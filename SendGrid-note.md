@@ -1,4 +1,3 @@
-
 # Azureのインスタンスからメールを送る
 
 Postfix+SendGridを使う例。
