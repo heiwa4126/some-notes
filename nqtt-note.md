@@ -1,4 +1,6 @@
-MQTTの実験をする
+# MQTTの実験
+
+## 概要
 
 MQTT参照実装のMosquittoを使う。
 
@@ -68,6 +70,7 @@ HiveMQのWebsocketクライアントで`test.mosquitto.org`につなげるか?
 /etc/mosquitto/conf.d/websokets.conf
 ```
 listener 1883
+
 listener 8080
 protocol websockets
 ```
@@ -90,9 +93,11 @@ start,stopしてるのはrestartだとなんかうまくいかなかったから
 
 # Websocketがうちのproxyを越えられるか
 
-pythonでpaho-mqttを使ったテストコードを書いて、社内でも取れることを確認した。
+pythonでpaho-mqttを使ったテストコードを書いて、プロキシ内でも取れることを確認した。
 
-Node.jsとAMDでも
+# 認証やSSL
 
+これが超参考になる。
 
+[How to Install and Secure the Mosquitto MQTT Messaging Broker on Ubuntu 16.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-the-mosquitto-mqtt-messaging-broker-on-ubuntu-16-04)
 

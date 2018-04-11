@@ -1,0 +1,79 @@
+# node.jsのメモ
+
+## npmの設定一覧
+```
+npm config list
+```
+
+## npmの設定を編集
+```
+npm config edit
+```
+またはNPM_CONFIG_xxxx環境変数でも設定できる。
+
+## npmにプロキシ設定
+環境変数http_proxy, https_proxy, ftp_proxy (いつもの)
+
+または
+```
+npm config set proxy http://PROXY-SERVER:PROXY-PORT
+```
+
+## npm -g でインストールされる先
+
+npm config の prefixの値に/lib/node_modulesをつけたところ。
+
+prefixの設定は
+```
+npm config set prefix PathYouWant
+```
+または
+```
+export NPM_CONFIG_PREFIX=PathYouWant
+```
+
+確認は
+```
+npm root -g
+```
+
+`{prifixの値}/bin`をPATH環境変数に追加しておくと楽。
+(そのパスは`npm bin -g`でも得られる)
+(Windowsのインストーラだとオプションで追加してくれる)
+
+参考:
+- [20 - How to prevent permissions errors | npm Documentation](https://docs.npmjs.com/getting-started/fixing-npm-permissions)
+
+## nodeがモジュールを探しに行く先を表示
+
+`require('hoge')`のhogeを探しに行く先。
+
+```
+node -e "console.log(global.module.paths)" 
+```
+カレントパスから1個づつ上の/node_modules
+
+これに加えて環境変数NODE_PATHを対象にする。
+
+npm -gでインストールしたモジュールを検索するなら
+```
+export NODE_PATH=`npm -g root`
+```
+のようなことをする
+(公開するモジュールを開発しているならやるべきではない)。
+
+
+## --saveと--save-dev
+
+開発時にいるモジュールは`--save-dev`、
+ライブラリとして使われる場合にいるモジュールは`--save-dev`
+
+参考:
+- [package.json | npm Documentation](https://docs.npmjs.com/files/package.json#dependencies)
+- [ちゃんと使い分けてる? dependenciesいろいろ。 - Qiita](https://qiita.com/cognitom/items/acc3ffcbca4c56cf2b95)
+
+## npm link
+
+便利
+
+[npm linkの基本的な使い方まとめ - Qiita](https://qiita.com/103ma2/items/284b3f00948121f23ee4)
