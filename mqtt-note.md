@@ -15,14 +15,25 @@ ver1.4.2以降(2016頃)からWebsocket対応らしい。
 
 このへんに従う
 - 本家 : [Download | Eclipse Mosquitto](http://mosquitto.org/download/)
+- 必見: [How to Install and Secure the Mosquitto MQTT Messaging Broker on Ubuntu 16.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-the-mosquitto-mqtt-messaging-broker-on-ubuntu-16-04)
 - [UbuntuにMosquittoをインストールしてMQTTブローカーを構築 - Qiita](https://qiita.com/kyoro353/items/b862257086fca02d3635)
+
 
 本家のubuntuの項目にはクライアントとブローカのインストール方法が書いてない…
 
+一応通しで書くと、
 ```
+sudo apt-get install python-software-properties
+sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
+sudo apt-get update
 sudo apt-get install mosquitto-clients
+```
+
+ブローカが要る場合は
+```
 sudo apt-get install mosquitto
 ```
+
 2018-4-11では
 ```
 $ dpkg -l mosquitto\*
@@ -34,13 +45,21 @@ ii  mosquitto-clients        1.4.15-0mosquitto amd64             Mosquitto comma
 
 # テスト
 
-ローカルにテスト
+## 本家のブローカでサブスクライブのテスト
 
-[接続テスト - Qiita](https://qiita.com/kyoro353/items/b862257086fca02d3635#%E6%8E%A5%E7%B6%9A%E3%83%86%E3%82%B9%E3%83%88)
+クライアントのテスト。
+mosquittoがテスト用のブローカを[test.mosquitto.org](http://test.mosquitto.org/)で動かしている。
 
-よそのブローカでテスト
+FWやproxyで遮られていないなら、
+```
+mosquitto_sub -t '#' -h test.mosquitto.org
+```
+全トピックがものすごい勢いで表示される。Ctrl+Cでとめる。
 
-[test.mosquitto.org](http://test.mosquitto.org/)
+
+## 本家のブローカでテスト
+
+トピックを`something/fishy`とする(アレンジして下さい)。
 
 サブスクライブ側
 ```
@@ -48,7 +67,7 @@ mosquitto_sub -t something/fishy -h test.mosquitto.org -p 1883 -d
 ```
 '-d'はデバッグオプション
 
-発信側
+パブリッシュ側
 ```
 mosquitto_pub -t something/fishy -h test.mosquitto.org -p 1883 -m Boo!
 ```
@@ -57,12 +76,20 @@ mosquitto_pub -t something/fishy -h test.mosquitto.org -p 1883 -m Boo!
 mosquitto_pub -t something/fishy -h localhost -m "`date -R`"
 ```
 
+## ローカルにテスト
+
+ブローカもインストールした場合
+
+[接続テスト - Qiita](https://qiita.com/kyoro353/items/b862257086fca02d3635#%E6%8E%A5%E7%B6%9A%E3%83%86%E3%82%B9%E3%83%88)
+
+
+
 # 他のテスト
 
 HiveMQのWebsocketクライアントで`test.mosquitto.org`につなげるか?
 
-[MQTT over WebSockets](http://test.mosquitto.org/ws.html)
-[MQTT Websocket Client](http://www.hivemq.com/demos/websocket-client/)
+- [MQTT over WebSockets](http://test.mosquitto.org/ws.html)
+- [MQTT Websocket Client](http://www.hivemq.com/demos/websocket-client/)
 
 
 # WebSocket
@@ -95,9 +122,51 @@ start,stopしてるのはrestartだとなんかうまくいかなかったから
 
 pythonでpaho-mqttを使ったテストコードを書いて、プロキシ内でも取れることを確認した。
 
+TODO:ここにコードを書く
+```
+code
+```
+
 # 認証やSSL
 
 これが超参考になる。
 
 [How to Install and Secure the Mosquitto MQTT Messaging Broker on Ubuntu 16.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-the-mosquitto-mqtt-messaging-broker-on-ubuntu-16-04)
 
+# node.js
+
+node.jsのMQTTクライアントMQTT.js([mqtt - npm](https://www.npmjs.com/package/mqtt))を試す。
+
+グローバルにインストールすると (かつ`nmp -b bin`にパスが通っていれば) 特にコードを書かなくても`mqtt`コマンドが使える。
+
+```
+npm -g i mqtt
+```
+
+ヘルプ
+```
+mqtt help subscribe
+```
+
+サブスクライブのテスト。
+```
+mqtt subscribe -h test.mosquitto.org -t '#'
+```
+
+Websocketでサブスクライブ
+```
+mqtt subscribe -h test.mosquitto.org -p 8080 -l ws -t '#'
+```
+proxyがあると動かない。http_proxy環境変数とかもサポートしていない。
+
+[Is a HTTP_PROXY supported? · Issue #452 · mqttjs/MQTT.js](https://github.com/mqttjs/MQTT.js/issues/452)
+
+MQTT.js自体にはproxyのサポートはあるが、mqttコマンドにはオプションがないらしい。
+
+MQTT.jsのexamplesにclient_with_proxy.jsがあるので、これを参考に作る。
+
+[MQTT.js/client_with_proxy.js at master · mqttjs/MQTT.js](https://github.com/mqttjs/MQTT.js/blob/master/examples/wss/client_with_proxy.js)
+
+# ブラウザで
+
+[mqtt - npm](https://www.npmjs.com/package/mqtt#browser)
