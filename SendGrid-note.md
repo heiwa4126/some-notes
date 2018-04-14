@@ -21,33 +21,20 @@ Nameはリソース名。"SendGridxxxx"のような名前をつける。自分�
 
 > SendGrid API キーを確認するには
 
-~~Postfixでメールを送るならAPIキーは不要。~~
-訂正: API形式の方がセキュア。
-
-[PostfixからSendGridへのリレーをカスタマイズする | SendGridブログ](https://sendgrid.kke.co.jp/blog/?p=8192)
-にある、
-> [smtp.sendgrid.net]:587 apikey:SendGridのAPIキー
+のところで
 
 SendGridのマネージャで
 Settings > API Keys > Create API Key
-Restricted Access で mail sendだけ有効なキーを作ればOK.
+で
+Restricted Accessを選び
+mail sendだけ有効なキーを作る。
 
-こちらのほうが安全
 
 ## Postfix編
 
 以下のURLを参照
 
-**記述が古い**
 [Postfixでメール送信 - ドキュメント | SendGrid](https://sendgrid.kke.co.jp/docs/Integrate/Mail_Servers/postfix.html)
-
-~~`/etc/postfix/sasl_passwd`に設定する"ユーザ名:パスワード"は、
-SendGridの管理画面の左上の自分の名前のプルダウンからAccount Detailsを選び
-USERNAMEのところに書いてあるのが、ユーザー名。~~
-
-~~AzureのSendGridリソースのSetteings - ConfigurationsのUSERNAMEでも同じ。~~
-
-~~パスワードはさっき設定したパスワード。~~
 
 `/etc/postfix/sasl_passwd`に設定する"ユーザ名:パスワード"は、
 - ユーザ名 `apikey`
