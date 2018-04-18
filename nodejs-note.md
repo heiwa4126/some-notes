@@ -1,5 +1,9 @@
 # node.jsのメモ
 
+## node.jsのインストール
+
+[Installing Node.js via package manager | Node.js](https://nodejs.org/en/download/package-manager/)
+
 ## npmの設定一覧
 ```
 npm config list
