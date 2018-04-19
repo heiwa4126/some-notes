@@ -27,6 +27,11 @@ or
 sudo locale-gen ja_JP.UTF-8
 ```
 
+さらにデフォルトのロケールを変えたい場合は
+```
+sudo localectl set-locale LANG=ja_JP.UTF-8
+```
+のように。
 
 
 # EDITORを変更
