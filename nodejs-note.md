@@ -1,5 +1,7 @@
 # node.jsのメモ
 
+検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
+
 ## node.jsのインストール
 
 [Installing Node.js via package manager | Node.js](https://nodejs.org/en/download/package-manager/)
@@ -69,12 +71,33 @@ export NODE_PATH=`npm -g root`
 
 ## --saveと--save-dev
 
-開発時にいるモジュールは`--save-dev`、
-ライブラリとして使われる場合にいるモジュールは`--save-dev`
+開発時にいるモジュールは`--save-dev` (package.jsの"dependencies"に入る)、
+ライブラリとして使われる場合にいるモジュールは`--save-dev` (package.jsの"devDependencies"に入る)
 
 参考:
 - [package.json | npm Documentation](https://docs.npmjs.com/files/package.json#dependencies)
 - [ちゃんと使い分けてる? dependenciesいろいろ。 - Qiita](https://qiita.com/cognitom/items/acc3ffcbca4c56cf2b95)
+
+なので、たとえばGitHubから落としたプロジェクトを使いたいだけなら
+```
+npm i
+```
+さらにこのプロジェクトを改造したりするなら
+```
+npm i --dev
+```
+↑古い。`npm install --only=dev`
+
+参考:
+- [install | npm Documentation](https://docs.npmjs.com/cli/install)
+
+## プロジェクトにインストールしたモジュールのbinを使う
+
+$HOME/.profileや$HOME/,bash_profileで./node_modules/.bin:`をPATHに追加しておく。
+こんな感じ
+```
+export PATH="./node_modules/.bin:$PATH"
+```
 
 ## npm link
 
