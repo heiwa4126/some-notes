@@ -114,3 +114,14 @@ export PATH="./node_modules/.bin:$PATH"
 便利
 
 [npm linkの基本的な使い方まとめ - Qiita](https://qiita.com/103ma2/items/284b3f00948121f23ee4)
+
+## npmのオートコンプリート(completion)
+
+例)
+```
+npm completion >> ~/.bashrc
+```
+
+参考: 
+- [全部知ってる？ npmを使いこなすために絶対知っておきたい10のこと - WPJ](https://www.webprofessional.jp/10-npm-tips-and-tricks/)
+- 原文: [10 Tips and Tricks That Will Make You an npm Ninja — SitePoint](https://www.sitepoint.com/10-npm-tips-and-tricks/)
