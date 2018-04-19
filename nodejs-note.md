@@ -18,7 +18,7 @@ export MANPATH="$NPM_CONFIG_PREFIX/man:$MANPATH"
 ## 環境設定: npmのオートコンプリート(completion)
 
 ```
-npm completion >> ~/.bash_profile
+npm completion >> ~/.profile
 ```
 
 参考: 
