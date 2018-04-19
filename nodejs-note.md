@@ -88,8 +88,18 @@ npm i --dev
 ```
 ↑古い。`npm install --only=dev`
 
-参考:
+参考(必読):
 - [install | npm Documentation](https://docs.npmjs.com/cli/install)
+
+**修正**
+
+`--save`オプションはデフォルトだった。
+`npm i PackageName`で`--save`つけたのと同等になる。
+(そもそも--saveは-P|--save-prodのエリアスらしい)
+
+もし依存関係に影響をあたえず(package.jsonに変更を加えず)パッケージを入れたいなら`--no-save`オプションを。
+
+
 
 ## プロジェクトにインストールしたモジュールのbinを使う
 
