@@ -80,3 +80,11 @@ sensible-editor ~/.ssh/authorized_keys
 chmod -R og= ~/.ssh
 ```
 別セッションからsshで接続テスト。
+
+# 絶対いれとくパッケージ
+
+## bash-completion
+
+systemctlのサブコマンドとか覚えきれないので。あと「こんなサブコマンド/オプションがあったのか!」というのがあるので。
+
+RHELやCentでもEPELにあるので、絶対入れるべき。
