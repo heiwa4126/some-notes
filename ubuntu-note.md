@@ -91,14 +91,14 @@ passwd yourAccount
 ```
 RHEL AMIだとsudoグループのかわりにwheelで
 
-
-rootになれるかテスト
+sudoでrootになれるかテスト
 ```
 su - yourAccount
 sudo -i
 ```
 
-さらに `~yourAccount/.ssh/authorized_keys` を設定。
+さらに yourAccountの公開鍵を用意して、
+`~yourAccount/.ssh/authorized_keys` を設定。
 
 yourAccountの状態で
 ```
@@ -107,6 +107,11 @@ sensible-editor ~/.ssh/authorized_keys
 chmod -R og= ~/.ssh
 ```
 別セッションからsshで接続テスト。
+
+(TODO:公開鍵を簡単に引っ張ってくる素敵な方法を探す。
+S3に置いて`curl xxxx >> ~/.ssh/authorized_keys`とかが思いつくけど
+URL忘れそう。)
+
 
 # 絶対いれとくパッケージ
 
