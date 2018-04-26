@@ -6,7 +6,7 @@ Nginx + Let's Encrypt(Certbot)で構築したWebサーバを
 
 [SSL Server Test (Powered by Qualys SSL Labs)](https://www.ssllabs.com/ssltest/)
 
-## 最初のステップ
+## ステップ
 
 Nginxなので以下の通りに設定する。
 
@@ -17,19 +17,22 @@ Nginxなので以下の通りに設定する。
   ssl_stapling on;
   ssl_prefer_server_ciphers on;
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_ciphers 'kEECDH+ECDSA+AES128 kEECDH+ECDSA+AES256 kEECDH+AES128 kEECDH+AES256 kEDH+AES128 kEDH+AES256 DES-CB C3-SHA +SHA !aNULL !eNULL !LOW !kECDH !DSS !MD5 !EXP !PSK !SRP !CAMELLIA !SEED !3DES !DHE RSA+AES128';
+  ssl_ciphers 'kEECDH+ECDSA+AES128 kEECDH+ECDSA+AES256 kEECDH+AES128 kEECDH+AES256 kEDH+AES128 kEDH+AES256 DES-CB C3-SHA +SHA !aNULL !eNULL !LOW !kECDH !DSS !MD5 !EXP !PSK !SRP !CAMELLIA !SEED !DHE RSA+AES128';
 ```
-これで評価A。(使えないブラウザが1種類)
-- TLS_RSA_WITH_3DES_EDE_CBC_SHA
+`ssl_ciphers`だけちょっとアレンジした。
 
-を追加できれば...
+これで評価A(DNS CAAがないのでA+にはならない)。
+使えないブラウザもなし。
+暗号化
 
-こうすればいきなり評価Aなのだが(DNS CAAがないのでA+にはならない)、
+こうすればいきなり評価Aなのだが
 ```
 ssl_protocols TLSv1.2;
 ssl_ciphers 'TLSv1.2';
 ```
 見えないブラウザが増えてしまう。
+
+## メモ
 
 ssl_ciphersのチェックは
 ```
@@ -43,7 +46,7 @@ nginx -t
 ```
 
 
-参考:
+## 参考
 * [Nginx SSLの評価を「A+」に上げる](https://rin-ka.net/ssl-test/)
 * [SSL and TLS Deployment Best Practices · ssllabs/research Wiki](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices)
 * [HTTPS on Nginx: From Zero to A+ (Part 2) - Configuration, Ciphersuites, and Performance - Julian Simioni](https://juliansimioni.com/blog/https-on-nginx-from-zero-to-a-plus-part-2-configuration-ciphersuites-and-performance/)
