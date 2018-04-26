@@ -17,11 +17,19 @@ Nginxなので以下の通りに設定する。
   ssl_stapling on;
   ssl_prefer_server_ciphers on;
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_ciphers 'ECDH !aNULL !eNULL';
+  ssl_ciphers 'ECDHE !EDE !aNULL !eNULL !RC4 !SSLv3';
 ```
 
+ssl_ciphersのチェックは
+```
+openssl ciphers -v 'ECDH !aNULL !eNULL !RC4 !SHA1' | sort
+```
+のようにして、問題のある方式がでてこなくなるまで調整する。
+
 nginxのconfigのシンタックスチェックは
-`nginx -t`
+```
+nginx -t
+```
 
 
 参考:
