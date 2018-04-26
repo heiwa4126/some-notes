@@ -51,4 +51,5 @@ nginx -t
 * [Nginx SSLの評価を「A+」に上げる](https://rin-ka.net/ssl-test/)
 * [SSL and TLS Deployment Best Practices · ssllabs/research Wiki](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices)
 * [HTTPS on Nginx: From Zero to A+ (Part 2) - Configuration, Ciphersuites, and Performance - Julian Simioni](https://juliansimioni.com/blog/https-on-nginx-from-zero-to-a-plus-part-2-configuration-ciphersuites-and-performance/)
+* [orangejulius/https-on-nginx: Notes for setting up HTTPS on Nginx](https://github.com/orangejulius/https-on-nginx)
 * [Webサーバー nginx における SSL証明書設定の安全性向上 ～SSL Server Test で A+ 判定を目指して～ | SaintSouth.NET](https://www.saintsouth.net/blog/safety-of-ssl-certificate-setting-improvements-in-web-server-nginx-to-get-rankaplus-from-ssl-server-test/)
