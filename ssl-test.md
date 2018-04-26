@@ -17,8 +17,19 @@ Nginxなので以下の通りに設定する。
   ssl_stapling on;
   ssl_prefer_server_ciphers on;
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_ciphers 'ECDHE !EDE !aNULL !eNULL !RC4 !SSLv3';
+  ssl_ciphers 'kEECDH+ECDSA+AES128 kEECDH+ECDSA+AES256 kEECDH+AES128 kEECDH+AES256 kEDH+AES128 kEDH+AES256 DES-CB C3-SHA +SHA !aNULL !eNULL !LOW !kECDH !DSS !MD5 !EXP !PSK !SRP !CAMELLIA !SEED !3DES !DHE RSA+AES128';
 ```
+これで評価A。(使えないブラウザが1種類)
+- TLS_RSA_WITH_3DES_EDE_CBC_SHA
+
+を追加できれば...
+
+こうすればいきなり評価Aなのだが(DNS CAAがないのでA+にはならない)、
+```
+ssl_protocols TLSv1.2;
+ssl_ciphers 'TLSv1.2';
+```
+見えないブラウザが増えてしまう。
 
 ssl_ciphersのチェックは
 ```
