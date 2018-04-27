@@ -38,12 +38,30 @@ npm config edit
 またはNPM_CONFIG_xxxx環境変数でも設定できる。
 
 ## npmにプロキシ設定
+
 環境変数http_proxy, https_proxy, ftp_proxy (いつもの)
 
 または
 ```
 npm config set proxy http://PROXY-SERVER:PROXY-PORT
 ```
+
+## パッケージの更新
+
+どれが古いか知る
+```
+npm outdated
+```
+
+更新
+```
+npm update <pakage name>
+```
+pakage.jsonは書き換えてくれないみたい。
+
+ncuが便利: [npm installしたパッケージの更新確認とアップデート(npm-check-updates) - dackdive's blog](http://dackdive.hateblo.jp/entry/2016/10/10/095800)
+
+グローバルは手動になるけど。
 
 ## npm -g でインストールされる先
 
@@ -134,4 +152,42 @@ export PATH="./node_modules/.bin:$PATH"
 便利
 
 [npm linkの基本的な使い方まとめ - Qiita](https://qiita.com/103ma2/items/284b3f00948121f23ee4)
+
+
+## cafile
+
+ZScalerというproxyが来て、npmが使えなくなってしまった。
+有名でないサイトは一旦proxyでSSLを解除して、内容を検閲し、ZScalerで再度SSL化するらしい。
+
+ZScalerのCA証明書をPEM形式でエクスポートして、
+```
+npm config set cafile "<path to your certificate file>"
+```
+で再び使えるようになった。.nmprcを直に編集してもOK.
+
+curlなんかも
+```
+curl --cafile "<path to your certificate file>" ....
+```
+であとりあえず使える(これも.curlrcに書ける。参考: [curlを便利に使う為の.curlrcの雛型 - Qiita](https://qiita.com/hirohiro77/items/309f5bf93083744b042e))
+
+「証明書をPEM形式でエクスポート」はWindowsのバージョンによって微妙に異なるのだが、
+1. コントロールパネル
+1. インターネットのプロパティ
+1. コンテンツタブ
+1. 証明書ボタン
+1. 信頼されたルート証明機関
+1. リストで"Zscaler Root CA"を選択
+1. エクスポートボタン
+1. ウイザードで次へボタン
+1. "BASE 64 encoded X509"選択
+1. 次へボタン
+1. ファイル名にフルパス入力
+1. 次へボタン
+1. 完了ボタン
+
+の順でマウスカチカチすればだれでも簡単にできる。
+
+参考:
+[How to fix SSL certificate error when running Npm on Windows? - Stack Overflow](https://stackoverflow.com/questions/13913941/how-to-fix-ssl-certificate-error-when-running-npm-on-windows)
 
