@@ -165,11 +165,21 @@ npm config set cafile "<path to your certificate file>"
 ```
 で再び使えるようになった。.npmrcを直に編集してもOK.
 
+参考:
+[How to fix SSL certificate error when running Npm on Windows? - Stack Overflow](https://stackoverflow.com/questions/13913941/how-to-fix-ssl-certificate-error-when-running-npm-on-windows)
+
+
 curlなんかも
 ```
 curl --cafile "<path to your certificate file>" ....
 ```
 であとりあえず使える(これも.curlrcに書ける。参考: [curlを便利に使う為の.curlrcの雛型 - Qiita](https://qiita.com/hirohiro77/items/309f5bf93083744b042e))
+
+pipも
+```
+pip --cert "<path to your certificate file>" ....
+```
+で行ける。~/.pip/pip.confにも書ける。参考: [python - pip: cert failed, but curl works - Stack Overflow](https://stackoverflow.com/questions/19377045/pip-cert-failed-but-curl-works)
 
 「証明書をPEM形式でエクスポート」はWindowsのバージョンによって微妙に異なるのだが、
 1. コントロールパネル
@@ -188,6 +198,4 @@ curl --cafile "<path to your certificate file>" ....
 
 の順でマウスカチカチすればだれでも簡単にできる。
 
-参考:
-[How to fix SSL certificate error when running Npm on Windows? - Stack Overflow](https://stackoverflow.com/questions/13913941/how-to-fix-ssl-certificate-error-when-running-npm-on-windows)
 
