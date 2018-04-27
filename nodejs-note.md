@@ -163,7 +163,7 @@ ZScalerのCA証明書をPEM形式でエクスポートして、
 ```
 npm config set cafile "<path to your certificate file>"
 ```
-で再び使えるようになった。.nmprcを直に編集してもOK.
+で再び使えるようになった。.npmrcを直に編集してもOK.
 
 curlなんかも
 ```
