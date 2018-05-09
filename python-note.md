@@ -60,3 +60,30 @@ virtualenv下にpylintやautopep8をインストールすればいいのだが�
 さらに`.vscode/settings.json`をgitに含めないようにしておく。
 
 もっと楽な方法がありそうだがなあ。
+
+
+# pip10問題
+
+* [pip install --upgrade pip (10.0.0) 後の奇妙な挙動について - 雑記](http://icchy.hatenablog.jp/entry/2018/04/17/064443)
+
+Ubuntu16.04LTSのpython3.5でpip10に更新すると
+```
+$ pip
+Traceback (most recent call last):
+  File "/usr/bin/pip", line 9, in <module>
+    from pip import main
+ImportError: cannot import name main
+```
+こんな感じになる問題。
+
+自分は↑のリンクを受けて
+~/.profileに
+```
+alias pip='python3 -m pip'
+alias pip3='python3 -m pip'
+```
+を書いていちおう解決、ということにしましたけど。
+
+ただAWSやAzureで立てたUbuntuでは何もしないでもエラーにならなくて
+よくわからない。
+
