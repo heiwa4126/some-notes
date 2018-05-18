@@ -295,6 +295,12 @@ firewall-cmd --permanent --service=clusterpro_webmanager --set-description="CLUS
 firewall-cmd --permanent --service=clusterpro_webmanager --add-port=29003/tcp 
 ```
 
+設定したら
+```
+firewall-cmd --reload
+```
+でリロード。
+
 # めんどくさいときは
 
 `iptables`を使うw
