@@ -90,3 +90,23 @@ fi
 > ~/.bashrc が存在し、かつ読み込み可能であれば、 bash はコマンドをこのファイルから読み込んで実行します。
 
 > sh として呼び出された場合には、この動作は行いません。
+
+
+# exit code
+
+/bin/sh, /bin/bashを使って起動したプロセスのexit codeは
+shが予約している領域があるよ、という話。
+
+> exit codes 1 - 2, 126 - 165, and 255
+
+> 上記の表の通り，Exit Code 1, 2, 126〜165, 255 は特別な意味を持ち，スクリプトやプログラム内で exit に指定するパラメータとしては避けるべきである
+
+- [Exit Codes With Special Meanings](http://tldp.org/LDP/abs/html/exitcodes.html)
+- [コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code](https://qiita.com/Linda_pp/items/1104d2d9a263b60e104b)
+
+あと、POSIXでは
+/usr/include/sysexits.h
+で定義されている値が提案されているので、
+これを併用するのが行儀がいいと思う。
+- [https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h](https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h)
+
