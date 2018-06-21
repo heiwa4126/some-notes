@@ -104,9 +104,12 @@ shが予約している領域があるよ、という話。
 - [Exit Codes With Special Meanings](http://tldp.org/LDP/abs/html/exitcodes.html)
 - [コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code](https://qiita.com/Linda_pp/items/1104d2d9a263b60e104b)
 
-あと、POSIXでは
+あと、POSIXでは64～78が提案されているので
 /usr/include/sysexits.h
-で定義されている値が提案されているので、
-これを併用するのが行儀がいいと思う。
+これを使うのが行儀がいい(はず)。
 - [https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h](https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h)
+
+たとえばpythonだとosモジュールでos.EX_USAGEなどが定義されている。
+
+ただしWindowsのosモジュールはos.EX_xxxが無い(POSIXじゃないから)。
 
