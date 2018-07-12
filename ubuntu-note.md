@@ -60,14 +60,14 @@ AMI のデフォルトのユーザー名はだいたい`ec2-user`.
 
 [SSH を使用した Linux インスタンスへの接続 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html)
 
-で、Ubuntuだけ例外で、
+で、**Ubuntuだけ例外**で、
 > Ubuntu AMI の場合、ユーザー名は ubuntu または root. です。
 
 確認は、
 EC2のマネージメントコンソールで「接続」ボタンを押し
 「例:」の@マークの前がそれ。
 ```
-例:　
+例:
 
 ssh -i "xxx.pem" ubuntu@xxxxxxxxx.ap-xxxxxxx-1.compute.amazonaws.com
 
@@ -111,6 +111,27 @@ chmod -R og= ~/.ssh
 (TODO:公開鍵を簡単に引っ張ってくる素敵な方法を探す。
 S3に置いて`curl xxxx >> ~/.ssh/authorized_keys`とかが思いつくけど
 URL忘れそう。)
+
+
+# sudoでパスワードがいらないのを無効(有効)にする
+
+↓こういう話ももっともだと思うのだが
+- [su|sudo|polkit を使うべきでないただ一つの理由(とりあえずの対策を追記)](https://qiita.com/ureorownramogpzq/items/7387ddb5aa414e5607bb)
+
+無いよりはましだと思う。
+
+まず対象のユーザにパスワードが設定されてるかを確認する。
+```
+grep <target-user> /etc/shadow
+```
+第2フィールドを見て確認。`chage -l <target-user>` も。
+
+パスワードが設定されてなければ `passwd <target-user>`。
+
+次に `grep NOPASSWD /etc/sudoers.d/*` でファイルを見つけ
+
+`visudo -f そのファイル`で`NOPASSWD:`を削除する。
+
 
 
 # 絶対いれとくパッケージ
