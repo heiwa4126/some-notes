@@ -1,24 +1,14 @@
-ssh tips
+その他いろいろノート
 
-# .ssh/configでhostごとのUserがoverrideできない
+# UFWのログが多すぎるとき
 
-だめな例
-```
-User foo
-...
-Host h1
-  User bar
-```
+/var/log/{syslog,kern.log,ufw.log}にUFW BLOCKが山程出てて、
+さすがにもういいんじゃないかと思った。
 
-`ssh h1` するとユーザfooでつなぎに行く。
+`sudo ufw logging off`
 
-正しい例
-```
-Host h1
-  User bar
+logレベルを調整できる。詳しくは `man ufw` のLOGGING項を。
 
-Host *
-  User foo
-```
 
-- [linux - OpenSSH ~/.ssh/config host-specific overrides not working - Super User](https://superuser.com/questions/718346/openssh-ssh-config-host-specific-overrides-not-working)
+参考
+* [Ubuntu Manpage: ufw - program for managing a netfilter firewall](http://manpages.ubuntu.com/manpages/cosmic/man8/ufw.8.html)
