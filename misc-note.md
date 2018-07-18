@@ -9,6 +9,8 @@
 
 logレベルを調整できる。詳しくは `man ufw` のLOGGING項を。
 
+現在のロギング状態は `ufw status verbose` で知れる。
+
 
 参考
 * [Ubuntu Manpage: ufw - program for managing a netfilter firewall](http://manpages.ubuntu.com/manpages/cosmic/man8/ufw.8.html)
