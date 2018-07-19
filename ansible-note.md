@@ -3,9 +3,21 @@ ansibleメモランダム
 
 # tips
 
+## git
+
 ansibleをまるごとgit cloneしておくと捗る。Dymamic inventoryなどハードリンクすると楽。
 * [ansible/ansible: Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy. Avoid writing scripts or custom code to deploy and update your applications — automate in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com/ansible/](https://github.com/ansible/ansible)
 
+手順は
+```
+git clone https://github.com/ansible/ansible.git --recursive
+```
+
+参考: これの"Running From Source"のところ
+* [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#running-from-source)
+
+
+## verbose
 
 コマンドにverboseオプション(-v)がある。4つまでいけるみたい(-vvvv)。
 
