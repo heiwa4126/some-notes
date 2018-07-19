@@ -141,3 +141,28 @@ ansible windows -i hosts-win -m win_ping
 
 うまくいったらsetupモジュールでfactを見てみる(setupはwin_setupとか無い)。
 
+## ansible 2.6.1のwin_rebootが壊れている
+
+pipで取れるansible 2.6.1のwin_rebootが壊れていた話。
+
+こんな感じのメッセージが
+```
+fatal: [w1]: FAILED! => {"changed": false, "elapsed": 600, "msg": "timed out waiting for reboot uptime check success: Invalid settings supplied for _extras: Requested option _extras was not defined in configuration", "rebooted": true}
+```
+
+AnsibleのIssuesに上がってた。
+
+* [win_reboot fails when windows VM hostname is changed · Issue #42294 · ansible/ansible](https://github.com/ansible/ansible/issues/42294)
+
+↑に従って、最新のをソースから実行↓
+
+* [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#running-from-source)
+
+```
+$ source ./hacking/env-setup
+$ ansible --version
+ansible 2.7.0.dev0 (devel bea8e0200c) last updated 2018/07/19 14:34:25 (GMT +900)
+(略)
+```
+
+これでwin_rebootしたらちゃんと動いた。
