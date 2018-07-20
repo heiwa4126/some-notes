@@ -16,7 +16,6 @@ git clone https://github.com/ansible/ansible.git --recursive
 参考: これの"Running From Source"のところ
 * [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#running-from-source)
 
-
 ## verbose
 
 コマンドにverboseオプション(-v)がある。4つまでいけるみたい(-vvvv)。
@@ -26,13 +25,59 @@ git clone https://github.com/ansible/ansible.git --recursive
 - chefよりは簡単に使い始められる感じ。あとchefより軽い。
 - でもpipとか(--userとか、~/.local/binとか)、python2,3の話とかは慣れてないと辛いかも。
 - あとgitも慣れてるといいかも。
-- 制御構造がわかりにくくて死ねる
+- 制御構造がわかりにくくて死ねる。
+- バージョンによって結構変わる。
+- YAMLのsyntax checkのあるエディタを使わないと即死(emacsだとyaml-mode & flymark-yaml)
+  - 実はPlaybookや変数ファイルはJSONやINIで書いてもいいらしい
 
-# 制御構造
+# loopについて
 
 * [Loops — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
-
 * [2.6からwith_xxxxなループはloopに併合されました](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html?highlight=with_items#migrating-from-with-x-to-loop)
+
+## Blockでloopが使えない
+
+世界的に怨嗟の声が。
+* [feature request: looping over blocks · Issue #13262 · ansible/ansible](https://github.com/ansible/ansible/issues/13262)
+
+実際なんで使えないのかわからん。
+
+
+## loopをitemのままで使うとincludeでネストしたときに警告が
+
+こんな警告
+```
+[WARNING]: The loop variable 'item' is already in use. You should set the `loop_var` value in the `loop_control` option for the task to
+something else to avoid variable collisions and unexpected behavior.
+```
+
+loop_controlの使用例
+```
+    - loop: "{{initial_users}}"
+      loop_control: {loop_var: user}
+      include_tasks: include/create_a_user.yml
+```
+
+## lookup
+[Lookup Plugins — Ansible Documentation](https://docs.ansible.com/ansible/latest/plugins/lookup.html#query)
+
+面白そう。調べる。
+
+# ansible_os_familyのリスト
+
+[[When] Condition: `ansible_os_family` Lists | ansible Tutorial](http://www.riptutorial.com/ansible/example/12268/-when--condition----ansible-os-family--lists)
+
+ソースの何処かに埋め込まれているか... これとか?
+
+[ansible/distribution.py at 1737b7be3ecaa6fea9372fe9ba7d8fe659a4e95f · ansible/ansible](https://github.com/ansible/ansible/blob/1737b7be3ecaa6fea9372fe9ba7d8fe659a4e95f/lib/ansible/module_utils/facts/system/distribution.py#L413)
+
+Windowsが無いようだが。
+
+
+# includeの変遷
+
+* [Ansible 2.4 で import_tasks/include_tasks に tags を付けるときの注意点 - 無印吉澤](https://muziyoshiz.hatenablog.com/entry/2018/01/15/231213)
+* [Creating Reusable Playbooks — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse.html)
 
 
 # モジュール
@@ -53,7 +98,7 @@ ansible-doc {{module_name}}
 * [Windows modules — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/list_of_windows_modules.html)
 
 
-## setup
+## setupモジュール
 
 ホストの情報を取ってくる
 
@@ -63,6 +108,13 @@ ansible-doc {{module_name}}
 ```
 ansible all -i hosts -m setup
 ```
+
+## win_sayモジュール
+
+[win_say - Text to speech module for Windows to speak messages and optionally play sounds — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/win_say_module.html)
+
+クライアントが喋るらしいw。Exampleが面白い。
+
 
 # WindowsをAnsibleで管理できるようにする
 
