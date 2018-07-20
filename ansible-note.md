@@ -116,6 +116,17 @@ ansible all -i hosts -m setup
 クライアントが喋るらしいw。Exampleが面白い。
 
 
+# yaml2json
+
+混乱したらJSONに変換してみるとらくだと思う。
+pythonでワンライナーを書いてるひとがいたので(
+[plist ファイルの代わりに YAML を使ってみた](https://qiita.com/kitsuyui/items/d254d3f0ba84c6a5d04d))
+それを参考に
+```
+alias y2j="python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=2)'"
+```
+標準入力を変換なので、ちょっとだけ使いにくい。少し改造する。
+
 # WindowsをAnsibleで管理できるようにする
 
 正しくWinRMを有効にするのが
