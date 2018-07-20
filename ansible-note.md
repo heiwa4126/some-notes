@@ -32,7 +32,7 @@ git clone https://github.com/ansible/ansible.git --recursive
 
 # loopについて
 
-* [Loops — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
+* [Loops — Ansible Documentation (超参考になる)](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
 * [2.6からwith_xxxxなループはloopに併合されました](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html?highlight=with_items#migrating-from-with-x-to-loop)
 
 ## Blockでloopが使えない
@@ -47,8 +47,7 @@ git clone https://github.com/ansible/ansible.git --recursive
 
 こんな警告
 ```
-[WARNING]: The loop variable 'item' is already in use. You should set the `loop_var` value in the `loop_control` option for the task to
-something else to avoid variable collisions and unexpected behavior.
+[WARNING]: The loop variable 'item' is already in use. You should set the `loop_var` value in the `loop_control` option for the task to something else to avoid variable collisions and unexpected behavior.
 ```
 
 loop_controlの使用例
