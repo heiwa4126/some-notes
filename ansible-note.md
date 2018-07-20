@@ -26,6 +26,14 @@ git clone https://github.com/ansible/ansible.git --recursive
 - chefよりは簡単に使い始められる感じ。あとchefより軽い。
 - でもpipとか(--userとか、~/.local/binとか)、python2,3の話とかは慣れてないと辛いかも。
 - あとgitも慣れてるといいかも。
+- 制御構造がわかりにくくて死ねる
+
+# 制御構造
+
+* [Loops — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
+
+* [2.6からwith_xxxxなループはloopに併合されました](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html?highlight=with_items#migrating-from-with-x-to-loop)
+
 
 # モジュール
 
@@ -178,3 +186,35 @@ ansible 2.7.0.dev0 (devel bea8e0200c) last updated 2018/07/19 14:34:25 (GMT +900
 ```
 
 これでwin_rebootしたらちゃんと動いた。
+
+
+# "when"が使えるのは?
+
+- Task
+- Block
+- Role
+
+↓これ見る
+[Playbook Keywords — Ansible Documentation](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html)
+
+構造がわかりにくい。playbook.ymlで配列になってるのが"Play"。上位構造から順に:
+- Play
+  - Role
+    - ...
+  - Task
+    - Module
+    - Block
+
+みたいな感じ?
+
+
+
+
+# rolesの練習: epel
+
+* [Amazon EC2 での EPEL の有効化](https://aws.amazon.com/jp/premiumsupport/knowledge-center/ec2-enable-epel/)
+
+AWSのRed HatもCentもAmazonLinuxもos_familyはRedHatなのに、
+こんなに手法が違う...
+
+Amazon Linux 2とAmazon Linuxでまた違うのが辛い。
