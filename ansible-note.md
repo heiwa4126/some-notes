@@ -126,6 +126,44 @@ alias y2j="python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sy
 ```
 標準入力を変換なので、ちょっとだけ使いにくい。少し改造する。
 
+# userモジュールでパスワードの扱い
+
+/etc/shadowに**そのまま**入るので、何らかのハッシュ化が必要。
+
+平文パスワードを渡すつもりなら `password_hash()`フィルタが便利。
+[Filters — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#hashing-filters)
+
+例)
+```
+- name: Create a user
+  user:
+    name: "{{user.user}}"
+    password: "{{user.pass|password_hash('sha512')}}"
+    group: "{{user.user}}"
+    groups: "{{initial_groups[ansible_os_family]}}"
+    shell: /bin/bash
+    create_home: Yes
+  register: create_a_user_result
+  vars:
+    initial_groups:
+      RedHat: [users, wheel]
+      Debian: [sudo]
+```
+
+これだと、varファイルに平文記述になったりして、やや不安なので、事前にhash化する。
+```
+python -c 'import crypt; print crypt.crypt("SuperSecretSecretPassword","$6$anySalt")'
+```
+
+`$6$salt`の書式
+`$id$salt$encrypted`
+については
+[crypt(3) - Linux manual page](http://man7.org/linux/man-pages/man3/crypt.3.html)
+の `glibc feature` を参照。
+
+この方法でもハッシュ化されたパスワードがブルートフォースされるので扱いは注意。
+
+
 # WindowsをAnsibleで管理できるようにする
 
 正しくWinRMを有効にするのが
