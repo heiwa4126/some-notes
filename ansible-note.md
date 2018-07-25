@@ -118,6 +118,16 @@ ansible all -i hosts -m setup
 
 クライアントが喋るらしいw。Exampleが面白い。
 
+## win_hostnameモジュール
+
+2.6から
+
+[win_hostname - Manages local Windows computer name. — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/win_hostname_module.html#win-hostname-module)
+
+
+名前しかダメ。プライマリDNSサフィックスはどこで設定するのか...
+
+net_systemモジュールみたいのがほしい。
 
 # yaml2json
 
