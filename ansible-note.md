@@ -29,6 +29,7 @@ git clone https://github.com/ansible/ansible.git --recursive
 - バージョンによって結構変わる。
 - YAMLのsyntax checkのあるエディタを使わないと即死(emacsだとyaml-mode & flymark-yaml)
   - 実はPlaybookや変数ファイルはJSONやINIで書いてもいいらしい
+- デバッガーがあって嬉しい
 
 # loopについて
 
@@ -40,7 +41,7 @@ git clone https://github.com/ansible/ansible.git --recursive
 世界的に怨嗟の声が。
 * [feature request: looping over blocks · Issue #13262 · ansible/ansible](https://github.com/ansible/ansible/issues/13262)
 
-実際なんで使えないのかわからん。
+実際なんで使えないのかわからん。whenは使えるのに。
 
 
 ## loopをitemのままで使うとincludeでネストしたときに警告が
@@ -85,8 +86,11 @@ Windowsが無いようだが。
 
 * [Module Index — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html)
 
-↑カテゴリーインデックスで若干使いにくい。[Index of /ansible/latest/modules](https://docs.ansible.com/ansible/latest/modules/)の方が楽なときも。
+↑カテゴリーインデックスで若干使いにくい。
 
+* [All modules — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/list_of_all_modules.html)
+
+コマンドラインで
 ```
 ansible-doc {{module_name}}
 ```
@@ -125,6 +129,11 @@ pythonでワンライナーを書いてるひとがいたので(
 alias y2j="python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=2)'"
 ```
 標準入力を変換なので、ちょっとだけ使いにくい。少し改造する。
+
+
+ansible-playbookの`--syntax-check`オプションも。
+ただしPlaybookのチェックしかできない(includeとかはダメ)。
+
 
 # userモジュールでパスワードの扱い
 
@@ -178,8 +187,15 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/ansible/ansible/devel/e
 powershell -ExecutionPolicy RemoteSigned .\ConfigureRemotingForAnsible.ps1
 ```
 
+追加: CredSSPも有効にしておくといいかも
+```
+Enable-WSManCredSSP -Role Server -Force
+```
+
+
 参考:
 * [AnsibleでWindowsを操作する準備をする](https://qiita.com/yunano/items/f9d5652a296931a09a70)
+
 
 
 WinRMの設定を確認。
@@ -205,7 +221,7 @@ winrm get winrm/config
            Kerberos = true
            Negotiate = true
            Certificate = true
-           CredSSP = false
+           CredSSP = true <- ここも追加
        DefaultPorts
            HTTP = 5985
            HTTPS = 5986 <- ここ
@@ -261,6 +277,18 @@ ansible windows -i hosts-win -m win_ping
 
 うまくいったらsetupモジュールでfactを見てみる(setupはwin_setupとか無い)。
 
+**【注意】**
+AD環境とかで認証が異なる。 [Windows Remote Management — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html) 参照
+
+`ansible_winrm_transport` で`ntml`を指定するのが楽そう(深く試していません)。
+
+NTMLよりCredSSPが良さそう。
+(機能比較表: [Windows Remote Management — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#authentication-options))
+いろいろ追加準備がある(ansible側にも、管理対象にも)。**今からAnsible使うなら管理対象WindowsでCredSSPを有効にしておくべき。**
+[Windows Remote Management — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#credssp)
+
+
+
 ## ansible 2.6.1のwin_rebootが壊れている
 
 pipで取れるansible 2.6.1のwin_rebootが壊れていた話。
@@ -305,9 +333,24 @@ ansible 2.7.0.dev0 (devel bea8e0200c) last updated 2018/07/19 14:34:25 (GMT +900
     - Module
     - Block
 
-みたいな感じ?
+みたいな感じ? 全然正確でない。
 
+# AmazonLinux2とAnsible
 
+いまのところAmazonLinux2に対応したRoleが少ないみたい。
+RedHat系ではなくてAmazon系とかを設けるべきだ。
+
+Amazonだけ
+`ansible_distribution_major_version`がNAなので、
+https://github.com/geerlingguy/ansible-role-nginx/blob/master/templates/nginx.repo.j2#L3
+とかで、でたらめなURIになるし。
+
+参考:
+* [Ansible で Amazon Linux と Amazon Linux 2 を見分ける](https://blog.manabusakai.com/2017/12/ansible-for-amazon-linux-2/)
+
+Ansibleで
+Amazon Linuxがいたら
+用心すること。
 
 
 # rolesの練習: epel
@@ -318,3 +361,116 @@ AWSのRed HatもCentもAmazonLinuxもos_familyはRedHatなのに、
 こんなに手法が違う...
 
 Amazon Linux 2とAmazon Linuxでまた違うのが辛い。
+
+
+# ansible-galaxyメモ
+
+## デフォルトのroleの場所
+
+- /usr/share/ansible/roles
+- /etc/ansible/roles
+
+## 非rootで書き込める場所を追加
+
+~/.ansible.cfgに
+```
+[defaults]
+role_path = ~/.ansible/roles
+```
+のように記述。':'で複数指定できるらしい。環境変数もあるらしい。
+
+## role_pathのサブディレクトリにroleは置ける?
+
+やってみたらできました。
+
+
+## ansible-galaxy コマンド
+
+### リスト
+
+```
+ansible-galaxy list
+```
+
+### 取得
+
+[Ansible Galaxy](https://galaxy.ansible.com/home)の[Ansible Galaxy](https://galaxy.ansible.com/geerlingguy/nginx)を持ってくる例
+
+```
+ansible-galaxy install geerlingguy.nginx
+```
+
+### 更新
+
+「古いものを見つけて更新する」機能はいまのところない。
+roleフォルダ以下もgitではない。
+
+```
+ansible-galaxy install --force xxxx.xxx
+```
+で上書きはできる。
+
+
+# ansibleのデバッグ
+
+debugモジュール
+
+vオプション(vをたくさん)
+
+ANSIBLE_LOG_PATH環境変数
+
+ANSIBLE_KEEP_REMOTE_FILES環境変数をTrueにセットすると、リモートマシンの~/.ansible/tmpが消えなくなる。
+
+`strategy: debug`で失敗時にデバッグモード。
+* [Ansible2.0に対応したansible-playbook-debuggerが便利！](https://qiita.com/Gin/items/740cb728471a82c3f1ba)
+* [Ansible の playbook をデバッグしたいときのあれこれ - てくなべ](https://tekunabe.hatenablog.jp/entry/2017/11/03/ansible_debug)
+* [Playbook Debugger — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html)
+* [Strategies — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html)
+
+
+ansible-playbookの`--syntax-check`オプションでYAMLのチェック
+
+# 参考になったプレイブック
+
+## yum update -y
+
+* [Ansible - Update And Reboot (if required) Amazon Linux Servers | Programster's Blog](https://blog.programster.org/ansible-update-and-reboot-if-required-amazon-linux-servers)
+
+`name=*`は気が付かなかった。
+[yumモジュールのドキュメント](https://docs.ansible.com/ansible/latest/modules/yum_module.html)の例参照
+
+
+# hosts
+
+- hostsキーワードがかけるのはPlayだけ
+[Playbook Keywords — Ansible Documentation](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play)
+
+- hostsには例外が書けない
+  (tagを使う)
+
+参考:
+* [ansibleで実行対象を切り替える方法 — そこはかとなく書くよん。](http://tdoc.info/blog/2014/05/30/ansible_target_switching.html)
+* [Tags — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html)
+
+## when条件でhostsっぽいことをする例
+
+例)
+```
+---
+- name: インベントリで"redhat"グループに属するものを処理
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: 例1 group_namesマジック変数を使う
+      debug: msg="{{ ansible_host }} in 'redhat'"
+      when: "'redhat' in group_names"
+
+    - name: 例2 groupsマジック変数とinventory_hostnameを使う
+      debug: msg="{{inventory_hostname}} in 'redhat'"
+      when: "inventory_hostname in groups['redhat']"
+```
+
+
+
+
