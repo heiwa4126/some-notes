@@ -486,6 +486,7 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 [Template Designer Documentation — Jinja2 Documentation (2.10)](http://jinja.pocoo.org/docs/2.10/templates/#list-of-global-functions)
 
 くだらないサンプル
+```
 ---
 - name: jinja2 functions test
   hosts: all
@@ -495,9 +496,6 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
     - debug:
         var: lipsum()
 ```
-
-
-
 
 # ansible-vault
 
@@ -525,7 +523,7 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 * /etc/ansible/ansible.cfg
 ```
 
-＄HOMEのだけ.で始まる。
+＄HOMEのだけ.dotで始まるので注意
 
 設定できる値の例(ansible 2.4)
 * [Configuration file — Ansible Documentation](https://docs.ansible.com/ansible/2.4/intro_configuration.html)
