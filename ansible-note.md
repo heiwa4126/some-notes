@@ -481,6 +481,36 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
       when: "inventory_hostname in groups['redhat']"
 ```
 
+# ansible-vault
 
+パスワードなどを暗号化して、うっかりgithubに上げてしまっても安全に。
+
+参考:
+* [Ansible Vault を試す](https://qiita.com/yteraoka/items/d18e3c353b6e15ca84a8)
+* [Ansible Vault を賢く使う](https://qiita.com/yteraoka/items/de9da64ca2d9261b0292)
+
+暗号は実行時に展開される。キーは
+
+- ansible.confにvault_password_fileオプションで指定
+- 実行時にオプションで指定
+
+
+# ansible.conf
+
+設定ファイル。優先順位がややこしい。
+
+[Ansible Configuration Settings — Ansible Documentation](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#ansible-configuration-settings)
+
+```
+* ANSIBLE_CONFIG (environment variable if set)
+* ansible.cfg (in the current directory)
+* ~/.ansible.cfg (in the home directory)
+* /etc/ansible/ansible.cfg
+```
+
+＄HOMEのだけ.で始まる。
+
+設定できる値の例(ansible 2.4)
+* [Configuration file — Ansible Documentation](https://docs.ansible.com/ansible/2.4/intro_configuration.html)
 
 
