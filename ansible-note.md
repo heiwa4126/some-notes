@@ -481,6 +481,24 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
       when: "inventory_hostname in groups['redhat']"
 ```
 
+# jinja2の関数が使える
+
+[Template Designer Documentation — Jinja2 Documentation (2.10)](http://jinja.pocoo.org/docs/2.10/templates/#list-of-global-functions)
+
+くだらないサンプル
+---
+- name: jinja2 functions test
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - debug:
+        var: lipsum()
+```
+
+
+
+
 # ansible-vault
 
 パスワードなどを暗号化して、うっかりgithubに上げてしまっても安全に。
@@ -493,7 +511,6 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 
 - ansible.confにvault_password_fileオプションで指定
 - 実行時にオプションで指定
-
 
 # ansible.conf
 
