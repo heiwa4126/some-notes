@@ -529,3 +529,50 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 * [Configuration file — Ansible Documentation](https://docs.ansible.com/ansible/2.4/intro_configuration.html)
 
 
+# 改行問題
+
+Windowsにテンプレートを設定ファイルとして吐くとき、
+改行がCRLFでないとまずい
+というような場合(逆もありうる。WindowsがAnsibleのホストとか)
+回避策はあるのか。
+
+win_templateモジュールのnewline_sequenceで設定できるらしい(2.4から)
+templateモジュールにもある。
+
+テストしてみた。
+なるほど元のtempleteの改行コードに無関係に出力の改行を制御できる。
+
+例(抜粋)
+```
+  tasks:
+    - name: test1a-lf-crlf
+      template:
+        src: template/test1.j2
+        dest: /tmp/remove-me-test1.conf
+        owner: "{{test_user}}"
+        group: "{{test_group}}"
+        mode: "{{test_mode}}"
+        newline_sequence: "\r\n"
+```
+みたいなことができる。
+
+win_templateとtemplateモジュールの違いは? 
+
+見つけた範囲では
+- owner, groupが指定できない (たぶんWinRMアカウントになる。要確認)
+
+
+参考:
+* [win_template - Templates a file out to a remote server — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/win_template_module.html#notes)
+* [template - Templates a file out to a remote server — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/template_module.html#template-module)
+* [win_template replaces CRLF (\r\n) with LF (\n) · Issue #1480 · ansible/ansible-modules-core](https://github.com/ansible/ansible-modules-core/issues/1480)
+* [ansibleで改行コードの変換 - HPCメモ](http://hpcmemo.hatenablog.com/entry/2017/04/07/142345)
+
+Windosの場合だとUTF-8のBOM問題もあるなあ...
+
+
+## 改行tips
+
+改行の確認は`od -c`がポータブル。
+たくさんあるならもうすこし考える。
+
