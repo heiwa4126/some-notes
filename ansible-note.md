@@ -1,9 +1,28 @@
 
 ansibleメモランダム
 
-# tips
+# 感想
 
-## git
+- chefよりは簡単に使い始められる感じ。あとchefより軽い
+- でもpipとか(--userとか、~/.local/binとか)、python2,3の話とかは慣れてないと辛いかも。
+- あとgitも慣れてるといいかも。
+- 制御構造がわかりにくくて死ねる。
+- バージョンによって結構変わる。
+- YAMLのsyntax checkのあるエディタを使わないと即死(emacsだとyaml-mode & flymark-yaml)
+  - 実はPlaybookや変数ファイルはJSONやINIで書いてもいいらしい
+- デバッガーがあって嬉しい
+
+それ以前に
+- sshを公開鍵暗号方式でつなげるようにする。
+- ssh-agent(MacだったらKeychain)でつなげるようにする。
+
+という部分で敷居が高い人がいるようだけど...
+
+[【Ansible】Inventoryファイルを利用せずにansibleコマンドを実行する ｜ Developers.IO](https://dev.classmethod.jp/server-side/ansible/ansible-without-inventory/)
+
+こういうの↑もできるけど、アカウントが違ったりするともうアウトだし。
+
+# git
 
 ansibleをまるごとgit cloneしておくと捗る。Dymamic inventoryなどハードリンクすると楽。
 * [ansible/ansible: Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy. Avoid writing scripts or custom code to deploy and update your applications — automate in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com/ansible/](https://github.com/ansible/ansible)
@@ -16,25 +35,14 @@ git clone https://github.com/ansible/ansible.git --recursive
 参考: これの"Running From Source"のところ
 * [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#running-from-source)
 
-## verbose
-
-コマンドにverboseオプション(-v)がある。4つまでいけるみたい(-vvvv)。
-
-# 感想
-
-- chefよりは簡単に使い始められる感じ。あとchefより軽い。
-- でもpipとか(--userとか、~/.local/binとか)、python2,3の話とかは慣れてないと辛いかも。
-- あとgitも慣れてるといいかも。
-- 制御構造がわかりにくくて死ねる。
-- バージョンによって結構変わる。
-- YAMLのsyntax checkのあるエディタを使わないと即死(emacsだとyaml-mode & flymark-yaml)
-  - 実はPlaybookや変数ファイルはJSONやINIで書いてもいいらしい
-- デバッガーがあって嬉しい
 
 # loopについて
 
 * [Loops — Ansible Documentation (超参考になる)](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
 * [2.6からwith_xxxxなループはloopに併合されました](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html?highlight=with_items#migrating-from-with-x-to-loop)
+
+[これ](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)の、
+「with_xxxxはこう書き換えて」が超参考になる。
 
 ## Blockでloopが使えない
 
@@ -79,6 +87,8 @@ Windowsが無いようだが。
 * [Ansible 2.4 で import_tasks/include_tasks に tags を付けるときの注意点 - 無印吉澤](https://muziyoshiz.hatenablog.com/entry/2018/01/15/231213)
 * [Creating Reusable Playbooks — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse.html)
 
+
+パスは絶対パスで書かない場合、playbookの場所相対になるみたい。
 
 # モジュール
 
@@ -140,9 +150,19 @@ alias y2j="python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sy
 ```
 標準入力を変換なので、ちょっとだけ使いにくい。少し改造する。
 
-
 ansible-playbookの`--syntax-check`オプションも。
 ただしPlaybookのチェックしかできない(includeとかはダメ)。
+
+
+# changed_when, failed_when
+
+commandモジュール類を使うときは必ず書くこと。
+
+デフォルト動作は
+- 必ずchanged.
+- return codeが0以外はfailed.
+
+なので。
 
 
 # userモジュールでパスワードの扱い
@@ -524,9 +544,9 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 ```
 上にあるほど優先順位が高い。
 
+* (in the current directory)があやしい。playbookと同じディレクトリ?
 * ＄HOMEのだけ.dotで始まるので注意。
 * ファイルの優先順序であって、「全部中身を読んでオーバライドする」式ではないことに注意(ファイルは1個しか読まない)
-
 
 設定できる値の例(ansible 2.4)
 * [Configuration file — Ansible Documentation](https://docs.ansible.com/ansible/2.4/intro_configuration.html)
