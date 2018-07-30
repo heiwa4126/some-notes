@@ -522,8 +522,11 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 * ~/.ansible.cfg (in the home directory)
 * /etc/ansible/ansible.cfg
 ```
+上にあるほど優先順位が高い。
 
-＄HOMEのだけ.dotで始まるので注意
+* ＄HOMEのだけ.dotで始まるので注意。
+* ファイルの優先順序であって、「全部中身を読んでオーバライドする」式ではないことに注意(ファイルは1個しか読まない)
+
 
 設定できる値の例(ansible 2.4)
 * [Configuration file — Ansible Documentation](https://docs.ansible.com/ansible/2.4/intro_configuration.html)
@@ -556,13 +559,21 @@ templateモジュールにもある。
 ```
 みたいなことができる。
 
-win_templateとtemplateモジュールの違いは? 
+## win_templateとtemplateモジュールの違いは? 
 
-見つけた範囲では
-- owner, groupが指定できない (たぶんWinRMアカウントになる。要確認)
+templateモジュールでwindowsに送った場合、
+owner:, group:, mode: が無視される。
+オーナーはWinRMの接続ユーザ、モードは...readOnlyとかにならないことは確か。
+
+win_templateには
+owner:, group:, mode: が無い。
+
+newline_sequenceのデフォルト値が異なる。
 
 
-参考:
+
+## 参考
+
 * [win_template - Templates a file out to a remote server — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/win_template_module.html#notes)
 * [template - Templates a file out to a remote server — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/template_module.html#template-module)
 * [win_template replaces CRLF (\r\n) with LF (\n) · Issue #1480 · ansible/ansible-modules-core](https://github.com/ansible/ansible-modules-core/issues/1480)
@@ -576,3 +587,5 @@ Windosの場合だとUTF-8のBOM問題もあるなあ...
 改行の確認は`od -c`がポータブル。
 たくさんあるならもうすこし考える。
 
+Windowsだと`format-hex`が使える(Powershell 5ぐらいか?)
+[Format-HexFormat-Hex | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/wmf/5.0/feedback_formathex)
