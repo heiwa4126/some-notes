@@ -44,12 +44,63 @@ git clone https://github.com/ansible/ansible.git --recursive
 [これ](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)の、
 「with_xxxxはこう書き換えて」が超参考になる。
 
-## Blockでloopが使えない
+## blockでloopが使えない
 
 世界的に怨嗟の声が。
 * [feature request: looping over blocks · Issue #13262 · ansible/ansible](https://github.com/ansible/ansible/issues/13262)
 
 実際なんで使えないのかわからん。whenは使えるのに。
+
+
+## handlersでblockが使えない
+
+なんで?!
+
+## blockは例外処理ができる
+
+[Blocks — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_blocks.html)
+
+```
+tasks:
+ - name: Attempt and graceful roll back demo
+   block:
+     - debug:
+         msg: 'I execute normally'
+     - command: /bin/false
+     - debug:
+         msg: 'I never execute, due to the above task failing'
+   rescue:
+     - debug:
+         msg: 'I caught an error'
+     - command: /bin/false
+     - debug:
+         msg: 'I also never execute :-('
+   always:
+     - debug:
+         msg: "This always executes"
+```
+すべてのエラーはrescueセクションで捕えられる。
+
+
+自分はtempfileモジュールで作ったテンポラリディレクトリを削除するのに使っている。
+
+## tempfileモジュールで作ったファイル/ディレクトリは、自動的に消えない
+
+なんで。
+
+
+## Debian系の/var/run/reboot-required
+
+実際に出現するのを見たのでメモ
+```
+heiwa@ip-172-31-1-134:~$ head /var/run/reboot-required*
+==> /var/run/reboot-required <==
+*** システムの再起動が必要です ***
+
+==> /var/run/reboot-required.pkgs <==
+linux-base
+```
+
 
 
 ## loopをitemのままで使うとincludeでネストしたときに警告が
@@ -402,7 +453,7 @@ Amazon Linux 2とAmazon Linuxでまた違うのが辛い。
 
 ## 非rootで書き込める場所を追加
 
-~/.ansible.cfgに
+~/.ansible.cfgなどの設定ファイルで
 ```
 [defaults]
 role_path = ~/.ansible/roles
