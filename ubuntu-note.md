@@ -141,3 +141,13 @@ grep <target-user> /etc/shadow
 systemctlのサブコマンドとか覚えきれないので。あと「こんなサブコマンド/オプションがあったのか!」というのがあるので。
 
 RHELやCentでもEPELにあるので、絶対入れるべき。
+
+
+# ホストの再起動が必要かどうか知る
+
+```
+# checkrestart -a
+```
+
+参考:
+[Linuxのパッケージをアップデートしたあとrestartが必要なプロセスを見つける方法](https://qiita.com/usiusi360/items/7b47be9d0ab5b1acd608)

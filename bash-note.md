@@ -127,3 +127,17 @@ find /etc/cron.daily -type f -perm /+x | xargs -n1 -P20 sh
 ```
 
 もっと良い方法があると思う。↑は複雑すぎる。
+
+
+# ファイルから引数を読み込んで処理
+
+```
+yum install $(<list)
+```
+みたいな記述ができる。
+
+上記は
+```
+cat list | xargs yum install
+```
+と同じ
