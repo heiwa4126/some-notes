@@ -143,7 +143,7 @@ systemctlのサブコマンドとか覚えきれないので。あと「こん�
 RHELやCentでもEPELにあるので、絶対入れるべき。
 
 
-# ホストの再起動が必要かどうか知る
+# サービスの再起動が必要かどうか知る
 
 ```
 # checkrestart -a
@@ -151,3 +151,8 @@ RHELやCentでもEPELにあるので、絶対入れるべき。
 
 参考:
 [Linuxのパッケージをアップデートしたあとrestartが必要なプロセスを見つける方法](https://qiita.com/usiusi360/items/7b47be9d0ab5b1acd608)
+
+
+# ホストの再起動が必要かどうか知る
+
+`/var/run/reboot-required`または`/var/run/reboot-required.pkg`の存在をチェック
