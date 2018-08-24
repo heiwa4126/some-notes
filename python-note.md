@@ -87,3 +87,15 @@ alias pip3='python3 -m pip'
 ただAWSやAzureで立てたUbuntuでは何もしないでもエラーにならなくて
 よくわからない。
 
+# magic
+
+`magic`という名前のモジュールが何種類もあるらしい。
+
+* [julian-r/python-magic: A python wrapper for libmagic](https://github.com/julian-r/python-magic) MIME判別用のmagic. 下のmagicのフォークだが、バイナリ付きでWindowsやMacでも動く
+* [ahupp/python-magic: A python wrapper for libmagic](https://github.com/ahupp/python-magic) MIME判別用のmagic(WindowsやMacでは動かない)
+
+他にImageMagickのPythonラッパーもあって
+[Develop @ ImageMagick](http://www.imagemagick.org/script/develop.php#python)
+ますますわけがわからない。
+
+
