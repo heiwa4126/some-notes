@@ -97,9 +97,10 @@ CLIなら
 * [3.2. コマンドラインを使用したサブスクリプションのアタッチと削除 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/sub-cli)
 * [インストールしたRHEL7をRHNに登録する | 猫の目](http://www.neko-no-me.net/2015/05/12/984/)
 
+RHELの登録については
+[Red Hat Developer | Red Hat Enterprise Linux Hello-world](https://developers.redhat.com/products/rhel/hello-world/)
+これがよくまとまっている。
 
-RHEL Developer Subscription ってどうなったんだっけ?
-https://developers.redhat.com/
 
 
 # 「デスクトップ」とかを英語にする
@@ -117,4 +118,28 @@ LC_ALL=C xdg-user-dirs-gtk-update
 ```
 
 参考:
-[Linuxのパッケージをアップデートしたあとrestartが必要なプロセスを見つける方法](https://qiita.com/usiusi360/items/7b47be9d0ab5b1acd608)
+[Linuxのパッケージをアップデートしたあとrestartが必要なプロセスを見つける方法]
+(https://qiita.com/usiusi360/items/7b47be9d0ab5b1acd608)
+
+
+# パッケージのpin
+
+例)
+/etc/yum.conf
+```
+[main]
+...
+#exclude=kernel-* kmod-* redhat-release-* perf-* python-perf-*
+exclude=kernel-* redhat-release-*
+```
+
+問題としては`kernel-*`が`kernel-headers`まで含んでしまうこと。
+
+yumコマンドのオプションでexclude無視ができるので、個別に使うとよい
+```
+--disableexcludes=[all|main|repoid]
+```
+
+* allは全ての除外項目を無効。
+* mainはmainセクションで設定した除外項目を無効。
+* repoidはリポジトリの除外項目を無効にする。
