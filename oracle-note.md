@@ -1,0 +1,114 @@
+Oracleのわけのわからなさは
+* 歴史的なもの
+* 環境的なもの
+* ライセンスのせい
+* すぐ変わるURL
+* アカウントがないと何も見れない
+
+などが原因と思われる。まあ仕事でなかったら絶対に使わないよね。
+
+# FAQリンク
+
+Oracleの情報は見つけるのがしんどい。
+
+Oracleは12cの次が18c。
+
+
+# エディション
+
+Oracle12c(12.1.0.2以降)では
+* Enterprise Edition（EE）
+* Standard Edition 2（SE2）
+* Personal Edition（PE）
+(偉い順)
+
+学習用なら`Personal Edition（PE）`。
+
+[Oracle Database Personal Edition の使用上の制限について教えて下さい。](https://faq.oracle.co.jp/app/answers/detail/a_id/2649/~/oracle-database-personal-edition-%E3%81%AE%E4%BD%BF%E7%94%A8%E4%B8%8A%E3%81%AE%E5%88%B6%E9%99%90%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E6%95%99%E3%81%88%E3%81%A6%E4%B8%8B%E3%81%95%E3%81%84%E3%80%82)
+
+(古い)[Oracle Database Standard Edition 2と、Oracle Database Standard Edition、Oracle Database Standard Edition Oneの違いを教えて下さい。](https://faq.oracle.co.jp/app/answers/detail/a_id/2797/related/1)
+
+# Oracleの入手先
+
+[Oracle Database ソフトウェア･ダウンロード](https://www.oracle.com/technetwork/jp/database/enterprise-edition/downloads/index.html)
+
+PE版というものは特にない。普通にSE版を入れればOKで、あとは「使用上の制限」に従って使えばよい。
+
+
+参考:
+* [Oracle12cのエディションとは | Oracle初心者でもスッキリわかる](https://sql-oracle.com/?p=417)
+* [Oracle Database 12c エディション比較 - SE/EEの違い、Enterprise Editionでできること | Oracle オラクルエンジニア通信 - 技術資料、マニュアル、セミナー Blog](https://blogs.oracle.com/oracle4engineer/oracle-database-12c-seeeenterprise-edition)
+* [Oracle Databaseのエディション毎の違い | Oracle Technology Network Japan Blog](https://blogs.oracle.com/otnjp/oracle-database-v4)
+
+
+[Oracleの起動モード(NOMOUNT・MOUNT・OPEN)と使い方 | Oracle初心者でもスッキリわかる](https://sql-oracle.com/?p=56)
+
+
+# X
+
+ちょっと仮想マシン上に環境を作るにはしきいが高い。
+
+Xが必要。
+
+RHEL/CentOSの場合
+```
+sudo yum -y groupinstall "X Window System"
+sudo yum -y install vlgothic-* xterm xorg-x11-apps
+```
+
+[Microsoft Azure上でのCentOS仮想マシン作成と、X11転送でGUIインストーラをWindowsから操作する手順 - Elixir Report](https://qiita.com/mdmom/items/1b8044dcb21e38510a44)
+
+sshdが`X11Forwarding yes`になってるか確認。
+
+sshでログインするユーザのhomeに.Xauthorityファイルを作る。
+```
+touch ~/.Xauthority
+```
+
+X11を有効にしたputtyで接続し、DISPLAY環境変数を表示してみる。
+```
+$ echo $DISPLAY
+localhost:10.0
+```
+こんな感じになれば準備OK
+
+[PuTTY + Xming でX を使おう](http://www.ep.sci.hokudai.ac.jp/~epnetfan/tebiki/server-login/xming.html)
+
+XサーバはVcXsrvを使ってみる。
+[VcXsrv Windows X Server download | SourceForge.net](https://sourceforge.net/projects/vcxsrv/)
+
+Xサーバを普通にインストール&起動したあと、
+puttyから`xeyes &`してxeyesが表示されればOK(ものすごく遅いかも)。
+
+あとはputtyで`xterm &`でターミナル起動して、
+そこからLinuxを操作する。
+
+
+
+
+# sqlplusと叩いたときに何が起きているのか
+
+リスナー経由の接続と、そうでない接続。
+
+`@`なしだと直接接続。
+
+`@<接続識別子>`だとリスナー経由 (接続識別子は`tnsnames.ora`に書いてあるやつ)
+
+リスナー経由の方法は`@<接続識別子>`以外にもいくつかある。
+
+
+* [リスナーを経由しない接続 - 解決!ORACLE!](http://www.noguopin.com/oracle/index.php?%A5%EA%A5%B9%A5%CA%A1%BC%A4%F2%B7%D0%CD%B3%A4%B7%A4%CA%A4%A4%C0%DC%C2%B3)
+* [ORACLE　クライアント接続設定(クライアント編)](http://www.doppo1.net/oracle/beginner/network_connect_2.html)
+* [「データベースへの接続の仕組み」を正しく理解する (1/2)：ゼロからのリレーショナルデータベース入門（8） - ＠IT](http://www.atmarkit.co.jp/ait/articles/0905/28/news109.html)
+
+# listener.ora
+
+
+完全なリファレンス:
+[Oracle Database Net Services管理者ガイド12cリリース1 (12.1)](https://docs.oracle.com/cd/E57425_01/121/NETAG/toc.htm)
+
+Oracle Net Servicesというのがリスナー。
+
+[12.10.2 リスナーの設定とネットサービス名の登録（Oracleの場合）](http://software.fujitsu.com/jp/manual/manualfiles/M080163/J2X15990/05Z200/setup12/setup265.html)
+
+[リスナー・パラメータ（listener.ora）](http://otndnld.oracle.co.jp/document/products/oracle10g/102/doc_cd/network.102/B19209-01/listener.htm)
