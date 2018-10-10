@@ -143,3 +143,23 @@ yumコマンドのオプションでexclude無視ができるので、個別に�
 * allは全ての除外項目を無効。
 * mainはmainセクションで設定した除外項目を無効。
 * repoidはリポジトリの除外項目を無効にする。
+
+# yum4/dnf
+
+yum遅っそいので。
+
+インストール方法はいろいろあるけれど
+CentOS7の場合:
+```
+# yum install centos-release-yum4
+# yum install yum4
+# yum4 install dnf-plugins-core
+```
+が一番簡単。
+
+あとはyumの代わりに、yum4またはdnfを使えば(おおむね)OK.
+
+参考:
+[YUM4/DNF for CentOS 7 updates – Blog.CentOS.org](https://blog.centos.org/2018/04/yum4-dnf-for-centos-7-updates/)
+
+RHELでは?
