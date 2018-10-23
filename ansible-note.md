@@ -22,6 +22,15 @@ ansibleメモランダム
 
 こういうの↑もできるけど、アカウントが違ったりするともうアウトだし。
 
+# RHEL
+
+ansibleパッケージはExtrasチャンネルにある、とのことなのだがテストする環境を作るのが難しい。
+[第33章 Ansible を使用した Red Hat Enterprise Linux System Roles - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/7.5_release_notes/technology_previews_red_hat_enterprise_linux_system_roles_powered_by_ansible)
+
+[Red Hat Enterprise Linux (RHEL) System Roles](https://access.redhat.com/articles/3050101)
+
+
+
 # git
 
 ansibleをまるごとgit cloneしておくと捗る。Dymamic inventoryなどハードリンクすると楽。
@@ -660,3 +669,57 @@ Windosの場合だとUTF-8のBOM問題もあるなあ...
 
 Windowsだと`format-hex`が使える(Powershell 5ぐらいか?)
 [Format-HexFormat-Hex | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/wmf/5.0/feedback_formathex)
+
+# Ansible 2.4ではloopが無い
+
+```
+---
+# 2.4では動かない(bug). 2.5ぐらいからOK
+- name: loop test ex1
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: loop1
+      debug:
+        msg: Hello! ({{item}})
+      loop:
+        - one
+        - two
+        - three
+```
+2.4では死ぬ。
+
+[Issues using variables in loops · Issue #38314 · ansible/ansible](https://github.com/ansible/ansible/issues/38314)
+
+with_itemsを使う。with_itemsはloop_controlも使える。
+
+例)
+```
+---
+# loop test
+# loopは2.4では動かない(loopは2.5から).
+
+- name: loop test ex1
+  hosts: redhat
+  gather_facts: no
+  vars:
+    items:
+        - one
+        - two
+        - three
+  tasks:
+    - name: test
+      include_tasks: inc2.yml
+      with_items: "{{items}}"
+      loop_control: {loop_var: outer_item}
+```
+
+inc2.yml
+```
+---
+
+- debug: var=outer_item
+```
+
+
+

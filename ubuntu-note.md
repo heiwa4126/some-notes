@@ -19,6 +19,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
     - [bash-completion](#bash-completion)
 - [サービスの再起動が必要かどうか知る](#サービスの再起動が必要かどうか知る)
 - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
+- [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
 
 <!-- /TOC -->
 
@@ -177,3 +178,13 @@ RHELやCentでもEPELにあるので、絶対入れるべき。
 # ホストの再起動が必要かどうか知る
 
 `/var/run/reboot-required`または`/var/run/reboot-required.pkg`の存在をチェック
+
+# Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数
+
+なんと、数じゃないらしい。
+
+[server - How does 'apt' decide how many old kernels to keep? - Ask Ubuntu](https://askubuntu.com/questions/620266/how-does-apt-decide-how-many-old-kernels-to-keep)
+
+`/etc/kernel/postinst.d/apt-auto-removal`で自動生成される
+`/etc/apt/apt.conf.d/01autoremove-kernels`が消されるカーネル。
+

@@ -62,6 +62,29 @@ virtualenv下にpylintやautopep8をインストールすればいいのだが�
 もっと楽な方法がありそうだがなあ。
 
 
+# RHEL7にpip
+
+RHELはチャネル(レポジトリ)が細分化されててめんどくさい。
+
+引用元: [How to install pip on Red Hat Enterprise Linux?](https://access.redhat.com/solutions/1519803)
+
+```
+# subscription-manager repos --enable rhel-server-rhscl-7-rpms
+# yum install python27-python-pip -y
+# scl enable python27 bash
+# pip install --upgrade pip
+```
+
+`get-pip.py`のほうが全然楽そう。
+
+```
+$ wget https://bootstrap.pypa.io/get-pip.py
+$ python get-pip.py --user
+```
+あとは`$(HOME)/.local/bin`にPATHを通して`hash -r`
+
+
+
 # pip10問題
 
 * [pip install --upgrade pip (10.0.0) 後の奇妙な挙動について - 雑記](http://icchy.hatenablog.jp/entry/2018/04/17/064443)
