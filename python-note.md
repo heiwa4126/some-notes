@@ -74,8 +74,11 @@ RHELはチャネル(レポジトリ)が細分化されててめんどくさい�
 # scl enable python27 bash
 # pip install --upgrade pip
 ```
+こうすると` /opt/rh/python27/root/usr/lib/python2.7/site-packages/pip`にpipが...
+どう考えても頭がおかしいと思う。
 
-`get-pip.py`のほうが全然楽そう。
+
+`get-pip.py`のほうが全然まともだと思う。
 
 ```
 $ wget https://bootstrap.pypa.io/get-pip.py
