@@ -175,3 +175,41 @@ Red Hat Network上にあるドキュメント。公式だからそれなりに�
 目次は [Product Documentation for Red Hat Enterprise Linux 7 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/)
 
 
+# AWSでRHEL
+
+RHELはサブスクリプションマネージャが難しすぎるので、テスト環境がほしいところ。
+
+AWSのAMI(ami-6b0d5f0d)でRed Hatを普通に作って、Red Hat Developer SubscriptionでRHNに登録すれば、
+普通にsubscription-managerが使える。
+
+例)
+```
+subscription-manager register --username fooami --password supersecret
+subscription-manager subscribe --auto
+subscription-manager repos --enable=rhel-7-server-optional-rpms
+# ↑は↓でもOK
+yum-config-manager --enable rhel-7-server-optional-rpms
+
+# 確認
+subscription-manager list | less
+subscription-manager repos --list-enabled
+```
+
+どうやらsubscription-manager registerかsubscribeの時点で
+/etc/yum.repos.d/redhat.repoがダウンロードされるようだ...
+
+Developer Subscriptionは
+https://developers.redhat.com/
+でアカウント作って(RHN全体でSSOみたい)
+https://developers.redhat.com/products/rhel/download/
+でダウンロードすれば1年分もらえるみたい。(違うかもしれない)
+
+https://access.redhat.com/management
+で確認。
+
+https://developers.redhat.com/products/rhel/help/
+も面白い。
+
+[RHEL Developer subscription not finding repos - Stack Overflow](https://stackoverflow.com/questions/52780825/rhel-developer-subscription-not-finding-repos)
+など。
+
