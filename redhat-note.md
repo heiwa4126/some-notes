@@ -180,10 +180,16 @@ Red Hat Network上にあるドキュメント。公式だからそれなりに�
 * [ライフサイクルとアップデートポリシー - Red Hat Customer Portal](https://access.redhat.com/ja/support/policy/update_policies)
 * [アドバイザリーメール設定](https://www.redhat.com/wapps/ugc/protected/notif.html)
 
+
 英語のほうがわかりやすいかも
 * [RHSM Subscription Issues Troubleshooting Do's and Don'ts](https://access.redhat.com/solutions/1522143)
 * [RHSM サブスクリプション問題のトラブルシューティングに関する注意事項](https://access.redhat.com/ja/solutions/2705411)
 
+virt-who
+* [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/virtual_instances_guide/)
+* [virt-whoとは何か](https://www.slideshare.net/moriwaka/virtwho)
+* [Red Hat Virtualization Agent (virt-who) Configuration Helper | Red Hat Customer Portal Labs](https://access.redhat.com/labs/virtwhoconfig/)
+* [暗号化されたパスワードで virt-who を設定する](https://access.redhat.com/ja/solutions/2325761)
 
 # AWSでRHEL
 
@@ -195,7 +201,7 @@ AWSのAMI(ami-6b0d5f0d)でRed Hatを普通に作って、Red Hat Developer Subsc
 例)
 ```
 subscription-manager register --username fooami --password supersecret
-subscription-manager subscribe --auto
+subscription-manager attach --auto
 subscription-manager repos --enable=rhel-7-server-optional-rpms
 # ↑は↓でもOK
 yum-config-manager --enable rhel-7-server-optional-rpms
