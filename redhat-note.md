@@ -175,9 +175,15 @@ Red Hat Network上にあるドキュメント。公式だからそれなりに�
 目次は [Product Documentation for Red Hat Enterprise Linux 7 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/)
 
 * [Red Hat サブスクリプション管理のワークフローの概要 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/introduction_to_red_hat_subscription_management_workflows/)
+* [Red Hat Network サブスクリプション管理 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_customer_portal/1/html/red_hat_network_certificate-based_subscription_management/index)
 * [RHEL の簡易登録 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/)
 * [ライフサイクルとアップデートポリシー - Red Hat Customer Portal](https://access.redhat.com/ja/support/policy/update_policies)
 * [アドバイザリーメール設定](https://www.redhat.com/wapps/ugc/protected/notif.html)
+
+英語のほうがわかりやすいかも
+* [RHSM Subscription Issues Troubleshooting Do's and Don'ts](https://access.redhat.com/solutions/1522143)
+* [RHSM サブスクリプション問題のトラブルシューティングに関する注意事項](https://access.redhat.com/ja/solutions/2705411)
+
 
 # AWSでRHEL
 
@@ -317,6 +323,8 @@ System Type:         Physical
 > このシステムが使用することができるリポジトリを一覧表示する
 
 レポジトリをリスト/追加する。
+
+
 
 # 「サービスレベルの設定」とは
 
