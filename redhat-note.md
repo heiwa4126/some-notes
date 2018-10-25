@@ -325,4 +325,4 @@ RHNポータルのシステムのページにある「サービスレベルの�
 * [4. コンシューマーの管理 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_customer_portal/1/html/red_hat_network_certificate-based_subscription_management/managing-consumers#sla)
 * [製品サポートのサービスレベルアグリーメント - Red Hat Customer Portal](https://access.redhat.com/ja/support/offerings/production/sla)
 
-...よくわからない。
+...よくわからない。設定するとauto attach時のサブスクリプション決定アルゴリズムに影響がある、ということ?
