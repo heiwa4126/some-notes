@@ -174,6 +174,10 @@ Red Hat Network上にあるドキュメント。公式だからそれなりに�
 
 目次は [Product Documentation for Red Hat Enterprise Linux 7 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/)
 
+* [Red Hat サブスクリプション管理のワークフローの概要 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/introduction_to_red_hat_subscription_management_workflows/)
+* [RHEL の簡易登録 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/)
+* [ライフサイクルとアップデートポリシー - Red Hat Customer Portal](https://access.redhat.com/ja/support/policy/update_policies)
+* [アドバイザリーメール設定](https://www.redhat.com/wapps/ugc/protected/notif.html)
 
 # AWSでRHEL
 
@@ -212,4 +216,105 @@ https://developers.redhat.com/products/rhel/help/
 
 [RHEL Developer subscription not finding repos - Stack Overflow](https://stackoverflow.com/questions/52780825/rhel-developer-subscription-not-finding-repos)
 など。
+
+## example
+
+このシステムに割り当てられたサブスクリプションを見てみる("--consumed show the subscriptions being consumed by this system")
+```
+# subscription-manager list --consumed
++-------------------------------------------+
+   Consumed Subscriptions
++-------------------------------------------+
+Subscription Name:   Red Hat Developer Subscription
+Provides:            Red Hat Enterprise Linux High Availability - Update Services for SAP Solutions
+                     Red Hat Enterprise Linux Atomic Host
+                     Red Hat Container Development Kit
+                     MRG Realtime
+                     Red Hat Enterprise Linux Atomic Host Beta
+                     Red Hat Developer Tools (for RHEL Server)
+                     Red Hat Container Images
+                     Red Hat Developer Tools Beta (for RHEL Server)
+                     Red Hat Container Images Beta
+                     Red Hat Developer Toolset (for RHEL Server)
+                     Red Hat Enterprise Linux High Performance Networking (for RHEL Server)
+                     Red Hat Enterprise Linux High Performance Networking (for RHEL Server) - Extended Update Support
+                     Red Hat Enterprise Linux High Performance Networking (for RHEL Compute Node)
+                     Red Hat Enterprise Linux Resilient Storage (for RHEL Server)
+                     Red Hat Enterprise Linux Resilient Storage (for RHEL Server) - Extended Update Support
+                     dotNET on RHEL (for RHEL Server)
+                     Red Hat Enterprise Linux Scalable File System (for RHEL Server)
+                     Red Hat Enterprise Linux Server - Extended Update Support
+                     dotNET on RHEL Beta (for RHEL Server)
+                     Red Hat Enterprise Linux Scalable File System (for RHEL Server) - Extended Update Support
+                     Red Hat Enterprise Linux for ARM 64
+                     Red Hat Beta
+                     Red Hat EUCJP Support (for RHEL Server) - Extended Update Support
+                     Oracle Java (for RHEL Server)
+                     RHEL for SAP (for IBM Power LE) - Update Services for SAP Solutions
+                     Red Hat Enterprise Linux for SAP Hana
+                     Red Hat Enterprise Linux for ARM 64 Beta
+                     Red Hat Enterprise Linux for Real Time
+                     Red Hat Enterprise Linux Server - Update Services for SAP Solutions
+                     RHEL for SAP - Update Services for SAP Solutions
+                     Red Hat Software Collections (for RHEL Server)
+                     Red Hat Enterprise Linux for SAP
+                     RHEL for SAP - Extended Update Support
+                     Oracle Java (for RHEL Server) - Extended Update Support
+                     RHEL for SAP HANA - Update Services for SAP Solutions
+                     Red Hat Beta
+                     Red Hat EUCJP Support (for RHEL Server) - Extended Update Support
+                     Oracle Java (for RHEL Server)
+                     RHEL for SAP (for IBM Power LE) - Update Services for SAP Solutions
+                     Red Hat Enterprise Linux for SAP Hana
+                     Red Hat Enterprise Linux for ARM 64 Beta
+                     Red Hat Enterprise Linux for Real Time
+                     Red Hat Enterprise Linux Server - Update Services for SAP Solutions
+                     RHEL for SAP - Update Services for SAP Solutions
+                     Red Hat Software Collections (for RHEL Server)
+                     Red Hat Enterprise Linux for SAP
+                     RHEL for SAP - Extended Update Support
+                     Oracle Java (for RHEL Server) - Extended Update Support
+                     RHEL for SAP HANA - Update Services for SAP Solutions
+                     Red Hat S-JIS Support (for RHEL Server) - Extended Update Support
+                     RHEL for SAP HANA - Extended Update Support
+                     Red Hat Software Collections Beta (for RHEL Server)
+                     Red Hat Enterprise Linux High Availability (for RHEL Server)
+                     Red Hat Enterprise Linux High Availability (for RHEL Server) - Extended Update Support
+                     Red Hat Ansible Engine
+                     Red Hat Enterprise Linux Load Balancer (for RHEL Server)
+                     Red Hat Enterprise Linux Load Balancer (for RHEL Server) - Extended Update Support
+                     Red Hat Enterprise Linux Server
+SKU:                 RH00798
+Contract:
+Account:             0000000
+Serial:              0000000000000000000
+Pool ID:             zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+Provides Management: No
+Active:              True
+Quantity Used:       1
+Service Level:       Self-Support
+Service Type:
+Status Details:      Subscription is current
+Subscription Type:   Standard
+Starts:              13/42/2018
+Ends:                13/42/2019
+System Type:         Physical
+```
+
+# サブスクリプションが難しい
+
+参考: [RHEL の簡易登録](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/)
+
+まず `register` して
+> 新規システムをサブスクリプションサービスに対し登録または特定します。
+
+つぎに `attach` することで
+> マシンに特定のサブスクリプションをアタッチします。
+
+更新できるようになる。(登録解除はunregister コマンドの実行のみでOK。[登録解除](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/un-registering)参照)
+
+さらに `repos` で
+> このシステムが使用することができるリポジトリを一覧表示する
+
+レポジトリをリスト/追加する。
 
