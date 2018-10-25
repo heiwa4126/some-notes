@@ -318,3 +318,11 @@ System Type:         Physical
 
 レポジトリをリスト/追加する。
 
+# 「サービスレベルの設定」とは
+
+RHNポータルのシステムのページにある「サービスレベルの設定」とは
+
+* [4. コンシューマーの管理 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_customer_portal/1/html/red_hat_network_certificate-based_subscription_management/managing-consumers#sla)
+* [製品サポートのサービスレベルアグリーメント - Red Hat Customer Portal](https://access.redhat.com/ja/support/offerings/production/sla)
+
+...よくわからない。
