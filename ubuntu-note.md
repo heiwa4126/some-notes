@@ -20,6 +20,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [サービスの再起動が必要かどうか知る](#サービスの再起動が必要かどうか知る)
 - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
 - [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
+- [no_proxy](#no_proxy)
 
 <!-- /TOC -->
 
@@ -188,3 +189,27 @@ RHELやCentでもEPELにあるので、絶対入れるべき。
 `/etc/kernel/postinst.d/apt-auto-removal`で自動生成される
 `/etc/apt/apt.conf.d/01autoremove-kernels`が消されるカーネル。
 
+
+# no_proxy
+
+最近のcurlではno_proxy環境変数でproxy例外が指定できる。
+
+> Since  7.53.0,  This  option  overrides the environment variables that disable the proxy.
+
+(man curlの--noproxyのところから引用)
+
+```
+# 1604LTS
+$ curl --version
+curl 7.47.0 
+
+# 1804LTS
+$ curl --version
+curl 7.58.0
+```
+
+とりあえず、
+```
+no_proxy="localhost, 127.0.0.1, *.yourdomain.com"
+```
+ぐらいでも結構生活が楽になる。
