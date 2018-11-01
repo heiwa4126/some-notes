@@ -17,6 +17,7 @@ Red Hat系メモ
     - [example](#example)
 - [サブスクリプションが難しい](#サブスクリプションが難しい)
 - [「サービスレベルの設定」とは](#サービスレベルの設定とは)
+- [CentOSをVirtualBoxのゲストとして使う](#centosをvirtualboxのゲストとして使う)
 
 <!-- /TOC -->
 
@@ -171,8 +172,10 @@ yum遅っそいので。
 インストール方法はいろいろあるけれど
 CentOS7の場合:
 ```
+# yum install epel-release
 # yum install centos-release-yum4
 # yum install yum4
+(proxyの設定などを/etc/dnf/dnf.confに)
 # yum4 install dnf-plugins-core
 ```
 が一番簡単。
@@ -360,3 +363,20 @@ RHNポータルのシステムのページにある「サービスレベルの�
 * [製品サポートのサービスレベルアグリーメント - Red Hat Customer Portal](https://access.redhat.com/ja/support/offerings/production/sla)
 
 ...よくわからない。設定するとauto attach時のサブスクリプション決定アルゴリズムに影響がある、ということ?
+
+# CentOSをVirtualBoxのゲストとして使う
+
+たまにやるのでメモ。dkmsを使う方法。
+
+参照: [HowTos/Virtualization/VirtualBox/CentOSguest - CentOS Wiki](https://wiki.centos.org/HowTos/Virtualization/VirtualBox/CentOSguest)
+
+```
+yum install dkms
+yum groupinstall "Development Tools"
+yum install kernel-devel
+```
+VirtualBoxGuestCDをマウントして、CDのディレクトリで
+```
+ ./VBoxLinuxAdditions.run
+```
+
