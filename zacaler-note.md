@@ -9,6 +9,7 @@ ZScalerというproxyが来たので、対策
 - [Linuxに証明書を追加する手順](#linuxに証明書を追加する手順)
     - [Ubuntuの場合](#ubuntuの場合)
     - [RHEL/CentOS 7の場合](#rhelcentos-7の場合)
+- [そのほか](#そのほか)
 
 <!-- /TOC -->
 
@@ -109,3 +110,7 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 
 参考:
 * [Update & Add CA Certificates Bundle in RedHat & CentOS - Tech Journey](https://techjourney.net/update-add-ca-certificates-bundle-in-redhat-centos/)
+
+# そのほか
+
+* [Goodwine/ZScalerSux: This is my extension for Chrome which allows you to save a username and password for your Zscaler login screen to avoid losing as much time as possible.](https://github.com/Goodwine/ZScalerSux)
