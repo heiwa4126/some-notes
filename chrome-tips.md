@@ -8,8 +8,11 @@ Google Chromeのtips
 
 # 「検索エンジンの管理」で英語Googleを設定しておくと捗る
 
-Chromeで
-[検索エンジンの管理](chrome://settings/searchEngines)を開いて、
+Chromeで検索エンジンの管理
+
+`chrome://settings/searchEngines`
+
+を開いて、
 その他の検索エンジンの「追加」で
 
 |項目|内容|
