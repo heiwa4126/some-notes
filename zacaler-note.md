@@ -8,7 +8,7 @@ ZScalerというproxyが来たので、対策
 - [ZScalerの証明書をexportする手順](#zscalerの証明書をexportする手順)
 - [Linuxに証明書を追加する手順](#linuxに証明書を追加する手順)
     - [Ubuntuの場合](#ubuntuの場合)
-    - [RHEL/CentOS 7](#rhelcentos-7)
+    - [RHEL/CentOS 7の場合](#rhelcentos-7の場合)
 
 <!-- /TOC -->
 
@@ -56,7 +56,8 @@ Windowsでマウスをカチカチしてpem形式でexport。ああ面倒。
 
 # Linuxに証明書を追加する手順
 
-curlとかでhttpsがエラーになる。curlだけなら-kをつけて証明書エラーを無視すればOKだが、そうもいかないでしょ。
+curlとかで有名でないホストに対するhttps:がエラーになる。Let's Encryptなんかだとまるでダメ。
+curlだけなら-kをつけて証明書エラーを無視すればOKだが、そうもいかないでしょ。
 
 ## Ubuntuの場合
 
@@ -74,6 +75,36 @@ curlとかでhttpsがエラーになる。curlだけなら-kをつけて証明�
 を追加。
 1. `update-ca-certificates`を実行
 
-## RHEL/CentOS 7
+## RHEL/CentOS 7の場合
 
-(TODO)
+証明書を置くディレクトリが2つあるみたいで、使い分けがよくわからない
+
+* /usr/share/pki/ca-trust-source/
+* /etc/pki/ca-trust/source
+
+双方にREADMEがあるので、見比べてみると
+
+```
+# diff -u /etc/pki/ca-trust/source/README /usr/share/pki/ca-trust-source/README
+-interpreted with a high priority - higher than the ones found in
+-/usr/share/pki/ca-trust-source/.
++interpreted with a low priority - lower than the ones found in
++/etc/pki/ca-trust/source/ .
+```
+
+優先度が違うらしい。
+
+* (優先度高) /usr/share/pki/ca-trust-source/
+* (優先度低) /etc/pki/ca-trust/source
+
+今回は低いほうで試す。手順はREADMEに書いてあるとおり。
+
+1. `/etc/pki/ca-trust/source/anchors/`に
+`ZscalerRootCertificate.cer`ファイルを置く。
+1. ` update-ca-trust`を実行
+
+結果は`/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem`に。
+
+これでcurlで-kなしでもエラーがでなくなる。
+
+
