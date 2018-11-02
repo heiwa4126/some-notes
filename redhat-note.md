@@ -15,6 +15,7 @@ Red Hat系メモ
 - [RHEL7の役立つドキュメント](#rhel7の役立つドキュメント)
 - [AWSでRHEL](#awsでrhel)
     - [example](#example)
+- [AzureでRHEL](#azureでrhel)
 - [サブスクリプションが難しい](#サブスクリプションが難しい)
 - [「サービスレベルの設定」とは](#サービスレベルの設定とは)
 - [CentOSをVirtualBoxのゲストとして使う](#centosをvirtualboxのゲストとして使う)
@@ -335,6 +336,10 @@ Starts:              13/42/2018
 Ends:                13/42/2019
 System Type:         Physical
 ```
+
+# AzureでRHEL
+
+[AzureでRHEL7を使うには - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/running_rhel7_on_azure)
 
 # サブスクリプションが難しい
 

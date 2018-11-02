@@ -1,5 +1,57 @@
-
 ansibleメモランダム
+
+<!-- TOC -->
+
+- [感想](#感想)
+- [RHEL](#rhel)
+- [git](#git)
+- [loopについて](#loopについて)
+    - [blockでloopが使えない](#blockでloopが使えない)
+    - [handlersでblockが使えない](#handlersでblockが使えない)
+    - [blockは例外処理ができる](#blockは例外処理ができる)
+    - [tempfileモジュールで作ったファイル/ディレクトリは、自動的に消えない](#tempfileモジュールで作ったファイルディレクトリは自動的に消えない)
+    - [Debian系の/var/run/reboot-required](#debian系のvarrunreboot-required)
+    - [loopをitemのままで使うとincludeでネストしたときに警告が](#loopをitemのままで使うとincludeでネストしたときに警告が)
+    - [lookup](#lookup)
+- [ansible_os_familyのリスト](#ansible_os_familyのリスト)
+- [includeの変遷](#includeの変遷)
+- [モジュール](#モジュール)
+    - [Windowsのモジュール](#windowsのモジュール)
+    - [setupモジュール](#setupモジュール)
+    - [win_sayモジュール](#win_sayモジュール)
+    - [win_hostnameモジュール](#win_hostnameモジュール)
+- [yaml2json](#yaml2json)
+- [changed_when, failed_when](#changed_when-failed_when)
+- [userモジュールでパスワードの扱い](#userモジュールでパスワードの扱い)
+- [WindowsをAnsibleで管理できるようにする](#windowsをansibleで管理できるようにする)
+    - [ansible 2.6.1のwin_rebootが壊れている](#ansible-261のwin_rebootが壊れている)
+- ["when"が使えるのは?](#whenが使えるのは)
+- [AmazonLinux2とAnsible](#amazonlinux2とansible)
+- [rolesの練習: epel](#rolesの練習-epel)
+- [ansible-galaxyメモ](#ansible-galaxyメモ)
+    - [デフォルトのroleの場所](#デフォルトのroleの場所)
+    - [非rootで書き込める場所を追加](#非rootで書き込める場所を追加)
+    - [role_pathのサブディレクトリにroleは置ける?](#role_pathのサブディレクトリにroleは置ける)
+    - [ansible-galaxy コマンド](#ansible-galaxy-コマンド)
+        - [リスト](#リスト)
+        - [取得](#取得)
+        - [更新](#更新)
+- [ansibleのデバッグ](#ansibleのデバッグ)
+- [参考になったプレイブック](#参考になったプレイブック)
+    - [yum update -y](#yum-update--y)
+- [hosts](#hosts)
+    - [when条件でhostsっぽいことをする例](#when条件でhostsっぽいことをする例)
+- [jinja2の関数が使える](#jinja2の関数が使える)
+- [ansible-vault](#ansible-vault)
+- [ansible.conf](#ansibleconf)
+- [改行問題](#改行問題)
+    - [win_templateとtemplateモジュールの違いは?](#win_templateとtemplateモジュールの違いは)
+    - [参考](#参考)
+    - [改行tips](#改行tips)
+- [Ansible 2.4ではloopが無い](#ansible-24ではloopが無い)
+- [参照](#参照)
+
+<!-- /TOC -->
 
 # 感想
 
@@ -721,5 +773,7 @@ inc2.yml
 - debug: var=outer_item
 ```
 
+# 参照
 
+* [Ansibleドキュメントを活用しよう！ モジュールの調べ方 - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/2018/10/25/ansible-document)
 
