@@ -107,4 +107,5 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 
 これでcurlで-kなしでもエラーがでなくなる。
 
-
+参考:
+* [Update & Add CA Certificates Bundle in RedHat & CentOS - Tech Journey](https://techjourney.net/update-add-ca-certificates-bundle-in-redhat-centos/)
