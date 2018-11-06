@@ -152,22 +152,24 @@ systemctl restart autofs
 
 --debugオプションはトラブルシューティングに便利。
 CentOS/RHELなどでは/etc/sysconfig/autofs中のOPTION環境変数で指定すると/var/log/messageにログが出まくる(2秒に1回ぐらい?)。
-マスタマップにも書ける(--ghostや--timeout同様に)。
+マスタマップの行にも書ける(--ghostや--timeout同様に)。これ便利。
 
 
 `mount | fgrep /etc/auto` で autofsが見張っているディレクトリやオプションがわかる。
 
 
-autofsはもともとNFS用なので、/etc/auto.masterにはNFSやsmbの設定があるかもしれない。sshfsしか使わないなら、それらをコメントアウトしておいたほうがいいと思う。
+autofsはもともとNFS用なので、/etc/auto.masterにはNFSやsmbの設定があるかもしれない。
+sshfsしか使わないなら、それらをコメントアウトしておいたほうがいいと思う。
 
 
 -n, --negative-timeout, NEGATIVE_TIMEOUTを短めにしてみる。サーバ側がリブートした時再接続が早くなるかも。
 
->　NEGATIVE_TIMEOUT=value
+> NEGATIVE_TIMEOUT=value
 マウント試行が失敗した時のデフォルト設定の負のタイムアウトです。
 
 引用元: [付録D sysconfig ディレクトリ - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/deployment_guide/ch-the_sysconfig_directory)
 
 他参考: 
 * auto.master(5) — autofs — Debian jessie — Debian Manpages](https://manpages.debian.org/jessie/autofs/auto.master.5.en.html)
+
 
