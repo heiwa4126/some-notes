@@ -1,6 +1,17 @@
 .profileや.bash_profileで毎回混乱するので、
 きちんと理解する。
 
+<!-- TOC -->
+
+- [参考](#参考)
+- [.profile, .bash_profileの関係](#profile-bash_profileの関係)
+- [exit code](#exit-code)
+- [特定のフォルダの下にあるスクリプトをすべて実行する](#特定のフォルダの下にあるスクリプトをすべて実行する)
+- [ファイルから引数を読み込んで処理](#ファイルから引数を読み込んで処理)
+- [psの出力を長くする](#psの出力を長くする)
+
+<!-- /TOC -->
+
 # 参考
 - man 1 bash
 - [Man page of BASH (日本語: JM Project)](https://linuxjm.osdn.jp/html/GNU_bash/man1/bash.1.html)
@@ -141,3 +152,18 @@ yum install $(<list)
 cat list | xargs yum install
 ```
 と同じ
+
+# psの出力を長くする
+
+shellと関係ないけどよく忘れるのでメモ
+
+```
+COLUMNS=999 ps axf
+```
+とかでもできるけど
+```
+ps axfww
+```
+w2個で制限がなくなる。
+
+参考: [Man page of PS](https://linuxjm.osdn.jp/html/procps/man1/ps.1.html)
