@@ -1,26 +1,6 @@
 Red Hat系メモ
 
-<!-- TOC -->
 
-- [インストール済みパッケージ一覧](#インストール済みパッケージ一覧)
-- [パッケージ一覧](#パッケージ一覧)
-- [例: 古いカーネルを入手してインストールする](#例-古いカーネルを入手してインストールする)
-- [古いカーネルを消す](#古いカーネルを消す)
-- [proxy設定あちこち](#proxy設定あちこち)
-- [RHELの登録](#rhelの登録)
-- [「デスクトップ」とかを英語にする](#デスクトップとかを英語にする)
-- [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
-- [パッケージのpin](#パッケージのpin)
-- [yum4/dnf](#yum4dnf)
-- [RHEL7の役立つドキュメント](#rhel7の役立つドキュメント)
-- [AWSでRHEL](#awsでrhel)
-    - [example](#example)
-- [AzureでRHEL](#azureでrhel)
-- [サブスクリプションが難しい](#サブスクリプションが難しい)
-- [「サービスレベルの設定」とは](#サービスレベルの設定とは)
-- [CentOSをVirtualBoxのゲストとして使う](#centosをvirtualboxのゲストとして使う)
-
-<!-- /TOC -->
 
 # インストール済みパッケージ一覧
 
@@ -384,4 +364,27 @@ VirtualBoxGuestCDをマウントして、CDのディレクトリで
 ```
  ./VBoxLinuxAdditions.run
 ```
+
+# ipv6を止める(永続的に)
+
+```
+cat <<EOS > /etc/sysctl.d/disable_ipv6.conf
+net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+EOS
+sysctl --system
+```
+
+たぶんDebian系でもいっしょ。
+
+# virbr0を消す
+
+```
+systemctl stop libvirtd
+systemctl disable libvirtd
+```
+virbr0がdownする。再起動するとvirbr0は消える。
+
+
+参考: [virbr0 インターフェイスは何に使用されますか? 無効にするにはどうしたら良いですか?](https://access.redhat.com/ja/solutions/2318431)
 
