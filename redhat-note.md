@@ -365,7 +365,7 @@ VirtualBoxGuestCDをマウントして、CDのディレクトリで
  ./VBoxLinuxAdditions.run
 ```
 
-# ipv6を止める(永続的に)
+# 永続的にIPv6を止める
 
 ```
 cat <<EOS > /etc/sysctl.d/disable_ipv6.conf
@@ -388,3 +388,13 @@ virbr0がdownする。再起動するとvirbr0は消える。
 
 参考: [virbr0 インターフェイスは何に使用されますか? 無効にするにはどうしたら良いですか?](https://access.redhat.com/ja/solutions/2318431)
 
+
+# 起動に失敗したデーモンのリスト
+
+```
+systemctl list-units --state=failed
+# `faild` is alias.
+systemctl list-units --failed
+```
+
+[systemd - What are the systemctl options to "List all failed units" - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/341060/what-are-the-systemctl-options-to-list-all-failed-units)
