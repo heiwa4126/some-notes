@@ -377,6 +377,12 @@ sysctl --system
 
 たぶんDebian系でもいっしょ。
 
+あと`sysctl -p`は`/etc/sysctl.cfg`しか読みません。
+`/etc/sysctl.d/*.conf`を反映したいなら`sysctl --system`で。
+
+ブート時には`sysctl --system`が使われるみたい。
+
+
 # virbr0を消す
 
 ```
