@@ -1,7 +1,5 @@
 ansibleメモランダム
 
-<!-- TOC -->
-
 - [感想](#感想)
 - [RHEL](#rhel)
 - [git](#git)
@@ -50,8 +48,6 @@ ansibleメモランダム
     - [改行tips](#改行tips)
 - [Ansible 2.4ではloopが無い](#ansible-24ではloopが無い)
 - [参照](#参照)
-
-<!-- /TOC -->
 
 # 感想
 

@@ -1,5 +1,7 @@
 その他いろいろノート
 
+- [UFWのログが多すぎるとき](#ufwのログが多すぎるとき)
+
 # UFWのログが多すぎるとき
 
 /var/log/{syslog,kern.log,ufw.log}にUFW BLOCKが山程出てて、
