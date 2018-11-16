@@ -372,7 +372,7 @@ RHNポータルのシステムのページにある「サービスレベルの�
 
 たまにやるのでメモ。CentOS6,7でOK。
 dkmsを使う方法。
-カーネルをアップデートしてもVBoxClientがちゃんと動くのが良い。
+カーネルをアップデートしてもvboxguestがちゃんと動くのが良い。
 
 参照: [HowTos/Virtualization/VirtualBox/CentOSguest - CentOS Wiki](https://wiki.centos.org/HowTos/Virtualization/VirtualBox/CentOSguest)
 
