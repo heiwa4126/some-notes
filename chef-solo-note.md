@@ -1,12 +1,9 @@
 2018年だというのにChef Solo.
 
-<!-- TOC -->
-
 - [概要](#概要)
 - [Ubuntu 1604LTSでテスト](#ubuntu-1604ltsでテスト)
 - [defaultにhashをmergeする方法](#defaultにhashをmergeする方法)
-
-<!-- /TOC -->
+- [Ubuntu 1804LTSでテスト](#ubuntu-1804ltsでテスト)
 
 # 概要
 
@@ -98,8 +95,30 @@ default.merge!(h)
 ```
 h.each { |k, v| default[k].merge!(v) }
 ```
-とかすると「とりあえず」動く。
+とかすると「とりあえず」動く。「とりあえず」なのは下の枝がそっくり置き換えられてしまうから。
+
+
 
 参考: 
 * [Class: Chef::Node::VividMash — Documentation for chef/chef (master)](https://www.rubydoc.info/github/chef/chef/Chef/Node/VividMash)
 * [Module: Chef::Mixin::DeepMerge — Documentation for opscode/chef (master)](https://www.rubydoc.info/github/opscode/chef/Chef/Mixin/DeepMerge)
+
+
+
+# Ubuntu 1804LTSでテスト
+
+1804だとchef-zeroになってるはず。
+`apt install chef`で入れてバージョン確認
+
+```
+$ chef-solo --version
+Chef: 12.14.60
+```
+
+12.3.0で作った
+簡単なsoloプロジェクトを置いて実行してみると、
+エラーと警告がぞろぞろ出る。
+
+なんだか
+超めんどくさい。
+
