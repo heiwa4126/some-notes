@@ -16,3 +16,11 @@ Azureでは `blobxfer` よさそうなので使ってみる。
 * [Azure/blobxfer: Azure Storage transfer tool and data movement library](https://github.com/Azure/blobxfer)
 * [blobxfer | Read the Docs](https://readthedocs.org/projects/blobxfer/)
 * [blobxferでAzure Blob Storageにファイルを一括転送する - Qiita](https://qiita.com/takebayashi/items/5554dab2e0c1728c1f0d)
+
+
+そもそもpython2/3のせいで、`az`や`aws`がちゃんと動くかややこしい。
+いきなりpip使うとわけがわからなくなるので、公式ドキュメントに従う。
+
+* [apt を使用して Linux に Azure CLI をインストールする | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli-apt?view=azure-cli-latest)
+* [AWS CLI のインストールと設定 - Amazon Kinesis Data Streams](https://docs.aws.amazon.com/ja_jp/streams/latest/dev/kinesis-tutorial-cli-installation.html)
+

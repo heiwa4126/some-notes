@@ -210,9 +210,12 @@ Red Hat Network上にあるドキュメント。公式だからそれなりに�
 
 virt-who
 * [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/virtual_instances_guide/)
+* [RHEL サブスクリプション (2013 パッケージ) の使用: シナリオ 5 仮想データセンター](https://access.redhat.com/ja/articles/1435793)
 * [virt-whoとは何か](https://www.slideshare.net/moriwaka/virtwho)
 * [Red Hat Virtualization Agent (virt-who) Configuration Helper | Red Hat Customer Portal Labs](https://access.redhat.com/labs/virtwhoconfig/)
 * [暗号化されたパスワードで virt-who を設定する](https://access.redhat.com/ja/solutions/2325761)
+* [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_satellite/6.3/html/virtual_instances_guide/)
+
 
 # AWSでRHEL
 
