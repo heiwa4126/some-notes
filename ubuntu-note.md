@@ -4,8 +4,6 @@ Ubuntu,Debainおぼえがき。
 
 AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
-<!-- TOC -->
-
 - [概要](#概要)
 - [タイムゾーン](#タイムゾーン)
 - [locale](#locale)
@@ -21,9 +19,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
 - [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
 - [no_proxy](#no_proxy)
-
-<!-- /TOC -->
-
+- [Unattended Upgradesの有効/無効](#unattended-upgradesの有効無効)
 
 # タイムゾーン
 
@@ -213,3 +209,17 @@ curl 7.58.0
 no_proxy="localhost, 127.0.0.1, *.yourdomain.com"
 ```
 ぐらいでも結構生活が楽になる。
+
+# Unattended Upgradesの有効/無効
+
+Unattended Upgradesを有効にすると、セキュリティアップグレードを勝手に実行する。
+
+起動しっぱなしのサーバたと便利な機能だが、
+たまに起動するテスト用サーバだと、ブート直後にアップグレード処理が走って、ものすごく遅いことがある。
+
+* [How to Enable / Disable Unattended Upgrades in Ubuntu 16.04](https://linoxide.com/ubuntu-how-to/enable-disable-unattended-upgrades-ubuntu-16-04/)
+* [Disable Automatic Updates on Ubuntu 18.04 Bionic Beaver Linux - LinuxConfig.org](https://linuxconfig.org/disable-automatic-updates-on-ubuntu-18-04-bionic-beaver-linux)
+* [6.7. システムを最新の状態に保つ](https://debian-handbook.info/browse/ja-JP/stable/sect.regular-upgrades.html)
+* [unattended-upgradesはインストールしただけでは動かない - orangain flavor](https://orangain.hatenablog.com/entry/unattended-upgrades)
+
+`/etc/apt/apt.conf.d/20auto-upgrades` を編集して `APT::Periodic::Unattended-Upgrade` の値を `"0"` に変更すると無効。
