@@ -78,6 +78,8 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 
 ## RHEL/CentOS 7の場合
 
+(RHEL 6/Cent 6では手順が違います)
+
 証明書を置くディレクトリが2つあるみたいで、使い分けがよくわからない
 
 * /usr/share/pki/ca-trust-source/
@@ -102,7 +104,7 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 
 1. `/etc/pki/ca-trust/source/anchors/`に
 `ZscalerRootCertificate.cer`ファイルを置く。
-1. ` update-ca-trust`を実行
+1. `update-ca-trust`を実行
 
 結果は`/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem`に。
 
@@ -114,3 +116,6 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 # そのほか
 
 * [Goodwine/ZScalerSux: This is my extension for Chrome which allows you to save a username and password for your Zscaler login screen to avoid losing as much time as possible.](https://github.com/Goodwine/ZScalerSux)
+* [CentOS7の検証: CA証明書の管理方針が変更に - s_tajima:TechBlog](http://s-tajima.hateblo.jp/entry/2014/07/31/152949)
+* [RHEL 6 および RHEL 7 で信頼されている CA 証明書の一覧をリセットする](https://access.redhat.com/ja/solutions/2769011)
+* [Firefox: How to audit & reset the list of trusted servers/CAs](https://access.redhat.com/solutions/1549043)
