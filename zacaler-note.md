@@ -7,8 +7,8 @@ ZScalerというproxyが来たので、対策
 - [参考](#参考)
 - [ZScalerの証明書をexportする手順](#zscalerの証明書をexportする手順)
 - [Linuxに証明書を追加する手順](#linuxに証明書を追加する手順)
-    - [Ubuntuの場合](#ubuntuの場合)
-    - [RHEL/CentOS 7の場合](#rhelcentos-7の場合)
+  - [Ubuntuの場合](#ubuntuの場合)
+  - [RHEL/CentOS 7の場合](#rhelcentos-7の場合)
 - [そのほか](#そのほか)
 
 <!-- /TOC -->
