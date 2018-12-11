@@ -53,12 +53,12 @@ yum --showduplicates list
 # 有効になっているレポジトリのリスト
 
 ```
-yum replist
+yum repolist
 ```
 
 全リストは
 ```
-yum replist all
+yum repolist all
 ```
 
 # 例: 古いカーネルを入手してインストールする
