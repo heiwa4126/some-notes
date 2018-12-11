@@ -50,6 +50,17 @@ yum --showduplicates list
 ただしこれも`yum list installed`同様長いパッケージ名が折り返される。
 
 
+# 有効になっているレポジトリのリスト
+
+```
+yum replist
+```
+
+全リストは
+```
+yum replist all
+```
+
 # 例: 古いカーネルを入手してインストールする
 
 ```
