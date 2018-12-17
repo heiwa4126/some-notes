@@ -5,6 +5,7 @@
   - [RHEL7系でiptablesルール永続化](#rhel7系でiptablesルール永続化)
   - [TODO](#todo)
 
+
 # ICMP type=13 のブロック
 
 脆弱性診断で CVE-1999-0524
@@ -61,8 +62,9 @@ iptables -nvL
 iptables -A INPUT -p icmp --icmp-type 13 -j DROP
 ```
 必要ならソースやディスティネーションを追加。
+REJECTも試してみたけど、DROPのほうがいいと思う(個人の感想です)。
 
-再実行
+テスト再実行
 ```
 # nping -c1 --icmp-type 13 -v ip-172-31-1-110
 
