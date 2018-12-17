@@ -9,17 +9,18 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [locale](#locale)
 - [EDITORを変更](#editorを変更)
 - [デフォルトユーザ](#デフォルトユーザ)
-    - [AWS](#aws)
+  - [AWS](#aws)
 - [userを追加](#userを追加)
-        - [ubuntu on AWS編](#ubuntu-on-aws編)
+    - [ubuntu on AWS編](#ubuntu-on-aws編)
 - [sudoでパスワードがいらないのを無効(有効)にする](#sudoでパスワードがいらないのを無効有効にする)
 - [絶対いれとくパッケージ](#絶対いれとくパッケージ)
-    - [bash-completion](#bash-completion)
+  - [bash-completion](#bash-completion)
 - [サービスの再起動が必要かどうか知る](#サービスの再起動が必要かどうか知る)
 - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
 - [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
 - [no_proxy](#no_proxy)
 - [Unattended Upgradesの有効/無効](#unattended-upgradesの有効無効)
+- [AWSでホスト名を変更する](#awsでホスト名を変更する)
 
 # タイムゾーン
 
@@ -223,3 +224,14 @@ Unattended Upgradesを有効にすると、セキュリティアップグレー�
 * [unattended-upgradesはインストールしただけでは動かない - orangain flavor](https://orangain.hatenablog.com/entry/unattended-upgrades)
 
 `/etc/apt/apt.conf.d/20auto-upgrades` を編集して `APT::Periodic::Unattended-Upgrade` の値を `"0"` に変更すると無効。
+
+# AWSでホスト名を変更する
+
+```
+[root@ip-172-31-1-155 ~]# hostname
+ip-172-31-1-155.ap-northeast-1.compute.internal
+```
+みたいなIPベースのホスト名がつくので、複数ターミナルを使うと、どっちがどっちだったか間違える。
+
+
+[Amazon EC2 Linux の静的ホスト名 RHEL7 Centos7](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname-rhel7-centos7/)
