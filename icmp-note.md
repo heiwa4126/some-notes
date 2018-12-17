@@ -2,6 +2,7 @@
   - [確認方法](#確認方法)
   - [テスト](#テスト)
   - [firewalldがある場合](#firewalldがある場合)
+  - [参考](#参考)
   - [RHEL7系でiptablesルール永続化](#rhel7系でiptablesルール永続化)
   - [TODO](#todo)
 
@@ -89,6 +90,14 @@ dropされるのが確認できた。
 2. 有効にする
 
 の2ステップ。
+
+## 参考
+
+* [How to block ICMP packets using iptables?](https://access.redhat.com/solutions/32547)
+古いので7系ではそのままでは使えない
+* [How to extend the list of ICMP types for FirewallD](https://access.redhat.com/solutions/2441531)
+Firewalldを使ってる場合はこれを読むこと
+
 
 ## RHEL7系でiptablesルール永続化
 
