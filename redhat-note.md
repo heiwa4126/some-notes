@@ -21,6 +21,7 @@ Red Hat系メモ
 - [永続的にIPv6を止める](#永続的にipv6を止める)
 - [virbr0を消す](#virbr0を消す)
 - [起動に失敗したデーモンのリスト](#起動に失敗したデーモンのリスト)
+- [AWSでホスト名を変更する](#awsでホスト名を変更する)
 
 # インストール済みパッケージ一覧
 
@@ -448,3 +449,20 @@ systemctl list-units --failed
 ```
 
 [systemd - What are the systemctl options to "List all failed units" - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/341060/what-are-the-systemctl-options-to-list-all-failed-units)
+
+
+# AWSでホスト名を変更する
+
+```
+[root@ip-172-31-1-155 ~]# hostname
+ip-172-31-1-155.ap-northeast-1.compute.internal
+```
+みたいなIPベースのホスト名がつくので、複数ターミナルを使うと、どっちがどっちだったか間違える。
+
+* [Amazon EC2 Linux の静的ホスト名 RHEL7 Centos7](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname-rhel7-centos7/)
+* [Linux インスタンスのホスト名の変更 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/set-hostname.html)
+* [Amazon EC2 Linux 静的ホスト名](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname/)* 
+
+**↑これらを実行しても、その名前でDNS引いたりできるわけではないので意味がない。**
+
+NICKNAMEつけて表示だけかえるのがいいと思う。

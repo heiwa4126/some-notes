@@ -1,8 +1,6 @@
 .profileや.bash_profileで毎回混乱するので、
 きちんと理解する。
 
-<!-- TOC -->
-
 - [参考](#参考)
 - [.profile, .bash_profileの関係](#profile-bash_profileの関係)
 - [exit code](#exit-code)
@@ -10,8 +8,6 @@
 - [ファイルから引数を読み込んで処理](#ファイルから引数を読み込んで処理)
 - [psの出力を長くする](#psの出力を長くする)
 - [tarでリスト](#tarでリスト)
-
-<!-- /TOC -->
 
 # 参考
 - man 1 bash
