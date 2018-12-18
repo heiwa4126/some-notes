@@ -1,12 +1,9 @@
 SNMPの理解がいいかげんなのでまとめる。
 
-- [参考](#参考)
 - [RHEL7での導入](#rhel7での導入)
   - [コミュニティ名変更](#コミュニティ名変更)
   - [IPで制限](#ipで制限)
-
-
-# 参考
+  - [snmpdはtrap送信もできる](#snmpdはtrap送信もできる)
 
 
 
@@ -184,3 +181,8 @@ access:   granted
 参考: [2.6.2. TCP Wrapper の設定ファイル - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/security_guide/sect-security_guide-tcp_wrappers_and_xinetd-tcp_wrappers_configuration_files)
 
 TODO: /etc/snmpd.confで制限できるはず(難しい)。
+
+## snmpdはtrap送信もできる
+
+ので試してみる。
+
