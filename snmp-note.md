@@ -1,15 +1,16 @@
 SNMPの理解がいいかげんなのでまとめる。
 
 - [RHEL7での導入](#rhel7での導入)
-  - [コミュニティ名変更](#コミュニティ名変更)
-  - [IPで制限](#ipで制限)
-  - [一部をsetできるようにしてみる](#一部をsetできるようにしてみる)
-  - [snmpdはtrap送信もできる](#snmpdはtrap送信もできる)
+- [コミュニティ名変更](#コミュニティ名変更)
+- [IPで制限](#ipで制限)
+- [一部をsetできるようにしてみる](#一部をsetできるようにしてみる)
+- [net-snmpのsnmpdはtrap送信もできる](#net-snmpのsnmpdはtrap送信もできる)
 
 
 
 # RHEL7での導入
 
+CentOS7でも同じでしょう(多分)。
 ```
 yum install net-snmp -y
 ```
@@ -19,7 +20,7 @@ yum install net-snmp -y
 systemctl start snmpd
 ```
 
-SNMPトラップデーモンはあとで起動する。コマンドは
+SNMPトラップデーモンはあとで起動することにする。コマンドは
 ```
 systemctl start snmptrapd
 ```
@@ -39,11 +40,11 @@ snmpwalk -v 2c -c public localhost system
 snmpwalk -v 2c -c public r1 system
 ```
 
-## コミュニティ名変更
+# コミュニティ名変更
 
-net-snmpのデフォルト設定だと、起動したとたんにコミュニティ名`public`でいろいろ見えることがわかる。
+上の例でnet-snmpのデフォルト設定だと、起動したとたんにコミュニティ名`public`でいろいろ見えることがわかる。
 
-さすがに問題なので、まずコミュニティ名を`foobar`に変えてみる。
+問題になるかもなので、まずコミュニティ名を`swordfish`に変えてみる。
 
 ```
 --- a/snmp/snmpd.conf
@@ -54,7 +55,7 @@ net-snmpのデフォルト設定だと、起動したとたんにコミュニテ
  #       sec.name  source          community
 -com2sec notConfigUser  default       public
 +#com2sec notConfigUser  default       public
-+com2sec notConfigUser  default       foobar
++com2sec notConfigUser  default       swordfish
 
  ####
  # Second, map the security name into a group name:
@@ -65,12 +66,12 @@ net-snmpのデフォルト設定だと、起動したとたんにコミュニテ
 systemctl restart snmpd
 ```
 
-publicで見えなくなった/foobarで見える例
+publicで見えなくなった/swordfishで見える例
 ```
 # snmpwalk -v 2c -c public localhost system
 Timeout: No Response from localhost
 
-# snmpwalk -v 2c -c foobar localhost system
+# snmpwalk -v 2c -c swordfish localhost system
 (略)
 ```
 
@@ -80,7 +81,7 @@ Timeout: No Response from localhost
 # First, map the community name "public" into a "security name"
 
 #       sec.name       source        community
-com2sec notConfigUser  default       foobar
+com2sec notConfigUser  default       swordfish
 
 ####
 # Second, map the security name into a group name:
@@ -114,7 +115,7 @@ systemサブツリー(.1.3.6.1.2.1.1 sysDescr)以下と
 
 稼働時間のget
 ```
-snmpget -v 2c -c foobar localhost hrSystemUptime.0
+snmpget -v 2c -c swordfish localhost hrSystemUptime.0
 ```
 1/100sec単位なので63日でカンストすることで有名。
 
@@ -122,19 +123,20 @@ snmpget -v 2c -c foobar localhost hrSystemUptime.0
 おまけ:
 snmpwalkだと出力が長いので、MIB1個だけ取ってみる例
 ```
-snmpget -v 2c -c foobar r1 system.sysDescr.0
+snmpget -v 2c -c swordfish r1 system.sysDescr.0
 ```
 
-もっと引数の少ないsnmpstatusというのも
+動作確認だけならもっと引数の少ないsnmpstatusというのも
 ```
-snmpget -v 2c -c foobar r1
+snmpget -v 2c -c swordfish r1
 ```
 
 
 
-## IPで制限
+# IPで制限
 
 /etc/snmpd.confのcom2setのsourceで制限できる。
+(iptables, firewalld, ufwでもできるけど...それは後で)
 
 ここではちょっと/etc/hosts.{allow,deny}でやってみる。
 
@@ -142,7 +144,6 @@ snmpdがlibwrap使ってるか確認。
 ```
 ldd /usr/sbin/snmpd | grep wrap
 ```
-(iptables, firewalld, ufwでもできるけど...それは後で)
 
 /etc/hosts.allowに
 ```
@@ -187,7 +188,7 @@ access:   granted
 
 
 
-## 一部をsetできるようにしてみる
+# 一部をsetできるようにしてみる
 
 参考:
 * [Net-SNMP Tutorial -- snmpset](http://net-snmp.sourceforge.net/tutorial/tutorial-5/commands/snmpset.html)
@@ -203,8 +204,8 @@ localhostからだけはsysNameをsetできる例
 # First, map the community name "public" into a "security name"
 
 #       sec.name       source        community
-com2sec configUser     127.0.0.1     foobar
-com2sec notConfigUser  default       foobar
+com2sec configUser     127.0.0.1     swordfish
+com2sec notConfigUser  default       swordfish
 
 ####
 # Second, map the security name into a group name:
@@ -231,41 +232,43 @@ view    sysname        included      sysName
 access  notConfigGroup ""      any       noauth    exact  systemview  none      none
 access  configGroup    ""      any       noauth    exact  systemview  sysname   none
 ```
+コミュニティはconfig,notconfigで同じにしたけど、
+変えてもかまわない。
 
 com2secは上から評価され、マッチしたところで終わるらしい。なので
 ```
 #       sec.name       source        community
-com2sec notConfigUser  default       foobar
-com2sec configUser     127.0.0.1     foobar
+com2sec notConfigUser  default       swordfish
+com2sec configUser     127.0.0.1     swordfish
 ```
 とすると、localhostもnotConfigUserになってしまう。
 
 localhostからsetのテスト
 ```
-$ snmpget -v 2c -c foobar localhost sysName.0
-SNMPv2-MIB::sysName.0 = STRING: foobar.example.com
+$ snmpget -v 2c -c swordfish localhost sysName.0
+SNMPv2-MIB::sysName.0 = STRING: swordfish.example.com
 
-$ snmpset -v 2c -c foobar localhost sysName.0 s test
+$ snmpset -v 2c -c swordfish localhost sysName.0 s test
 SNMPv2-MIB::sysName.0 = STRING: test
 
-$ snmpset -v 2c -c foobar localhost sysName.0 s foobar.example.com
-SNMPv2-MIB::sysName.0 = STRING: foobar.example.com
+$ snmpset -v 2c -c swordfish localhost sysName.0 s swordfish.example.com
+SNMPv2-MIB::sysName.0 = STRING: swordfish.example.com
 ```
 
 localhost以外からsetのテスト
 ```
-$ snmpget -v 2c -c foobar r1 sysName.0
-SNMPv2-MIB::sysName.0 = STRING: foobar.example.com
+$ snmpget -v 2c -c swordfish r1 sysName.0
+SNMPv2-MIB::sysName.0 = STRING: swordfish.example.com
 
-$ snmpset -v 2c -c foobar r1 sysName.0 s test
+$ snmpset -v 2c -c swordfish r1 sysName.0 s test
 SNMPv2-MIB::sysName.0 = STRING: test
 
-$ snmpset -v 2c -c foobar r1 sysName.0 s test
+$ snmpset -v 2c -c swordfish r1 sysName.0 s test
 Error in packet.
 Reason: noAccess
 Failed object: SNMPv2-MIB::sysName.0
 
-$ snmpset -v 1 -c foobar r1 sysName.0 s test
+$ snmpset -v 1 -c swordfish r1 sysName.0 s test
 Error in packet.
 Reason: (noSuchName) There is no such variable name in this MIB.
 Failed object: SNMPv2-MIB::sysName.0
@@ -273,7 +276,12 @@ Failed object: SNMPv2-MIB::sysName.0
 1と2cで返事が違うのが面白い。
 
 
-## snmpdはtrap送信もできる
+
+
+
+# net-snmpのsnmpdはtrap送信もできる
 
 ので試してみる。
 
+一番簡単なトラップの発生はデーモンの起動・停止だそうなので、
+まずそれで試す。
