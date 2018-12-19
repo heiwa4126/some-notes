@@ -341,6 +341,7 @@ Dec 19 07:17:51 ip-172-31-1-110 snmptrapd[4439]: 2018-12-19 07:17:51 localhost [
 参考:
 * [SNMPトラップの送信条件、トラップ抑止方法について – SIOS Tech. Lab](https://tech-lab.sios.jp/archives/9260)
 * [snmptrapd 設定方法](https://changineer.info/server/monitoring/monitoring_snmptrapd.html#snmptrapdconf)
+* [snmpd発のSNMPTrapに関する備忘 : 弾き語って御免](http://blog.livedoor.jp/wibu/archives/52820100.html)
 
 
 ## 認証失敗トラップを追加してみる
