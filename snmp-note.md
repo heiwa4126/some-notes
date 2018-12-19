@@ -1,6 +1,7 @@
 SNMPの理解がいいかげんなのでまとめる。
 
 - [RHEL7での導入](#rhel7での導入)
+- [参考](#参考)
 - [コミュニティ名変更](#コミュニティ名変更)
 - [IPで制限](#ipで制限)
 - [一部をsetできるようにしてみる](#一部をsetできるようにしてみる)
@@ -39,6 +40,14 @@ snmpwalk -v 2c -c public localhost system
 ```
 snmpwalk -v 2c -c public r1 system
 ```
+
+# 参考
+
+```
+snmpd -H 2>&1| less
+```
+snmpd.confで使えるディレクティブ一覧
+
 
 # コミュニティ名変更
 
@@ -130,7 +139,6 @@ snmpget -v 2c -c swordfish r1 system.sysDescr.0
 ```
 snmpget -v 2c -c swordfish r1
 ```
-
 
 
 # IPで制限
@@ -283,5 +291,40 @@ Failed object: SNMPv2-MIB::sysName.0
 
 ので試してみる。
 
-一番簡単なトラップの発生はデーモンの起動・停止だそうなので、
-まずそれで試す。
+同じホストで偽snmptrapdを立てる(tmux, screen, 別ターミナルなどで)
+```
+# nc -l -u -p 162
+```
+
+/etc/snmp/snmpd.confの最後の方に
+```
+# Note also that you typically only want *one* of the settings:
+#trapsink   localhost
+trap2sink  localhost  foobar
+#informsink localhost
+```
+とか記述して、 `systemctl restart snmpd` すると
+netcatの方に何かが出力される。
+
+これはsnmpdの起動時に 1.3.6.1.6.3.1.1.5.1 (coldStart)が送られたもの。
+
+本物のsnmptrapdを立てる。/etc/snmp/snmptrapd.conf
+```
+# Example configuration file for snmptrapd
+#
+# No traps are handled by default, you must edit this file!
+#
+# authCommunity   log,execute,net public
+# traphandle SNMPv2-MIB::coldStart    /usr/bin/bin/my_great_script cold
+
+authCommunity log foobar
+```
+foobarというコミュニティ名でトラップが来たら、ログに出す、という例。
+
+`systemctl restart snmptrapd` して
+`systemctl restart snmpd` すると
+/var/log/message に
+```
+Dec 19 07:17:51 ip-172-31-1-110 snmptrapd[4439]: 2018-12-19 07:17:51 localhost [UDP: [127.0.0.1]:39708->[127.0.0.1]:162]:#012DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (6) 0:00:00.06#011SNMPv2-MIB::snmpTrapOID.0 = OID: SNMPv2-MIB::coldStart#011SNMPv2-MIB::snmpTrapEnterprise.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
+```
+みたいのが出たら成功。
