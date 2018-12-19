@@ -10,6 +10,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [EDITORを変更](#editorを変更)
 - [デフォルトユーザ](#デフォルトユーザ)
   - [AWS](#aws)
+  - [Azure](#azure)
 - [userを追加](#userを追加)
     - [ubuntu on AWS編](#ubuntu-on-aws編)
 - [sudoでパスワードがいらないのを無効(有効)にする](#sudoでパスワードがいらないのを無効有効にする)
@@ -93,6 +94,14 @@ ssh -i "xxx.pem" ubuntu@xxxxxxxxx.ap-xxxxxxx-1.compute.amazonaws.com
 ほとんどの場合、上のユーザー名は正確ですが、AMI の使用方法を読んで AMI 所有者がデフォルト AMI ユーザー名を変更していないことを確認してください。 
 ```
 
+## Azure
+
+Azureは初期ユーザが指定できるので楽。
+ただssh公開鍵だと、ユーザのパスワードが未設定になるので、
+シリアルコンソールがあるのにログインできない、みたいな事態に遭遇する。
+
+パスワードは設定しておいたほうがいいのではないかと思う。
+`sudo passwd <initial user>`
 
 # userを追加
 
