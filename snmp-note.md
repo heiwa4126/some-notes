@@ -370,3 +370,30 @@ man snmptrapには
 snmptrap -v 1 -c public manager enterprises.spider test-hub 3 0 '' interfaces.iftable.ifentry.ifindex.1 i 1
 ```
 みたいな例がのっています。
+
+
+参考:
+[SNMPTRAPの発報方法(v1～v3) - Qiita](https://qiita.com/mishikawan/items/4cd9192e38501b6dfc1c)
+
+```
+snmptrap -v 2c -c foobar localhost '' netSnmpExperimental \
+ netSnmpExperimental.1 s "hogehoge1" \
+ netSnmpExperimental.2 s "hogehoge2"
+```
+みたいな例がのってます。
+
+
+netSnmpExperimentalは
+```
+$ snmptranslate -On NET-SNMP-MIB::netSnmpExperimental
+.1.3.6.1.4.1.8072.9999
+
+$ snmptranslate -Tp .1.3.6.1.4.1.8072.9999
++--netSnmpExperimental(9999)
+   |
+   +--netSnmpPlaypen(9999)
+```
+Net-SNMPのテスト用にいろいろできるものらしい。
+
+参考:
+[snmptranslate - mib oidと名前の変換 - うまいぼうぶろぐ](https://hogem.hatenablog.com/entry/20100622/1277215889)
