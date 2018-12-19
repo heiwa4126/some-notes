@@ -6,6 +6,8 @@ SNMPの理解がいいかげんなのでまとめる。
 - [IPで制限](#ipで制限)
 - [一部をsetできるようにしてみる](#一部をsetできるようにしてみる)
 - [net-snmpのsnmpdはtrap送信もできる](#net-snmpのsnmpdはtrap送信もできる)
+  - [本物のsnmptrapdを立てる](#本物のsnmptrapdを立てる)
+  - [認証失敗トラップを追加してみる](#認証失敗トラップを追加してみる)
 
 
 
@@ -305,10 +307,17 @@ trap2sink  localhost  foobar
 ```
 とか記述して、 `systemctl restart snmpd` すると
 netcatの方に何かが出力される。
-
 これはsnmpdの起動時に 1.3.6.1.6.3.1.1.5.1 (coldStart)が送られたもの。
 
-本物のsnmptrapdを立てる。/etc/snmp/snmptrapd.conf
+上の設定で3行あるうち「通常は**1つ**の設定のみが必要」と言ってるのは
+[Net-SNMP FAQ](http://www.net-snmp.org/docs/FAQ.html#Where_are_these_traps_sent_to_)
+なので、参照のこと
+(もちろん複数のマネージャに送るなら、複数行書く必要があります)
+。
+
+## 本物のsnmptrapdを立てる
+
+/etc/snmp/snmptrapd.conf
 ```
 # Example configuration file for snmptrapd
 #
@@ -328,3 +337,35 @@ foobarというコミュニティ名でトラップが来たら、ログに出�
 Dec 19 07:17:51 ip-172-31-1-110 snmptrapd[4439]: 2018-12-19 07:17:51 localhost [UDP: [127.0.0.1]:39708->[127.0.0.1]:162]:#012DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (6) 0:00:00.06#011SNMPv2-MIB::snmpTrapOID.0 = OID: SNMPv2-MIB::coldStart#011SNMPv2-MIB::snmpTrapEnterprise.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 ```
 みたいのが出たら成功。
+
+参考:
+* [SNMPトラップの送信条件、トラップ抑止方法について – SIOS Tech. Lab](https://tech-lab.sios.jp/archives/9260)
+* [snmptrapd 設定方法](https://changineer.info/server/monitoring/monitoring_snmptrapd.html#snmptrapdconf)
+
+
+## 認証失敗トラップを追加してみる
+
+```
+trap2sink  localhost foobar
+authtrapenable  1
+```
+で、コミュニティが正しくないとtrap発生、になる。
+authtrapenableは1で有効、2で無効。デフォルトは無効。
+
+```
+snmpget -v 2c -c swordfishXXX localhost sysName.0
+```
+などすると、/var/log/syslogには
+```
+Dec 19 08:02:39 ip-172-31-1-110 snmptrapd[4439]: 2018-12-19 08:02:39 localhost [UDP: [127.0.0.1]:43230->[127.0.0.1]:162]:#012DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (179104) 0:29:51.04#011SNMPv2-MIB::snmpTrapOID.0 = OID: SNMPv2-MIB::authenticationFailure#011SNMPv2-MIB::snmpTrapEnterprise.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
+```
+のようなのが出る。簡単なのでSNMPマネージャのテストに便利。
+
+単にマネージャにtrap送るだけなら`snmptrap`コマンドを使う。
+問題はOIDがよくわからん、ということ。
+
+man snmptrapには
+```
+snmptrap -v 1 -c public manager enterprises.spider test-hub 3 0 '' interfaces.iftable.ifentry.ifindex.1 i 1
+```
+みたいな例がのっています。
