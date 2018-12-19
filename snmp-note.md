@@ -3,6 +3,7 @@ SNMPの理解がいいかげんなのでまとめる。
 - [RHEL7での導入](#rhel7での導入)
   - [コミュニティ名変更](#コミュニティ名変更)
   - [IPで制限](#ipで制限)
+  - [一部をsetできるようにしてみる](#一部をsetできるようにしてみる)
   - [snmpdはtrap送信もできる](#snmpdはtrap送信もできる)
 
 
@@ -133,7 +134,10 @@ snmpget -v 2c -c foobar r1
 
 ## IPで制限
 
-IP制限は/etc/hosts.{allow,deny}のほうでできるはず。
+/etc/snmpd.confのcom2setのsourceで制限できる。
+
+ここではちょっと/etc/hosts.{allow,deny}でやってみる。
+
 snmpdがlibwrap使ってるか確認。
 ```
 ldd /usr/sbin/snmpd | grep wrap
@@ -180,7 +184,94 @@ access:   granted
 
 参考: [2.6.2. TCP Wrapper の設定ファイル - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/security_guide/sect-security_guide-tcp_wrappers_and_xinetd-tcp_wrappers_configuration_files)
 
-TODO: /etc/snmpd.confで制限できるはず(難しい)。
+
+
+
+## 一部をsetできるようにしてみる
+
+参考:
+* [Net-SNMP Tutorial -- snmpset](http://net-snmp.sourceforge.net/tutorial/tutorial-5/commands/snmpset.html)
+* [TUT:snmpset - Net-SNMP Wiki](http://www.net-snmp.org/wiki/index.php/TUT:snmpset)
+
+適当に書き込み権与えても、実際に書き込めるところは少ないみたい。
+簡単に設定できるので有名なのは `sysName (.1.3.6.1.2.1.1.5)` なので、これで試す
+
+
+localhostからだけはsysNameをsetできる例
+```
+####
+# First, map the community name "public" into a "security name"
+
+#       sec.name       source        community
+com2sec configUser     127.0.0.1     foobar
+com2sec notConfigUser  default       foobar
+
+####
+# Second, map the security name into a group name:
+
+#       groupName      securityModel securityName
+group   notConfigGroup v1            notConfigUser
+group   notConfigGroup v2c           notConfigUser
+group   configGroup    v1            configUser
+group   configGroup    v2c           configUser
+
+####
+# Third, create a view for us to let the group have rights to:
+
+# Make at least  snmpwalk -v 1 localhost -c public system fast again.
+#       name           incl/excl     subtree         mask(optional)
+view    systemview     included      .1.3.6.1.2.1.1
+view    systemview     included      .1.3.6.1.2.1.25.1.1
+view    sysname        included      sysName
+
+####
+# Finally, grant the group read-only access to the systemview view.
+
+#       group          context sec.model sec.level prefix read        write     notif
+access  notConfigGroup ""      any       noauth    exact  systemview  none      none
+access  configGroup    ""      any       noauth    exact  systemview  sysname   none
+```
+
+com2secは上から評価され、マッチしたところで終わるらしい。なので
+```
+#       sec.name       source        community
+com2sec notConfigUser  default       foobar
+com2sec configUser     127.0.0.1     foobar
+```
+とすると、localhostもnotConfigUserになってしまう。
+
+localhostからsetのテスト
+```
+$ snmpget -v 2c -c foobar localhost sysName.0
+SNMPv2-MIB::sysName.0 = STRING: foobar.example.com
+
+$ snmpset -v 2c -c foobar localhost sysName.0 s test
+SNMPv2-MIB::sysName.0 = STRING: test
+
+$ snmpset -v 2c -c foobar localhost sysName.0 s foobar.example.com
+SNMPv2-MIB::sysName.0 = STRING: foobar.example.com
+```
+
+localhost以外からsetのテスト
+```
+$ snmpget -v 2c -c foobar r1 sysName.0
+SNMPv2-MIB::sysName.0 = STRING: foobar.example.com
+
+$ snmpset -v 2c -c foobar r1 sysName.0 s test
+SNMPv2-MIB::sysName.0 = STRING: test
+
+$ snmpset -v 2c -c foobar r1 sysName.0 s test
+Error in packet.
+Reason: noAccess
+Failed object: SNMPv2-MIB::sysName.0
+
+$ snmpset -v 1 -c foobar r1 sysName.0 s test
+Error in packet.
+Reason: (noSuchName) There is no such variable name in this MIB.
+Failed object: SNMPv2-MIB::sysName.0
+```
+1と2cで返事が違うのが面白い。
+
 
 ## snmpdはtrap送信もできる
 
