@@ -8,6 +8,7 @@ SNMPの理解がいいかげんなのでまとめる。
 - [net-snmpのsnmpdはtrap送信もできる](#net-snmpのsnmpdはtrap送信もできる)
   - [本物のsnmptrapdを立てる](#本物のsnmptrapdを立てる)
   - [認証失敗トラップを追加してみる](#認証失敗トラップを追加してみる)
+- [snmptrap](#snmptrap)
 
 
 
@@ -362,6 +363,8 @@ Dec 19 08:02:39 ip-172-31-1-110 snmptrapd[4439]: 2018-12-19 08:02:39 localhost [
 ```
 のようなのが出る。簡単なのでSNMPマネージャのテストに便利。
 
+# snmptrap
+
 単にマネージャにtrap送るだけなら`snmptrap`コマンドを使う。
 問題はOIDがよくわからん、ということ。
 
@@ -397,3 +400,13 @@ Net-SNMPのテスト用にいろいろできるものらしい。
 
 参考:
 [snmptranslate - mib oidと名前の変換 - うまいぼうぶろぐ](https://hogem.hatenablog.com/entry/20100622/1277215889)
+
+
+もっと短く
+```
+snmptrap -v 2c -c foobar localhost '' \
+netSnmpExperimental \
+1 s "hogehoge1" \
+2 s "hogehoge2"
+```
+と書けるなあ。
