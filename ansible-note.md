@@ -1,7 +1,7 @@
 ansibleメモランダム
 
 - [感想](#感想)
-- [RHEL](#rhel)
+- [RHEL7](#rhel7)
 - [git](#git)
 - [loopについて](#loopについて)
   - [blockでloopが使えない](#blockでloopが使えない)
@@ -73,12 +73,24 @@ ansibleメモランダム
 
 こういうの↑もできるけど、アカウントが違ったりするともうアウトだし。
 
-# RHEL
+# RHEL7
 
-ansibleパッケージはExtrasチャンネルにある、とのことなのだがテストする環境を作るのが難しい。
-[第33章 Ansible を使用した Red Hat Enterprise Linux System Roles - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/7.5_release_notes/technology_previews_red_hat_enterprise_linux_system_roles_powered_by_ansible)
+ansibleパッケージは別レポジトリなので
+```
+subscription-manager repos --list | grep -i ansible
+```
+して探す。2018年末現在では
+```
+subscription-manager repos --enable=rhel-7-server-ansible-2.7-rpms
+yum install ansible
+```
+ansible-2.7.5-1が入る。
 
-[Red Hat Enterprise Linux (RHEL) System Roles](https://access.redhat.com/articles/3050101)
+あとsshpassはrhel-7-server-extras-rpms
+
+参考:
+* [第33章 Ansible を使用した Red Hat Enterprise Linux System Roles - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/7.5_release_notes/technology_previews_red_hat_enterprise_linux_system_roles_powered_by_ansible)
+* [Red Hat Enterprise Linux (RHEL) System Roles](https://access.redhat.com/articles/3050101)
 
 
 
@@ -107,8 +119,11 @@ source ./hacking/env-setup
 参照: これの"Running From Source"のところ
 * [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#running-from-source)
 
-
-
+git版はpythonのモジュールまで用意してくれないので
+```
+sudo pip install -r ./requirements.txt
+```
+するか、パッケージ版のansibleをインストールすること。
 
 
 # loopについて
