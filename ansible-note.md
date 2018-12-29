@@ -48,6 +48,9 @@ ansibleメモランダム
   - [改行tips](#改行tips)
 - [Ansible 2.4ではloopが無い](#ansible-24ではloopが無い)
 - [参照](#参照)
+- [sshまわり](#sshまわり)
+- [公開鍵でなくパスワードでssh接続する](#公開鍵でなくパスワードでssh接続する)
+- [ansible.cfgの場所](#ansiblecfgの場所)
 
 # 感想
 
@@ -787,4 +790,76 @@ inc2.yml
 # 参照
 
 * [Ansibleドキュメントを活用しよう！ モジュールの調べ方 - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/2018/10/25/ansible-document)
+
+
+# sshまわり
+
+邪悪だが役に立つときもある
+
+* [AnsibleのSSH接続エラーの回避設定 - Qiita](https://qiita.com/taka379sy/items/331a294d67e02e18d68d)
+* [ansible sshpass error - Qiita](https://qiita.com/park-jh/items/d14cb20c9dfa0e2628d5)
+
+
+# 公開鍵でなくパスワードでssh接続する
+
+まあ、そういう環境もある。
+
+sshpass入れて、
+`ansible_ssh_pass` にパスワードを書く。
+
+で、そういう環境だとsudoerもちゃんと設定してなくて
+suでrootになれ、とかいうことがしばしば。
+
+それは
+`ansible_become_method` と `ansible_become_pass` で。
+(ansible_su_passよりはいい)
+
+インベントリのall:varsに書いた例(もちろんホスト別にできる)
+```
+[all:vars]
+ansible_port=22
+ansible_user=foo
+ansible_ssh_pass=sw0rdfizh
+ansible_become_method=su
+ansible_become_pass=p@ssW0rd
+```
+
+TODO: vaultにする
+
+参考:
+[Inventory | ansible Tutorial](https://riptutorial.com/ansible/topic/1764/%E7%9B%AE%E9%8C%B2)
+
+RHEL7ではsshpassはrhel-7-server-extras-rpmsにあるので
+```
+subscription-manager repos --enable=rhel-7-server-extras-rpms
+yum install -y sshpass
+```
+すること。CentOS7はEPEL?
+
+# ansible.cfgの場所
+
+[ansible.cfgを設定しコマンドをシンプルに - aboutnagaishiの日記](http://aboutnagaishi.hatenablog.com/entry/2015/02/14/155734)
+から引用 & 修正
+
+ansible tutorialによれば以下の順番でansible.cfgを探す。
+
+1. カレントディレクトリ
+1. 環境変数の ANSIBLE_CONFIG or ~/.ansible.cfg
+1. /etc/ansible/ansible.cfg
+
+ansible.cfg設定例
+```
+[defaults]
+inventory = ./hosts
+
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+```
+
+むかしは`inventory`でなく`hostfile`だった。
+
+
+ansible.cfgはパッケージでは`/etc/ansible/ansible.cfg`
+git版では`examples/ansible.cfg`
+にあるので、それをコピーして編集すると苦労が減ると思う。
 
