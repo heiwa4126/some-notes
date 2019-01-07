@@ -233,3 +233,12 @@ Unattended Upgradesを有効にすると、セキュリティアップグレー�
 
 `/etc/apt/apt.conf.d/20auto-upgrades` を編集して `APT::Periodic::Unattended-Upgrade` の値を `"0"` に変更すると無効。
 
+# `A start job is running for wait for network to be configured` で起動が遅い
+
+```
+systemctl disable systemd-networkd-wait-online.service
+systemctl mask systemd-networkd-wait-online.service
+```
+
+引用: [ubuntu がネットワーク待ちで起動が遅い・・・](http://takuya-1st.hatenablog.jp/entry/2017/12/19/211216)
+
