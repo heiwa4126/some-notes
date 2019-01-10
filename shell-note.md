@@ -26,5 +26,7 @@ echo "test 2 (set -e)"
 )
 ```
 
-参考: [シェルスクリプトを書くときはset -euしておく](https://qiita.com/youcune/items/fcfb4ad3d7c1edf9dc96)
+参考:
+* [シェルスクリプトを書くときはset -euしておく](https://qiita.com/youcune/items/fcfb4ad3d7c1edf9dc96)
+* [シェルスクリプトの set -e は罠いっぱい](https://togetter.com/li/1104655)
 
