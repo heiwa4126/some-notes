@@ -244,4 +244,14 @@ systemctl mask systemd-networkd-wait-online.service
 
 > Systemdではmaskという操作を実行できる。mask操作を行う事で、サービスの起動自体不可能になる(手動実行も不可)。disableの強化版
 
+# yum history
 
+yumの`yum history info nn`みたいなやつが羨ましくてしらべた。
+
+```
+cat /var/log/apt/history.log
+```
+and
+```
+cat /var/log/dpkg.log
+```
