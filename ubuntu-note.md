@@ -245,6 +245,11 @@ systemctl mask systemd-networkd-wait-online.service
 > Systemdではmaskという操作を実行できる。mask操作を行う事で、サービスの起動自体不可能になる(手動実行も不可)。disableの強化版
 
 
+'/lib/systemd/systemd-networkd-wait-online'が、何を待つのかはよくわからない。
+'networkctl'の出力が参考になると思う。
+
+確かにsystemd-networkd-wait-onlineで止まるホストではSETUPがconfiguringになるインタフェースがあるなあ。
+
 # yum history
 
 yumの`yum history info nn`みたいなやつが羨ましくてしらべた。
@@ -262,5 +267,13 @@ cat /var/log/dpkg.log
 
 Ubuntu18から標準になったので調べておくこと。
 
+とりあえずは:
+1. /etc/netplan/*.yml を修正
+1. netplan generate
+1. netplan apply
+
+で
+
 * [Examples | netplan.io](https://netplan.io/examples)
 * [Netplanの使い方 - komeの備忘録](https://www.komee.org/entry/2018/06/12/181400)
+* [Ubuntu 18.04 LTS のネットワーク設定がnetplanというものになっているのでその確認とか – Webを汚すWeblog](https://blog.dshimizu.jp/article/1196)
