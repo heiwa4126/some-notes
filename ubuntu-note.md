@@ -244,6 +244,7 @@ systemctl mask systemd-networkd-wait-online.service
 
 > Systemdではmaskという操作を実行できる。mask操作を行う事で、サービスの起動自体不可能になる(手動実行も不可)。disableの強化版
 
+
 # yum history
 
 yumの`yum history info nn`みたいなやつが羨ましくてしらべた。
@@ -255,3 +256,11 @@ and
 ```
 cat /var/log/dpkg.log
 ```
+
+
+# netplan.io
+
+Ubuntu18から標準になったので調べておくこと。
+
+* [Examples | netplan.io](https://netplan.io/examples)
+* [Netplanの使い方 - komeの備忘録](https://www.komee.org/entry/2018/06/12/181400)
