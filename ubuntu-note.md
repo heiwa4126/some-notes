@@ -21,6 +21,9 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
 - [no_proxy](#no_proxy)
 - [Unattended Upgradesの有効/無効](#unattended-upgradesの有効無効)
+- [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
+- [yum history](#yum-history)
+- [netplan.io](#netplanio)
 
 # タイムゾーン
 

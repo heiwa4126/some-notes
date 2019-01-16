@@ -1,4 +1,6 @@
-journaldのメモ
+- [journaldのメモ](#journaldのメモ)
+
+# journaldのメモ
 
 特定サービスのログだけ見るとき(networkは例。サービス名を書く)
 ```
