@@ -23,6 +23,9 @@ Red Hat系メモ
 - [virbr0を消す](#virbr0を消す)
 - [起動に失敗したデーモンのリスト](#起動に失敗したデーモンのリスト)
 - [AWSでホスト名を変更する](#awsでホスト名を変更する)
+- [GRUB2の再インストール](#grub2の再インストール)
+- [RHELのバックアップ・リストア](#rhelのバックアップリストア)
+- [ReaR (Relax-and-Recover)](#rear-relax-and-recover)
 
 # インストール済みパッケージ一覧
 
@@ -481,3 +484,23 @@ ip-172-31-1-155.ap-northeast-1.compute.internal
 **↑これらを実行しても、その名前でDNS引いたりできるわけではないので意味がない。**
 
 NICKNAMEつけて表示だけかえるのがいいと思う。
+
+
+# GRUB2の再インストール
+
+* [Red Hat Enterprise Linux 7 25.7. Reinstalling GRUB 2 - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
+* [Red Hat Enterprise Linux 7 25.7. GRUB 2 の再インストール - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
+
+
+# RHELのバックアップ・リストア
+
+ReaR(Relax-and-Recover )は別項目に
+* [dump および restore コマンドで Red Hat Enterprise Linux 全体をバックアップおよびリストアする](https://access.redhat.com/ja/solutions/122373)
+* [パーティションテーブルをバックアップおよび復元する方法](https://access.redhat.com/ja/solutions/800283)
+  
+# ReaR (Relax-and-Recover)
+
+* [Relax-and-Recover - Linux Disaster Recovery](http://relax-and-recover.org/)
+* [Red Hat Enterprise Linux 7 第26章 Relax-and-Recover (ReaR) - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-relax-and-recover_rear)
+* [Relax and Recoverでのシステム回復](https://redhat.sios.jp/relax-and-recover)
+* [rear/03-configuration.adoc at master · rear/rear · GitHub](https://github.com/rear/rear/blob/master/doc/user-guide/03-configuration.adoc)  - CIFSのconfig
