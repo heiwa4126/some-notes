@@ -21,6 +21,9 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
 - [no_proxy](#no_proxy)
 - [Unattended Upgradesの有効/無効](#unattended-upgradesの有効無効)
+- [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
+- [yum history](#yum-history)
+- [netplan.io](#netplanio)
 
 # タイムゾーン
 
@@ -233,3 +236,47 @@ Unattended Upgradesを有効にすると、セキュリティアップグレー�
 
 `/etc/apt/apt.conf.d/20auto-upgrades` を編集して `APT::Periodic::Unattended-Upgrade` の値を `"0"` に変更すると無効。
 
+# `A start job is running for wait for network to be configured` で起動が遅い
+
+```
+systemctl disable systemd-networkd-wait-online.service
+systemctl mask systemd-networkd-wait-online.service
+```
+
+引用: [ubuntu がネットワーク待ちで起動が遅い・・・](http://takuya-1st.hatenablog.jp/entry/2017/12/19/211216)
+
+> Systemdではmaskという操作を実行できる。mask操作を行う事で、サービスの起動自体不可能になる(手動実行も不可)。disableの強化版
+
+
+'/lib/systemd/systemd-networkd-wait-online'が、何を待つのかはよくわからない。
+'networkctl'の出力が参考になると思う。
+
+確かにsystemd-networkd-wait-onlineで止まるホストではSETUPがconfiguringになるインタフェースがあるなあ。
+
+# yum history
+
+yumの`yum history info nn`みたいなやつが羨ましくてしらべた。
+
+```
+cat /var/log/apt/history.log
+```
+and
+```
+cat /var/log/dpkg.log
+```
+
+
+# netplan.io
+
+Ubuntu18から標準になったので調べておくこと。
+
+とりあえずは:
+1. /etc/netplan/*.yml を修正
+1. netplan generate
+1. netplan apply
+
+で
+
+* [Examples | netplan.io](https://netplan.io/examples)
+* [Netplanの使い方 - komeの備忘録](https://www.komee.org/entry/2018/06/12/181400)
+* [Ubuntu 18.04 LTS のネットワーク設定がnetplanというものになっているのでその確認とか – Webを汚すWeblog](https://blog.dshimizu.jp/article/1196)

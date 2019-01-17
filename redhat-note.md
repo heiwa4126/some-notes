@@ -23,6 +23,7 @@ Red Hat系メモ
 - [virbr0を消す](#virbr0を消す)
 - [起動に失敗したデーモンのリスト](#起動に失敗したデーモンのリスト)
 - [AWSでホスト名を変更する](#awsでホスト名を変更する)
+- ["Require IPv4 addressing for this connection to complete"](#require-ipv4-addressing-for-this-connection-to-complete)
 - [GRUB2の再インストール](#grub2の再インストール)
 - [RHELのバックアップ・リストア](#rhelのバックアップリストア)
 - [ReaR (Relax-and-Recover)](#rear-relax-and-recover)
@@ -484,6 +485,15 @@ ip-172-31-1-155.ap-northeast-1.compute.internal
 **↑これらを実行しても、その名前でDNS引いたりできるわけではないので意味がない。**
 
 NICKNAMEつけて表示だけかえるのがいいと思う。
+
+# "Require IPv4 addressing for this connection to complete"
+
+nmのguiとnmtuiでの設定。日本語だと「この接続には IPv4 アドレス設定が必要になります」。
+
+チェックをはずすと、IPv4の設定に失敗した場合でもIPv6の設定が行われる。
+
+参照:
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-configuring_ipv4_settings
 
 
 # GRUB2の再インストール

@@ -9,6 +9,7 @@ ansibleメモランダム
   - [blockは例外処理ができる](#blockは例外処理ができる)
   - [tempfileモジュールで作ったファイル/ディレクトリは、自動的に消えない](#tempfileモジュールで作ったファイルディレクトリは自動的に消えない)
   - [Debian系の/var/run/reboot-required](#debian系のvarrunreboot-required)
+  - [scriptモジュール](#scriptモジュール)
   - [loopをitemのままで使うとincludeでネストしたときに警告が](#loopをitemのままで使うとincludeでネストしたときに警告が)
   - [lookup](#lookup)
 - [ansible_os_familyのリスト](#ansible_os_familyのリスト)
@@ -190,6 +191,16 @@ heiwa@ip-172-31-1-134:~$ head /var/run/reboot-required*
 ==> /var/run/reboot-required.pkgs <==
 linux-base
 ```
+
+## scriptモジュール
+
+[script - Runs a local script on a remote node after transferring it — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/script_module.html)
+
+便利。
+
+おそらく安全のためPATHが制限されていて、
+`/usr/local/bin:/usr/bin`
+ぐらいしか書かれていないので、自分で追加するかフルパスでコマンドを書く。
 
 
 
