@@ -226,7 +226,7 @@ no_proxy="localhost, 127.0.0.1, *.yourdomain.com"
 
 Unattended Upgradesを有効にすると、セキュリティアップグレードを勝手に実行する。
 
-起動しっぱなしのサーバたと便利な機能だが、
+起動しっぱなしのサーバだと便利な機能だが、
 たまに起動するテスト用サーバだと、ブート直後にアップグレード処理が走って、ものすごく遅いことがある。
 
 * [How to Enable / Disable Unattended Upgrades in Ubuntu 16.04](https://linoxide.com/ubuntu-how-to/enable-disable-unattended-upgrades-ubuntu-16-04/)
