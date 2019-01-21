@@ -388,7 +388,7 @@ winrm get winrm/config
 ↑で
 * BASIC認証が有効
 * HTTPSが有効
-* T qrustedHostsにansibleのhostが入っていること
+* TrustedHostsにansibleのhostが入っていること
 
 をチェック。以下例(抜粋):
 
