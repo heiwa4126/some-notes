@@ -7,4 +7,8 @@ https://jp.norton.com/security_response/glossary/define.jsp?letter=d&word=dissim
 Dissimilar System Recovery(DSR)
 ハードウェア構成が異なる新しいシステムにリストア
 
-共有リソースツリー (SRT)
+共有リソースツリー (SRT : Shared Resource Tree)
+
+ブートサーバ作成
+SRT作成
+BMRメディア作成
