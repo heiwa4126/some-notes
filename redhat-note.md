@@ -514,3 +514,35 @@ ReaR(Relax-and-Recover )は別項目に
 * [Red Hat Enterprise Linux 7 第26章 Relax-and-Recover (ReaR) - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-relax-and-recover_rear)
 * [Relax and Recoverでのシステム回復](https://redhat.sios.jp/relax-and-recover)
 * [rear/03-configuration.adoc at master · rear/rear · GitHub](https://github.com/rear/rear/blob/master/doc/user-guide/03-configuration.adoc)  - CIFSのconfig
+
+# RHELを見た目ダウングレードさせる
+
+プロプライエタリ製品はマイナーバージョンにうるさいやつが多いので。
+
+以下は7.3に見た目ダウングレードする例。
+
+```
+# yum --showduplicate list redhat-release-server | grep 7.3
+server.x86_64           7.3-7.el7             rhel-7-server-rpms
+# yum --showduplicate list initscripts | grep 7.3
+initscripts.x86_64             9.49.37-1.el7_3.1             rhel-7-server-rpms
+# yum downgrade \
+redhat-release-server-7.3-7.el7.x86_64 \
+initscripts-9.49.37-1.el7_3.1.x86_64
+```
+
+終わったら/etc/yum.confのexcludeにredhat-release-*とinitscriptsを追加しておくと、
+yum updateが簡単になる。
+
+以下は例:
+```
+exclude=kernel-* kmod-* redhat-release-* perf-* python-perf-* initscripts
+```
+
+
+
+
+
+
+
+
