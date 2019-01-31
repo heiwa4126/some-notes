@@ -866,6 +866,22 @@ yum install -y sshpass
 ```
 すること。CentOS7はEPEL?
 
+# Windows用のvars例
+
+インベントリに書いた例
+```
+[windows:vars]
+ansible_user=eraiadmin
+ansible_password=himitsunokotoba
+ansible_port=5986
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=ignore
+```
+
+急いでるときに使うこと。
+
+TODO: ansible_winrm_server_cert_validをignoreしないようにする方法。ADのときとか
+
 # ansible.cfgの場所
 
 [ansible.cfgを設定しコマンドをシンプルに - aboutnagaishiの日記](http://aboutnagaishi.hatenablog.com/entry/2015/02/14/155734)
@@ -888,7 +904,11 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=
 
 むかしは`inventory`でなく`hostfile`だった。
 
+ssh_connectionのところは
+[AnsibleのSSH接続エラーの回避設定 - Qiita](https://qiita.com/taka379sy/items/331a294d67e02e18d68d)
+からのコピペで、意味はそちらを参照。
 
 ansible.cfgはパッケージでは`/etc/ansible/ansible.cfg`
 git版では`examples/ansible.cfg`
 にあるので、それをコピーして編集すると苦労が減ると思う。
+
