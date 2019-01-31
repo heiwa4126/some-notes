@@ -39,7 +39,7 @@ Relax-and-Recover (ReaR)
 - ホストのipは192.168.56.94/24 (enp0s8)
 - バックアップ先はCIFSで//192.168.56.91/dumpの下
 
-以下のようなディスク構成
+以下のようなディスク構成を想定
 ```
 # lsblk
 NAME                MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
