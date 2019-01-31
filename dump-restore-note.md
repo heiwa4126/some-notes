@@ -1,12 +1,15 @@
-dumpとrestoreでBMR的な。
-
-VMやcloudの時代であっても、
-Veritas NetBackup™, Arcserve UDPのプロプラがあっても、
-dump/restoreは基本
+RHEL7系のホストで
+dumpとrestoreを使って
+ディザスタリカバリーを行う。
 
 - [注意](#%E6%B3%A8%E6%84%8F)
 - [例の前提](#%E4%BE%8B%E3%81%AE%E5%89%8D%E6%8F%90)
+  - [メモ](#%E3%83%A1%E3%83%A2)
 - [dump](#dump)
+  - [インストールCDからrescueモードで起動する](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%ABcd%E3%81%8B%E3%82%89rescue%E3%83%A2%E3%83%BC%E3%83%89%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B)
+- [dump(続き)](#dump%E7%B6%9A%E3%81%8D)
+- [restore](#restore)
+- [参考](#%E5%8F%82%E8%80%83)
 
 # 注意
 
@@ -32,39 +35,195 @@ Relax-and-Recover (ReaR)
 - GPTディスク
 - LVM
 - ファイルシステムは全部ext4
-- ホストのipは192.168.56.93/24 (eth1)
+- ホストのipは192.168.56.94/24 (eth1)
 - バックアップ先はCIFSで//192.168.56.91/dumpの下
+
+以下のようなディスク構成
+```
+# lsblk
+NAME                MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                   8:0    0    8G  0 disk
+├─sda1                8:1    0  200M  0 part /boot/efi
+├─sda2                8:2    0    1G  0 part /boot
+└─sda3                8:3    0  6.8G  0 part
+  ├─centos_c71-root 253:0    0    6G  0 lvm  /
+  └─centos_c71-swap 253:1    0  820M  0 lvm  [SWAP]
+sr0                  11:0    1 1024M  0 rom
+```
+## メモ
+
+sgdiskは`yum install gdisk`。
+バックアップ前にHDDにインストールしておくと楽。
 
 # dump
 
-BMR(Bare Metal Restore )用にフルバックアップ(entire dump)を行う。
+BMR(Bare Metal Restore)用にフルバックアップ(entire dump)を行う。
+
+マウントされたデバイスもバックアップできるが、静止点確保のため、インストールCDからrescueモードで起動する。
 
 
-マウントされたデバイスはフルバックアップできないので、
+## インストールCDからrescueモードで起動する
 
-バックアップ先はCIFS共有ディスク
-//192.168.56.91/dump 
-とする。
+RHEL7(またはCentOS)のインストールCDをホストに挿入し、
+CDからブートさせる(ホストによってCDからブートさせる手順は異なる)。
 
-inet 
+起動したらメニューから
+1. Troubleshooting -> 
+2. Rescue A Red Hat Enterprise Linux system ->
+3. 2 Read-only mount ->
+4. return
 
+で、shが立ち上がる。
 
-RHELのインストールCDから起動
-
-Troubleshooting -> 
-Rescue A Red Hat Enterprise Linux system ->
-2) Read-only mount -> <return>
-
+```
+# 日本語キーボードにする
 loadkeys jp106
-ip a add 192.168.56.92/24 dev enp0s8
 
+# 手動でIPを設定する. 以下は例
+ip a add 192.168.56.94/24 dev enp0s8
+ip a add 10.0.2.222/24 dev eth0
+ip r add default via 10.0.2.2
+
+# バックアップ先をマウントする
 mkdir /mnt/dump
 mount -t cifs -o username=foo,password=baz //192.168.56.91/dump /mnt/dump
+```
 
-mkdir /mnt/dump/c7
-cd /mnt/dump/c7
+# dump(続き)
 
-mkdir c7
+```
+# バックアップ先を作り移動する(c71はホスト名)
+mkdir /mnt/dump/c71
+cd /mnt/dump/c71
 
-手動でネットワーク設定
-手動でCIFSマウント
+# /bootのdump
+dump -z9 -0f ./boot.dump /mnt/sysimage/boot
+# /rootのdump
+dump -z9 -0f ./root.dump /mnt/sysimage
+## 必要なら他のドライブも
+
+# GPTディスクのパーティション情報エクスポート
+# ディスクが複数あれば全部やる
+sgdisk --backup=sgdisk.txt /dev/sda
+
+# UUIDを保存
+blkid > blkid.txt
+
+# Volume groupのリストを保存
+vgs > vgs.txt
+
+# VG情報をエクスポート
+vgcfgbackup -f lvm.txt
+```
+
+# restore
+
+まっさらなディスクに復元する。
+
+restoreそのものよりも、
+GPTディスクにパーティションを復元、
+LVMを設定 そして EFIをインストールするのは
+とてつもなく難しい。
+
+
+まずdump同様
+rescueモードで起動する。
+cdを挿入し
+起動したらメニューから
+1. Troubleshooting -> 
+2. Rescue A Red Hat Enterprise Linux system ->
+3. 1 continue -> (**read only mouuntではない**)
+4. return
+
+```
+## ここでネットワーク設定
+# CIFS共有ディスクをマウント(壊さないようroで)
+mkdir /mnt/dump
+mount -t cifs -o ro,username=foo,password=baz //192.168.56.91/dump /mnt/dump
+
+# 保存場所に移動
+cd /mnt/dump/c71
+
+# パーティション情報のリストア。ディスクが複数あれば全部
+sgdisk --load-backup sgdisk.txt /dev/sda
+
+# blkid.txtの中でtypeがLVM2_memberのものの
+# uuidとdevice(/dev/sda3)を指定して実行
+# いくつもあれば全部やる。コマンドが長いので、別のホストで編集すると楽
+pvcreate \
+  --restorefile lvm.txt \
+  --uuid TIKJAP-7qXR-yVcJ-m7Dc-teuO-vAu0-eESUI3  \
+  /dev/sda3
+
+# vgs.txtにあるVGを全部繰り返す
+vgcfgrestore -f lvm.txt centos_c71
+
+# VGを再スキャンし、全部アクティブ化
+vgscan
+vgchange -ay
+
+# ファイルシステムを作成する
+mkfs.vfat /dev/sda1
+mkfs.ext4 /dev/sda2
+mkfs.ext4 /dev/mapper/centos_c71-root
+mkswap /dev/mapper/centos_c71-swap
+
+# rootをマウントする
+mount -t ext4 /dev/mapper/centos_c71-root /mnt/sysimage
+
+# rootをリストア
+cd /mnt/sysimage
+restore -rf /mnt/dump/c71/restore.dump
+
+# bootをマウントする
+mount -t ext4 /dev/sda2 boot
+
+# bootをリストア
+cd boot
+restore -rf /mnt/dump/c71/boot.dump
+```
+
+ここで再起動してrescueモードではいると、
+/mnt/sysimageの下にrootとbootがマウントされているはず。
+('lsblk'で確認)
+
+されていなかったら
+```
+vgscan
+vgchange -ay
+```
+して再起動。
+
+続き
+```
+chroot /mnt/sysimage
+
+# EFI領域をマウント
+# (場合によってはすでにマウントされているかも)
+mount -t vfat /dev/sda1 /boot/efi
+
+## ここでネットワーク設定
+
+# grub-efiのインストール
+yum reinstall grub2-efi shim grub2-tools
+
+# grub.cfgの再生成
+grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
+## CentOSだと/boot/efi/EFI/centos/grub.cfg
+```
+
+最後に
+/etc/fstabのuuidをblkidの値に従って編集。
+
+別マシンに複製した場合は、
+/etc/sysconfig/network-scriptの下や、
+/etc/hostname
+なども書き換える。
+RHELならsubscription-managerも修正する。
+
+
+# 参考
+
+- [Red Hat Enterprise Linux 7 25.7. GRUB 2 の再インストール - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
+- [Red Hat Labs | Red Hat Customer Portal Labs](https://access.redhat.com/labs/rbra/)
+- [Relax and Recover(ReaR) の概要](https://access.redhat.com/ja/solutions/2641301)
