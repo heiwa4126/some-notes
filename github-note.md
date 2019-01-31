@@ -7,6 +7,21 @@ github.comのメモ
 
 公式ドキュメント: [Using SSH over the HTTPS port](https://help.github.com/articles/using-ssh-over-the-https-port/)
 
+Linuxだったら~/.ssh/configで
+```
+Host github.com
+     # Hostname github.com
+     # Port 22
+     Hostname ssh.github.com
+     Port 443
+     User git
+     Compression yes
+     IdentityFile ~/.ssh/github
+     ProxyCommand  /usr/bin/connect-proxy -H 111.222.333.444:3128 %h %p
+```
+みたいな感じで(要アレンジ)。
+
+
 Windowsだったら
 * puttyで"github.com"プロファイルを作る
   - port: **443**
