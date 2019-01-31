@@ -35,7 +35,8 @@ Relax-and-Recover (ReaR)
 - GPTディスク
 - LVM
 - ファイルシステムは全部ext4
-- ホストのipは192.168.56.94/24 (eth1)
+- ホスト名はc71
+- ホストのipは192.168.56.94/24 (enp0s8)
 - バックアップ先はCIFSで//192.168.56.91/dumpの下
 
 以下のようなディスク構成
@@ -53,13 +54,15 @@ sr0                  11:0    1 1024M  0 rom
 ## メモ
 
 sgdiskは`yum install gdisk`。
-バックアップ前にHDDにインストールしておくと楽。
+バックアップ前にHDDにインストールしておくと少し楽。
+
 
 # dump
 
 BMR(Bare Metal Restore)用にフルバックアップ(entire dump)を行う。
 
-マウントされたデバイスもバックアップできるが、静止点確保のため、インストールCDからrescueモードで起動する。
+マウントされたデバイスもdumpでバックアップできるが、
+静止点確保のため、インストールCDからrescueモードで起動する。
 
 
 ## インストールCDからrescueモードで起動する
@@ -199,7 +202,7 @@ vgchange -ay
 chroot /mnt/sysimage
 
 # EFI領域をマウント
-# (場合によってはすでにマウントされているかも)
+# (すでにマウントされている場合もある)
 mount -t vfat /dev/sda1 /boot/efi
 
 ## ここでネットワーク設定
@@ -213,7 +216,7 @@ grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
 ```
 
 最後に
-/etc/fstabのuuidをblkidの値に従って編集。
+/etc/fstabのuuidを`blkid`の値に従って編集。
 
 別マシンに複製した場合は、
 /etc/sysconfig/network-scriptの下や、
