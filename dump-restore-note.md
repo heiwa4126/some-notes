@@ -1,4 +1,4 @@
-RHEL7系のホストで
+RHEL7系のホストで(EFIでGPTでLVM)
 dumpとrestoreを使って
 ディザスタリカバリーを行う。
 
