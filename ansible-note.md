@@ -93,6 +93,10 @@ ansible-2.7.5-1が入る。
 * [第33章 Ansible を使用した Red Hat Enterprise Linux System Roles - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/7.5_release_notes/technology_previews_red_hat_enterprise_linux_system_roles_powered_by_ansible)
 * [Red Hat Enterprise Linux (RHEL) System Roles](https://access.redhat.com/articles/3050101)
 
+# レポジトリ
+
+(TODO:)
+
 
 
 # git
@@ -731,7 +735,7 @@ templateモジュールにもある。
 ```
 みたいなことができる。
 
-## win_templateとtemplateモジュールの違いは? 
+## win_templateとtemplateモジュールの違いは?
 
 templateモジュールでwindowsに送った場合、
 owner:, group:, mode: が無視される。
@@ -888,4 +892,3 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=
 ansible.cfgはパッケージでは`/etc/ansible/ansible.cfg`
 git版では`examples/ansible.cfg`
 にあるので、それをコピーして編集すると苦労が減ると思う。
-
