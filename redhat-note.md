@@ -1,32 +1,34 @@
 Red Hat系メモ
 
-- [インストール済みパッケージ一覧](#インストール済みパッケージ一覧)
-- [パッケージ一覧](#パッケージ一覧)
-- [有効になっているレポジトリのリスト](#有効になっているレポジトリのリスト)
-- [例: 古いカーネルを入手してインストールする](#例-古いカーネルを入手してインストールする)
-- [古いカーネルを消す](#古いカーネルを消す)
-- [コマンドが含まれているパッケージを探す](#コマンドが含まれているパッケージを探す)
-- [proxy設定あちこち](#proxy設定あちこち)
-- [RHELの登録](#rhelの登録)
-- [「デスクトップ」とかを英語にする](#デスクトップとかを英語にする)
-- [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
-- [パッケージのpin](#パッケージのpin)
+- [インストール済みパッケージ一覧](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%B8%88%E3%81%BF%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E4%B8%80%E8%A6%A7)
+- [パッケージ一覧](#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E4%B8%80%E8%A6%A7)
+- [有効になっているレポジトリのリスト](#%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88)
+- [例: 古いカーネルを入手してインストールする](#%E4%BE%8B-%E5%8F%A4%E3%81%84%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%82%92%E5%85%A5%E6%89%8B%E3%81%97%E3%81%A6%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B)
+- [古いカーネルを消す](#%E5%8F%A4%E3%81%84%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%82%92%E6%B6%88%E3%81%99)
+- [コマンドが含まれているパッケージを探す](#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%8C%E5%90%AB%E3%81%BE%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E6%8E%A2%E3%81%99)
+- [proxy設定あちこち](#proxy%E8%A8%AD%E5%AE%9A%E3%81%82%E3%81%A1%E3%81%93%E3%81%A1)
+- [RHELの登録](#rhel%E3%81%AE%E7%99%BB%E9%8C%B2)
+- [「デスクトップ」とかを英語にする](#%E3%83%87%E3%82%B9%E3%82%AF%E3%83%88%E3%83%83%E3%83%97%E3%81%A8%E3%81%8B%E3%82%92%E8%8B%B1%E8%AA%9E%E3%81%AB%E3%81%99%E3%82%8B)
+- [ホストの再起動が必要かどうか知る](#%E3%83%9B%E3%82%B9%E3%83%88%E3%81%AE%E5%86%8D%E8%B5%B7%E5%8B%95%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E7%9F%A5%E3%82%8B)
+- [パッケージのpin](#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AEpin)
 - [yum4/dnf](#yum4dnf)
-- [RHEL7の役立つドキュメント](#rhel7の役立つドキュメント)
-- [AWSでRHEL](#awsでrhel)
+- [RHEL7の役立つドキュメント](#rhel7%E3%81%AE%E5%BD%B9%E7%AB%8B%E3%81%A4%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88)
+- [AWSでRHEL](#aws%E3%81%A7rhel)
   - [example](#example)
-- [AzureでRHEL](#azureでrhel)
-- [サブスクリプションが難しい](#サブスクリプションが難しい)
-- [「サービスレベルの設定」とは](#サービスレベルの設定とは)
-- [CentOSをVirtualBoxのゲストとして使う](#centosをvirtualboxのゲストとして使う)
-- [永続的にIPv6を止める](#永続的にipv6を止める)
-- [virbr0を消す](#virbr0を消す)
-- [起動に失敗したデーモンのリスト](#起動に失敗したデーモンのリスト)
-- [AWSでホスト名を変更する](#awsでホスト名を変更する)
-- ["Require IPv4 addressing for this connection to complete"](#require-ipv4-addressing-for-this-connection-to-complete)
-- [GRUB2の再インストール](#grub2の再インストール)
-- [RHELのバックアップ・リストア](#rhelのバックアップリストア)
+- [AzureでRHEL](#azure%E3%81%A7rhel)
+- [サブスクリプションが難しい](#%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%8C%E9%9B%A3%E3%81%97%E3%81%84)
+- [「サービスレベルの設定」とは](#%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%83%AC%E3%83%99%E3%83%AB%E3%81%AE%E8%A8%AD%E5%AE%9A%E3%81%A8%E3%81%AF)
+- [CentOSをVirtualBoxのゲストとして使う](#centos%E3%82%92virtualbox%E3%81%AE%E3%82%B2%E3%82%B9%E3%83%88%E3%81%A8%E3%81%97%E3%81%A6%E4%BD%BF%E3%81%86)
+- [永続的にIPv6を止める](#%E6%B0%B8%E7%B6%9A%E7%9A%84%E3%81%ABipv6%E3%82%92%E6%AD%A2%E3%82%81%E3%82%8B)
+- [virbr0を消す](#virbr0%E3%82%92%E6%B6%88%E3%81%99)
+- [起動に失敗したデーモンのリスト](#%E8%B5%B7%E5%8B%95%E3%81%AB%E5%A4%B1%E6%95%97%E3%81%97%E3%81%9F%E3%83%87%E3%83%BC%E3%83%A2%E3%83%B3%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88)
+- [AWSでホスト名を変更する](#aws%E3%81%A7%E3%83%9B%E3%82%B9%E3%83%88%E5%90%8D%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B)
+- ["Require IPv4 addressing for this connection to complete"](#%22require-ipv4-addressing-for-this-connection-to-complete%22)
+- [GRUB2の再インストール](#grub2%E3%81%AE%E5%86%8D%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB)
+- [RHELのバックアップ・リストア](#rhel%E3%81%AE%E3%83%90%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97%E3%83%BB%E3%83%AA%E3%82%B9%E3%83%88%E3%82%A2)
 - [ReaR (Relax-and-Recover)](#rear-relax-and-recover)
+- [RHELを見た目ダウングレードさせる](#rhel%E3%82%92%E8%A6%8B%E3%81%9F%E7%9B%AE%E3%83%80%E3%82%A6%E3%83%B3%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E3%81%95%E3%81%9B%E3%82%8B)
+
 
 # インストール済みパッケージ一覧
 
@@ -419,10 +421,10 @@ dkmsを使う方法。
 参照: [HowTos/Virtualization/VirtualBox/CentOSguest - CentOS Wiki](https://wiki.centos.org/HowTos/Virtualization/VirtualBox/CentOSguest)
 
 ```
-yum install epel-release
-yum install dkms
-yum groupinstall "Development Tools"
-yum install kernel-devel
+yum install epel-release -y
+yum install dkms -y
+yum groupinstall "Development Tools" -y
+yum install kernel-devel -y
 ```
 VirtualBoxGuestCDをマウントして、CDのディレクトリで
 ```
