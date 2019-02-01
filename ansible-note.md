@@ -912,3 +912,67 @@ ansible.cfgはパッケージでは`/etc/ansible/ansible.cfg`
 git版では`examples/ansible.cfg`
 にあるので、それをコピーして編集すると苦労が減ると思う。
 
+# Windowsで化ける出力を得る
+
+ansibleで情報を引っ張ってくるケースはよくあるんだけれど、
+たまにCP932しか吐かないコマンドがあるので、
+それの対応。
+
+[WindowsのCP932に苦闘している件](https://www.slideshare.net/HidetoshiHirokawa/windowscp932-95190631)
+にない別解
+
+利点はnkfがいらないこと。
+
+コツは2つ:
+- win_shellモジュールで、powershellでなくcmd.exeを使う
+- 出力をいったんファイルに落とす
+
+w32tmを使ったplaybookの例
+```
+---
+# sjis vs asnsible
+- name: Windows ntpq
+  hosts: all
+  become: no
+  vars:
+    outpath: ./var/w32tm
+  gather_facts: False
+
+  tasks:
+    - name: Ensures ouput directory exists.
+      local_action: file path={{outpath}} state=directory
+      run_once: true
+
+    - name: create remote temporary directory
+      win_tempfile:
+        state: directory
+        suffix: temp
+      register: tmpfile
+      changed_when: no
+
+    - name: Run a command.
+      win_shell: w32tm /query /status > {{tmpfile.path}}/status.log
+      args:
+        executable: cmd
+      # powershellだと化けるのでcmd.exeを使う
+      changed_when: no
+      ignore_errors: True
+      # 標準出力だと化けるので、registerでなく一旦ファイルに落とす
+
+    - name: Fetch output file
+      fetch:
+        src: "{{ tmpfile.path }}/status.log"
+        dest: "{{ outpath }}/{{inventory_hostname}}.log"
+        flat: yes
+    
+    - name: remove remote temporary directory
+      win_file:
+        path: "{{ tmpfile.path }}"
+        state: absent
+      changed_when: no
+```
+
+なぜか改行コードがLFになる。
+
+TODO: 得たファイルを `iconv -f cp932 -t utf8` する。
+

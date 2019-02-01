@@ -4,7 +4,7 @@ dumpとrestoreを使って
 
 - [注意](#%E6%B3%A8%E6%84%8F)
 - [例の前提](#%E4%BE%8B%E3%81%AE%E5%89%8D%E6%8F%90)
-  - [メモ](#%E3%83%A1%E3%83%A2)
+  - [GPTツールメモ](#gpt%E3%83%84%E3%83%BC%E3%83%AB%E3%83%A1%E3%83%A2)
 - [dump](#dump)
   - [インストールCDからrescueモードで起動する](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%ABcd%E3%81%8B%E3%82%89rescue%E3%83%A2%E3%83%BC%E3%83%89%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B)
 - [dump(続き)](#dump%E7%B6%9A%E3%81%8D)
@@ -51,10 +51,26 @@ sda                   8:0    0    8G  0 disk
   └─centos_c71-swap 253:1    0  820M  0 lvm  [SWAP]
 sr0                  11:0    1 1024M  0 rom
 ```
-## メモ
+## GPTツールメモ
 
-sgdiskは`yum install gdisk`。
+
+sgdiskは `yum install gdisk`。
+Debian/Ubuntuでも `atp install gdisk`.
 バックアップ前にHDDにインストールしておくと少し楽。
+
+sfdisk, cfdiskの新しいバージョンはGPTにも対応している。
+RHEL7のはGPT対応していないので
+sgdisk, cgdiskを使うこと。
+
+ディスクがMBRかGPTか確認するには
+```
+parted -l /dev/sda
+```
+が最も汎用的。
+
+`sfdisk -l`は`sgdisk -p`.
+
+sgdiskの`-l`は `-b`オプションと対になるバックアップ/ロードバックアップ。
 
 
 # dump
