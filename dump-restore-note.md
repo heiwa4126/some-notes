@@ -10,6 +10,7 @@ dumpとrestoreを使って
   - [インストールCDからrescueモードで起動する](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%ABcd%E3%81%8B%E3%82%89rescue%E3%83%A2%E3%83%BC%E3%83%89%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B)
 - [dump(続き)](#dump%E7%B6%9A%E3%81%8D)
 - [restore](#restore)
+- [TODO](#todo)
 - [参考](#%E5%8F%82%E8%80%83)
 
 # 注意
@@ -267,6 +268,14 @@ grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
 RHELならsubscription-managerも修正する。
 
 /etc/sysconfig/network-script/ifc*にはMACも入ってたりするので注意。
+
+# TODO
+
+dumpをもう少し簡単に & 自動定期実行できるようにする
+- ある程度daemonを止めて実行する。
+- LVMスナップショットと組み合わせる。
+
+などなど。 
 
 # 参考
 
