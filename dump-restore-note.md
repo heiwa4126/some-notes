@@ -5,6 +5,7 @@ dumpとrestoreを使って
 - [注意](#%E6%B3%A8%E6%84%8F)
 - [例の前提](#%E4%BE%8B%E3%81%AE%E5%89%8D%E6%8F%90)
   - [GPTツールメモ](#gpt%E3%83%84%E3%83%BC%E3%83%AB%E3%83%A1%E3%83%A2)
+  - [他メモ](#%E4%BB%96%E3%83%A1%E3%83%A2)
 - [dump](#dump)
   - [インストールCDからrescueモードで起動する](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%ABcd%E3%81%8B%E3%82%89rescue%E3%83%A2%E3%83%BC%E3%83%89%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B)
 - [dump(続き)](#dump%E7%B6%9A%E3%81%8D)
@@ -68,9 +69,28 @@ parted -l /dev/sda
 ```
 が最も汎用的。
 
-`sfdisk -l`は`sgdisk -p`.
+`sfdisk -l` は `sgdisk -p`.
 
 sgdiskの`-l`は `-b`オプションと対になるバックアップ/ロードバックアップ。
+
+## 他メモ
+
+GPTのパーティションにはPARTUUIDというIDが付く。
+
+ファイルシステムを作っていないパーティション、
+またはpvcreateしてないパーティション
+にはUUID(PARTUUIDではなく)はつかない。
+これはMBRでも同じ。
+
+/dev/mapper/* は /dev/dm* へのシンボリックリンク。
+/dev/ボリュームグループ名/* も。
+
+device-mapparについて詳しくは
+* [LC2009 Tutorial: device-mapper - T-02-slide.pdf](http://lc.linux.or.jp/lc2009/slide/T-02-slide.pdf)
+* [device-mapperの仕組み (1) device-mapperの概要 - テストステ論](https://www.akiradeveloper.com/entry/2013/05/11/220634)
+
+など参照。
+
 
 
 # dump
@@ -143,6 +163,11 @@ restoreそのものよりも、
 GPTディスクにパーティションを復元、
 LVMを設定 そして EFIをインストールするのは
 とてつもなく難しい。
+
+パーティションを「復元」ではなく、
+もとに近いものを作る、
+という方針でもいいかもしれないので
+そこは臨機応変に行うこと。
 
 
 まずdump同様
@@ -233,6 +258,7 @@ grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
 
 最後に
 /etc/fstabのuuidを`blkid`の値に従って編集。
+(もしくはtune2fs -UでUUIDのほうを変更するなど)
 
 別マシンに複製した場合は、
 /etc/sysconfig/network-scriptの下や、
@@ -240,6 +266,7 @@ grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
 なども書き換える。
 RHELならsubscription-managerも修正する。
 
+/etc/sysconfig/network-script/ifc*にはMACも入ってたりするので注意。
 
 # 参考
 
