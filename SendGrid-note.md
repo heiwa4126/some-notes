@@ -37,7 +37,7 @@ mail sendだけ有効なキーを作る。
 [Postfixでメール送信 - ドキュメント | SendGrid](https://sendgrid.kke.co.jp/docs/Integrate/Mail_Servers/postfix.html)
 
 `/etc/postfix/sasl_passwd`に設定する"ユーザ名:パスワード"は、
-- ユーザ名 `apikey`
+- ユーザ名 `apikey` <- この6文字
 - パスワード さっき作ったmail sendだけ有効なAPIキー
 
 を指定すること。
