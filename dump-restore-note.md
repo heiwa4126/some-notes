@@ -23,7 +23,7 @@ xfs用にはxfsdump/xfsrestoreがある。オプションはほぼ同じ。
 - [xfsdump(8) - Linux man page](https://linux.die.net/man/8/xfsdump)
 
 
-他のファイルシステムの場合、dump/restoreは諦めて
+他のファイルシステム(reiserfs, jfs, btrfs など)の場合、dump/restoreは諦めて
 Relax-and-Recover (ReaR) 
 の使用をお勧めする。
 - [Red Hat Enterprise Linux 7 第26章 Relax-and-Recover (ReaR) - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-relax-and-recover_rear)
@@ -55,7 +55,6 @@ sr0                  11:0    1 1024M  0 rom
 ```
 ## GPTツールメモ
 
-
 sgdiskは `yum install gdisk`。
 Debian/Ubuntuでも `atp install gdisk`.
 バックアップ前にHDDにインストールしておくと少し楽。
@@ -70,8 +69,8 @@ parted -l /dev/sda
 ```
 が最も汎用的。
 
-`sfdisk -l` は `sgdisk -p`.
-
+MBRのツールとGPTのツールでは若干オプションが異なる。
+例えば `sfdisk -l` は `sgdisk -p`.
 sgdiskの`-l`は `-b`オプションと対になるバックアップ/ロードバックアップ。
 
 ## 他メモ
@@ -93,13 +92,12 @@ device-mapparについて詳しくは
 など参照。
 
 
-
 # dump
 
 BMR(Bare Metal Restore)用にフルバックアップ(entire dump)を行う。
 
 マウントされたデバイスもdumpでバックアップできるが、
-静止点確保のため、インストールCDからrescueモードで起動する。
+「静止点」確保のため、インストールCDからrescueモードで起動する。
 
 
 ## インストールCDからrescueモードで起動する
@@ -163,7 +161,7 @@ vgcfgbackup -f lvm.txt
 restoreそのものよりも、
 GPTディスクにパーティションを復元、
 LVMを設定 そして EFIをインストールするのは
-とてつもなく難しい。
+大変難しい。
 
 パーティションを「復元」ではなく、
 もとに近いものを作る、
@@ -181,7 +179,9 @@ cdを挿入し
 4. return
 
 ```
-## ここでネットワーク設定
+## ここでネットワークを手動設定
+ip a ... (略)
+
 # CIFS共有ディスクをマウント(壊さないようroで)
 mkdir /mnt/dump
 mount -t cifs -o ro,username=foo,password=baz //192.168.56.91/dump /mnt/dump
@@ -228,9 +228,9 @@ cd boot
 restore -rf /mnt/dump/c71/boot.dump
 ```
 
-ここで再起動してrescueモードではいると、
+ここで再起動してrescueモードではいりなおすと、
 /mnt/sysimageの下にrootとbootがマウントされているはず。
-('lsblk'で確認)
+(`lsblk` で確認)
 
 されていなかったら
 ```
@@ -248,6 +248,7 @@ chroot /mnt/sysimage
 mount -t vfat /dev/sda1 /boot/efi
 
 ## ここでネットワーク設定
+ip a ... (略)
 
 # grub-efiのインストール
 yum reinstall grub2-efi shim grub2-tools
