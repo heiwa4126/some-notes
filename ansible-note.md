@@ -434,6 +434,7 @@ Get-Item WSMan:\localhost\Client\TrustedHosts
 * 設定されているTrustedHostsをすべて消去
 Clear-Item WSMan:\localhost\Client\Trustedhosts
 ```
+設定は上書きなので注意(追加じゃない).
 
 ↑引用元:
 * [PowerShellでリモートからコマンドを実行する - Masato's IT Library](https://mstn.hateblo.jp/entry/2016/09/13/193124)
