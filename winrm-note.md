@@ -169,3 +169,28 @@ WMIの通信の設定もかなり面倒。
 * [Let's Encrpytで発行した証明書をPowerShellリモート接続のHTTPS接続にも使ってみる](https://qiita.com/kazinoue/items/bdd7b783d6742770b2cc)
 * [Let's Encryptで発行した証明書をRemote Desktopの証明書にも割り当ててみる](https://qiita.com/kazinoue/items/209846d0204caad46522)
 
+# pywinrmでの例
+
+[diyan/pywinrm: Python library for Windows Remote Management (WinRM)](https://github.com/diyan/pywinrm)
+の例をちょっとだけアレンジした例
+```
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+from winrm.protocol import Protocol
+
+p = Protocol(
+    endpoint='https://HOSTXXX:5986/wsman',
+    transport='ntlm',
+    username=r'x.example.com\foobar',
+    password='swordfish',
+    server_cert_validation='ignore')
+shell_id = p.open_shell()
+command_id = p.run_command(shell_id, 'ipconfig', ['/all'])
+std_out, std_err, status_code = p.get_command_output(shell_id, command_id)
+p.cleanup_command(shell_id, command_id)
+p.close_shell(shell_id)
+
+# std_out is binary[]
+print(std_out)
+```
