@@ -155,6 +155,47 @@ Remove-PSSession -Session $sess
 Get-WmiObjectは`-computername`でリモートを指定できるけれど、PSRemotingの方が早い。
 WMIの通信の設定もかなり面倒。
 
+## httpsで接続して、かつ証明書をごまかすPowershellサンプル
+
+超ありがちなダメな状況。
+
+IPではSSL使えないし、
+非ADユーザでつなぐのもどうか。
+**でも動く**
+
+```
+$url = "https://111.222.333.444:5986/wsman"
+$username = ".\user001" # local user example 
+$passwd   = "swordfish"
+
+# Credential オプションに指定するオブジェクトのインスタンス生成
+$psc = New-Object System.Management.Automation.PsCredential($username, (ConvertTo-SecureString $passwd -AsPlainText -Force))
+
+# 証明書エラーをごまかす設定
+$sessionOption = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
+
+# New-PSSession コマンドによるセッションの生成
+$sess = New-PSSession -ConnectionURI $url -Credential $psc -SessionOption $sessionOption
+
+## セッションの確認
+# Get-PSSession
+
+# 若干のWMIの収集サンプル
+$cpu = Invoke-Command -Session $sess -ScriptBlock {Get-WmiObject Win32_Processor}
+$mem = Invoke-Command -Session $sess -ScriptBlock {Get-WmiObject Win32_PhysicalMemory}
+$sys = Invoke-Command -Session $sess -ScriptBlock {Get-WmiObject Win32_ComputerSystem}
+
+# セッションを削除
+Remove-PSSession -Session $sess
+
+# 結果を出力
+$cpu | fl *
+$mem | fl *
+$sys | fl *
+```
+
+参考:
+* [Not able to remote connect to powershell](https://social.technet.microsoft.com/Forums/en-US/e1aac407-33a1-4d19-988f-8b954d8b5007/not-able-to-remote-connect-to-powershell?forum=Exch2016PS)
 
 # その他参考
 
@@ -192,5 +233,6 @@ p.cleanup_command(shell_id, command_id)
 p.close_shell(shell_id)
 
 # std_out is binary[]
-print(std_out)
+#print(std_out)
+print(std_out.decode('sjis'))
 ```
