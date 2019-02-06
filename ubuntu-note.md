@@ -188,6 +188,10 @@ RHELやCentでもEPELにあるので、絶対入れるべき。
 
 `/var/run/reboot-required`または`/var/run/reboot-required.pkg`の存在をチェック
 
+
+
+
+
 # Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数
 
 なんと、数じゃないらしい。
@@ -280,3 +284,10 @@ Ubuntu18から標準になったので調べておくこと。
 * [Examples | netplan.io](https://netplan.io/examples)
 * [Netplanの使い方 - komeの備忘録](https://www.komee.org/entry/2018/06/12/181400)
 * [Ubuntu 18.04 LTS のネットワーク設定がnetplanというものになっているのでその確認とか – Webを汚すWeblog](https://blog.dshimizu.jp/article/1196)
+
+
+# Let's Encryptで証明書が更新されたか知る
+
+```
+zgrep "Cert is due for renewal" /var/log/letsencrypt/letsencrypt.log*
+```
