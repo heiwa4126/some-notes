@@ -28,6 +28,14 @@ journalctl -exlp err
 * [Arch Wikiのjournal]
 (https://wiki.archlinux.jp/index.php/Systemd#Journal)
 
+# loggerコマンド的なもの
+
+journaldはsyslogも収集してるのでloggerで出せばjournaldにも出る。
+
+直接出すなら
+[systemd-cat](https://www.freedesktop.org/software/systemd/man/systemd-cat.html)
+が面白い。これのサンプル参照。pipeとしても使える。
+
 # 参考
 
 * [Red Hat Enterprise Linux 7 22.10. Journal の使用 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/s1-using_the_journal)
