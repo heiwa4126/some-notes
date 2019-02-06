@@ -27,3 +27,7 @@ journalctl -exlp err
 (https://sites.google.com/site/kandamotohiro/systemd/man-journalctl-no-yi)
 * [Arch Wikiのjournal]
 (https://wiki.archlinux.jp/index.php/Systemd#Journal)
+
+# 参考
+
+* [Red Hat Enterprise Linux 7 22.10. Journal の使用 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/s1-using_the_journal)
