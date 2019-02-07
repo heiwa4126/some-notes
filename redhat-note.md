@@ -561,6 +561,13 @@ yum distribution-synchronization
 ```
 でダウングレードもできるはずだが、実際にはほとんど無理。
 
+あったりまえですが固定すると
+> 最新以外または古いマイナーリリースへのアップデートには、セキュリティーおよびバグのエラータが含まれないことに注意してください
 
+なので注意。
+
+参考:
+* [Red Hat Enterprise Linux の特定のアップデートにシステムを指定する](https://access.redhat.com/ja/solutions/743243)
+* [Red Hat Enterprise Linux 6 8.4.3. Using Yum Variables - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-using_yum_variables)
 
 
