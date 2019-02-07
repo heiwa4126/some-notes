@@ -566,8 +566,23 @@ yum distribution-synchronization
 
 なので注意。
 
+登録時にリリースを設定することもできるけど、これは「固定」になるかはわからない。
+```
+subscription-manager register --autosubscribe --release=6.4
+
+# 確認 
+subscription-manager release --list
+
+# あとから追加
+subscription-manager release --set=6.3
+```
+
+
+
 参考:
 * [Red Hat Enterprise Linux の特定のアップデートにシステムを指定する](https://access.redhat.com/ja/solutions/743243)
 * [Red Hat Enterprise Linux 6 8.4.3. Using Yum Variables - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-using_yum_variables)
+* [Red Hat Enterprise Linux 6 5.6.3. コマンドラインで希望するオペレーティングシステムのリリースバージョンを設定する - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/deployment_guide/preferred-os)
+
 
 
