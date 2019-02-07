@@ -226,6 +226,17 @@ no_proxy="localhost, 127.0.0.1, *.yourdomain.com"
 ```
 ぐらいでも結構生活が楽になる。
 
+# 参考
+
+* [[AWS]RHEL7 よくある初期構築設定のコマンド詰め合わせ ｜ DevelopersIO](https://dev.classmethod.jp/cloud/aws/ec2-rehl7-first-buildcmd/)
+
+EC2のユーザーデータに関して:
+
+* [AWS勉強会(補足1) / ユーザーデータでEC2作成時の初期設定を行う - Qiita](https://qiita.com/zaki-lknr/items/197ea366bd4243b78e69)
+* [EC2 インスタンスの初回起動後にユーザーデータを実行する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/execute-user-data-ec2/)
+* [Linux インスタンスでの起動時のコマンドの実行 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/user-data.html)
+
+
 # Unattended Upgradesの有効/無効
 
 Unattended Upgradesを有効にすると、セキュリティアップグレードを勝手に実行する。
@@ -257,7 +268,7 @@ systemctl mask systemd-networkd-wait-online.service
 
 確かにsystemd-networkd-wait-onlineで止まるホストではSETUPがconfiguringになるインタフェースがあるなあ。
 
-# yum history
+# yum history みたいのを Debian/Ubuntu で
 
 yumの`yum history info nn`みたいなやつが羨ましくてしらべた。
 
