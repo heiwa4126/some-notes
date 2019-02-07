@@ -32,6 +32,8 @@ journalctl -exlp err
 
 journaldはsyslogも収集してるのでloggerで出せばjournaldにも出る。
 
+logger に `--journald`オプションがあるときもある(man logger)
+
 直接出すなら
 [systemd-cat](https://www.freedesktop.org/software/systemd/man/systemd-cat.html)
 が面白い。これのサンプル参照。pipeとしても使える。
