@@ -546,9 +546,20 @@ yum updateが簡単になる。
 exclude=kernel-* kmod-* redhat-release-* perf-* python-perf-* initscripts
 ```
 
+# RHELを特定のバージョンに固定する
 
+yumの$releasever変数を指定する。
 
+例)
+```
+echo 7.4 > /etc/yum/vars/releasever
+```
 
+設定すると
+```
+yum distribution-synchronization
+```
+でダウングレードもできるはずだが、実際にはほとんど無理。
 
 
 
