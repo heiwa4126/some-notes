@@ -561,6 +561,20 @@ yum distribution-synchronization
 ```
 でダウングレードもできるはずだが、実際にはほとんど無理。
 
+[Red Hat Enterprise Linux 7 9.5. Yum と Yum リポジトリーの設定 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-Configuring_Yum_and_Yum_Repositories#sec-Using_Yum_Variables)によると、
+> yum は /etc/yum.conf 設定ファイルにある distroverpkg=value の行から $releasever の値を取得します
+
+とあるので、そちらを設定するほうがいいかもしれない(優先度不明)
+
+デフォルトは
+```
+distroverpkg=redhat-release
+```
+なので
+redhat-releaseをyum.confのexcludeに追加する(たぶんinitscriptsも)
+だけで同じ効果があると思われる。
+
+
 あったりまえですが固定すると
 > 最新以外または古いマイナーリリースへのアップデートには、セキュリティーおよびバグのエラータが含まれないことに注意してください
 
