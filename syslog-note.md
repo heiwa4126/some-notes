@@ -2,6 +2,7 @@ syslog(とjouernald)で出るエラーメッセージの対策メモ
 
 - [pam_oddjob_mkhomedir.soが無い](#pamoddjobmkhomedirso%E3%81%8C%E7%84%A1%E3%81%84)
 - [ntpd ::1](#ntpd-1)
+- [postfix](#postfix)
 
 # pam_oddjob_mkhomedir.soが無い
 
@@ -27,3 +28,21 @@ messages:Feb  4 19:12:24 XXXXXXX001 ntpd[6363]: restrict: error in address '::1'
 ```
 
 `restrict -6 ::1`もあるらしい。
+
+# postfix
+
+```
+ 2月 06 22:53:25 XXXXXX001 postfix/pickup[24937]: warning: inet_protocols: disabling IPv6 name/address support: Address
+```
+
+対策
+```
+inet_protocols = all
+```
+から
+```
+inet_protocols = ipv4
+```
+
+小文字なのがミソ
+
