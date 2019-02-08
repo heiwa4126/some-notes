@@ -20,10 +20,12 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
 - [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
 - [no_proxy](#no_proxy)
+- [参考](#参考)
 - [Unattended Upgradesの有効/無効](#unattended-upgradesの有効無効)
 - [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
-- [yum history](#yum-history)
+- [yum history みたいのを Debian/Ubuntu で](#yum-history-みたいのを-debianubuntu-で)
 - [netplan.io](#netplanio)
+- [Let's Encryptで証明書が更新されたか知る](#lets-encryptで証明書が更新されたか知る)
 
 # タイムゾーン
 

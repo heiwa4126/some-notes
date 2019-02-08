@@ -1,4 +1,6 @@
 - [journaldのメモ](#journaldのメモ)
+- [loggerコマンド的なもの](#loggerコマンド的なもの)
+- [参考](#参考)
 
 # journaldのメモ
 
