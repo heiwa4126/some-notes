@@ -1,4 +1,5 @@
 - [links](#links)
+- [random note](#random-note)
 
 # links
 
@@ -12,3 +13,21 @@
 
 Red Hat系はEPELにパッケージがある。
 Ubuntuは普通にパッケージがある。
+
+
+# random note 
+
+Windows
+
+1. [Cntlm Authentication Proxy - Browse /cntlm/cntlm 0.92.3 at SourceForge.net](https://sourceforge.net/projects/cntlm/files/cntlm/cntlm%200.92.3/)
+から `cntlm-0.92.3-setup.exe` を取得 & 実行
+2. xxxxにある設定ファイル `cntlm.ini` を
+添付のcntlm.ini で上書きする。
+3. スタート→コントロールパネル→管理ツール→サービス→Cntlm Authentication Proxy で右クリック→開始 
+4. 同様に 右クリック→全般タブ→スタートアップの種類→自動→OK
+    - TODO: 3.4.の手順をスクリプトにする
+5. pac
+
+xxxxは
+C:\Program Files\Cntlm
+C:\Program Files(x86)\Cntlm
