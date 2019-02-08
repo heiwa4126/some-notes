@@ -150,6 +150,7 @@ cat list | xargs yum install
 ```
 と同じ
 
+
 # psの出力を長くする
 
 shellと関係ないけどよく忘れるのでメモ
@@ -165,6 +166,7 @@ w2個で制限がなくなる。
 
 参考: [Man page of PS](https://linuxjm.osdn.jp/html/procps/man1/ps.1.html)
 
+
 # tarでリスト
 
 これもshellと関係ないけどよく忘れるのでメモ。
@@ -179,4 +181,3 @@ tar ztvf foo.tar.gz
 ```
 
 zcvf,zxvfのc,xのところにt(--list)を使う。
-
