@@ -7,12 +7,25 @@ syslog(とjouernald)で出るエラーメッセージの対策メモ
 # pam_oddjob_mkhomedir.soが無い
 
 ```
-2月 08 14:03:01 XXXXXXX001 crond[476]: PAM unable to dlopen(/usr/lib64/security/pam_oddjob_mkhomedir.so): /usr/lib64/sec
- 2月 08 14:03:01 XXXXXXX001 crond[476]: PAM adding faulty module: /usr/lib64/security/pam_oddjob_mkhomedir.so
+journalctl -exlp err
 ```
+で
 
-[Why AD user's home directory is not getting created in Atomic host after configuring sssd container ?](https://access.redhat.com/solutions/2946401)
+```
+2月 08 14:03:01 XXXXXXX001 crond[476]: PAM unable to dlopen(/usr/lib64/security/pam_oddjob_mkhomedir.so): /usr/lib64/sec
+2月 08 14:03:01 XXXXXXX001 crond[476]: PAM adding faulty module: /usr/lib64/security/pam_oddjob_mkhomedir.so
+```
+が毎分出ているとき。
 
+```
+yum install oddjob-mkhomedir
+```
+でとりあえず消せる。影響がわからない。
+
+```
+journalctl -f -p err
+```
+で見張る。
 
 # ntpd ::1
 
