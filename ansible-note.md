@@ -1,8 +1,10 @@
 ansibleメモランダム
 
 - [感想](#感想)
-- [RHEL7](#rhel7)
-- [git](#git)
+- [インストール](#インストール)
+  - [RHEL7](#rhel7)
+  - [Ubuntu/Debian](#ubuntudebian)
+  - [git](#git)
 - [loopについて](#loopについて)
   - [blockでloopが使えない](#blockでloopが使えない)
   - [handlersでblockが使えない](#handlersでblockが使えない)
@@ -51,7 +53,9 @@ ansibleメモランダム
 - [参照](#参照)
 - [sshまわり](#sshまわり)
 - [公開鍵でなくパスワードでssh接続する](#公開鍵でなくパスワードでssh接続する)
+- [Windows用のvars例](#windows用のvars例)
 - [ansible.cfgの場所](#ansiblecfgの場所)
+- [Windowsで化ける出力を得る](#windowsで化ける出力を得る)
 
 # 感想
 
@@ -74,7 +78,15 @@ ansibleメモランダム
 
 こういうの↑もできるけど、アカウントが違ったりするともうアウトだし。
 
-# RHEL7
+
+# インストール
+
+コントロールマシンにansibleをインストールする様々な方法
+
+公式: 
+[Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+
+## RHEL7
 
 ansibleパッケージは別レポジトリなので
 ```
@@ -93,16 +105,26 @@ ansible-2.7.5-1が入る。
 * [第33章 Ansible を使用した Red Hat Enterprise Linux System Roles - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/7.5_release_notes/technology_previews_red_hat_enterprise_linux_system_roles_powered_by_ansible)
 * [Red Hat Enterprise Linux (RHEL) System Roles](https://access.redhat.com/articles/3050101)
 
-# レポジトリ
+## Ubuntu/Debian
 
-(TODO:)
+Ubuntu/Debianで新し目のansibleをパッケージで入れる場合、
+この辺参考:
+* [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu)
+* [ansible : Ansible, Inc.](https://launchpad.net/~ansible/+archive/ubuntu/ansible)
 
+Ubuntuの場合
+```
+apt-get update
+apt-get install software-properties-common
+apt-add-repository --yes --update ppa:ansible/ansible
+apt-get install ansible
+```
 
-
-# git
+## git
 
 ansibleをまるごとgit cloneしておくと捗る。Dymamic inventoryなどハードリンクすると楽。
-* [ansible/ansible: Ansible is a radically simple IT automation platform that makes your applications and systems easier to deploy. Avoid writing scripts or custom code to deploy and update your applications — automate in a language that approaches plain English, using SSH, with no agents to install on remote systems. https://docs.ansible.com/ansible/](https://github.com/ansible/ansible)
+* [Ansible on GitHub](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#ansible-on-github)
+* [ansible/ansible - GitHub](https://github.com/ansible/ansible)
 
 手順は
 ```
@@ -679,6 +701,7 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 パスワードなどを暗号化して、うっかりgithubに上げてしまっても安全に。
 
 参考:
+* [Ansible Vault — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/vault.html)
 * [Ansible Vault を試す](https://qiita.com/yteraoka/items/d18e3c353b6e15ca84a8)
 * [Ansible Vault を賢く使う](https://qiita.com/yteraoka/items/de9da64ca2d9261b0292)
 
@@ -686,6 +709,8 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 
 - ansible.confにvault_password_fileオプションで指定
 - 実行時にオプションで指定
+
+これをgit管理パス以外に置けばいい。
 
 # ansible.conf
 
