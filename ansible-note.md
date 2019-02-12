@@ -1047,3 +1047,17 @@ netstatの-pオプションはsuがいるので。
 参考:
 * [Understanding Privilege Escalation — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/become.html#id1)
  
+# fuserのverboseはなぜかstderrに出る
+
+しかもPIDはstdoutに出る。なので
+`/sbin/fuser -vn tcp 80`
+の出力を集めたいときは
+
+```
+    - shell: "/sbin/fuser -vn tcp 80 |& cat"
+      become: yes
+      register: rc
+      ignore_errors: True
+      changed_when: no
+```
+みたいなタスクにしないとダメ。
