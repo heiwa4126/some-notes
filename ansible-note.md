@@ -56,6 +56,7 @@ ansibleメモランダム
 - [Windows用のvars例](#windows用のvars例)
 - [ansible.cfgの場所](#ansiblecfgの場所)
 - [Windowsで化ける出力を得る](#windowsで化ける出力を得る)
+- [local_action](#local_action)
 
 # 感想
 
@@ -1001,4 +1002,40 @@ w32tmを使ったplaybookの例
 なぜか改行コードがLFになる。
 
 TODO: 得たファイルを `iconv -f cp932 -t utf8` する。
+
+
+# local_action
+
+local_actionはローカルで実行されるのだけど、
+このときにもbecomeが効くので、
+`become: yes`だとローカルでsudo/suしようとする。
+
+local_actionを使う場合は、
+そのタスクに`become: no`をつけとく習慣にするべき。
+
+playbookの例。
+netstatの-pオプションはsuがいるので。
+```
+---
+- name: gather 'netstat -tapn'
+  hosts: all
+  become: yes
+  gather_facts: False
+  vars:
+    outpath: ./var/netstat-tapn
+  tasks:
+    - name: Ensures ouput directory exists.
+      local_action: file path={{outpath}} state=directory
+      run_once: true
+      become: no
+
+    - shell: LANG=C netstat -tapn
+      register: rc
+      changed_when: no
+      ignore_errors: True
+
+    - name: Write result to output file.
+      local_action: copy content={{rc.stdout}} dest={{outpath}}/{{inventory_hostname}}.log
+      become: no
+```
 
