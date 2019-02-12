@@ -1006,12 +1006,19 @@ TODO: 得たファイルを `iconv -f cp932 -t utf8` する。
 
 # local_action
 
-local_actionはローカルで実行されるのだけど、
-このときにもbecomeが効くので、
+local_actionはローカル(コントロールマシン)で実行されるのだけど、
+このときにもbecomeの設定が効くので、
 `become: yes`だとローカルでsudo/suしようとする。
 
 local_actionを使う場合は、
 そのタスクに`become: no`をつけとく習慣にするべき。
+
+あるいは必要なところにだけbecome: yesするか。
+becomeのデフォルトはno(false)。
+
+ほかから呼ばれる可能性もあるので、
+明示したほうがいいかもしれない。
+
 
 playbookの例。
 netstatの-pオプションはsuがいるので。
@@ -1019,7 +1026,6 @@ netstatの-pオプションはsuがいるので。
 ---
 - name: gather 'netstat -tapn'
   hosts: all
-  become: yes
   gather_facts: False
   vars:
     outpath: ./var/netstat-tapn
@@ -1027,15 +1033,17 @@ netstatの-pオプションはsuがいるので。
     - name: Ensures ouput directory exists.
       local_action: file path={{outpath}} state=directory
       run_once: true
-      become: no
 
     - shell: LANG=C netstat -tapn
+      become: yes
       register: rc
       changed_when: no
       ignore_errors: True
 
     - name: Write result to output file.
       local_action: copy content={{rc.stdout}} dest={{outpath}}/{{inventory_hostname}}.log
-      become: no
 ```
 
+参考:
+* [Understanding Privilege Escalation — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/become.html#id1)
+ 
