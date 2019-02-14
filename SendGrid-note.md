@@ -1,3 +1,9 @@
+- [Azureのインスタンスからメールを送る](#azureのインスタンスからメールを送る)
+  - [SendGrid編](#sendgrid編)
+  - [Postfix編](#postfix編)
+  - [exim4](#exim4)
+
+
 # Azureのインスタンスからメールを送る
 
 Postfix+SendGridを使う例。
@@ -42,3 +48,12 @@ mail sendだけ有効なキーを作る。
 
 を指定すること。
 
+## exim4
+
+[Exim 4 configuration for SendGrid | SendGrid Documentation](https://sendgrid.com/docs/for-developers/sending-email/exim/)
+
+postfix同様に
+- ユーザ名 `apikey` <- この6文字
+- パスワード さっき作ったmail sendだけ有効なAPIキー
+
+にすればできるはず(試してません)。
