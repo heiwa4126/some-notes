@@ -121,6 +121,8 @@ apt-add-repository --yes --update ppa:ansible/ansible
 apt-get install ansible
 ```
 
+↑proxy使っている場合はaptのproxy設定以外に`export=https://...`の類が必要。
+
 ## git
 
 ansibleをまるごとgit cloneしておくと捗る。Dymamic inventoryなどハードリンクすると楽。
