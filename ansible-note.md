@@ -123,6 +123,20 @@ apt-get install ansible
 
 ↑proxy使っている場合はaptのproxy設定以外に`export=https://...`の類が必要。
 
+## pip
+
+pip3でインストールすれば、いきなりpython3で動くのがいい感じ。
+~/.local/binにパスを通して(RHEL7だと標準で、ubuntuだと存在すればパスが通る)
+```
+sudo apt install python3-pip
+pip3 install pip --user
+hash -r
+pip install ansible --user
+hash -r
+```
+みたいな感じで.
+
+
 ## git
 
 ansibleをまるごとgit cloneしておくと捗る。Dymamic inventoryなどハードリンクすると楽。
