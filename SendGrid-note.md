@@ -4,6 +4,7 @@
   - [exim4](#exim4)
 - [改行を有効にする。](#改行を有効にする)
 - [RHEL7のpostfixでうまく動かないとき](#rhel7のpostfixでうまく動かないとき)
+- [リンク](#リンク)
 
 
 # Azureのインスタンスからメールを送る
@@ -89,3 +90,12 @@ Feb 14 04:41:32 XXXXXXXXXXXXXX postfix/smtp[22222]: 6F263169B46: SASL authentica
 yum install cyrus-sasl cyrus-sasl-lib cyrus-sasl-plain cyrus-sasl-md5
 ```
 で、だいたい大丈夫なはず。
+
+# リンク
+
+メールのログ - [email activity](https://app.sendgrid.com/email_activity)
+
+`search` か `show all activity`をクリック。
+
+
+過去バウンスされたので送信しない先 - [bounces](https://app.sendgrid.com/suppressions/bounces)
