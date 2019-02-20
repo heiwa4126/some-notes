@@ -1,8 +1,9 @@
 YAMLメモ
 
-- [リンク](#リンク)
-- [フロースタイル / ブロックスタイル](#フロースタイル--ブロックスタイル)
-- [literal style (“|”) / folded style (“>”)](#literal-style---folded-style-)
+- [リンク](#%E3%83%AA%E3%83%B3%E3%82%AF)
+- [フロースタイル / ブロックスタイル](#%E3%83%95%E3%83%AD%E3%83%BC%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB--%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB)
+- [literal style (“|”) / folded style (“>”)](#literal-style---folded-style)
+- [エスケープ](#%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97)
 
 # リンク
 
@@ -86,3 +87,10 @@ yaml2json (`python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), s
 [YAML Ain’t Markup Language (YAML™) Version 1.2](https://yaml.org/spec/1.2/spec.html)を`c-chomping-indicator`で検索。
 
 
+# エスケープ
+
+* [4.1.6. Escape Sequences](https://yaml.org/spec/current.html#id2517668)
+* [Ansible 2.6 | 不可能なWindowsの使用 - CODE Q&A 問題解決](https://code.i-harness.com/ja/docs/ansible~2.6/user_guide/windows_usage#path-formatting-for-windows)
+* [Ansible 2.6 | Using Ansible and Windows - CODE Q&A Solved](https://code.i-harness.com/en/docs/ansible~2.6/user_guide/windows_usage)
+
+> 二重引用符"を使用する場合、バックスラッシュはエスケープ文字とみなされ、別のバックスラッシュでエスケープする必要があります。 
