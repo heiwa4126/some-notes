@@ -22,4 +22,4 @@ fsck.ext4 -y /dev/mappar/XXXX-root
 `fsck.ext4`のところは環境にあわせてアレンジ。
 
 マウントするとfsckできないので、こんな感じになる。
-
+read-onlyマウントでもfsckできなかった。
