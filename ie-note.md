@@ -10,6 +10,9 @@ Internet Explorer (IE)のメモ。
 そうでない場合のフローチャートは
 https://msdnshared.blob.core.windows.net/media/2018/03/IESecurityZone.pdf
 
+(MSはよく消えるので、用心のため[ローカルコピー](./imgs/IESecurityZone.pdf))
+
+
 ここで出てくる
 - イントラネットのネットワークを自動的に検出する
   - ほかのゾーンに指定されていないローカル(イントラネット)のサイトをすべて含める
@@ -31,3 +34,9 @@ https://msdnshared.blob.core.windows.net/media/2018/03/IESecurityZone.pdf
 
 [前述のフローチャート](https://msdnshared.blob.core.windows.net/media/2018/03/IESecurityZone.pdf)
 を熟読すること。
+
+フローチャートの途中で出てくる「クライアント」はWWWサーバのことらしい。
+(例:「クライアントがドメインネットワーク上に存在する」)
+
+フローチャートの途中で出てくるNLA(Network Location Awareness)が難しい。
+[ASCII.jp：Windowsでネットワークの状況を識別するNetwork Location Awarenessとネットワークプロファイル｜Windows Info](http://ascii.jp/elem/000/001/734/1734489/)で「管理されている(managed)」なものがイントラネットになる。
