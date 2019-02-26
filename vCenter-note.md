@@ -16,3 +16,9 @@
 EFIのVMだと、設定の「仮想マシンオプション」に
 「次回起動時に、強制的に EFI セットアップ画面に入る」があるので
 これを使うと楽。1回だけBIOS画面に入る。 
+
+GRUBのメニューが出ないときは、メーカロゴのところで
+- BIOS(MBR)だったら Shiftキー
+- UEFIだったらESCキー
+
+を押し続けるとよいらしい(未確認。[RecoveryMode - Ubuntu Wiki](https://wiki.ubuntu.com/RecoveryMode))

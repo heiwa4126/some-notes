@@ -139,6 +139,11 @@ encrypted_passwordの含まれた.confをコピーしてもダメ。
 
 各々のvirt-whoホストで実行すること(saltにホスト名か何かが入ってるらしい)
 
+`/etc/sysconfig/virt-who`の
+`VIRTWHO_SAM=1`は0にしないほうがいいと思う。
+デフォルトは1なので特にいじる必要はない。
+
+
 
 # 参考
 

@@ -12,6 +12,7 @@ Red Hat系メモ
 - [ホストの再起動が必要かどうか知る](#%E3%83%9B%E3%82%B9%E3%83%88%E3%81%AE%E5%86%8D%E8%B5%B7%E5%8B%95%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E7%9F%A5%E3%82%8B)
 - [パッケージのpin](#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AEpin)
 - [yum4/dnf](#yum4dnf)
+  - [yum4 参考](#yum4-%E5%8F%82%E8%80%83)
 - [RHEL7の役立つドキュメント](#rhel7%E3%81%AE%E5%BD%B9%E7%AB%8B%E3%81%A4%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88)
 - [AWSでRHEL](#aws%E3%81%A7rhel)
   - [example](#example)
@@ -29,6 +30,8 @@ Red Hat系メモ
 - [RHELのバックアップ・リストア](#rhel%E3%81%AE%E3%83%90%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97%E3%83%BB%E3%83%AA%E3%82%B9%E3%83%88%E3%82%A2)
 - [ReaR (Relax-and-Recover)](#rear-relax-and-recover)
 - [RHELを見た目ダウングレードさせる](#rhel%E3%82%92%E8%A6%8B%E3%81%9F%E7%9B%AE%E3%83%80%E3%82%A6%E3%83%B3%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E3%81%95%E3%81%9B%E3%82%8B)
+- [RHELを特定のバージョンに固定する](#rhel%E3%82%92%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AB%E5%9B%BA%E5%AE%9A%E3%81%99%E3%82%8B)
+- [RHELのホスト名](#rhel%E3%81%AE%E3%83%9B%E3%82%B9%E3%83%88%E5%90%8D)
 
 
 # インストール済みパッケージ一覧
@@ -204,23 +207,30 @@ yumコマンドのオプションでexclude無視ができるので、個別に�
 
 yum遅っそいので。
 
-インストール方法はいろいろあるけれど
-CentOS7の場合:
 ```
-# yum install epel-release
-# yum install centos-release-yum4
-# yum install yum4
-(proxyの設定などを/etc/dnf/dnf.confに)
-# yum4 install dnf-plugins-core
+yum install nextgen-yum4 dnf-plugins-core yum-utils
 ```
-が一番簡単。
+
+設定ファイルは`/etc/dnf/dnf.conf` (いまのところ)
 
 あとはyumの代わりに、yum4またはdnfを使えば(おおむね)OK.
 
 参考:
-[YUM4/DNF for CentOS 7 updates – Blog.CentOS.org](https://blog.centos.org/2018/04/yum4-dnf-for-centos-7-updates/)
+[YUM4/DNF for CentOS 7 updates – Blog.CentOS.org](https://blog.centos.org/2018/04/yum4-dnf-for-centos-7-updates/) - 古い
 
-(TODO)RHELでは?
+RHELでは?
+
+[第36章 システムとサブスクリプション管理 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/7.6_release_notes/technology_previews_system_and_subscription_management)
+
+```
+subscription-manager repos --enable=rhel-7-server-extras-rpms
+yum install nextgen-yum4 dnf-plugins-core yum-utils
+```
+
+## yum4 参考
+
+* [YUM is dead.  Long live YUM! (PDF)](https://people.redhat.com/mskinner/rhug/q3.2018/MSP-RHUG-YUM-is-dead-Long-live-YUM.pdf)
+* [Changes in DNF CLI compared to YUM — DNF 4.0.10-1 documentation](https://dnf.readthedocs.io/en/latest/cli_vs_yum.html)
 
 # RHEL7の役立つドキュメント
 
