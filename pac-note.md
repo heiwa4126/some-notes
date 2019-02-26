@@ -21,6 +21,12 @@ apt-get install libpacparser1
 * [Writing and testing proxy auto-configuration (PAC) files - ThousandEyes Customer Success Center](https://success.thousandeyes.com/PublicArticlePage?articleIdParam=kA044000000LBBmCAO)
 * [man pactester (1): Tool to test proxy auto-config (pac) files.](http://manpages.org/pactester)
 
+テストはこんな感じ
+```
+$ pactester -p ./proxy.pac -u http://www.yahoo.co.jp/test.html
+PROXY 111.222.333.444:8080
+```
+
 # tips
 　
 * Windows10以降ではfile://のpacが使えないのでWWWサーバを立てること
