@@ -4,6 +4,7 @@ Proxy Auto-Configuration (PAC)のメモ。
 # 概要とリファレンス
 
 * [プロキシ自動設定 - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%97%E3%83%AD%E3%82%AD%E3%82%B7%E8%87%AA%E5%8B%95%E8%A8%AD%E5%AE%9A)
+* [プロキシ自動設定ファイル - HTTP | MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_(PAC)_file)
 * [Proxy auto-config - Wikipedia](https://en.wikipedia.org/wiki/Proxy_auto-config)
 
 * [Proxy Auto-Configuration (PAC) file - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_(PAC)_file)
