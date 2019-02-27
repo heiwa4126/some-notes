@@ -5,6 +5,7 @@ Red Hat系メモ
 - [有効になっているレポジトリのリスト](#%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88)
 - [例: 古いカーネルを入手してインストールする](#%E4%BE%8B-%E5%8F%A4%E3%81%84%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%82%92%E5%85%A5%E6%89%8B%E3%81%97%E3%81%A6%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B)
 - [古いカーネルを消す](#%E5%8F%A4%E3%81%84%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%82%92%E6%B6%88%E3%81%99)
+- [パッケージが最新か確認する例](#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%8C%E6%9C%80%E6%96%B0%E3%81%8B%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E4%BE%8B)
 - [コマンドが含まれているパッケージを探す](#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%8C%E5%90%AB%E3%81%BE%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E6%8E%A2%E3%81%99)
 - [proxy設定あちこち](#proxy%E8%A8%AD%E5%AE%9A%E3%81%82%E3%81%A1%E3%81%93%E3%81%A1)
 - [RHELの登録](#rhel%E3%81%AE%E7%99%BB%E9%8C%B2)
@@ -14,6 +15,8 @@ Red Hat系メモ
 - [yum4/dnf](#yum4dnf)
   - [yum4 参考](#yum4-%E5%8F%82%E8%80%83)
 - [RHEL7の役立つドキュメント](#rhel7%E3%81%AE%E5%BD%B9%E7%AB%8B%E3%81%A4%E3%83%89%E3%82%AD%E3%83%A5%E3%83%A1%E3%83%B3%E3%83%88)
+- [タイムゾーンを日本に](#%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E6%97%A5%E6%9C%AC%E3%81%AB)
+- [ロケールを日本に](#%E3%83%AD%E3%82%B1%E3%83%BC%E3%83%AB%E3%82%92%E6%97%A5%E6%9C%AC%E3%81%AB)
 - [AWSでRHEL](#aws%E3%81%A7rhel)
   - [example](#example)
 - [AzureでRHEL](#azure%E3%81%A7rhel)
@@ -116,6 +119,29 @@ kernel.x86_64                                                    3.10.0-862.11.6
 ```
 [yum-utilsを使って/bootの不要なカーネルを削除する方法 | OXY NOTES](https://oxynotes.com/?p=7297)
 
+
+# パッケージが最新か確認する例
+
+```
+# yum --disableexcludes=all --showduplicates list openssh-server
+読み込んだプラグイン:langpacks, product-id, search-disabled-repos, subscription-manager
+インストール済みパッケージ
+openssh-server.x86_64                                7.4p1-16.el7                                    @rhel-7-server-rpms
+利用可能なパッケージ
+openssh-server.x86_64                                6.4p1-8.el7                                     rhel-7-server-rpms
+openssh-server.x86_64                                6.6.1p1-11.el7                                  rhel-7-server-rpms
+openssh-server.x86_64                                6.6.1p1-12.el7_1                                rhel-7-server-rpms
+openssh-server.x86_64                                6.6.1p1-22.el7                                  rhel-7-server-rpms
+openssh-server.x86_64                                6.6.1p1-23.el7_2                                rhel-7-server-rpms
+openssh-server.x86_64                                6.6.1p1-25.el7_2                                rhel-7-server-rpms
+openssh-server.x86_64                                6.6.1p1-31.el7                                  rhel-7-server-rpms
+openssh-server.x86_64                                6.6.1p1-33.el7_3                                rhel-7-server-rpms
+openssh-server.x86_64                                6.6.1p1-35.el7_3                                rhel-7-server-rpms
+openssh-server.x86_64                                7.4p1-11.el7                                    rhel-7-server-rpms
+openssh-server.x86_64                                7.4p1-12.el7_4                                  rhel-7-server-rpms
+openssh-server.x86_64                                7.4p1-13.el7_4                                  rhel-7-server-rpms
+openssh-server.x86_64                                7.4p1-16.el7                                    rhel-7-server-rpms
+```
 
 # コマンドが含まれているパッケージを探す
 
