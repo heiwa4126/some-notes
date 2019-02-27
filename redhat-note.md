@@ -267,6 +267,30 @@ LinuxからESXi(vCenter)
 * [vSphere 6.0 の覚え書き - Web Client の SSL 証明書エラーを消す （簡易版） - 仮想化でプリセールスしてるSEの一日](http://d.hatena.ne.jp/ogawad/20160131/1454243457)
 
 
+# タイムゾーンを日本に
+
+```
+timedatectl set-timezone Asia/Tokyo
+```
+
+# ロケールを日本に
+
+簡単じゃない。
+
+システムワイドでいいのなら
+```
+localectl set-locale LANG=ja_JP.utf8
+```
+確認は
+```
+localectl status
+```
+
+参考:
+* [RHEL7 のシステムロケールを変更する](https://access.redhat.com/ja/solutions/1562183)
+* [Red Hat EL7の基本設定（ロケールとタイムゾーン） | Skyarch Broadcasting](https://www.skyarch.net/blog/?p=247)
+* [【 localectl 】 システムのロケールやキーボードレイアウトを管理する 【 Linuxコマンドまとめ 】 | Linux Fan](https://linuxfan.info/localectl)
+
 
 
 # AWSでRHEL
