@@ -1,15 +1,16 @@
 .profileや.bash_profileで毎回混乱するので、
 きちんと理解する。
 
-- [参考](#参考)
-- [.profile, .bash_profileの関係](#profile-bash_profileの関係)
+- [参考](#%E5%8F%82%E8%80%83)
+- [.profile, .bash_profileの関係](#profile-bashprofile%E3%81%AE%E9%96%A2%E4%BF%82)
 - [exit code](#exit-code)
-- [特定のフォルダの下にあるスクリプトをすべて実行する](#特定のフォルダの下にあるスクリプトをすべて実行する)
-- [ファイルから引数を読み込んで処理](#ファイルから引数を読み込んで処理)
-- [psの出力を長くする](#psの出力を長くする)
-- [tarでリスト](#tarでリスト)
+- [特定のフォルダの下にあるスクリプトをすべて実行する](#%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AE%E4%B8%8B%E3%81%AB%E3%81%82%E3%82%8B%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%82%92%E3%81%99%E3%81%B9%E3%81%A6%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B)
+- [ファイルから引数を読み込んで処理](#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8B%E3%82%89%E5%BC%95%E6%95%B0%E3%82%92%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%82%93%E3%81%A7%E5%87%A6%E7%90%86)
+- [psの出力を長くする](#ps%E3%81%AE%E5%87%BA%E5%8A%9B%E3%82%92%E9%95%B7%E3%81%8F%E3%81%99%E3%82%8B)
+- [tarでリスト](#tar%E3%81%A7%E3%83%AA%E3%82%B9%E3%83%88)
 
 # 参考
+
 - man 1 bash
 - [Man page of BASH (日本語: JM Project)](https://linuxjm.osdn.jp/html/GNU_bash/man1/bash.1.html)
 - [Bash Reference Manual (GNU project)](https://www.gnu.org/software/bash/manual/bash.html)
@@ -31,6 +32,7 @@
 > **ログインシェル(login shell)とは**、0 番目の引き数の最初の文字が - であるシェル、または --login オプション付きで起動されたシェルのことです。
 
 `echo $0`で確認できる。
+
 ```
 $ echo $0
 -bash
