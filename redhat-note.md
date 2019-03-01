@@ -7,6 +7,7 @@ Red Hat系メモ
 - [有効になっているレポジトリのリスト](#%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88)
 - [全レポジトリのパッケージのリストを得る](#%E5%85%A8%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%82%92%E5%BE%97%E3%82%8B)
 - [例: 古いカーネルを入手してインストールする](#%E4%BE%8B-%E5%8F%A4%E3%81%84%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%82%92%E5%85%A5%E6%89%8B%E3%81%97%E3%81%A6%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B)
+- [Software collections で nginx をインストールする例](#software-collections-%E3%81%A7-nginx-%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B%E4%BE%8B)
 - [古いカーネルを消す](#%E5%8F%A4%E3%81%84%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%82%92%E6%B6%88%E3%81%99)
 - [パッケージが最新か確認する例](#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%8C%E6%9C%80%E6%96%B0%E3%81%8B%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E4%BE%8B)
 - [コマンドが含まれているパッケージを探す](#%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%8C%E5%90%AB%E3%81%BE%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E6%8E%A2%E3%81%99)
@@ -129,7 +130,6 @@ rhel-7-server-ansible-2-rpms をenableにしたほうがいいのがわかる。
 定期的に実行すること。
 
 
-
 # 例: 古いカーネルを入手してインストールする
 
 ```
@@ -156,6 +156,40 @@ kernel.x86_64                                                    3.10.0-862.11.6
 #  yum install kernel-3.10.0-862.el7
 ...
 ```
+
+# Software collections で nginx をインストールする例
+
+**注意**: SCLを普通のレポジトリと同じ感覚で使わないこと。特にアップデートに関して。
+
+[nginx 1.14 — Software Collections](https://www.softwarecollections.org/en/scls/rhscl/rh-nginx114/)
+
+RHEL7での例
+```
+subscription-manager repos --enable=rhel-server-rhscl-7-rpms
+yum install rh-nginx114 -y
+systemctl start rh-nginx114-nginx
+systemctl enable rh-nginx114-nginx
+```
+
+パッケージは普通じゃないところにインストールされる。
+```
+$ man nginx
+nginx というマニュアルはありません
+$ scl enable rh-nginx114 bash
+$ man nginx
+....
+```
+
+.profileに
+```
+. scl_source enable rh-nginx114
+```
+みたいに書いておく手もあり(enableにできるものは複数書ける)
+
+* [ソフトウェアコレクション(SCL：Software Collections)とは？ – StupidDog's blog](http://stupiddog.jp/note/archives/1074)
+* [4.7. Software Collections および scl-utils - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/developer_guide/scl-utils)
+* [Directory — Software Collections](https://www.softwarecollections.org/en/scls/)
+* [Red Hat Software CollectionsとSCLについて調べたメモ – 走って登る](https://blog.liclab.com/2017-10-10/rhscl/)
 
 
 # 古いカーネルを消す

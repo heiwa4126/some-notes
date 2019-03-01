@@ -95,10 +95,16 @@ subscription-manager repos --list | grep -i ansible
 ```
 して探す。2018年末現在では
 ```
-subscription-manager repos --enable=rhel-7-server-ansible-2.7-rpms
+subscription-manager repos --enable=rhel-7-server-ansible-2-rpms
 yum install ansible
 ```
 ansible-2.7.5-1が入る。
+
+- rhel-7-server-ansible-2-rpms
+- rhel-7-server-ansible-2.7-rpms
+
+のようにマイナーバージョンつきのレポジトリがあるので
+用途に合わせて選ぶこと。
 
 あとsshpassはrhel-7-server-extras-rpms
 
@@ -933,8 +939,8 @@ TODO: ansible_winrm_server_cert_validをignoreしないようにする方法。A
 ansible tutorialによれば以下の順番でansible.cfgを探す。
 
 1. カレントディレクトリ
-1. 環境変数の ANSIBLE_CONFIG or ~/.ansible.cfg
-1. /etc/ansible/ansible.cfg
+2. 環境変数の ANSIBLE_CONFIG or ~/.ansible.cfg
+3. /etc/ansible/ansible.cfg
 
 ansible.cfg設定例
 ```
