@@ -191,6 +191,8 @@ $ man nginx
 * [Directory — Software Collections](https://www.softwarecollections.org/en/scls/)
 * [Red Hat Software CollectionsとSCLについて調べたメモ – 走って登る](https://blog.liclab.com/2017-10-10/rhscl/)
 
+SCLはデメリットも多いが、野良ビルドよりはよっぽどマシだと思う (It depends)。
+
 
 # 古いカーネルを消す
 
