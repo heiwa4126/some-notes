@@ -2,7 +2,10 @@ Red Hat系メモ
 
 - [インストール済みパッケージ一覧](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%B8%88%E3%81%BF%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E4%B8%80%E8%A6%A7)
 - [パッケージ一覧](#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E4%B8%80%E8%A6%A7)
+- [RHELのパッケージをWWWで探す](#rhel%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92www%E3%81%A7%E6%8E%A2%E3%81%99)
+- [特定のレポジトリに含まれるパッケージのリストを得る](#%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AB%E5%90%AB%E3%81%BE%E3%82%8C%E3%82%8B%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%82%92%E5%BE%97%E3%82%8B)
 - [有効になっているレポジトリのリスト](#%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88)
+- [全レポジトリのパッケージのリストを得る](#%E5%85%A8%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%82%92%E5%BE%97%E3%82%8B)
 - [例: 古いカーネルを入手してインストールする](#%E4%BE%8B-%E5%8F%A4%E3%81%84%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%82%92%E5%85%A5%E6%89%8B%E3%81%97%E3%81%A6%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B)
 - [古いカーネルを消す](#%E5%8F%A4%E3%81%84%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%82%92%E6%B6%88%E3%81%99)
 - [パッケージが最新か確認する例](#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%8C%E6%9C%80%E6%96%B0%E3%81%8B%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E4%BE%8B)
@@ -65,6 +68,20 @@ yum --showduplicates list
 ```
 ただしこれも`yum list installed`同様長いパッケージ名が折り返される。
 
+# RHELのパッケージをWWWで探す
+
+[Red Hat Enterprise Linux Server 7 - Red Hat カスタマーポータル](https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.6/x86_64/packages)
+
+ただこれは rhel-7-server-rpms レポジトリしかリストされないようで、
+例えば rhel-7-server-extras-rpms などは検索されない。
+
+# 特定のレポジトリに含まれるパッケージのリストを得る
+
+例えばOracle Javaの含まれるrhel-7-server-supplementary-rpmを検索して
+パッケージ一覧を得る例
+```
+yum --disablerepo '*' --enablerepo rhel-7-server-supplementary-rpms list available
+```
 
 # 有効になっているレポジトリのリスト
 
@@ -76,6 +93,42 @@ yum repolist
 ```
 yum repolist all
 ```
+
+
+# 全レポジトリのパッケージのリストを得る
+
+ソースパッケージ、ベータ、アーカイブ、その他は除く。
+カレントディレクトリに`{{パッケージID}}.lst`形式のファイルができる。
+```
+#!/bin/sh
+LANG=C
+for repo in $(\
+yum repolist all | tail -n +4 | cut -d / -f1 | \
+ grep -vi -e : -e source -e debug -e REGION -e dvd -e test -e archive -e beta | \
+ tr -d ! \
+)
+do
+    echo $repo
+    yum --disablerepo '*' --enablerepo "$repo" list available > "$repo.lst"
+done
+```
+
+ごれをgrepすると
+例えばRHELでは
+PHP 7.2 や python 3.6 が
+のrhel-server-rhscl-7-eus-rpmsレポジトリにあることがわかる。
+
+(EUSとは、
+Extended Update Support)
+
+ansible2の最新(2.7.8)も
+rhel-7-server-ansible-2.7-rpms よりは
+rhel-7-server-ansible-2-rpms をenableにしたほうがいいのがわかる。
+
+リストは更新されるので、
+定期的に実行すること。
+
+
 
 # 例: 古いカーネルを入手してインストールする
 
