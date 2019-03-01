@@ -30,8 +30,27 @@ read-onlyマウントでもfsckできなかった。
 (未整理)
 
 
-vgのあるpvを広げるケース
+vgのあるpvを広げるケース。つまり
+```
+$ lsblk
+NAME                     MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda                        8:0    0   300G  0 disk
+├─sda1                     8:1    0   500M  0 part /boot/efi
+├─sda2                     8:2    0     1G  0 part /boot
+└─sda3                     8:3    0 298.5G  0 part
+  ├─VolGroup00-root      253:0    0 278.5G  0 lvm  /
+  ├─VolGroup00-swap      253:1    0     4G  0 lvm  [SWAP]
+  └─VolGroup00-var_crash 253:2    0    16G  0 lvm  /var/crash
+sr0                       11:0    1  1024M  0 rom
+```
+のような時に、
 
+1. sdaを拡張する
+2. 拡張領域をVolGroup00-rootに追加する
+
+というようなVMやCloudでよくあるケースを考える。
+
+何らかの方法でディスクを拡張し、OSもそれを認識した、という状態から。
 
 
 ```
