@@ -2,7 +2,17 @@
 
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
-## pip --user のパス
+- [pythonのメモ](#python%E3%81%AE%E3%83%A1%E3%83%A2)
+- [pip --user のパス](#pip---user-%E3%81%AE%E3%83%91%E3%82%B9)
+- [古いパッケージを見つける](#%E5%8F%A4%E3%81%84%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E8%A6%8B%E3%81%A4%E3%81%91%E3%82%8B)
+- [pipで更新可能なものをすべて更新するスクリプト](#pip%E3%81%A7%E6%9B%B4%E6%96%B0%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%82%E3%81%AE%E3%82%92%E3%81%99%E3%81%B9%E3%81%A6%E6%9B%B4%E6%96%B0%E3%81%99%E3%82%8B%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88)
+- [vscodeとpipenv](#vscode%E3%81%A8pipenv)
+- [RHEL7にpip](#rhel7%E3%81%ABpip)
+- [pip10問題](#pip10%E5%95%8F%E9%A1%8C)
+- [magic](#magic)
+
+
+# pip --user のパス
 
 ```
 python -c "import site; print(site.USER_BASE)"
@@ -14,7 +24,7 @@ python -c "import site; print(site.USER_BASE)"
 - [29.13. site — サイト固有の設定フック — Python 3.6.5 ドキュメント](https://docs.python.jp/3/library/site.html)
 
 
-## 古いパッケージを見つける
+# 古いパッケージを見つける
 
 グローバルは
 ```
@@ -35,8 +45,21 @@ pip install -U packageName
 参考:
 - [pip で更新可能なパッケージを一覧表示 - Qiita](https://qiita.com/Klein/items/a3110d20532ba9f9057b)
 
+# pipで更新可能なものをすべて更新するスクリプト
 
-## vscodeとpipenv
+依存関係で問題があるかもしれない。
+```
+#!/bin/bash
+pip3 list --user --outdated --format=freeze | \
+  grep -v '^\-e' | \
+  cut -d = -f 1  | \
+  xargs -r -n1 pip3 install --user -U
+hash -r
+```
+
+python2用はpip3をpip2にする。
+
+# vscodeとpipenv
 
 pipenvまたはvirtualenvで作業すると、グローバルやユーザにインストールした
 pylintやautopep8をvscodeが見つけてくれない。
@@ -134,16 +157,3 @@ alias pip3='python3 -m pip'
 ますますわけがわからない。
 
 
-# pipで更新可能なものをすべて更新するスクリプト
-
-依存関係で問題があるかもしれない。
-```
-#!/bin/bash
-pip3 list --user --outdated --format=freeze | \
-  grep -v '^\-e' | \
-  cut -d = -f 1  | \
-  xargs -r -n1 pip3 install --user -U
-hash -r
-```
-
-python2用はpip3をpip2にする。
