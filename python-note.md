@@ -125,3 +125,16 @@ alias pip3='python3 -m pip'
 ますますわけがわからない。
 
 
+# pipで更新可能なものをすべて更新するスクリプト
+
+依存関係で問題があるかもしれない。
+```
+#!/bin/bash
+pip3 list --user --outdated --format=freeze | \
+  grep -v '^\-e' | \
+  cut -d = -f 1  | \
+  xargs -r -n1 pip3 install --user -U
+hash -r
+```
+
+python2用はpip3をpip2にする。
