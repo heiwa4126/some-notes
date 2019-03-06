@@ -77,8 +77,15 @@ RHELはチャネル(レポジトリ)が細分化されててめんどくさい�
 こうすると` /opt/rh/python27/root/usr/lib/python2.7/site-packages/pip`にpipが...
 どう考えても頭がおかしいと思う。
 
-
 `get-pip.py`のほうが全然まともだと思う。
+
+
+※ SCLについては
+[ソフトウェアコレクション(SCL：Software Collections)とは？ – StupidDog's blog](http://stupiddog.jp/note/archives/1074)
+等を参照。そもそもコンセプトが違う。
+
+
+
 
 ```
 $ wget https://bootstrap.pypa.io/get-pip.py
@@ -89,6 +96,8 @@ $ python get-pip.py --user
 
 
 # pip10問題
+
+(pip version 19以降では問題なくなりました)
 
 * [pip install --upgrade pip (10.0.0) 後の奇妙な挙動について - 雑記](http://icchy.hatenablog.jp/entry/2018/04/17/064443)
 
