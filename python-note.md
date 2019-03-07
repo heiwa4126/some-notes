@@ -59,6 +59,18 @@ hash -r
 
 python2用はpip3をpip2にする。
 
+`--user`でなく、システムワイドに実行するのはやめたほうがいい。
+OSディストリのパッケージを消す時があるから。(certbotで失敗した)
+
+同様の理由で`rootで--user`もやめたほうがいい。
+
+
+おまけ: certbot & nginx を再インストールするapt
+```
+apt-get install --reinstall certbot python-certbot-nginx python3-certbot python3-certbot-nginx
+```
+
+
 # vscodeとpipenv
 
 pipenvまたはvirtualenvで作業すると、グローバルやユーザにインストールした
