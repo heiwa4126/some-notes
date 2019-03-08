@@ -39,6 +39,7 @@ Red Hat系メモ
 - [RHELを見た目ダウングレードさせる](#rhel%E3%82%92%E8%A6%8B%E3%81%9F%E7%9B%AE%E3%83%80%E3%82%A6%E3%83%B3%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E3%81%95%E3%81%9B%E3%82%8B)
 - [RHELを特定のバージョンに固定する](#rhel%E3%82%92%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AB%E5%9B%BA%E5%AE%9A%E3%81%99%E3%82%8B)
 - [RHELのホスト名](#rhel%E3%81%AE%E3%83%9B%E3%82%B9%E3%83%88%E5%90%8D)
+- [インストールされているパッケージのリストを構造のある形式で出力する](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%82%92%E6%A7%8B%E9%80%A0%E3%81%AE%E3%81%82%E3%82%8B%E5%BD%A2%E5%BC%8F%E3%81%A7%E5%87%BA%E5%8A%9B%E3%81%99%E3%82%8B)
 
 
 # インストール済みパッケージ一覧
@@ -758,3 +759,35 @@ subscription-manager release --set=6.3
 * [Red Hat Enterprise Linux 7 第3章 ホスト名の設定 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/networking_guide/ch-configure_host_names)
 * [Red Hat Enterprise Linux 7 3.3. hostnamectl を使ったホスト名の設定 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/networking_guide/sec_configuring_host_names_using_hostnamectl)
 
+
+# インストールされているパッケージのリストを構造のある形式で出力する
+
+XML, JSON, YANL, CSVなどでパッケージリストを得る方法
+
+```
+rpm -qa --xml
+```
+実際に実行すると、データ量が多くて死ぬ。
+
+`--queryformat (--qf)` を使うとタグが選択できる。
+
+例)
+```
+$ rpm --qf "<name>%{NAME}</name><version>%{version}</version>\n" -q systemd
+<name>systemd</name><version>219</version>
+```
+
+使えるタグ一覧は
+```
+rpm --querytags
+```
+で得られる。
+
+みんな大好きCSVで出力するワンライナーの例
+```
+(echo "name","version","release","arch","filename" ; rpm --qf='"%{name}","%{version}","%{release}","%{arch}","%{name}-%{version}-%{release}.%{arch}.rpm"\n' -qa | sort -f ) > rpms.csv
+```
+
+参考:
+- [rpm.org - RPM Query Formats](https://rpm.org/user_doc/query_format.html)
+- [rpm(8): RPM Package Manager - Linux man page](https://linux.die.net/man/8/rpm)
