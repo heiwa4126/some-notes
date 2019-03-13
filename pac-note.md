@@ -1,5 +1,9 @@
 Proxy Auto-Configuration (PAC)のメモ。
 
+- [概要とリファレンス](#概要とリファレンス)
+- [テストツール](#テストツール)
+- [tips](#tips)
+
 
 # 概要とリファレンス
 
@@ -32,4 +36,6 @@ PROXY 111.222.333.444:8080
 * Windows10以降ではfile://のpacが使えないのでWWWサーバを立てること
   - [Windows 10では、ファイル プロトコルによって参照される PAC ファイルが読み取られない](https://support.microsoft.com/ja-jp/help/4025058/windows-10-does-not-read-a-pac-file-referenced-by-a-file-protocol)
   - [[自動構成スクリプトを使用する] に file:// で .pac ファイルを指定しているのに参照されず、Outlook からの接続が失敗する – Outlook Support Team Blog JAPAN](https://blogs.technet.microsoft.com/outlooksupportjp/2014/09/09/file-pac-2345/)
-* .pacのMIMEタイプは設定したほうがいい。2つあるけど`application/x-ns-proxy-autoconfig`のほうがおすすめ。
+* .pacのMIMEタイプは設定したほうがいい。2つあるけど
+`application/x-ns-proxy-autoconfig`
+のほうがおすすめ。
