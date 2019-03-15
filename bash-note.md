@@ -192,3 +192,13 @@ stat -c "%a %n" *
 ```
 
 * [How can I get octal file permissions from command line? - Ask Ubuntu](https://askubuntu.com/questions/152001/how-can-i-get-octal-file-permissions-from-command-line)
+
+
+# ディレクトリを指定のモードで作成する
+
+mkdirの`-m`オプションを使う。
+
+例)
+```
+mkdir -m 1770 ~/tmp
+```
