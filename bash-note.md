@@ -183,3 +183,12 @@ tar ztvf foo.tar.gz
 ```
 
 zcvf,zxvfのc,xのところにt(--list)を使う。
+
+
+# ファイル/ディレクトリのmodeを8進数で得る
+
+```
+stat -c "%a %n" *
+```
+
+* [How can I get octal file permissions from command line? - Ask Ubuntu](https://askubuntu.com/questions/152001/how-can-i-get-octal-file-permissions-from-command-line)
