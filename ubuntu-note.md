@@ -11,6 +11,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [デフォルトユーザ](#デフォルトユーザ)
   - [AWS](#aws)
   - [Azure](#azure)
+- [cloud-init](#cloud-init)
 - [userを追加](#userを追加)
     - [ubuntu on AWS編](#ubuntu-on-aws編)
 - [sudoでパスワードがいらないのを無効(有効)にする](#sudoでパスワードがいらないのを無効有効にする)
@@ -107,6 +108,15 @@ Azureは初期ユーザが指定できるので楽。
 
 パスワードは設定しておいたほうがいいのではないかと思う。
 `sudo passwd <initial user>`
+
+
+# cloud-init
+
+TODO:
+AzureもAWSもcloud-initで初期設定ができるんだから、
+なんとかする。
+
+
 
 # userを追加
 
