@@ -1,6 +1,7 @@
 その他いろいろノート
 
 - [Tomcatの新し目のやつをRHELに入れたときに参考にした記事](#tomcatの新し目のやつをrhelに入れたときに参考にした記事)
+- [tomcatで不要なwebapps](#tomcatで不要なwebapps)
 
 # Tomcatの新し目のやつをRHELに入れたときに参考にした記事
 
@@ -20,3 +21,23 @@ tomcat9では自前のloggerがちゃんとしてるので
 いらないかもしれない。
 
 単にJava Servletコンテナを使うんだったらjettyのほうがいいんじゃないかとは思うけど、諸般の事情があって辛い。
+
+下の
+[Tomcat の初期設定まとめ - Qiita](https://qiita.com/hidekatsu-izuno/items/ab604b6c764b5b5a86ed)
+も参照
+
+# tomcatで不要なwebapps
+
+デフォルトで入っていることが多い(ディストリ版ではそうでもない)、
+不要＆セキュリティに問題のあるwebapps
+
+- ROOT
+- docs
+- examples
+- manager
+- host-manager
+
+ディレクトリごと削除 または どこかに移動する。
+
+参考:
+- [Tomcat の初期設定まとめ - Qiita](https://qiita.com/hidekatsu-izuno/items/ab604b6c764b5b5a86ed)
