@@ -1,7 +1,7 @@
 LVMいろいろノート
 
 - [LVMのrootをfsck](#lvm%E3%81%AEroot%E3%82%92fsck)
-- [LVMのサイズを広げる](#lvm%E3%81%AE%E3%82%B5%E3%82%A4%E3%82%BA%E3%82%92%E5%BA%83%E3%81%92%E3%82%8B)
+- [LVMのサイズを広げる -](#lvm%E3%81%AE%E3%82%B5%E3%82%A4%E3%82%BA%E3%82%92%E5%BA%83%E3%81%92%E3%82%8B)
 
 # LVMのrootをfsck
 
@@ -25,7 +25,7 @@ fsck.ext4 -y /dev/mappar/XXXX-root
 マウントするとfsckできないので、こんな感じになる。
 read-onlyマウントでもfsckできなかった。
 
-# LVMのサイズを広げる
+# LVMのサイズを広げる -  
 
 (未整理)
 
