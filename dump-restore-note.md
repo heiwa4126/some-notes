@@ -284,3 +284,18 @@ dumpをもう少し簡単に & 自動定期実行できるようにする
 - [Red Hat Enterprise Linux 7 25.7. GRUB 2 の再インストール - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
 - [Red Hat Labs | Red Hat Customer Portal Labs](https://access.redhat.com/labs/rbra/)
 - [Relax and Recover(ReaR) の概要](https://access.redhat.com/ja/solutions/2641301)
+
+
+# そのほかメモ
+
+## インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト
+
+```
+rpm -q --qf='%{name}-%{version}-%{release}.%{arch}.rpm\n' grub2-efi-x64 shim-x64 grub2-tools
+```
+
+## インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをゲット
+
+```
+rpm -q  grub2-efi-x64 shim-x64 grub2-tools | xargs yumdownloader
+```
