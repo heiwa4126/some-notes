@@ -251,7 +251,8 @@ mount -t vfat /dev/sda1 /boot/efi
 ip a ... (略)
 
 # grub-efiのインストール
-yum reinstall grub2-efi shim grub2-tools
+yum reinstall grub2-efi-x64 shim-x64 grub2-tools
+# x86_64 では-x64付きのパッケージのほうがよい。grub2-efi shimでも動く。
 
 # grub.cfgの再生成
 grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
