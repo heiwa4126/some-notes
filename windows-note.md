@@ -12,6 +12,7 @@ Windowsのメモ
 * [How to disable SSLv3 and RC4 ciphers in IIS](https://samrueby.com/2015/06/08/how-to-disable-sslv3-and-rc4-ciphers-in-iis/)
 * [How to Diable RC4 is Windows 2012 R2](https://social.technet.microsoft.com/Forums/en-US/faad7dd2-19d5-4ba0-bd3a-fc724d234d7b/how-to-diable-rc4-is-windows-2012-r2?forum=winservergen)
 * [FREAK 対策を行う](https://www.agilegroup.co.jp/technote/freak-check.html)
+* [マイクロソフト セキュリティ アドバイザリ 3009008 - SSL 3.0 の脆弱性により、情報漏えいが起こる](https://docs.microsoft.com/ja-jp/security-updates/securityadvisories/2015/3009008)
 
 regeditを使って、以下の値を設定する。
 ```
