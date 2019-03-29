@@ -1,5 +1,17 @@
 WinRM(WS-Man)のメモ
 
+- [非AD環境のWindows・Windows間でWinRMを使う](#%E9%9D%9Ead%E7%92%B0%E5%A2%83%E3%81%AEwindows%E3%83%BBwindows%E9%96%93%E3%81%A7winrm%E3%82%92%E4%BD%BF%E3%81%86)
+  - [危険な方](#%E5%8D%B1%E9%99%BA%E3%81%AA%E6%96%B9)
+    - [サーバ側(service側)](#%E3%82%B5%E3%83%BC%E3%83%90%E5%81%B4service%E5%81%B4)
+    - [クライアント側](#%E3%82%AF%E3%83%A9%E3%82%A4%E3%82%A2%E3%83%B3%E3%83%88%E5%81%B4)
+    - [テスト](#%E3%83%86%E3%82%B9%E3%83%88)
+    - [AllowUnencrypted プロパティについて](#allowunencrypted-%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+- [PSRemotingのもう少し実用的なサンプル](#psremoting%E3%81%AE%E3%82%82%E3%81%86%E5%B0%91%E3%81%97%E5%AE%9F%E7%94%A8%E7%9A%84%E3%81%AA%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB)
+  - [httpsで接続して、かつ証明書をごまかすPowershellサンプル](#https%E3%81%A7%E6%8E%A5%E7%B6%9A%E3%81%97%E3%81%A6%E3%81%8B%E3%81%A4%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92%E3%81%94%E3%81%BE%E3%81%8B%E3%81%99powershell%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB)
+- [その他参考](#%E3%81%9D%E3%81%AE%E4%BB%96%E5%8F%82%E8%80%83)
+- [pywinrmでの例](#pywinrm%E3%81%A7%E3%81%AE%E4%BE%8B)
+
+
 # 非AD環境のWindows・Windows間でWinRMを使う
 
 非AD環境でWindows-Windows間でWinRMを使うのはひどく難しい。
