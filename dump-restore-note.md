@@ -12,6 +12,9 @@ dumpとrestoreを使って
 - [restore](#restore)
 - [TODO](#todo)
 - [参考](#%E5%8F%82%E8%80%83)
+- [そのほかメモ](#%E3%81%9D%E3%81%AE%E3%81%BB%E3%81%8B%E3%83%A1%E3%83%A2)
+  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8Bgrub2-efi-x64-shim-x64-grub2-tools%E3%82%92%E3%83%AA%E3%82%B9%E3%83%88)
+  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをゲット](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8Bgrub2-efi-x64-shim-x64-grub2-tools%E3%82%92%E3%82%B2%E3%83%83%E3%83%88)
 
 # 注意
 
