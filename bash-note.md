@@ -216,3 +216,7 @@ mkdir -m 1770 ~/tmp
 
 `lsblk --fs`
 が代わりに使える。
+(
+`lsblk -f`
+に同じ
+)
