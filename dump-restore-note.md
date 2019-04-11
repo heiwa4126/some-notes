@@ -56,6 +56,11 @@ sda                   8:0    0    8G  0 disk
   └─centos_c71-swap 253:1    0  820M  0 lvm  [SWAP]
 sr0                  11:0    1 1024M  0 rom
 ```
+
+`/boot/efi(sda1)`のFSがvfatでdump/restoreできないのがミソ。
+(dump/restoreはextとxfsのみ)
+
+
 ## GPTツールメモ
 
 sgdiskは `yum install gdisk`。
