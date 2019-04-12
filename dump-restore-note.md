@@ -188,7 +188,8 @@ REHL7やCentOS7のDVDのrescue modeには
 mount.cifsが含まれてないので、
 cifsマウントできない。(nfsはある)
 
-SystemRescueCDの5.3.2を使う。
+[SystemRescueCDの5.3.2](https://osdn.net/projects/systemrescuecd/storage/releases/5.3.2/)
+を使う。
 (SystemRescueCDの6にはdump/restoreが入ってない。xfs_dumpはあるが)
 
 ```
