@@ -63,11 +63,10 @@ sr0                  11:0    1 1024M  0 rom
 `/boot/efi(sda1)`のFSがvfatでdump/restoreできないのがミソ。
 (dump/restoreはextとxfsのみ)
 
-またRedHat7/CentOS7のDVDのrescueモードには、
-/sbin/mount.cifsがないので
-resutoreにCIFSが使えない。
-NFSにするかSystemRescueCD 5 (6はdump/restoreがない)
-を使うこと。
+あとバックアップ先をCIFSにするのはやめといたほうがいい。
+DVDのrescueモードにはmount.cifsがないので、
+restoreするとき結構大変。
+NFSをお勧めします。
 
 
 ## GPTツールメモ
@@ -185,15 +184,12 @@ LVMを設定 そして EFIをインストールするのは
 という方針でもいいかもしれないので
 そこは臨機応変に行うこと。
 
+REHL7やCentOS7のDVDのrescue modeには
+mount.cifsが含まれてないので、
+cifsマウントできない。(nfsはある)
 
-まずdump同様
-rescueモードで起動する。
-cdを挿入し
-起動したらメニューから
-1. Troubleshooting -> 
-2. Rescue A Red Hat Enterprise Linux system ->
-3. 1 continue -> (**read only mouuntではない**)
-4. return
+SystemRescueCDの5.3.2を使う。
+(SystemRescueCDの6にはdump/restoreが入ってない。xfs_dumpはあるが)
 
 ```
 ## ここでネットワークを手動設定
@@ -216,6 +212,8 @@ pvcreate \
   --restorefile lvm.txt \
   --uuid TIKJAP-7qXR-yVcJ-m7Dc-teuO-vAu0-eESUI3  \
   /dev/sda3
+# 指定するUUIDはlvm.txtの physical_volumes にあるやつ
+
 
 # vgs.txtにあるVGを全部繰り返す
 vgcfgrestore -f lvm.txt centos_c71
@@ -245,7 +243,15 @@ cd boot
 restore -rf /mnt/dump/c71/boot.dump
 ```
 
-ここで再起動してrescueモードではいりなおすと、
+ここで再起動して
+RHELのcdを挿入し
+起動したらメニューから
+1. Troubleshooting -> 
+2. Rescue A Red Hat Enterprise Linux system ->
+3. 1 continue -> (**read only mouuntではない**)
+4. return
+
+rescueモードではいりなおすと、
 /mnt/sysimageの下にrootとbootがマウントされているはず。
 (`lsblk` で確認)
 
