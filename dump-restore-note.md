@@ -1,7 +1,10 @@
+# dump / restore
+
 RHEL7系のホストで(EFIでGPTでLVM)
 dumpとrestoreを使って
 ディザスタリカバリーを行う。
 
+- [dump / restore](#dump--restore)
 - [注意](#%E6%B3%A8%E6%84%8F)
 - [例の前提](#%E4%BE%8B%E3%81%AE%E5%89%8D%E6%8F%90)
   - [GPTツールメモ](#gpt%E3%83%84%E3%83%BC%E3%83%AB%E3%83%A1%E3%83%A2)
@@ -59,6 +62,12 @@ sr0                  11:0    1 1024M  0 rom
 
 `/boot/efi(sda1)`のFSがvfatでdump/restoreできないのがミソ。
 (dump/restoreはextとxfsのみ)
+
+またRedHat7/CentOS7のDVDのrescueモードには、
+/sbin/mount.cifsがないので
+resutoreにCIFSが使えない。
+NFSにするかSystemRescueCD 5 (6はdump/restoreがない)
+を使うこと。
 
 
 ## GPTツールメモ
