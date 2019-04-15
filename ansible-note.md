@@ -82,7 +82,11 @@ ansibleメモランダム
 
 # インストール
 
-コントロールマシンにansibleをインストールする様々な方法
+コントロールマシンにansibleをインストールする様々な方法。
+
+個人的にはpipでuserに入れるのがいいと思う。
+
+
 
 公式: 
 [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
@@ -141,6 +145,16 @@ pip install ansible --user
 hash -r
 ```
 みたいな感じで.
+
+RHEL7, CentOS7では、
+```
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py --user
+hash -r
+pip install ansible --user
+hash -r
+```
+がいいと思う。たぶんDebian, Ubuntuでもpipはこっちのほうが。
 
 
 ## git
@@ -1083,3 +1097,38 @@ netstatの-pオプションはsuがいるので。
       changed_when: no
 ```
 みたいなタスクにしないとダメ。
+
+
+
+# expectモジュール
+
+* [expect – Executes a command and responds to prompts. — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/expect_module.html)
+
+pexpect >= 3.3 がコントロールマシンではなく
+remote側に必要。
+
+Ununtu 18.04LTSだと
+python-pexpect 4.2.1-1
+パッケージがあるので簡単だが、
+
+RHEL7, CentOS7だと、古いパッケージしかなくて、
+公式が
+「7では出さない」とか言ってるので
+[Does Red Hat ship pexpect 3.3 ? - Red Hat Customer Portal](https://access.redhat.com/solutions/3440581)
+pip入れて、pip install pexpectするしかない。
+
+とりあえず
+rootのuserディレクトリに
+```
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py --user
+pip install pexpect -U --user
+```
+して、影響が外へ出ないようにしてやれば大丈夫(なはず)。
+
+rhsclにもpipはあるのだが、
+これで入れてちゃんと動くとは思えない。
+
+
+
+
