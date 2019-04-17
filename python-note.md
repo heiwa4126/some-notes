@@ -8,6 +8,7 @@
 - [pipで更新可能なものをすべて更新するスクリプト](#pip%E3%81%A7%E6%9B%B4%E6%96%B0%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%82%E3%81%AE%E3%82%92%E3%81%99%E3%81%B9%E3%81%A6%E6%9B%B4%E6%96%B0%E3%81%99%E3%82%8B%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88)
 - [vscodeとpipenv](#vscode%E3%81%A8pipenv)
 - [RHEL7にpip](#rhel7%E3%81%ABpip)
+- [RHEL6にpip](#rhel6%E3%81%ABpip)
 - [pip10問題](#pip10%E5%95%8F%E9%A1%8C)
 - [magic](#magic)
 
@@ -129,6 +130,23 @@ $ python get-pip.py --user
 あとは`$(HOME)/.local/bin`にPATHを通して`hash -r`
 
 
+# RHEL6にpip
+
+RHEL6のpythonは2.6で
+
+> DEPRECATION: Python 2.6 is no longer supported by the Python core team, please upgrade your Python. A future version of pip will drop support for Python 2.6
+
+とか言われますが、一応動くことは動く。
+
+pipも9.0.3までしか入らない。
+
+```
+wget https://bootstrap.pypa.io/2.6/get-pip.py
+$ python get-pip.py --user
+```
+あとは`$(HOME)/.local/bin`にPATHを通して`hash -r`
+
+
 
 # pip10問題
 
@@ -156,6 +174,7 @@ alias pip3='python3 -m pip'
 
 ただAWSやAzureで立てたUbuntuでは何もしないでもエラーにならなくて
 よくわからない。
+
 
 # magic
 
