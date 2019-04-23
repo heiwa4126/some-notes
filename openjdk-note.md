@@ -24,16 +24,19 @@ OpenJDKはオープンソースとして配布(ソースのみ提供)。
 
 OpenJDKのレポジトリ [OpenJDK Mercurial Repositories](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=2ahUKEwjgiKH29eXhAhWmyosBHVmaBOQQFjAAegQIABAB&url=https%3A%2F%2Fhg.openjdk.java.net%2F&usg=AOvVaw2qWknA1P18mdKk5PNw3FVa)
 
-新しいバージョンが出た時点で、Oracleによるサポート終了。
+新しいバージョンが出た時点で、Oracleによるメンテナンス終了。
 
 毎年3月と9月に新しいバージョン(新機能の追加や機能の変更が行われるフィーチャー・リリース)が出る。つまり6ヶ月毎に更新する必要がある。
 
 Oracle JDK (LTS)は有償 (LTS:Long Term Support)。
 サポートは3年。
 
+Oracle JDKはOpenJDKより機能が多く、サポート期間が長い以外は、同じもの(バージョン番号が同じならば)。
+
 OpenJDKはオープンソース(ソースのみ提供)なので、
 バイナリビルドは誰がやってもいいし、
 Oracleがサポート終了後、バックポートしてもかまわない。
+
 
 ## JREの廃止
 
@@ -54,7 +57,7 @@ Java Runtime Environment (JRE)の配布を廃止する。その理由は以下�
 
 # Oracleの提供するOpenJDKのバイナリ
 
-Oracleの提供するOpenJDKのバイナリ(とソース)は
+OracleがビルドしたOpenJDKのバイナリは
 [OpenJDK](http://openjdk.java.net/)
 から入手できる。
 
@@ -62,9 +65,11 @@ Oracleの提供するOpenJDKのバイナリのアーカイブは
 [Archived OpenJDK GA Releases](http://jdk.java.net/archive/)
 から入手できる(セキュリティ問題やバグが含まれている。また更新もされない)
 
-Oracleの提供するOpenJDKのバイナリには「インストーラー」が無い。WindowsではZIPの展開、環境変数の設定を手動で行う(参考:[Chapter 1. Getting Started with OpenJDK 11 for Windows - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/openjdk/11/html/openjdk_11_for_windows_getting_started_guide/getting_started_with_openjdk_for_windows))
+Oracleの提供するOpenJDKのバイナリには「インストーラー」が無い。WindowsではZIPの展開、環境変数の設定を手動で行う
+(参考:[Chapter 1. Getting Started with OpenJDK 11 for Windows - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/openjdk/11/html/openjdk_11_for_windows_getting_started_guide/getting_started_with_openjdk_for_windows))
 
-その性質上、基本6ヶ月ごとにアップグレードするべきである。
+その性質上、基本6ヶ月ごとにアップグレードするべき。
+
 
 
 # Oracle以外が配布するOpenJDKのバイナリ
@@ -78,7 +83,7 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 欠点:
 
 - サポート期間や範囲が不安
-- 無償の範囲がさまざまでわかりにくい(Cloudのみ、非商用など)
+- 無償の範囲がさまざまでわかりにくい (Cloudのみ、非商用など)
 
 参考:
 
@@ -115,7 +120,7 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - RHELとWindowsをサポート
 - OpenJDK11は2024年10月までサポート
 - Red Hat Networkのアカウントが必要(無料アカウントあり)
-- Windows用は開発用途専用。
+- Windows用は開発用途専用らしい。
 
 リンク:
 
