@@ -70,15 +70,18 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 # Oracle以外が配布するOpenJDKのバイナリ
 
 利点:
+
 - 「インストーラー」がある配布が多い
 - 無償のLTS (+ 有償によるサポート)
 - JDKだけでなくJREに相当する配布があるものがある
 
 欠点:
+
 - サポート期間や範囲が不安
 - 無償の範囲がさまざまでわかりにくい(Cloudのみ、非商用など)
 
 参考:
+
 - [Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)
 - [JDKの長期商用サポート(LTS)の提供ベンダー比較（無償利用についても言及あり） - Qiita](https://qiita.com/u-tanick/items/bb166929a58a4c20bb88)
 - [Javaのサポートについてのまとめ - Qiita](https://qiita.com/nowokay/items/edb5c5df4dbfc4a99ffb)
@@ -93,15 +96,17 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
   
 
 リンク:
+
 - [AdoptOpenJDK - Open source, prebuilt OpenJDK binaries](https://adoptopenjdk.net/)
 - [コミュニティのOpenJDKビルドファームが稼働](https://www.infoq.com/jp/news/2018/04/AdoptOpenJDKMar18)
   
 
 ## Azul Systemsによる配布 (Zulu)
 
-- JavaFXの配布がある(ZuluFX)
+- JavaFX(OpenFX)の配布がある(ZuluFX)
 
 リンク:
+
 - [OpenJDK Java Linux Windows macOS Alpine Java 11 Java 8のダウンロード](https://jp.azul.com/downloads/zulu/)
 
 
@@ -113,6 +118,7 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - Windows用は開発用途専用。
 
 リンク:
+
 - [OpenJDK Life Cycle and Support Policy - Red Hat Customer Portal](https://access.redhat.com/articles/1299013)
 - [Product Documentation for OpenJDK 11 - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/openjdk/11/)
 - [Red Hat Developer | Red Hat OpenJDK Download](https://developers.redhat.com/products/openjdk/download/)
