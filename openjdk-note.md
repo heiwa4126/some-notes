@@ -3,7 +3,7 @@
 - [OpenJDKメモ](#openjdk%E3%83%A1%E3%83%A2)
 - [参考リンク](#%E5%8F%82%E8%80%83%E3%83%AA%E3%83%B3%E3%82%AF)
 - [OpenJDKの概要](#openjdk%E3%81%AE%E6%A6%82%E8%A6%81)
-- [JREの廃止](#jre%E3%81%AE%E5%BB%83%E6%AD%A2)
+  - [JREの廃止](#jre%E3%81%AE%E5%BB%83%E6%AD%A2)
 - [Oracleの提供するOpenJDKのバイナリ](#oracle%E3%81%AE%E6%8F%90%E4%BE%9B%E3%81%99%E3%82%8Bopenjdk%E3%81%AE%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA)
 - [Oracle以外が配布するOpenJDKのバイナリ](#oracle%E4%BB%A5%E5%A4%96%E3%81%8C%E9%85%8D%E5%B8%83%E3%81%99%E3%82%8Bopenjdk%E3%81%AE%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA)
   - [AdoptOpenJDKによる配布](#adoptopenjdk%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83)
@@ -28,13 +28,14 @@ OpenJDKのレポジトリ [OpenJDK Mercurial Repositories](https://www.google.co
 
 毎年3月と9月に新しいバージョン(新機能の追加や機能の変更が行われるフィーチャー・リリース)が出る。つまり6ヶ月毎に更新する必要がある。
 
-Oracle JDK (LTS)は有償。 (LTS:Long Term Support)
+Oracle JDK (LTS)は有償 (LTS:Long Term Support)。
+サポートは3年。
 
 OpenJDKはオープンソース(ソースのみ提供)なので、
 バイナリビルドは誰がやってもいいし、
 Oracleがサポート終了後、バックポートしてもかまわない。
 
-# JREの廃止
+## JREの廃止
 
 Oracleは
 Java Runtime Environment (JRE)の配布を廃止する。その理由は以下の通り:
@@ -50,6 +51,7 @@ Java Runtime Environment (JRE)の配布を廃止する。その理由は以下�
 
 > 今後はカスタマイズしたJREをアプリケーションにバンドルする方法を推奨 (参考:[jlink](https://docs.oracle.com/javase/jp/9/tools/jlink.htm))
 
+
 # Oracleの提供するOpenJDKのバイナリ
 
 Oracleの提供するOpenJDKのバイナリ(とソース)は
@@ -61,6 +63,8 @@ Oracleの提供するOpenJDKのバイナリのアーカイブは
 から入手できる(セキュリティ問題やバグが含まれている。また更新もされない)
 
 Oracleの提供するOpenJDKのバイナリには「インストーラー」が無い。WindowsではZIPの展開、環境変数の設定を手動で行う(参考:[Chapter 1. Getting Started with OpenJDK 11 for Windows - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/openjdk/11/html/openjdk_11_for_windows_getting_started_guide/getting_started_with_openjdk_for_windows))
+
+その性質上、基本6ヶ月ごとにアップグレードするべきである。
 
 
 # Oracle以外が配布するOpenJDKのバイナリ
