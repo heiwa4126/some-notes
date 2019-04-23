@@ -12,10 +12,10 @@
 
 # 参考リンク
 
-* [JDKの新しいリリース・モデル、および提供ライセンスについて](https://www.oracle.com/technetwork/jp/articles/java/ja-topics/jdk-release-model-4487660-ja.html)
-* [Oracle Java SE サポート･ロードマップ](https://www.oracle.com/technetwork/java/eol-135779-ja.html)
-* [来月にはJava 10が登場し、9月にはJava 11が登場予定。新しいリリースモデルを採用した今後のJava、入手方法やサポート期間はこう変わる（OpenJDKに関する追記あり） － Publickey](https://www.publickey1.jp/blog/18/java_109java_11java.html)
-* [Java Is Still Free - Google ドキュメント](https://docs.google.com/document/d/1nFGazvrCvHMZJgFstlbzoHjpAVwv5DEdnaBr_5pKuHo/preview#heading=h.pcjnntz9twpw)
+- [JDKの新しいリリース・モデル、および提供ライセンスについて](https://www.oracle.com/technetwork/jp/articles/java/ja-topics/jdk-release-model-4487660-ja.html)
+- [Oracle Java SE サポート･ロードマップ](https://www.oracle.com/technetwork/java/eol-135779-ja.html)
+- [来月にはJava 10が登場し、9月にはJava 11が登場予定。新しいリリースモデルを採用した今後のJava、入手方法やサポート期間はこう変わる（OpenJDKに関する追記あり） － Publickey](https://www.publickey1.jp/blog/18/java_109java_11java.html)
+- [Java Is Still Free - Google ドキュメント](https://docs.google.com/document/d/1nFGazvrCvHMZJgFstlbzoHjpAVwv5DEdnaBr_5pKuHo/preview#heading=h.pcjnntz9twpw)
 
 
 # OpenJDKの概要
@@ -79,10 +79,10 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - 無償の範囲がさまざまでわかりにくい(Cloudのみ、非商用など)
 
 参考:
-* [Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)
-* [JDKの長期商用サポート(LTS)の提供ベンダー比較（無償利用についても言及あり） - Qiita](https://qiita.com/u-tanick/items/bb166929a58a4c20bb88)
-* [Javaのサポートについてのまとめ - Qiita](https://qiita.com/nowokay/items/edb5c5df4dbfc4a99ffb)
-* [Oracle JDK 8 の無償アップデート終了後の選択肢は何があるのか | そるでぶろぐ](https://devlog.arksystems.co.jp/2018/09/21/5953/)
+- [Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)
+- [JDKの長期商用サポート(LTS)の提供ベンダー比較（無償利用についても言及あり） - Qiita](https://qiita.com/u-tanick/items/bb166929a58a4c20bb88)
+- [Javaのサポートについてのまとめ - Qiita](https://qiita.com/nowokay/items/edb5c5df4dbfc4a99ffb)
+- [Oracle JDK 8 の無償アップデート終了後の選択肢は何があるのか | そるでぶろぐ](https://devlog.arksystems.co.jp/2018/09/21/5953/)
 
 
 ## AdoptOpenJDKによる配布
@@ -92,15 +92,17 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - OpenJDK(HotSpot)にIBMのOpenJ9を追加したバージョンの配布あり
   
 
-* [AdoptOpenJDK - Open source, prebuilt OpenJDK binaries](https://adoptopenjdk.net/)
-* [コミュニティのOpenJDKビルドファームが稼働](https://www.infoq.com/jp/news/2018/04/AdoptOpenJDKMar18)
+リンク:
+- [AdoptOpenJDK - Open source, prebuilt OpenJDK binaries](https://adoptopenjdk.net/)
+- [コミュニティのOpenJDKビルドファームが稼働](https://www.infoq.com/jp/news/2018/04/AdoptOpenJDKMar18)
   
 
 ## Azul Systemsによる配布 (Zulu)
 
 - JavaFXの配布がある(ZuluFX)
 
-[OpenJDK Java Linux Windows macOS Alpine Java 11 Java 8のダウンロード](https://jp.azul.com/downloads/zulu/)
+リンク:
+- [OpenJDK Java Linux Windows macOS Alpine Java 11 Java 8のダウンロード](https://jp.azul.com/downloads/zulu/)
 
 
 ## Red Hatによる配布
@@ -111,9 +113,9 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - Windows用は開発用途専用。
 
 リンク:
-* [OpenJDK Life Cycle and Support Policy - Red Hat Customer Portal](https://access.redhat.com/articles/1299013)
-* [Product Documentation for OpenJDK 11 - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/openjdk/11/)
-* [Red Hat Developer | Red Hat OpenJDK Download](https://developers.redhat.com/products/openjdk/download/)
-* [Red Hat、Windows版OpenJDKの長期商用サポート提供を発表 － Publickey](https://www.publickey1.jp/blog/18/red_hatwindowsopenjdklts.html)
-* [Red HatのOpenJDKのサポート - nekop's blog](https://nekop.hatenablog.com/entry/2018/09/18/115712)
+- [OpenJDK Life Cycle and Support Policy - Red Hat Customer Portal](https://access.redhat.com/articles/1299013)
+- [Product Documentation for OpenJDK 11 - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/openjdk/11/)
+- [Red Hat Developer | Red Hat OpenJDK Download](https://developers.redhat.com/products/openjdk/download/)
+- [Red Hat、Windows版OpenJDKの長期商用サポート提供を発表 － Publickey](https://www.publickey1.jp/blog/18/red_hatwindowsopenjdklts.html)
+- [Red HatのOpenJDKのサポート - nekop's blog](https://nekop.hatenablog.com/entry/2018/09/18/115712)
 
