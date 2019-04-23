@@ -20,22 +20,24 @@
 
 # OpenJDKの概要
 
-OpenJDKはオープンソースとして配布(ソースのみ提供)。
-
-OpenJDKのレポジトリ [OpenJDK Mercurial Repositories](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=2ahUKEwjgiKH29eXhAhWmyosBHVmaBOQQFjAAegQIABAB&url=https%3A%2F%2Fhg.openjdk.java.net%2F&usg=AOvVaw2qWknA1P18mdKk5PNw3FVa)
+OpenJDKはオープンソースとして配布(ソースのみ提供。
+OpenJDKのレポジトリ [OpenJDK Mercurial Repositories](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=2ahUKEwjgiKH29eXhAhWmyosBHVmaBOQQFjAAegQIABAB&url=https%3A%2F%2Fhg.openjdk.java.net%2F&usg=AOvVaw2qWknA1P18mdKk5PNw3FVa))。
 
 新しいバージョンが出た時点で、Oracleによるメンテナンス終了。
 
 毎年3月と9月に新しいバージョン(新機能の追加や機能の変更が行われるフィーチャー・リリース)が出る。つまり6ヶ月毎に更新する必要がある。
 
+Oracle JDKはOpenJDKより機能が多く、サポート期間が長い以外は、機能的には同じもの(バージョン番号が同じならば)。
+
 Oracle JDK (LTS)は有償 (LTS:Long Term Support)。
 サポートは3年。
 
-Oracle JDKはOpenJDKより機能が多く、サポート期間が長い以外は、同じもの(バージョン番号が同じならば)。
+「Oracle JDKはオラクルとの契約なしでの商用利用を全く許可しない」という点がOracle JDKとOpenJDKの最大の相違。
 
-OpenJDKはオープンソース(ソースのみ提供)なので、
-バイナリビルドは誰がやってもいいし、
-Oracleがサポート終了後、バックポートしてもかまわない。
+OpenJDKはオープンソース([GPLv2+CE](http://openjdk.java.net/legal/gplv2+ce.html))なので、
+バイナリのビルド&配布は誰がやってもいいし、
+Oracleのサポート終了後、フォークしてバックポートしてもかまわない。
+
 
 
 ## JREの廃止
