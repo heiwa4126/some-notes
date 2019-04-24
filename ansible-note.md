@@ -1129,6 +1129,10 @@ pip install pexpect -U --user
 rhsclにもpipはあるのだが、
 これで入れてちゃんと動くとは思えない。
 
+いまのところansibleにwin_pexpectはないので誰かcontributeしてください。
+* [expect module fails for windows target systems · Issue #31051 · ansible/ansible · GitHub](https://github.com/ansible/ansible/issues/31051)
+* [Windowsでpexpectを利用する - Qiita](https://qiita.com/shita_fontaine/items/c2ceb1e66450d7e09490)
+
 
 ## 複数ホストの指定
 

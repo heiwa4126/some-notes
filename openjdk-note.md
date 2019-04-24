@@ -4,6 +4,7 @@
 - [参考リンク](#%E5%8F%82%E8%80%83%E3%83%AA%E3%83%B3%E3%82%AF)
 - [OpenJDKの概要](#openjdk%E3%81%AE%E6%A6%82%E8%A6%81)
   - [JREの廃止](#jre%E3%81%AE%E5%BB%83%E6%AD%A2)
+  - [Java8](#java8)
 - [Oracleの提供するOpenJDKのバイナリ](#oracle%E3%81%AE%E6%8F%90%E4%BE%9B%E3%81%99%E3%82%8Bopenjdk%E3%81%AE%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA)
 - [Oracle以外が配布するOpenJDKのバイナリ](#oracle%E4%BB%A5%E5%A4%96%E3%81%8C%E9%85%8D%E5%B8%83%E3%81%99%E3%82%8Bopenjdk%E3%81%AE%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA)
   - [AdoptOpenJDKによる配布](#adoptopenjdk%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83)
@@ -12,10 +13,18 @@
 
 # 参考リンク
 
-- [JDKの新しいリリース・モデル、および提供ライセンスについて](https://www.oracle.com/technetwork/jp/articles/java/ja-topics/jdk-release-model-4487660-ja.html)
-- [Oracle Java SE サポート･ロードマップ](https://www.oracle.com/technetwork/java/eol-135779-ja.html)
+わかりやすい:
+
+- [Introduction to Java 11: Support and JVM Features #jjug](https://www.slideshare.net/YujiKubota/introduction-to-java-11-support-and-jvm-features)
+- [Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)
 - [来月にはJava 10が登場し、9月にはJava 11が登場予定。新しいリリースモデルを採用した今後のJava、入手方法やサポート期間はこう変わる（OpenJDKに関する追記あり） － Publickey](https://www.publickey1.jp/blog/18/java_109java_11java.html)
 - [Java Is Still Free - Google ドキュメント](https://docs.google.com/document/d/1nFGazvrCvHMZJgFstlbzoHjpAVwv5DEdnaBr_5pKuHo/preview#heading=h.pcjnntz9twpw)
+
+
+Oracle公式:
+
+- [JDKの新しいリリース・モデル、および提供ライセンスについて](https://www.oracle.com/technetwork/jp/articles/java/ja-topics/jdk-release-model-4487660-ja.html)
+- [Oracle Java SE サポート･ロードマップ](https://www.oracle.com/technetwork/java/eol-135779-ja.html)
 
 
 # OpenJDKの概要
@@ -29,15 +38,18 @@ OpenJDKのレポジトリ [OpenJDK Mercurial Repositories](https://www.google.co
 
 Oracle JDKはOpenJDKより機能が多く、サポート期間が長い以外は、機能的には同じもの(バージョン番号が同じならば)。
 
-Oracle JDK (LTS)は有償 (LTS:Long Term Support)。
-サポートは3年。
+Oracle JDKは有償。
+LTS版(Long Term Support)は3年、
+non‑LTSは6ヶ月
+サポート。
+(詳しくは[Oracle Java SE サポート･ロードマップ](https://www.oracle.com/technetwork/java/eol-135779-ja.html)参照)
 
-「Oracle JDKはオラクルとの契約なしでの商用利用を全く許可しない」という点がOracle JDKとOpenJDKの最大の相違。
+「Oracle Java 11以降はオラクルとの契約なしでの商用利用を全く許可しない」という点が
+Oracle JDKとOpenJDKの最大の相違。
 
 OpenJDKはオープンソース([GPLv2+CE](http://openjdk.java.net/legal/gplv2+ce.html))なので、
 バイナリのビルド&配布は誰がやってもいいし、
 Oracleのサポート終了後、フォークしてバックポートしてもかまわない。
-
 
 
 ## JREの廃止
@@ -56,6 +68,14 @@ Java Runtime Environment (JRE)の配布を廃止する。その理由は以下�
 
 > 今後はカスタマイズしたJREをアプリケーションにバンドルする方法を推奨 (参考:[jlink](https://docs.oracle.com/javase/jp/9/tools/jlink.htm))
 
+## Java8
+
+> 商用ユーザー向けの最後の無償バージョンはJava 8 Update 201(8u201)とJava 8 Update 202(8u202)です。
+このバージョンは商用ユーザーであっても無償で使用し続けることができます。
+ただし、今後脆弱性を修正したバージョンの無償提供は行われません。
+
+([Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)から引用)
+
 
 # Oracleの提供するOpenJDKのバイナリ
 
@@ -73,8 +93,11 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 その性質上、基本6ヶ月ごとにアップグレードするべき。
 
 
-
 # Oracle以外が配布するOpenJDKのバイナリ
+
+(Linuxはディストリビューションのパッケージを普通に使用するのが基本。
+以下は主にMS-Windowsでの話)
+
 
 利点:
 
@@ -100,7 +123,7 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - コミュニティベース(スポンサーにIBMがいる)
 - JRE相当の配布あり
 - OpenJDK(HotSpot)にIBMのOpenJ9を追加したバージョンの配布あり
-  
+- OpenJDK 11をLTS(4年)  
 
 リンク:
 
@@ -122,7 +145,7 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - RHELとWindowsをサポート
 - OpenJDK11は2024年10月までサポート
 - Red Hat Networkのアカウントが必要(無料アカウントあり)
-- Windows用は開発用途専用らしい。
+- Windows用は開発用途専用らしい(あいまい)
 
 リンク:
 
@@ -131,4 +154,7 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - [Red Hat Developer | Red Hat OpenJDK Download](https://developers.redhat.com/products/openjdk/download/)
 - [Red Hat、Windows版OpenJDKの長期商用サポート提供を発表 － Publickey](https://www.publickey1.jp/blog/18/red_hatwindowsopenjdklts.html)
 - [Red HatのOpenJDKのサポート - nekop's blog](https://nekop.hatenablog.com/entry/2018/09/18/115712)
+
+
+
 
