@@ -10,6 +10,8 @@
   - [AdoptOpenJDKによる配布](#adoptopenjdk%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83)
   - [Azul Systemsによる配布 (Zulu)](#azul-systems%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83-zulu)
   - [Red Hatによる配布](#red-hat%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83)
+  - [Amazonによる配布 (Amazon Corretto)](#amazon%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83-amazon-corretto)
+  - [その他の配布](#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E9%85%8D%E5%B8%83)
 
 # 参考リンク
 
@@ -25,6 +27,11 @@ Oracle公式:
 
 - [JDKの新しいリリース・モデル、および提供ライセンスについて](https://www.oracle.com/technetwork/jp/articles/java/ja-topics/jdk-release-model-4487660-ja.html)
 - [Oracle Java SE サポート･ロードマップ](https://www.oracle.com/technetwork/java/eol-135779-ja.html)
+
+Wikipedia:
+
+- [OpenJDK - Wikipedia](https://en.wikipedia.org/wiki/OpenJDK)
+- [OpenJDK - ウィキペディア](https://ja.wikipedia.org/wiki/OpenJDK)
 
 
 # OpenJDKの概要
@@ -68,6 +75,10 @@ Java Runtime Environment (JRE)の配布を廃止する。その理由は以下�
 
 > 今後はカスタマイズしたJREをアプリケーションにバンドルする方法を推奨 (参考:[jlink](https://docs.oracle.com/javase/jp/9/tools/jlink.htm))
 
+OracleはOracleJavaでもOracle OepnJDKでもJREを廃止するが、
+Oracle以外でOpenJDKでJRE相当のパッケージを出しているディストリビューターはある。
+
+
 ## Java8
 
 > 商用ユーザー向けの最後の無償バージョンはJava 8 Update 201(8u201)とJava 8 Update 202(8u202)です。
@@ -95,9 +106,7 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 
 # Oracle以外が配布するOpenJDKのバイナリ
 
-(Linuxはディストリビューションのパッケージを普通に使用するのが基本。
-以下は主にMS-Windowsでの話)
-
+(Linuxはディストリビューションのパッケージを普通に使用するのが基本)
 
 利点:
 
@@ -139,6 +148,10 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 
 - [OpenJDK Java Linux Windows macOS Alpine Java 11 Java 8のダウンロード](https://jp.azul.com/downloads/zulu/)
 
+MicrosoftはAzure上ではZuluを推していく模様。
+
+- [Microsoft and Azul Systems bring free Java LTS support to Azure | Blog | Microsoft Azure](https://azure.microsoft.com/en-us/blog/microsoft-and-azul-systems-bring-free-java-lts-support-to-azure/)
+
 
 ## Red Hatによる配布
 
@@ -156,5 +169,26 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - [Red HatのOpenJDKのサポート - nekop's blog](https://nekop.hatenablog.com/entry/2018/09/18/115712)
 
 
+## Amazonによる配布 (Amazon Corretto)
+
+- OpenJDK 8,11をLTS
+- AWS上のみ使用可、というわけではなく、どこでつかってもいい。
+- Windows版はMSIインストーラ付き
+
+リンク:
+
+- [Amazon Corretto（本番環境に対応したOpenJDKディストリビューション）| AWS](https://aws.amazon.com/jp/corretto/)
+- [Amazon Corretto FAQs](https://aws.amazon.com/jp/corretto/faqs/)
+- [Amazon Corretto Documentation](https://docs.aws.amazon.com/corretto/index.html)
+- [Amazon Corretto 8 とは - Amazon Corretto 8](https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-8-ug/what-is-corretto-8.html)
+- [What Is Amazon Corretto 11? - Amazon Corretto](https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-11-ug/what-is-corretto-11.html)
+
+
+## その他の配布
+
+以下参照
+
+- [OpenJDK Builds - OpenJDK - Wikipedia](https://en.wikipedia.org/wiki/OpenJDK#OpenJDK_Builds)
+- [パーミッシブ・ライセンス - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%91%E3%83%BC%E3%83%9F%E3%83%83%E3%82%B7%E3%83%96%E3%83%BB%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9)
 
 
