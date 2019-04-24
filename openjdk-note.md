@@ -138,6 +138,7 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 - [JDKの長期商用サポート(LTS)の提供ベンダー比較（無償利用についても言及あり） - Qiita](https://qiita.com/u-tanick/items/bb166929a58a4c20bb88)
 - [Javaのサポートについてのまとめ - Qiita](https://qiita.com/nowokay/items/edb5c5df4dbfc4a99ffb)
 - [Oracle JDK 8 の無償アップデート終了後の選択肢は何があるのか | そるでぶろぐ](https://devlog.arksystems.co.jp/2018/09/21/5953/)
+- [Oracle Java 更新版公開、ただしライセンス変更に注意。抵触する場合はOpenJDKへの移行を - 特に重要なセキュリティ欠陥・ウイルス情報](https://www.st.ryukoku.ac.jp/blog/vuln/01058)
 
 
 ## AdoptOpenJDKによる配布
