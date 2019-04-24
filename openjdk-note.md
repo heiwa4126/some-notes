@@ -89,8 +89,10 @@ Oracle以外でOpenJDKでJRE相当のパッケージを出しているディス�
 ([Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)から引用)
 
 Java8でも2019年4月16日以降のリリース(8u211,8u212以降)は、ライセンスが変わって有償。
-(正確には「2019年1月が商用無償の最後(Ends January 2019 for commercial use)」。
-8u201,202は1月15日リリース)
+
+正確には「2019年1月が商用無償の最後(Free updates superseded / ended (by Oracle) ... Ends January 2019 for commercial use)」。
+8u201,202は1月15日リリース。
+
 
 - [JDK 8 Update Release Notes](https://www.oracle.com/technetwork/java/javase/8u-relnotes-2225394.html)
 - [Java™ SE Development Kit 8, Update 212 Release Notes](https://www.oracle.com/technetwork/java/javase/8u212-relnotes-5292913.html) 新元号対応 + セキュリティパッチ
