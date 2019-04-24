@@ -21,6 +21,7 @@
 - [Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)
 - [来月にはJava 10が登場し、9月にはJava 11が登場予定。新しいリリースモデルを採用した今後のJava、入手方法やサポート期間はこう変わる（OpenJDKに関する追記あり） － Publickey](https://www.publickey1.jp/blog/18/java_109java_11java.html)
 - [Java Is Still Free - Google ドキュメント](https://docs.google.com/document/d/1nFGazvrCvHMZJgFstlbzoHjpAVwv5DEdnaBr_5pKuHo/preview#heading=h.pcjnntz9twpw)
+- [Javaは今も無償です - Google ドキュメント](https://docs.google.com/document/d/1HtUnuAkUEDGL2gwUOkrDrmLe_zrD6wpAyqYBZxRmHv4/edit)
 
 
 Oracle公式:
@@ -88,6 +89,8 @@ Oracle以外でOpenJDKでJRE相当のパッケージを出しているディス�
 ([Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)から引用)
 
 Java8でも2019年4月16日以降のリリース(8u211,8u212以降)は、ライセンスが変わって有償。
+(正確には「2019年1月が商用無償の最後(Ends January 2019 for commercial use)」。
+8u201,202は1月15日リリース)
 
 - [JDK 8 Update Release Notes](https://www.oracle.com/technetwork/java/javase/8u-relnotes-2225394.html)
 - [Java™ SE Development Kit 8, Update 212 Release Notes](https://www.oracle.com/technetwork/java/javase/8u212-relnotes-5292913.html) 新元号対応 + セキュリティパッチ
