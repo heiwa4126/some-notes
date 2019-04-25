@@ -4,6 +4,7 @@ ansibleメモランダム
 - [インストール](#インストール)
   - [RHEL7](#rhel7)
   - [Ubuntu/Debian](#ubuntudebian)
+  - [pip](#pip)
   - [git](#git)
 - [loopについて](#loopについて)
   - [blockでloopが使えない](#blockでloopが使えない)
@@ -57,6 +58,9 @@ ansibleメモランダム
 - [ansible.cfgの場所](#ansiblecfgの場所)
 - [Windowsで化ける出力を得る](#windowsで化ける出力を得る)
 - [local_action](#local_action)
+- [fuserのverboseはなぜかstderrに出る](#fuserのverboseはなぜかstderrに出る)
+- [expectモジュール](#expectモジュール)
+  - [複数ホストの指定](#複数ホストの指定)
 
 # 感想
 
@@ -156,6 +160,11 @@ hash -r
 ```
 がいいと思う。たぶんDebian, Ubuntuでもpipはこっちのほうが。
 
+pipなので古いバージョンのansibleも取得できる
+```
+pip install ansible==2.6 --user
+```
+のような感じで。
 
 ## git
 
