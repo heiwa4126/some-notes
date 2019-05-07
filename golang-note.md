@@ -6,6 +6,7 @@
   - [インストール](#インストール)
   - [実行例](#実行例)
 - [GDBでデバッグ](#gdbでデバッグ)
+- [goモジュール](#goモジュール)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -84,3 +85,14 @@ runtime.main.func2
 # GDBでデバッグ
 
 * [Debugging Go Code with GDB - The Go Programming Language](https://golang.org/doc/gdb)
+
+
+# goモジュール
+
+go 1.13から標準になる。
+
+以下のリンクが
+チュートリアルになってるので、一回やってみると理解できる
+
+* [Using Go Modules - The Go Blog](https://blog.golang.org/using-go-modules)
+* [The Go Blog - Using Go Modules / Go Modulesを使う（和訳） - Qiita](https://qiita.com/pokeh/items/139d0f1fe56e358ba597)
