@@ -1,6 +1,8 @@
-- [MTUの確認](#mtu%E3%81%AE%E7%A2%BA%E8%AA%8D)
-- [ジャンボフレーム](#%E3%82%B8%E3%83%A3%E3%83%B3%E3%83%9C%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0)
-- [ポートの疎通確認](#%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AE%E7%96%8E%E9%80%9A%E7%A2%BA%E8%AA%8D)
+
+- [MTUの確認](#mtuの確認)
+- [ジャンボフレーム](#ジャンボフレーム)
+- [ポートの疎通確認](#ポートの疎通確認)
+- [TCP BBR](#tcp-bbr)
 
 # MTUの確認
 
@@ -62,3 +64,42 @@ Test-NetConnection <host> -Port <port>
 
 * [Test-NetConnection](https://docs.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=win10-ps)
 * [Using the PowerShell Test-NetConnection Cmdlet on Windows](https://blog.ipswitch.com/using-powershell-test-netconnection-cmdlet-windows)
+
+
+# TCP BBR
+
+[Google Cloud Platform Japan 公式ブログ: 輻輳制御の新アルゴリズム TCP BBR を GCP に導入](https://cloudplatform-jp.googleblog.com/2017/08/TCP-BBR-congestion-control-comes-to-GCP-your-Internet-just-got-faster.html)
+
+Ubuntu 1804LTSだと、カーネルがわりと新しいので、TCP BBRが簡単に切り替えられる。
+
+使えるアルゴリズムのリスト
+```
+$ cat /proc/sys/net/ipv4/tcp_available_congestion_control
+reno cubic bbr
+```
+
+現在のアルゴリズム
+```
+$ cat /proc/sys/net/ipv4/tcp_congestion_control
+cubic
+```
+
+現在のキューイングアルゴリズム
+```
+$ cat /proc/sys/net/core/default_qdisc
+pfifo_fast
+```
+
+適当なエディタで
+`/etc/sysctl.d/10-tcp-bbr.conf`のようなファイルを作成。
+```
+net.core.default_qdisc=fq
+net.ipv4.tcp_congestion_control=bbr
+```
+
+再起動。
+
+
+参考:
+- [コラム - グーグルのクラウドを支えるテクノロジー | 第22回　パケットロスに基づかない新しい輻輳制御の仕組み ― BBR（前編）｜CTC教育サービス 研修/トレーニング](https://www.school.ctc-g.co.jp/columns/nakai2/nakai222.html)
+- [コラム - グーグルのクラウドを支えるテクノロジー | 第23回　パケットロスに基づかない新しい輻輳制御の仕組み ― BBR（後編）｜CTC教育サービス 研修/トレーニング](https://www.school.ctc-g.co.jp/columns/nakai2/nakai223.html)
