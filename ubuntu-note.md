@@ -1,10 +1,8 @@
-# 概要
-
-Ubuntu,Debainおぼえがき。
+# Ubuntu,Debain おぼえがき
 
 AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
-- [概要](#概要)
+- [Ubuntu,Debain おぼえがき](#ubuntudebain-おぼえがき)
 - [タイムゾーン](#タイムゾーン)
 - [locale](#locale)
 - [EDITORを変更](#editorを変更)
@@ -251,10 +249,12 @@ EC2のユーザーデータに関して:
 
 # Unattended Upgradesの有効/無効
 
-Unattended Upgradesを有効にすると、セキュリティアップグレードを勝手に実行する。
+Unattended Upgrades(無人更新)を有効にすると、
+アップグレードを自動実行する。
 
 起動しっぱなしのサーバだと便利な機能だが、
-たまに起動するテスト用サーバだと、ブート直後にアップグレード処理が走って、ものすごく遅いことがある。
+たまに起動するテスト用サーバだと、
+ブート直後にアップグレード処理が走って、ものすごく遅いことがある。
 
 * [How to Enable / Disable Unattended Upgrades in Ubuntu 16.04](https://linoxide.com/ubuntu-how-to/enable-disable-unattended-upgrades-ubuntu-16-04/)
 * [Disable Automatic Updates on Ubuntu 18.04 Bionic Beaver Linux - LinuxConfig.org](https://linuxconfig.org/disable-automatic-updates-on-ubuntu-18-04-bionic-beaver-linux)
@@ -262,6 +262,15 @@ Unattended Upgradesを有効にすると、セキュリティアップグレー�
 * [unattended-upgradesはインストールしただけでは動かない - orangain flavor](https://orangain.hatenablog.com/entry/unattended-upgrades)
 
 `/etc/apt/apt.conf.d/20auto-upgrades` を編集して `APT::Periodic::Unattended-Upgrade` の値を `"0"` に変更すると無効。
+
+```
+# APT::Periodic::Update-Package-Lists "1";
+# APT::Periodic::Unattended-Upgrade "1";
+APT::Periodic::Update-Package-Lists "0";
+APT::Periodic::Unattended-Upgrade "0";
+```
+
+
 
 # `A start job is running for wait for network to be configured` で起動が遅い
 
