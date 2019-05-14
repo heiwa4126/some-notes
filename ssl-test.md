@@ -4,7 +4,11 @@ Nginx + Let's Encrypt(Certbot)で構築したWebサーバを
 [Qualys SSL LABS SSL Server Test](https://www.ssllabs.com/ssltest/)
 でチェックしたら**評価F**だったので直す。
 
-[SSL Server Test (Powered by Qualys SSL Labs)](https://www.ssllabs.com/ssltest/)
+- [SSL Server Test - 評価"F"からの脱出](#ssl-server-test---%E8%A9%95%E4%BE%A1%22f%22%E3%81%8B%E3%82%89%E3%81%AE%E8%84%B1%E5%87%BA)
+  - [ステップ](#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97)
+  - [メモ](#%E3%83%A1%E3%83%A2)
+  - [参考](#%E5%8F%82%E8%80%83)
+
 
 ## ステップ
 

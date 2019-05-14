@@ -1,16 +1,14 @@
 SNMPの理解がいいかげんなのでまとめる。
 
-- [RHEL7での導入](#rhel7での導入)
-- [参考](#参考)
-- [コミュニティ名変更](#コミュニティ名変更)
-- [IPで制限](#ipで制限)
-- [一部をsetできるようにしてみる](#一部をsetできるようにしてみる)
-- [net-snmpのsnmpdはtrap送信もできる](#net-snmpのsnmpdはtrap送信もできる)
-  - [本物のsnmptrapdを立てる](#本物のsnmptrapdを立てる)
-  - [認証失敗トラップを追加してみる](#認証失敗トラップを追加してみる)
+- [RHEL7での導入](#rhel7%E3%81%A7%E3%81%AE%E5%B0%8E%E5%85%A5)
+- [参考](#%E5%8F%82%E8%80%83)
+- [コミュニティ名変更](#%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%8B%E3%83%86%E3%82%A3%E5%90%8D%E5%A4%89%E6%9B%B4)
+- [IPで制限](#ip%E3%81%A7%E5%88%B6%E9%99%90)
+- [一部をsetできるようにしてみる](#%E4%B8%80%E9%83%A8%E3%82%92set%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B)
+- [net-snmpのsnmpdはtrap送信もできる](#net-snmp%E3%81%AEsnmpd%E3%81%AFtrap%E9%80%81%E4%BF%A1%E3%82%82%E3%81%A7%E3%81%8D%E3%82%8B)
+  - [本物のsnmptrapdを立てる](#%E6%9C%AC%E7%89%A9%E3%81%AEsnmptrapd%E3%82%92%E7%AB%8B%E3%81%A6%E3%82%8B)
+  - [認証失敗トラップを追加してみる](#%E8%AA%8D%E8%A8%BC%E5%A4%B1%E6%95%97%E3%83%88%E3%83%A9%E3%83%83%E3%83%97%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B)
 - [snmptrap](#snmptrap)
-
-
 
 # RHEL7での導入
 
@@ -78,7 +76,7 @@ snmpd.confで使えるディレクティブ一覧
 systemctl restart snmpd
 ```
 
-publicで見えなくなった/swordfishで見える例
+publicで見えなくなった & swordfishで見える例
 ```
 # snmpwalk -v 2c -c public localhost system
 Timeout: No Response from localhost
@@ -405,8 +403,8 @@ Net-SNMPのテスト用にいろいろできるものらしい。
 もっと短く
 ```
 snmptrap -v 2c -c foobar localhost '' \
-netSnmpExperimental \
-1 s "hogehoge1" \
-2 s "hogehoge2"
+ netSnmpExperimental \
+ 1 s "hogehoge1" \
+ 2 s "hogehoge2"
 ```
 と書けるなあ。
