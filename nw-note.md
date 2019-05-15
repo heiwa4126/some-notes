@@ -77,6 +77,12 @@ Ubuntu 1804LTSだと、カーネルがわりと新しいので、TCP BBRが簡�
 $ cat /proc/sys/net/ipv4/tcp_available_congestion_control
 reno cubic bbr
 ```
+もしbbrがなければ
+```
+sudo modprobe tcp_bbr
+```
+してみる。
+
 
 現在のアルゴリズム
 ```
