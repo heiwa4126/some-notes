@@ -1,20 +1,19 @@
-sshfs作業ノート
+# sshfs作業ノート
 
 sshfsはFUSEでssh先のディレクトリをファイルシステムとしてマウントするしかけ。
 
-<!-- TOC -->
-
-- [参考](#参考)
-- [パッケージなど](#パッケージなど)
-- [設定](#設定)
-    - [他メモ](#他メモ)
+- [sshfs作業ノート](#sshfs%E4%BD%9C%E6%A5%AD%E3%83%8E%E3%83%BC%E3%83%88)
+- [参考](#%E5%8F%82%E8%80%83)
+- [パッケージなど](#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AA%E3%81%A9)
+- [設定](#%E8%A8%AD%E5%AE%9A)
+  - [他メモ](#%E4%BB%96%E3%83%A1%E3%83%A2)
 - [/etc/fstab](#etcfstab)
 - [sshfs+autofs](#sshfsautofs)
-    - [パッケージ等](#パッケージ等)
-    - [autofs設定](#autofs設定)
-    - [その他](#その他)
+  - [パッケージ等](#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E7%AD%89)
+  - [autofs設定](#autofs%E8%A8%AD%E5%AE%9A)
+  - [その他](#%E3%81%9D%E3%81%AE%E4%BB%96)
 
-<!-- /TOC -->
+
 
 # 参考
 
@@ -171,5 +170,4 @@ sshfsしか使わないなら、それらをコメントアウトしておいた
 
 他参考: 
 * auto.master(5) — autofs — Debian jessie — Debian Manpages](https://manpages.debian.org/jessie/autofs/auto.master.5.en.html)
-
 
