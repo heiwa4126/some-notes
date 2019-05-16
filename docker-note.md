@@ -6,6 +6,7 @@
 - [JDKなしでJavaをコンパイル](#jdkなしでjavaをコンパイル)
 - [hello-worldのDockfile](#hello-worldのdockfile)
 - [GoLangでサーバを書いてimageにしてみる](#golangでサーバを書いてimageにしてみる)
+- [Red Hat Universal Base Image](#red-hat-universal-base-image)
 
 # インストール
 
@@ -222,3 +223,48 @@ $ docker stop $GOCLOCKID
 ```
 
 LocalがUTCだ。
+
+
+# Red Hat Universal Base Image
+
+Red Hat Universal Base Imageを試す。
+
+- [自由に再配布可能なRed Hat Enterprise Linux 8ベースのコンテナ用OSイメージ「Red Hat Universal Base Image」が公開 － Publickey](https://www.publickey1.jp/blog/19/red_hat_enterprise_linux_8osred_hat_universal_base_image.html)
+- 
+
+```
+$ docker search registry.redhat.io/ubi
+...
+$ docker pull registry.redhat.io/ubi7/ubi
+Using default tag: latest
+Error response from daemon: Get https://registry.redhat.io/v2/ubi7/ubi-init/manifests/latest: unauthorized: Please login to the Red Hat Registr$ using your Customer Portal credentials. Further instructions can be found here: https://access.redhat.com/articles/3399531
+```
+
+RHNのアカウントが必要らしい。
+[Red Hat Container Registry Authentication - Red Hat Customer Portal](https://access.redhat.com/RegistryAuthentication)
+
+redhat developerのアカウントで行けるか試す。
+
+```
+$ docker login https://registry.redhat.io
+Username: XXXXXXXXX
+Password:
+WARNING! Your password will be stored unencrypted in /home/heiwa/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+$ docker run --rm -it registry.redhat.io/ubi7/ubi bash
+[root@fd2064a8c239 /]# cat /etc/redhat-release
+Red Hat Enterprise Linux Server release 7.6 (Maipo)
+[root@fd2064a8c239 /]# subscription-manager status
++-------------------------------------------+
+   System Status Details
++-------------------------------------------+
+Overall Status: Unknown
+```
+
+やっぱコンテナもyumするには最初に登録がいるみたい。
+Dockerfileの頭でやらないとダメだな。
+
