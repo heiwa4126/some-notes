@@ -2,7 +2,10 @@
 
 - [Dockerメモ](#dockerメモ)
 - [インストール](#インストール)
+  - [メモ](#メモ)
 - [JDKなしでJavaをコンパイル](#jdkなしでjavaをコンパイル)
+- [hello-worldのDockfile](#hello-worldのdockfile)
+- [GoLangでサーバを書いてimageにしてみる](#golangでサーバを書いてimageにしてみる)
 
 # インストール
 
@@ -27,8 +30,14 @@ $ docker run hello-world
 ここまで終わったら、
 終了したコンテナーは消しておく。
 ```
-$ docker rm $(docker ps -q -a)
+$ docker rm $(docker ps -aq)
 ```
+
+## メモ
+
+`docker ps -aq` は終了したコンテナのIDのみ出力するコマンド、ではない。
+
+
 
 # JDKなしでJavaをコンパイル
 
@@ -104,4 +113,112 @@ alias dj='docker run --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/o
 dj javac HelloWorld.java
 dj java HelloWorld
 ```
-でOK (効率は悪そう)。
+でOK。 効率は悪そう。
+
+たとえば
+``` bash
+$ ID=$(docker run -dt --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest)
+$ docker exec $id javac HelloWorld.java
+$ docker exec $id java HelloWorld
+$ docker stop $id
+```
+のようにしたほうが少しはいいのかもしれない。 (dockerの起動が重い)
+
+
+
+
+# hello-worldのDockfile
+
+- [hello-world | Docker Documentation](https://docs.docker.com/samples/library/hello-world/)
+- [hello-world/Dockerfile at b715c35271f1d18832480bde75fe17b93db26414 · docker-library/hello-world](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-world/Dockerfile)
+- [docker-library/hello-world](https://github.com/docker-library/hello-world)
+
+`hello`のソースは
+- [hello-world/hello.c at a9a7163cb59f2ae60dc678d042055a56693fba7e · docker-library/hello-world](https://github.com/docker-library/hello-world/blob/a9a7163cb59f2ae60dc678d042055a56693fba7e/hello.c)
+- [docker-library/hello-world at a9a7163cb59f2ae60dc678d042055a56693fba7e](https://github.com/docker-library/hello-world/tree/a9a7163cb59f2ae60dc678d042055a56693fba7e)
+
+システムコールを直接呼んでいて、ライブラリ使っていない。
+helloのバイナリサイズはとてもちいさい。
+
+
+# GoLangでサーバを書いてimageにしてみる
+
+```
+$ go version
+go version go1.12 linux/amd64
+```
+
+参考:
+- [FROM scratchから始める軽量Docker image for Go - Qiita](https://qiita.com/Saint1991/items/dcd6a92e5074bd10f75a)
+- [Building Minimal Docker Containers for Go Applications | Codeship | via @codeship](https://blog.codeship.com/building-minimal-docker-containers-for-go-applications/)
+
+clock.go ([参考リンク](https://qiita.com/Saint1991/items/dcd6a92e5074bd10f75a)そのまま)
+``` go
+package main
+
+import (
+        "net/http"
+        "time"
+)
+
+const layout = "2006-01-02 15:04:05"
+
+func main() {
+        http.HandleFunc("/time",
+            func(writer http.ResponseWriter, request *http.Request) {
+                l := request.URL.Query().Get("tz")
+                location, err := time.LoadLocation(l)
+                if err != nil {
+                        panic(err)
+                }
+                writer.Write([]byte(time.Now().In(location).Format(layout)))
+            }
+        )
+
+        http.ListenAndServe(":8080", nil)
+}
+```
+
+clock.goのビルド
+``` bash
+$ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o clock -ldflags="-w -s" clock.go
+```
+upxも使えるので`upx --best clock`も試して
+
+メモ:
+go 1.6までは[goupx](https://github.com/pwaller/goupx)が必要。
+
+
+Dockerfile
+```
+FROM scratch
+COPY clock /clock
+ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo.zip
+ENV ZONEINFO /zoneinfo.zip
+ENTRYPOINT ["/clock"]
+```
+
+docker imageの作成
+``` bash
+$ docker build ./ -t go-clock
+$ docker image ls go-clock
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+go-clock            latest              cf53a2432eee        1 seconds ago      6.12MB
+```
+(upxを使うと2.8MB)
+
+
+実行
+``` bash
+$ GOCLOCKID=$(docker run --rm -d -p 8080:8080 go-clock)
+$ curl http://localhost:8080/time?tz=Local
+2019-05-16 07:42:00
+$ curl http://localhost:8080/time
+2019-05-16 07:42:08
+$ curl http://localhost:8080/time?tz=Asia/Tokyo
+2019-05-16 07:42:39
+$ docker stop $GOCLOCKID
+(略)
+```
+
+LocalがUTCだ。
