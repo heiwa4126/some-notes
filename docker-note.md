@@ -2,7 +2,7 @@
 
 - [Dockerメモ](#dockerメモ)
 - [インストール](#インストール)
-- [JDKなしでjava](#jdkなしでjava)
+- [JDKなしでJavaをコンパイル](#jdkなしでjavaをコンパイル)
 
 # インストール
 
@@ -24,15 +24,22 @@ $ sudo docker run hello-world
 $ docker run hello-world
 ```
 
-# JDKなしでjava
+ここまで終わったら、
+終了したコンテナは消しておく。
+```
+$ docker rm $(docker ps -q -a)
+```
+
+# JDKなしでJavaをコンパイル
 
 あちこちから出ている
 OpenJDKを試してみたかったので
-`HelloWorld.java`をコンパイル&runしてみる。
+`HelloWorld.java`をコンパイル&実行してみる。
 
 参考:
 - [Dockerで色んなJDKを試す - Qiita](https://qiita.com/kikutaro/items/d140f519253f276b94e0)
 - [adoptopenjdk's Profile - Docker Hub](https://hub.docker.com/u/adoptopenjdk)
+- [docker run | Docker Documentation](https://docs.docker.com/engine/reference/commandline/run/)
 
 作業ディレクトリ作成
 ``` bash
@@ -65,13 +72,13 @@ AdoptOpenJDK 11
 
 コンパイル
 ``` bash
-docker run -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest \
+docker run --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest \
  java HelloWorld
 ```
 
 実行
 ``` bash
-docker run -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest \
+docker run --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest \
  java HelloWorld
 ```
 
@@ -83,9 +90,18 @@ vender: AdoptOpenJDK
 vm: OpenJDK 64-Bit Server VM
 ```
 
-何回も繰り返すと、どんどんコンテナが貯まるので
-```
-docker rm $(docker ps -q -a)
-```
-でとりあえず終わったものは消しておく。
+何回も実行するなら、
+たとえばaliasにして
+.bash_profileに書いておく。
 
+``` bash
+alias dj='docker run --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest'
+```
+
+これで
+
+``` bash
+dj javac HelloWorld.java
+dj java HelloWorld
+```
+でOK (効率は悪そう)。
