@@ -25,7 +25,7 @@ $ docker run hello-world
 ```
 
 ここまで終わったら、
-終了したコンテナは消しておく。
+終了したコンテナーは消しておく。
 ```
 $ docker rm $(docker ps -q -a)
 ```
@@ -92,7 +92,7 @@ vm: OpenJDK 64-Bit Server VM
 
 何回も実行するなら、
 たとえばaliasにして
-.bash_profileに書いておく。
+.profileに書いておく。
 
 ``` bash
 alias dj='docker run --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest'
