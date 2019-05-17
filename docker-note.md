@@ -193,15 +193,15 @@ Dockerfile
 ```
 FROM scratch
 
-ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo
-ENV ZONEINFO /zoneinfo
+ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo.zip
+ENV ZONEINFO /zoneinfo.zip
 
 COPY clock /clock
 
 ENTRYPOINT ["/clock"]
 ```
 - 順番に意味がある。↑だと最初のADDでimageがキャッシュされる。
-- 上の例でADDの第2引数は「展開する場所」だが、zipは展開対象にならない
+- 上の例でADDの第2引数は「展開する場所」だが、zipは展開対象にならない。COPYにしたほうがいいかも
 
 参考: [ADD | Docker Documentation](https://docs.docker.com/engine/reference/builder/#add)
 
