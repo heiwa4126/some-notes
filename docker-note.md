@@ -158,25 +158,25 @@ clock.go ([参考リンク](https://qiita.com/Saint1991/items/dcd6a92e5074bd10f7
 package main
 
 import (
-        "net/http"
-        "time"
+    "net/http"
+    "time"
 )
 
 const layout = "2006-01-02 15:04:05"
 
 func main() {
-        http.HandleFunc("/time",
-            func(writer http.ResponseWriter, request *http.Request) {
-                l := request.URL.Query().Get("tz")
-                location, err := time.LoadLocation(l)
-                if err != nil {
-                        panic(err)
-                }
-                writer.Write([]byte(time.Now().In(location).Format(layout)))
+    http.HandleFunc("/time",
+        func(writer http.ResponseWriter, request *http.Request) {
+            l := request.URL.Query().Get("tz")
+            location, err := time.LoadLocation(l)
+            if err != nil {
+                panic(err)
             }
-        )
+            writer.Write([]byte(time.Now().In(location).Format(layout)))
+        }
+    )
 
-        http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":8080", nil)
 }
 ```
 
@@ -189,15 +189,21 @@ upxも使えるので`upx --best clock`も試して
 メモ:
 go 1.6までは[goupx](https://github.com/pwaller/goupx)が必要。
 
-
 Dockerfile
 ```
 FROM scratch
+
+ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo
+ENV ZONEINFO /zoneinfo
+
 COPY clock /clock
-ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo.zip
-ENV ZONEINFO /zoneinfo.zip
+
 ENTRYPOINT ["/clock"]
 ```
+- 順番に意味がある。↑だと最初のADDでimageがキャッシュされる。
+- 上の例でADDの第2引数は「展開する場所」だが、zipは展開対象にならない
+
+参考: [ADD | Docker Documentation](https://docs.docker.com/engine/reference/builder/#add)
 
 docker imageの作成
 ``` bash
@@ -223,6 +229,14 @@ $ docker stop $GOCLOCKID
 ```
 
 LocalがUTCだ。
+
+
+動作を確認したら、タグをつけてbuildしておく。
+
+``` bash
+$ docker build ./ -t go-clock:1
+```
+
 
 
 # Red Hat Universal Base Image

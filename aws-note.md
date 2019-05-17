@@ -3,6 +3,10 @@
 AWSのメモ
 - [AWS忘備録](#aws忘備録)
 - [メタデータ](#メタデータ)
+- [AWS CLIのインストール手順](#aws-cliのインストール手順)
+  - [Amazon Linux](#amazon-linux)
+  - [Debian, Ubuntu Linux系](#debian-ubuntu-linux系)
+  - [RHEL 7, CentOS 7](#rhel-7-centos-7)
 
 # メタデータ
 
@@ -13,3 +17,33 @@ AWSのメモ
 ``` bash
 curl http://169.254.169.254/latest/meta-data/
 ```
+
+# AWS CLIのインストール手順
+
+## Amazon Linux
+
+プリインストール
+
+## Debian, Ubuntu Linux系
+
+```
+sudo apt install awscli -y
+```
+
+## RHEL 7, CentOS 7
+
+[Linux に AWS CLI をインストールする - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-linux.html)
+
+カレントユーザにインストールする例
+```
+curl -O https://bootstrap.pypa.io/get-pip.py
+python get-pip.py --user
+rm ./get-pip.py
+pip install awscli --upgrade --user
+hash -r
+```
+
+
+
+
+
