@@ -1,17 +1,17 @@
 # OpenJDKメモ
 
-- [OpenJDKメモ](#openjdk%E3%83%A1%E3%83%A2)
-- [参考リンク](#%E5%8F%82%E8%80%83%E3%83%AA%E3%83%B3%E3%82%AF)
-- [OpenJDKの概要](#openjdk%E3%81%AE%E6%A6%82%E8%A6%81)
-  - [JREの廃止](#jre%E3%81%AE%E5%BB%83%E6%AD%A2)
+- [OpenJDKメモ](#openjdkメモ)
+- [参考リンク](#参考リンク)
+- [OpenJDKの概要](#openjdkの概要)
+  - [JREの廃止](#jreの廃止)
   - [Java8](#java8)
-- [Oracleの提供するOpenJDKのバイナリ](#oracle%E3%81%AE%E6%8F%90%E4%BE%9B%E3%81%99%E3%82%8Bopenjdk%E3%81%AE%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA)
-- [Oracle以外が配布するOpenJDKのバイナリ](#oracle%E4%BB%A5%E5%A4%96%E3%81%8C%E9%85%8D%E5%B8%83%E3%81%99%E3%82%8Bopenjdk%E3%81%AE%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA)
-  - [AdoptOpenJDKによる配布](#adoptopenjdk%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83)
-  - [Azul Systemsによる配布 (Zulu)](#azul-systems%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83-zulu)
-  - [Red Hatによる配布](#red-hat%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83)
-  - [Amazonによる配布 (Amazon Corretto)](#amazon%E3%81%AB%E3%82%88%E3%82%8B%E9%85%8D%E5%B8%83-amazon-corretto)
-  - [その他の配布](#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E9%85%8D%E5%B8%83)
+- [Oracleの提供するOpenJDKのバイナリ](#oracleの提供するopenjdkのバイナリ)
+- [Oracle以外が配布するOpenJDKのバイナリ](#oracle以外が配布するopenjdkのバイナリ)
+  - [AdoptOpenJDKによる配布](#adoptopenjdkによる配布)
+  - [Azul Systemsによる配布 (Zulu)](#azul-systemsによる配布-zulu)
+  - [Red Hatによる配布](#red-hatによる配布)
+  - [Amazonによる配布 (Amazon Corretto)](#amazonによる配布-amazon-corretto)
+  - [その他の配布](#その他の配布)
 
 # 参考リンク
 
@@ -22,7 +22,7 @@
 - [来月にはJava 10が登場し、9月にはJava 11が登場予定。新しいリリースモデルを採用した今後のJava、入手方法やサポート期間はこう変わる（OpenJDKに関する追記あり） － Publickey](https://www.publickey1.jp/blog/18/java_109java_11java.html)
 - [Java Is Still Free - Google ドキュメント](https://docs.google.com/document/d/1nFGazvrCvHMZJgFstlbzoHjpAVwv5DEdnaBr_5pKuHo/preview#heading=h.pcjnntz9twpw)
 - [Javaは今も無償です - Google ドキュメント](https://docs.google.com/document/d/1HtUnuAkUEDGL2gwUOkrDrmLe_zrD6wpAyqYBZxRmHv4/edit)
-
+- [最適なOpenJDKディストリビューションの選び方(PDF)](https://www.oracle.co.jp/campaign/code/2019/pdfs/oct2019_b-3-3.pdf)
 
 Oracle公式:
 
