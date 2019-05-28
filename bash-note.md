@@ -53,9 +53,9 @@ $ ps f
 - `sudo -i` は `-bash`
 - `sudo su` は `bash`
 
-> /etc/profile ファイルが存在すれば、 bash はまずここからコマンドを読み込んで実行します。 
+> /etc/profile ファイルが存在すれば、 bash はまずここからコマンドを読み込んで実行します。
 
-> このファイルを読んだ後、 bash は 
+> このファイルを読んだ後、 bash は
 1. ~/.bash_profile
 2. ~/.bash_login
 3. ~/.profile
@@ -220,3 +220,17 @@ mkdir -m 1770 ~/tmp
 `lsblk -f`
 に同じ
 )
+
+
+# hex dump
+
+```
+od -tx1
+```
+または
+```
+xxd
+```
+
+- [Man page of OD](https://linuxjm.osdn.jp/html/gnumaniak/man1/od.1.html)
+- [man xxd (1): 16 進ダンプを作成したり、元に戻したり。](http://ja.manpages.org/xxd)
