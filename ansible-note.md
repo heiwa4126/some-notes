@@ -92,7 +92,7 @@ ansibleメモランダム
 
 
 
-公式: 
+公式:
 [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
 ## RHEL7
@@ -387,6 +387,26 @@ commandモジュール類を使うときは必ず書くこと。
 - return codeが0以外はfailed.
 
 なので。
+
+# TRANSFORM_INVALID_GROUP_CHARS
+
+2.8から
+インベントリでグループに'-'があると警告が出るようになった。
+
+```
+[huge-hoga]
+host1
+host2
+host3
+```
+とかいうのを
+```
+[huge_hoga]
+host1
+host2
+host3
+```
+に直す。
 
 
 # userモジュールでパスワードの扱い
@@ -1036,7 +1056,7 @@ w32tmを使ったplaybookの例
         src: "{{ tmpfile.path }}/status.log"
         dest: "{{ outpath }}/{{inventory_hostname}}.log"
         flat: yes
-    
+
     - name: remove remote temporary directory
       win_file:
         path: "{{ tmpfile.path }}"
@@ -1091,7 +1111,7 @@ netstatの-pオプションはsuがいるので。
 
 参考:
 * [Understanding Privilege Escalation — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/become.html#id1)
- 
+
 # fuserのverboseはなぜかstderrに出る
 
 しかもPIDはstdoutに出る。なので
