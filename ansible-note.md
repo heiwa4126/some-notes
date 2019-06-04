@@ -417,11 +417,12 @@ Pythonはだいたいこれ。roleでもtaskでも変数でもなんでも`-`は
 # Interpreter Discovery
 
 2.8からpython3,2で警告が出るようになった。
-> [DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host sa1 should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future Ansible release will default to using the discovered platform python for this host. See https://docs.ansible.com/ansible/2.8/reference_appendices/interpreter_discovery.html
- for more information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by setting
-deprecation_warnings=False in ansible.cfg.
+> [DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host XXX should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future Ansible release will default to using the discovered platform python for this host. See https://docs.ansible.com/ansible/2.8/reference_appendices/interpreter_discovery.html for more information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
 
-[Interpreter Discovery — Ansible Documentation](https://docs.ansible.com/ansible/2.8/reference_appendices/interpreter_discovery.html) にあるように
+```
+deprecation_warnings=False 
+```
+しちゃうと、ありとあらゆる廃止の警告が消えてしまうであろうなので、[Interpreter Discovery — Ansible Documentation](https://docs.ansible.com/ansible/2.8/reference_appendices/interpreter_discovery.html) にあるように
 `./ansible.cfg`
 に
 ```
