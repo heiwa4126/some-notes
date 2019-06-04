@@ -24,6 +24,7 @@ ansibleメモランダム
   - [win_hostnameモジュール](#win_hostnameモジュール)
 - [yaml2json](#yaml2json)
 - [changed_when, failed_when](#changed_when-failed_when)
+- [TRANSFORM_INVALID_GROUP_CHARS](#transform_invalid_group_chars)
 - [userモジュールでパスワードの扱い](#userモジュールでパスワードの扱い)
 - [WindowsをAnsibleで管理できるようにする](#windowsをansibleで管理できるようにする)
   - [ansible 2.6.1のwin_rebootが壊れている](#ansible-261のwin_rebootが壊れている)
@@ -61,6 +62,7 @@ ansibleメモランダム
 - [fuserのverboseはなぜかstderrに出る](#fuserのverboseはなぜかstderrに出る)
 - [expectモジュール](#expectモジュール)
   - [複数ホストの指定](#複数ホストの指定)
+- [変数をかける場所と優先度](#変数をかける場所と優先度)
 
 # 感想
 
@@ -1179,6 +1181,13 @@ ansible -m play host1,host2
 ansible-playbookの-lオプションでも同様。
 
 
+# 変数をかける場所と優先度
 
+- [Using Variables — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html)
+- [Working with Inventory — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html)
+
+最近のGoogle翻訳は大したもんだ。
+- [Google 翻訳](https://translate.google.com/translate?hl=&sl=en&tl=ja&u=https%3A%2F%2Fdocs.ansible.com%2Fansible%2Flatest%2Fuser_guide%2Fplaybooks_variables.html)
+- [Google 翻訳](https://translate.google.com/translate?hl=&sl=en&tl=ja&u=https%3A%2F%2Fdocs.ansible.com%2Fansible%2Flatest%2Fuser_guide%2Fintro_inventory.html)
 
 
