@@ -25,6 +25,7 @@ ansibleメモランダム
 - [yaml2json](#yaml2json)
 - [changed_when, failed_when](#changed_when-failed_when)
 - [TRANSFORM_INVALID_GROUP_CHARS](#transform_invalid_group_chars)
+- [Interpreter Discovery](#interpreter-discovery)
 - [userモジュールでパスワードの扱い](#userモジュールでパスワードの扱い)
 - [WindowsをAnsibleで管理できるようにする](#windowsをansibleで管理できるようにする)
   - [ansible 2.6.1のwin_rebootが壊れている](#ansible-261のwin_rebootが壊れている)
@@ -411,6 +412,24 @@ host3
 に直す。
 
 Pythonはだいたいこれ。roleでもtaskでも変数でもなんでも`-`は使わないほうがいい。
+
+
+# Interpreter Discovery
+
+2.8からpython3,2で警告が出るようになった。
+> [DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host sa1 should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future Ansible release will default to using the discovered platform python for this host. See https://docs.ansible.com/ansible/2.8/reference_appendices/interpreter_discovery.html
+ for more information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by setting
+deprecation_warnings=False in ansible.cfg.
+
+[Interpreter Discovery — Ansible Documentation](https://docs.ansible.com/ansible/2.8/reference_appendices/interpreter_discovery.html) にあるように
+`./ansible.cfg`
+に
+```
+[defaults]
+interpreter_python=auto_silent
+```
+を追加した。
+
 
 
 # userモジュールでパスワードの扱い
