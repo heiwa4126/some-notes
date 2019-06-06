@@ -3,6 +3,7 @@
 - [Azure忘備録](#azure忘備録)
 - [azure-cliでアカウントの切り替え方](#azure-cliでアカウントの切り替え方)
 - [テナントID](#テナントid)
+- [Azure AD Graph API](#azure-ad-graph-api)
 
 # azure-cliでアカウントの切り替え方
 
@@ -38,3 +39,14 @@ az account set -s <ここにidをペースト>
 複数の信頼されたAD,AADのグループを「フェデレーション(federation)」という
 
 [Azure AD とのフェデレーションとは | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/hybrid/whatis-fed)
+
+
+# Azure AD Graph API
+
+[Microsoft Graph](https://developer.microsoft.com/ja-jp/graph)とは別物。機能は似ている。
+
+[Azure AD Graph API](https://docs.microsoft.com/ja-jp/azure/active-directory/develop/active-directory-graph-api)
+のほうが古いし、今後徐々にサポートされなくなる(2019年2月)。
+
+違いは
+[Microsoft ID プラットフォーム (v2.0) に更新する理由 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/develop/azure-ad-endpoint-comparison)
