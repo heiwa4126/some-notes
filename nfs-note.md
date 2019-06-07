@@ -69,3 +69,6 @@ NFSサーバ側
 - [Stray Penguin - Linux Memo (NFSv4)](http://www.asahi-net.or.jp/~aa4t-nngk/nfsv4.html)
 - [Ubuntu14.04でNFSv4を動かしてみる | Siguniang's Blog](https://siguniang.wordpress.com/2015/08/09/setup-nfsv4-on-ubuntu-1404/)
 - [8.7.6. RDMA で NFS を有効にする (NFSoRDMA)](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/storage_administration_guide/nfs-serverconfig#nfs-rdma)
+- [【iStorage HS】NFSが使用するポートについて](http://info.ace.comp.nec.co.jp/View.aspx?NoClear=on&id=3150110310)
+- [Stray Penguin - Linux Memo (NFS)](http://www.asahi-net.or.jp/~aa4t-nngk/nfs.html)
+
