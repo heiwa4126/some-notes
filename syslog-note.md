@@ -131,10 +131,3 @@ Jun  7 18:19:14 r1 user01: warn:警告 <warning>
 Jun  7 18:19:14 r1 user01: notice:通知 <notice>
 Jun  7 18:19:14 r1 user01: info:情報 <info>
 ```
-
-
-
-
-
-
-
