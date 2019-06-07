@@ -7,6 +7,7 @@ AWSのメモ
   - [Amazon Linux](#amazon-linux)
   - [Debian, Ubuntu Linux系](#debian-ubuntu-linux系)
   - [RHEL 7, CentOS 7](#rhel-7-centos-7)
+- [EC2ってntpは要るの?](#ec2ってntpは要るの)
 
 # メタデータ
 
@@ -43,7 +44,15 @@ pip install awscli --upgrade --user
 hash -r
 ```
 
+# EC2ってntpは要るの?
 
+[Linux インスタンスの時刻の設定 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/set-time.html)
+というのがあるので、たぶん要る。
 
-
-
+Azureでは
+[Azure での Linux VM の時刻同期 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync)
+によると
+「Hyper-VなのでVMICTimeSyncあるけど、ntp併用のほうが多いね。でもAzure内にNTPサーバはないよ」
+みたいな感じ。
+このページの[ツールとリソース](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync#tools-and-resources)
+の項目が、Linuxでhvが動いてるかのチェックになってて面白い。
