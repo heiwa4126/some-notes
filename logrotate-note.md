@@ -63,4 +63,8 @@ compressoptions -9
 compressext .xz
 ```
 
-zstdを使いたいところだがlessが対応していないのが辛い。
+zstdを使いたいところだがlessが対応していないのが辛い(結構使うから)。
+
+参照: [Shirouzu Hiroaki（白水啓章）さんのツイート: "logrotate.conf に下記を足して、ログの圧縮をgzipからzstdに変更。 ---- compresscmd /usr/bin/zstd uncompresscmd /usr/bin/zstd compressext .zst"](https://twitter.com/shirouzu/status/1045588414051962880)
+
+zstdはgzip並か、それ以上の圧縮率を、高速・低メモリで行えるので、lessで対応してほしい。
