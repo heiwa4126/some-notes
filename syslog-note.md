@@ -1,10 +1,10 @@
 syslog(とjouernald)で出るエラーメッセージの対策メモ
 
-- [pam_oddjob_mkhomedir.soが無い](#pamoddjobmkhomedirso%E3%81%8C%E7%84%A1%E3%81%84)
+- [pam_oddjob_mkhomedir.soが無い](#pam_oddjob_mkhomedirsoが無い)
 - [ntpd ::1](#ntpd-1)
 - [postfix](#postfix)
-- [syslogのテスト用コード](#syslog%E3%81%AE%E3%83%86%E3%82%B9%E3%83%88%E7%94%A8%E3%82%B3%E3%83%BC%E3%83%89)
-- [出力フォーマットを変えてみる](#%E5%87%BA%E5%8A%9B%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%E3%82%92%E5%A4%89%E3%81%88%E3%81%A6%E3%81%BF%E3%82%8B)
+- [syslogのテスト用コード](#syslogのテスト用コード)
+- [出力フォーマットを変えてみる](#出力フォーマットを変えてみる)
 
 # pam_oddjob_mkhomedir.soが無い
 
@@ -81,13 +81,13 @@ logger -p 7 "debug:デバッグ情報"
 
 こんなのが出ます。
 ```
-Jun  7 17:46:24 r1 user01: emerg:システムが落ちるような状態
-Jun  7 17:46:24 r1 user01: alert:緊急に対処すべきエラー
-Jun  7 17:46:24 r1 user01: crit:致命的なエラー
-Jun  7 17:46:24 r1 user01: err:一般的なエラー
-Jun  7 17:46:24 r1 user01: warn:警告
-Jun  7 17:46:24 r1 user01: notice:通知
-Jun  7 17:46:24 r1 user01: info:情報
+Jun  7 17:46:24 r1 user1: emerg:システムが落ちるような状態
+Jun  7 17:46:24 r1 user1: alert:緊急に対処すべきエラー
+Jun  7 17:46:24 r1 user1: crit:致命的なエラー
+Jun  7 17:46:24 r1 user1: err:一般的なエラー
+Jun  7 17:46:24 r1 user1: warn:警告
+Jun  7 17:46:24 r1 user1: notice:通知
+Jun  7 17:46:24 r1 user1: info:情報
 ```
 (RHEL7のrsyslog(デフォルト設定値)で/var/log/message)
 
@@ -123,11 +123,33 @@ systemctl restart rsyslog
 
 こんな出力になります。
 ```
-Jun  7 18:19:14 r1 user01: emerg:システムが落ちるような状態 <emerg>
-Jun  7 18:19:14 r1 user01: alert:緊急に対処すべきエラー <alert>
-Jun  7 18:19:14 r1 user01: crit:致命的なエラー <crit>
-Jun  7 18:19:14 r1 user01: err:一般的なエラー <err>
-Jun  7 18:19:14 r1 user01: warn:警告 <warning>
-Jun  7 18:19:14 r1 user01: notice:通知 <notice>
-Jun  7 18:19:14 r1 user01: info:情報 <info>
+Jun  7 18:19:14 r1 user1: emerg:システムが落ちるような状態 <emerg>
+Jun  7 18:19:14 r1 user1: alert:緊急に対処すべきエラー <alert>
+Jun  7 18:19:14 r1 user1: crit:致命的なエラー <crit>
+Jun  7 18:19:14 r1 user1: err:一般的なエラー <err>
+Jun  7 18:19:14 r1 user1: warn:警告 <warning>
+Jun  7 18:19:14 r1 user1: notice:通知 <notice>
+Jun  7 18:19:14 r1 user1: info:情報 <info>
 ```
+
+もう少し変な例。
+/var/log/messageにエラーを"error"という文字列で出さなければならない要件があったケース
+```
+# Log anything (except mail) of level info or higher.
+# Don't log private authentication messages!
+set $.sp = $syslogpriority-text;
+if $syslogpriority < 4 then set $.sp = "error:" & $syslogpriority-text;
+$template TraditionalFormatP1,"%timegenerated% %HOSTNAME% %syslogtag% %msg:::drop-last-lf% <%.sp%>\n"
+```
+
+出力
+```
+Jun  8 20:48:22 r1 user1: emerg:システムが落ちるような状態 <error:emerg>
+Jun  8 20:48:22 r1 user1: alert:緊急に対処すべきエラー <error:alert>
+Jun  8 20:48:22 r1 user1: crit:致命的なエラー <error:crit>
+Jun  8 20:48:22 r1 user1: err:一般的なエラー <error:err>
+Jun  8 20:48:22 r1 user1: warn:警告 <warning>
+Jun  8 20:48:22 r1 user1: notice:通知 <notice>
+Jun  8 20:48:22 r1 user1: info:情報 <info>
+```
+crit以上もエラーに見えるように、変なことをしている。
