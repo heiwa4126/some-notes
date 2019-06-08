@@ -1,4 +1,11 @@
-logrotateのメモ
+# logrotateのメモ
+
+- [logrotateのメモ](#logrotateのメモ)
+- [logrotateをすぐさま実行](#logrotateをすぐさま実行)
+- [logoroteのログなど](#logoroteのログなど)
+- [参考](#参考)
+- [gz以外の圧縮を使う](#gz以外の圧縮を使う)
+
 
 # logrotateをすぐさま実行
 
@@ -33,3 +40,27 @@ less /var/lib/logrotate/status
 
 * [Linuxのlogrotateを手動実行させる | 俺的備忘録 〜なんかいろいろ〜](https://orebibou.com/2015/08/linux%E3%81%AElogrotate%E3%82%92%E6%89%8B%E5%8B%95%E5%AE%9F%E8%A1%8C%E3%81%95%E3%81%9B%E3%82%8B/)
 * [logrotate（ログローテート）の動作確認 | OpenGroove](https://open-groove.net/linux/logrotate-test/)
+
+# gz以外の圧縮を使う
+
+bzip2を使う例: [Maximum Logrotate Compression with bzip2](http://danielsokolowski.blogspot.com/2012/09/maximum-logrotate-compression-with-bzip2.html)
+
+`/etc/logrotate.conf` に記述
+```
+# use bzip2 whith higher compression than gzip
+compresscmd /bin/bzip2
+uncompresscmd /bin/bunzip2
+compressoptions -9
+compressext .bz2
+```
+
+xzなら
+```
+# use xz whith higher compression than gzip
+compresscmd /usr/bin/xz
+uncompresscmd /usr/bin/unxz
+compressoptions -9
+compressext .xz
+```
+
+zstdを使いたいところだがlessが対応していないのが辛い。
