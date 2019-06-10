@@ -1,5 +1,6 @@
 - [非0の戻り値で中断させたい](#非0の戻り値で中断させたい)
 - [ファイルの差集合](#ファイルの差集合)
+- ['-'で始まる引数](#-で始まる引数)
 
 # 非0の戻り値で中断させたい
 
@@ -74,3 +75,15 @@ aにだけあるものが1列目、bにだけあるものが2列目、ab両方�
 * [Man page of COMM](https://linuxjm.osdn.jp/html/GNU_coreutils/man1/comm.1.html)
 
 
+# '-'で始まる引数
+
+`--`(no more option)を使う。
+
+[linux - How to cd into a directory with this name "-2" (starting with the hyphen)? - Server Fault](https://serverfault.com/questions/462739/how-to-cd-into-a-directory-with-this-name-2-starting-with-the-hyphen)
+
+例:
+``` bash
+# systemctl list-dependencies --after -- -.mount
+-.mount
+* `-system.slice
+```
