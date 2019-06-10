@@ -2,29 +2,30 @@
 
 AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
-- [Ubuntu,Debain おぼえがき](#ubuntudebain-おぼえがき)
-- [タイムゾーン](#タイムゾーン)
+- [Ubuntu,Debain おぼえがき](#ubuntudebain-%E3%81%8A%E3%81%BC%E3%81%88%E3%81%8C%E3%81%8D)
+- [タイムゾーン](#%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%BE%E3%83%BC%E3%83%B3)
 - [locale](#locale)
-- [EDITORを変更](#editorを変更)
-- [デフォルトユーザ](#デフォルトユーザ)
+- [EDITORを変更](#editor%E3%82%92%E5%A4%89%E6%9B%B4)
+- [デフォルトユーザ](#%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%E3%83%A6%E3%83%BC%E3%82%B6)
   - [AWS](#aws)
   - [Azure](#azure)
 - [cloud-init](#cloud-init)
-- [userを追加](#userを追加)
-    - [ubuntu on AWS編](#ubuntu-on-aws編)
-- [sudoでパスワードがいらないのを無効(有効)にする](#sudoでパスワードがいらないのを無効有効にする)
-- [絶対いれとくパッケージ](#絶対いれとくパッケージ)
+- [userを追加](#user%E3%82%92%E8%BF%BD%E5%8A%A0)
+    - [ubuntu on AWS編](#ubuntu-on-aws%E7%B7%A8)
+- [sudoでパスワードがいらないのを無効(有効)にする](#sudo%E3%81%A7%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%8C%E3%81%84%E3%82%89%E3%81%AA%E3%81%84%E3%81%AE%E3%82%92%E7%84%A1%E5%8A%B9%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B)
+- [絶対いれとくパッケージ](#%E7%B5%B6%E5%AF%BE%E3%81%84%E3%82%8C%E3%81%A8%E3%81%8F%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8)
   - [bash-completion](#bash-completion)
-- [サービスの再起動が必要かどうか知る](#サービスの再起動が必要かどうか知る)
-- [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
-- [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
-- [no_proxy](#no_proxy)
-- [参考](#参考)
-- [Unattended Upgradesの有効/無効](#unattended-upgradesの有効無効)
-- [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
-- [yum history みたいのを Debian/Ubuntu で](#yum-history-みたいのを-debianubuntu-で)
+- [サービスの再起動が必要かどうか知る](#%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E5%86%8D%E8%B5%B7%E5%8B%95%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E7%9F%A5%E3%82%8B)
+- [ホストの再起動が必要かどうか知る](#%E3%83%9B%E3%82%B9%E3%83%88%E3%81%AE%E5%86%8D%E8%B5%B7%E5%8B%95%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E7%9F%A5%E3%82%8B)
+- [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebian%E3%81%A7apt-autoremove%E3%81%A7%E3%82%AD%E3%83%BC%E3%83%97%E3%81%95%E3%82%8C%E3%82%8Bkernel%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E6%95%B0)
+- [no_proxy](#noproxy)
+- [参考](#%E5%8F%82%E8%80%83)
+- [Unattended Upgradesの有効/無効](#unattended-upgrades%E3%81%AE%E6%9C%89%E5%8A%B9%E7%84%A1%E5%8A%B9)
+- [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%8C%E9%81%85%E3%81%84)
+- [yum history みたいのを Debian/Ubuntu で](#yum-history-%E3%81%BF%E3%81%9F%E3%81%84%E3%81%AE%E3%82%92-debianubuntu-%E3%81%A7)
 - [netplan.io](#netplanio)
-- [Let's Encryptで証明書が更新されたか知る](#lets-encryptで証明書が更新されたか知る)
+- [Let's Encryptで証明書が更新されたか知る](#lets-encrypt%E3%81%A7%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%81%8C%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9F%E3%81%8B%E7%9F%A5%E3%82%8B)
+- [import debian.deb822](#import-debiandeb822)
 
 # タイムゾーン
 
@@ -95,7 +96,7 @@ EC2のマネージメントコンソールで「接続」ボタンを押し
 
 ssh -i "xxx.pem" ubuntu@xxxxxxxxx.ap-xxxxxxx-1.compute.amazonaws.com
 
-ほとんどの場合、上のユーザー名は正確ですが、AMI の使用方法を読んで AMI 所有者がデフォルト AMI ユーザー名を変更していないことを確認してください。 
+ほとんどの場合、上のユーザー名は正確ですが、AMI の使用方法を読んで AMI 所有者がデフォルト AMI ユーザー名を変更していないことを確認してください。
 ```
 
 ## Azure
@@ -223,7 +224,7 @@ RHELやCentでもEPELにあるので、絶対入れるべき。
 ```
 # 1604LTS
 $ curl --version
-curl 7.47.0 
+curl 7.47.0
 
 # 1804LTS
 $ curl --version
@@ -323,3 +324,42 @@ Ubuntu18から標準になったので調べておくこと。
 ```
 zgrep "Cert is due for renewal" /var/log/letsencrypt/letsencrypt.log*
 ```
+
+# import debian.deb822
+
+update-notifier-commonでエラーが出る
+```
+update-notifier-common (3.192.1.7) を設定しています ...
+Traceback (most recent call last):
+  File "/usr/lib/update-notifier/package-data-downloader", line 24, in <module>
+    import debian.deb822
+ModuleNotFoundError: No module named 'debian'
+```
+
+エラーが出ないubuntuでチェックすると
+```
+# python3
+>>> import debian.deb822
+>>> debian.deb822.__file__
+'/usr/lib/python3/dist-packages/debian/deb822.py'
+
+# dlocate /usr/lib/python3/dist-packages/debian/deb822.py
+python3-debian: /usr/lib/python3/dist-packages/debian/deb822.py
+```
+
+この要領でトレースして、
+```
+apt remove update-notifier-common
+apt-get --reinstall install python3-debian python-debian python3-six update-notifier-common
+```
+自分のところではこれで収まった。
+
+よく出る症状らしくて、
+["ImportError: No module named debian.deb822" - Google 検索](https://www.google.com/search?client=firefox-b-d&q=%22ImportError%3A+No+module+named+debian.deb822%22)
+だと、たくさん表示される。
+
+代表:
+[package management - apt-get broken: No module named debian.deb822 - Ask Ubuntu](https://askubuntu.com/questions/246970/apt-get-broken-no-module-named-debian-deb822)
+
+
+早くpython3が標準になるといい。
