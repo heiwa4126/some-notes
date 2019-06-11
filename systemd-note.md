@@ -88,5 +88,13 @@ GRUBからは
 をつけて起動。
 
 
+rootディスクをfsckする場合は、rescueモードか、emergencyモードで
+```
+mount -o ro,remount /
+```
+してから行う。
+
+
 [25.10.3. デバッグシェルのブート](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-terminal_menu_editing_during_boot#sec-Booting_to_the_Debug_Shell)
 も役に立つ。
+
