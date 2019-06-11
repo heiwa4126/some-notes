@@ -2,6 +2,7 @@
 
 - [systemdのメモ](#systemdのメモ)
 - [systemctl list-dependencies](#systemctl-list-dependencies)
+- [rescue.target, emergency.target](#rescuetarget-emergencytarget)
 
 # systemctl list-dependencies
 
@@ -37,3 +38,50 @@
 ```
 systemctl list-dependencies network-online.target
 ```
+
+# rescue.target, emergency.target
+
+rescueモードは、昔のシングルユーザーモード
+
+- [【CentOS7】シングルユーザモード(rescue.target)への移行方法 | server-memo.net](https://www.server-memo.net/tips/server-operation/single-user.html)
+- [10.3. systemd ターゲットでの作業 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-targets)
+- [How To Boot Into Rescue Mode Or Emergency Mode In Ubuntu 18.04](https://www.ostechnix.com/how-to-boot-into-rescue-mode-or-emergency-mode-in-ubuntu-18-04/)
+
+> 現在のターゲットを変更し、現行セッションでレスキューモードに入るには、root でシェルプロンプトに以下を入力します。
+```
+systemctl rescue
+# or
+systemctl --no-wall rescue
+# or
+systemctl isolate rescue.target
+```
+emergency.targetも同様
+
+GRUBからは
+
+- [CentOS / RHEL 7 : How to boot into Rescue Mode or Emergency Mode – The Geek Diary](https://www.thegeekdiary.com/centos-rhel-7-how-to-boot-into-rescue-mode-or-emergency-mode/)
+- [25.10. ブート中のターミナルメニューの編集 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-terminal_menu_editing_during_boot)
+- [How to Boot Ubuntu 18.04 / Debian 9 Server in Rescue (Single User mode) / Emergency Mode](https://www.linuxtechi.com/boot-ubuntu-18-04-debian-9-rescue-emergency-mode/)
+
+`e`でエディトモード。
+
+* 64ビット IBM Power シリーズの場合は linux 行
+* x86-64 BIOS ベースシステムの場合は linux16 行
+* UEFI システムの場合は linuxefi 行
+
+の最後に以下のパラメーターを追加
+
+```
+ systemd.unit=rescue.target
+または
+ 1
+または
+ s
+または
+ single
+```
+をつけて起動。
+
+
+[25.10.3. デバッグシェルのブート](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-terminal_menu_editing_during_boot#sec-Booting_to_the_Debug_Shell)
+も役に立つ。
