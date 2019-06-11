@@ -42,7 +42,7 @@ systemctl list-dependencies network-online.target
 # rescue.target, emergency.target
 
 rescueモードは、昔のシングルユーザーモード。
-
+rescueモードはemergencyモードプラスネットワークが使える、ぐらいな感じ?
 
 - [【CentOS7】シングルユーザモード(rescue.target)への移行方法 | server-memo.net](https://www.server-memo.net/tips/server-operation/single-user.html)
 - [10.3. systemd ターゲットでの作業 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-targets)
