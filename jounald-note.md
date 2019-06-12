@@ -1,10 +1,13 @@
-- [journaldのメモ](#journald%E3%81%AE%E3%83%A1%E3%83%A2)
-- [loggerコマンド的なもの](#logger%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E7%9A%84%E3%81%AA%E3%82%82%E3%81%AE)
-- [参考](#%E5%8F%82%E8%80%83)
+- [journaldのメモ](#journaldのメモ)
+- [loggerコマンド的なもの](#loggerコマンド的なもの)
+- [参考](#参考)
 
 # journaldのメモ
 
-`-l`オプションがよくわからない...`-a`も。「フィールド」とは?
+`-l`オプションがよくわからない...
+jouranlctlでは`-l (--full)`がデフォルトで、
+`--no-full`しないと幅で切り詰めない模様。
+`-a`も。「フィールド」とは?
 
 とりあえず全部見るなら`--no-pager`オプションが必要。
 
@@ -27,6 +30,11 @@ journalctl -lxu network -p err
 最近のエラー
 ```
 journalctl -exlp err
+```
+
+`tail -f`的な
+```
+journalctl -f
 ```
 
 * [man journalctl の訳]
