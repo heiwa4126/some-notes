@@ -3,6 +3,7 @@
 - [systemdのメモ](#systemdのメモ)
 - [systemctl list-dependencies](#systemctl-list-dependencies)
 - [rescue.target, emergency.target](#rescuetarget-emergencytarget)
+- [-l option](#-l-option)
 
 # systemctl list-dependencies
 
@@ -98,3 +99,11 @@ mount -o ro,remount /
 [25.10.3. デバッグシェルのブート](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-terminal_menu_editing_during_boot#sec-Booting_to_the_Debug_Shell)
 も役に立つ。
 
+# -l option
+
+よく`systemctl status` で `-l`オプションをつけないと全部表示されませんよ、
+というメッセージが出るが、
+実は `-l (--full)`と`--no-pager`の2つをつけないと、全部表示されない。
+`|`すると自動で`--no-pager`は有効になるので、
+`systemctl status foobar.service -l | cat`
+でもいい。イカれてると思うがそうなんだからしょうがない。
