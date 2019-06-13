@@ -5,20 +5,20 @@ dumpとrestoreを使って
 ディザスタリカバリーを行う。
 
 - [dump / restore](#dump--restore)
-- [注意](#注意)
-- [例の前提](#例の前提)
-  - [GPTツールメモ](#gptツールメモ)
-  - [他メモ](#他メモ)
+- [注意](#%E6%B3%A8%E6%84%8F)
+- [例の前提](#%E4%BE%8B%E3%81%AE%E5%89%8D%E6%8F%90)
+  - [GPTツールメモ](#gpt%E3%83%84%E3%83%BC%E3%83%AB%E3%83%A1%E3%83%A2)
+  - [他メモ](#%E4%BB%96%E3%83%A1%E3%83%A2)
 - [dump](#dump)
-  - [インストールCDからrescueモードで起動する](#インストールcdからrescueモードで起動する)
-- [dump(続き)](#dump続き)
+  - [インストールCDからrescueモードで起動する](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%ABcd%E3%81%8B%E3%82%89rescue%E3%83%A2%E3%83%BC%E3%83%89%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B)
+- [dump(続き)](#dump%E7%B6%9A%E3%81%8D)
 - [restore](#restore)
 - [TODO](#todo)
-- [参考](#参考)
-- [そのほかメモ](#そのほかメモ)
-  - [vfatのUUID](#vfatのuuid)
-  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト](#インストールされているgrub2-efi-x64-shim-x64-grub2-toolsをリスト)
-  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをゲット](#インストールされているgrub2-efi-x64-shim-x64-grub2-toolsをゲット)
+- [参考](#%E5%8F%82%E8%80%83)
+- [そのほかメモ](#%E3%81%9D%E3%81%AE%E3%81%BB%E3%81%8B%E3%83%A1%E3%83%A2)
+  - [vfatのUUID](#vfat%E3%81%AEuuid)
+  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8Bgrub2-efi-x64-shim-x64-grub2-tools%E3%82%92%E3%83%AA%E3%82%B9%E3%83%88)
+  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをゲット](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8Bgrub2-efi-x64-shim-x64-grub2-tools%E3%82%92%E3%82%B2%E3%83%83%E3%83%88)
 
 # 注意
 
@@ -31,7 +31,7 @@ xfs用にはxfsdump/xfsrestoreがある。オプションはほぼ同じ。
 
 
 他のファイルシステム(reiserfs, jfs, btrfs など)の場合、dump/restoreは諦めて
-Relax-and-Recover (ReaR) 
+Relax-and-Recover (ReaR)
 の使用をお勧めする。
 - [Red Hat Enterprise Linux 7 第26章 Relax-and-Recover (ReaR) - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-relax-and-recover_rear)
 - [Relax-and-Recover - Linux Disaster Recovery](http://relax-and-recover.org/)
@@ -123,7 +123,7 @@ RHEL7(またはCentOS)のインストールCDをホストに挿入し、
 CDからブートさせる(ホストによってCDからブートさせる手順は異なる)。
 
 起動したらメニューから
-1. Troubleshooting -> 
+1. Troubleshooting ->
 2. Rescue A Red Hat Enterprise Linux system ->
 3. 2 Read-only mount ->
 4. return
@@ -248,7 +248,7 @@ restore -rf /mnt/dump/c71/boot.dump
 ここで再起動して
 RHELのcdを挿入し
 起動したらメニューから
-1. Troubleshooting -> 
+1. Troubleshooting ->
 2. Rescue A Red Hat Enterprise Linux system ->
 3. 1 continue -> (**read only mouuntではない**)
 4. return
@@ -279,6 +279,8 @@ ip a ... (略)
 yum reinstall grub2-efi-x64 shim-x64 grub2-tools
 # x86_64 では-x64付きのパッケージのほうがよい。grub2-efi shimでも動く。
 # パッケージの再インストールが必要なのは /boot/efiがvfatだから
+# rpm -ivh --replacepkgs packagename
+# でも行けるはず。
 
 # grub.cfgの再生成
 grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
@@ -304,7 +306,7 @@ dumpをもう少し簡単に & 自動定期実行できるようにする
 - ある程度daemonを止めて実行する。
 - LVMスナップショットと組み合わせる。
 
-などなど。 
+などなど。
 
 # 参考
 
