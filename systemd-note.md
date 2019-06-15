@@ -1,9 +1,10 @@
 # systemdのメモ
 
-- [systemdのメモ](#systemdのメモ)
+- [systemdのメモ](#systemd%E3%81%AE%E3%83%A1%E3%83%A2)
 - [systemctl list-dependencies](#systemctl-list-dependencies)
 - [rescue.target, emergency.target](#rescuetarget-emergencytarget)
-- [-l option](#-l-option)
+- [-l option](#l-option)
+- [systemd-tempfiles](#systemd-tempfiles)
 
 # systemctl list-dependencies
 
@@ -107,3 +108,43 @@ mount -o ro,remount /
 `|`すると自動で`--no-pager`は有効になるので、
 `systemctl status foobar.service -l | cat`
 でもいい。イカれてると思うがそうなんだからしょうがない。
+
+# systemd-tempfiles
+
+再起動時にファイルを作成し、
+定期的に削除する。
+
+- [systemd-tmpfiles](https://www.freedesktop.org/software/systemd/man/systemd-tmpfiles.html)
+- [tmpfiles.d](https://www.freedesktop.org/software/systemd/man/tmpfiles.d.html#)
+
+↑最新バージョンのman. たいていのディストリではオプションや設定が少ない。
+
+
+例) /etc/tmpfiles.d/test.conf
+```
+f /tmp/a 0755 root root - hello
+d /tmp/b 0755 root root - -
+f /tmp/b/a 0755 root root - world
+```
+これで、/tmp/a,/tmp/b/aファイルがなければ作られる。
+
+tmpfiles.d/*.confのかける場所は異常に多い。
+特に--userが使えるバージョンだと。
+
+よくあるディストリビューションに入ってるバージョンだと
+1. /etc/tmpfiles.d/*.conf
+2. /run/tmpfiles.d/*.conf
+3. /usr/lib/tmpfiles.d/*.conf
+
+同じ名前の.confファイルがあるとオーバライドされる。1.がいちばん強い。
+
+妙なルールがいっぱいあるので
+(package.confとpackage-part.confとか)
+manを熟読すること。
+
+
+デバッグは、
+```
+SYSTEMD_LOG_LEVEL=debug /usr/bin/systemd-tmpfiles --create --remove --boot --exclude-prefix=/dev /etc/tmpfiles.d/test.conf
+```
+みたいな感じで。
