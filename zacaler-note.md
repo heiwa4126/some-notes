@@ -75,6 +75,9 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 を追加。
 1. `update-ca-certificates`を実行
 
+`/etc/ssl/certs/ca-certificates.crt`が更新されるらしい
+
+
 ## RHEL/CentOS 7の場合
 
 (RHEL 6/Cent 6では手順が違います)
@@ -106,6 +109,7 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 1. `update-ca-trust`を実行
 
 結果は`/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem`に。
+(`/etc/pki/tls/certs/ca-bundle.crt`かも? それはRHEL6)
 
 これでcurlで-kなしでもエラーがでなくなる。
 
