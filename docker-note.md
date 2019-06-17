@@ -1,12 +1,13 @@
 # Dockerメモ
 
-- [Dockerメモ](#docker%E3%83%A1%E3%83%A2)
-- [インストール](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB)
-  - [メモ](#%E3%83%A1%E3%83%A2)
-- [JDKなしでJavaをコンパイル](#jdk%E3%81%AA%E3%81%97%E3%81%A7java%E3%82%92%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%AB)
-- [hello-worldのDockfile](#hello-world%E3%81%AEdockfile)
-- [GoLangでサーバを書いてimageにしてみる](#golang%E3%81%A7%E3%82%B5%E3%83%BC%E3%83%90%E3%82%92%E6%9B%B8%E3%81%84%E3%81%A6image%E3%81%AB%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B)
+- [Dockerメモ](#dockerメモ)
+- [インストール](#インストール)
+  - [メモ](#メモ)
+- [JDKなしでJavaをコンパイル](#jdkなしでjavaをコンパイル)
+- [hello-worldのDockfile](#hello-worldのdockfile)
+- [GoLangでサーバを書いてimageにしてみる](#golangでサーバを書いてimageにしてみる)
 - [Red Hat Universal Base Image](#red-hat-universal-base-image)
+- [Dockerでsyslog](#dockerでsyslog)
 
 # インストール
 
@@ -190,7 +191,7 @@ upxも使えるので`upx --best clock`も試して
 go 1.6までは[goupx](https://github.com/pwaller/goupx)が必要。
 
 メモ:
-cgoとは何か? なぜ無効にするかについては
+cgoとは何か? なぜ無効にするか? については
 [GoとDockerでscratchを使うときに気をつけること - Qiita](https://qiita.com/Tsuzu/items/774073bccaff32e9ee8d)
 を参照。
 
@@ -234,7 +235,6 @@ $ docker stop $GOCLOCKID
 ```
 
 LocalがUTCだ。
-
 
 動作を確認したら、タグをつけてbuildしておく。
 
@@ -293,3 +293,10 @@ Overall Status: Unknown
 やっぱコンテナもyumするには最初に登録がいるみたい。
 Dockerfileの頭でやらないとダメだな。
 
+
+# Dockerでsyslog
+
+[ロギング・ドライバの設定 — Docker-docs-ja 17.06.Beta ドキュメント](http://docs.docker.jp/engine/admin/logging/overview.html#syslog)
+
+`--log-driver=syslog`で、ローカルのsyslogにとれるはず。
+(`--log-opt syslog-address=`のデフォルト値がunixソケットだから)
