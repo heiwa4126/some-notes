@@ -1,13 +1,13 @@
 # Dockerメモ
 
-- [Dockerメモ](#dockerメモ)
+- [Dockerメモ](#Dockerメモ)
 - [インストール](#インストール)
   - [メモ](#メモ)
-- [JDKなしでJavaをコンパイル](#jdkなしでjavaをコンパイル)
-- [hello-worldのDockfile](#hello-worldのdockfile)
-- [GoLangでサーバを書いてimageにしてみる](#golangでサーバを書いてimageにしてみる)
-- [Red Hat Universal Base Image](#red-hat-universal-base-image)
-- [Dockerでsyslog](#dockerでsyslog)
+- [JDKなしでJavaをコンパイル](#JDKなしでJavaをコンパイル)
+- [hello-worldのDockfile](#hello-worldのDockfile)
+- [GoLangでサーバを書いてimageにしてみる](#GoLangでサーバを書いてimageにしてみる)
+- [Red Hat Universal Base Image](#Red-Hat-Universal-Base-Image)
+- [Dockerでsyslog](#Dockerでsyslog)
 
 # インストール
 
@@ -46,6 +46,9 @@ $ docker rm $(docker ps -aq)
 あちこちから出ている
 OpenJDKを試してみたかったので
 `HelloWorld.java`をコンパイル&実行してみる。
+
+Dockerで配布されてるのは、「Javaの実行環境」という位置づけであって「Javaの開発環境」ではないのだけど。
+
 
 参考:
 - [Dockerで色んなJDKを試す - Qiita](https://qiita.com/kikutaro/items/d140f519253f276b94e0)
