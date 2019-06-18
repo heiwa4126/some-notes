@@ -52,7 +52,7 @@ Relax-and-Recover (ReaR)
 - ホスト名はc71
 - ホストのipは192.168.56.94/24 (enp0s8)
 - バックアップ先はCIFSで//192.168.56.91/dumpの下
-- またはバックアップ先はNFSv3で192.168.56.91:/export/LinuxDumpの下
+  - またはバックアップ先はNFSv3で192.168.56.91:/export/LinuxDumpの下
 
 以下のようなディスク構成を想定
 ```
@@ -105,6 +105,7 @@ rescueモードで起動するには
 [26.10. Terminal Menu Editing During Boot - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-terminal_menu_editing_during_boot)
 参照
 
+続けてrootのパスワードを要求されるので、それを入力の後、
 ```
 # 日本語キーボードにする
 loadkeys jp106
@@ -255,7 +256,7 @@ ip a ... (略)
 mkdir /mnt/dump
 mount -t cifs -o ro,username=foo,password=baz //192.168.56.91/dump /mnt/dump
 ```
-NFSについては 「[dump(続き)](#dump続き)」を参照
+NFSについては 「[dump(続き)](#dump続き)」を参照。
 オプションにroをつけるのを忘れないこと(`-o ro,vers=3...`)
 
 続き
@@ -371,10 +372,10 @@ grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
 /etc/hostname
 なども適宜書き換える。
 RHELならsubscription-managerも修正する。
-
-別マシンに複製した場合は
-/etc/sysconfig/network-script/ifc*に
-MACが入ってたりするのでこちらも編集すること・
+特に
+/etc/sysconfig/network-script/ifc*
+に
+MACが入っているので、適切に編集すること。
 
 ```
 # 終了。再起動
@@ -385,7 +386,7 @@ reboot
 さらに
 CDから起動しているので
 [HPのBIOS](#HPのBIOS)
-を参照。
+を参照してCDを抜く。
 
 
 # TODO
@@ -401,6 +402,9 @@ dumpをもう少し簡単に & 自動定期実行できるようにする
 - [Red Hat Enterprise Linux 7 25.7. GRUB 2 の再インストール - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
 - [Red Hat Labs | Red Hat Customer Portal Labs](https://access.redhat.com/labs/rbra/)
 - [Relax and Recover(ReaR) の概要](https://access.redhat.com/ja/solutions/2641301)
+- [5.4. ext2、ext3、ext4 ファイルシステムのバックアップ - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/storage_administration_guide/ext4backup)
+- [5.5. ext2、ext3、ext4 ファイルシステムの復元 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/storage_administration_guide/extrestore)
+- [3.7. XFS ファイルシステムのバックアップと復元 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/storage_administration_guide/xfsbackuprestore)
 
 
 # メモ
@@ -461,11 +465,11 @@ CDブートから、HDD(RAID)ブートに切り替えるときは
 
 ## vfatのUUID
 
-vfatのUUIDは「ボリューム シリアル番号」というやつで「ラベル」ではない。
+vfatのUUIDは「ボリューム シリアル番号」というもので「ラベル」ではない。
 
 vfatのUUIDを変更するツールはないので
 ファイルシステム作成時に設定するか(mkfs.vfatの-iオプション)、
-ディスクを直接編集して変更すること。
+またはディスクを直接編集して変更すること。
 
 
 ## インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト
