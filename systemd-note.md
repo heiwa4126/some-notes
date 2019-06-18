@@ -1,10 +1,11 @@
 # systemdのメモ
 
-- [systemdのメモ](#systemd%E3%81%AE%E3%83%A1%E3%83%A2)
+- [systemdのメモ](#systemdのメモ)
 - [systemctl list-dependencies](#systemctl-list-dependencies)
 - [rescue.target, emergency.target](#rescuetarget-emergencytarget)
-- [-l option](#l-option)
+- [-l option](#-l-option)
 - [systemd-tempfiles](#systemd-tempfiles)
+- [systemd-tymesyncd](#systemd-tymesyncd)
 
 # systemctl list-dependencies
 
@@ -148,3 +149,38 @@ manを熟読すること。
 SYSTEMD_LOG_LEVEL=debug /usr/bin/systemd-tmpfiles --create --remove --boot --exclude-prefix=/dev /etc/tmpfiles.d/test.conf
 ```
 みたいな感じで。
+
+
+# systemd-tymesyncd
+
+systemdのSNTPクライアント
+
+利点:
+- 小さい (サーバ部分がないから)
+- セキュア (サーバ部分がないから)
+
+欠点:
+- RTCを設定しない (RTCがないホスト、例えばRaspberry Piなどでは利点). 設定してるように見える... TODO
+- driftとか設定しない (これもRTCがないホストでは利点かも)
+
+物理サーバでは chronyやntpd、
+CloudやIoTならsystemd-tymesyncd(やsntp)
+がいいのではないか。
+オンプレミスのVMでは状況次第。
+
+参考:
+- [systemd-timesyncd - ArchWiki](https://wiki.archlinux.jp/index.php/Systemd-timesyncd)
+- [ntpd vs. systemd-timesyncd - How to achieve reliable NTP syncing? - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/305643/ntpd-vs-systemd-timesyncd-how-to-achieve-reliable-ntp-syncing)
+
+
+AWSでの設定
+```bash
+echo -e "[Time]\nNTP=169.254.169.123" > /etc/systemd/timesyncd.conf
+systemctl start systemd-timesyncd
+timedatectl set-ntp true
+timedatectl set-local-rtc 0
+systemctl enable systemd-timesyncd
+```
+
+RHEL7, CentOS7, Amazon Linuxではsystemdパッケージに`systemd-timesyncd`が入ってない。
+systemdのバージョンが古いらしい。

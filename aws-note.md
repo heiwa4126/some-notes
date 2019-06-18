@@ -1,13 +1,13 @@
 # AWS忘備録
 
 AWSのメモ
-- [AWS忘備録](#aws忘備録)
+- [AWS忘備録](#AWS忘備録)
 - [メタデータ](#メタデータ)
-- [AWS CLIのインストール手順](#aws-cliのインストール手順)
-  - [Amazon Linux](#amazon-linux)
-  - [Debian, Ubuntu Linux系](#debian-ubuntu-linux系)
-  - [RHEL 7, CentOS 7](#rhel-7-centos-7)
-- [EC2ってntpは要るの?](#ec2ってntpは要るの)
+- [AWS CLIのインストール手順](#AWS-CLIのインストール手順)
+  - [Amazon Linux](#Amazon-Linux)
+  - [Debian, Ubuntu Linux系](#Debian-Ubuntu-Linux系)
+  - [RHEL 7, CentOS 7](#RHEL-7-CentOS-7)
+- [EC2ってntpは要るの?](#EC2ってntpは要るの)
 
 # メタデータ
 
@@ -56,3 +56,30 @@ Azureでは
 みたいな感じ。
 このページの[ツールとリソース](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync#tools-and-resources)
 の項目が、Linuxでhvが動いてるかのチェックになってて面白い。
+
+NTPサーバは
+
+- 169.254.169.123 (リンクローカル)
+- 0.amazon.pool.ntp.org
+- 1.amazon.pool.ntp.org
+- 2.amazon.pool.ntp.org
+- 3.amazon.pool.ntp.org
+
+が使える。
+
+ntpdだったら景気よく
+```
+server 169.254.169.123 iburst
+server 0.amazon.pool.ntp.org iburst
+server 1.amazon.pool.ntp.org iburst
+server 2.amazon.pool.ntp.org iburst
+server 3.amazon.pool.ntp.org iburst
+```
+しとけばいいのではないか。
+
+ntpdやchronyのようなNTPサーバの機能を持つものではなく
+sntpやsystemd-timesyncdのようなSNTPクライアントだけのものが軽いのではないか。試してみる。
+
+systemd-timesyncdはVMだと動かない? [ゆきろぐ: systemd-timesyncdによる時刻同期](http://yukithm.blogspot.com/2014/09/systemd-timesyncd.html)
+試してみたが動くみたい。
+

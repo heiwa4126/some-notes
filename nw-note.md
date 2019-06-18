@@ -1,8 +1,8 @@
 
-- [MTUの確認](#mtuの確認)
+- [MTUの確認](#MTUの確認)
 - [ジャンボフレーム](#ジャンボフレーム)
 - [ポートの疎通確認](#ポートの疎通確認)
-- [TCP BBR](#tcp-bbr)
+- [TCP BBR](#TCP-BBR)
 
 # MTUの確認
 
@@ -71,6 +71,7 @@ Test-NetConnection <host> -Port <port>
 [Google Cloud Platform Japan 公式ブログ: 輻輳制御の新アルゴリズム TCP BBR を GCP に導入](https://cloudplatform-jp.googleblog.com/2017/08/TCP-BBR-congestion-control-comes-to-GCP-your-Internet-just-got-faster.html)
 
 Ubuntu 1804LTSだと、カーネルがわりと新しいので、TCP BBRが簡単に切り替えられる。
+(Amazon Linux 2もOK)
 
 使えるアルゴリズムのリスト
 ```

@@ -12,6 +12,7 @@
 - [ファイル/ディレクトリのmodeを8進数で得る](#ファイルディレクトリのmodeを8進数で得る)
 - [ディレクトリを指定のモードで作成する](#ディレクトリを指定のモードで作成する)
 - [mountでディスクを列挙するのをやめる](#mountでディスクを列挙するのをやめる)
+- [sudo -e](#sudo--e)
 - [hex dump](#hex-dump)
 
 
@@ -228,6 +229,14 @@ mkdir -m 1770 ~/tmp
 `lsblk -f`
 に同じ
 )
+
+# sudo -e
+
+``` bash
+sudo -e /etc/foobar.conf
+# sudo $EDITOR /etc/foobar.conf に同じ
+```
+みたいなことができる。かっこいいかもしれない。
 
 
 # hex dump
