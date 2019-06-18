@@ -1,9 +1,11 @@
 # Azure忘備録
 
-- [Azure忘備録](#azure忘備録)
+- [Azure忘備録](#Azure忘備録)
 - [azure-cliでアカウントの切り替え方](#azure-cliでアカウントの切り替え方)
-- [テナントID](#テナントid)
-- [Azure AD Graph API](#azure-ad-graph-api)
+- [テナントID](#テナントID)
+- [Azure AD Graph API](#Azure-AD-Graph-API)
+- [Azureでの時刻同期](#Azureでの時刻同期)
+- [hv-fcopy-daemon.service が fail](#hv-fcopy-daemonservice-が-fail)
 
 # azure-cliでアカウントの切り替え方
 
@@ -50,3 +52,48 @@ az account set -s <ここにidをペースト>
 
 違いは
 [Microsoft ID プラットフォーム (v2.0) に更新する理由 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/develop/azure-ad-endpoint-comparison)
+
+
+# Azureでの時刻同期
+
+Azureでは
+[Azure での Linux VM の時刻同期 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync)
+
+hyper-vで同期する
+
+はずなのでntpdもchronyもいらないはず、だが、2本立てが推奨されている。
+
+``` 
+lsmod | grep hv_utils
+ps -ef | grep hv
+ls /sys/class/ptp
+cat /sys/class/ptp/ptp0/clock_name
+```
+で確認。
+
+PTPソースを使えるchronyで
+```
+refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
+```
+のように設定。 
+
+
+# hv-fcopy-daemon.service が fail
+
+Azure上のUbuntu 1804で hv-fcopy-daemon.serviceがfailする。
+
+```
+$ systemctl status hv-fcopy-daemon
+● hv-fcopy-daemon.service - Hyper-V File Copy Protocol Daemon
+   Loaded: loaded (/lib/systemd/system/hv-fcopy-daemon.service; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Tue 2019-06-18 12:03:52 JST; 3min 9s ago
+  Process: 969 ExecStart=/usr/sbin/hv_fcopy_daemon -n (code=exited, status=1/FAILURE)
+ Main PID: 969 (code=exited, status=1/FAILURE)
+
+ 6月 18 12:03:52 u9 systemd[1]: Started Hyper-V File Copy Protocol Daemon.
+ 6月 18 12:03:52 u9 HV_FCOPY[969]: starting; pid is:969
+ 6月 18 12:03:52 u9 HV_FCOPY[969]: open /dev/vmbus/hv_fcopy failed; error: 2 No such file or directory
+ 6月 18 12:03:52 u9 systemd[1]: hv-fcopy-daemon.service: Main process exited, code=exited, status=1/FAILURE
+ 6月 18 12:03:52 u9 systemd[1]: hv-fcopy-daemon.service: Failed with result 'exit-code'.
+```
+確かに/dev/vmbus/hv_fcopyは無い。(つづく)
