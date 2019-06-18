@@ -402,8 +402,6 @@ dumpをもう少し簡単に & 自動定期実行できるようにする
 - [Red Hat Enterprise Linux 7 25.7. GRUB 2 の再インストール - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
 - [Red Hat Labs | Red Hat Customer Portal Labs](https://access.redhat.com/labs/rbra/)
 - [Relax and Recover(ReaR) の概要](https://access.redhat.com/ja/solutions/2641301)
-- [5.4. ext2、ext3、ext4 ファイルシステムのバックアップ - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/storage_administration_guide/ext4backup)
-- [5.5. ext2、ext3、ext4 ファイルシステムの復元 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/storage_administration_guide/extrestore)
 - [3.7. XFS ファイルシステムのバックアップと復元 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/storage_administration_guide/xfsbackuprestore)
 
 
