@@ -77,6 +77,20 @@ refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
 ```
 のように設定。 
 
+設定してしばらく後
+```
+# chronyc sources
+210 Number of sources = 2
+MS Name/IP address         Stratum Poll Reach LastRx Last sample
+===============================================================================
+#* PHC0                          0   3   377    11    -63ns[ +758ns] +/- 1711ns
+^- 40.74.70.63                   2   6   377   111    -31ms[  -31ms] +/-  116ms
+```
+(NTPサーバはtime.windows.comを指定してみた)
+
+
+
+
 
 # hv-fcopy-daemon.service が fail
 
