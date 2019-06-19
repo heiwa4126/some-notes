@@ -317,7 +317,7 @@ restore -rf /mnt/dump/c71/boot.dump
 /mnt/sysimage/etc/fstab
 を正しいuuidで修正しておくと、
 CD再起動時に/etc/sysimageの下に
-全部のパーティションが適切にマウントされるので
+全部のパーティションが適切にマウントされる(はず)なので
 おすすめ。
 
 再起動して
@@ -340,9 +340,9 @@ mount -t ext4 /dev/mapper/VolGroup00-root /mnt/sysimage
 mount -t ext4 /dev/mapper/VolGroup00-var_crash /mnt/sysimage/var/crash
 mount -t ext4 /dev/sda2 /mnt/sysimage/boot
 mount -t vfat /dev/sda1 /mnt/sysimage/boot/efi
+mount -t proc proc /mnt/sysimage/proc
+mount -t sysfs sys /mnt/sysimage/sys
 mount -o bind /dev /mnt/sysimage/dev
-mount -o bind /sys /mnt/sysimage/sys
-mount -t proc none /mnt/sysimage/proc
 ```
 する。
 
