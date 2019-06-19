@@ -125,7 +125,7 @@ CDからブートさせる(ホストによってCDからブートさせる手順
 起動したらメニューから
 1. Troubleshooting ->
 2. Rescue A Red Hat Enterprise Linux system ->
-3. 1 continue -> 
+3. 1 continue ->
 4. return
 
 で、shが立ち上がる。
@@ -267,6 +267,11 @@ cd /mnt/dump/c71
 # パーティション情報のリストア。ディスクが複数あれば全部
 sgdisk --load-backup sgdisk.txt /dev/sda
 
+# sgdiskのバージョンによってはlvm2の復元まで行うものがある。
+# 以下のコマンドで、パーティションを確認し、lvmまで復元されているようなら
+# vgscanから実行
+lsblk
+
 # blkid.txtの中でtypeがLVM2_memberのものの
 # uuidとdevice(/dev/sda3)を指定して実行
 # いくつもあれば全部やる。コマンドが長いので、別のホストで編集すると楽
@@ -319,7 +324,7 @@ RHELのcdを挿入し
 起動したらメニューから
 1. Troubleshooting ->
 2. Rescue A Red Hat Enterprise Linux system ->
-3. 1 continue -> (**read only mouuntではない**)
+3. 1 continue ->
 4. return
 
 rescueモードではいりなおすと、
@@ -480,4 +485,20 @@ rpm -q --qf='%{name}-%{version}-%{release}.%{arch}.rpm\n' grub2-efi-x64 shim-x64
 
 ```
 rpm -q  grub2-efi-x64 shim-x64 grub2-tools | xargs yumdownloader
+```
+
+## GPTディスクを空にする
+
+RHELのcdを挿入し
+起動したらメニューから
+1. Troubleshooting ->
+2. Rescue A Red Hat Enterprise Linux system ->
+3. 3 skip ton shell ->
+4. return
+
+```
+cgdisk /dev/sda
+# 全パーティションで選択&delete。最後にWrite
+dd if=/dev/zero of=/dev/sad block=1024k count=10240
+# 先頭10GBをゼロクリア
 ```
