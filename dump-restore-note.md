@@ -5,24 +5,25 @@ dumpとrestoreを使って
 ディザスタリカバリーを行う。
 
 - [dump / restore](#dump--restore)
-- [注意](#注意)
-- [例の前提](#例の前提)
-- [dumpの事前準備](#dumpの事前準備)
-- [dumpの実行](#dumpの実行)
-  - [GRUBメニューでrescueモードで起動する場合](#GRUBメニューでrescueモードで起動する場合)
-  - [インストールCDからrescueモードで起動する場合](#インストールCDからrescueモードで起動する場合)
-  - [dump(続き)](#dump続き)
-  - [dump(続き2)](#dump続き2)
-- [restoreの実行](#restoreの実行)
+- [注意](#%E6%B3%A8%E6%84%8F)
+- [例の前提](#%E4%BE%8B%E3%81%AE%E5%89%8D%E6%8F%90)
+- [dumpの事前準備](#dump%E3%81%AE%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99)
+- [dumpの実行](#dump%E3%81%AE%E5%AE%9F%E8%A1%8C)
+  - [GRUBメニューでrescueモードで起動する場合](#GRUB%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%81%A7rescue%E3%83%A2%E3%83%BC%E3%83%89%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88)
+  - [インストールCDからrescueモードで起動する場合](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%ABCD%E3%81%8B%E3%82%89rescue%E3%83%A2%E3%83%BC%E3%83%89%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88)
+  - [dump(続き)](#dump%E7%B6%9A%E3%81%8D)
+  - [dump(続き2)](#dump%E7%B6%9A%E3%81%8D2)
+- [restoreの実行](#restore%E3%81%AE%E5%AE%9F%E8%A1%8C)
 - [TODO](#TODO)
-- [参考](#参考)
-- [メモ](#メモ)
-  - [GPTツールメモ](#GPTツールメモ)
-  - [他メモ](#他メモ)
-  - [HPのBIOS](#HPのBIOS)
-  - [vfatのUUID](#vfatのUUID)
-  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト](#インストールされているgrub2-efi-x64-shim-x64-grub2-toolsをリスト)
-  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをインタネットから取得](#インストールされているgrub2-efi-x64-shim-x64-grub2-toolsをインタネットから取得)
+- [参考](#%E5%8F%82%E8%80%83)
+- [メモ](#%E3%83%A1%E3%83%A2)
+  - [GPTツールメモ](#GPT%E3%83%84%E3%83%BC%E3%83%AB%E3%83%A1%E3%83%A2)
+  - [他メモ](#%E4%BB%96%E3%83%A1%E3%83%A2)
+  - [HPのBIOS](#HP%E3%81%AEBIOS)
+  - [vfatのUUID](#vfat%E3%81%AEUUID)
+  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8Bgrub2-efi-x64-shim-x64-grub2-tools%E3%82%92%E3%83%AA%E3%82%B9%E3%83%88)
+  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをインタネットから取得](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8Bgrub2-efi-x64-shim-x64-grub2-tools%E3%82%92%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%8D%E3%83%83%E3%83%88%E3%81%8B%E3%82%89%E5%8F%96%E5%BE%97)
+  - [GPTディスクを空にする](#GPT%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%82%92%E7%A9%BA%E3%81%AB%E3%81%99%E3%82%8B)
 
 
 # 注意
@@ -335,8 +336,15 @@ rescueモードではいりなおすと、
 ```
 vgscan
 vgchange -ay
+mount -t ext4 /dev/mapper/VolGroup00-root /mnt/sysimage
+mount -t ext4 /dev/mapper/VolGroup00-var_crash /mnt/sysimage/var/crash
+mount -t ext4 /dev/sda2 /mnt/sysimage/boot
+mount -t vfat /dev/sda1 /mnt/sysimage/boot/efi
+mount -o bind /dev /mnt/sysimage/dev
+mount -o bind /sys /mnt/sysimage/sys
+mount -t proc none /mnt/sysimage/proc
 ```
-し、さらにfstabを確認してCDから再起動。
+する。
 
 続き
 ```
