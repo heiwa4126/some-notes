@@ -49,7 +49,7 @@ sudo apt-get install azure-functions-core-tools
 
 # 作業
 
-venv環境用意
+venv環境へ移動(毎回最初に実行)
 ```
 python3 -m venv .env
 source .env/bin/activate
@@ -100,3 +100,10 @@ curl -i http://localhost:7071/admin/functions/TimerTrigger1
 これでJSONがずらずら帰ってくれば、とりあえずOK。
 
 一方Storageの方に `azure-webjobs-hosts`というのができてるはず。
+
+
+venvの環境は`~/.env/lib/python3.6/site-packages`からモジュールを読むので
+```
+pip install -r requirements.txt -U -t ~/.env/lib/python3.6/site-packages
+```
+みたいなことが必要(当たってる?)。
