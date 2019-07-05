@@ -1,29 +1,31 @@
 # dump / restore
 
-RHEL7系のホストで(EFIでGPTでLVM)
+RHEL7系のホストで(EFIでGPTでLVM。FSはext4かxfs)
 dumpとrestoreを使って
 ディザスタリカバリーを行う。
 
+バックアップ先はCIFSまたはNFS(v3 or v4)
+
 - [dump / restore](#dump--restore)
-- [注意](#%E6%B3%A8%E6%84%8F)
-- [例の前提](#%E4%BE%8B%E3%81%AE%E5%89%8D%E6%8F%90)
-- [dumpの事前準備](#dump%E3%81%AE%E4%BA%8B%E5%89%8D%E6%BA%96%E5%82%99)
-- [dumpの実行](#dump%E3%81%AE%E5%AE%9F%E8%A1%8C)
-  - [GRUBメニューでrescueモードで起動する場合](#GRUB%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%81%A7rescue%E3%83%A2%E3%83%BC%E3%83%89%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88)
-  - [インストールCDからrescueモードで起動する場合](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%ABCD%E3%81%8B%E3%82%89rescue%E3%83%A2%E3%83%BC%E3%83%89%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88)
-  - [dump(続き)](#dump%E7%B6%9A%E3%81%8D)
-  - [dump(続き2)](#dump%E7%B6%9A%E3%81%8D2)
-- [restoreの実行](#restore%E3%81%AE%E5%AE%9F%E8%A1%8C)
+- [注意](#注意)
+- [例の前提](#例の前提)
+- [dumpの事前準備](#dumpの事前準備)
+- [dumpの実行](#dumpの実行)
+  - [GRUBメニューでrescueモードで起動する場合](#GRUBメニューでrescueモードで起動する場合)
+  - [インストールCDからrescueモードで起動する場合](#インストールCDからrescueモードで起動する場合)
+  - [dump(続き)](#dump続き)
+  - [dump(続き2)](#dump続き2)
+- [restoreの実行](#restoreの実行)
 - [TODO](#TODO)
-- [参考](#%E5%8F%82%E8%80%83)
-- [メモ](#%E3%83%A1%E3%83%A2)
-  - [GPTツールメモ](#GPT%E3%83%84%E3%83%BC%E3%83%AB%E3%83%A1%E3%83%A2)
-  - [他メモ](#%E4%BB%96%E3%83%A1%E3%83%A2)
-  - [HPのBIOS](#HP%E3%81%AEBIOS)
-  - [vfatのUUID](#vfat%E3%81%AEUUID)
-  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8Bgrub2-efi-x64-shim-x64-grub2-tools%E3%82%92%E3%83%AA%E3%82%B9%E3%83%88)
-  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをインタネットから取得](#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8Bgrub2-efi-x64-shim-x64-grub2-tools%E3%82%92%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%8D%E3%83%83%E3%83%88%E3%81%8B%E3%82%89%E5%8F%96%E5%BE%97)
-  - [GPTディスクを空にする](#GPT%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%82%92%E7%A9%BA%E3%81%AB%E3%81%99%E3%82%8B)
+- [参考](#参考)
+- [メモ](#メモ)
+  - [GPTツールメモ](#GPTツールメモ)
+  - [他メモ](#他メモ)
+  - [HPのBIOS](#HPのBIOS)
+  - [vfatのUUID](#vfatのUUID)
+  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト](#インストールされているgrub2-efi-x64-shim-x64-grub2-toolsをリスト)
+  - [インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをインターネットから取得](#インストールされているgrub2-efi-x64-shim-x64-grub2-toolsをインターネットから取得)
+  - [GPTディスクを空にする](#GPTディスクを空にする)
 
 
 # 注意
@@ -42,14 +44,20 @@ Relax-and-Recover (ReaR)
 - [Red Hat Enterprise Linux 7 第26章 Relax-and-Recover (ReaR) - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-relax-and-recover_rear)
 - [Relax-and-Recover - Linux Disaster Recovery](http://relax-and-recover.org/)
 
+AWSやAzureでの仮想マシンでは
+おおむねMBRで非LVMなので、こんな手間はいらない。
+(クラウドなのでdump/restoreは無いと思うが)
+
 
 # 例の前提
+
+例なので、適宜読み替えること。
 
 - OSはRHEL7(またはCentOS7)
 - UEFI
 - GPTディスク
 - LVM
-- ファイルシステムは全部ext4
+- ファイルシステムは全部ext4(かxfs)
 - ホスト名はc71
 - ホストのipは192.168.56.94/24 (enp0s8)
 - バックアップ先はCIFSで//192.168.56.91/dumpの下
@@ -71,17 +79,19 @@ sr0                  11:0    1 1024M  0 rom
 `/boot/efi(sda1)`のFSがvfatでdump/restoreできないのがミソ。
 (dump/restoreの対応FSはextとxfsのみ)
 
-あとバックアップ先をCIFSにするのはやめといたほうがいい。
+あとバックアップ先をCIFSにするのは推奨しない。
 DVDのrescueモードにはmount.cifsがないので、
 restoreするとき結構大変。
-NFSをお勧めします。
+NFSをお勧めします(できればNFSv4)。
 
 
 # dumpの事前準備
 
+各ホストで実行しておくこと。
 ```
-yum install cifs-utils nfs-utils dump gdisk
+yum install cifs-utils nfs-utils dump xfsdump gdisk
 ```
+
 
 # dumpの実行
 
@@ -96,6 +106,7 @@ rescueモードで起動するには
 * インストールCDから起動する
 
 の2通りがある。前者のほうがかなり楽。
+
 
 ## GRUBメニューでrescueモードで起動する場合
 
@@ -117,6 +128,7 @@ systemctl start network
 ```
 
 「[dump(続き)](#dump続き)」へ進む
+
 
 ## インストールCDからrescueモードで起動する場合
 
@@ -216,7 +228,6 @@ CDから起動した場合は
 
 
 
-
 # restoreの実行
 
 まっさらなディスクにEFIでGPTでLVMなシステムを復元するケース。
@@ -230,7 +241,7 @@ LVMを設定
 パーティションを「復元」ではなく、
 もとに近いものを作る、
 という方針でもいいかもしれないので
-そこは臨機応変に行うこと。
+臨機応変に行うこと。
 
 REHL7やCentOS7のDVDのrescue modeには
 mount.cifsが含まれてないので、
@@ -239,12 +250,12 @@ cifsマウントできない。(nfsはある)
 CIFSからリストアする場合は
 [SystemRescueCDの5.3.2](https://osdn.net/projects/systemrescuecd/storage/releases/5.3.2/)
 を使う。
-(SystemRescueCDの6にはdump/restoreが入ってない。xfs_dumpはあるが)
+(SystemRescueCDの6にはdump/restoreが入ってない。xfs_dumpはある)
 
 以下はRHEL7/CentOS7のインストールCDを使うケースについて書く。
 
+まず
 [インストールCDからrescueモードで起動する場合](#インストールCDからrescueモードで起動する場合)を参照して、CDから起動する。
-
 
 ```
 loadkeys jp106
@@ -267,10 +278,16 @@ cd /mnt/dump/c71
 
 # パーティション情報のリストア。ディスクが複数あれば全部
 sgdisk --load-backup sgdisk.txt /dev/sda
-
-# sgdiskのバージョンによってはlvm2の復元まで行うものがある。
+# ** XFSの注意 **
+# RHEL7のsgdiskではxfsパーティションが正しく復元されない
+# lsblk-f.txtを参照して、mkfs.xfs & xfs_adminでUUIDとLABELをつけて作り直すこと。
+## 例)
+## mkfs.xfs -L {label} /dev/mapper/centos_c71-root
+## xfs_admin -U {UUID} /dev/mapper/centos_c71-root
+# ** LVMの注意 **
+# sgdiskのバージョンによってはlvm2の復元も行う。
 # 以下のコマンドで、パーティションを確認し、lvmまで復元されているようなら
-# vgscanから実行
+# vgscanから実行(lvmでxfsの場合は、続けて上の「XFSの注意」に従うこと)
 lsblk
 
 # blkid.txtの中でtypeがLVM2_memberのものの
@@ -289,11 +306,13 @@ vgcfgrestore -f lvm.txt centos_c71
 vgscan
 vgchange -ay
 
-# ファイルシステムを作成する
+# ファイルシステムが作成されていなければ作成する
+# sgdisk --load-backupでXFS以外は作成されているはず
 mkfs.vfat /dev/sda1
 mkfs.ext4 /dev/sda2
 mkfs.ext4 /dev/mapper/centos_c71-root
 mkswap /dev/mapper/centos_c71-swap
+# ** EFIパーティションの注意 **
 # vfatはmkfsの時しかuuidが指定できないので、指定するつもりならここで行うこと
 # オプションは-i ABCD1234 (真ん中のハイフンを除く)
 
@@ -303,6 +322,13 @@ mount -t ext4 /dev/mapper/centos_c71-root /mnt/sysimage
 # rootをリストア
 cd /mnt/sysimage
 restore -rf /mnt/dump/c71/restore.dump
+# ** XFSの注意 ***
+# xfsrestoreはdestが必要なので
+## cd /mnt/sysimage
+## xfsrestore -f /mnt/dump/c71/restore.xfs.dump .
+# または
+## xfsrestore -f /mnt/dump/c71/restore.xfs.dump cd /mnt/sysimage
+# のように行うこと。
 
 # bootをマウントする
 mount -t ext4 /dev/sda2 boot
@@ -317,8 +343,8 @@ restore -rf /mnt/dump/c71/boot.dump
 /mnt/sysimage/etc/fstab
 を正しいuuidで修正しておくと、
 CD再起動時に/etc/sysimageの下に
-全部のパーティションが適切にマウントされる(はず)なので
-おすすめ。
+全部のパーティションが適切にマウントされる(はず)なのでおすすめ。
+
 
 再起動して
 RHELのcdを挿入し
@@ -332,7 +358,7 @@ rescueモードではいりなおすと、
 /mnt/sysimageの下にrootとbootとEFI領域がマウントされているはず。
 (`lsblk` で確認)
 
-されていなかったら
+自動マウントされていなかったら
 ```
 vgscan
 vgchange -ay
@@ -344,7 +370,7 @@ mount -t proc proc /mnt/sysimage/proc
 mount -t sysfs sys /mnt/sysimage/sys
 mount -o bind /dev /mnt/sysimage/dev
 ```
-する。
+のようにする(順番が大事)。
 
 続き
 ```
@@ -352,17 +378,12 @@ chroot /mnt/sysimage
 loadkeys jp106
 export LANG=C
 
-## bootとEFI領域をマウント
-## (fstabが正しければすでにマウントされている)
-## mount -t ext4 /dev/sda2 /boot
-## mount -t vfat /dev/sda1 /boot/efi
-
 ## ここでネットワーク設定
 ip a ... (略)
 
-# /etc/fstabのuuidを`blkid`の値に従って編集。
+# /etc/fstabのuuidを`blkid`の値に従って確認 and 編集。
 # (もしくはtune2fs -UでUUIDのほうを変更するなど)
-# 必ずgrub-efiのインストール前に行うこと
+# ** 必ず ** grub-efiのインストール前に行うこと
 vim /etc/fstab
 
 # grub-efiのインストール
@@ -371,8 +392,9 @@ yum reinstall grub2-efi-x64 shim-x64 grub2-tools
 # パッケージの再インストールが必要なのは /boot/efiがvfatでdump/restoreできないから。
 #
 # ローカルにyumdumloadしておいて
-# rpm -ivh --replacepkgs packagename
-# でも行けるので、バックアップ先に置いておくと良い。
+# rpm -ivh --replacepkgs packagename (*.rpmが楽)
+# でも行けるので、事前にバージョンを確認してyumdownloaderで落として
+# バックアップ先に置いておくと良い。(巻末参照)
 
 # grub.cfgの再生成
 grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
@@ -408,7 +430,6 @@ dumpをもう少し簡単に & 自動定期実行できるようにする
 - ある程度daemonを止めて実行する。
 - LVMスナップショットと組み合わせる。
 
-などなど。
 
 # 参考
 
@@ -440,6 +461,7 @@ MBRのツールとGPTのツールでは若干オプションが異なる。
 例えば `sfdisk -l` は `sgdisk -p`.
 sgdiskの`-l`は `-b`オプションと対になるバックアップ/ロードバックアップ。
 
+
 ## 他メモ
 
 GPTのパーティションにはPARTUUIDというIDが付く。
@@ -463,8 +485,8 @@ device-mapparについて詳しくは
 
 HP(ヒューレット・パッカード)のBIOSの乗ったホストで
 CDブートするときに使う
-「ワンタイムブート」メニューは、
-実はワンタイムでない。永続する。
+「ワンタイムブート」メニューは、ワンタイムでない。
+なんらかの条件で永続する。
 
 CDブートから、HDD(RAID)ブートに切り替えるときは
 1. (CDブートした状態から)reboot
@@ -489,7 +511,7 @@ vfatのUUIDを変更するツールはないので
 rpm -q --qf='%{name}-%{version}-%{release}.%{arch}.rpm\n' grub2-efi-x64 shim-x64 grub2-tools
 ```
 
-## インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをインタネットから取得
+## インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをインターネットから取得
 
 ```
 rpm -q  grub2-efi-x64 shim-x64 grub2-tools | xargs yumdownloader
