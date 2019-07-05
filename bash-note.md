@@ -14,6 +14,7 @@
 - [mountでディスクを列挙するのをやめる](#mountでディスクを列挙するのをやめる)
 - [sudo -e](#sudo--e)
 - [hex dump](#hex-dump)
+- [/のfsck](#のfsck)
 
 
 # 参考
@@ -251,3 +252,25 @@ xxd
 
 - [Man page of OD](https://linuxjm.osdn.jp/html/gnumaniak/man1/od.1.html)
 - [man xxd (1): 16 進ダンプを作成したり、元に戻したり。](http://ja.manpages.org/xxd)
+
+
+# /のfsck
+
+まず
+```
+fsck -n /
+```
+でほんとに異常があるのか確認。
+
+本当にファイルシステムに異常があるなら
+```
+shutdown -F -r now
+```
+で、再起動時にfsckを実行させる。
+
+まだ問題があるようなら、CD bootなどで。
+
+参考:
+- [Man page of SHUTDOWN](https://linuxjm.osdn.jp/html/SysVinit/man8/shutdown.8.html)
+
+`/forcefsck`は自動的に削除される。
