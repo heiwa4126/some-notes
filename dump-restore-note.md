@@ -190,6 +190,11 @@ dump -z9 -0f ./boot.dump /boot
 # /rootのdump
 dump -z9 -0f ./root.dump /
 
+# ファイルシステムがXFSの場合は
+xfsdump -l 0  -L backup -M backup  -f ./boot.xfs.dump /boot
+xfsdump -l 0  -L backup -M backup  -f ./root.xfs.dump /
+# のように
+
 ## /var/crashなどがあればそれも
 
 # GPTディスクのパーティション情報エクスポート
@@ -230,7 +235,7 @@ CDから起動した場合は
 
 # restoreの実行
 
-まっさらなディスクにEFIでGPTでLVMなシステムを復元するケース。
+まっさらなディスクにEFIでGPTでLVMがあるシステムを復元するケース。
 
 restoreそのものよりも、
 GPTディスクにパーティションを復元、
