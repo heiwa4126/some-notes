@@ -5,6 +5,7 @@ Cloud watch Eventのスケジュール実行で
 
 [CloudWatch Management Console](https://ap-northeast-1.console.aws.amazon.com/cloudwatch/home?region=ap-northeast-1#rules:)
 
+ルールの作成または編集
 「ステップ 1: ルールの作成」で「ターゲット」で「定数 (JSON テキスト)」を設定すると
 
 それがまるごとハンドラのevent変数に入って呼ばれる。
