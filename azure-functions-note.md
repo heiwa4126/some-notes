@@ -8,6 +8,7 @@ AWS Lambdaと全然違う。
 - [前提](#前提)
 - [作業](#作業)
 - [InsitesのLLog Analytics(Azure Monitor)で使えるクエリサンプル](#InsitesのLLog-AnalyticsAzure-Monitorで使えるクエリサンプル)
+- [未整理メモ](#未整理メモ)
 
 
 # 制限(2019-7)
@@ -134,3 +135,21 @@ pip install -r requirements.txt -U -t ~/.env/lib/python3.6/site-packages
 ```
 traces | top 100 by timestamp desc | project timestamp, message
 ```
+
+# 未整理メモ
+
+「とりあえず」仕様
+
+出力はInsitesのLog Analyticsに特殊な先頭文字付きで出し、
+Kustoクエリで
+```
+traces
+| where (cloud_RoleName == "hello9vaglet") and (isempty(severityLevel) != true ) and ( message matches regex "^\\*\\*\\*\\*\\ " )
+| project timestamp, message
+```
+みたいな感じで。
+
+queueに出力も簡単にできるのだが、意外とリードアウトがめんどくさい。
+
+
+欠点: Log Analyticsへの出力が死ぬほど遅い。
