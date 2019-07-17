@@ -2,15 +2,16 @@
 
 ZScalerというproxyが来たので、対策
 
-- [ZScaler](#zscaler)
-- [問題](#%E5%95%8F%E9%A1%8C)
-- [対策](#%E5%AF%BE%E7%AD%96)
-- [参考](#%E5%8F%82%E8%80%83)
-- [ZScalerの証明書をexportする手順](#zscaler%E3%81%AE%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92export%E3%81%99%E3%82%8B%E6%89%8B%E9%A0%86)
-- [Linuxに証明書を追加する手順](#linux%E3%81%AB%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B%E6%89%8B%E9%A0%86)
-  - [Ubuntuの場合](#ubuntu%E3%81%AE%E5%A0%B4%E5%90%88)
-  - [RHEL/CentOS 7の場合](#rhelcentos-7%E3%81%AE%E5%A0%B4%E5%90%88)
-- [そのほか](#%E3%81%9D%E3%81%AE%E3%81%BB%E3%81%8B)
+- [ZScaler](#ZScaler)
+- [問題](#問題)
+- [対策](#対策)
+- [参考](#参考)
+- [ZScalerの証明書をexportする手順](#ZScalerの証明書をexportする手順)
+- [Linuxに証明書を追加する手順](#Linuxに証明書を追加する手順)
+  - [Ubuntuの場合](#Ubuntuの場合)
+  - [RHEL/CentOS 7の場合](#RHELCentOS-7の場合)
+- [そのほか](#そのほか)
+
 
 # 問題
 

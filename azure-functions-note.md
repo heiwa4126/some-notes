@@ -4,9 +4,26 @@ Ubuntu 18.04LTS上でPythonでAzure Functionsを書くメモ。
 AWS Lambdaと全然違う。
 
 - [Azure Functions 忘備録](#Azure-Functions-忘備録)
+- [制限(2019-7)](#制限2019-7)
 - [前提](#前提)
 - [作業](#作業)
+- [InsitesのLLog Analytics(Azure Monitor)で使えるクエリサンプル](#InsitesのLLog-AnalyticsAzure-Monitorで使えるクエリサンプル)
+- [未整理メモ](#未整理メモ)
 
+
+# 制限(2019-7)
+
+- [Azure Functions on Linux Preview · Azure/Azure-Functions Wiki · GitHub](https://github.com/Azure/Azure-Functions/wiki/Azure-Functions-on-Linux-Preview)
+
+使えるリージョンがいまのところ
+- West US
+- East US
+- West Europe
+- East Asia
+
+GUIも使えたり使えなかったり。
+コードの編集も
+テストランもできません。
 
 # 前提
 
@@ -107,3 +124,32 @@ venvの環境は`~/.env/lib/python3.6/site-packages`からモジュールを読�
 pip install -r requirements.txt -U -t ~/.env/lib/python3.6/site-packages
 ```
 みたいなことが必要(当たってる?)。
+
+# InsitesのLLog Analytics(Azure Monitor)で使えるクエリサンプル
+
+参考:
+- [Overview - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/kusto/query/)
+
+
+普通のlogっぽい出力を得る
+```
+traces | top 100 by timestamp desc | project timestamp, message
+```
+
+# 未整理メモ
+
+「とりあえず」仕様
+
+出力はInsitesのLog Analyticsに特殊な先頭文字付きで出し、
+Kustoクエリで
+```
+traces
+| where (cloud_RoleName == "hello9vaglet") and (isempty(severityLevel) != true ) and ( message matches regex "^\\*\\*\\*\\*\\ " )
+| project timestamp, message
+```
+みたいな感じで。
+
+queueに出力も簡単にできるのだが、意外とリードアウトがめんどくさい。
+
+
+欠点: Log Analyticsへの出力が死ぬほど遅い。
