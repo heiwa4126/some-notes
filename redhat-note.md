@@ -37,6 +37,7 @@ Red Hat系メモ
 - [RHELのバックアップ・リストア](#rhelのバックアップリストア)
 - [ReaR (Relax-and-Recover)](#rear-relax-and-recover)
 - [RHELを見た目ダウングレードさせる](#rhelを見た目ダウングレードさせる)
+- [RHELの特定マイナーバージョンに属するカーネルを探す手順](#rhelの特定マイナーバージョンに属するカーネルを探す手順)
 - [RHELを特定のバージョンに固定する](#rhelを特定のバージョンに固定する)
 - [RHELのホスト名](#rhelのホスト名)
 - [インストールされているパッケージのリストを構造のある形式で出力する](#インストールされているパッケージのリストを構造のある形式で出力する)
@@ -698,7 +699,72 @@ yum updateが簡単になる。
 exclude=kernel-* kmod-* perf-* python-perf-* redhat-release-* initscripts
 ```
 
+# RHELの特定マイナーバージョンに属するカーネルを探す手順
+
+```
+kernel-* kmod-* perf-* python-perf-* redhat-release-* 
+```
+
+``` bash
+yum --showduplicate --disableexcludes=all list | fgrep 3.10.0-514.26.2.el7 > krpms.lst
+
+# 対象パッケージ
+cut -d' ' -f1 < krpms.lst  | sort | uniq
+
+# 対象パッケージ バージョン付き
+cut -d' ' -f1 < krpms.lst  | sort | uniq | fgrep . | sed 's/\./-3.10.0-514.26.2.el7./' > prpms.lst
+
+# RPMをダウンロード
+cat prpms.lst | xargs yumdownloader --disableexcludes=all
+```
+
+
+```
+exclude=kernel-* perf-* python-perf-* redhat-release-* initscripts
+```
+kmodなしで
+
+```
+rm -f /etc/yum/vars/releasever
+subscription-manager release --set=7Server
+yum clean all
+(yum.confいじる)
+yum update -y
+...
+rpm -ivh --force (kernelだけ)
+rpm -Uvh --force (kernel以外) 
+```
+
+`yum localinstall`はうまくいかない。
+`--oldpackage`いるかも
+
+
+けっこう複雑なので
+```
+rpm -qa kernel kernel-abi-whitelists kernel-debug kernel-debug-debuginfo kernel-debug-devel kernel-debuginfo kernel-devel kernel-doc kernel-headers kernel-tools kernel-tools-debuginfo kernel-tools-libs kernel-tools-libs-devel perf perf-debuginfo python-perf python-perf-debuginfo
+```
+のリストで7.3,7.5,6.xの決め打ちでいくしかない。
+
+
 # RHELを特定のバージョンに固定する
+
+この項うそ。これでは固定できない。
+```
+[main]
+exclude=kernel-* kmod-* perf-* python-perf-* redhat-release-* initscripts
+```
+して、kernel群だけを手で入れるしか無い。
+
+
+
+
+
+
+
+
+
+**これ以下嘘。**
+
 
 yumの$releasever変数を指定する。
 
@@ -746,6 +812,8 @@ subscription-manager release --list
 
 # あとから追加
 subscription-manager release --set=6.3
+# or
+subscription-manager release --set=7Server
 ```
 
 
