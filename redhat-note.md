@@ -702,7 +702,7 @@ exclude=kernel-* kmod-* perf-* python-perf-* redhat-release-* initscripts
 # RHELの特定マイナーバージョンに属するカーネルを探す手順
 
 ```
-kernel-* kmod-* perf-* python-perf-* redhat-release-* 
+kernel-* kmod-* perf-* python-perf-* redhat-release-* initscripts-*
 ```
 
 ``` bash
