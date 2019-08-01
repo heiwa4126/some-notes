@@ -73,6 +73,14 @@ yum --showduplicates list
 ```
 ただしこれも`yum list installed`同様長いパッケージ名が折り返される。
 
+
+```
+repoquery -a --releasever=7Server --show-duplicates | sort | uniq
+```
+が適切だが、repoqueryには`--disableexcludes=all`が無い。
+
+
+
 # RHELのパッケージをWWWで探す
 
 [Red Hat Enterprise Linux Server 7 - Red Hat カスタマーポータル](https://access.redhat.com/downloads/content/69/ver=/rhel---7/7.6/x86_64/packages)
