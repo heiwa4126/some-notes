@@ -36,7 +36,8 @@ SendGridのマネージャで
 Settings > API Keys > Create API Key
 で
 Restricted Accessを選び
-mail sendだけ有効なキーを作る。
+Mail SendのMail Sendだけ有効なキーを作る
+(ここのUIが変なので苦労すること)。
 
 
 ## Postfix編
