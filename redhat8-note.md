@@ -1,4 +1,4 @@
-# Red Hat 7
+# Red Hat Enterprise Linux 8
 
 Azureで入れてみた。
 [Red Hat Enterprise Linux 8 (.latest, LVM) - Microsoft Azure](https://portal.azure.com/#create/hub)
