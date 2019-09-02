@@ -1,11 +1,12 @@
 # ssh tips
 
 - [ssh tips](#ssh-tips)
-- [.ssh/configでhostごとのUserがoverrideできない](#sshconfig%e3%81%a7host%e3%81%94%e3%81%a8%e3%81%aeuser%e3%81%8coverride%e3%81%a7%e3%81%8d%e3%81%aa%e3%81%84)
+- [.ssh/configでhostごとのUserがoverrideできない](#sshconfigでhostごとのuserがoverrideできない)
 - [ProxyJump](#proxyjump)
 - [DynamicForward](#dynamicforward)
 - [LocalForward](#localforward)
 - [ControlPersist](#controlpersist)
+- [各ディストリのsshd_configのCiphersのデフォルト値](#各ディストリのsshd_configのciphersのデフォルト値)
 
 
 # .ssh/configでhostごとのUserがoverrideできない
@@ -82,3 +83,31 @@ ssh_configにはどう書くのか. RemoteForward など
 
 * [OpenSSHのセッションを束ねるControlMasterの使いにくい部分はControlPersistで解決できる - Gマイナー志向](https://matsuu.hatenablog.com/entry/20120707/1341677472)
 * [Speed Up SSH by Reusing Connections | Puppet](https://puppet.com/blog/speed-up-ssh-by-reusing-connections)
+
+
+# 各ディストリのsshd_configのCiphersのデフォルト値
+
+RHEL7 default Ciphers 
+```
+Ciphers chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,blowfish-cbc,cast128-cbc,3des-cbc
+```
+(man sshd_config参照)
+
+Ubunts 18.04LTS
+```
+Cipers  chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+```
+
+RHEL7のは流石にまずいので、弱いのは外すべき。
+
+**ssh_configの設定だけど**
+[ssh config最強設定 - Qiita](https://qiita.com/keiya/items/dec9a1142ac701b19bd9)
+にあるのが参考になると思う。
+
+以下引用:
+```
+##### セキュリティ系！重要！！ #####
+# 以下は、OpenSSH 6.8を参考にしたもの。 
+# NSAフリーなChacha20を優先的に、そのあとは暗号強度の順。aes-cbcはダメらしい
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+```
