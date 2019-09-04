@@ -211,7 +211,7 @@ SCLはデメリットも多いが、野良ビルドよりはよっぽどマシ�
 [How to Install and Use 'yum-utils' to Maintain Yum and Boost its Performance](https://www.tecmint.com/linux-yum-package-management-with-yum-utils/)
 
 ```
-# package-cleanup --oldkernels
+# package-cleanup --oldkernels -y
 ```
 
 残すカーネルの数を指定することもできる
