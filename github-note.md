@@ -1,7 +1,13 @@
-github.comのメモ
+# github.comのメモ
 
-- [80,443/tcpしかつながらないproxyを超えて、githubにsshでつなぐ](#80443tcp%E3%81%97%E3%81%8B%E3%81%A4%E3%81%AA%E3%81%8C%E3%82%89%E3%81%AA%E3%81%84proxy%E3%82%92%E8%B6%85%E3%81%88%E3%81%A6github%E3%81%ABssh%E3%81%A7%E3%81%A4%E3%81%AA%E3%81%90)
-- [Firefoxのmarkdown拡張](#firefox%E3%81%AEmarkdown%E6%8B%A1%E5%BC%B5)
+- [github.comのメモ](#githubcomのメモ)
+- [80,443/tcpしかつながらないproxyを超えて、githubにsshでつなぐ](#80443tcpしかつながらないproxyを超えてgithubにsshでつなぐ)
+- [Firefoxのmarkdown拡張](#firefoxのmarkdown拡張)
+- [releaseの練習](#releaseの練習)
+  - [タグをつける](#タグをつける)
+  - [GitHub側](#github側)
+
+
 
 # 80,443/tcpしかつながらないproxyを超えて、githubにsshでつなぐ
 
@@ -37,3 +43,49 @@ Windowsだったら
 
 - [Copy as Markdown – Get this Extension for 🦊 Firefox (ja)](https://addons.mozilla.org/ja/firefox/addon/copy-as-markdown/)
 
+
+# releaseの練習
+
+## タグをつける
+
+``` bash
+# まずコミットする
+git commit -a -m "First release"
+git push
+# tagをつける
+git tag v0.0.1
+# ローカルでつけたタグを全てリモートに反映させる
+git push --tags
+```
+
+間違えると取り消すのが結構めんどくさいので慎重に。
+
+おまけ:
+``` bash
+# tag一覧
+git tag -n
+# タグの削除(ローカル)
+git tag -d tag名
+# さらにタグの削除(リモート)
+git push :タグ名
+```
+
+## GitHub側
+
+- [リリースの作成 - GitHub ヘルプ](https://help.github.com/ja/articles/creating-releases)
+- [Github – Tagの付け方とRelease機能の使い方 | Howpon[ハウポン]](https://howpon.com/7676)
+- [GitHubのリリース機能を使う - Qiita](https://qiita.com/todogzm/items/db9f5f2cedf976379f84)
+
+要点メモ:
+
+1. releaseのリンクから
+2. Draft a new releaseボタン
+3. バージョン入れて、フォームを埋める。
+4. Attach binariesのところへバイナリをドラッグ&ドロップ
+
+CLIがあると楽なんだが...
+REST APIはある。[Create a release](https://developer.github.com/v3/repos/releases/#create-a-release)
+
+goreleaser:
+- [goreleaser を使って Github Releases へ簡単デプロイ #golang - Qiita](https://qiita.com/ynozue/items/f939cff562ec782b33f0)
+- [GoReleaser](https://goreleaser.com/)
