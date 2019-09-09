@@ -89,3 +89,4 @@ REST APIはある。[Create a release](https://developer.github.com/v3/repos/rel
 goreleaser:
 - [goreleaser を使って Github Releases へ簡単デプロイ #golang - Qiita](https://qiita.com/ynozue/items/f939cff562ec782b33f0)
 - [GoReleaser](https://goreleaser.com/)
+- [goreleaser/goreleaser: Deliver Go binaries as fast and easily as possible](https://github.com/goreleaser/goreleaser)
