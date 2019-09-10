@@ -8,6 +8,7 @@
 - [GDBでデバッグ](#gdbでデバッグ)
 - [goモジュール](#goモジュール)
 - [snapdでgo](#snapdでgo)
+  - [おまけ: CentOS7でsnapd](#おまけ-centos7でsnapd)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -134,3 +135,17 @@ git config --global ghq.root "$MYGOPATH/src"
 emacs使うなら以下参照:
 
 - [Goプログラミングの環境構築 | Emacs JP](https://emacs-jp.github.io/programming/golang)
+
+## おまけ: CentOS7でsnapd
+
+``` bash
+yum update
+yum install yum-plugin-copr epel-release
+yum copr enable ngompa/snapcore-el7
+yum install snapd bridge-utils
+systemctl enable --now snapd.socket
+systemctl enable --now snapd
+ln -s /var/lib/snapd/snap /snap
+```
+
+あと `/snap/bin`にパスを通す。
