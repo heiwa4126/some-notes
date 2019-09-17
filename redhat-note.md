@@ -42,6 +42,7 @@ Red Hat系メモ
 - [RHELのホスト名](#rhelのホスト名)
 - [インストールされているパッケージのリストを構造のある形式で出力する](#インストールされているパッケージのリストを構造のある形式で出力する)
 - [起動時にntpdate](#起動時にntpdate)
+- [reposync](#reposync)
 
 
 
@@ -908,3 +909,10 @@ CentOS7だけど
 (略)
 ```
 なので多分`-g`つき。
+
+# reposync
+
+- [RHELを定期的にアップデートする際の課題と対策](https://www.redhat.com/cms/managed-files/RHEL_update_solutions.pdf)
+- [How to synchronize repository on system registered to CDN via subscription-manager - Red Hat Customer Portal](https://access.redhat.com/articles/1355053)
+
+> subscription-manager で登録後、そのシステムで利用可能なリポジトリを reposync コマンドでミラーできる
