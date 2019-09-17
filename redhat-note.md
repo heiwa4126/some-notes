@@ -912,7 +912,8 @@ CentOS7だけど
 
 # reposync
 
-- [RHELを定期的にアップデートする際の課題と対策](https://www.redhat.com/cms/managed-files/RHEL_update_solutions.pdf)
+- [RHELを定期的にアップデートする際の課題と対策](https://www.redhat.com/cms/managed-files/RHEL_update_solutions.pdf) - pdf
+- [RHELを定期的にアップデートする際の課題と対策](https://www.slideshare.net/moriwaka/rhel-86721836) - slideshare版
 - [How to synchronize repository on system registered to CDN via subscription-manager - Red Hat Customer Portal](https://access.redhat.com/articles/1355053)
 
 > subscription-manager で登録後、そのシステムで利用可能なリポジトリを reposync コマンドでミラーできる
