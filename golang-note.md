@@ -1,14 +1,15 @@
 # GoLangメモ
-- [GoLangメモ](#golangメモ)
-- [LinuxでWindowsのバイナリを作る](#linuxでwindowsのバイナリを作る)
+- [GoLangメモ](#golang%e3%83%a1%e3%83%a2)
+- [LinuxでWindowsのバイナリを作る](#linux%e3%81%a7windows%e3%81%ae%e3%83%90%e3%82%a4%e3%83%8a%e3%83%aa%e3%82%92%e4%bd%9c%e3%82%8b)
 - [strings.Builder](#stringsbuilder)
 - [delve](#delve)
-  - [インストール](#インストール)
-  - [実行例](#実行例)
-- [GDBでデバッグ](#gdbでデバッグ)
-- [goモジュール](#goモジュール)
-- [snapdでgo](#snapdでgo)
-  - [おまけ: CentOS7でsnapd](#おまけ-centos7でsnapd)
+  - [インストール](#%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
+  - [実行例](#%e5%ae%9f%e8%a1%8c%e4%be%8b)
+- [GDBでデバッグ](#gdb%e3%81%a7%e3%83%87%e3%83%90%e3%83%83%e3%82%b0)
+- [goモジュール](#go%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab)
+- [snapdでgo](#snapd%e3%81%a7go)
+  - [おまけ: CentOS7でsnapd](#%e3%81%8a%e3%81%be%e3%81%91-centos7%e3%81%a7snapd)
+- [定番ツールをまとめて](#%e5%ae%9a%e7%95%aa%e3%83%84%e3%83%bc%e3%83%ab%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%a6)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -149,3 +150,23 @@ ln -s /var/lib/snapd/snap /snap
 ```
 
 あと `/snap/bin`にパスを通す。
+
+# 定番ツールをまとめて
+
+ディスクに余裕があるなら
+``` bash
+go get -u golang.org/x/tools/...
+```
+(300MBぐらい。strip *して200MBぐらい)
+
+余裕がなければこれぐらいは
+``` bash
+go get -u github.com/rogpeppe/godef
+go get -u github.com/nsf/gocode
+go get -u github.com/golang/lint/golint
+go get -u github.com/kisielk/errcheck
+go get -u github.com/derekparker/delve/cmd/dlv
+```
+
+[golang/tools: [mirror] Go Tools](https://github.com/golang/tools)
+
