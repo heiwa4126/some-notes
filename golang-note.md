@@ -9,6 +9,7 @@
 - [goモジュール](#goモジュール)
 - [snapdでgo](#snapdでgo)
   - [おまけ: CentOS7でsnapd](#おまけ-centos7でsnapd)
+  - [おまけ: snapdで古いのを消す](#おまけ-snapdで古いのを消す)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -149,3 +150,26 @@ ln -s /var/lib/snapd/snap /snap
 ```
 
 あと `/snap/bin`にパスを通す。
+
+## おまけ: snapdで古いのを消す
+
+例)
+``` bash
+$ snap list --all
+Name              Version    Rev   Tracking  Publisher   Notes
+amazon-ssm-agent  2.3.662.0  1455  stable/…  aws✓        disabled,classic
+amazon-ssm-agent  2.3.672.0  1480  stable/…  aws✓        classic
+core              16-2.41    7713  stable    canonical✓  core,disabled
+core              16-2.42    7917  stable    canonical✓  core
+go                1.13       4409  1.13      mwhudson    disabled,classic
+go                1.13.1     4517  1.13      mwhudson    classic
+```
+
+で、古いのを消す例
+```
+snap remove core --revision=7713
+```
+
+まとめて消したいときは:
+
+[How to remove disabled (unused) snap packages with a single line of command? - Ask Ubuntu](https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
