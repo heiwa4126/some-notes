@@ -1,4 +1,5 @@
 # GoLangメモ
+
 - [GoLangメモ](#golang%e3%83%a1%e3%83%a2)
 - [LinuxでWindowsのバイナリを作る](#linux%e3%81%a7windows%e3%81%ae%e3%83%90%e3%82%a4%e3%83%8a%e3%83%aa%e3%82%92%e4%bd%9c%e3%82%8b)
 - [strings.Builder](#stringsbuilder)
@@ -9,6 +10,7 @@
 - [goモジュール](#go%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab)
 - [snapdでgo](#snapd%e3%81%a7go)
   - [おまけ: CentOS7でsnapd](#%e3%81%8a%e3%81%be%e3%81%91-centos7%e3%81%a7snapd)
+  - [おまけ: snapdで古いのを消す](#%e3%81%8a%e3%81%be%e3%81%91-snapd%e3%81%a7%e5%8f%a4%e3%81%84%e3%81%ae%e3%82%92%e6%b6%88%e3%81%99)
 - [定番ツールをまとめて](#%e5%ae%9a%e7%95%aa%e3%83%84%e3%83%bc%e3%83%ab%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%a6)
 
 # LinuxでWindowsのバイナリを作る
@@ -151,6 +153,30 @@ ln -s /var/lib/snapd/snap /snap
 
 あと `/snap/bin`にパスを通す。
 
+
+## おまけ: snapdで古いのを消す
+
+例)
+``` bash
+$ snap list --all
+Name              Version    Rev   Tracking  Publisher   Notes
+amazon-ssm-agent  2.3.662.0  1455  stable/…  aws✓        disabled,classic
+amazon-ssm-agent  2.3.672.0  1480  stable/…  aws✓        classic
+core              16-2.41    7713  stable    canonical✓  core,disabled
+core              16-2.42    7917  stable    canonical✓  core
+go                1.13       4409  1.13      mwhudson    disabled,classic
+go                1.13.1     4517  1.13      mwhudson    classic
+```
+
+で、古いのを消す例
+```
+snap remove core --revision=7713
+```
+
+まとめて消したいときは:
+
+[How to remove disabled (unused) snap packages with a single line of command? - Ask Ubuntu](https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
+
 # 定番ツールをまとめて
 
 ディスクに余裕があるなら
@@ -169,4 +195,3 @@ go get -u github.com/derekparker/delve/cmd/dlv
 ```
 
 [golang/tools: [mirror] Go Tools](https://github.com/golang/tools)
-
