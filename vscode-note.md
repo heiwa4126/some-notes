@@ -65,7 +65,8 @@ vscodeでf1押して`Remote-SSH: Connect to Host`を実行。.ssh/configに書�
 次からはリモートエクスプローラのペインから作業フォルダが開ける。
 
 
+## メモ
 
-
-
+いまのところ(2019-10)、`ProxyJump`が使えないらしい。
+MINGWのsshでは通るけど、vscodeでつなごうとすると死ぬ。
 
