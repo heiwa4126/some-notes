@@ -1,6 +1,7 @@
 # powershell-note
 
-遅い。長い。めんどくさい。わけがわからない
+遅い。長い。わけがわからない
+Powershellが絡むとすべてがめんどくさくなる。
 
 # moduleの場所
 
@@ -22,6 +23,4 @@ Get-InstalledModule -Name Az -AllVersions # Azの全バージョン
 
 # モジュールの削除
 
-
-- 
-- [Azure PowerShell のアンインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/azure/uninstall-az-ps?view=azps-2.8.0)
+参考になる: [Azure PowerShell のアンインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/azure/uninstall-az-ps?view=azps-2.8.0)

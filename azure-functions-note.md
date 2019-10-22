@@ -231,7 +231,8 @@ WARNING: Starting zip deployment. This operation can take a while to complete ..
 ```
 ログ出力代わりにwarning出すな、といいたい。
 
-めんどくさいので、最初の1回とか、二度と変更しないような場合に使う。
+azure powershellのインストールがめんどくさいので、
+最初の1回とか、二度と変更しないような場合に使う。
 
 
 ## 結論1
@@ -245,12 +246,12 @@ GitHubのprivateレポジトリでもOK
 
 プラットフォーム->デプロイセンター->External->続行->App Service のビルド サービス->続行
 
-リポジトリ 
-ブランチ 
-リポジトリの種類 Mercurial｜Git
-プライベート リポジトリ いいえ｜はい
-ユーザー名 
-パスワード
+- リポジトリ 
+- ブランチ 
+- リポジトリの種類 - Mercurial｜Git
+- プライベート リポジトリ - いいえ｜はい
+- ユーザー名 (プライベート リポジトリを「はい」にしたとき)
+- パスワード (プライベート リポジトリを「はい」にしたとき)
 
 最初の1回目は自動的にpull & npm install & functionの再起動が行われる。
 2回め以降は「同期」ボタン。
