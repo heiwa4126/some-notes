@@ -12,6 +12,7 @@ AWS Lambdaと全然違う。
   - [発端](#発端)
   - [調査](#調査)
   - [結論](#結論)
+  - [結論0](#結論0)
   - [結論1](#結論1)
   - [結論2](#結論2)
 - [未整理メモ](#未整理メモ)
@@ -185,6 +186,9 @@ AWS Lambdaみたいにzipでなんとかならないのか(なるよね?)
 
 ## 結論
 
+Powershell版のAzure CLIでzipを発行するのが
+
+
 ポータルで、該当functionから、プラットフォーム->デプロイセンター
 様々なデプロイが選べる。
 
@@ -192,6 +196,43 @@ AWS Lambdaみたいにzipでなんとかならないのか(なるよね?)
 - 手動配置 (プッシュ/同期)
 
 の2種類がある。とりあえず手動配置(構成後「同期」ボタンをおして配信)の方から選ぶ。
+
+## 結論0
+
+[Azure Functions の zip プッシュ デプロイ](https://docs.microsoft.com/ja-jp/azure/azure-functions/deployment-zip-push)
+にある通りの[Azure PowerShell](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-2.8.0)(Azure CLIとは違う)を使ったデプロイ。
+
+ポータルでfunctionを作り、azure powershellでazureにlogin後、
+``` powershell
+az functionapp deployment source config-zip `
+ -g <functionのリソースグループ> `
+ -n <function名> `
+ --src <zipfile名>
+```
+
+実際に実行すると出力はこんな感じ
+```
+az : WARNING: Getting scm site credentials for zip deployment
+At C:\Users\heiwa4126\Documents\Projects\func-check-url-nodejs-zip\deploy1.ps1:1 char:1
++ az functionapp deployment source config-zip `
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: Gettin... zip deployment:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+WARNING: Starting zip deployment. This operation can take a while to complete ...
+{
+  "active": true,
+  "author": "N/A",
+  "author_email": "N/A",
+  "complete": true,
+  "deployer": "Push-Deployer",
+  (略)
+}
+```
+ログ出力代わりにwarning出すな、といいたい。
+
+めんどくさいので、最初の1回とか、二度と変更しないような場合に使う。
+
 
 ## 結論1
 
