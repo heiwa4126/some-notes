@@ -3,11 +3,11 @@
 Ubuntu 18.04LTS上でPythonでAzure Functionsを書くメモ。
 AWS Lambdaと全然違う。
 
-- [Azure Functions 忘備録](#Azure-Functions-忘備録)
+- [Azure Functions 忘備録](#azure-functions-忘備録)
 - [制限(2019-7)](#制限2019-7)
 - [前提](#前提)
 - [作業](#作業)
-- [InsitesのLLog Analytics(Azure Monitor)で使えるクエリサンプル](#InsitesのLLog-AnalyticsAzure-Monitorで使えるクエリサンプル)
+- [InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル](#insightsのlog-analyticsazure-monitorで使えるクエリサンプル)
 - [未整理メモ](#未整理メモ)
 
 
@@ -125,7 +125,7 @@ pip install -r requirements.txt -U -t ~/.env/lib/python3.6/site-packages
 ```
 みたいなことが必要(当たってる?)。
 
-# InsitesのLLog Analytics(Azure Monitor)で使えるクエリサンプル
+# InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル
 
 参考:
 - [Overview - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/kusto/query/)
@@ -136,11 +136,27 @@ pip install -r requirements.txt -U -t ~/.env/lib/python3.6/site-packages
 traces | top 100 by timestamp desc | project timestamp, message
 ```
 
+過去60分以内のerrorレベルのログを出す。
+```
+union traces
+| union exceptions
+| where timestamp > ago(60m)
+| where customDimensions.LogLevel == "Error"
+| order by timestamp desc
+```
+これは実際に使った。
+count>0のとき、メール送るアクショングループを起動する、という感じで(期間60分頻度5分)
+
+
+
+
+
+
 # 未整理メモ
 
 「とりあえず」仕様
 
-出力はInsitesのLog Analyticsに特殊な先頭文字付きで出し、
+出力はInsightsのLog Analyticsに特殊な先頭文字付きで出し、
 Kustoクエリで
 ```
 traces
