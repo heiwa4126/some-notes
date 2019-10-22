@@ -8,6 +8,12 @@ AWS Lambdaと全然違う。
 - [前提](#前提)
 - [作業](#作業)
 - [InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル](#insightsのlog-analyticsazure-monitorで使えるクエリサンプル)
+- [Azure Functionsのデプロイがめんどくさすぎる問題](#azure-functionsのデプロイがめんどくさすぎる問題)
+  - [発端](#発端)
+  - [調査](#調査)
+  - [結論](#結論)
+  - [結論1](#結論1)
+  - [結論2](#結論2)
 - [未整理メモ](#未整理メモ)
 
 
@@ -147,9 +153,102 @@ union traces
 これは実際に使った。
 count>0のとき、メール送るアクショングループを起動する、という感じで(期間60分頻度5分)
 
+# Azure Functionsのデプロイがめんどくさすぎる問題
+
+## 発端
+
+開発をしない、デプロイだけする人のことを考える(SIer的な)。
+
+たとえばnodejsの場合、
+チュートリアル [Visual Studio Code を使用して Azure で初めての関数を作成する](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-first-function-vs-code)
+によれば、
+
+- [Azure CLI](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli?view=azure-cli-latest)
+- [Node.js](https://nodejs.org/) 推奨は8.xか10.x
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Azure Functions Core Tools](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-run-local#v2) 2.x
+- VSCodeに [Azure Functions 拡張機能](vscode:extension/ms-azuretools.vscode-azurefunctions)
+
+を揃えて、なおかつPortalでいろいろやんなくちゃならないのは辛い。
+apt/yum、msi/msixまではともかく、
+AWS Lambdaみたいにzipでなんとかならないのか(なるよね?)
+を確かめる。
+
+参考: [Azure Functions の zip プッシュ デプロイ | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/deployment-zip-push)
+
+## 調査
+
+まず上のような開発環境で作る & 動作確認 
+
+できあがったものがこちら →
+[heiwa4126/hello-function: Azure Functions & nodejs。vscodeを使った開発環境と、デプロイ用のzipを作るテスト](https://github.com/heiwa4126/hello-function)
+
+## 結論
+
+ポータルで、該当functionから、プラットフォーム->デプロイセンター
+様々なデプロイが選べる。
+
+- 継続的配置 (CI/CD)
+- 手動配置 (プッシュ/同期)
+
+の2種類がある。とりあえず手動配置(構成後「同期」ボタンをおして配信)の方から選ぶ。
+
+## 結論1
+
+自分でデプロイするなら、External。
+
+> パブリックの Git または Mercurial リポジトリからデプロイします。
+
+「パブリックの」はインタネット上の、ぐらいの意味で、pullさえできれば
+GitHubのprivateレポジトリでもOK
+
+プラットフォーム->デプロイセンター->External->続行->App Service のビルド サービス->続行
+
+リポジトリ 
+ブランチ 
+リポジトリの種類 Mercurial｜Git
+プライベート リポジトリ いいえ｜はい
+ユーザー名 
+パスワード
+
+最初の1回目は自動的にpull & npm install & functionの再起動が行われる。
+2回め以降は「同期」ボタン。
+
+これはなかなか便利なので、TODO:
+- AWS lambdaでも同様のことができないか試す。
+- 継続的配置のGitHubのほうも試す。
 
 
+## 結論2
 
+gitってなんだ? っていう人が扱う場合には、FTPS
+
+zipのダウンロードは
+
+ポータルで、該当functionから、
+アプリのコンテンツのダウンロード
+サイトのコンテンツ、「ダウンロードにアプリ設定を含める」はチェックしない
+ダウンロードボタン (たぶんcliでできる)
+
+FTPSクライアントはWinSCPが使える。
+
+ポータルで、該当functionから、
+
+プラットフォーム->デプロイセンター->FTP->ダッシュボード
+
+FTPSエンドポイント
+アプリの資格情報タブで
+ユーザ名
+パスワード
+
+これをWinSCPにコピペして、オープンしたら、
+zipの中身を上書きコピーする。
+
+functionsの再起動はしないようなので、
+関数の停止/開始を行う(再起動ではダメだった)。
+
+gitでデプロイ、と違って、npm installはやってくれないみたいで、
+node_modules以下も必要で、転送サイズが大きくなりがち。
 
 
 # 未整理メモ
