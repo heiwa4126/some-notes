@@ -202,6 +202,8 @@ Powershell版のAzure CLIでzipを発行するのが
 [Azure Functions の zip プッシュ デプロイ](https://docs.microsoft.com/ja-jp/azure/azure-functions/deployment-zip-push)
 にある通りの[Azure PowerShell](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-2.8.0)(Azure CLIとは違う)を使ったデプロイ。
 
+※ Azure CLI (python版)にも同じコマンドがあるので、無理にpowershell版をいれなくてもOK。下のコマンドも行継続キャラを'^'にするだけでbatになる。Linuxとかでも同様にできる。
+
 ポータルでfunctionを作り、azure powershellでazureにlogin後、
 ``` powershell
 az functionapp deployment source config-zip `
