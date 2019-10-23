@@ -2,15 +2,45 @@
 
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
-- [pythonのメモ](#python%E3%81%AE%E3%83%A1%E3%83%A2)
-- [pip --user のパス](#pip---user-%E3%81%AE%E3%83%91%E3%82%B9)
-- [古いパッケージを見つける](#%E5%8F%A4%E3%81%84%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E8%A6%8B%E3%81%A4%E3%81%91%E3%82%8B)
-- [pipで更新可能なものをすべて更新するスクリプト](#pip%E3%81%A7%E6%9B%B4%E6%96%B0%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%82%E3%81%AE%E3%82%92%E3%81%99%E3%81%B9%E3%81%A6%E6%9B%B4%E6%96%B0%E3%81%99%E3%82%8B%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88)
-- [vscodeとpipenv](#vscode%E3%81%A8pipenv)
-- [RHEL7にpip](#rhel7%E3%81%ABpip)
-- [RHEL6にpip](#rhel6%E3%81%ABpip)
-- [pip10問題](#pip10%E5%95%8F%E9%A1%8C)
+- [pythonのメモ](#pythonのメモ)
+- [pipをユーザーローカルに入れる](#pipをユーザーローカルに入れる)
+- [pip --user のパス](#pip---user-のパス)
+- [古いパッケージを見つける](#古いパッケージを見つける)
+- [pipで更新可能なものをすべて更新するスクリプト](#pipで更新可能なものをすべて更新するスクリプト)
+- [vscodeとpipenv](#vscodeとpipenv)
+- [RHEL7にpip](#rhel7にpip)
+- [RHEL6にpip](#rhel6にpip)
+- [pip10問題](#pip10問題)
 - [magic](#magic)
+
+
+# pipをユーザーローカルに入れる
+
+python2とpython3があって、
+ディストリのパッケージでは古いpipしか入らなくて、
+みたいな状況のとき
+(Ubuntu 18.04LTS)
+
+``` bash
+curl -kL https://bootstrap.pypa.io/get-pip.py -O
+python2 get-pip.py -U --user
+python3 get-pip.py -U --user
+hash -r
+rm get-pip.py
+```
+
+これでpip2,pip3,pip(=pip3)が使える。
+
+Ubuntuのデフォルトの.profileでは
+`%HOME/.local/bin`が存在するときのみPATHに追加、
+という仕様になってるので、
+最初の1回は
+
+``` bash
+PATH="$HOME/.local/bin:$PATH"
+hash -r
+```
+する。
 
 
 # pip --user のパス
