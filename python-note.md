@@ -33,7 +33,7 @@ rm get-pip.py
 
 Ubuntuのデフォルトの.profileでは
 `%HOME/.local/bin`が存在するときのみPATHに追加、
-という仕様になってるので、
+という仕様になってるので、(RHEL7とかでは無条件に追加)
 最初の1回は
 
 ``` bash
