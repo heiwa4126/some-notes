@@ -3,19 +3,22 @@
 Ubuntu 18.04LTS上でPythonでAzure Functionsを書くメモ。
 AWS Lambdaと全然違う。
 
-- [Azure Functions 忘備録](#azure-functions-忘備録)
-- [制限(2019-7)](#制限2019-7)
-- [前提](#前提)
-- [作業](#作業)
-- [InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル](#insightsのlog-analyticsazure-monitorで使えるクエリサンプル)
-- [Azure Functionsのデプロイがめんどくさすぎる問題](#azure-functionsのデプロイがめんどくさすぎる問題)
-  - [発端](#発端)
-  - [調査](#調査)
-  - [結論](#結論)
-  - [結論0](#結論0)
-  - [結論1](#結論1)
-  - [結論2](#結論2)
-- [未整理メモ](#未整理メモ)
+- [Azure Functions 忘備録](#azure-functions-%e5%bf%98%e5%82%99%e9%8c%b2)
+- [制限(2019-7)](#%e5%88%b6%e9%99%902019-7)
+- [前提](#%e5%89%8d%e6%8f%90)
+- [作業](#%e4%bd%9c%e6%a5%ad)
+- [InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル](#insights%e3%81%aelog-analyticsazure-monitor%e3%81%a7%e4%bd%bf%e3%81%88%e3%82%8b%e3%82%af%e3%82%a8%e3%83%aa%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab)
+- [Azure Functions Core Toolsのインストール](#azure-functions-core-tools%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
+- [Azure Functionsのデプロイがめんどくさすぎる問題](#azure-functions%e3%81%ae%e3%83%87%e3%83%97%e3%83%ad%e3%82%a4%e3%81%8c%e3%82%81%e3%82%93%e3%81%a9%e3%81%8f%e3%81%95%e3%81%99%e3%81%8e%e3%82%8b%e5%95%8f%e9%a1%8c)
+  - [発端](#%e7%99%ba%e7%ab%af)
+  - [調査](#%e8%aa%bf%e6%9f%bb)
+  - [結論](#%e7%b5%90%e8%ab%96)
+  - [結論0](#%e7%b5%90%e8%ab%960)
+  - [結論1](#%e7%b5%90%e8%ab%961)
+  - [結論2](#%e7%b5%90%e8%ab%962)
+- [Linux](#linux)
+- [nodejs v12 LTS](#nodejs-v12-lts)
+- [未整理メモ](#%e6%9c%aa%e6%95%b4%e7%90%86%e3%83%a1%e3%83%a2)
 
 
 # 制限(2019-7)
@@ -153,6 +156,37 @@ union traces
 ```
 これは実際に使った。
 count>0のとき、メール送るアクショングループを起動する、という感じで(期間60分頻度5分)
+
+# Azure Functions Core Toolsのインストール
+
+[Azure Functions Core Tools](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-run-local#v2)
+
+WindowsだとChocolatey でインストールしないと`func`が動かない。
+(npmでもproxyが邪魔で入らない場合があるけど、それとは別)
+
+```
+C:\>func -v
+internal/child_process.js:366
+    throw errnoException(err, 'spawn');
+(略)
+```
+何かがたりないんだと思うけど、何だかはわからない。
+
+管理者権限で
+```
+choco install azure-functions-core-tools
+```
+
+結果
+```
+C:\>func -v
+2.7.1724
+```
+
+そもそもChocolateyが入ってない場合は
+[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/install)
+参照。
+
 
 # Azure Functionsのデプロイがめんどくさすぎる問題
 
@@ -293,6 +327,33 @@ functionsの再起動はしないようなので、
 
 gitでデプロイ、と違って、npm installはやってくれないみたいで、
 node_modules以下も必要で、転送サイズが大きくなりがち。
+
+# Linux
+
+Azure FunctionsでLinuxを使うとデプロイセンターが使えない。
+
+
+
+# nodejs v12 LTS
+
+nodejs v12.13 LTSが出たので、アップグレードしたら
+[Azure Functions Core Tools](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-run-local#v2)
+が、
+
+```
+[2019/10/23 2:32:53] [error] Incompatible Node.js version. The version you are using is 
+v12.13.0, but the runtime requires an LTS-covered major version (ex: 8.11.1 or 10.14.1). LTS-covered versions have an even major version number (8.x, 10.x, etc.) as per https://github.com/nodejs/Release#release-plan. For deployed code, change WEBSITE_NODE_DEFAULT_VERSION in App Settings. Locally, install or switch to a supported node version (make sure to quit and restart your code editor to pick up the changes).
+```
+
+とか言って死ぬ。
+
+```
+npm update -g azure-functions-core-tools
+```
+してもダメだった。
+
+Functionsの開発環境はしばらく10.xで。
+
 
 
 # 未整理メモ
