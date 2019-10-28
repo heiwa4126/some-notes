@@ -4,9 +4,10 @@ Ubuntu 18.04LTS上でPythonでAzure Functionsを書くメモ。
 AWS Lambdaと全然違う。
 
 - [Azure Functions 忘備録](#azure-functions-%e5%bf%98%e5%82%99%e9%8c%b2)
+- [functionsの開発にいるもの](#functions%e3%81%ae%e9%96%8b%e7%99%ba%e3%81%ab%e3%81%84%e3%82%8b%e3%82%82%e3%81%ae)
 - [Pythonの制限(2019-7)](#python%e3%81%ae%e5%88%b6%e9%99%902019-7)
-- [前提](#%e5%89%8d%e6%8f%90)
-- [作業](#%e4%bd%9c%e6%a5%ad)
+  - [前提](#%e5%89%8d%e6%8f%90)
+  - [作業](#%e4%bd%9c%e6%a5%ad)
 - [InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル](#insights%e3%81%aelog-analyticsazure-monitor%e3%81%a7%e4%bd%bf%e3%81%88%e3%82%8b%e3%82%af%e3%82%a8%e3%83%aa%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab)
 - [Azure Functions Core Toolsのインストール](#azure-functions-core-tools%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
   - [Windowsの場合](#windows%e3%81%ae%e5%a0%b4%e5%90%88)
@@ -22,9 +23,30 @@ AWS Lambdaと全然違う。
 - [未整理メモ](#%e6%9c%aa%e6%95%b4%e7%90%86%e3%83%a1%e3%83%a2)
 
 
+# functionsの開発にいるもの
+
+最低限必要なもの:
+
+- Azureのサブスクリプション
+- [Azure CLI](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli?view=azure-cli-latest)
+- Node.js 10.x (12は今はダメ)
+- [Azure Functions Core Tools](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-run-local#v2) 2.x
+- Python, JDK, .NET Core etc
+
+あると便利なもの:
+
+- [Visual Studio Code](https://code.visualstudio.com/)
+
+チュートリアル [Visual Studio Code を使用して Azure で初めての関数を作成する](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-first-function-vs-code)にはVScode+ExtensionやVisual Studioが必須のように書かれていますが、funcコマンドでなんとでもなる。
+
+
+
+
 # Pythonの制限(2019-7)
 
 - [Azure Functions on Linux Preview · Azure/Azure-Functions Wiki · GitHub](https://github.com/Azure/Azure-Functions/wiki/Azure-Functions-on-Linux-Preview)
+
+Japan EastでもPython使えるみたい(2019-10)
 
 使えるリージョンがいまのところ
 - West US
@@ -36,7 +58,7 @@ GUIも使えたり使えなかったり。
 コードの編集も
 テストランもできません。
 
-# 前提
+## 前提
 
 ここから開始→ [Azure で HTTP によってトリガーされる関数を作成する | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-first-function-python)
 
@@ -75,7 +97,7 @@ sudo apt-get update
 sudo apt-get install azure-functions-core-tools
 ```
 
-# 作業
+## 作業
 
 venv環境へ移動(毎回最初に実行)
 ```
@@ -136,6 +158,7 @@ pip install -r requirements.txt -U -t ~/.env/lib/python3.6/site-packages
 ```
 みたいなことが必要(当たってる?)。
 
+
 # InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル
 
 参考:
@@ -157,6 +180,7 @@ union traces
 ```
 これは実際に使った。
 count>0のとき、メール送るアクショングループを起動する、という感じで(期間60分頻度5分)
+
 
 # Azure Functions Core Toolsのインストール
 
