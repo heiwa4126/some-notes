@@ -4,11 +4,12 @@ Ubuntu 18.04LTS上でPythonでAzure Functionsを書くメモ。
 AWS Lambdaと全然違う。
 
 - [Azure Functions 忘備録](#azure-functions-%e5%bf%98%e5%82%99%e9%8c%b2)
-- [制限(2019-7)](#%e5%88%b6%e9%99%902019-7)
+- [Pythonの制限(2019-7)](#python%e3%81%ae%e5%88%b6%e9%99%902019-7)
 - [前提](#%e5%89%8d%e6%8f%90)
 - [作業](#%e4%bd%9c%e6%a5%ad)
 - [InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル](#insights%e3%81%aelog-analyticsazure-monitor%e3%81%a7%e4%bd%bf%e3%81%88%e3%82%8b%e3%82%af%e3%82%a8%e3%83%aa%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab)
 - [Azure Functions Core Toolsのインストール](#azure-functions-core-tools%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
+  - [Windowsの場合](#windows%e3%81%ae%e5%a0%b4%e5%90%88)
 - [Azure Functionsのデプロイがめんどくさすぎる問題](#azure-functions%e3%81%ae%e3%83%87%e3%83%97%e3%83%ad%e3%82%a4%e3%81%8c%e3%82%81%e3%82%93%e3%81%a9%e3%81%8f%e3%81%95%e3%81%99%e3%81%8e%e3%82%8b%e5%95%8f%e9%a1%8c)
   - [発端](#%e7%99%ba%e7%ab%af)
   - [調査](#%e8%aa%bf%e6%9f%bb)
@@ -21,7 +22,7 @@ AWS Lambdaと全然違う。
 - [未整理メモ](#%e6%9c%aa%e6%95%b4%e7%90%86%e3%83%a1%e3%83%a2)
 
 
-# 制限(2019-7)
+# Pythonの制限(2019-7)
 
 - [Azure Functions on Linux Preview · Azure/Azure-Functions Wiki · GitHub](https://github.com/Azure/Azure-Functions/wiki/Azure-Functions-on-Linux-Preview)
 
@@ -160,6 +161,17 @@ count>0のとき、メール送るアクショングループを起動する、�
 # Azure Functions Core Toolsのインストール
 
 [Azure Functions Core Tools](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-run-local#v2)
+
+## Windowsの場合
+
+まとめると、今現在(2019-10)では
+
+1. node 10.xを先に入れる(12もLTSだが、Azure Functions Core Toolsが対応していない)
+2. Chocolatey入れる
+3. ChocolateyでAzure Functions Core Toolsいれる
+
+の順で。
+
 
 WindowsだとChocolatey でインストールしないと`func`が動かない。
 (npmでもproxyが邪魔で入らない場合があるけど、それとは別)

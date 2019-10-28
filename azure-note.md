@@ -1,19 +1,24 @@
 # Azure忘備録
 
-- [Azure忘備録](#azure忘備録)
+- [Azure忘備録](#azure%e5%bf%98%e5%82%99%e9%8c%b2)
 - [Azure CLI](#azure-cli)
-  - [Azure CLI コマンド補完](#azure-cli-コマンド補完)
-- [azure-cliでアカウントの切り替え方](#azure-cliでアカウントの切り替え方)
-- [テナントID](#テナントid)
+  - [Debian/Ubuntu](#debianubuntu)
+  - [Windows](#windows)
+  - [Azure CLI コマンド補完](#azure-cli-%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e8%a3%9c%e5%ae%8c)
+- [azure-cliでアカウントの切り替え方](#azure-cli%e3%81%a7%e3%82%a2%e3%82%ab%e3%82%a6%e3%83%b3%e3%83%88%e3%81%ae%e5%88%87%e3%82%8a%e6%9b%bf%e3%81%88%e6%96%b9)
+- [テナントID](#%e3%83%86%e3%83%8a%e3%83%b3%e3%83%88id)
 - [Azure AD Graph API](#azure-ad-graph-api)
-- [Azureでの時刻同期](#azureでの時刻同期)
-- [hv-fcopy-daemon.service が fail](#hv-fcopy-daemonservice-が-fail)
+- [Azureでの時刻同期](#azure%e3%81%a7%e3%81%ae%e6%99%82%e5%88%bb%e5%90%8c%e6%9c%9f)
+- [hv-fcopy-daemon.service が fail](#hv-fcopy-daemonservice-%e3%81%8c-fail)
 
 # Azure CLI
 
-[Azure CLI のインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli?view=azure-cli-latest)
+[Azure CLI のインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli)
 
-Debian/Ubuntuなら
+## Debian/Ubuntu
+
+[apt を使用して Linux に Azure CLI をインストールする | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli-apt)
+
 ``` bash
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
@@ -23,6 +28,16 @@ pipでもインストールできるが、
 > Azure CLI のパッケージによって独自の Python インタープリターがインストールされ、システム上の Python は使用されません。
 
 なので、pipを使うのはやめたほうがいい。
+
+
+## Windows
+
+**pipでインストールしないこと。MSIでインストールすること。**
+
+[Windows での Azure CLI のインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli-windows)
+
+PowerShell でのインストール例も出てるけど、けっこう時間がかかって不安になるので、おすすめしない。
+Azureなどでは使えるかも?(win_msiモジュールを使うと思う)
 
 
 ## Azure CLI コマンド補完
