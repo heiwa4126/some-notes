@@ -1,13 +1,16 @@
 # Dockerメモ
 
-- [Dockerメモ](#Dockerメモ)
-- [インストール](#インストール)
-  - [メモ](#メモ)
-- [JDKなしでJavaをコンパイル](#JDKなしでJavaをコンパイル)
-- [hello-worldのDockfile](#hello-worldのDockfile)
-- [GoLangでサーバを書いてimageにしてみる](#GoLangでサーバを書いてimageにしてみる)
-- [Red Hat Universal Base Image](#Red-Hat-Universal-Base-Image)
-- [Dockerでsyslog](#Dockerでsyslog)
+- [Dockerメモ](#docker%e3%83%a1%e3%83%a2)
+- [インストール](#%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
+  - [メモ](#%e3%83%a1%e3%83%a2)
+- [便利なコマンド](#%e4%be%bf%e5%88%a9%e3%81%aa%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89)
+- [dockerの「ボリューム」](#docker%e3%81%ae%e3%83%9c%e3%83%aa%e3%83%a5%e3%83%bc%e3%83%a0)
+- [JDKなしでJavaをコンパイル](#jdk%e3%81%aa%e3%81%97%e3%81%a7java%e3%82%92%e3%82%b3%e3%83%b3%e3%83%91%e3%82%a4%e3%83%ab)
+- [hello-worldのDockfile](#hello-world%e3%81%aedockfile)
+- [GoLangでサーバを書いてimageにしてみる](#golang%e3%81%a7%e3%82%b5%e3%83%bc%e3%83%90%e3%82%92%e6%9b%b8%e3%81%84%e3%81%a6image%e3%81%ab%e3%81%97%e3%81%a6%e3%81%bf%e3%82%8b)
+- [Red Hat Universal Base Image](#red-hat-universal-base-image)
+- [Dockerでsyslog](#docker%e3%81%a7syslog)
+
 
 # インストール
 
@@ -30,7 +33,7 @@ $ docker run hello-world
 ```
 
 ここまで終わったら、
-終了したコンテナーは消しておく。
+終了したコンテナは消しておく。
 ```
 $ docker rm $(docker ps -aq)
 ```
@@ -38,6 +41,31 @@ $ docker rm $(docker ps -aq)
 ## メモ
 
 `docker ps -aq` は終了したコンテナのIDのみ出力するコマンド、ではない。
+
+
+# 便利なコマンド
+
+[一発ですべてのDockerコンテナを停止・削除、イメージの削除をする - Qiita](https://qiita.com/shisama/items/48e2eaf1dc356568b0d7)
+
+
+終了したコンテナを削除する
+```
+docker ps -f "status=exited" -q | xargs -r docker rm -v
+```
+
+[Dockerイメージとコンテナの削除方法 - Qiita](https://qiita.com/tifa2chan/items/e9aa408244687a63a0ae)
+
+ディスクの使用量
+```
+docker system df
+```
+
+# dockerの「ボリューム」
+
+[Docker、ボリューム(Volume)について真面目に調べた - Qiita](https://qiita.com/gounx2/items/23b0dc8b8b95cc629f32)
+
+> ボリューム(=データを永続化できる場所) は２種類ある
+
 
 
 

@@ -7,7 +7,7 @@ AWS Lambdaと全然違う。
 - [functionsの開発にいるもの](#functions%e3%81%ae%e9%96%8b%e7%99%ba%e3%81%ab%e3%81%84%e3%82%8b%e3%82%82%e3%81%ae)
 - [Pythonの制限(2019-7)](#python%e3%81%ae%e5%88%b6%e9%99%902019-7)
   - [前提](#%e5%89%8d%e6%8f%90)
-  - [作業](#%e4%bd%9c%e6%a5%ad)
+  - [準備](#%e6%ba%96%e5%82%99)
 - [InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル](#insights%e3%81%aelog-analyticsazure-monitor%e3%81%a7%e4%bd%bf%e3%81%88%e3%82%8b%e3%82%af%e3%82%a8%e3%83%aa%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab)
 - [Azure Functions Core Toolsのインストール](#azure-functions-core-tools%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
   - [Windowsの場合](#windows%e3%81%ae%e5%a0%b4%e5%90%88)
@@ -21,6 +21,10 @@ AWS Lambdaと全然違う。
 - [Linux](#linux)
 - [nodejs v12 LTS](#nodejs-v12-lts)
 - [未整理メモ](#%e6%9c%aa%e6%95%b4%e7%90%86%e3%83%a1%e3%83%a2)
+- [ホスティング プラン](#%e3%83%9b%e3%82%b9%e3%83%86%e3%82%a3%e3%83%b3%e3%82%b0-%e3%83%97%e3%83%a9%e3%83%b3)
+- [よく使うfuncコマンド](#%e3%82%88%e3%81%8f%e4%bd%bf%e3%81%86func%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89)
+  - [デプロイ](#%e3%83%87%e3%83%97%e3%83%ad%e3%82%a4)
+  - [設定のダウンロード](#%e8%a8%ad%e5%ae%9a%e3%81%ae%e3%83%80%e3%82%a6%e3%83%b3%e3%83%ad%e3%83%bc%e3%83%89)
 
 
 # functionsの開発にいるもの
@@ -28,7 +32,7 @@ AWS Lambdaと全然違う。
 最低限必要なもの:
 
 - Azureのサブスクリプション
-- [Azure CLI](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli?view=azure-cli-latest)
+- [Azure CLI](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli)
 - Node.js 10.x (12は今はダメ)
 - [Azure Functions Core Tools](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-run-local#v2) 2.x
 - Python, JDK, .NET Core etc
@@ -57,6 +61,15 @@ Japan EastでもPython使えるみたい(2019-10)
 GUIも使えたり使えなかったり。
 コードの編集も
 テストランもできません。
+
+あと
+Premiumプラン、
+App Serviceプランだけなので、
+「少なくとも 1 つのインスタンスが常にウォーム状態である必要があります。 つまり、実行数に関係なく、アクティブなプランごとに固定の月額コストがかかります」
+のは同じ。
+
+[Azure Functions のスケールとホスティング | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-scale#premium-plan)
+
 
 ## 前提
 
@@ -97,13 +110,7 @@ sudo apt-get update
 sudo apt-get install azure-functions-core-tools
 ```
 
-## 作業
-
-venv環境へ移動(毎回最初に実行)
-```
-python3 -m venv .env
-source .env/bin/activate
-```
+## 準備
 
 作業ディレクトリ作る & 移動
 ```
@@ -117,12 +124,31 @@ func init MyFunctionProj
 cd MyFunctionProj
 ```
 
+venv環境作成
+```
+python3 -m venv .env
+```
+
+venv環境へ移動(毎回最初に実行)
+```
+ource .env/bin/activate
+```
+
+```
+pip install -r requirements.txt
+```
+
 ローカル設定ファイル`local.settings.json`で
 AzureWebJobsStorageの接続文字列を編集する。
 設定しないとfunctionはなにも動かないので仕方がない。
 [Azure ストレージ エミュレーター](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-emulator)も使えるらしいのだが、Linux版が無い。
 
 [ストレージ接続文字列の取得](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-run-local#get-your-storage-connection-strings)を参考にして接続文字列を得る。
+
+この設定はあとで`func azure functionapp fetch-app-settings <APP_NAME>`で上書きされる。
+先にポータルでfunction作ってからのほうが楽かもしれない。
+
+
 
 関数つくる。中身は空で。
 ``` bash
@@ -409,3 +435,27 @@ queueに出力も簡単にできるのだが、意外とリードアウトがめ
 
 
 欠点: Log Analyticsへの出力が死ぬほど遅い。
+
+
+# ホスティング プラン
+
+[Azure Functions のスケールとホスティング | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-scale)
+
+
+# よく使うfuncコマンド
+
+## デプロイ
+
+``` bash
+func azure functionapp publish <APP_NAME> --build remote
+```
+`--build remote`オプションをつけるとリモートビルドする(
+`pip install -r requirements.txt`や
+`npm install`をリモートでやってくれるらしい)
+
+## 設定のダウンロード
+
+``` bash
+func azure functionapp fetch-app-settings <APP_NAME>
+```
+local.settings.jsonに設定をダウンロードしてくれる。
