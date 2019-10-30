@@ -12,6 +12,7 @@
 - [Dockerでsyslog](#docker%e3%81%a7syslog)
 - [Credentials store (証明書ストア)](#credentials-store-%e8%a8%bc%e6%98%8e%e6%9b%b8%e3%82%b9%e3%83%88%e3%82%a2)
 - [AWSでDocker](#aws%e3%81%a7docker)
+- [AzureでDocker](#azure%e3%81%a7docker)
 
 
 # インストール
@@ -360,9 +361,13 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 
 チュートリアルなど:
 
+- [Docker for AWS setup & prerequisites | Docker Documentation](https://docs.docker.com/docker-for-aws/)
 - [開始方法 - Amazon ECS | AWS](https://aws.amazon.com/jp/ecs/getting-started/)
 - [Docker コンテナのデプロイ方法 – AWS](https://aws.amazon.com/jp/getting-started/tutorials/deploy-docker-containers/)
 - [Amazon ECR の使用開始 - Amazon ECR](https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/ECR_GetStarted.html)
 - [Amazon Elastic Container Service、Docker、および Amazon EC2 を使用してモノリシックアプリケーションをマイクロサービスに分割する方法 | AWS](https://aws.amazon.com/jp/getting-started/projects/break-monolith-app-microservices-ecs-docker-ec2/)
 - [Set Up a Continuous Delivery Pipeline for Containers Using AWS CodePipeline and Amazon ECS | AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/set-up-a-continuous-delivery-pipeline-for-containers-using-aws-codepipeline-and-amazon-ecs/)
 
+# AzureでDocker
+
+[Docker for AWS setup & prerequisites | Docker Documentation](https://docs.docker.com/docker-for-aws/)
