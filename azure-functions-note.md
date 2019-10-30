@@ -5,6 +5,10 @@ AWS Lambdaと全然違う。
 
 - [Azure Functions 忘備録](#azure-functions-%e5%bf%98%e5%82%99%e9%8c%b2)
 - [functionsの開発にいるもの](#functions%e3%81%ae%e9%96%8b%e7%99%ba%e3%81%ab%e3%81%84%e3%82%8b%e3%82%82%e3%81%ae)
+- [リンク](#%e3%83%aa%e3%83%b3%e3%82%af)
+  - [Azure CLI](#azure-cli)
+  - [Azure Functions Core Tools](#azure-functions-core-tools)
+  - [日本語ドキュメント](#%e6%97%a5%e6%9c%ac%e8%aa%9e%e3%83%89%e3%82%ad%e3%83%a5%e3%83%a1%e3%83%b3%e3%83%88)
 - [Pythonの制限(2019-7)](#python%e3%81%ae%e5%88%b6%e9%99%902019-7)
   - [前提](#%e5%89%8d%e6%8f%90)
   - [準備](#%e6%ba%96%e5%82%99)
@@ -44,9 +48,28 @@ AWS Lambdaと全然違う。
 チュートリアル [Visual Studio Code を使用して Azure で初めての関数を作成する](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-first-function-vs-code)にはVScode+ExtensionやVisual Studioが必須のように書かれていますが、funcコマンドでなんとでもなる。
 
 
+# リンク
+
+## Azure CLI
+
+- [Azure/azure-cli: Command-line tools for Azure.](https://github.com/Azure/azure-cli)
+- [Azure/azure-powershell: Microsoft Azure PowerShell](https://github.com/Azure/azure-powershell)
+
+## Azure Functions Core Tools
+
+[Azure/azure-functions-core-tools: Command line tools for Azure Functions](https://github.com/Azure/azure-functions-core-tools)
+
+Azure Functions Runtime 2.0.12850が2019-10-29に出てた。
+
+
+## 日本語ドキュメント
+
+[azure-docs.ja-jp/articles/azure-functions at master · MicrosoftDocs/azure-docs.ja-jp](https://github.com/MicrosoftDocs/azure-docs.ja-jp/tree/master/articles/azure-functions)
 
 
 # Pythonの制限(2019-7)
+
+v2.7.1724
 
 - [Azure Functions on Linux Preview · Azure/Azure-Functions Wiki · GitHub](https://github.com/Azure/Azure-Functions/wiki/Azure-Functions-on-Linux-Preview)
 
@@ -252,9 +275,15 @@ C:\>func -v
 
 # Azure Functionsのデプロイがめんどくさすぎる問題
 
+開発をしない、デプロイだけする人のことを考えたときに(SIer的な)
+AWS Lambdaみたいな「ポータルからZIPでデプロイ」が無いのは辛い、という話。
+
+開発者にとっては、かなり便利()
+[Azure Functions のデプロイ テクノロジ | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-deployment-technologies)
+
+
 ## 発端
 
-開発をしない、デプロイだけする人のことを考える(SIer的な)。
 
 たとえばnodejsの場合、
 チュートリアル [Visual Studio Code を使用して Azure で初めての関数を作成する](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-first-function-vs-code)
@@ -282,7 +311,7 @@ AWS Lambdaみたいにzipでなんとかならないのか(なるよね?)
 
 ## 結論
 
-Powershell版のAzure CLIでzipを発行するのが
+Azure CLIでzipを発行するのが
 
 
 ポータルで、該当functionから、プラットフォーム->デプロイセンター
@@ -298,7 +327,9 @@ Powershell版のAzure CLIでzipを発行するのが
 [Azure Functions の zip プッシュ デプロイ](https://docs.microsoft.com/ja-jp/azure/azure-functions/deployment-zip-push)
 にある通りの[Azure PowerShell](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps?view=azps-2.8.0)(Azure CLIとは違う)を使ったデプロイ。
 
-※ Azure CLI (python版)にも同じコマンドがあるので、無理にpowershell版をいれなくてもOK。下のコマンドも行継続キャラを'^'にするだけでbatになる。Linuxとかでも同様にできる。
+※ Azure CLI (python版)にも同じコマンドがあるので、
+無理にpowershell版をいれなくてもOK。
+下のコマンドも行継続キャラを'^'にするだけでbatになる。Linuxとかでも同様にできる。
 
 ポータルでfunctionを作り、azure powershellでazureにlogin後、
 ``` powershell
@@ -308,7 +339,7 @@ az functionapp deployment source config-zip `
  --src <zipfile名>
 ```
 
-実際に実行すると出力はこんな感じ
+実際に実行すると出力はこんな感じ(Powershell版)
 ```
 az : WARNING: Getting scm site credentials for zip deployment
 At C:\Users\heiwa4126\Documents\Projects\func-check-url-nodejs-zip\deploy1.ps1:1 char:1
@@ -327,10 +358,17 @@ WARNING: Starting zip deployment. This operation can take a while to complete ..
   (略)
 }
 ```
-ログ出力代わりにwarning出すな、といいたい。
+ログ出力代わりにwarning出すな、といいたい(Python版のAzure CLIでは警告でません)。
 
-azure powershellのインストールがめんどくさいので、
+Azure powershellのインストールがめんどくさいので、
 最初の1回とか、二度と変更しないような場合に使う。
+
+Azure Functions Core Toolsが入っていれば
+``` bash
+func azure functionapp publish <app name> --build remote
+```
+の方が楽。
+
 
 
 ## 結論1
