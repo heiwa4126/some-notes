@@ -12,6 +12,7 @@
   - [おまけ: CentOS7でsnapd](#%e3%81%8a%e3%81%be%e3%81%91-centos7%e3%81%a7snapd)
   - [おまけ: snapdで古いのを消す](#%e3%81%8a%e3%81%be%e3%81%91-snapd%e3%81%a7%e5%8f%a4%e3%81%84%e3%81%ae%e3%82%92%e6%b6%88%e3%81%99)
 - [定番ツールをまとめて](#%e5%ae%9a%e7%95%aa%e3%83%84%e3%83%bc%e3%83%ab%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%a6)
+- [Goで書いたコードをsystemdでデーモンにする](#go%e3%81%a7%e6%9b%b8%e3%81%84%e3%81%9f%e3%82%b3%e3%83%bc%e3%83%89%e3%82%92systemd%e3%81%a7%e3%83%87%e3%83%bc%e3%83%a2%e3%83%b3%e3%81%ab%e3%81%99%e3%82%8b)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -141,11 +142,22 @@ emacs使うなら以下参照:
 
 ## おまけ: CentOS7でsnapd
 
+Red Hatだと
+```
+yum install snapd -y
+ln -s /var/lib/snapd/snap /snap
+systemctl start snapd
+systemctl enable snapd
+```
+PATHは`/etc/profile.d/snapd.sh`で入るので、
+一旦ログアウトして入り直すのが楽。
+
+
 ``` bash
-yum update
-yum install yum-plugin-copr epel-release
-yum copr enable ngompa/snapcore-el7
-yum install snapd bridge-utils
+yum update -y
+yum install yum-plugin-copr epel-release -y
+yum copr enable ngompa/snapcore-el7 -y
+yum install snapd bridge-utils -y
 systemctl enable --now snapd.socket
 systemctl enable --now snapd
 ln -s /var/lib/snapd/snap /snap
@@ -153,6 +165,10 @@ ln -s /var/lib/snapd/snap /snap
 
 あと `/snap/bin`にパスを通す。
 
+```
+ln -s /var/lib/snapd/snap /snap
+```
+も。
 
 ## おまけ: snapdで古いのを消す
 
@@ -177,6 +193,7 @@ snap remove core --revision=7713
 
 [How to remove disabled (unused) snap packages with a single line of command? - Ask Ubuntu](https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
 
+
 # 定番ツールをまとめて
 
 ディスクに余裕があるなら
@@ -195,3 +212,94 @@ go get -u github.com/derekparker/delve/cmd/dlv
 ```
 
 [golang/tools: [mirror] Go Tools](https://github.com/golang/tools)
+
+
+# Goで書いたコードをsystemdでデーモンにする
+
+参考にしたもの：
+
+- [Integration of a Go service with systemd: readiness & liveness | Vincent Bernat](https://vincent.bernat.ch/en/blog/2017-systemd-golang)
+
+`main.go` ([↑から引用](https://vincent.bernat.ch/en/blog/2017-systemd-golang))
+``` go
+package main
+
+import (
+    "log"
+    "net"
+    "net/http"
+)
+
+func main() {
+    l, err := net.Listen("tcp", ":8081")
+    if err != nil {
+        log.Panicf("cannot listen: %s", err)
+    }
+    http.Serve(l, nil)
+}
+```
+
+手順
+``` bash
+mkdir 404
+cd !$
+vim main.go # 上記のコードをコピペ
+go build
+# test
+./404
+curl http://localhost:8081/
+```
+
+結果
+```
+404 NOT FOUND
+```
+
+バイナリのサイズを小さくしたかったら
+``` bash
+go build -ldflags="-w -s"
+upx 404
+```
+など
+
+
+で、これをsystemdでデーモンにする。
+
+いちばんカンタンで必要十分と思われる`404.service`
+```
+[Unit]
+Description=404 micro-service
+Requires=network.target
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=(いま自分のいるディレクトリ)/404
+WorkingDirectory=(いま自分のいるディレクトリ)
+Restart=always
+RestartSec=3s
+
+[Install]
+WantedBy=multi-user.target
+```
+
+↑のポイント
+- 死んだら3秒まって再開する(試しにkill -9 <pid>してみること)。
+- `Restart=always`は雑すぎるかも。
+- networkは必要
+
+手順
+``` bash
+sudo vim /lib/systemd/system/404.service # コピペ&編集
+sudo systemctl daemon-reload
+sudo systemctl start 404.service
+sudo systemctl status 404.service
+# 404だとPIDと思われるので.serviceもつける
+```
+
+`curl http://localhost:8081/`
+や
+`sudo lsof -p <pid>`
+などしてみる。
+
+
