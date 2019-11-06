@@ -1,8 +1,12 @@
+# Linuxのネットワーク関連のメモ
 
-- [MTUの確認](#MTUの確認)
-- [ジャンボフレーム](#ジャンボフレーム)
-- [ポートの疎通確認](#ポートの疎通確認)
-- [TCP BBR](#TCP-BBR)
+- [Linuxのネットワーク関連のメモ](#linux%e3%81%ae%e3%83%8d%e3%83%83%e3%83%88%e3%83%af%e3%83%bc%e3%82%af%e9%96%a2%e9%80%a3%e3%81%ae%e3%83%a1%e3%83%a2)
+- [MTUの確認](#mtu%e3%81%ae%e7%a2%ba%e8%aa%8d)
+- [ジャンボフレーム](#%e3%82%b8%e3%83%a3%e3%83%b3%e3%83%9c%e3%83%95%e3%83%ac%e3%83%bc%e3%83%a0)
+- [ポートの疎通確認](#%e3%83%9d%e3%83%bc%e3%83%88%e3%81%ae%e7%96%8e%e9%80%9a%e7%a2%ba%e8%aa%8d)
+- [ネットワークパフォーマンスをみるツール](#%e3%83%8d%e3%83%83%e3%83%88%e3%83%af%e3%83%bc%e3%82%af%e3%83%91%e3%83%95%e3%82%a9%e3%83%bc%e3%83%9e%e3%83%b3%e3%82%b9%e3%82%92%e3%81%bf%e3%82%8b%e3%83%84%e3%83%bc%e3%83%ab)
+- [TCP BBR](#tcp-bbr)
+
 
 # MTUの確認
 
@@ -27,7 +31,7 @@ ping: local error: Message too long, mtu=1500
 
 ethx は使用するイーサネットアダプタ (eth0, eth1 など) に、<size> は使用したいフレームのサイズ (1500, 4000, 9000) に置き換えてください。
 
-設定が適用されたことは ip link show | grep mtu で確認できます。 
+設定が適用されたことは ip link show | grep mtu で確認できます。
 ```
 
 うまくいったら、続けて永続化設定もすること。
@@ -64,6 +68,15 @@ Test-NetConnection <host> -Port <port>
 
 * [Test-NetConnection](https://docs.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=win10-ps)
 * [Using the PowerShell Test-NetConnection Cmdlet on Windows](https://blog.ipswitch.com/using-powershell-test-netconnection-cmdlet-windows)
+
+
+# ネットワークパフォーマンスをみるツール
+
+TUI
+- nload
+- iftop
+
+[Linuxでネットワークの監視を行えるモニタリングコマンド20選 | 俺的備忘録 〜なんかいろいろ〜](https://orebibou.com/2014/09/linux%E3%81%A7%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AE%E7%9B%A3%E8%A6%96%E3%82%92%E8%A1%8C%E3%81%88%E3%82%8B%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%B0%E3%82%B3/)
 
 
 # TCP BBR

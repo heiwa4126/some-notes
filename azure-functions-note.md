@@ -4,6 +4,7 @@ Ubuntu 18.04LTS上でPythonでAzure Functionsを書くメモ。
 AWS Lambdaと全然違う。
 
 - [Azure Functions 忘備録](#azure-functions-%e5%bf%98%e5%82%99%e9%8c%b2)
+- [Azure Functions リファレンス](#azure-functions-%e3%83%aa%e3%83%95%e3%82%a1%e3%83%ac%e3%83%b3%e3%82%b9)
 - [functionsの開発にいるもの](#functions%e3%81%ae%e9%96%8b%e7%99%ba%e3%81%ab%e3%81%84%e3%82%8b%e3%82%82%e3%81%ae)
 - [リンク](#%e3%83%aa%e3%83%b3%e3%82%af)
   - [Azure CLI](#azure-cli)
@@ -29,6 +30,14 @@ AWS Lambdaと全然違う。
 - [よく使うfuncコマンド](#%e3%82%88%e3%81%8f%e4%bd%bf%e3%81%86func%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89)
   - [デプロイ](#%e3%83%87%e3%83%97%e3%83%ad%e3%82%a4)
   - [設定のダウンロード](#%e8%a8%ad%e5%ae%9a%e3%81%ae%e3%83%80%e3%82%a6%e3%83%b3%e3%83%ad%e3%83%bc%e3%83%89)
+- [HTTPトリガのauthLevel](#http%e3%83%88%e3%83%aa%e3%82%ac%e3%81%aeauthlevel)
+- [invoke](#invoke)
+
+# Azure Functions リファレンス
+
+- [Azure Functions のドキュメント | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/)
+-
+
 
 
 # functionsの開発にいるもの
@@ -304,7 +313,7 @@ AWS Lambdaみたいにzipでなんとかならないのか(なるよね?)
 
 ## 調査
 
-まず上のような開発環境で作る & 動作確認 
+まず上のような開発環境で作る & 動作確認
 
 できあがったものがこちら →
 [heiwa4126/hello-function: Azure Functions & nodejs。vscodeを使った開発環境と、デプロイ用のzipを作るテスト](https://github.com/heiwa4126/hello-function)
@@ -347,7 +356,7 @@ At C:\Users\heiwa4126\Documents\Projects\func-check-url-nodejs-zip\deploy1.ps1:1
 + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (WARNING: Gettin... zip deployment:String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
- 
+
 WARNING: Starting zip deployment. This operation can take a while to complete ...
 {
   "active": true,
@@ -382,8 +391,8 @@ GitHubのprivateレポジトリでもOK
 
 プラットフォーム->デプロイセンター->External->続行->App Service のビルド サービス->続行
 
-- リポジトリ 
-- ブランチ 
+- リポジトリ
+- ブランチ
 - リポジトリの種類 - Mercurial｜Git
 - プライベート リポジトリ - いいえ｜はい
 - ユーザー名 (プライベート リポジトリを「はい」にしたとき)
@@ -441,7 +450,7 @@ nodejs v12.13 LTSが出たので、アップグレードしたら
 が、
 
 ```
-[2019/10/23 2:32:53] [error] Incompatible Node.js version. The version you are using is 
+[2019/10/23 2:32:53] [error] Incompatible Node.js version. The version you are using is
 v12.13.0, but the runtime requires an LTS-covered major version (ex: 8.11.1 or 10.14.1). LTS-covered versions have an even major version number (8.x, 10.x, etc.) as per https://github.com/nodejs/Release#release-plan. For deployed code, change WEBSITE_NODE_DEFAULT_VERSION in App Settings. Locally, install or switch to a supported node version (make sure to quit and restart your code editor to pick up the changes).
 ```
 
@@ -497,3 +506,29 @@ func azure functionapp publish <APP_NAME> --build remote
 func azure functionapp fetch-app-settings <APP_NAME>
 ```
 local.settings.jsonに設定をダウンロードしてくれる。
+
+
+# HTTPトリガのauthLevel
+
+functio.jsonのauthLevelで
+
+- anonymous - わかる
+- function - わかる。「関数固有の API キーが必要です。 何も指定されなかった場合は、これが既定値になります」
+- admin - わからん。「マスター キーが必要です」
+
+- [承認キー](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-http-webhook#authorization-keys)
+- [Azure API Management の認証ポリシー | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/api-management/api-management-authentication-policies)
+
+# invoke
+
+AWS CLIの `aws lambda invoke` に相当するものがないらしい。
+
+たぶん以下のどちらかで実現できる
+
+- [Azure Functions における Azure Queue Storage のバインド | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-storage-queue)
+- [Azure Functions における Azure Service Bus のバインド | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-service-bus)
+
+
+これも使えるかも。
+- [Durable Functions の概要 - Azure | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/durable/durable-functions-overview)
+- [GitHub - Azure/azure-functions-durable-js: JavaScript library for using the Durable Functions bindings](https://github.com/Azure/azure-functions-durable-js)
