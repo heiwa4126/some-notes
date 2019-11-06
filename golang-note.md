@@ -142,16 +142,7 @@ emacs使うなら以下参照:
 
 ## おまけ: CentOS7でsnapd
 
-Red Hatだと
-```
-yum install snapd -y
-ln -s /var/lib/snapd/snap /snap
-systemctl start snapd
-systemctl enable snapd
-```
-PATHは`/etc/profile.d/snapd.sh`で入るので、
-一旦ログアウトして入り直すのが楽。
-
+Red Hatでも同じ
 
 ``` bash
 yum update -y
@@ -162,13 +153,9 @@ systemctl enable --now snapd.socket
 systemctl enable --now snapd
 ln -s /var/lib/snapd/snap /snap
 ```
+PATHは`/etc/profile.d/snapd.sh`で入るので、
+一旦ログアウトして入り直すのが楽。
 
-あと `/snap/bin`にパスを通す。
-
-```
-ln -s /var/lib/snapd/snap /snap
-```
-も。
 
 ## おまけ: snapdで古いのを消す
 
