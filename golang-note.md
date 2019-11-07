@@ -131,6 +131,10 @@ export PATH="$HOME/.go/bin:$PATH:$MYGOPATH/bin"
 alias gcd='cd $MYGOPATH/src/github.com/heiwa4126'
 ```
 
+epelのyumでgoを入れたなら、
+GOPATHの2つ目は`/usr/lib/golang`
+
+
 [motemen/ghq](https://github.com/motemen/ghq) 使うなら
 ``` bash
 git config --global ghq.root "$MYGOPATH/src"
