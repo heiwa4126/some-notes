@@ -142,6 +142,13 @@ emacs使うなら以下参照:
 
 ## おまけ: CentOS7でsnapd
 
+**注意**
+EPELで新し目のgolangパッケージを配ってます。
+単にRed Hat系でgo入れるなら
+`sudo yum -y install golang`
+も試すこと。
+
+
 Red Hatでも同じ
 
 ``` bash
