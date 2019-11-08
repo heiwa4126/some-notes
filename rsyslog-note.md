@@ -9,7 +9,7 @@ POSIXのregexについては [正規表現メモ](http://www.kt.rim.or.jp/~kbk/r
 文字列リテラルは、
 シングルクォートでもダブルクォートでも
 '\'はエスケープ文字。
-ダブルクォートは$が展開される。
+ダブルクォートの場合$をエスケープしなければならない(なんだそれ)。
 
 [String Constants — rsyslog v8.1910.0 documentation](https://www.rsyslog.com/doc/v8-stable/rainerscript/constant_strings.html)
 
