@@ -32,6 +32,7 @@ AWS Lambdaと全然違う。
   - [設定のダウンロード](#%e8%a8%ad%e5%ae%9a%e3%81%ae%e3%83%80%e3%82%a6%e3%83%b3%e3%83%ad%e3%83%bc%e3%83%89)
 - [HTTPトリガのauthLevel](#http%e3%83%88%e3%83%aa%e3%82%ac%e3%81%aeauthlevel)
 - [invoke](#invoke)
+- [Docker](#docker)
 
 # Azure Functions リファレンス
 
@@ -532,3 +533,10 @@ AWS CLIの `aws lambda invoke` に相当するものがないらしい。
 これも使えるかも。
 - [Durable Functions の概要 - Azure | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/durable/durable-functions-overview)
 - [GitHub - Azure/azure-functions-durable-js: JavaScript library for using the Durable Functions bindings](https://github.com/Azure/azure-functions-durable-js)
+
+
+# Docker
+
+Azure Functionsでdockerを使うと、Functionを停止しても料金が発生するので、辛い。
+
+Linuxベースのfunctions(Pythonとか)はそうではなかったような気がする。
