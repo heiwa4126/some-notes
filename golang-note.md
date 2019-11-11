@@ -146,8 +146,10 @@ emacs使うなら以下参照:
 
 EPELで新し目のgolangパッケージを配ってます。
 Red Hat 7系でgo入れるならEPELを設定して
-`sudo yum -y install golang`
-を試すこと。
+```
+sudo yum -y install golang
+```
+を試すこと。snapよりはちょっとリリースは遅い。
 
 あとは↑の[snapdでgo](#snapd%e3%81%a7go)みたいな設定を。
 
