@@ -23,3 +23,12 @@ sudo yum install -y \
 sudo yum install tmux git2u etckeeper python36u jq -y
 sudo etckeeper init
 ```
+
+gitは既に入ってるかも。その場合はyum remove。
+
+python36uは
+RHEL7の場合公式レポジトリ(rhel-7-server-rpms)に
+python3が入ったので、そっちを。
+
+RHEL8ならApplication Streamsで。
+[Red Hat Enterprise Linux 8にPythonをインストールする ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/in-search-of-lost-python-at-rhel-8/)

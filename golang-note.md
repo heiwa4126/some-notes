@@ -9,8 +9,7 @@
 - [GDBでデバッグ](#gdb%e3%81%a7%e3%83%87%e3%83%90%e3%83%83%e3%82%b0)
 - [goモジュール](#go%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab)
 - [snapdでgo](#snapd%e3%81%a7go)
-  - [おまけ: CentOS7でsnapd](#%e3%81%8a%e3%81%be%e3%81%91-centos7%e3%81%a7snapd)
-  - [おまけ: snapdで古いのを消す](#%e3%81%8a%e3%81%be%e3%81%91-snapd%e3%81%a7%e5%8f%a4%e3%81%84%e3%81%ae%e3%82%92%e6%b6%88%e3%81%99)
+- [RHEL/CentOS 7でgolang](#rhelcentos-7%e3%81%a7golang)
 - [定番ツールをまとめて](#%e5%ae%9a%e7%95%aa%e3%83%84%e3%83%bc%e3%83%ab%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%a6)
 - [Goで書いたコードをsystemdでデーモンにする](#go%e3%81%a7%e6%9b%b8%e3%81%84%e3%81%9f%e3%82%b3%e3%83%bc%e3%83%89%e3%82%92systemd%e3%81%a7%e3%83%87%e3%83%bc%e3%83%a2%e3%83%b3%e3%81%ab%e3%81%99%e3%82%8b)
 
@@ -115,6 +114,8 @@ go 1.13から標準になる。
 
 # snapdでgo
 
+Ubuntuだとsnapd使うのが便利。
+
 [Install Go for Linux using the Snap Store | Snapcraft](https://snapcraft.io/go)
 
 ``` bash
@@ -131,10 +132,6 @@ export PATH="$HOME/.go/bin:$PATH:$MYGOPATH/bin"
 alias gcd='cd $MYGOPATH/src/github.com/heiwa4126'
 ```
 
-epelのyumでgoを入れたなら、
-GOPATHの2つ目は`/usr/lib/golang`
-
-
 [motemen/ghq](https://github.com/motemen/ghq) 使うなら
 ``` bash
 git config --global ghq.root "$MYGOPATH/src"
@@ -144,52 +141,18 @@ emacs使うなら以下参照:
 
 - [Goプログラミングの環境構築 | Emacs JP](https://emacs-jp.github.io/programming/golang)
 
-## おまけ: CentOS7でsnapd
+# RHEL/CentOS 7でgolang
 
-**注意**
 EPELで新し目のgolangパッケージを配ってます。
-単にRed Hat系でgo入れるなら
+Red Hat 7系でgo入れるならEPELを設定して
 `sudo yum -y install golang`
-も試すこと。
+を試すこと。
 
+あとは↑の[snapdでgo](#snapd%e3%81%a7go)みたいな設定を。
 
-Red Hatでも同じ
+epelのyumでgoを入れたなら、
+GOPATHの2つ目は`/usr/lib/golang`
 
-``` bash
-yum update -y
-yum install yum-plugin-copr epel-release -y
-yum copr enable ngompa/snapcore-el7 -y
-yum install snapd bridge-utils -y
-systemctl enable --now snapd.socket
-systemctl enable --now snapd
-ln -s /var/lib/snapd/snap /snap
-```
-PATHは`/etc/profile.d/snapd.sh`で入るので、
-一旦ログアウトして入り直すのが楽。
-
-
-## おまけ: snapdで古いのを消す
-
-例)
-``` bash
-$ snap list --all
-Name              Version    Rev   Tracking  Publisher   Notes
-amazon-ssm-agent  2.3.662.0  1455  stable/…  aws✓        disabled,classic
-amazon-ssm-agent  2.3.672.0  1480  stable/…  aws✓        classic
-core              16-2.41    7713  stable    canonical✓  core,disabled
-core              16-2.42    7917  stable    canonical✓  core
-go                1.13       4409  1.13      mwhudson    disabled,classic
-go                1.13.1     4517  1.13      mwhudson    classic
-```
-
-で、古いのを消す例
-```
-snap remove core --revision=7713
-```
-
-まとめて消したいときは:
-
-[How to remove disabled (unused) snap packages with a single line of command? - Ask Ubuntu](https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
 
 
 # 定番ツールをまとめて
