@@ -17,14 +17,23 @@ sudo yum install -y \
  https://rhel6.iuscommunity.org/ius-release.rpm
 ```
 
+RHEL7
+
+``` bash
+sudo yum install -y \
+ https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+ https://rhel7.iuscommunity.org/ius-release.rpm
+```
+
 よく使うものセット
 
 ``` bash
-sudo yum install tmux git2u etckeeper python36u jq -y
+sudo yum install tmux git222 etckeeper jq -y
 sudo etckeeper init
 ```
 
 gitは既に入ってるかも。その場合はyum remove。
+git2u, git222など新しいのあるかも。
 
 python36uは
 RHEL7の場合公式レポジトリ(rhel-7-server-rpms)に
