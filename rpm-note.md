@@ -9,3 +9,7 @@
 sudo yum install gcc rpm-build rpm-devel rpmlint make python bash coreutils diffutils patch rpmdevtools -y
 sudo useradd -s /sbin/nologin mockbuild
 ```
+
+
+
+[Rpmlint Errors - Rosalab Wiki](http://wiki.rosalab.ru/en/index.php/Rpmlint_Errors#subsys-not-used)

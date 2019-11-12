@@ -5,6 +5,7 @@
 - [AWS CodeCommitとCodePiplineでCI/CD](#aws-codecommit%e3%81%a8codepipline%e3%81%a7cicd)
 - [AWS Lambdaのデプロイツール](#aws-lambda%e3%81%ae%e3%83%87%e3%83%97%e3%83%ad%e3%82%a4%e3%83%84%e3%83%bc%e3%83%ab)
 - [AWS SAM](#aws-sam)
+- [2019-11](#2019-11)
 
 
 # ハンドラのeventに値を渡す
@@ -61,3 +62,17 @@ Azure Function Core Tools的なノリに思われる。
 - [serverless-application-model/examples/apps at master · awslabs/serverless-application-model · GitHub](https://github.com/awslabs/serverless-application-model/tree/master/examples/apps) - サンプル。どうもServerlessとそっくりに見える。
 - [Amazon.com: AWS Serverless Application Model: Developer Guide eBook: Amazon Web Services: Kindle Store](https://www.amazon.com/dp/B07P7K9VZB) - Kindle版. $0.
   - [Amazon.co.jpではこちら](https://www.amazon.co.jp/AWS-Serverless-Application-Model-Developer-ebook/dp/B07P7K9VZB/)
+
+
+# 2019-11
+
+- [新しいサーバーレスアプリ作成機能で CI/CD も作れます | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/new-serverless-app-creation-with-cicd/)
+- [AWS Lambdaのアプリケーション作成を使ってCI/CDパイプラインを一気に構築 - Qiita](https://qiita.com/shonansurvivors/items/b223fbb362aed3c1c536)
+- [実際に手を動かして学ぶ！AWS Hands-on for Beginners のご紹介 | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/aws-hands-on-for-beginners-01/)
+
+GitHubからつなげられるのが嬉しい。
+
+デプロイするのに3分かかる... これは辛い。
+SAM環境で十分デバッグしてからでないと。
+
+あといまのところNodejsだけなのも辛い。

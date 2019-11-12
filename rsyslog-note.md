@@ -63,3 +63,30 @@ rcvbufSize=を設定するとOSによる自動チューニングが無効にな�
 
 
 
+
+# テスト用
+
+`logger -n r1 -d test`を毎回タイプするのも面倒なので、
+0.5秒ごとにUDPで現在時刻を送りつけるperlのコード
+``` perl
+#!/usr/bin/env perl
+# -*- coding: utf-8 -*-
+use strict;
+use warnings;
+use Sys::Syslog qw(:standard setlogsock);
+use Time::HiRes qw(gettimeofday usleep);
+use POSIX qw(strftime);
+use constant TARGET => 'r1';
+setlogsock('udp');
+$Sys::Syslog::host = TARGET;
+openlog('test', 'ndelay', 'user');
+for(;;) {
+  my ($sec, $usec) = gettimeofday();
+  syslog('info',sprintf('%s.%03d',strftime('%Y-%m-%d %H:%M:%S',localtime $sec),$usec/1000));
+  usleep(500000);
+}
+closelog();
+0;
+```
+
+Red Hat系だと`sudo yum install perl-Sys-Syslog`が要る。
