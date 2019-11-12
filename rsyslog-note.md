@@ -28,9 +28,9 @@ omはoutput moduleの略
 [omfile: File Output Module — rsyslog v8.1910.0 documentation](https://www.rsyslog.com/doc/v8-stable/configuration/modules/omfile.html)
 
 `-/var/log/from-interal` のかわりに
-`action(type="omfile" dirCreateMode="0700" FileCreateMode="0644" asyncWriting="off" File="/var/log/from-interal")`と書いてもOK
+`action(type="omfile" dirCreateMode="0700" FileCreateMode="0644" asyncWriting="off" File="/var/log/from-interal")`と書いてもOK。
 
-socket経由でもfromhost-ipは"127.0.0.1"になる。
+socket経由でもfromhost-ipは"127.0.0.1"になるみたい。
 
 ```
 :fromhost-ip, !isequal, "127.0.0.1", /var/log/non-local
@@ -49,7 +49,7 @@ module(load="imudp") # needs to be done just once
 input(type="imudp" port="514" rcvbufSize="1m" ruleset="nonlocal")
 ...
 ruleset(name="nonlocal"){
-    - /var/log/nonlolcal
+    -/var/log/nonlocal
     stop
 }
 ```
