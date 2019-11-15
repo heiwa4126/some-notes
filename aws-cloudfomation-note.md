@@ -33,8 +33,17 @@ Resources:
 - [AWS コマンドラインインターフェイスの使用 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/cfn-using-cli.html)
 - [cloudformation — AWS CLI 1.16.282 Command Reference](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/index.html)
 
+``` bash
+#!/bin/sh
+set -uex
+aws cloudformation create-stack \
+    --stack-name stackOta01 \
+    --template-body file://./template01.yml \
+    --tags 'Key=Owner,Value=heiwa4126@example.com'
+```
 
+`--param`でパラメータが指定できるらしい。[パラメータ - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html)。後で試す。
 
-
-
-[パラメータ - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html)
+既存のリソースからCloudFormationのテンプレートを得ることが出来るらしい。
+- [CloudFormer (ベータ) を使用して既存の AWS リソースから AWS CloudFormation テンプレートを作成する - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/cfn-using-cloudformer.html)
+- [【AWS】CloudFormerの使い方 - Qiita](https://qiita.com/ktsuchi/items/f5ba5bab119cf40764cf)
