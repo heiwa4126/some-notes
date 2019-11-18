@@ -6,6 +6,7 @@
 - [AWS Lambdaのデプロイツール](#aws-lambda%e3%81%ae%e3%83%87%e3%83%97%e3%83%ad%e3%82%a4%e3%83%84%e3%83%bc%e3%83%ab)
 - [AWS SAM](#aws-sam)
 - [2019-11](#2019-11)
+- [AWS SAM](#aws-sam-1)
 
 
 # ハンドラのeventに値を渡す
@@ -76,3 +77,10 @@ GitHubからつなげられるのが嬉しい。
 SAM環境で十分デバッグしてからでないと。
 
 あといまのところNodejsだけなのも辛い。
+
+# AWS SAM
+
+[AWS SAM で Hello World する - Qiita](https://qiita.com/mokuo/items/3348f19d12cb9b17295d)
+
+生成されるREADME.mdが親切。
+
