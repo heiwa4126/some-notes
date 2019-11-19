@@ -2,15 +2,15 @@
 
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
-- [pythonのメモ](#pythonのメモ)
-- [pipをユーザーローカルに入れる](#pipをユーザーローカルに入れる)
-- [pip --user のパス](#pip---user-のパス)
-- [古いパッケージを見つける](#古いパッケージを見つける)
-- [pipで更新可能なものをすべて更新するスクリプト](#pipで更新可能なものをすべて更新するスクリプト)
-- [vscodeとpipenv](#vscodeとpipenv)
-- [RHEL7にpip](#rhel7にpip)
-- [RHEL6にpip](#rhel6にpip)
-- [pip10問題](#pip10問題)
+- [pythonのメモ](#python%e3%81%ae%e3%83%a1%e3%83%a2)
+- [pipをユーザーローカルに入れる](#pip%e3%82%92%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e3%83%ad%e3%83%bc%e3%82%ab%e3%83%ab%e3%81%ab%e5%85%a5%e3%82%8c%e3%82%8b)
+- [pip --user のパス](#pip---user-%e3%81%ae%e3%83%91%e3%82%b9)
+- [古いパッケージを見つける](#%e5%8f%a4%e3%81%84%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%82%92%e8%a6%8b%e3%81%a4%e3%81%91%e3%82%8b)
+- [pipで更新可能なものをすべて更新するスクリプト](#pip%e3%81%a7%e6%9b%b4%e6%96%b0%e5%8f%af%e8%83%bd%e3%81%aa%e3%82%82%e3%81%ae%e3%82%92%e3%81%99%e3%81%b9%e3%81%a6%e6%9b%b4%e6%96%b0%e3%81%99%e3%82%8b%e3%82%b9%e3%82%af%e3%83%aa%e3%83%97%e3%83%88)
+- [vscodeとpipenv](#vscode%e3%81%a8pipenv)
+- [RHEL7にpip](#rhel7%e3%81%abpip)
+- [RHEL6にpip](#rhel6%e3%81%abpip)
+- [pip10問題](#pip10%e5%95%8f%e9%a1%8c)
 - [magic](#magic)
 
 
@@ -42,6 +42,14 @@ hash -r
 ```
 する。
 
+RHEL7/CentOS7では ~/.bash_profileで
+``` bash
+# User specific environment and startup programs
+# PATH=$PATH:$HOME/.local/bin:$HOME/bin
+PATH=$HOME/.local/bin:$PATH:$HOME/bin
+```
+`.local/bin`が先になるように修正しておく。
+
 
 # pip --user のパス
 
@@ -53,6 +61,8 @@ python -c "import site; print(site.USER_BASE)"
 参考:
 - [pipに--userをつけた時のインストール先を変える - Qiita](https://qiita.com/ronin_gw/items/cdf8112b61649ca455f5)
 - [29.13. site — サイト固有の設定フック — Python 3.6.5 ドキュメント](https://docs.python.jp/3/library/site.html)
+
+
 
 
 # 古いパッケージを見つける
@@ -75,6 +85,7 @@ pip install -U packageName
 
 参考:
 - [pip で更新可能なパッケージを一覧表示 - Qiita](https://qiita.com/Klein/items/a3110d20532ba9f9057b)
+
 
 # pipで更新可能なものをすべて更新するスクリプト
 
@@ -129,6 +140,15 @@ virtualenv下にpylintやautopep8をインストールすればいいのだが�
 
 
 # RHEL7にpip
+
+最近の(2019-11)RHEL7では公式レポジトリにPython3.6が入っていて、ちょっと古めのpip3も入る。
+``` bash
+sudo yum install python3
+```
+で。
+
+
+以下古い情報。
 
 RHELはチャネル(レポジトリ)が細分化されててめんどくさい。
 
