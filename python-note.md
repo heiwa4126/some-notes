@@ -12,6 +12,7 @@
 - [RHEL6にpip](#rhel6%e3%81%abpip)
 - [pip10問題](#pip10%e5%95%8f%e9%a1%8c)
 - [magic](#magic)
+- [Ubuntu 18.04 LTSでpython3.7](#ubuntu-1804-lts%e3%81%a7python37)
 
 
 # pipをユーザーローカルに入れる
@@ -238,3 +239,21 @@ alias pip3='python3 -m pip'
 ますますわけがわからない。
 
 
+# Ubuntu 18.04 LTSでpython3.7
+
+3.8もあるけどAzure Functionsが3.7.x対応なので一応。
+
+rootで
+```sh
+apt install python3.7 python3.7-dev
+```
+
+python3を3.7にすると動かなくなるシステムツールが山ほどあるので
+あんまりいじるのはやめておく。
+
+python3-aptパッケージのこのへんが
+```
+/usr/lib/python3/dist-packages/apt_pkg.cpython-36m-x86_64-linux-gnu.so
+/usr/lib/python3/dist-packages/apt_pkg.pyi
+```
+36用なので
