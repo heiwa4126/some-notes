@@ -13,6 +13,7 @@
 - [pip10問題](#pip10%e5%95%8f%e9%a1%8c)
 - [magic](#magic)
 - [Ubuntu 18.04 LTSでpython3.7](#ubuntu-1804-lts%e3%81%a7python37)
+- [venv](#venv)
 
 
 # pipをユーザーローカルに入れる
@@ -261,3 +262,35 @@ python3-aptパッケージのこのへんが
 venvとか使うしかない。
 
 Ubuntu 20.04 LTSでは Python 3.8が標準でPython2は入らないらしい。
+
+
+# venv
+
+[venv --- 仮想環境の作成 — Python 3.7.5 ドキュメント](https://docs.python.org/ja/3.7/library/venv.html)
+
+Ubuntu 18.04 LTSで
+
+```sh
+sudo apt install python3.7 python3.7-dev python3.7-venv
+python3.7 -m venv ~/.venv/37
+. ~/.venv/37/bin/activate
+python --version
+python3 --version
+pip install -U pip
+deactivate
+```
+
+activateをエリアスにしておくといいかも
+```
+alias p37='source "$HOME/.venv/37/bin/activate"'
+```
+こんな感じ?
+
+他venvのtips:
+```
+python3.7 -m venv ~/.venv/37 --clear
+```
+で、環境を作り直す。
+
+
+この環境で`pip --user`するとどうなるのか?
