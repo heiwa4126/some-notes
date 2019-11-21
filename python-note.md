@@ -256,4 +256,8 @@ python3-aptパッケージのこのへんが
 /usr/lib/python3/dist-packages/apt_pkg.cpython-36m-x86_64-linux-gnu.so
 /usr/lib/python3/dist-packages/apt_pkg.pyi
 ```
-36用なので
+36用なので。
+
+venvとか使うしかない。
+
+Ubuntu 20.04 LTSでは Python 3.8が標準でPython2は入らないらしい。
