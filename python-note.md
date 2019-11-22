@@ -14,6 +14,7 @@
 - [magic](#magic)
 - [Ubuntu 18.04 LTSでpython3.7](#ubuntu-1804-lts%e3%81%a7python37)
 - [venv](#venv)
+- [pythonのEOL](#python%e3%81%aeeol)
 
 
 # pipをユーザーローカルに入れる
@@ -294,3 +295,21 @@ python3.7 -m venv ~/.venv/37 --clear
 
 
 この環境で`pip --user`するとどうなるのか?
+
+# pythonのEOL
+
+- [PEP 494 -- Python 3.6 Release Schedule | Python.org](https://www.python.org/dev/peps/pep-0494/#lifespan)
+- [PEP 537 -- Python 3.7 Release Schedule | Python.org](https://www.python.org/dev/peps/pep-0537/#lifespan)
+- [PEP 569 -- Python 3.8 Release Schedule | Python.org](https://www.python.org/dev/peps/pep-0569/#lifespan)
+
+|version|date|
+|---|---|
+|Python 3.6|2021-12|
+|Python 3.7|2023-06|
+|Python 3.8|2024-08|
+
+
+今後はAWS Lambdaは3.8で書く
+
+- [AWS Lambda now supports Python 3.8](https://aws.amazon.com/jp/about-aws/whats-new/2019/11/aws-lambda-now-supports-python-3-8/)
+- [AWS Lambda で Python 3.8 ランタイム がサポートされました ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/aws_lambda_support_python38/)
