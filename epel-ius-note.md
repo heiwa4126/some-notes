@@ -30,6 +30,7 @@ sudo yum install -y \
 ``` bash
 sudo yum install tmux git222 etckeeper jq -y
 sudo etckeeper init
+sudo etckeeper commit "Initial"
 ```
 
 gitは既に入ってるかも。その場合はyum remove。
