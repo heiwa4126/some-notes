@@ -281,7 +281,7 @@ shutdown -F -r now
 頭にsaltが入ってるから。
 
 実験:
-``` sh
+```
 $ mkpasswd -m sha-512
 パスワード: # "test"とかタイプする。
 $6$cgLIIKwI7G3gP5$BB8lv2ywAMpd6aEh7fv7IPgNrFMGzeWh3kHItFgBrSsjW1jBnhMg1jLRxnf20bR4vCGv/P4OZGhFDj7yAUx/e.
