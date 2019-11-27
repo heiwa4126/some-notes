@@ -274,3 +274,35 @@ shutdown -F -r now
 - [Man page of SHUTDOWN](https://linuxjm.osdn.jp/html/SysVinit/man8/shutdown.8.html)
 
 `/forcefsck`は自動的に削除される。
+
+
+# 同じパスワードでも/etc/shadowで同じ値にならない話
+
+頭にsaltが入ってるから。
+
+実験:
+``` sh
+$ mkpasswd -m sha-512
+パスワード: # "test"とかタイプする。
+$6$cgLIIKwI7G3gP5$BB8lv2ywAMpd6aEh7fv7IPgNrFMGzeWh3kHItFgBrSsjW1jBnhMg1jLRxnf20bR4vCGv/P4OZGhFDj7yAUx/e.
+$ mkpasswd -m sha-512
+パスワード: # 同じく"test"とかタイプする。
+$6$w/4/NSMdk$Uhnu9e6ebwfffnD63QwaRtkztr8/fa4y/Bw5maFWsOH9F/qZ9iL6wB3oiNbJieS3RkuE77QIy7l.1o0ty.fJJ0
+
+# saltを指定してみる
+$ mkpasswd -m sha-512 -S 00000000
+パスワード:
+$6$00000000$Ecw0YyyJ4sK4v4s7/V/HvstYmY48Hthq0T3M/Dr70frxMfGTUbP4llrgm2vTwJbQxGGbP2cDUlvl2QeO6tPwo0
+$ mkpasswd -m sha-512 -S 00000000
+パスワード:
+$6$00000000$Ecw0YyyJ4sK4v4s7/V/HvstYmY48Hthq0T3M/Dr70frxMfGTUbP4llrgm2vTwJbQxGGbP2cDUlvl2QeO6tPwo0
+# おなじsaltで同じパスワードならハッシュはおなじになる
+```
+
+mkpasswdはwhoisパッケージに入ってる。
+
+参考: [ひつまぶし食べたい: /etc/shadowについて勉強してみた](http://hitsumabushi-pc.blogspot.com/2011/12/etcshadow.html)
+
+
+
+
