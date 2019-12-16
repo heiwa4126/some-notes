@@ -45,7 +45,14 @@ Resources:
 
 また、`Environment`のところでAWS Lambda環境変数として
 S3バケット名が生成されるので、
-Lambda中にバケット名をハードコーディングしなくてすむ。
+**lambda中にバケット名をハードコーディングしなくてすむ**。
+lamda側では普通に環境変数とるのと同じように
+```python
+import os
+MY_BUCKET = os.environ['SomeBucket']
+```
+のように書けばOK
+
 
 ただlocal invokeはめんどうになる。
 ```bash
@@ -56,9 +63,22 @@ SomeBucket=********** sam local invoke
 参考:
 - [AWS SAMがめちゃめちゃアップデートされてる件 – ClassmethodサーバーレスAdvent Calendar 2017 #serverless #adventcalendar #reinvent ｜ Developers.IO](https://dev.classmethod.jp/server-side/serverless/20171203-updates-about-aws-serverless-application-model/) - ちょっと古いけど参考になる
 - [AWS SAM テンプレートを作成する - AWS CodeDeploy](https://docs.aws.amazon.com/ja_jp/codedeploy/latest/userguide/tutorial-lambda-sam-template.html)
+- [Lambda 関数で使用できる環境変数 - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/lambda-environment-variables.html) - デフォルトの環境変数。かぶらないようにする、または意図的にオーバライドする。
 
 
-# AWS Lambdaの参考
+# AWS LambdaとSAMの参考
 
 - [AWS Lambda 関数を使用する際のベストプラクティス - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/best-practices.html)
 - [AWS Lambda 環境変数 - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/env_variables.html)
+- [Lambda 関数で環境変数のクライアント側を暗号化する - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/tutorial-env_console.html)
+- [[アップデート]AWS SAMのデプロイが簡単になりました ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/aws-sam-simplifies-deployment/)
+- [AWS SAMを使う前にCloudFormationテンプレートを書こう - Qiita](https://qiita.com/izanari/items/78258251cced2f713b33)
+
+
+# AWS Lambda 関数のバージョン
+
+- [AWS Lambda 関数のバージョン - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/configuration-versions.html)
+- [AWS Lambda 関数のエイリアス - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/configuration-aliases.html)
+- [AWS Lambda のバージョン管理の仕組み ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/lambda-versioning/)
+- [AWS Lambdaバージョン管理のススメ - Qiita](https://qiita.com/quotto/items/4c364074edc69cb67d70)
+- [TECHSCORE｜知っておきたかったAWS SAM の小ネタ4選 | TECHSCORE BLOG](https://www.techscore.com/blog/2018/12/07/aws-sam-tips/) - `--parameter-overrides`の使い所が参考になる。
