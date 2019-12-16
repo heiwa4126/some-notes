@@ -47,3 +47,13 @@ aws cloudformation create-stack \
 既存のリソースからCloudFormationのテンプレートを得ることが出来るらしい。
 - [CloudFormer (ベータ) を使用して既存の AWS リソースから AWS CloudFormation テンプレートを作成する - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/cfn-using-cloudformer.html)
 - [【AWS】CloudFormerの使い方 - Qiita](https://qiita.com/ktsuchi/items/f5ba5bab119cf40764cf)
+
+
+# CloudFormationでS3を作る
+
+- [AWS::S3::Bucket - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket.html)
+- [CloudFormationでいろいろなS3バケットを作成してみた ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/cloudformation-s3bucket-type/)
+- [CloudFormationでS3を作成する - Qiita](https://qiita.com/yoshiokaCB/items/f8c36a6fe250856fd672)
+
+> バケット名には、小文字の英文字、数字、ハイフン、およびピリオドを使用することができます。
+バケット名の先頭と末尾は文字または数値とし、ハイフンまたは別のピリオドの横にピリオドを使用することはできません。 - [AWS CLI での高レベル (s3) コマンドの使用 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-services-s3-commands.html)
