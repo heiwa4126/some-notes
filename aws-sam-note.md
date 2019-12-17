@@ -71,7 +71,66 @@ SomeBucket=********** sam local invoke
 
 stack外にあるリソースにアクセスするケース。
 
+案1: 
+``` yaml
+Resources:
+  SecretTestFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: policy1
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "secretsmanager:GetSecretValue"
+                Resource: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  SecretTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: secret_test/
+      Handler: app.lambda_handler
+      Runtime: python3.6
+      Role: !GetAtt SecretTestRole.Arn
+```
 
+管理ポリシーAWSLambdaBasicExecutionRoleに
+インラインポリシーpolicy1を追加したロールを作り、
+Lamdaへ`Role:`でアタッチする。
+
+問題は**SAMポリシーテンプレートと混ぜられない**こと。
+
+
+- [AWS::Serverless::Function - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html)
+
+
+上の例でいいなら
+[Policy Template List - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-template-list.html#secrets-manager-get-secret-value-policy)
+がARNで設定できるのでそれを使うのも。
+**たぶんほとんどのケースでカバーできると思う**(たぶんね)。
+
+```yaml
+Resources:
+  SecretTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: secret_test/
+      Handler: app.lambda_handler
+      Runtime: python3.6
+      Policies:
+      - AWSSecretsManagerGetSecretValuePolicy:
+          SecretArn: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
 
 
 
