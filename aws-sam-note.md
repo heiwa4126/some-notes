@@ -5,6 +5,7 @@
 例えば「S3バケツを作って、それに対する読み書きできるようにする」方法
 
 - [AWS SAM Policy Templates - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html)
+- [AWS サーバーレスアプリケーションモデル (AWS SAM) の使用 - AWS Serverless Application Repository](https://docs.aws.amazon.com/ja_jp/serverlessrepo/latest/devguide/using-aws-sam.html)
 
 template.yamlのResourcesの部分だけ抜粋
 ```yaml
@@ -64,6 +65,20 @@ SomeBucket=********** sam local invoke
 - [AWS SAMがめちゃめちゃアップデートされてる件 – ClassmethodサーバーレスAdvent Calendar 2017 #serverless #adventcalendar #reinvent ｜ Developers.IO](https://dev.classmethod.jp/server-side/serverless/20171203-updates-about-aws-serverless-application-model/) - ちょっと古いけど参考になる
 - [AWS SAM テンプレートを作成する - AWS CodeDeploy](https://docs.aws.amazon.com/ja_jp/codedeploy/latest/userguide/tutorial-lambda-sam-template.html)
 - [Lambda 関数で使用できる環境変数 - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/lambda-environment-variables.html) - デフォルトの環境変数。かぶらないようにする、または意図的にオーバライドする。
+
+
+# template.yamlで作っていないリソースに対して、lamdaにアクセス権を与える
+
+stack外にあるリソースにアクセスするケース。
+
+
+
+
+
+# SAMのアップロード用S3 bucketが同じ名前になるのはなんで?
+
+どこにデータ持ってるのか?
+(TODO)
 
 
 # AWS LambdaとSAMの参考

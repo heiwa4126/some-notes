@@ -57,3 +57,12 @@ aws cloudformation create-stack \
 
 > バケット名には、小文字の英文字、数字、ハイフン、およびピリオドを使用することができます。
 バケット名の先頭と末尾は文字または数値とし、ハイフンまたは別のピリオドの横にピリオドを使用することはできません。 - [AWS CLI での高レベル (s3) コマンドの使用 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-services-s3-commands.html)
+
+
+# CloudFormationでstackの外のリソースのIAMをマネージするかっこいい方法
+
+ホントは SAMで なんだけど。
+
+
+- [AWS CloudFormation のベストプラクティス - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/best-practices.html)
+
