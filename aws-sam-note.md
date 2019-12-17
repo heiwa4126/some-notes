@@ -132,6 +132,10 @@ Resources:
           SecretArn: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
+ただ、世の中には"LBのルールの順番を入れ替えるlambda"みたいのもあって
+さすがにそういうのはポリシーテンプレートにはない。
+
+なんかうまい方法はないですかねえ。
 
 
 # SAMのアップロード用S3 bucketが同じ名前になるのはなんで?
