@@ -119,7 +119,15 @@ go 1.13から標準になる。
 go runの引数はpackageなので
 mainパッケージのmain()が1つしかない、ちゃんとしたプロジェクトなら
 `go run .`
-で実行できる。
+で実行できる。もちろんパッケージ名をフルで指定してもいい。
+`go run github.com/heiwa4126/gogogophers`
+みたいな(でもしないよ)。
+
+サブパッケージ以下のテストも
+`go test ./feather/...`
+みたいにできる。
+`go test feather/...`
+ではダメ。
 
 
 # snapdでgo
