@@ -3,6 +3,11 @@
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
 - [pythonのメモ](#python%e3%81%ae%e3%83%a1%e3%83%a2)
+- [pythonをインストールする(2019-12)](#python%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab%e3%81%99%e3%82%8b2019-12)
+  - [Amazon Linux 2](#amazon-linux-2)
+  - [Ubuntu 18.04 TLS](#ubuntu-1804-tls)
+  - [RHEL7, CentOS7](#rhel7-centos7)
+  - [RHEL8, CentOS8](#rhel8-centos8)
 - [pipをユーザーローカルに入れる](#pip%e3%82%92%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e3%83%ad%e3%83%bc%e3%82%ab%e3%83%ab%e3%81%ab%e5%85%a5%e3%82%8c%e3%82%8b)
 - [pip --user のパス](#pip---user-%e3%81%ae%e3%83%91%e3%82%b9)
 - [古いパッケージを見つける](#%e5%8f%a4%e3%81%84%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%82%92%e8%a6%8b%e3%81%a4%e3%81%91%e3%82%8b)
@@ -15,6 +20,167 @@
 - [Ubuntu 18.04 LTSでpython3.7](#ubuntu-1804-lts%e3%81%a7python37)
 - [venv](#venv)
 - [pythonのEOL](#python%e3%81%aeeol)
+
+
+
+# pythonをインストールする(2019-12)
+
+システムワイドにpython3と、
+新し目のpip3をuser install directoryに
+インストールする手順。
+
+## Amazon Linux 2
+
+RHEL7同様python3が公式に配布されるようになった。いまのところpython3.7。
+
+``` sh
+sudo yum install python3
+```
+
+pip3
+``` sh
+pip3 intsall -U --user pip
+```
+デフォルトでは
+`$HOME/.local/bin`のパスの優先順が低いので、
+.bash_profileを修正する。
+
+オリジナル
+```
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+```
+
+修正後
+```
+PATH=$HOME/.local/bin:$HOME/bin:$PATH
+```
+
+テスト 
+```
+$ python3 --version
+Python 3.7.4
+$ pip3 --version
+pip 19.3.1 from /home/xxxxx/.local/lib/python3.7/site-packages/pip (python 3.7)
+```
+
+## Ubuntu 18.04 TLS
+
+最初からpython3 (3.6)が入っているはず。もしなければ
+
+``` sh
+sudo apt install python3
+```
+
+pip3
+``` sh
+pip3 intsall -U --user pip
+```
+
+デフォルトでは
+`$HOME/.local/bin`のパスがないので、
+~/.profileを修正する。
+
+追加例
+```
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
+```
+
+テスト
+```
+$ python3 --version
+Python 3.6.9
+$ pip3 --version
+pip 19.3.1 from /home/xxxxx/.local/lib/python3.6/site-packages/pip (python 3.6)
+```
+
+Ubuntuでは公式にPython 3.7と3.8も配布されているが、システム標準のPython3にはできない。
+venvなどで使うか、バージョンを明示して使う。
+
+Ubuntu 20.04 LTSからはPython3が標準のpythonになる予定
+
+## RHEL7, CentOS7
+
+python3が公式に配布されるようになった。いまのところpython3.6。
+
+``` sh
+sudo yum install python3
+```
+
+pip3
+``` sh
+pip3 intsall -U --user pip
+```
+デフォルトでは
+`$HOME/.local/bin`のパスの優先順が低いので、
+.bash_profileを修正する。
+
+オリジナル
+```
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+```
+
+修正後
+```
+PATH=$HOME/.local/bin:$HOME/bin:$PATH
+```
+
+テスト 
+```
+$ python3 --version
+Python 3.6.8
+$ pip3 --version
+pip 19.3.1 from /home/xxxxx/.local/lib/python3.6/site-packages/pip (python 3.6)
+```
+
+## RHEL8, CentOS8
+
+pythonはデフォルトでは入らない。
+pythonで書かれたシステムパッケージは、ユーザが`python`と叩いて使うpythonとは別パッケージになっていてる。
+
+システムが使うPythonは
+```
+# /usr/libexec/platform-python --version
+Python 3.6.8
+# rpm -qf /usr/libexec/platform-python
+platform-python-3.6.8-15.1.el8.x86_64
+```
+である。
+
+ユーザが使うPython3とpip3のインストールは
+``` sh
+sudo yum install python36
+pip3 intsall -U --user pip
+hash -r
+```
+
+テスト 
+```
+$ python3 --version
+Python 3.6.8
+$ pip3 --version
+pip 19.3.1 from /home/xxxxx/.local/lib/python3.6/site-packages/pip (python 3.6)
+```
+
+`python`でpython3を使うようにしたい場合は
+```
+$ sudo update-alternatives --config python
+
+There are 2 programs which provide 'python'.
+
+  Selection    Command
+-----------------------------------------------
+*+ 1           /usr/libexec/no-python
+   2           /usr/bin/python3
+
+Enter to keep the current selection[+], or type selection number:
+```
+で`/usr/bin/python3`を選ぶ。
+
+
+
 
 
 # pipをユーザーローカルに入れる
