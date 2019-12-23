@@ -8,6 +8,7 @@
   - [実行例](#%e5%ae%9f%e8%a1%8c%e4%be%8b)
 - [GDBでデバッグ](#gdb%e3%81%a7%e3%83%87%e3%83%90%e3%83%83%e3%82%b0)
 - [goモジュール](#go%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab)
+- [go run](#go-run)
 - [snapdでgo](#snapd%e3%81%a7go)
 - [RHEL/CentOS 7でgolang](#rhelcentos-7%e3%81%a7golang)
 - [定番ツールをまとめて](#%e5%ae%9a%e7%95%aa%e3%83%84%e3%83%bc%e3%83%ab%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%a6)
@@ -111,6 +112,22 @@ go 1.13から標準になる。
 
 * [Using Go Modules - The Go Blog](https://blog.golang.org/using-go-modules)
 * [The Go Blog - Using Go Modules / Go Modulesを使う（和訳） - Qiita](https://qiita.com/pokeh/items/139d0f1fe56e358ba597)
+
+
+# go run
+
+go runの引数はpackageなので
+mainパッケージのmain()が1つしかない、ちゃんとしたプロジェクトなら
+`go run .`
+で実行できる。もちろんパッケージ名をフルで指定してもいい。
+`go run github.com/heiwa4126/gogogophers`
+みたいな(でもしないよ)。
+
+サブパッケージ以下のテストも
+`go test ./feather/...`
+みたいにできる。
+`go test feather/...`
+ではダメ。
 
 
 # snapdでgo
