@@ -8,6 +8,11 @@
   - [Ubuntu 18.04 TLS](#ubuntu-1804-tls)
   - [RHEL7, CentOS7](#rhel7-centos7)
   - [RHEL8, CentOS8](#rhel8-centos8)
+  - [Windows python本家の配布](#windows-python%e6%9c%ac%e5%ae%b6%e3%81%ae%e9%85%8d%e5%b8%83)
+  - [Anaconda, miniconda](#anaconda-miniconda)
+  - [Windows msys2](#windows-msys2)
+  - [Windows Store](#windows-store)
+- [Jupyter notebook](#jupyter-notebook)
 - [pipをユーザーローカルに入れる](#pip%e3%82%92%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e3%83%ad%e3%83%bc%e3%82%ab%e3%83%ab%e3%81%ab%e5%85%a5%e3%82%8c%e3%82%8b)
 - [pip --user のパス](#pip---user-%e3%81%ae%e3%83%91%e3%82%b9)
 - [古いパッケージを見つける](#%e5%8f%a4%e3%81%84%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%82%92%e8%a6%8b%e3%81%a4%e3%81%91%e3%82%8b)
@@ -101,6 +106,10 @@ venvなどで使うか、バージョンを明示して使う。
 
 Ubuntu 20.04 LTSからはPython3が標準のpythonになる予定
 
+ほか参考:
+- [（備忘録）Ubuntu 18.04 LTS で Jupyter Notebook 環境構築 - Qiita](https://qiita.com/zono_0/items/49eb8605ef4d841b2c26)
+
+
 ## RHEL7, CentOS7
 
 python3が公式に配布されるようになった。いまのところpython3.6。
@@ -180,7 +189,85 @@ Enter to keep the current selection[+], or type selection number:
 で`/usr/bin/python3`を選ぶ。
 
 
+## Windows python本家の配布
 
+[Download Python | Python.org](https://www.python.org/downloads/)
+
+注: たぶんすぐ直ると思うけど、jupyterはいまのところ3.8では動かない(asynioの引数がかわったらしい) ので、jupyter notebookを使うつもりなら3.7をインストール。
+
+インストーラに従う。
+
+![インストーラーの画面](imgs/w1.png "インストーラ")
+
+インストール後「Pathの長さ制限を解除する」ボタンが出てくるので、解除する。
+
+pip3の最新版のインストールは、管理者権限でないコマンドプロンプトから
+```
+pip3 install -U --user　pip
+```
+
+これは`C:\Users\ユーザ名\AppData\Roaming\Python\Python38\Scripts`にインストールされるので、
+ここをPathに追加し、優先度を高くする。(Python3.7だったら38のところは37)
+
+テスト
+```
+C:>python --version
+Python 3.8.1
+
+C:>pip3 --version
+pip 19.3.1 from C:\Users\xxxxx\AppData\Roaming\Python\Python38\site-packages\pip (python 3.8)
+```
+
+## Anaconda, miniconda
+
+- [Anaconda Python/R Distribution - Free Download](https://www.anaconda.com/distribution/)
+- [Miniconda — Conda documentation](https://docs.conda.io/en/latest/miniconda.html)
+
+インストール・アンインストールにすごい時間がかかるので、十分な時間的余裕をもって実行すること。
+
+condaのパッケージ管理は、condaコマンドを使う。
+
+たとえば、インストールされているパッケージやpython自体の更新は
+インストール後、スタートメニュー->Anaconda 3->Anaconda Prompt (Anaconda 3)->右クリックで「管理者として起動」
+```
+conda update --all
+```
+で出来る。
+
+pipでインストールすると、すぐ不具合が起きるので、
+condaは「`Jupyter Notebook`環境をすぐ作りたい」というときなどに使うこと。
+
+
+## Windows msys2
+
+[MSYS2 homepage](http://www.msys2.org/)参照。たぶん使うことは少ないと思うのでTODO。
+
+
+## Windows Store
+
+Windows Storeで`python`で検索して、Python 3.8をインストール。
+
+`C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.496.0_x64__xxxxxxxx`
+のような名前でインストールされて、とてもまともに使えない。
+
+
+# Jupyter notebook
+
+Windows版ではPython3.7以下(2019-12現在。たぶんすぐ直る。[windows - Jupyter Notebook with Python 3.8 - NotImplementedError - Stack Overflow](https://stackoverflow.com/questions/58422817/jupyter-notebook-with-python-3-8-notimplementederror)参照)
+
+python3とpip3インストール後
+
+```sh
+pip install --user -U jupyter numpy matplotlib
+```
+numpy と matplotlib はオマケ(グラフとか書きたいでしょう?)
+
+```
+jupyper notebook
+```
+で起動。
+表示されるURL(`http://localhost:8888/token=xxxx`)にwebブラウザでつないで、
+あとはUIに従う。
 
 
 # pipをユーザーローカルに入れる
@@ -218,6 +305,7 @@ RHEL7/CentOS7では ~/.bash_profileで
 PATH=$HOME/.local/bin:$PATH:$HOME/bin
 ```
 `.local/bin`が先になるように修正しておく。
+
 
 
 # pip --user のパス
