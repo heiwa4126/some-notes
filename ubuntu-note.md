@@ -26,6 +26,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [netplan.io](#netplanio)
 - [Let's Encryptで証明書が更新されたか知る](#lets-encrypt%e3%81%a7%e8%a8%bc%e6%98%8e%e6%9b%b8%e3%81%8c%e6%9b%b4%e6%96%b0%e3%81%95%e3%82%8c%e3%81%9f%e3%81%8b%e7%9f%a5%e3%82%8b)
 - [import debian.deb822](#import-debiandeb822)
+- [ubuntuでIPAfont](#ubuntu%e3%81%a7ipafont)
 
 # タイムゾーン
 
@@ -374,3 +375,23 @@ apt-get --reinstall install python3-debian python-debian python3-six update-noti
 
 
 早くpython3が標準になるといい。
+
+
+# ubuntuでIPAfont
+
+[amueller/word_cloud: A little word cloud generator in Python](https://github.com/amueller/word_cloud)
+を使うときにちょっと調べたのでメモ。
+
+インストールは
+```sh
+sudo apt install fonts-ipafont
+```
+
+フォントの場所は
+```
+$ dlocate fonts-ipafont | fgrep .ttf | cut -d' ' -f2
+/usr/share/fonts/opentype/ipafont-gothic/ipag.ttf
+/usr/share/fonts/opentype/ipafont-gothic/ipagp.ttf
+/usr/share/fonts/opentype/ipafont-mincho/ipam.ttf
+/usr/share/fonts/opentype/ipafont-mincho/ipamp.ttf
+```
