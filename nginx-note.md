@@ -2,7 +2,7 @@
 
 nginxのメモ
 
-# 謎の警告を抑制する
+# /run/nginx.pidの警告を抑制する
 
 謎の警告が残る
 > nginx.service: Failed to parse PID from file /run/nginx.pid: Invalid argument
