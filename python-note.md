@@ -25,6 +25,7 @@
 - [Ubuntu 18.04 LTSでpython3.7](#ubuntu-1804-lts%e3%81%a7python37)
 - [venv](#venv)
 - [pythonのEOL](#python%e3%81%aeeol)
+- [モジュールとパッケージ](#%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a8%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8)
 
 
 
@@ -567,3 +568,18 @@ python3.7 -m venv ~/.venv/37 --clear
 
 - [AWS Lambda now supports Python 3.8](https://aws.amazon.com/jp/about-aws/whats-new/2019/11/aws-lambda-now-supports-python-3-8/)
 - [AWS Lambda で Python 3.8 ランタイム がサポートされました ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/aws_lambda_support_python38/)
+
+
+# モジュールとパッケージ
+
+[6. モジュール — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/tutorial/modules.html)
+に書いてあるとおりなので必ず読むこと。
+
+ものすごい適当なまとめ:
+
+- モジュールは*.pyファイル。
+- パッケージはディレクトリで、`__init.py__`が必須。
+  - ディレクトリに複数のモジュールを置けて、これを「サブモジュール」と呼ぶ。
+  - `__init.py__`だけで、他のファイルは置かなくても良い。
+  - `__init.py__`は、中身がなくてもよい(size=0)。
+  - パッケージのディレクトリは階層化できる(それぞれに`__init.py__`は必要)。 
