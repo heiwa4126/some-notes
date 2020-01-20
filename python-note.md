@@ -583,3 +583,9 @@ python3.7 -m venv ~/.venv/37 --clear
   - `__init.py__`だけで、他のファイルは置かなくても良い。
   - `__init.py__`は、中身がなくてもよい(size=0)。
   - パッケージのディレクトリは階層化できる(それぞれに`__init.py__`は必要)。 
+
+[5. インポートシステム — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/reference/import.html)
+
+「名前空間パッケージ(Namespace Packages)」
+
+[Python にまつわるアイデア： Python のパッケージとモジュールの違い - Life with Python](https://www.lifewithpython.com/2018/05/python-difference-between-package-and-module.html)
