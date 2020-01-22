@@ -26,6 +26,7 @@
 - [venv](#venv)
 - [pythonのEOL](#python%e3%81%aeeol)
 - [モジュールとパッケージ](#%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a8%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8)
+- [Windows10上でのPython](#windows10%e4%b8%8a%e3%81%a7%e3%81%aepython)
 
 
 
@@ -589,3 +590,16 @@ python3.7 -m venv ~/.venv/37 --clear
 「名前空間パッケージ(Namespace Packages)」
 
 [Python にまつわるアイデア： Python のパッケージとモジュールの違い - Life with Python](https://www.lifewithpython.com/2018/05/python-difference-between-package-and-module.html)
+
+
+# Windows10上でのPython
+
+Anacondaより、本家Pythonの配布が良い感じ(2020-01現在)。
+
+[Download Python | Python.org](https://www.python.org/downloads/)
+
+Jupyterのバグ回避で3.7を使ってる。
+
+- proxyやZScalerのネットワークシステムまわりで、設定が不要。
+  - Anacondaだとめちゃめちゃ苦労した
+- Mathplotもpipですんなり入る。
