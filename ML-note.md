@@ -28,3 +28,15 @@
   - [文系エンジニアがCourseraの機械学習コースを1ヶ月で修了したので振り返ってみました。 - Qiita](https://qiita.com/poly_soft/items/0f7c09470af4ad5dbd39)
 - [AI Academy | Python・機械学習・AIを実践的に学べるプログラミング学習サービス](https://aiacademy.jp/)
 
+- [Numpy 入門](https://www.codexa.net/numpy/)
+- [Matplotlib 入門](https://www.codexa.net/matplotlib/)
+- [Pandas 入門](https://www.codexa.net/pandas/)
+- [線形代数 入門](https://www.codexa.net/linear-basics-2/)
+- [統計入門（前編）](https://www.codexa.net/statistics-for-machine-learning-first/)
+- [統計入門（後編）](https://www.codexa.net/statistics-for-machine-learning-second/)
+- [線形回帰 入門](https://www.codexa.net/linear-regression-for-beginner/)
+
+
+
+
+
