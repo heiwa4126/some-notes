@@ -1,4 +1,6 @@
-- [PostgreSQLのサンプルデータ](#postgresqlのサンプルデータ)
+- [PostgreSQLのサンプルデータ](#postgresql%e3%81%ae%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab%e3%83%87%e3%83%bc%e3%82%bf)
+- [PostgreSQLのlibパスは?](#postgresql%e3%81%aelib%e3%83%91%e3%82%b9%e3%81%af)
+- [valuntilがNULLの時](#valuntil%e3%81%8cnull%e3%81%ae%e6%99%82)
 
 # PostgreSQLのサンプルデータ
 
@@ -6,6 +8,17 @@ PostgreSQL Tutorialに適当なサンプルがある。
 
 * [[PostgreSQL] サンプルのデータベースを用意する ｜ DevelopersIO](https://dev.classmethod.jp/etc/postgresql-create-sample-database/)
 * [PostgreSQL Sample Database](http://www.postgresqltutorial.com/postgresql-sample-database/)
+
+# PostgreSQLのlibパスは?
+
+libpq.soのあるパスなのかlibpq.so.5までのフルパスなのか
+微妙なんだが
+
+`pg_config --libdir`
+
+で出るやつでいいのでは。
+
+
 
 # valuntilがNULLの時
 

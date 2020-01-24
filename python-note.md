@@ -27,6 +27,7 @@
 - [pythonのEOL](#python%e3%81%aeeol)
 - [モジュールとパッケージ](#%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a8%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8)
 - [Windows10上でのPython](#windows10%e4%b8%8a%e3%81%a7%e3%81%aepython)
+- [Jupyter Notebookのtips](#jupyter-notebook%e3%81%aetips)
 
 
 
@@ -603,3 +604,7 @@ Jupyterのバグ回避で3.7を使ってる。
 - proxyやZScalerのネットワークシステムまわりで、設定が不要。
   - Anacondaだとめちゃめちゃ苦労した
 - Mathplotもpipですんなり入る。
+
+# Jupyter Notebookのtips 
+
+- [Jupyter Notebook で Prompt の番号をリセットするたったひとつの冴えたやりかた - Qiita](https://qiita.com/iktakahiro/items/32d65ebee6b7d784eed1)
