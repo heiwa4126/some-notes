@@ -74,3 +74,11 @@ if __name__ == r"__main__":
 - [Logging クックブック — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/howto/logging-cookbook.html#logging-cookbook)
 - [RotatingFileHandler](https://docs.python.org/ja/3/library/logging.handlers.html#logging.handlers.RotatingFileHandler)
 - [TimedRotatingFileHandler](https://docs.python.org/ja/3/library/logging.handlers.html#logging.handlers.TimedRotatingFileHandler)
+
+
+# 構造化ログ
+
+## python-json-logger
+
+- [madzak/python-json-logger: Json Formatter for the standard python logger](https://github.com/madzak/python-json-logger)
+- [pythonでjson形式でログを出す - Qiita](https://qiita.com/sakamossan/items/8e4141e789a2110e037b)
