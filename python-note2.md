@@ -24,14 +24,17 @@ def get_syslogger():
     log = logging.getLogger("syslog")
     # 名前はなんでもいいのだが、**loggerは名前が同一ならばPythonプロセス内を通して常に同一**
     log.setLevel(logging.INFO)
-    # レベルフィルタはハンドラとログルートの2つ必要。デフォルトはWARNING以上
+    # レベルフィルタはハンドラとログルートの2つ必要。
+    # デフォルトがWARNING以上だから
 
     handler = SysLogHandler(address="/dev/log")
     # SysLogHandlerのデフォルトはlocalhostの514/UDPなので
     # unix socketを使うならaddressを明示する
-    handler.setLevel(logging.INFO)  # レベルのフィルタはハンドラとログルートの2つ必要
+    handler.setLevel(logging.INFO)
+    # この場合レベルのフィルタはハンドラとログルートの2つ必要。
+    # デフォルトがWARNING以上だから
     handler.setFormatter(
-        logging.Formatter("syslog-ex2[%(process)d]: %(levelname)s: %(message)s")
+        logging.Formatter("appname[%(process)d]: %(levelname)s: %(message)s at %(filename)s(%(lineno)d)")
     )
     log.addHandler(handler)
 
@@ -48,6 +51,7 @@ if __name__ == r"__main__":
 
     l2 = logging.getLogger("syslog")
     # l2とlgrは同じものになる。ハンドルを設定する必要がない。
+    # 「loggerは名前が同一ならばPythonプロセス内を通して常に同一」の例
     l2.debug("debug2") # <-これは出ない
     l2.info("info2")
     l2.warning("warning2")
@@ -55,6 +59,9 @@ if __name__ == r"__main__":
     l2.critical("critical2")
 ```
 
+もし別モジュールがあるなら、そこでは`logging.getLogger("syslog")`でロガーを得ること。`get_syslogger()`を呼んだりしないこと。(またはlgrを引数で渡すとか)
+
 参考:
 - [Python の logging について - Qiita](https://qiita.com/kitsuyui/items/5a7484a09eeacb564649)
 - [Logging HOWTO — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/howto/logging.html)
+
