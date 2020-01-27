@@ -7,7 +7,7 @@
 
 NORMALレベルのlogがでなくて苦労した。
 loggingはかなり難しいモジュール。
-初心者向きの記事読んで使うと行き詰まる。
+**初心者向きの記事読んでlogging使うと行き詰まる**。
 
 ```python
 #!/usr/bin/env python3
@@ -64,4 +64,13 @@ if __name__ == r"__main__":
 参考:
 - [Python の logging について - Qiita](https://qiita.com/kitsuyui/items/5a7484a09eeacb564649)
 - [Logging HOWTO — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/howto/logging.html)
+- [Logging クックブック — 複数のモジュールで logging を使う](https://docs.python.org/ja/3/howto/logging-cookbook.html#using-logging-in-multiple-modules)
 
+
+# loggingモジュールでlog rotation
+
+参考:
+- [便利なハンドラ](https://docs.python.org/ja/3/howto/logging.html#useful-handlers)
+- [Logging クックブック — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/howto/logging-cookbook.html#logging-cookbook)
+- [RotatingFileHandler](https://docs.python.org/ja/3/library/logging.handlers.html#logging.handlers.RotatingFileHandler)
+- [TimedRotatingFileHandler](https://docs.python.org/ja/3/library/logging.handlers.html#logging.handlers.TimedRotatingFileHandler)
