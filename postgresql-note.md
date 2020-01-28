@@ -1,6 +1,7 @@
 - [PostgreSQLのサンプルデータ](#postgresql%e3%81%ae%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab%e3%83%87%e3%83%bc%e3%82%bf)
 - [PostgreSQLのlibパスは?](#postgresql%e3%81%aelib%e3%83%91%e3%82%b9%e3%81%af)
 - [valuntilがNULLの時](#valuntil%e3%81%8cnull%e3%81%ae%e6%99%82)
+- [PostgreSQLの認証問題](#postgresql%e3%81%ae%e8%aa%8d%e8%a8%bc%e5%95%8f%e9%a1%8c)
 
 # PostgreSQLのサンプルデータ
 
@@ -40,3 +41,8 @@ valuntilがNULLの時のパスワードは決して無効にならない。
 
 * [PostgreSQL: Documentation: 11: 8.5. Date/Time Types](https://www.postgresql.org/docs/current/datatype-datetime.html)
 * [PostgreSQL・ロールのパスワード設定](http://www.ajisaba.net/db/postgresql/role_password.html)
+
+
+# PostgreSQLの認証問題
+
+めんどくさい上に、毎回忘れる。ちゃんと理解してないから。
