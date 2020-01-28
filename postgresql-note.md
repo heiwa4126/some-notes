@@ -46,3 +46,46 @@ valuntilがNULLの時のパスワードは決して無効にならない。
 # PostgreSQLの認証問題
 
 めんどくさい上に、毎回忘れる。ちゃんと理解してないから。
+
+example
+
+postgresユーザ以外で
+peerで入れないことを確認
+```sh
+psql -h localhost -U postgres
+```
+
+```sh
+sudo systemctl start postgresql
+sudo su - postgres
+psql -c "alter role postgres with password '{password}'";
+```
+
+`{password}`のところは好きに変える。
+
+パスワードで入れることを確認。
+
+```sh
+touch ~/.pgpass
+chmod 0600 ~/.pgpass
+emacs ~/.pgpass
+```
+
+```
+#hostname:port:database:username:password
+localhost:*:postgres:postgres:{password}
+```
+
+`{password}`のところはさっきのパスワード。
+
+pg_hba.confを
+```
+# IPv4 local connections:
+#host   all             all             127.0.0.1/32            ident
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+#host   all             all             ::1/128                 ident
+host    all             all             ::1/128                 md5
+```
+
+identデーモン立ててるクライアントなんか無いだろう。
