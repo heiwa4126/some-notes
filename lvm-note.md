@@ -164,6 +164,6 @@ lvdisplay VolGroup00/snap1 | fgrep 'Allocated to snapshot'
 lvremove VolGroup00/snap1 -y
 ```
 
-
-
-
+リストアの参考:
+- [How to Take 'Snapshot of Logical Volume and Restore' in LVM - Part III](https://www.tecmint.com/take-snapshot-of-logical-volume-and-restore-in-lvm/)
+- [10.3. スナップショットボリュームのマージ Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/proc_merging-snapshot-volumes-snapshot-volumes)
