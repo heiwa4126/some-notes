@@ -1,7 +1,8 @@
 LVMいろいろノート
 
-- [LVMのrootをfsck](#lvm%E3%81%AEroot%E3%82%92fsck)
-- [LVMのサイズを広げる -](#lvm%E3%81%AE%E3%82%B5%E3%82%A4%E3%82%BA%E3%82%92%E5%BA%83%E3%81%92%E3%82%8B)
+- [LVMのrootをfsck](#lvm%e3%81%aeroot%e3%82%92fsck)
+- [LVMのサイズを広げる](#lvm%e3%81%ae%e3%82%b5%e3%82%a4%e3%82%ba%e3%82%92%e5%ba%83%e3%81%92%e3%82%8b)
+- [LVMでsnapshot](#lvm%e3%81%a7snapshot)
 
 # LVMのrootをfsck
 
@@ -25,7 +26,7 @@ fsck.ext4 -y /dev/mappar/XXXX-root
 マウントするとfsckできないので、こんな感じになる。
 read-onlyマウントでもfsckできなかった。
 
-# LVMのサイズを広げる -  
+# LVMのサイズを広げる
 
 (未整理)
 
@@ -74,7 +75,7 @@ lvextend -L +1G /dev/mapper/VolGroup00-root
 resize2fs /dev/mapper/VolGroup00-root
 or
 xfs_growfs
-or ... 
+or ...
 ```
 
 ```
@@ -102,7 +103,66 @@ GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力
 
 ```
 
+# LVMでsnapshot
 
+VMでテスト
+
+```
+# lsblk -f
+NAME                FSTYPE      LABEL UUID                                   MOUNTPOINT
+sda
+├─sda1              vfat        efi   8EA4-09AF                              /boot/efi
+├─sda2              ext4        boot  da20638e-6d5b-4412-b091-5d1a845dab42   /boot
+└─sda3              LVM2_member       sPpKdm-n05w-KJo3-tAnJ-K2cH-Vzbh-XgZgxz
+  ├─VolGroup00-root ext4        root  979940c6-73bc-4587-8652-d22e47bd7022   /
+  └─VolGroup00-swap swap        swap  861754ca-7d31-4bce-aaf8-d5739e648523   [SWAP]
+
+# pvdisplay | grep Free
+  Free PE               0
+```
+で空きがぜんぜん無い。
+
+sdaを1GB広げて
+VolGroup00に追加して
+拡張分をスナップショット領域にする。
+
+VMマネージャで広げて、
+`parted /dev/sda`で`p Fix Fix resizepart 3 100%`で
+`pvresize /dev/sda3`
+
+これで
+```
+# vgdisplay VolGroup00 | grep Free
+  Free  PE / Size       256 / 1.00 GiB
+```
+
+root用にsnapshot領域を作成
+``` sh
+lvcreate -s -l 100%FREE -n snap1 /dev/mapper/VolGroup00-root
+ls -lad /dev/mapper/VolGroup00-snap1
+```
+
+この`/dev/mapper/VolGroup00-snap1`に対してdumpとかを行う。
+
+状態の確認は
+```sh
+lvdisplay VolGroup00/snap1
+# or
+lvdisplay /dev/mapper/VolGroup00-snap1
+```
+
+特にディスク使用量は
+```sh
+lvdisplay VolGroup00/snap1 | fgrep 'Allocated to snapshot'
+```
+
+`yum clean all ; yum update`とかしてみるといいです。
+
+バックアップが終わったら
+スナップショット領域を解放
+```
+lvremove VolGroup00/snap1 -y
+```
 
 
 
