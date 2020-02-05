@@ -32,6 +32,7 @@ AWS Lambdaと全然違う。
   - [設定のダウンロード](#%e8%a8%ad%e5%ae%9a%e3%81%ae%e3%83%80%e3%82%a6%e3%83%b3%e3%83%ad%e3%83%bc%e3%83%89)
 - [HTTPトリガのauthLevel](#http%e3%83%88%e3%83%aa%e3%82%ac%e3%81%aeauthlevel)
 - [invoke](#invoke)
+- [テレメトリー](#%e3%83%86%e3%83%ac%e3%83%a1%e3%83%88%e3%83%aa%e3%83%bc)
 - [Docker](#docker)
 
 # Azure Functions リファレンス
@@ -534,9 +535,23 @@ AWS CLIの `aws lambda invoke` に相当するものがないらしい。
 - [Durable Functions の概要 - Azure | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/durable/durable-functions-overview)
 - [GitHub - Azure/azure-functions-durable-js: JavaScript library for using the Durable Functions bindings](https://github.com/Azure/azure-functions-durable-js)
 
+# テレメトリー
+
+```
+Telemetry
+---------
+The Azure Functions Core tools collect usage data in order to help us improve your experience.
+The data is anonymous and doesn't include any user specific or personal information. The data is collected by Microsoft.
+
+You can opt-out of telemetry by setting the FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT environment variable to '1' or 'true' using your favorite shell.
+```
+ということなので~/.profileなどに`FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT=1`とか書いておく。
+
+see: [Azure/azure-functions-core-tools: Command line tools for Azure Functions](https://github.com/Azure/azure-functions-core-tools)
 
 # Docker
 
 Azure Functionsでdockerを使うと、Functionを停止しても料金が発生するので、辛い。
 
 Linuxベースのfunctions(Pythonとか)はそうではなかったような気がする。
+
