@@ -2,6 +2,7 @@
 - [PostgreSQLのlibパスは?](#postgresql%e3%81%aelib%e3%83%91%e3%82%b9%e3%81%af)
 - [valuntilがNULLの時](#valuntil%e3%81%8cnull%e3%81%ae%e6%99%82)
 - [PostgreSQLの認証問題](#postgresql%e3%81%ae%e8%aa%8d%e8%a8%bc%e5%95%8f%e9%a1%8c)
+- [WALアーカイブを消す](#wal%e3%82%a2%e3%83%bc%e3%82%ab%e3%82%a4%e3%83%96%e3%82%92%e6%b6%88%e3%81%99)
 
 # PostgreSQLのサンプルデータ
 
@@ -89,3 +90,31 @@ host    all             all             ::1/128                 md5
 ```
 
 identデーモン立ててるクライアントなんか無いだろう。
+
+
+# WALアーカイブを消す
+
+RHEL7標準のpostgresでは`postgresql-contrib`パッケージに`pg_archivecleanup`が入ってる。
+
+`pg_archivecleanup -d {アーカイブディレクトリ} {一番新しい.backup}.backup`
+
+`-d`はデバッグオプションなのでお好みで。ドライランは`-n`
+
+スクリプトにするとこんな感じ。
+``` sh
+#!/bin/bash -e
+ARCDIR=/var/lib/pgsql/data/archivedir
+
+RC=$(cd "$ARCDIR"; ls -1 *.backup 2> /dev/null | wc -l)
+if [ "0" == "$RC" ] ; then
+  # do notnig
+  exit 0
+fi
+
+cd "$ARCDIR"
+RC=$(ls -t *.backup | head -1)
+ls -t *.backup | tail -n +2 | xargs -r rm
+cd - &> /dev/null
+
+pg_archivecleanup -d "$ARCDIR" "$RC"
+```
