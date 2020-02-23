@@ -20,3 +20,6 @@ CATALINA_OPTS="$CATALINA_OPTS -XX:MaxPermSize=1024M"
 CATALINA_OPTS="$CATALINA_OPTS -Djava.net.preferIPv4Stack=true"
 ```
 みたいに書いておくと、altanativeシステムとうまく付き合える。
+
+参考:
+[UbuntuにおけるTomcatの覚え書き - Qiita](https://qiita.com/hidekuro/items/119317f826253326e490)
