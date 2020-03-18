@@ -14,7 +14,7 @@
 - [定番ツールをまとめて](#%e5%ae%9a%e7%95%aa%e3%83%84%e3%83%bc%e3%83%ab%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%a6)
 - [Goで書いたコードをsystemdでデーモンにする](#go%e3%81%a7%e6%9b%b8%e3%81%84%e3%81%9f%e3%82%b3%e3%83%bc%e3%83%89%e3%82%92systemd%e3%81%a7%e3%83%87%e3%83%bc%e3%83%a2%e3%83%b3%e3%81%ab%e3%81%99%e3%82%8b)
 - [golangで書いたコードをsystemdでdaemonに](#golang%e3%81%a7%e6%9b%b8%e3%81%84%e3%81%9f%e3%82%b3%e3%83%bc%e3%83%89%e3%82%92systemd%e3%81%a7daemon%e3%81%ab)
-- [](#)
+- [構造体の比較](#%e6%a7%8b%e9%80%a0%e4%bd%93%e3%81%ae%e6%af%94%e8%bc%83)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -290,4 +290,39 @@ sudo systemctl status 404.service
 [Integration of a Go service with systemd: readiness & liveness | Vincent Bernat](https://vincent.bernat.ch/en/blog/2017-systemd-golang)
 
 
-# 
+# 構造体の比較
+
+なんか値まで比較してくれるみたい。
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+type p struct{ x, y int }
+
+func main() {
+	o := p{0, 0}
+	a := p{1, 2}
+	b := p{1, 2}
+
+	fmt.Printf("o=%v\n", o)
+	fmt.Printf("a=%v\n", a)
+	fmt.Printf("b=%v\n", b)
+
+	fmt.Printf("o==a? : %t\n", o == a)
+	fmt.Printf("b==a? : %t\n", b == a)
+}
+```
+[The Go Playground](https://play.golang.org/p/e2OngSSFisB)
+
+結果:
+```
+o={0 0}
+a={1 2}
+b={1 2}
+o==a? : false
+b==a? : true
+```
