@@ -10,6 +10,37 @@ sudo yum install gcc rpm-build rpm-devel rpmlint make python bash coreutils diff
 sudo useradd -s /sbin/nologin mockbuild
 ```
 
-
-
 [Rpmlint Errors - Rosalab Wiki](http://wiki.rosalab.ru/en/index.php/Rpmlint_Errors#subsys-not-used)
+
+# `rpm -qa`の出力をCSVっぽく
+
+`rpm -qa`の出力を分解するのは面倒なので、最初からバラして出す。
+
+queryformatオプションを使う。
+
+例) 典型的例
+```
+rpm -qa --queryformat '%{NAME},%{VERSION},%{RELEASE},%{ARCH}\n' | sort -t, -k1,4
+```
+queryformatをつけないときのデフォルトは
+`%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}`
+なので、それに沿った例。
+
+比較用には
+kernelパッケージに配慮して(複数あるから)、
+第2フィールドもソート対象にしたいところ。
+(あいにく2個しか指定できない。man sortでKEYDDEF参照)
+
+
+例) インストールした日付順
+```
+rpm -qa --queryformat '%{NAME},%{INSTALLTIME},%{INSTALLTIME:date}\n' | sort -rn -t, -k2 | cut -d, -f1,3
+```
+
+使えるtagの一覧は
+```
+rpm --querytags
+```
+で。
+
+[rpm.org - RPM Query Formats](https://rpm.org/user_doc/query_format.html) に良いサンプルがいろいろあります。
