@@ -65,7 +65,14 @@ psql -c "alter role postgres with password '{password}'";
 `{password}`のところは好きに変える。
 
 パスワードで入れることを確認。
+TCPで入れることを確認。
+``` sh
+psql -h 127.0.0.1 -U postgres postgres
+```
+で、パスワード聞かれたら答えて入れればOK。
 
+
+で、.pgpass
 ```sh
 touch ~/.pgpass
 chmod 0600 ~/.pgpass
@@ -90,6 +97,10 @@ host    all             all             ::1/128                 md5
 ```
 
 identデーモン立ててるクライアントなんか無いだろう。
+
+
+
+
 
 
 # WALアーカイブを消す
