@@ -50,3 +50,8 @@ rpm --querytags
 で。
 
 [rpm.org - RPM Query Formats](https://rpm.org/user_doc/query_format.html) に良いサンプルがいろいろあります。
+
+こういうやつとか
+```
+rpm -q --queryformat "[%-80{FILENAMES} %10{FILESIZES}\n]" gcc
+```
