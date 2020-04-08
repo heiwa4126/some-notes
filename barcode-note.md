@@ -8,6 +8,9 @@
 
 # コードの種類
 
+どうもコード方式と表現方式がごっちゃになって記述されることが多いみたいので注意が必要(両方を兼ねてる言い方もあるのがますますややこしい)。
+
+
 ## JAN
 
 - 標準タイプ(13桁)
@@ -31,15 +34,15 @@
 - 4561234567890
 - 49012347
 
-![4912345678904](imgs/jan/jan_4912345678904.png "4912345678904")
- ![4561234567890](imgs/jan/jan_4561234567890.png "4561234567890")
-![49012347](imgs/jan/jan_49012347.png "49012347")
+![4912345678904](imgs/barcode/jan_4912345678904.png "4912345678904")
+ ![4561234567890](imgs/barcode/jan_4561234567890.png "4561234567890")
+![49012347](imgs/barcode/jan_49012347.png "49012347")
 
 それをQRコードにしたもの ([QRコードの作成｜バーコードどころ](https://barcode-place.azurewebsites.net/Barcode/qr)で作成)
 
-![4912345678904](imgs/qr/qr_4912345678904.png "4912345678904")
- ![4561234567890](imgs/qr/qr_4561234567890.png "4561234567890")
-![49012347](imgs/qr/qr_49012347.png "49012347")
+![4912345678904](imgs/barcode/qr_4912345678904.png "4912345678904")
+ ![4561234567890](imgs/barcode/qr_4561234567890.png "4561234567890")
+![49012347](imgs/barcode/qr_49012347.png "49012347")
 
 なんでQRコードなのwは秘密だ。
 
@@ -55,8 +58,23 @@ ASCIIコードなんでも、とはいうものの具体的な例としては
 
 他、参考: [Code 128 - Wikipedia](https://en.wikipedia.org/wiki/Code_128)
 
+Code128のスタートコードにCODE-Cを使った
+[GS1-128](https://www.keyence.co.jp/ss/products/autoid/codereader/basic-gs1.jsp)のサンプル:
+
+![(01)04912345123459(10)ABC123](imgs/barcode/gs1_128_(01)04912345123459(10)ABC123.png "(01)04912345123459(10)ABC123")
+
+(01)04912345123459(10)ABC123
+
+
+
+
 
 # ブラウザでバーコード
 
 - [ブラウザでバーコード/QRコードリーダー【実装・カスタマイズ編】 - Qiita](https://qiita.com/mm_sys/items/6e5e927ef75ab82fa8d3)
 - [GitHub - andrastoth/webcodecamjs: Demo page](https://github.com/andrastoth/webcodecamjs)
+  - [GitHub - EddieLa/JOB: A Barcode scanner capapable of reading Code128, Code93, Code39, Standard/Industrial 2 of 5, Interleaved 2 of 5, Codabar and EAN-13 barcodes in javascript.](https://github.com/EddieLa/JOB) - JANコードのデコードができない
+  - [GitHub - LazarSoft/jsqrcode: Javascript QRCode scanner](https://github.com/LazarSoft/jsqrcode)
+- [スマフォカメラにブラウザからアクセス - Qiita](https://qiita.com/tkyko13/items/1871d906736ac88a1f35)
+
+> スマフォブラウザからカメラを利用するときはsslじゃないとだめらしいです
