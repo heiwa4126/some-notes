@@ -2,30 +2,31 @@
 
 AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
-- [Ubuntu,Debain おぼえがき](#ubuntudebain-%E3%81%8A%E3%81%BC%E3%81%88%E3%81%8C%E3%81%8D)
-- [タイムゾーン](#%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%BE%E3%83%BC%E3%83%B3)
+- [Ubuntu,Debain おぼえがき](#ubuntudebain-%e3%81%8a%e3%81%bc%e3%81%88%e3%81%8c%e3%81%8d)
+- [タイムゾーン](#%e3%82%bf%e3%82%a4%e3%83%a0%e3%82%be%e3%83%bc%e3%83%b3)
 - [locale](#locale)
-- [EDITORを変更](#editor%E3%82%92%E5%A4%89%E6%9B%B4)
-- [デフォルトユーザ](#%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%E3%83%A6%E3%83%BC%E3%82%B6)
+- [EDITORを変更](#editor%e3%82%92%e5%a4%89%e6%9b%b4)
+- [デフォルトユーザ](#%e3%83%87%e3%83%95%e3%82%a9%e3%83%ab%e3%83%88%e3%83%a6%e3%83%bc%e3%82%b6)
   - [AWS](#aws)
   - [Azure](#azure)
 - [cloud-init](#cloud-init)
-- [userを追加](#user%E3%82%92%E8%BF%BD%E5%8A%A0)
-    - [ubuntu on AWS編](#ubuntu-on-aws%E7%B7%A8)
-- [sudoでパスワードがいらないのを無効(有効)にする](#sudo%E3%81%A7%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%8C%E3%81%84%E3%82%89%E3%81%AA%E3%81%84%E3%81%AE%E3%82%92%E7%84%A1%E5%8A%B9%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B)
-- [絶対いれとくパッケージ](#%E7%B5%B6%E5%AF%BE%E3%81%84%E3%82%8C%E3%81%A8%E3%81%8F%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8)
+- [userを追加](#user%e3%82%92%e8%bf%bd%e5%8a%a0)
+    - [ubuntu on AWS編](#ubuntu-on-aws%e7%b7%a8)
+- [sudoでパスワードがいらないのを無効(有効)にする](#sudo%e3%81%a7%e3%83%91%e3%82%b9%e3%83%af%e3%83%bc%e3%83%89%e3%81%8c%e3%81%84%e3%82%89%e3%81%aa%e3%81%84%e3%81%ae%e3%82%92%e7%84%a1%e5%8a%b9%e6%9c%89%e5%8a%b9%e3%81%ab%e3%81%99%e3%82%8b)
+- [絶対いれとくパッケージ](#%e7%b5%b6%e5%af%be%e3%81%84%e3%82%8c%e3%81%a8%e3%81%8f%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8)
   - [bash-completion](#bash-completion)
-- [サービスの再起動が必要かどうか知る](#%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E5%86%8D%E8%B5%B7%E5%8B%95%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E7%9F%A5%E3%82%8B)
-- [ホストの再起動が必要かどうか知る](#%E3%83%9B%E3%82%B9%E3%83%88%E3%81%AE%E5%86%8D%E8%B5%B7%E5%8B%95%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E7%9F%A5%E3%82%8B)
-- [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebian%E3%81%A7apt-autoremove%E3%81%A7%E3%82%AD%E3%83%BC%E3%83%97%E3%81%95%E3%82%8C%E3%82%8Bkernel%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E6%95%B0)
+- [サービスの再起動が必要かどうか知る (古い)](#%e3%82%b5%e3%83%bc%e3%83%93%e3%82%b9%e3%81%ae%e5%86%8d%e8%b5%b7%e5%8b%95%e3%81%8c%e5%bf%85%e8%a6%81%e3%81%8b%e3%81%a9%e3%81%86%e3%81%8b%e7%9f%a5%e3%82%8b-%e5%8f%a4%e3%81%84)
+- [ホストの再起動が必要かどうか知る](#%e3%83%9b%e3%82%b9%e3%83%88%e3%81%ae%e5%86%8d%e8%b5%b7%e5%8b%95%e3%81%8c%e5%bf%85%e8%a6%81%e3%81%8b%e3%81%a9%e3%81%86%e3%81%8b%e7%9f%a5%e3%82%8b)
+- [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebian%e3%81%a7apt-autoremove%e3%81%a7%e3%82%ad%e3%83%bc%e3%83%97%e3%81%95%e3%82%8c%e3%82%8bkernel%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%81%ae%e6%95%b0)
 - [no_proxy](#noproxy)
-- [参考](#%E5%8F%82%E8%80%83)
-- [Unattended Upgradesの有効/無効](#unattended-upgrades%E3%81%AE%E6%9C%89%E5%8A%B9%E7%84%A1%E5%8A%B9)
-- [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-%E3%81%A7%E8%B5%B7%E5%8B%95%E3%81%8C%E9%81%85%E3%81%84)
-- [yum history みたいのを Debian/Ubuntu で](#yum-history-%E3%81%BF%E3%81%9F%E3%81%84%E3%81%AE%E3%82%92-debianubuntu-%E3%81%A7)
+- [参考](#%e5%8f%82%e8%80%83)
+- [Unattended Upgradesの有効/無効](#unattended-upgrades%e3%81%ae%e6%9c%89%e5%8a%b9%e7%84%a1%e5%8a%b9)
+- [A start job is running for wait for network to be configured で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-%e3%81%a7%e8%b5%b7%e5%8b%95%e3%81%8c%e9%81%85%e3%81%84)
+- [yum history みたいのを Debian/Ubuntu で](#yum-history-%e3%81%bf%e3%81%9f%e3%81%84%e3%81%ae%e3%82%92-debianubuntu-%e3%81%a7)
 - [netplan.io](#netplanio)
-- [Let's Encryptで証明書が更新されたか知る](#lets-encrypt%E3%81%A7%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%81%8C%E6%9B%B4%E6%96%B0%E3%81%95%E3%82%8C%E3%81%9F%E3%81%8B%E7%9F%A5%E3%82%8B)
+- [Let's Encryptで証明書が更新されたか知る](#lets-encrypt%e3%81%a7%e8%a8%bc%e6%98%8e%e6%9b%b8%e3%81%8c%e6%9b%b4%e6%96%b0%e3%81%95%e3%82%8c%e3%81%9f%e3%81%8b%e7%9f%a5%e3%82%8b)
 - [import debian.deb822](#import-debiandeb822)
+- [ubuntuでIPAfont](#ubuntu%e3%81%a7ipafont)
 
 # タイムゾーン
 
@@ -185,10 +186,13 @@ systemctlのサブコマンドとか覚えきれないので。あと「こん�
 RHELやCentでもEPELにあるので、絶対入れるべき。
 
 
-# サービスの再起動が必要かどうか知る
+# サービスの再起動が必要かどうか知る (古い)
 
-```
-# checkrestart -a
+sysetmdだとダメみたい。
+
+```sh
+sudo apt install debian-goods
+sudo checkrestart -a
 ```
 
 参考:
@@ -198,6 +202,14 @@ RHELやCentでもEPELにあるので、絶対入れるべき。
 # ホストの再起動が必要かどうか知る
 
 `/var/run/reboot-required`または`/var/run/reboot-required.pkg`の存在をチェック
+
+これは update-notifier-common パッケージが生成する。
+まれにこれが入ってないUbuntuがあったりするので、
+```sh
+sudo apt install update-notifier-common
+```
+する。
+
 
 
 
@@ -363,3 +375,23 @@ apt-get --reinstall install python3-debian python-debian python3-six update-noti
 
 
 早くpython3が標準になるといい。
+
+
+# ubuntuでIPAfont
+
+[amueller/word_cloud: A little word cloud generator in Python](https://github.com/amueller/word_cloud)
+を使うときにちょっと調べたのでメモ。
+
+インストールは
+```sh
+sudo apt install fonts-ipafont
+```
+
+フォントの場所は
+```
+$ dlocate fonts-ipafont | fgrep .ttf | cut -d' ' -f2
+/usr/share/fonts/opentype/ipafont-gothic/ipag.ttf
+/usr/share/fonts/opentype/ipafont-gothic/ipagp.ttf
+/usr/share/fonts/opentype/ipafont-mincho/ipam.ttf
+/usr/share/fonts/opentype/ipafont-mincho/ipamp.ttf
+```

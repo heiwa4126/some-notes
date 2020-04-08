@@ -87,3 +87,20 @@ aにだけあるものが1列目、bにだけあるものが2列目、ab両方�
 -.mount
 * `-system.slice
 ```
+
+
+# 特定PIDのプロセスの下をツリー表示
+
+特定のプロセスが何故か定期的に死ぬので、定期的にpgrepで取って、
+子プロセスのツリーをstdoutするスクリプトを書いたときに使ったコード
+
+```sh
+pid=$(pgrep -f `*******`)
+if [ "$pid" == "" ] ; then
+  echo "NO PROCESS"
+else
+  ps --forest $(ps -e --no-header -o pid,ppid|awk -vp=$pid 'function r(s){print s;s=a[s];while(s){sub(",","",s);t=s;sub(",.*","",t);sub("[0-9]+","",s);r(t)}}{a[$2]=a[$2]","$1}END{r(p)}')
+fi
+```
+
+出処: [linux - ps: How can i recursively get all child process for a given pid - Super User](https://superuser.com/questions/363169/ps-how-can-i-recursively-get-all-child-process-for-a-given-pid)

@@ -79,6 +79,16 @@ TUI
 [Linuxでネットワークの監視を行えるモニタリングコマンド20選 | 俺的備忘録 〜なんかいろいろ〜](https://orebibou.com/2014/09/linux%E3%81%A7%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%81%AE%E7%9B%A3%E8%A6%96%E3%82%92%E8%A1%8C%E3%81%88%E3%82%8B%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%B0%E3%82%B3/)
 
 
+実測するなら
+- iperf
+- netperf
+
+- [ネットワーク測定ツールiperfの使い方 - Qiita](https://qiita.com/takish/items/bff7a1df712d475432df)
+- [iperf3コマンド使い方、オプション一覧 - Qiita](https://qiita.com/yokoc1322/items/bfd8b6e69d6bdb3bb1c6)
+- [NetPerf (Windows版) で VPN のスループットを測ってみた。](http://takaq1.plala.jp/contents/windows/netperf/index.html)
+
+
+
 # TCP BBR
 
 [Google Cloud Platform Japan 公式ブログ: 輻輳制御の新アルゴリズム TCP BBR を GCP に導入](https://cloudplatform-jp.googleblog.com/2017/08/TCP-BBR-congestion-control-comes-to-GCP-your-Internet-just-got-faster.html)
@@ -115,6 +125,11 @@ pfifo_fast
 ```
 net.core.default_qdisc=fq
 net.ipv4.tcp_congestion_control=bbr
+```
+
+ワンライナーなら
+```
+echo -e 'net.core.default_qdisc=fq\nnet.ipv4.tcp_congestion_control=bbr' > /etc/sysctl.d/10-tcp-bbr.conf
 ```
 
 再起動。

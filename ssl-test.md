@@ -4,10 +4,11 @@ Nginx + Let's Encrypt(Certbot)で構築したWebサーバを
 [Qualys SSL LABS SSL Server Test](https://www.ssllabs.com/ssltest/)
 でチェックしたら**評価F**だったので直す。
 
-- [SSL Server Test - 評価"F"からの脱出](#ssl-server-test---%E8%A9%95%E4%BE%A1%22f%22%E3%81%8B%E3%82%89%E3%81%AE%E8%84%B1%E5%87%BA)
-  - [ステップ](#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97)
-  - [メモ](#%E3%83%A1%E3%83%A2)
-  - [参考](#%E5%8F%82%E8%80%83)
+- [SSL Server Test - 評価"F"からの脱出](#ssl-server-test---%e8%a9%95%e4%be%a1%22f%22%e3%81%8b%e3%82%89%e3%81%ae%e8%84%b1%e5%87%ba)
+  - [ステップ](#%e3%82%b9%e3%83%86%e3%83%83%e3%83%97)
+  - [メモ](#%e3%83%a1%e3%83%a2)
+  - [参考](#%e5%8f%82%e8%80%83)
+- [Apache2参考設定](#apache2%e5%8f%82%e8%80%83%e8%a8%ad%e5%ae%9a)
 
 
 ## ステップ
@@ -57,3 +58,27 @@ nginx -t
 * [HTTPS on Nginx: From Zero to A+ (Part 2) - Configuration, Ciphersuites, and Performance - Julian Simioni](https://juliansimioni.com/blog/https-on-nginx-from-zero-to-a-plus-part-2-configuration-ciphersuites-and-performance/)
 * [orangejulius/https-on-nginx: Notes for setting up HTTPS on Nginx](https://github.com/orangejulius/https-on-nginx)
 * [Webサーバー nginx における SSL証明書設定の安全性向上 ～SSL Server Test で A+ 判定を目指して～ | SaintSouth.NET](https://www.saintsouth.net/blog/safety-of-ssl-certificate-setting-improvements-in-web-server-nginx-to-get-rankaplus-from-ssl-server-test/)
+
+
+# Apache2参考設定
+
+`/etc/letsencrypt/options-ssl-apache.conf`
+
+
+[SSL Server Test (Powered by Qualys SSL Labs)](https://www.ssllabs.com/ssltest/index.html)で
+Aが取れる設定。
+
+weakなcryptはなくなるけど、つながるクライアントが少し減る。
+```
+SSLProtocol    all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+SSLCipherSuite ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA
+-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:!DSS
+```
+
+少し妥協して
+```
+SSLProtocol    all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+SSLCipherSuite HIGH:!MEDIUM:!aNULL:!MD5:!RC4:!3DES:!CBC
+```
+
+ぐらいがいいかもしれない。

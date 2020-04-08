@@ -1,12 +1,13 @@
 # ssh tips
 
 - [ssh tips](#ssh-tips)
-- [.ssh/configでhostごとのUserがoverrideできない](#sshconfigでhostごとのuserがoverrideできない)
+- [.ssh/configでhostごとのUserがoverrideできない](#sshconfig%e3%81%a7host%e3%81%94%e3%81%a8%e3%81%aeuser%e3%81%8coverride%e3%81%a7%e3%81%8d%e3%81%aa%e3%81%84)
 - [ProxyJump](#proxyjump)
 - [DynamicForward](#dynamicforward)
 - [LocalForward](#localforward)
 - [ControlPersist](#controlpersist)
-- [各ディストリのsshd_configのCiphersのデフォルト値](#各ディストリのsshd_configのciphersのデフォルト値)
+- [各ディストリのsshd_configのCiphersのデフォルト値](#%e5%90%84%e3%83%87%e3%82%a3%e3%82%b9%e3%83%88%e3%83%aa%e3%81%aesshdconfig%e3%81%aeciphers%e3%81%ae%e3%83%87%e3%83%95%e3%82%a9%e3%83%ab%e3%83%88%e5%80%a4)
+- [sshの接続でどんなcipherが使われるか確認](#ssh%e3%81%ae%e6%8e%a5%e7%b6%9a%e3%81%a7%e3%81%a9%e3%82%93%e3%81%aacipher%e3%81%8c%e4%bd%bf%e3%82%8f%e3%82%8c%e3%82%8b%e3%81%8b%e7%a2%ba%e8%aa%8d)
 
 
 # .ssh/configでhostごとのUserがoverrideできない
@@ -111,3 +112,29 @@ RHEL7のは流石にまずいので、弱いのは外すべき。
 # NSAフリーなChacha20を優先的に、そのあとは暗号強度の順。aes-cbcはダメらしい
 Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
 ```
+
+
+# sshの接続でどんなcipherが使われるか確認
+
+```
+$ ssh -vvv <host>
+...
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes[111/343]penssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+...
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: zlib@openssh.com
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: zlib@openssh.com
+```
+
+aesにするとハードウエアアクセラレーションが効く、という話を聞いたので
+/etc/sshdのCiphersで並びを変えてみる(man sshd_config)。
+
+```
+#Ciphers  chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+Ciphers  aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr
+```
+
+...微塵も変わらない... 単に並びを変えただけじゃダメみたい(続く)
+

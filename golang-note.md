@@ -8,10 +8,13 @@
   - [実行例](#%e5%ae%9f%e8%a1%8c%e4%be%8b)
 - [GDBでデバッグ](#gdb%e3%81%a7%e3%83%87%e3%83%90%e3%83%83%e3%82%b0)
 - [goモジュール](#go%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab)
+- [go run](#go-run)
 - [snapdでgo](#snapd%e3%81%a7go)
-  - [おまけ: CentOS7でsnapd](#%e3%81%8a%e3%81%be%e3%81%91-centos7%e3%81%a7snapd)
-  - [おまけ: snapdで古いのを消す](#%e3%81%8a%e3%81%be%e3%81%91-snapd%e3%81%a7%e5%8f%a4%e3%81%84%e3%81%ae%e3%82%92%e6%b6%88%e3%81%99)
+- [RHEL/CentOS 7でgolang](#rhelcentos-7%e3%81%a7golang)
 - [定番ツールをまとめて](#%e5%ae%9a%e7%95%aa%e3%83%84%e3%83%bc%e3%83%ab%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%a6)
+- [Goで書いたコードをsystemdでデーモンにする](#go%e3%81%a7%e6%9b%b8%e3%81%84%e3%81%9f%e3%82%b3%e3%83%bc%e3%83%89%e3%82%92systemd%e3%81%a7%e3%83%87%e3%83%bc%e3%83%a2%e3%83%b3%e3%81%ab%e3%81%99%e3%82%8b)
+- [golangで書いたコードをsystemdでdaemonに](#golang%e3%81%a7%e6%9b%b8%e3%81%84%e3%81%9f%e3%82%b3%e3%83%bc%e3%83%89%e3%82%92systemd%e3%81%a7daemon%e3%81%ab)
+- [構造体の比較](#%e6%a7%8b%e9%80%a0%e4%bd%93%e3%81%ae%e6%af%94%e8%bc%83)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -112,7 +115,25 @@ go 1.13から標準になる。
 * [The Go Blog - Using Go Modules / Go Modulesを使う（和訳） - Qiita](https://qiita.com/pokeh/items/139d0f1fe56e358ba597)
 
 
+# go run
+
+go runの引数はpackageなので
+mainパッケージのmain()が1つしかない、ちゃんとしたプロジェクトなら
+`go run .`
+で実行できる。もちろんパッケージ名をフルで指定してもいい。
+`go run github.com/heiwa4126/gogogophers`
+みたいな(でもしないよ)。
+
+サブパッケージ以下のテストも
+`go test ./feather/...`
+みたいにできる。
+`go test feather/...`
+ではダメ。
+
+
 # snapdでgo
+
+Ubuntuだとsnapd使うのが便利。
 
 [Install Go for Linux using the Snap Store | Snapcraft](https://snapcraft.io/go)
 
@@ -139,43 +160,21 @@ emacs使うなら以下参照:
 
 - [Goプログラミングの環境構築 | Emacs JP](https://emacs-jp.github.io/programming/golang)
 
-## おまけ: CentOS7でsnapd
+# RHEL/CentOS 7でgolang
 
-``` bash
-yum update
-yum install yum-plugin-copr epel-release
-yum copr enable ngompa/snapcore-el7
-yum install snapd bridge-utils
-systemctl enable --now snapd.socket
-systemctl enable --now snapd
-ln -s /var/lib/snapd/snap /snap
+EPELで新し目のgolangパッケージを配ってます。
+Red Hat 7系でgo入れるならEPELを設定して
 ```
-
-あと `/snap/bin`にパスを通す。
-
-
-## おまけ: snapdで古いのを消す
-
-例)
-``` bash
-$ snap list --all
-Name              Version    Rev   Tracking  Publisher   Notes
-amazon-ssm-agent  2.3.662.0  1455  stable/…  aws✓        disabled,classic
-amazon-ssm-agent  2.3.672.0  1480  stable/…  aws✓        classic
-core              16-2.41    7713  stable    canonical✓  core,disabled
-core              16-2.42    7917  stable    canonical✓  core
-go                1.13       4409  1.13      mwhudson    disabled,classic
-go                1.13.1     4517  1.13      mwhudson    classic
+sudo yum -y install golang
 ```
+を試すこと。snapよりはちょっとリリースは遅い。
 
-で、古いのを消す例
-```
-snap remove core --revision=7713
-```
+あとは↑の[snapdでgo](#snapd%e3%81%a7go)みたいな設定を。
 
-まとめて消したいときは:
+epelのyumでgoを入れたなら、
+GOPATHの2つ目は`/usr/lib/golang`
 
-[How to remove disabled (unused) snap packages with a single line of command? - Ask Ubuntu](https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
+
 
 # 定番ツールをまとめて
 
@@ -195,3 +194,135 @@ go get -u github.com/derekparker/delve/cmd/dlv
 ```
 
 [golang/tools: [mirror] Go Tools](https://github.com/golang/tools)
+
+
+# Goで書いたコードをsystemdでデーモンにする
+
+参考にしたもの：
+
+- [Integration of a Go service with systemd: readiness & liveness | Vincent Bernat](https://vincent.bernat.ch/en/blog/2017-systemd-golang)
+
+`main.go` ([↑から引用](https://vincent.bernat.ch/en/blog/2017-systemd-golang))
+``` go
+package main
+
+import (
+    "log"
+    "net"
+    "net/http"
+)
+
+func main() {
+    l, err := net.Listen("tcp", ":8081")
+    if err != nil {
+        log.Panicf("cannot listen: %s", err)
+    }
+    http.Serve(l, nil)
+}
+```
+
+手順
+``` bash
+mkdir 404
+cd !$
+vim main.go # 上記のコードをコピペ
+go build
+# test
+./404
+curl http://localhost:8081/
+```
+
+結果
+```
+404 NOT FOUND
+```
+
+バイナリのサイズを小さくしたかったら
+``` bash
+go build -ldflags="-w -s"
+upx 404
+```
+など
+
+
+で、これをsystemdでデーモンにする。
+
+いちばんカンタンで必要十分と思われる`404.service`
+```
+[Unit]
+Description=404 micro-service
+Requires=network.target
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=(いま自分のいるディレクトリ)/404
+WorkingDirectory=(いま自分のいるディレクトリ)
+Restart=always
+RestartSec=3s
+
+[Install]
+WantedBy=multi-user.target
+```
+
+↑のポイント
+- 死んだら3秒まって再開する(試しにkill -9 <pid>してみること)。
+- `Restart=always`は雑すぎるかも。
+- networkは必要
+
+手順
+``` bash
+sudo vim /lib/systemd/system/404.service # コピペ&編集
+sudo systemctl daemon-reload
+sudo systemctl start 404.service
+sudo systemctl status 404.service
+# 404だとPIDと思われるので.serviceもつける
+```
+
+`curl http://localhost:8081/`
+や
+`sudo lsof -p <pid>`
+などしてみる。
+
+
+# golangで書いたコードをsystemdでdaemonに
+
+[Integration of a Go service with systemd: readiness & liveness | Vincent Bernat](https://vincent.bernat.ch/en/blog/2017-systemd-golang)
+
+
+# 構造体の比較
+
+なんか値まで比較してくれるみたい。
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+type p struct{ x, y int }
+
+func main() {
+	o := p{0, 0}
+	a := p{1, 2}
+	b := p{1, 2}
+
+	fmt.Printf("o=%v\n", o)
+	fmt.Printf("a=%v\n", a)
+	fmt.Printf("b=%v\n", b)
+
+	fmt.Printf("o==a? : %t\n", o == a)
+	fmt.Printf("b==a? : %t\n", b == a)
+}
+```
+[The Go Playground](https://play.golang.org/p/e2OngSSFisB)
+
+結果:
+```
+o={0 0}
+a={1 2}
+b={1 2}
+o==a? : false
+b==a? : true
+```

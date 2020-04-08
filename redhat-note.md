@@ -1,49 +1,50 @@
 Red Hat系メモ
 
-- [インストール済みパッケージ一覧](#インストール済みパッケージ一覧)
-- [パッケージ一覧](#パッケージ一覧)
-- [RHELのパッケージをWWWで探す](#rhelのパッケージをwwwで探す)
-- [特定のレポジトリに含まれるパッケージのリストを得る](#特定のレポジトリに含まれるパッケージのリストを得る)
-- [有効になっているレポジトリのリスト](#有効になっているレポジトリのリスト)
-- [全レポジトリのパッケージのリストを得る](#全レポジトリのパッケージのリストを得る)
-- [例: 古いカーネルを入手してインストールする](#例-古いカーネルを入手してインストールする)
-- [Software collections で nginx をインストールする例](#software-collections-で-nginx-をインストールする例)
-- [古いカーネルを消す](#古いカーネルを消す)
-- [パッケージが最新か確認する例](#パッケージが最新か確認する例)
-- [コマンドが含まれているパッケージを探す](#コマンドが含まれているパッケージを探す)
-- [proxy設定あちこち](#proxy設定あちこち)
-- [RHELの登録](#rhelの登録)
-- [「デスクトップ」とかを英語にする](#デスクトップとかを英語にする)
-- [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
-- [パッケージのpin](#パッケージのpin)
+- [インストール済みパッケージ一覧](#%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab%e6%b8%88%e3%81%bf%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e4%b8%80%e8%a6%a7)
+- [パッケージ一覧](#%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e4%b8%80%e8%a6%a7)
+- [RHELのパッケージをWWWで探す](#rhel%e3%81%ae%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%82%92www%e3%81%a7%e6%8e%a2%e3%81%99)
+- [特定のレポジトリに含まれるパッケージのリストを得る](#%e7%89%b9%e5%ae%9a%e3%81%ae%e3%83%ac%e3%83%9d%e3%82%b8%e3%83%88%e3%83%aa%e3%81%ab%e5%90%ab%e3%81%be%e3%82%8c%e3%82%8b%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%81%ae%e3%83%aa%e3%82%b9%e3%83%88%e3%82%92%e5%be%97%e3%82%8b)
+- [有効になっているレポジトリのリスト](#%e6%9c%89%e5%8a%b9%e3%81%ab%e3%81%aa%e3%81%a3%e3%81%a6%e3%81%84%e3%82%8b%e3%83%ac%e3%83%9d%e3%82%b8%e3%83%88%e3%83%aa%e3%81%ae%e3%83%aa%e3%82%b9%e3%83%88)
+- [全レポジトリのパッケージのリストを得る](#%e5%85%a8%e3%83%ac%e3%83%9d%e3%82%b8%e3%83%88%e3%83%aa%e3%81%ae%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%81%ae%e3%83%aa%e3%82%b9%e3%83%88%e3%82%92%e5%be%97%e3%82%8b)
+- [例: 古いカーネルを入手してインストールする](#%e4%be%8b-%e5%8f%a4%e3%81%84%e3%82%ab%e3%83%bc%e3%83%8d%e3%83%ab%e3%82%92%e5%85%a5%e6%89%8b%e3%81%97%e3%81%a6%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab%e3%81%99%e3%82%8b)
+- [Software collections で nginx をインストールする例](#software-collections-%e3%81%a7-nginx-%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab%e3%81%99%e3%82%8b%e4%be%8b)
+- [古いカーネルを消す](#%e5%8f%a4%e3%81%84%e3%82%ab%e3%83%bc%e3%83%8d%e3%83%ab%e3%82%92%e6%b6%88%e3%81%99)
+- [パッケージが最新か確認する例](#%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%81%8c%e6%9c%80%e6%96%b0%e3%81%8b%e7%a2%ba%e8%aa%8d%e3%81%99%e3%82%8b%e4%be%8b)
+- [コマンドが含まれているパッケージを探す](#%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e3%81%8c%e5%90%ab%e3%81%be%e3%82%8c%e3%81%a6%e3%81%84%e3%82%8b%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%82%92%e6%8e%a2%e3%81%99)
+- [proxy設定あちこち](#proxy%e8%a8%ad%e5%ae%9a%e3%81%82%e3%81%a1%e3%81%93%e3%81%a1)
+- [RHELの登録](#rhel%e3%81%ae%e7%99%bb%e9%8c%b2)
+- [「デスクトップ」とかを英語にする](#%e3%83%87%e3%82%b9%e3%82%af%e3%83%88%e3%83%83%e3%83%97%e3%81%a8%e3%81%8b%e3%82%92%e8%8b%b1%e8%aa%9e%e3%81%ab%e3%81%99%e3%82%8b)
+- [ホストの再起動が必要かどうか知る](#%e3%83%9b%e3%82%b9%e3%83%88%e3%81%ae%e5%86%8d%e8%b5%b7%e5%8b%95%e3%81%8c%e5%bf%85%e8%a6%81%e3%81%8b%e3%81%a9%e3%81%86%e3%81%8b%e7%9f%a5%e3%82%8b)
+- [パッケージのpin](#%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%81%aepin)
 - [yum4/dnf](#yum4dnf)
-  - [yum4 参考](#yum4-参考)
-- [RHEL7の役立つドキュメント](#rhel7の役立つドキュメント)
-- [タイムゾーンを日本に](#タイムゾーンを日本に)
-- [ロケールを日本に](#ロケールを日本に)
-- [AWSでRHEL](#awsでrhel)
+  - [yum4 参考](#yum4-%e5%8f%82%e8%80%83)
+- [RHEL7の役立つドキュメント](#rhel7%e3%81%ae%e5%bd%b9%e7%ab%8b%e3%81%a4%e3%83%89%e3%82%ad%e3%83%a5%e3%83%a1%e3%83%b3%e3%83%88)
+- [タイムゾーンを日本に](#%e3%82%bf%e3%82%a4%e3%83%a0%e3%82%be%e3%83%bc%e3%83%b3%e3%82%92%e6%97%a5%e6%9c%ac%e3%81%ab)
+- [ロケールを日本に](#%e3%83%ad%e3%82%b1%e3%83%bc%e3%83%ab%e3%82%92%e6%97%a5%e6%9c%ac%e3%81%ab)
+- [AWSでRHEL](#aws%e3%81%a7rhel)
   - [example](#example)
-- [AzureでRHEL](#azureでrhel)
-- [サブスクリプションが難しい](#サブスクリプションが難しい)
-- [「サービスレベルの設定」とは](#サービスレベルの設定とは)
-- [CentOSをVirtualBoxのゲストとして使う](#centosをvirtualboxのゲストとして使う)
-- [永続的にIPv6を止める](#永続的にipv6を止める)
-- [RHELの発音](#rhelの発音)
-- [virbr0を消す](#virbr0を消す)
-- [起動に失敗したデーモンのリスト](#起動に失敗したデーモンのリスト)
-- [AWSでホスト名を変更する](#awsでホスト名を変更する)
-- ["Require IPv4 addressing for this connection to complete"](#require-ipv4-addressing-for-this-connection-to-complete)
-- [GRUB2の再インストール](#grub2の再インストール)
-- [RHELのバックアップ・リストア](#rhelのバックアップリストア)
+- [AzureでRHEL](#azure%e3%81%a7rhel)
+- [サブスクリプションが難しい](#%e3%82%b5%e3%83%96%e3%82%b9%e3%82%af%e3%83%aa%e3%83%97%e3%82%b7%e3%83%a7%e3%83%b3%e3%81%8c%e9%9b%a3%e3%81%97%e3%81%84)
+- [「サービスレベルの設定」とは](#%e3%82%b5%e3%83%bc%e3%83%93%e3%82%b9%e3%83%ac%e3%83%99%e3%83%ab%e3%81%ae%e8%a8%ad%e5%ae%9a%e3%81%a8%e3%81%af)
+- [CentOSをVirtualBoxのゲストとして使う](#centos%e3%82%92virtualbox%e3%81%ae%e3%82%b2%e3%82%b9%e3%83%88%e3%81%a8%e3%81%97%e3%81%a6%e4%bd%bf%e3%81%86)
+- [永続的にIPv6を止める](#%e6%b0%b8%e7%b6%9a%e7%9a%84%e3%81%abipv6%e3%82%92%e6%ad%a2%e3%82%81%e3%82%8b)
+- [RHELの発音](#rhel%e3%81%ae%e7%99%ba%e9%9f%b3)
+- [virbr0を消す](#virbr0%e3%82%92%e6%b6%88%e3%81%99)
+- [起動に失敗したデーモンのリスト](#%e8%b5%b7%e5%8b%95%e3%81%ab%e5%a4%b1%e6%95%97%e3%81%97%e3%81%9f%e3%83%87%e3%83%bc%e3%83%a2%e3%83%b3%e3%81%ae%e3%83%aa%e3%82%b9%e3%83%88)
+- [AWSでホスト名を変更する](#aws%e3%81%a7%e3%83%9b%e3%82%b9%e3%83%88%e5%90%8d%e3%82%92%e5%a4%89%e6%9b%b4%e3%81%99%e3%82%8b)
+- ["Require IPv4 addressing for this connection to complete"](#%22require-ipv4-addressing-for-this-connection-to-complete%22)
+- [GRUB2の再インストール](#grub2%e3%81%ae%e5%86%8d%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
+- [RHELのバックアップ・リストア](#rhel%e3%81%ae%e3%83%90%e3%83%83%e3%82%af%e3%82%a2%e3%83%83%e3%83%97%e3%83%bb%e3%83%aa%e3%82%b9%e3%83%88%e3%82%a2)
 - [ReaR (Relax-and-Recover)](#rear-relax-and-recover)
-- [RHELを見た目ダウングレードさせる](#rhelを見た目ダウングレードさせる)
-- [RHELの特定マイナーバージョンに属するカーネルを探す手順](#rhelの特定マイナーバージョンに属するカーネルを探す手順)
-- [RHELを特定のバージョンに固定する](#rhelを特定のバージョンに固定する)
-- [RHELのホスト名](#rhelのホスト名)
-- [インストールされているパッケージのリストを構造のある形式で出力する](#インストールされているパッケージのリストを構造のある形式で出力する)
-- [起動時にntpdate](#起動時にntpdate)
+- [RHELを見た目ダウングレードさせる](#rhel%e3%82%92%e8%a6%8b%e3%81%9f%e7%9b%ae%e3%83%80%e3%82%a6%e3%83%b3%e3%82%b0%e3%83%ac%e3%83%bc%e3%83%89%e3%81%95%e3%81%9b%e3%82%8b)
+- [RHELの特定マイナーバージョンに属するカーネルを探す手順](#rhel%e3%81%ae%e7%89%b9%e5%ae%9a%e3%83%9e%e3%82%a4%e3%83%8a%e3%83%bc%e3%83%90%e3%83%bc%e3%82%b8%e3%83%a7%e3%83%b3%e3%81%ab%e5%b1%9e%e3%81%99%e3%82%8b%e3%82%ab%e3%83%bc%e3%83%8d%e3%83%ab%e3%82%92%e6%8e%a2%e3%81%99%e6%89%8b%e9%a0%86)
+- [RHELを特定のバージョンに固定する](#rhel%e3%82%92%e7%89%b9%e5%ae%9a%e3%81%ae%e3%83%90%e3%83%bc%e3%82%b8%e3%83%a7%e3%83%b3%e3%81%ab%e5%9b%ba%e5%ae%9a%e3%81%99%e3%82%8b)
+- [RHELのホスト名](#rhel%e3%81%ae%e3%83%9b%e3%82%b9%e3%83%88%e5%90%8d)
+- [インストールされているパッケージのリストを構造のある形式で出力する](#%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab%e3%81%95%e3%82%8c%e3%81%a6%e3%81%84%e3%82%8b%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%81%ae%e3%83%aa%e3%82%b9%e3%83%88%e3%82%92%e6%a7%8b%e9%80%a0%e3%81%ae%e3%81%82%e3%82%8b%e5%bd%a2%e5%bc%8f%e3%81%a7%e5%87%ba%e5%8a%9b%e3%81%99%e3%82%8b)
+- [起動時にntpdate](#%e8%b5%b7%e5%8b%95%e6%99%82%e3%81%abntpdate)
 - [reposync](#reposync)
-
+- [RHEL7で後からX](#rhel7%e3%81%a7%e5%be%8c%e3%81%8b%e3%82%89x)
+- [RHEL7でxrdp](#rhel7%e3%81%a7xrdp)
 
 
 # インストール済みパッケージ一覧
@@ -656,7 +657,7 @@ ip-172-31-1-155.ap-northeast-1.compute.internal
 
 * [Amazon EC2 Linux の静的ホスト名 RHEL7 Centos7](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname-rhel7-centos7/)
 * [Linux インスタンスのホスト名の変更 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/set-hostname.html)
-* [Amazon EC2 Linux 静的ホスト名](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname/)* 
+* [Amazon EC2 Linux 静的ホスト名](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname/)*
 
 **↑これらを実行しても、その名前でDNS引いたりできるわけではないので意味がない。**
 
@@ -683,7 +684,7 @@ https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/ne
 ReaR(Relax-and-Recover )は別項目に
 * [dump および restore コマンドで Red Hat Enterprise Linux 全体をバックアップおよびリストアする](https://access.redhat.com/ja/solutions/122373)
 * [パーティションテーブルをバックアップおよび復元する方法](https://access.redhat.com/ja/solutions/800283)
-  
+
 # ReaR (Relax-and-Recover)
 
 * [Relax-and-Recover - Linux Disaster Recovery](http://relax-and-recover.org/)
@@ -748,7 +749,7 @@ yum clean all
 yum update -y
 ...
 rpm -ivh --force (kernelだけ)
-rpm -Uvh --force (kernel以外) 
+rpm -Uvh --force (kernel以外)
 ```
 
 `yum localinstall`はうまくいかない。
@@ -823,7 +824,7 @@ exclude=redhat-release-* initscripts
 ```
 subscription-manager register --autosubscribe --release=6.4
 
-# 確認 
+# 確認
 subscription-manager release --list
 
 # あとから追加
@@ -917,3 +918,29 @@ CentOS7だけど
 - [How to synchronize repository on system registered to CDN via subscription-manager - Red Hat Customer Portal](https://access.redhat.com/articles/1355053)
 
 > subscription-manager で登録後、そのシステムで利用可能なリポジトリを reposync コマンドでミラーできる
+
+# RHEL7で後からX
+
+[How to install a graphical user interface (GUI) for Red Hat Enterprise Linux - Red Hat Customer Portal](https://access.redhat.com/solutions/5238)
+
+``` bash
+yum groupinstall gnome-desktop x11 fonts
+```
+or
+``` bash
+yum groupinstall "Server with GUI"
+```
+
+
+# RHEL7でxrdp
+
+EPELをレポジトリに追加
+
+``` bash
+yum groupinstall "Server with GUI"
+yum install xrdp tigervnc-server xterm -y
+systemctl daemon-reload
+systemctl stop xrdp
+systemctl start xrdp
+systemctl enable xrdp
+```
