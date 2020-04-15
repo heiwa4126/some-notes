@@ -1,5 +1,8 @@
 # DNSメモ
 
+- [DNSメモ](#dnsメモ)
+- [プライベートDNSモード または DNS over TLS](#プライベートdnsモード-または-dns-over-tls)
+
 # プライベートDNSモード または DNS over TLS
 
 [「プライベートDNSモード」は何の機能? - いまさら聞けないAndroidのなぜ | マイナビニュース](https://news.mynavi.jp/article/20200411-android_why/)
