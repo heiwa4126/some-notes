@@ -1,8 +1,9 @@
-- [PostgreSQLのサンプルデータ](#postgresql%e3%81%ae%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab%e3%83%87%e3%83%bc%e3%82%bf)
-- [PostgreSQLのlibパスは?](#postgresql%e3%81%aelib%e3%83%91%e3%82%b9%e3%81%af)
-- [valuntilがNULLの時](#valuntil%e3%81%8cnull%e3%81%ae%e6%99%82)
-- [PostgreSQLの認証問題](#postgresql%e3%81%ae%e8%aa%8d%e8%a8%bc%e5%95%8f%e9%a1%8c)
-- [WALアーカイブを消す](#wal%e3%82%a2%e3%83%bc%e3%82%ab%e3%82%a4%e3%83%96%e3%82%92%e6%b6%88%e3%81%99)
+- [PostgreSQLのサンプルデータ](#postgresqlのサンプルデータ)
+- [PostgreSQLのlibパスは?](#postgresqlのlibパスは)
+- [valuntilがNULLの時](#valuntilがnullの時)
+- [PostgreSQLの認証問題](#postgresqlの認証問題)
+- [よくあるテストユーザとテストデータの作り方](#よくあるテストユーザとテストデータの作り方)
+- [WALアーカイブを消す](#walアーカイブを消す)
 
 # PostgreSQLのサンプルデータ
 
@@ -98,8 +99,56 @@ host    all             all             ::1/128                 md5
 
 identデーモン立ててるクライアントなんか無いだろう。
 
+# よくあるテストユーザとテストデータの作り方
 
+初期ユーザを`heiwa`として、
 
+これをやるとユーザ(role)で、
+ソケット経由でつなぐことができる。
+
+``` sh
+sudo su - postgres
+psql
+```
+
+で
+
+```sql
+create role heiwa password '************';
+create database test01 encoding=utf8;
+grant all on database test01 to heiwa;
+grant connect on database test01 to heiwa;
+alter role heiwa with login;
+exit
+```
+
+``` sh
+exit
+```
+でheiwaユーザに戻って
+
+``` sh
+psql test01
+```
+でパスワード入れてつながることを確認。
+
+適当なテーブルを作ってみる
+```sql
+CREATE TABLE words (
+id SERIAL NOT NULL,
+english varchar(128),
+japanese varchar(128),
+PRIMARY KEY (id)
+);
+create unique index on words (english);
+insert into words(english,japanese) values('apple','りんご');
+insert into words(english,japanese) values('banana','バナナ');
+insert into words(english,japanese) values('cherry','さくらんぼ');
+insert into words(english,japanese) values('deer','しか');
+insert into words(english,japanese) values('eel','うなぎ');
+--- 英語にeが入ってるやつを抜き出す
+select * from words where english like '%e%';
+```
 
 
 
