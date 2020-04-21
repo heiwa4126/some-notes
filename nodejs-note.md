@@ -2,6 +2,26 @@
 
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
+- [node.jsのメモ](#nodejsのメモ)
+  - [node.jsのインストール](#nodejsのインストール)
+  - [環境設定](#環境設定)
+  - [環境設定: npmのオートコンプリート(completion)](#環境設定-npmのオートコンプリートcompletion)
+  - [npmの`-g`](#npmの-g)
+  - [npmの設定一覧](#npmの設定一覧)
+  - [npmの設定を編集](#npmの設定を編集)
+  - [npmにプロキシ設定](#npmにプロキシ設定)
+  - [パッケージの更新](#パッケージの更新)
+  - [npm -g でインストールされる先](#npm--g-でインストールされる先)
+  - [nodeがモジュールを探しに行く先を表示](#nodeがモジュールを探しに行く先を表示)
+  - [--saveと--save-dev](#--saveと--save-dev)
+  - [プロジェクトにインストールしたモジュールのbinを使う](#プロジェクトにインストールしたモジュールのbinを使う)
+  - [npm link](#npm-link)
+- [cafile](#cafile)
+- [いちばん簡単なnode.jsプロジェクトの始め方](#いちばん簡単なnodejsプロジェクトの始め方)
+  - [続き: git](#続き-git)
+  - [続き: node-dev](#続き-node-dev)
+- [そのほか参考リンク](#そのほか参考リンク)
+
 ## node.jsのインストール
 
 [Installing Node.js via package manager | Node.js](https://nodejs.org/en/download/package-manager/)
@@ -21,6 +41,8 @@ Tue Apr 21 11:38:54 JST 2020
 v12.16.2
 ```
 
+snapyのインストールなどについては
+
 ## 環境設定
 
 以下を.profileに追加(理由は後述)
@@ -39,6 +61,12 @@ npm completion >> ~/.profile
 参考: 
 - [全部知ってる？ npmを使いこなすために絶対知っておきたい10のこと - WPJ](https://www.webprofessional.jp/10-npm-tips-and-tricks/)
 - 原文: [10 Tips and Tricks That Will Make You an npm Ninja — SitePoint](https://www.sitepoint.com/10-npm-tips-and-tricks/)
+
+## npmの`-g`
+
+Pythonのpipだと`--user`オプションでper userだが、
+npmだと`-g`でper user。
+`-g`をつけないとプロジェクト(`package.json`)のパッケージになる。
 
 
 ## npmの設定一覧
@@ -169,7 +197,7 @@ export PATH="./node_modules/.bin:$PATH"
 [npm linkの基本的な使い方まとめ - Qiita](https://qiita.com/103ma2/items/284b3f00948121f23ee4)
 
 
-## cafile
+# cafile
 
 ZScalerというproxyが来て、npmが使えなくなってしまった。
 有名でないサイトは一旦proxyでSSLを解除して、内容を検閲し、ZScalerで再度SSL化するらしい。
@@ -211,6 +239,89 @@ pip --cert "<path to your certificate file>" ....
 1. 次へボタン
 1. 完了ボタン
 
-の順でマウスカチカチすればだれでも簡単にできる。
+の順でマウスカチカチすればだれでも簡単にできるw。
 
+# いちばん簡単なnode.jsプロジェクトの始め方
 
+[Express](https://expressjs.com/ja/)を使った
+Node.jsらしい
+簡単なプロジェクトを作ってみる。
+
+```sh
+mkdir hello
+cd hello
+npm init -f
+```
+`index.js`をエディタ開いて(`vi index.js`とか`emacs index.js`)、
+以下をコピペ
+
+```javascript
+#!/usr/bin/env node
+const express = require('express')
+const app = express()
+app.get('/', (req, res) => res.send('Hello World!'))
+app.listen(3000, () => console.log('Example app listening on port 3000!'))
+```
+([Express の「Hello World」の例](https://expressjs.com/ja/starter/hello-world.html)から引用)
+
+```sh
+npm install express
+chmod +x ./index.js
+./index.js & 
+```
+
+で、テスト
+```sh
+$ curl http://127.0.0.1:3000/
+Hello World!
+```
+
+終了は
+```sh
+kill %1
+```
+で。
+
+## 続き: git
+
+ここまでで、こんな感じになってるはず。
+```
+.
+|-- index.js
+|-- node_modules
+|   `-- (省略)
+|-- package-lock.json
+`-- package.json
+```
+
+```sh
+curl 'https://www.gitignore.io/api/vim,node,emacs,visualstudiocode' -o .gitignore
+git init
+git add --all
+git commit -am 'Initial commit'
+```
+
+あとは頑張って開発するw。
+
+## 続き: node-dev
+
+このままだと、index.jsを編集するたびにkillして./index.jsしなければならないので、[node-dev](https://www.npmjs.com/package/node-dev)を使ってみる。
+
+```sh
+npm install --save-dev node-dev
+```
+または
+```sh
+npm install node-dev -g
+```
+
+で、`./index.js &`のかわりに
+
+```sh
+node-dev index.js &
+```
+で起動する。`index.js`を編集&保存するごとにオートリロードするようになる。
+
+# そのほか参考リンク
+
+- [npm initでauthorやlicenseなどの初期値を指定する - teppeis blog](https://teppeis.hatenablog.com/entry/2015/12/configure-npm-init)

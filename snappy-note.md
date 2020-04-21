@@ -12,9 +12,13 @@
 - [Snapcraft - Snaps are universal Linux packages](https://snapcraft.io/) - 公式サイト
 - 一例として - [Install Go for Linux using the Snap Store | Snapcraft](https://snapcraft.io/go)
 - 一例として - [Install GNU Emacs for Linux using the Snap Store | Snapcraft](https://snapcraft.io/emacs)
+- [Snappy - Wikipedia](https://ja.wikipedia.org/wiki/Snappy)
+- [Snappy (package manager) - Wikipedia](https://en.wikipedia.org/wiki/Snappy_(package_manager))
+
 
 # proxy
 
+proxyが`10.250.42.37`だとして
 ```
 sudo emacs /etc/systemd/system/snapd.service.d/snap_proxy.conf
 [Service]
@@ -56,6 +60,8 @@ snap remove core --revision=7713
 
 
 # RHEL/CentOS 7でsnappy
+
+参考: [Install Snapd and Snap applications on Fedora 30 / Fedora 29/28 | ComputingForGeeks](https://computingforgeeks.com/install-snapd-and-snap-applications-on-fedora/)
 
 ``` bash
 yum update -y
