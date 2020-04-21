@@ -6,6 +6,21 @@
 
 [Installing Node.js via package manager | Node.js](https://nodejs.org/en/download/package-manager/)
 
+snap版があって楽。
+[distributions/README.md at master · nodesource/distributions](https://github.com/nodesource/distributions/blob/master/README.md)
+
+``` sh
+sudo snap install node --channel=12/stable --classic
+hash -r
+node -v
+```
+
+```
+$ LANG=C date ; node -v
+Tue Apr 21 11:38:54 JST 2020
+v12.16.2
+```
+
 ## 環境設定
 
 以下を.profileに追加(理由は後述)

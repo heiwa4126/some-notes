@@ -1,9 +1,17 @@
 # Snappyメモ
 
-- [Snappyメモ](#snappy%e3%83%a1%e3%83%a2)
+- [Snappyメモ](#snappyメモ)
+- [リンク](#リンク)
 - [proxy](#proxy)
-- [snapdで古いのを消す](#snapd%e3%81%a7%e5%8f%a4%e3%81%84%e3%81%ae%e3%82%92%e6%b6%88%e3%81%99)
-- [RHEL/CentOS 7でsnappy](#rhelcentos-7%e3%81%a7snappy)
+- [snapdで古いのを消す](#snapdで古いのを消す)
+- [RHEL/CentOS 7でsnappy](#rhelcentos-7でsnappy)
+
+
+# リンク
+
+- [Snapcraft - Snaps are universal Linux packages](https://snapcraft.io/) - 公式サイト
+- 一例として - [Install Go for Linux using the Snap Store | Snapcraft](https://snapcraft.io/go)
+- 一例として - [Install GNU Emacs for Linux using the Snap Store | Snapcraft](https://snapcraft.io/emacs)
 
 # proxy
 
@@ -59,6 +67,8 @@ systemctl enable --now snapd
 ln -s /var/lib/snapd/snap /snap
 ```
 PATHは`/etc/profile.d/snapd.sh`で入るので、
-一旦ログアウトして入り直すのが楽。
+一旦ログアウトして追加されるので、ログアウトしてログインするのが楽。
 
 [ngompa/snapcore-el7 Copr](https://copr.fedorainfracloud.org/coprs/ngompa/snapcore-el7/)
+
+RHEL7でemacs26が使えるのが便利。
