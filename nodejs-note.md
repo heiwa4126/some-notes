@@ -245,7 +245,8 @@ pip --cert "<path to your certificate file>" ....
 
 [Express](https://expressjs.com/ja/)を使った
 Node.jsらしい
-簡単なプロジェクトを作ってみる。
+簡単なプロジェクト(httpでアクセスするとHello worldを返す)を作ってみる。
+
 
 ```sh
 mkdir hello
@@ -267,6 +268,10 @@ app.listen(3000, () => console.log('Example app listening on port 3000!'))
 ```sh
 npm install express
 chmod +x ./index.js
+```
+
+起動
+```sh
 ./index.js & 
 ```
 
@@ -281,6 +286,8 @@ Hello World!
 kill %1
 ```
 で。
+
+(本当は`jobs`でリスト出して、`kill %{該当プロセス番号}`)が正しい。
 
 ## 続き: git
 
