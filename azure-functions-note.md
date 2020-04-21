@@ -3,36 +3,36 @@
 Ubuntu 18.04LTS上でPythonでAzure Functionsを書くメモ。
 AWS Lambdaと全然違う。
 
-- [Azure Functions 忘備録](#azure-functions-%e5%bf%98%e5%82%99%e9%8c%b2)
-- [Azure Functions リファレンス](#azure-functions-%e3%83%aa%e3%83%95%e3%82%a1%e3%83%ac%e3%83%b3%e3%82%b9)
-- [functionsの開発にいるもの](#functions%e3%81%ae%e9%96%8b%e7%99%ba%e3%81%ab%e3%81%84%e3%82%8b%e3%82%82%e3%81%ae)
-- [リンク](#%e3%83%aa%e3%83%b3%e3%82%af)
+- [Azure Functions 忘備録](#azure-functions-忘備録)
+- [Azure Functions リファレンス](#azure-functions-リファレンス)
+- [functionsの開発にいるもの](#functionsの開発にいるもの)
+- [リンク](#リンク)
   - [Azure CLI](#azure-cli)
   - [Azure Functions Core Tools](#azure-functions-core-tools)
-  - [日本語ドキュメント](#%e6%97%a5%e6%9c%ac%e8%aa%9e%e3%83%89%e3%82%ad%e3%83%a5%e3%83%a1%e3%83%b3%e3%83%88)
-- [Pythonの制限(2019-7)](#python%e3%81%ae%e5%88%b6%e9%99%902019-7)
-  - [前提](#%e5%89%8d%e6%8f%90)
-  - [準備](#%e6%ba%96%e5%82%99)
-- [InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル](#insights%e3%81%aelog-analyticsazure-monitor%e3%81%a7%e4%bd%bf%e3%81%88%e3%82%8b%e3%82%af%e3%82%a8%e3%83%aa%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab)
-- [Azure Functions Core Toolsのインストール](#azure-functions-core-tools%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
-  - [Windowsの場合](#windows%e3%81%ae%e5%a0%b4%e5%90%88)
-- [Azure Functionsのデプロイがめんどくさすぎる問題](#azure-functions%e3%81%ae%e3%83%87%e3%83%97%e3%83%ad%e3%82%a4%e3%81%8c%e3%82%81%e3%82%93%e3%81%a9%e3%81%8f%e3%81%95%e3%81%99%e3%81%8e%e3%82%8b%e5%95%8f%e9%a1%8c)
-  - [発端](#%e7%99%ba%e7%ab%af)
-  - [調査](#%e8%aa%bf%e6%9f%bb)
-  - [結論](#%e7%b5%90%e8%ab%96)
-  - [結論0](#%e7%b5%90%e8%ab%960)
-  - [結論1](#%e7%b5%90%e8%ab%961)
-  - [結論2](#%e7%b5%90%e8%ab%962)
+  - [日本語ドキュメント](#日本語ドキュメント)
+- [Pythonの制限(2019-7)](#pythonの制限2019-7)
+  - [前提](#前提)
+  - [準備](#準備)
+- [InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル](#insightsのlog-analyticsazure-monitorで使えるクエリサンプル)
+- [Azure Functions Core Toolsのインストール](#azure-functions-core-toolsのインストール)
+  - [Windowsの場合](#windowsの場合)
+- [Azure Functionsのデプロイがめんどくさすぎる問題](#azure-functionsのデプロイがめんどくさすぎる問題)
+  - [発端](#発端)
+  - [調査](#調査)
+  - [結論](#結論)
+  - [結論0](#結論0)
+  - [結論1](#結論1)
+  - [結論2](#結論2)
 - [Linux](#linux)
 - [nodejs v12 LTS](#nodejs-v12-lts)
-- [未整理メモ](#%e6%9c%aa%e6%95%b4%e7%90%86%e3%83%a1%e3%83%a2)
-- [ホスティング プラン](#%e3%83%9b%e3%82%b9%e3%83%86%e3%82%a3%e3%83%b3%e3%82%b0-%e3%83%97%e3%83%a9%e3%83%b3)
-- [よく使うfuncコマンド](#%e3%82%88%e3%81%8f%e4%bd%bf%e3%81%86func%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89)
-  - [デプロイ](#%e3%83%87%e3%83%97%e3%83%ad%e3%82%a4)
-  - [設定のダウンロード](#%e8%a8%ad%e5%ae%9a%e3%81%ae%e3%83%80%e3%82%a6%e3%83%b3%e3%83%ad%e3%83%bc%e3%83%89)
-- [HTTPトリガのauthLevel](#http%e3%83%88%e3%83%aa%e3%82%ac%e3%81%aeauthlevel)
+- [未整理メモ](#未整理メモ)
+- [ホスティング プラン](#ホスティング-プラン)
+- [よく使うfuncコマンド](#よく使うfuncコマンド)
+  - [デプロイ](#デプロイ)
+  - [設定のダウンロード](#設定のダウンロード)
+- [HTTPトリガのauthLevel](#httpトリガのauthlevel)
 - [invoke](#invoke)
-- [テレメトリー](#%e3%83%86%e3%83%ac%e3%83%a1%e3%83%88%e3%83%aa%e3%83%bc)
+- [テレメトリー](#テレメトリー)
 - [Docker](#docker)
 
 # Azure Functions リファレンス
@@ -250,7 +250,7 @@ count>0のとき、メール送るアクショングループを起動する、�
 
 まとめると、今現在(2019-10)では
 
-1. node 10.xを先に入れる(12もLTSだが、Azure Functions Core Toolsが対応していない)
+1. node 10.xを先に入れる(12もLTSだが、Azure Functions Core Toolsが対応していない) - これ12.xも使えるようになった(2020-04)
 2. Chocolatey入れる
 3. ChocolateyでAzure Functions Core Toolsいれる
 
@@ -293,8 +293,8 @@ AWS Lambdaみたいな「ポータルからZIPでデプロイ」が無いのは�
 [Azure Functions のデプロイ テクノロジ | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-deployment-technologies)
 
 
-## 発端
 
+## 発端
 
 たとえばnodejsの場合、
 チュートリアル [Visual Studio Code を使用して Azure で初めての関数を作成する](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-first-function-vs-code)
