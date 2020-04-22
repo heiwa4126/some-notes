@@ -4,6 +4,8 @@ Ubuntu 18.04LTS上でPythonでAzure Functionsを書くメモ。
 AWS Lambdaと全然違う。
 
 - [Azure Functions 忘備録](#azure-functions-忘備録)
+- [Azure Functionsで使える言語](#azure-functionsで使える言語)
+- [以下の記事はやや古いけど参考にはなります](#以下の記事はやや古いけど参考にはなります)
 - [Azure Functions リファレンス](#azure-functions-リファレンス)
 - [functionsの開発にいるもの](#functionsの開発にいるもの)
 - [リンク](#リンク)
@@ -35,11 +37,25 @@ AWS Lambdaと全然違う。
 - [テレメトリー](#テレメトリー)
 - [Docker](#docker)
 
+# Azure Functionsで使える言語
+
+[Azure Functions ランタイム バージョンの概要 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-versions#languages)
+
+ただし課金プランで、いちばん安い「従量課金プラン」が使える言語は限られる。
+(従量課金プランは消費量プラン、`Consumption plan`とも言う)
+
+[Azure Functions での従量課金プランのコストの見積もり | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-consumption-costs)
+
+
+
+
+# 以下の記事はやや古いけど参考にはなります
+
+^^^^^^^^^^^^^^^
+
 # Azure Functions リファレンス
 
 - [Azure Functions のドキュメント | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/)
--
-
 
 
 # functionsの開発にいるもの
@@ -447,6 +463,8 @@ Azure FunctionsでLinuxを使うとデプロイセンターが使えない。
 
 # nodejs v12 LTS
 
+(この項は古い。2020-04現在12.x使える)
+
 nodejs v12.13 LTSが出たので、アップグレードしたら
 [Azure Functions Core Tools](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-run-local#v2)
 が、
@@ -554,4 +572,3 @@ see: [Azure/azure-functions-core-tools: Command line tools for Azure Functions](
 Azure Functionsでdockerを使うと、Functionを停止しても料金が発生するので、辛い。
 
 Linuxベースのfunctions(Pythonとか)はそうではなかったような気がする。
-
