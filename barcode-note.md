@@ -11,6 +11,7 @@
   - [JOB](#job)
   - [QuaggaJS](#quaggajs)
   - [QuaggaJS2](#quaggajs2)
+  - [webcodecamjs](#webcodecamjs)
 
 # コードの種類
 
@@ -113,7 +114,7 @@ Code128のスタートコードにCODE-Cを使った
 - [mubaidr/Javascript-Barcode-Reader: Simple and Fast Barcode decoder with support of Code128, Code93, Code39, Standard/Industrial 2 of 5, Interleaved 2 of 5, Codabar, EAN-13, EAN-8 barcodes in javascript.](https://github.com/mubaidr/Javascript-Barcode-Reader)
 - [javascript-barcode-reader - npm](https://www.npmjs.com/package/javascript-barcode-reader)
 - [javascript-barcode-reader CDN by jsDelivr - A CDN for npm and GitHub](https://www.jsdelivr.com/package/npm/javascript-barcode-reader)
-
+- [javascript-barcode-reader | javascript-barcode-reader](https://mubaidr.js.org/Javascript-Barcode-Reader/)
 
 ## JOB
 
@@ -132,9 +133,19 @@ EAN-8が読めないらしいので今回はパス
 - [quagga CDN by jsDelivr - A CDN for npm and GitHub](https://www.jsdelivr.com/package/npm/quagga)
 - デモページ [QuaggaJS, an advanced barcode-reader written in JavaScript](https://serratus.github.io/quaggaJS/examples/static_images.html) - ライブイメージのデモもあるけど、さっぱり読めない。
 
+他参考:
+- [QuaggaJSを使ったバーコードリーダ実装 | WatchContents](https://watchcontents.com/quaggajs-barcode-reader/)
+
+
 ## QuaggaJS2
 
 QuaggaJSのフォーク
 
 - [ericblade/quagga2: An advanced barcode-scanner written in Javascript and TypeScript - Continuation from https://github.com/serratus/quaggajs](https://github.com/ericblade/quagga2)
 - [@ericblade/quagga2 - npm](https://www.npmjs.com/package/@ericblade/quagga2)
+
+## webcodecamjs
+
+- [andrastoth/webcodecamjs: Demo page](https://github.com/andrastoth/webcodecamjs)
+- [webcodecamjs - npm](https://www.npmjs.com/package/webcodecamjs)
+- [webcodecamjs CDN by jsDelivr - A CDN for npm and GitHub](https://www.jsdelivr.com/package/npm/webcodecamjs)
