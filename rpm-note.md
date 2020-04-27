@@ -1,8 +1,8 @@
 # RPMメモ
 
-- [RPMメモ](#rpmメモ)
-- [rpmbuild関連](#rpmbuild関連)
-- [`rpm -qa`の出力をCSVっぽく](#rpm--qaの出力をcsvっぽく)
+- [RPMメモ](#rpm%e3%83%a1%e3%83%a2)
+- [rpmbuild関連](#rpmbuild%e9%96%a2%e9%80%a3)
+- [`rpm -qa`の出力をCSVっぽく](#rpm--qa%e3%81%ae%e5%87%ba%e5%8a%9b%e3%82%92csv%e3%81%a3%e3%81%bd%e3%81%8f)
 
 # rpmbuild関連
 
@@ -58,11 +58,8 @@ rpm -q --queryformat "[%-80{FILENAMES} %10{FILESIZES}\n]" gcc
 
 よくある例: Red Hatでないやつを探せ、みたいなとき
 ```sh
-rpm -qa --queryformat '%{NAME},%{VERSION},%{RELEASE},%{ARCH},"%{VENDER}",%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n' | sort -i -t, -k1,4 | grep -vi 'Red Hat'
+rpm -qa --queryformat '%{NAME},%{VERSION},%{RELEASE},%{ARCH},"%{VENDOR}",%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n' | sort -i -t, -k1,4 | grep -vi 'Red Hat'
 ```
-
-
-
 
 
 

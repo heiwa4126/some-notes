@@ -45,6 +45,7 @@ Red Hat系メモ
 - [reposync](#reposync)
 - [RHEL7で後からX](#rhel7%e3%81%a7%e5%be%8c%e3%81%8b%e3%82%89x)
 - [RHEL7でxrdp](#rhel7%e3%81%a7xrdp)
+- [subscription manager以前](#subscription-manager%e4%bb%a5%e5%89%8d)
 
 
 # インストール済みパッケージ一覧
@@ -944,3 +945,13 @@ systemctl stop xrdp
 systemctl start xrdp
 systemctl enable xrdp
 ```
+
+# subscription manager以前
+
+`RHN classic`と呼ぶ。
+ちゃんと登録されていれば`/etc/sysconfig/rhn/systemid`にIDが入っているはず。
+
+[システムのアップデートに RHN Classic と RHSM のどちらを使用しているかを確認する - Red Hat Customer Portal](https://access.redhat.com/ja/solutions/1350833)
+
+
+`/usr/bin/rhn_register`
