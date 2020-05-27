@@ -73,6 +73,8 @@ Service
     AllowRemoteAccess = true
 ```
 
+
+
 ### クライアント側
 
 ```
@@ -83,6 +85,14 @@ winrm set winrm/config/client @{AllowUnencrypted="true"}
 @rem 信頼できるホストを指定
 winrm set winrm/config/client @{TrustedHosts="host1, host2, host3"}
 ```
+
+WinRMでは，
+**接続元のホスト**から見て，
+**接続先のホストが**
+「信頼できるホストである」ことが必要です。
+
+
+
 
 設定の確認
 ```
@@ -102,6 +112,62 @@ Client
         HTTPS = 5986
     TrustedHosts = 172.31.1.888, 172.31.1.999  <- ここ
 ```
+
+# ansibleのConfigureRemotingForAnsible.ps1
+
+[https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1](https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1)
+を使って設定したとき(+trusted host)の出力。
+
+参考:
+[Setting up a Windows Host — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html)
+
+某ホストでの結果
+```
+C:\Users\Administrator>winrm get winrm/config/client
+Client
+    NetworkDelayms = 5000
+    URLPrefix = wsman
+    AllowUnencrypted = false
+    Auth
+        Basic = true
+        Digest = true
+        Kerberos = true
+        Negotiate = true
+        Certificate = true
+        CredSSP = false
+    DefaultPorts
+        HTTP = 5985
+        HTTPS = 5986
+    TrustedHosts = 172.31.1.134, 172.31.1.167
+
+C:\Users\Administrator>winrm get winrm/config/service
+Service
+    RootSDDL = O:NSG:BAD:P(A;;GA;;;BA)(A;;GR;;;IU)S:P(AU;FA;GA;;;WD)(AU;SA;GXGW;;;WD)
+    MaxConcurrentOperations = 4294967295
+    MaxConcurrentOperationsPerUser = 1500
+    EnumerationTimeoutms = 240000
+    MaxConnections = 300
+    MaxPacketRetrievalTimeSeconds = 120
+    AllowUnencrypted = false
+    Auth
+        Basic = true
+        Kerberos = true
+        Negotiate = true
+        Certificate = false
+        CredSSP = true
+        CbtHardeningLevel = Relaxed
+    DefaultPorts
+        HTTP = 5985
+        HTTPS = 5986
+    IPv4Filter = *
+    IPv6Filter = *
+    EnableCompatibilityHttpListener = false
+    EnableCompatibilityHttpsListener = false
+    CertificateThumbprint
+    AllowRemoteAccess = true
+```
+
+
 
 ### テスト
 
