@@ -23,3 +23,13 @@ CATALINA_OPTS="$CATALINA_OPTS -Djava.net.preferIPv4Stack=true"
 
 参考:
 [UbuntuにおけるTomcatの覚え書き - Qiita](https://qiita.com/hidekuro/items/119317f826253326e490)
+
+
+# JSPでphpinfo()っぽいもの
+
+動作確認とかしたい時に...
+
+[cfmaniac/JSP-Info: JSP Info is similiar to phpInfo, perlInfo or my tag CFInfo](https://github.com/cfmaniac/JSP-Info)
+
+`curl https://raw.githubusercontent.com/cfmaniac/JSP-Info/master/info.jsp -O`
+で。
