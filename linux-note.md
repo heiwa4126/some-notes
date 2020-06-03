@@ -37,3 +37,19 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   GPU: Vendor 1234 Device 1111
 sudo apt install neofetch
 ```
 
+# shfmt - shellスクリプトのフォーマッター
+
+- [mvdan/sh: A shell parser, formatter, and interpreter (sh/bash/mksh), including shfmt](https://github.com/mvdan/sh#shfmt)
+- [シェルスクリプトのコードを整形してくれるツール `shfmt` | ゲンゾウ用ポストイット](https://genzouw.com/entry/2019/02/15/085003/874/)
+
+Golangなのでインストールかんたん。
+
+```
+go get -u github.com/mvdan/sh/cmd/shfmt
+```
+
+オプションも他のフォーマッターとよく似てる。とりあえず
+```
+shfmt -l -w *.sh
+```
+でカレントのshを全部再フォーマット。
