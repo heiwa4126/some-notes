@@ -6,6 +6,8 @@
 - [-l option](#-l-option)
 - [systemd-tempfiles](#systemd-tempfiles)
 - [systemd-tymesyncd](#systemd-tymesyncd)
+- [ユニットファイルの差分編集](#ユニットファイルの差分編集)
+- [ブート時最後に実行](#ブート時最後に実行)
 
 # systemctl list-dependencies
 
@@ -184,3 +186,44 @@ systemctl enable systemd-timesyncd
 
 RHEL7, CentOS7, Amazon Linuxではsystemdパッケージに`systemd-timesyncd`が入ってない。
 systemdのバージョンが古いらしい。
+
+# ユニットファイルの差分編集
+
+ユニットのパラメータの一部変更ができる。
+
+[systemdで既存のunitを編集する2つの方法 - Qiita](https://qiita.com/nvsofts/items/529e422bb8a326401c39)
+
+例)
+```
+systemctl edit nginx.service
+```
+こうすると
+`/etc/systemd/system/nginx.service.d`
+の下に差分の.confファイルができ、
+nginx.serviceの値を一部置き換えてくれる。
+
+`systemctl daemon-reload`が不要
+
+
+# ブート時最後に実行
+
+```sh
+sudo systemctl edit --force --full last.service
+```
+
+中身はこんな感じ。
+```
+[Unit]
+Description=test
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/logger "test!"
+
+[Install]
+WantedBy=multi-user.target
+```
+`systemctl enable last`してrebootするとsyslogに"test!"が最後に出る。
+
+
+`systemctl list-dependencies`ではわからない。
