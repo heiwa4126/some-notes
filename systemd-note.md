@@ -8,6 +8,8 @@
 - [systemd-tymesyncd](#systemd-tymesyncd)
 - [ユニットファイルの差分編集](#ユニットファイルの差分編集)
 - [ブート時最後に実行](#ブート時最後に実行)
+- [ブート時最初に実行](#ブート時最初に実行)
+- [シャットダウン時に実行](#シャットダウン時に実行)
 
 # systemctl list-dependencies
 
@@ -208,7 +210,7 @@ nginx.serviceの値を一部置き換えてくれる。
 # ブート時最後に実行
 
 ```sh
-sudo systemctl edit --force --full last.service
+sudo systemctl edit --force --full last-on-boot.service
 ```
 
 中身はこんな感じ。
@@ -223,7 +225,53 @@ ExecStart=/usr/bin/logger "test!"
 [Install]
 WantedBy=multi-user.target
 ```
-`systemctl enable last`してrebootするとsyslogに"test!"が最後に出る。
+`systemctl enable last-on-boot`してrebootするとsyslogに"test!"が最後に出る。
+statusはdeadになる。
 
+あとはExecStart=を弄ってください。
 
 `systemctl list-dependencies`ではわからない。
+
+# ブート時最初に実行
+
+「最初の方に」しか無理みたい。
+
+```
+[Unit]
+Description=test
+Before=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/logger "O.K. Go!"
+
+[Install]
+WantedBy=default.target
+```
+
+
+# シャットダウン時に実行
+
+
+おおむねこんな感じ。
+```
+[Unit]
+Description=test!
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStop=/usr/bin/logger "Good-bye!"
+
+[Install]
+WantedBy=multi-user.target
+```
+
+**activeになっていると、シャットダウン時に実行される。**
+なので書いたら、`systemctl enable xxx.service --now`とかすること。
+
+また上の例だとsyslogが先に死んでると結果が/va/log以下に残らないので
+`journalctl -u xxx.service`とかで確認。
+
+
+「シャットダウン時に**最初に**実行」は考え中
