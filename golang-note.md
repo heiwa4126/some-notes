@@ -1,20 +1,18 @@
 # GoLangメモ
 
-- [GoLangメモ](#golang%e3%83%a1%e3%83%a2)
-- [LinuxでWindowsのバイナリを作る](#linux%e3%81%a7windows%e3%81%ae%e3%83%90%e3%82%a4%e3%83%8a%e3%83%aa%e3%82%92%e4%bd%9c%e3%82%8b)
+- [GoLangメモ](#golangメモ)
+- [LinuxでWindowsのバイナリを作る](#linuxでwindowsのバイナリを作る)
 - [strings.Builder](#stringsbuilder)
 - [delve](#delve)
-  - [インストール](#%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
-  - [実行例](#%e5%ae%9f%e8%a1%8c%e4%be%8b)
-- [GDBでデバッグ](#gdb%e3%81%a7%e3%83%87%e3%83%90%e3%83%83%e3%82%b0)
-- [goモジュール](#go%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab)
+  - [インストール](#インストール)
+  - [実行例](#実行例)
+- [GDBでデバッグ](#gdbでデバッグ)
+- [goモジュール](#goモジュール)
 - [go run](#go-run)
-- [snapdでgo](#snapd%e3%81%a7go)
-- [RHEL/CentOS 7でgolang](#rhelcentos-7%e3%81%a7golang)
-- [定番ツールをまとめて](#%e5%ae%9a%e7%95%aa%e3%83%84%e3%83%bc%e3%83%ab%e3%82%92%e3%81%be%e3%81%a8%e3%82%81%e3%81%a6)
-- [Goで書いたコードをsystemdでデーモンにする](#go%e3%81%a7%e6%9b%b8%e3%81%84%e3%81%9f%e3%82%b3%e3%83%bc%e3%83%89%e3%82%92systemd%e3%81%a7%e3%83%87%e3%83%bc%e3%83%a2%e3%83%b3%e3%81%ab%e3%81%99%e3%82%8b)
-- [golangで書いたコードをsystemdでdaemonに](#golang%e3%81%a7%e6%9b%b8%e3%81%84%e3%81%9f%e3%82%b3%e3%83%bc%e3%83%89%e3%82%92systemd%e3%81%a7daemon%e3%81%ab)
-- [構造体の比較](#%e6%a7%8b%e9%80%a0%e4%bd%93%e3%81%ae%e6%af%94%e8%bc%83)
+- [snapdでgo](#snapdでgo)
+- [Goで書いたコードをsystemdでデーモンにする](#goで書いたコードをsystemdでデーモンにする)
+- [golangで書いたコードをsystemdでdaemonに](#golangで書いたコードをsystemdでdaemonに)
+- [構造体の比較](#構造体の比較)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -99,6 +97,14 @@ runtime.main.func2
 ...
 ```
 
+mainのmain()は`b main.main`ですむのに、
+モジュールについてはフルパスでないといけないのはめんどくさい。
+go.modを見るような設定があるはず。
+
+参考:
+[Golangのデバッガdelveの使い方 - Qiita](https://qiita.com/minamijoyo/items/4da68467c1c5d94c8cd7)
+
+
 # GDBでデバッグ
 
 * [Debugging Go Code with GDB - The Go Programming Language](https://golang.org/doc/gdb)
@@ -141,6 +147,24 @@ Ubuntuだとsnapd使うのが便利。
 sudo snap install go --channel=1.13/stable --classic
 ```
 
+```
+error: cannot install "go": classic confinement requires snaps under /snap or symlink from /snap to
+       /var/lib/snapd/snap
+```
+と言われたら
+``` sh
+sudo ln -s /var/lib/snapd/snap /snap
+```
+してもういちど。
+
+```
+Warning: /var/lib/snapd/snap/bin was not found in your $PATH. If you've not restarted your session
+         since you installed snapd, try doing that. Please see https://forum.snapcraft.io/t/9469
+         for more details.
+```
+があったらパスを通す。
+
+
 GOPATHの例(~/.profile)
 
 ``` bash
@@ -152,9 +176,13 @@ alias gcd='cd $MYGOPATH/src/github.com/heiwa4126'
 ```
 
 [motemen/ghq](https://github.com/motemen/ghq) 使うなら
-``` bash
 git config --global ghq.root "$MYGOPATH/src"
 ```
+
+GOPATHがない場合は"GOPATH="$HOME/go"になるみたい。
+"$HOME/go/bin"をPATHに追加
+
+
 
 emacs使うなら以下参照:
 
@@ -194,6 +222,21 @@ go get -u github.com/derekparker/delve/cmd/dlv
 ```
 
 [golang/tools: [mirror] Go Tools](https://github.com/golang/tools)
+
+
+最近(2020頭)
+```bash
+GO111MODULE=on go get -u golang.org/x/tools/gopls@latest
+GO111MODULE=on go get -u github.com/sqs/goreturns
+GO111MODULE=on go get -u github.com/rogpeppe/godef
+go get -u github.com/go-delve/delve/cmd/dlv
+GO111MODULE=on go get -u golang.org/x/lint/golint
+GO111MODULE=on go get -u github.com/lukehoban/go-outline
+GO111MODULE=on go get -u github.com/motemen/gore/cmd/gore
+
+GO111MODULE=on go get -u github.com/nsf/gocode
+```
+
 
 
 # Goで書いたコードをsystemdでデーモンにする
