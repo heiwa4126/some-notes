@@ -47,6 +47,7 @@ Red Hat系メモ
 - [RHEL7でxrdp](#rhel7%e3%81%a7xrdp)
 - [subscription manager以前](#subscription-manager%e4%bb%a5%e5%89%8d)
 - [NetworkManager-wait-online.service](#networkmanager-wait-onlineservice)
+- [No dialect specified on mount.](#no-dialect-specified-on-mount)
 
 
 # インストール済みパッケージ一覧
@@ -976,3 +977,14 @@ Kernel更新したら治った、という話。
 [network manager - What does NetworkManager-wait-online.service do? - Ask Ubuntu](https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do)
 
 そんなもん無効にしろ、という話。
+
+# No dialect specified on mount.
+
+`No dialect specified on mount. Default has changed to a more secure ... SMB3), from CIFS (SMB1). To use the less secure SMB1 dialect to access old servers which do not support SMB3 (or SMB2.1) specify vers=1.0 on mount.`
+
+[CentOS 7のCIFSで - 身の回り4畳半近辺の日記](https://b3g.hatenablog.com/entry/20181127/p1)
+
+例)
+```
+mount -t cifs -o vers=2.1,username=user,password=pass,domain=dom //srv/share /mnt
+```
