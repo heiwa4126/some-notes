@@ -46,6 +46,7 @@ Red Hat系メモ
 - [RHEL7で後からX](#rhel7%e3%81%a7%e5%be%8c%e3%81%8b%e3%82%89x)
 - [RHEL7でxrdp](#rhel7%e3%81%a7xrdp)
 - [subscription manager以前](#subscription-manager%e4%bb%a5%e5%89%8d)
+- [NetworkManager-wait-online.service](#networkmanager-wait-onlineservice)
 
 
 # インストール済みパッケージ一覧
@@ -955,3 +956,23 @@ systemctl enable xrdp
 
 
 `/usr/bin/rhn_register`
+
+
+# NetworkManager-wait-online.service
+
+なぜかこのサービスがfailedになる。
+
+[A systemd service sometimes failed to start with network connectivity problem on system boot in Red Hat Enterprise Linux 7 - Red Hat Customer Portal](https://access.redhat.com/solutions/3450402)
+
+```
+ExecStart=/usr/bin/nm-online -s -q --timeout=60        # Modify here
+```
+にしたらなおった。という話(未確認)
+
+[Why 'NetworkManager-wait-online.service' fails to start with error 'code=exited, status=2/INVALIDARGUMENT' ? - Red Hat Customer Portal](https://access.redhat.com/solutions/2851711)
+
+Kernel更新したら治った、という話。
+
+[network manager - What does NetworkManager-wait-online.service do? - Ask Ubuntu](https://askubuntu.com/questions/1018576/what-does-networkmanager-wait-online-service-do)
+
+そんなもん無効にしろ、という話。
