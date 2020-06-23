@@ -67,3 +67,13 @@ fn main() {
 ```
 実行すると`世界の皆さ`になります。
 [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=9904cd1381674fed2f5350752c924315)
+
+
+# type(var)みたいの
+
+[How do I print the type of a variable in Rust? - Stack Overflow](https://stackoverflow.com/questions/21747136/how-do-i-print-the-type-of-a-variable-in-rust)
+
+↑要は、
+存在しないメソッドつけてコンパイルしてみろ、
+という話。
+
