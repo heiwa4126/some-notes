@@ -77,3 +77,14 @@ fn main() {
 存在しないメソッドつけてコンパイルしてみろ、
 という話。
 
+# クレート & カーゴ
+
+> 英語でcrate「木枠や物を運ぶかご」という意味です
+
+[クレートとは？バリケンネルと何が違うの？ | 犬のQ&A集 - dogoo.com](https://www.dogoo.com/toukou/dogqa/faq_log/5067051.htm)
+
+
+>  カーゴ【cargo】 の解説
+>    １ 船・飛行機・列車などの積み荷
+
+[cargo（カーゴ）の意味 - goo国語辞書](https://dictionary.goo.ne.jp/word/%E3%82%AB%E3%83%BC%E3%82%B4/)
