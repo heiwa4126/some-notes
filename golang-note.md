@@ -17,6 +17,7 @@
   - [キャスト](#キャスト)
   - [永遠ループ](#永遠ループ)
   - [while](#while)
+- [interface](#interface)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -415,3 +416,163 @@ for coundown > 0 {
 }
 ```
 引用元: [Go言語 - forループによる繰り返し処理 - 覚えたら書く](https://blog.y-yuki.net/entry/2017/05/06/000000)
+
+
+# interface
+
+例えば
+[io.Writerインタフェース](https://golang.org/pkg/io/#Writer)の定義は
+```go
+type Writer interface {
+    Write(p []byte) (n int, err error)
+}
+```
+なので、
+```go
+func (t T)Write(p []byte) (n int, err error)
+// or
+func (t *T)Write(p []byte) (n int, err error)
+```
+を持つtype Tなら、io.Writeの代わりに渡すことができる。
+
+例えば
+[fmt.Fprintf()](https://golang.org/pkg/fmt/#Fprintf)に。
+
+で、上記のWrite()を持つタイプ(とWrite())は
+- [bytes.Buffer](https://golang.org/pkg/bytes/#Buffer.Write)
+- [bufio.Writer](https://golang.org/pkg/bufio/#Writer.Write) - 最後にFlush()が必要
+
+などがある。
+
+自作するなら
+
+```go
+package main
+
+import (
+  "fmt"
+)
+
+type Hoge struct {
+  label string
+}
+
+func (h Hoge) Write(b []byte) (n int, err error) {
+  fmt.Printf("(%s) len=%d\n", h.label, len(b))
+  return len(b), nil
+}
+
+func main() {
+  h := Hoge{"hoge1"}
+  fmt.Fprintf(h, "Hello, world")
+}
+```
+
+上記だと
+Hoge.Write()がhogeを実体渡ししていて、コピーができるのでよくない。
+
+```go
+package main
+
+import (
+  "fmt"
+)
+
+type Hoge struct {
+  label string
+}
+
+func (h *Hoge) Write(b []byte) (n int, err error) {
+  fmt.Printf("(%s) len=%d\n", h.label, len(b))
+  return len(b), nil
+}
+
+func main() {
+  h := &Hoge{"hoge1"}
+  fmt.Fprintf(h, "Hello, world")
+}
+```
+にする。`fmt.Fprintf()`は何も変更していないのがすごいところ。
+
+
+インタフェース引数は実体でも参照でも受けるが、
+
+```go
+func (t T)Write(p []byte) (n int, err error)
+```
+を実装したなら実体(T)を
+
+```go
+func (t *T)Write(p []byte) (n int, err error)
+```
+を実装したなら参照(&T)を渡さなければならない。
+
+呼ばれる関数は
+[fmt.Fprintf()](https://golang.org/pkg/fmt/#Fprintf)
+にある通り、
+実体でも参照でも
+`fx(i interface, ...)`
+で
+`fx(i *interface, ...)`
+にはならない。
+
+
+例)
+```go
+package main
+
+import (
+  "fmt"
+)
+
+type SS interface {
+  DoAnything()
+}
+
+type S1 struct {
+  cnt int
+  n   int
+}
+
+func (s1 *S1) DoAnything() {
+  s1.cnt++
+  fmt.Printf("(%d)n=%d\n", s1.cnt, s1.n)
+}
+
+type S2 struct {
+  cnt int
+  s   string
+}
+
+func (s2 *S2) DoAnything() {
+  s2.cnt += 100
+  fmt.Printf("(%d)s=%s\n", s2.cnt, s2.s)
+}
+
+type Z1 struct {
+}
+
+func (_ Z1) DoAnything() {
+  fmt.Println("Do nothing")
+}
+
+func test1(ss SS) {
+  ss.DoAnything()
+}
+
+func test2(ss SS) {
+  fmt.Printf("%#v\n", ss)
+}
+
+func main() {
+  s1 := &S1{0, 1}
+  s2 := &S2{0, "Two"}
+  test1(s1)
+  test1(s2)
+  test1(s1)
+  test1(s2)
+
+  z1 := Z1{}
+  test2(z1)
+}
+```
