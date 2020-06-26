@@ -13,6 +13,10 @@
 - [Goで書いたコードをsystemdでデーモンにする](#goで書いたコードをsystemdでデーモンにする)
 - [golangで書いたコードをsystemdでdaemonに](#golangで書いたコードをsystemdでdaemonに)
 - [構造体の比較](#構造体の比較)
+- [よく忘れるGolang](#よく忘れるgolang)
+  - [キャスト](#キャスト)
+  - [永遠ループ](#永遠ループ)
+  - [while](#while)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -369,3 +373,45 @@ b={1 2}
 o==a? : false
 b==a? : true
 ```
+
+# よく忘れるGolang
+
+他の言語とちゃんぽんにやってるとわけがわからなくなることメモ。
+やっぱGoってなんかちょっと変だかららら。
+
+## キャスト
+
+```go
+var x interface{} = 1
+y := x.(int)
+```
+
+キャストできない場合
+```go
+var x interface{} = "string"
+y := x.(int)
+```
+panicする。 [Go Playground](https://play.golang.org/p/eor3uIt5RtK)
+
+"string"が"100"とかでもダメ
+
+
+## 永遠ループ
+
+```go
+for {
+  // ...
+}
+```
+
+## while
+
+while無いです
+
+```go
+for coundown > 0 {
+    fmt.Printf("coundown: %d\n", coundown)
+    coundown--
+}
+```
+引用元: [Go言語 - forループによる繰り返し処理 - 覚えたら書く](https://blog.y-yuki.net/entry/2017/05/06/000000)
