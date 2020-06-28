@@ -14,6 +14,9 @@ cargo rustc --release -- --emit asm -C 'llvm-args=-x86-asm-syntax=intel'
 
 ちょっとしたコードの検証には [Compiler Explorer](https://rust.godbolt.org/) が楽。
 
+Compiler Explorerのコツ：
+- pubつけないと最適化されて消えてなくなる
+
 参照:
 - [Rustのゼロコスト抽象化の効果をアセンブラで確認](https://blog.rust-jp.rs/tatsuya6502/posts/2019-12-zero-cost-abstraction/)
 - [Cannot product disassembly file using ```cargo rustc -- --emit asm``` · Issue #8199 · rust-lang/cargo](https://github.com/rust-lang/cargo/issues/8199)
