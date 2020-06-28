@@ -587,6 +587,20 @@ write openしたファイルのClose()など。
 
 > 返り値のerrorをdeferから上書きできるように名前(err)をつけておく
 
+こんなパターン
+``` go
+  func xxx() (err error) {
+    // ...
+    // fileのWrite Open etc...
+    // ...
+    defer func() {
+      if cerr := f.Close(); err == nil {
+        err = cerr
+      }
+    }()
+  }
+```
+
 [Goでdeferの処理中のエラーを返す書き方を工夫してみた · hnakamur's blog](https://hnakamur.github.io/blog/2015/04/27/write_function_for_go_defer/)
 
 ↑名前付きの*errorを使う例。
@@ -608,3 +622,9 @@ func helloNotes() error {
 }
 ```
 引用元: [Don't defer Close() on writable files – joe shaw](https://www.joeshaw.org/dont-defer-close-on-writable-files/)
+
+
+goroutineに続く
+
+これとか参考:
+- [複数のGoroutineをWaitGroup（ErrGroup）で制御する - Hack Your Design!](https://blog.toshimaru.net/goroutine-with-waitgroup/#goroutine--errgroup-%E3%82%92%E4%BD%BF%E3%81%86)
