@@ -18,6 +18,7 @@
   - [永遠ループ](#永遠ループ)
   - [while](#while)
 - [interface](#interface)
+- [deferの中のエラー](#deferの中のエラー)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -576,3 +577,34 @@ func main() {
   test2(z1)
 }
 ```
+
+# deferの中のエラー
+
+よくあるのに正しく書くのは難しい。
+write openしたファイルのClose()など。
+
+[defer の中で発生した error を処理し忘れる - Go 言語(Golang) はまりどころと解決策 | yunabe.jp](https://www.yunabe.jp/docs/golang_pitfall.html#defer-%E3%81%AE%E4%B8%AD%E3%81%A7%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F-error-%E3%82%92%E5%87%A6%E7%90%86%E3%81%97%E5%BF%98%E3%82%8C%E3%82%8B)
+
+> 返り値のerrorをdeferから上書きできるように名前(err)をつけておく
+
+[Goでdeferの処理中のエラーを返す書き方を工夫してみた · hnakamur's blog](https://hnakamur.github.io/blog/2015/04/27/write_function_for_go_defer/)
+
+↑名前付きの*errorを使う例。
+
+f.Write()の場合は、f.Sync()を使う、という技もあり。
+```go
+func helloNotes() error {
+    f, err := os.Create("/home/joeshaw/notes.txt")
+    if err != nil {
+        return err
+    }
+    defer f.Close()
+
+    if err = io.WriteString(f, "hello world"); err != nil {
+        return err
+    }
+
+    return f.Sync()
+}
+```
+引用元: [Don't defer Close() on writable files – joe shaw](https://www.joeshaw.org/dont-defer-close-on-writable-files/)
