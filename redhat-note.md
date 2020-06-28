@@ -988,3 +988,47 @@ Kernel更新したら治った、という話。
 ```
 mount -t cifs -o vers=2.1,username=user,password=pass,domain=dom //srv/share /mnt
 ```
+
+# RHELでネットワークに苦しんだら
+
+役に立つ**かもしれない**資料
+
+[(PDF)Red Hat Enterprise Linux 7 ネットワークガイド -  RHEL 7 でネットワーク、ネットワークインターフェース、およびネットワークサービスの設定および管理](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/pdf/networking_guide/Red_Hat_Enterprise_Linux-7-Networking_Guide-ja-JP.pdf)
+
+
+# sosreport 
+
+- [Red Hat Enterprise Linux 上での sosreport の役割と取得方法 - Red Hat Customer Portal](https://access.redhat.com/ja/solutions/78443)
+
+インストール
+```sh
+sudo yum install sos -y
+```
+
+実行
+```sh
+sudo sosreport
+```
+かなり長い時間と、巨大なレポートができる。
+
+途中
+```
+Please enter the case id that you are generating this report for []: 
+```
+とか訊かれるので、かっこいい名前を考えておくこと。
+
+例) `Trinity666`
+
+名前を考えるのがめんどくさい場合は`--batch`オプションがあります。
+```
+sudo sosreport --batch
+```
+> ユーザーおよびアカウント情報をインタラクティブに入力しないで済むように、--batch オプションを指定してバッチモードで実行することができます。この場合、ユーザー情報はシステムの RHN 設定ファイルから取得されます。
+
+`--batch`オプションがCentOSだとどうなるかは知らない。
+
+他参考:
+- [Red Hat Enterprise Linux 上での sosreport の役割と取得方法 - Red Hat Customer Portal](https://access.redhat.com/ja/solutions/78443#command)
+- [[Linux] サーバトラブルへの備えと情報採取の手順 - 技術情報・詳細: 技術情報・検索一覧 | NEC](https://www.support.nec.co.jp/View.aspx?id=3140000151)
+
+
