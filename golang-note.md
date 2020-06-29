@@ -19,6 +19,9 @@
   - [while](#while)
 - [interface](#interface)
 - [deferの中のエラー](#deferの中のエラー)
+- [テストのカバレッジ](#テストのカバレッジ)
+- [shadowingによるバグ](#shadowingによるバグ)
+- [golangci-lint](#golangci-lint)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -628,3 +631,114 @@ goroutineに続く
 
 これとか参考:
 - [複数のGoroutineをWaitGroup（ErrGroup）で制御する - Hack Your Design!](https://blog.toshimaru.net/goroutine-with-waitgroup/#goroutine--errgroup-%E3%82%92%E4%BD%BF%E3%81%86)
+
+
+# テストのカバレッジ
+
+```sh
+go test ./... -cover
+```
+
+```
+coverage: 76.7% of statements
+```
+みたいのが表示される。
+
+```sh
+go test ./... -coverprofile=cover.out
+go tool cover -html=cover.out -o cover.html
+```
+で、
+緑がカバーしたところ、赤がしてないところ、みたいな
+カバレッジレポート`cover.html`ができる。 (`-o`を使わないと/tmpにできる)
+
+```sh
+go tool cover -func=cover.out
+```
+で関数単位のレポートなど。
+
+参考:
+- [Goのテスト作成とカバレッジ率＆カバレッジ行表示をしてみる - Qiita](https://qiita.com/silverfox/items/11332bdc5d33838c2c7b)
+- [Go でコードカバレッジを取得する - Qiita](https://qiita.com/kkohtaka/items/965fe08821cda8c9da8a)
+- [The cover story - The Go Blog](https://blog.golang.org/cover)
+
+
+# shadowingによるバグ
+
+`:=` Short Variable Declaration Operator は便利だけど、ブロックの中で使うと、あっさりshadowingによるバグを起こす。
+
+[Big Sky :: Go 言語で変数のシャドウイングを避けたいなら shadow を使おう。](https://mattn.kaoriya.net/software/lang/go/20200227102218.htm)
+にあったサンプル。
+
+`main.go`:
+```go
+package main
+
+import (
+  "fmt"
+)
+
+var condition = true
+
+func main() {
+
+  var hoge *string
+  if condition {
+    hoge, err := do("word") // <- "shadowing" here
+    if err != nil {
+      return
+    }
+    fmt.Printf("checkpoint: %v\n", *hoge)
+  } else {
+    hoge = nil
+  }
+
+  fmt.Printf("result: %v\n", hoge)
+}
+
+func do(v string) (*string, error) {
+  return &v, nil
+}
+```
+
+実行すると、あら不思議
+```
+checkpoint: word
+result: <nil>
+```
+
+検出するには
+```
+go get -u golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
+```
+でshadowコマンドをインストールして
+
+``` sh
+shadow ./...
+# or
+shadow main.go
+# or 
+go vet -vettool=$(which shadow) ./...
+```
+する。
+
+```
+./main.go:15:3: declaration of "hoge" shadows declaration at line 13
+```
+みたいな結果が出るので治す。
+
+
+ほか参考:
+- [goの静的解析ツールをGithub Actionsのv2で動かしてみた - Qiita](https://qiita.com/grandcolline/items/04c168844dfca3a8ede7)
+- [Go言語用のあらゆるLinterを丸っと並列実行する、gometalinterを使いこなそう - Sider Blog](https://blog-ja.sideci.com/entry/2017/07/04/110000)
+- [gometalinter が deprecated になったので golangci-lint に移行しよう - あふん](https://ponde-m.hatenablog.com/entry/2019/03/24/230333)
+- [golangci/golangci-lint: Fast linters Runner for Go](https://github.com/golangci/golangci-lint)
+  
+
+# golangci-lint
+
+使え。
+
+- [Install | golangci-lint](https://golangci-lint.run/usage/install/#local-installation)
+- [Quick Start | golangci-lint](https://golangci-lint.run/usage/quick-start)
+
