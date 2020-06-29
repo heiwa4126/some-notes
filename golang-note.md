@@ -22,6 +22,7 @@
 - [テストのカバレッジ](#テストのカバレッジ)
 - [shadowingによるバグ](#shadowingによるバグ)
 - [golangci-lint](#golangci-lint)
+- [panic()のドキュメント](#panicのドキュメント)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -742,3 +743,12 @@ go vet -vettool=$(which shadow) ./...
 - [Install | golangci-lint](https://golangci-lint.run/usage/install/#local-installation)
 - [Quick Start | golangci-lint](https://golangci-lint.run/usage/quick-start)
 
+
+# panic()のドキュメント
+
+- [builtin - The Go Programming Language](https://golang.org/pkg/builtin/)
+
+ビルドインモジュールのドキュメントにある。
+
+[println()](https://golang.org/pkg/builtin/#println)
+とか知らなかった(fmt.Println()ではなく)
