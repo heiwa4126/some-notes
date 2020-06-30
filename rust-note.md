@@ -2,6 +2,13 @@
 
 Rustって深いよね(皮肉)。
 
+- [Rustメモ](#rustメモ)
+- [std::strにiter()がない](#stdstrにiterがない)
+- [type(var)みたいの](#typevarみたいの)
+- [クレート & カーゴ](#クレート--カーゴ)
+- [Rsutは何で「サビ」なの?](#rsutは何でサビなの)
+- [testでprintln!](#testでprintln)
+
 
 # std::strにiter()がない
 
@@ -88,3 +95,24 @@ fn main() {
 >    １ 船・飛行機・列車などの積み荷
 
 [cargo（カーゴ）の意味 - goo国語辞書](https://dictionary.goo.ne.jp/word/%E3%82%AB%E3%83%BC%E3%82%B4/)
+
+# Rsutは何で「サビ」なの?
+
+[Internet archaeology: the definitive, end-all source for why Rust is named "Rust" : rust](https://www.reddit.com/r/rust/comments/27jvdt/internet_archaeology_the_definitive_endall_source/)
+
+"rust fungi"に由来するそうですが、
+[サビキン目 - Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%93%E3%82%AD%E3%83%B3%E7%9B%AE)
+↑にあるように「Chromeの反対」の方が好きだな。
+
+# testでprintln!
+
+```
+cargo test -- --nocapture
+```
+[関数の出力を表示する - テストを走らせる - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch11-02-running-tests.html#a%E9%96%A2%E6%95%B0%E3%81%AE%E5%87%BA%E5%8A%9B%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B)
+
+golangの
+`go test -v`
+みたいなやつ。
+
+
