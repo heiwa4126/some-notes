@@ -8,6 +8,7 @@ Rustって深いよね(皮肉)。
 - [クレート & カーゴ](#クレート--カーゴ)
 - [Rsutは何で「サビ」なの?](#rsutは何でサビなの)
 - [testでprintln!](#testでprintln)
+- [Rustのエラーハンドリング](#rustのエラーハンドリング)
 
 
 # std::strにiter()がない
@@ -116,3 +117,33 @@ golangの
 みたいなやつ。
 
 
+# Rustのエラーハンドリング
+
+Go言語の
+[builtin - The Go Programming Language](https://golang.org/pkg/builtin/#error)
+```go
+type error interface {
+    Error() string
+}
+```
+文字列返すError()関数だけ実装すればいい、
+とか、`fmr.Errorf()`みたいな、簡単なものとは違うらしい。
+
+例)
+[teip/errors.rs at master · greymd/teip](https://github.com/greymd/teip/blob/master/src/errors.rs)
+
+ある関数の返す`Result<T, E>`のEのenumを作る。Javaのexception列挙するようなノリ。
+
+そのenumに
+[std::fmt::Display - Rust](https://doc.rust-lang.org/std/fmt/trait.Display.html)
+と
+[std::error::Error - Rust](https://doc.rust-lang.org/std/error/trait.Error.html)
+を
+implする。
+
+参照: [Rust のエラーまわりの変遷 - Qiita](https://qiita.com/legokichi/items/d4819f7d464c0d2ce2b8#1-error-%E3%81%A8-debug-%E3%81%A8-display-%E3%83%88%E3%83%AC%E3%82%A4%E3%83%88%E3%82%92%E5%AE%9F%E8%A3%85%E3%81%97%E3%81%AA%E3%81%84%E3%81%A8%E3%81%84%E3%81%91%E3%81%AA%E3%81%84)
+
+難しすぎる。
+
+この例とかを使う。
+[Error Handling - A Gentle Introduction to Rust](https://stevedonovan.github.io/rust-gentle-intro/6-error-handling.html)
