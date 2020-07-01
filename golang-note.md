@@ -387,6 +387,9 @@ b==a? : true
 
 ## キャスト
 
+型アサーション (Type Assertion)。
+interfaceにのみ使える
+
 ```go
 var x interface{} = 1
 y := x.(int)
@@ -401,6 +404,15 @@ panicする。 [Go Playground](https://play.golang.org/p/eor3uIt5RtK)
 
 "string"が"100"とかでもダメ
 
+panicさせたくない場合は
+```go
+y, ok := x.(int)
+```
+[Go Playground](https://play.golang.org/p/OKbUpOBX0Uw)
+
+
+参考:
+[型のキャストと、型アサーションによる型変換 | まくまくHugo/Goノート](https://maku77.github.io/hugo/go/cast.html)
 
 ## 永遠ループ
 
@@ -718,7 +730,7 @@ go get -u golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
 shadow ./...
 # or
 shadow main.go
-# or 
+# or
 go vet -vettool=$(which shadow) ./...
 ```
 する。
@@ -734,7 +746,7 @@ go vet -vettool=$(which shadow) ./...
 - [Go言語用のあらゆるLinterを丸っと並列実行する、gometalinterを使いこなそう - Sider Blog](https://blog-ja.sideci.com/entry/2017/07/04/110000)
 - [gometalinter が deprecated になったので golangci-lint に移行しよう - あふん](https://ponde-m.hatenablog.com/entry/2019/03/24/230333)
 - [golangci/golangci-lint: Fast linters Runner for Go](https://github.com/golangci/golangci-lint)
-  
+
 
 # golangci-lint
 
