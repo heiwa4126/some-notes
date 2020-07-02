@@ -17,6 +17,9 @@
   - [キャスト](#キャスト)
   - [永遠ループ](#永遠ループ)
   - [while](#while)
+  - [type()](#type)
+    - [タイプの表示](#タイプの表示)
+    - [タイプの比較](#タイプの比較)
 - [interface](#interface)
 - [deferの中のエラー](#deferの中のエラー)
 - [テストのカバレッジ](#テストのカバレッジ)
@@ -433,6 +436,35 @@ for coundown > 0 {
 }
 ```
 引用元: [Go言語 - forループによる繰り返し処理 - 覚えたら書く](https://blog.y-yuki.net/entry/2017/05/06/000000)
+
+## type()
+
+### タイプの表示
+
+```go
+fmt.Println(reflect.TypeOf(x))
+// or
+fmt.Printf("%T\n",x)
+```
+
+interfaceなら`Type switches`も - [A Tour of Go](https://tour.golang.org/methods/16)
+
+
+### タイプの比較
+
+`x is int`みたいのが無いようだ。
+
+```go
+reflect.TypeOf(x).String() == "int"
+```
+しか思いつかない。
+
+でもこれだと
+type xがインタフェースyを持ってるかチェック
+みたいのはできないね。
+
+
+
 
 
 # interface
