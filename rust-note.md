@@ -147,3 +147,26 @@ implする。
 
 この例とかを使う。
 [Error Handling - A Gentle Introduction to Rust](https://stevedonovan.github.io/rust-gentle-intro/6-error-handling.html)
+
+この辺読む:
+- [Rustのエラー処理 - Qiita](https://qiita.com/fujitayy/items/cafe661415b6aa33d884) - failureはもはやメンテされてないらしい
+- [std::convert::From - Rust](https://doc.rust-lang.org/std/convert/trait.From.html)
+- [From failure to Fehler](https://boats.gitlab.io/blog/post/failure-to-fehler/) - fehlerはドイツ語でエラー
+- [Rust のエラーまわりの変遷 - Qiita](https://qiita.com/legokichi/items/d4819f7d464c0d2ce2b8)
+- [Rustエラーライブラリのトレンド解説（2020年1月版） - Qiita](https://qiita.com/dalance/items/7e0fa481626c76d59f65)
+  - [Rustのエラーライブラリ利用状況を調べてみた - Qiita](https://qiita.com/dalance/items/4704b16c0718f6dfb7c0) - ↑前編
+
+[Fix the Error trait by withoutboats · Pull Request #2504 · rust-lang/rfcs](https://github.com/rust-lang/rfcs/pull/2504)
+に基づいた、新しい
+`std::error::Error`は
+いつふつーに使える様になるかわからん。
+
+1. 昔の[std::error::Error](https://doc.rust-lang.org/std/error/trait.Error.html)
+1. [failure](https://boats.gitlab.io/failure/)
+1. anyhowとthiserror
+
+の順で学ぶしかないかな。
+
+ほか参考:
+- [Rustでエラーを合成する - Qiita](https://qiita.com/termoshtt/items/8c015d9289613ec640f1)
+- [RFC 2504 "fix_error": Rustの新たなErrorトレイト - Qiita](https://qiita.com/termoshtt/items/830008898f90c647a971)
