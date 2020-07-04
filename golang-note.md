@@ -26,6 +26,7 @@
 - [shadowingによるバグ](#shadowingによるバグ)
 - [golangci-lint](#golangci-lint)
 - [panic()のドキュメント](#panicのドキュメント)
+- [errorでスタックトレースが欲しいとき](#errorでスタックトレースが欲しいとき)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -796,3 +797,24 @@ go vet -vettool=$(which shadow) ./...
 
 [println()](https://golang.org/pkg/builtin/#println)
 とか知らなかった(fmt.Println()ではなく)
+
+
+# errorでスタックトレースが欲しいとき
+
+(2020-07. Go 1.14現在)
+
+- [pkg/errors: Simple error handling primitives](https://github.com/pkg/errors)
+- [Goでエラーのスタックトレースを追える&表示する方法 - Qiita](https://qiita.com/roba4coding/items/769ddb220bc61cd19df1)
+- [pkg/errors から徐々に Go 1.13 errors へ移行する - blog.syfm](https://syfm.hatenablog.com/entry/2019/12/27/193348)
+- [How to get stacktraces from errors in Golang with go-errors/errors | Bugsnag Blog](https://www.bugsnag.com/blog/go-errors)
+- [errors - The Go Programming Language](https://golang.org/pkg/errors/)
+
+お手軽にスタックトレースが欲しいならば、やっぱり
+
+- github.com/pkg/errorsをimportする
+- errors.New()でエラーを生成する
+- 表示したいところで、フォーマット文字列に%+vを使う
+
+引用元: [Goでエラーのスタックトレースを追える&表示する方法 - Qiita](https://qiita.com/roba4coding/items/769ddb220bc61cd19df1)
+
+みたいです。
