@@ -9,6 +9,7 @@ Rustって深いよね(皮肉)。
 - [Rsutは何で「サビ」なの?](#rsutは何でサビなの)
 - [testでprintln!](#testでprintln)
 - [Rustのエラーハンドリング](#rustのエラーハンドリング)
+- [anyhow](#anyhow)
 
 
 # std::strにiter()がない
@@ -153,6 +154,7 @@ implする。
 - [std::convert::From - Rust](https://doc.rust-lang.org/std/convert/trait.From.html)
 - [From failure to Fehler](https://boats.gitlab.io/blog/post/failure-to-fehler/) - fehlerはドイツ語でエラー
 - [Rust のエラーまわりの変遷 - Qiita](https://qiita.com/legokichi/items/d4819f7d464c0d2ce2b8)
+- [Error Handling Survey](https://blog.yoshuawuyts.com/error-handling-survey/)
 - [Rustエラーライブラリのトレンド解説（2020年1月版） - Qiita](https://qiita.com/dalance/items/7e0fa481626c76d59f65)
   - [Rustのエラーライブラリ利用状況を調べてみた - Qiita](https://qiita.com/dalance/items/4704b16c0718f6dfb7c0) - ↑前編
 
@@ -170,3 +172,10 @@ implする。
 ほか参考:
 - [Rustでエラーを合成する - Qiita](https://qiita.com/termoshtt/items/8c015d9289613ec640f1)
 - [RFC 2504 "fix_error": Rustの新たなErrorトレイト - Qiita](https://qiita.com/termoshtt/items/830008898f90c647a971)
+
+# anyhow
+
+- [anyhow - crates.io: Rust Package Registry](https://crates.io/crates/anyhow)
+- [anyhow - Rust](https://docs.rs/anyhow/1.0.31/anyhow/)
+- [Rustの便利クレート - Qiita](https://qiita.com/qryxip/items/7c16ab9ef3072c1d7199#anyhow)
+
