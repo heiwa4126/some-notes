@@ -178,4 +178,4 @@ implする。
 - [anyhow - crates.io: Rust Package Registry](https://crates.io/crates/anyhow)
 - [anyhow - Rust](https://docs.rs/anyhow/1.0.31/anyhow/)
 - [Rustの便利クレート - Qiita](https://qiita.com/qryxip/items/7c16ab9ef3072c1d7199#anyhow)
-
+- [anyhowの簡単な使い方 - Shinjuku.rs #8 dalance - Speaker Deck](https://speakerdeck.com/dalance/shinjuku-dot-rs-number-8-dalance)
