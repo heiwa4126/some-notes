@@ -24,3 +24,55 @@ Compiler Explorerのコツ：
 - [C++ オンラインコンパイラ - C++ の歩き方 | CppMap](https://cppmap.github.io/tools/onlinecompilers/)
 
 
+# rustのインストールメモ
+
+[rust-lang/rustup: The Rust toolchain installer](https://github.com/rust-lang/rustup)
+を使う。
+
+参照: [Other Installation Methods - Rust Forge](https://forge.rust-lang.org/infra/other-installation-methods.html)
+
+Linuxだったら
+```sh
+curl https://sh.rustup.rs -sSf | sh
+```
+
+インストールが終わったら
+```sh
+rustup update
+```
+
+バージョンの確認は
+```sh
+cargo --version
+rustc --version
+rustdoc --version
+rustup --version
+```
+
+# Iteratorサンプル
+
+[Rust playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=7108685ed017337a850c0ad212b13039)
+
+```rust
+struct Countdown {
+    cnt: i32,
+}
+
+impl Iterator for Countdown {
+    type Item = i32;
+    fn next(&mut self) -> Option<i32> {
+        if self.cnt < 0 {
+            None
+        } else {
+            self.cnt -= 1;
+            Some(self.cnt + 1)
+        }
+    }
+}
+
+fn main() {
+    for n in (Countdown { cnt: 9 }) {
+        println!("{}", n);
+    }
+}
+```

@@ -10,6 +10,8 @@ Rustって深いよね(皮肉)。
 - [testでprintln!](#testでprintln)
 - [Rustのエラーハンドリング](#rustのエラーハンドリング)
 - [anyhow](#anyhow)
+- [型を表示](#型を表示)
+- [スライスいろいろ](#スライスいろいろ)
 
 
 # std::strにiter()がない
@@ -179,3 +181,31 @@ implする。
 - [anyhow - Rust](https://docs.rs/anyhow/1.0.31/anyhow/)
 - [Rustの便利クレート - Qiita](https://qiita.com/qryxip/items/7c16ab9ef3072c1d7199#anyhow)
 - [anyhowの簡単な使い方 - Shinjuku.rs #8 dalance - Speaker Deck](https://speakerdeck.com/dalance/shinjuku-dot-rs-number-8-dalance)
+
+
+# 型を表示
+
+1.38から[std::any::type_name - Rust](https://doc.rust-lang.org/std/any/fn.type_name.html)が使える。
+
+コード例
+```rust
+fn typename<T>(_: T) -> &'static str{
+    std::any::type_name::<T>()
+}
+
+fn main() {
+    let x = (1 .. 11).skip(2).collect::<Vec<_>>();
+    println!("{} {:?}", typename(&x), &x);
+}
+```
+[rust playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=95e89835d488491109a897a2cad55d97)
+
+
+# スライスいろいろ
+
+```rust
+// 長さ8の10で初期化されたi32のスライス
+let mut x = [10_i32 ; 8];
+```
+
+
