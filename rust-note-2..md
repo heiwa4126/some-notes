@@ -76,3 +76,8 @@ fn main() {
     }
 }
 ```
+
+`Option<i32>`
+のところは
+`Option<Self::Item>`
+でもいいです。
