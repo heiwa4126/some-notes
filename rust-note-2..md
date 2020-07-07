@@ -81,3 +81,42 @@ fn main() {
 のところは
 `Option<Self::Item>`
 でもいいです。
+
+他のサンプル:
+- [std::iter - Rust](https://doc.rust-lang.org/std/iter/#implementing-iterator)
+
+# Iteratorで中身を書き換える例
+
+```rust
+fn main() {
+    let mut a = [1,2,3];
+    println!("{:?}", &a);
+    
+    for n in a.iter_mut() {
+        *n *= 2
+    }
+    println!("{:?}", &a);
+}
+```
+
+aはスライスでなくてもvecでも同じ。例)
+```rust
+    let mut a = vec![1,2,3];
+```
+
+- [slice method.iter_mut - Rust](https://doc.rust-lang.org/std/primitive.slice.html#method.iter_mut)
+- [Vec method.iter_mut - Rust](https://doc.rust-lang.org/std/vec/struct.Vec.html#method.iter_mut)
+
+# コアライブラリと標準ライブラリ
+
+coreクレート
+と
+stdクレート
+があるのか...
+
+- [core - Rust](https://doc.rust-lang.org/core/)
+- [std - Rust](https://doc.rust-lang.org/std/)
+
+この違いは
+[最小限の#![no_std]プログラム - The Embedonomicon](https://tomoyuki-nakabayashi.github.io/embedonomicon/smallest-no-std.html)
+参照。

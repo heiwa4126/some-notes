@@ -203,9 +203,13 @@ fn main() {
 
 # スライスいろいろ
 
+[slice - Rust](https://doc.rust-lang.org/std/primitive.slice.html)
+
 ```rust
 // 長さ8の10で初期化されたi32のスライス
 let mut x = [10_i32 ; 8];
 ```
+これはsliceじゃなくてarrayだ。
+[array - Rust](https://doc.rust-lang.org/std/primitive.array.html)
 
 
