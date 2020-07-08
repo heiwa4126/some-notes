@@ -54,3 +54,10 @@ go get -u github.com/mvdan/sh/cmd/shfmt
 shfmt -l -w *.sh
 ```
 でカレントのshを全部再フォーマット。
+
+
+# fstabの第4フィールドで
+
+noautoもautoもつけなかったら、どっちになるのか?
+
+`defaults`は`rw, suid, dev, exec, auto, nouser, and async`であるとマニュアルには書いてあるけど。
