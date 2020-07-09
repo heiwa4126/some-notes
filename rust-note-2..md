@@ -120,3 +120,14 @@ stdクレート
 この違いは
 [最小限の#![no_std]プログラム - The Embedonomicon](https://tomoyuki-nakabayashi.github.io/embedonomicon/smallest-no-std.html)
 参照。
+
+
+# write openしたファイルのクローズ
+
+[std::fs::File - Rust](https://doc.rust-lang.org/std/fs/struct.File.html)
+closeメソッドがない。デストラクタ的にcloseされる。
+
+で、これだとwrite openしたファイルのクローズのエラーがハンドリングできないので、
+[std::fs::File - Rust](https://doc.rust-lang.org/std/fs/struct.File.html#method.sync_all)
+sync_all()を使う。sync_data()はメタデータはsyncされない、んだそうだが、どういうタイミングで使うかよくわからない。
+
