@@ -131,3 +131,11 @@ closeメソッドがない。デストラクタ的にcloseされる。
 [std::fs::File - Rust](https://doc.rust-lang.org/std/fs/struct.File.html#method.sync_all)
 sync_all()を使う。sync_data()はメタデータはsyncされない、んだそうだが、どういうタイミングで使うかよくわからない。
 
+
+# derive(Debug)とは
+
+- [継承(Derive) - Rust By Example 日本語版](https://doc.rust-jp.rs/rust-by-example-ja/trait/derive.html)
+- [std::fmt::Debug - Rust](https://doc.rust-lang.org/std/fmt/trait.Debug.html)
+
+を参照
+
