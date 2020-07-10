@@ -101,3 +101,5 @@ yaml2json (`python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), s
 jqならぬyqが便利。
 
 [yq: Command-line YAML/XML processor - jq wrapper for YAML and XML documents — yq documentation](https://kislyuk.github.io/yq/)
+
+jqのwrapperとして実装されているのでjqが必要。
