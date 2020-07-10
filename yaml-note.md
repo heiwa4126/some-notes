@@ -1,9 +1,10 @@
 YAMLメモ
 
-- [リンク](#%E3%83%AA%E3%83%B3%E3%82%AF)
-- [フロースタイル / ブロックスタイル](#%E3%83%95%E3%83%AD%E3%83%BC%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB--%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB)
-- [literal style (“|”) / folded style (“>”)](#literal-style---folded-style)
-- [エスケープ](#%E3%82%A8%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%97)
+- [リンク](#リンク)
+- [フロースタイル / ブロックスタイル](#フロースタイル--ブロックスタイル)
+- [literal style (“|”) / folded style (“>”)](#literal-style---folded-style-)
+- [エスケープ](#エスケープ)
+- [yq](#yq)
 
 # リンク
 
@@ -94,3 +95,9 @@ yaml2json (`python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), s
 * [Ansible 2.6 | Using Ansible and Windows - CODE Q&A Solved](https://code.i-harness.com/en/docs/ansible~2.6/user_guide/windows_usage)
 
 > 二重引用符"を使用する場合、バックスラッシュはエスケープ文字とみなされ、別のバックスラッシュでエスケープする必要があります。 
+
+# yq
+
+jqならぬyqが便利。
+
+[yq: Command-line YAML/XML processor - jq wrapper for YAML and XML documents — yq documentation](https://kislyuk.github.io/yq/)
