@@ -1032,3 +1032,13 @@ sudo sosreport --batch
 - [[Linux] サーバトラブルへの備えと情報採取の手順 - 技術情報・詳細: 技術情報・検索一覧 | NEC](https://www.support.nec.co.jp/View.aspx?id=3140000151)
 
 
+# Red Hat 7のapache(httpd)でモジュールを無効にする時
+
+`/etc/httpd/conf.modules.d`の下の、例えばproxyのやつなんかを
+`/etc/httpd/conf.modules.d/unused`に移動していたんだけど、
+これだとhttpdパッケージが更新されたときに復活してしまう。
+
+`/etc/httpd/conf.modules.d/unused`にバックアップして、
+元の場所にサイズ0の同じファイルを置く、
+あるいは`chmod -r`してまう
+がいいと思う。
