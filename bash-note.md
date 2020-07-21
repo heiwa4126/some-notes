@@ -291,9 +291,16 @@ xfsなら
 ```sh
 sudo xfs_repair -d /dev/sda1
 ```
-でいいらしい(未確認)。manには「直ちにrebootする」と書いてある。
+でいいらしい(未確認)。manには「直ちにrebootする」と書いてある。fsck.xfsはダミーのコマンドで、実行しても何も起きない。
+[RHEL 8のこの記事が参考になる](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/managing_file_systems/checking-an-xfs-file-system-with-xfs-repair_checking-and-repairing-a-file-system)。
 
 
+
+参考:
+- [tune2fs(8) - Linux man page](https://linux.die.net/man/8/tune2fs)
+- [xfs_repair(8): repair XFS filesystem - Linux man page](https://linux.die.net/man/8/xfs_repair)
+- [13.4. xfs_repair で XFS ファイルシステムの確認 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/managing_file_systems/checking-an-xfs-file-system-with-xfs-repair_checking-and-repairing-a-file-system)
+- [13.8. e2fsck で ext2、ext3、または ext4 ファイルシステムの修復 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/managing_file_systems/repairing-an-ext2-ext3-or-ext4-file-system-with-e2fsck_checking-and-repairing-a-file-system)
 
 # 同じパスワードでも/etc/shadowで同じ値にならない話
 
