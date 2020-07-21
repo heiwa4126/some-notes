@@ -1,10 +1,9 @@
 .profileや.bash_profileで毎回混乱するので、
 きちんと理解する。
 
-- [参考](#参考)
+- [参考リンク](#参考リンク)
 - [.profile, .bash_profileの関係](#profile-bash_profileの関係)
 - [exit code](#exit-code)
-  - [参考](#参考-1)
 - [特定のフォルダの下にあるスクリプトをすべて実行する](#特定のフォルダの下にあるスクリプトをすべて実行する)
 - [ファイルから引数を読み込んで処理](#ファイルから引数を読み込んで処理)
 - [psの出力を長くする](#psの出力を長くする)
@@ -14,10 +13,13 @@
 - [mountでディスクを列挙するのをやめる](#mountでディスクを列挙するのをやめる)
 - [sudo -e](#sudo--e)
 - [hex dump](#hex-dump)
-- [/のfsck](#のfsck)
+- [/rootのfsck](#rootのfsck)
+  - [systemdでない場合](#systemdでない場合)
+  - [systemdの場合](#systemdの場合)
+- [同じパスワードでも/etc/shadowで同じ値にならない話](#同じパスワードでもetcshadowで同じ値にならない話)
 
 
-# 参考
+# 参考リンク
 
 - man 1 bash
 - [Man page of BASH (日本語: JM Project)](https://linuxjm.osdn.jp/html/GNU_bash/man1/bash.1.html)
@@ -131,11 +133,8 @@ shが予約している領域があるよ、という話。
 
 ただしWindowsのosモジュールはos.EX_xxxが無い(POSIXじゃないから)。
 
-## 参考
-
+参考: 
 - [Linux: .bashrcと.bash_profileの違いを今度こそ理解する](https://techracho.bpsinc.jp/hachi8833/2019_06_06/66396)
-
-
 
 
 # 特定のフォルダの下にあるスクリプトをすべて実行する
@@ -254,7 +253,9 @@ xxd
 - [man xxd (1): 16 進ダンプを作成したり、元に戻したり。](http://ja.manpages.org/xxd)
 
 
-# /のfsck
+# /rootのfsck 
+
+## systemdでない場合
 
 まず
 ```
@@ -266,7 +267,7 @@ fsck -n /
 ```
 shutdown -F -r now
 ```
-で、再起動時にfsckを実行させる。
+で、再起動時にfsckを実行させる。これは`touch /forcefsck`と同じ。
 
 まだ問題があるようなら、CD bootなどで。
 
@@ -274,6 +275,24 @@ shutdown -F -r now
 - [Man page of SHUTDOWN](https://linuxjm.osdn.jp/html/SysVinit/man8/shutdown.8.html)
 
 `/forcefsck`は自動的に削除される。
+
+
+## systemdの場合
+
+ext2,3,4ならtune2fsの`-c`オプションが使える。
+
+例:
+```sh
+sudo tune2fs -c1 /dev/sda1
+```
+でreboot。
+
+xfsなら
+```sh
+sudo xfs_repair -d /dev/sda1
+```
+でいいらしい(未確認)。manには「直ちにrebootする」と書いてある。
+
 
 
 # 同じパスワードでも/etc/shadowで同じ値にならない話
