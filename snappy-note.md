@@ -73,8 +73,11 @@ systemctl enable --now snapd
 ln -s /var/lib/snapd/snap /snap
 ```
 PATHは`/etc/profile.d/snapd.sh`で入るので、
-一旦ログアウトして追加されるので、ログアウトしてログインするのが楽。
+一旦ログアウトしてログインするのが楽。
 
 [ngompa/snapcore-el7 Copr](https://copr.fedorainfracloud.org/coprs/ngompa/snapcore-el7/)
 
 RHEL7でemacs26が使えるのが便利。
+```sh
+sudo snap install emacs --classic
+```

@@ -7,22 +7,22 @@ EPELとIUSの設定をググるのに若干時間がかかったので
 # install
 
 公式:
-[Getting Started - IUS](https://ius.io/GettingStarted/)
+[IUS - Setup](https://ius.io/setup)
 
 RHEL6
 
 ``` bash
 sudo yum install -y \
- https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm \
- https://rhel6.iuscommunity.org/ius-release.rpm
+ https://repo.ius.io/ius-release-el6.rpm \
+ https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
 ```
 
 RHEL7
 
 ``` bash
 sudo yum install -y \
- https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
- https://rhel7.iuscommunity.org/ius-release.rpm
+ https://repo.ius.io/ius-release-el7.rpm \
+ https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 ```
 
 よく使うものセット

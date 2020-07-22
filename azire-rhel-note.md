@@ -51,3 +51,34 @@ sdb1          ext4              1167997e-38d3-4f0c-a3b8-b6c1d49b9394   /mnt
   Allocated PE          6400
   PV UUID               zx0Lio-2YsN-ukmz-BvAY-LCKb-kRU0-ReRBzh
 ```
+
+# chronyでPTPクロックソース
+
+いつのまにか
+PTP (Precision Time Protocol) クロック ソース
+が使えるようになってた。
+
+- [Azure での Linux VM の時刻同期 - Azure Linux Virtual Machines | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync#configuration-options)
+- [18.6. ハードウェアのタイムスタンプを使用した Chrony Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-hw_timestamping)
+
+```
+$ lsmod | grep hv_utils
+hv_utils               25808  1
+ptp                    23551  1 hv_utils
+hv_vmbus               96714  7 hv_balloon,hyperv_keyboard,hv_netvsc,hid_hyperv,hv_utils,hyperv_fb,hv_storvsc
+
+$ ls /sys/class/ptp
+ptp0
+
+$ cat /sys/class/ptp/ptp0/clock_name
+hyperv
+```
+
+設定後:
+```
+# chronyc sources
+210 Number of sources = 1
+MS Name/IP address         Stratum Poll Reach LastRx Last sample
+===============================================================================
+#* PHC0                          0   3   377     9  -4893ns[-8974ns] +/- 1982ns
+```
