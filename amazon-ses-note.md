@@ -3,6 +3,8 @@
 
 # ドメイン認証
 
+ドメインを認証すると、送信アドレスをいちいち認証しなくても、そのドメインの全アドレスがsenderに使えるようになる。
+
 ドメインを所有していて、
 DNS設定ができるなら、
 TXTレコードとDKIMのCNAMEを追加してみる。
@@ -28,3 +30,11 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx._domainkey.example.com CNAME xxxxxxxxxxxxxxxxxx
 (TTLはあとで伸ばす。AWSのroute53でのサンプルでは1800になってた)
 
 これで最大48時間待てばいいらしい。
+-> そんなに待たなかった。2時間ぐらい?で 
+Verification は `Status: verified`になった。
+
+これで
+
+> You can send email from any email address on this domain.
+
+となった。
