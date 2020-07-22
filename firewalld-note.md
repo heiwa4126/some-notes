@@ -3,6 +3,20 @@ firewalldノート。
 コマンドがめんどくさくてどうしても覚えられない。
 嫌い^3だが仕事で使うからしょうがない。
 
+- [よく使うコマンド](#よく使うコマンド)
+  - [firewalldが動作しているか確認](#firewalldが動作しているか確認)
+  - [firewalldの再起動](#firewalldの再起動)
+  - [firewalldの再読込](#firewalldの再読込)
+- [man page](#man-page)
+- [メモ: Pモードと非Pモード](#メモ-pモードと非pモード)
+- [ゾーン](#ゾーン)
+- [インタフェースにZONEを割り当てる](#インタフェースにzoneを割り当てる)
+- [ゾーン情報の保存先](#ゾーン情報の保存先)
+  - [メモ: "taget: default"](#メモ-taget-default)
+  - [メモ: icmp-block-inversion](#メモ-icmp-block-inversion)
+- [サービス](#サービス)
+- [めんどくさいときは](#めんどくさいときは)
+
 
 # よく使うコマンド
 
