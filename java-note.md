@@ -1,7 +1,11 @@
-Java関係ノート
+# JAVA関係ノート
 
-- [Tomcatの新し目のやつをRHELに入れたときに参考にした記事](#Tomcat%E3%81%AE%E6%96%B0%E3%81%97%E7%9B%AE%E3%81%AE%E3%82%84%E3%81%A4%E3%82%92RHEL%E3%81%AB%E5%85%A5%E3%82%8C%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AB%E5%8F%82%E8%80%83%E3%81%AB%E3%81%97%E3%81%9F%E8%A8%98%E4%BA%8B)
-- [tomcatで不要なwebapps](#tomcat%E3%81%A7%E4%B8%8D%E8%A6%81%E3%81%AAwebapps)
+JAVAめんどくさい。
+
+- [JAVA関係ノート](#java関係ノート)
+- [Tomcatの新し目のやつをRHELに入れたときに参考にした記事](#tomcatの新し目のやつをrhelに入れたときに参考にした記事)
+- [tomcatで不要なwebapps](#tomcatで不要なwebapps)
+- [JAVAのCLASSPATH](#javaのclasspath)
 
 
 # Tomcatの新し目のやつをRHELに入れたときに参考にした記事
@@ -42,3 +46,9 @@ tomcat9では自前のloggerがちゃんとしてるので
 
 参考:
 - [Tomcat の初期設定まとめ - Qiita](https://qiita.com/hidekatsu-izuno/items/ab604b6c764b5b5a86ed)
+
+
+# JAVAのCLASSPATH
+
+実行時に指定するのがキツイ。
+

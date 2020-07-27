@@ -4,6 +4,7 @@
 - [PostgreSQLをインストールする](#postgresqlをインストールする)
 - [PostgreSQLの認証問題](#postgresqlの認証問題)
 - [よくあるテストユーザとテストデータの作り方](#よくあるテストユーザとテストデータの作り方)
+- [JDBC](#jdbc)
 - [WALアーカイブを消す](#walアーカイブを消す)
 
 # PostgreSQLのサンプルデータ
@@ -281,6 +282,12 @@ select * from words where english like '%e%';
 select * from words where japanese like '%ん%' order by japanese;
 ```
 
+# JDBC
+
+[Connecting to the Database](https://jdbc.postgresql.org/documentation/head/connect.html)
+
+UNIX Doamin Socketが使えるのは9.4かららしい。
+[PostgreSQL: support for Unix Domain socket](https://www.postgresql.org/message-id/CALU_HCMmpQejODHSoq82K2o=q97t63vODqKj+hyt2WabOYcm-A@mail.gmail.com)
 
 
 # WALアーカイブを消す
