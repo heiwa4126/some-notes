@@ -1,14 +1,22 @@
 AzureでRHEL7のメモ 
 
-# 最近の状況
+時代は変わる。
 
-ひさしぶりにAzureでRHEL 7.8のVMを作ったら(2020-07)
+- [最近の状況 - GPTでLVMでxfsで](#最近の状況---gptでlvmでxfsで)
+  - [拡張](#拡張)
+- [chronyでPTPクロックソース](#chronyでptpクロックソース)
 
-サイズ: B2S
+
+# 最近の状況 - GPTでLVMでxfsで
+
+ひさしぶりにAzureでRHEL 7.8のVMを作ったら(2020-07、
+サイズ: B2S)
 
 GPTでLVMでxfsで、
-PVのfreeが大きくて、自分で割り振れ、だった。
+PVのfreeが大きくて、
+自分で割り振れ、だった。
 
+こんな感じ
 ```
 # sgdisk /dev/sda -p
 Disk /dev/sda: 134217728 sectors, 64.0 GiB
