@@ -1,6 +1,10 @@
+shellいろいろtipsメモ
+
 - [非0の戻り値で中断させたい](#非0の戻り値で中断させたい)
 - [ファイルの差集合](#ファイルの差集合)
 - ['-'で始まる引数](#-で始まる引数)
+- [特定PIDのプロセスの下をツリー表示](#特定pidのプロセスの下をツリー表示)
+- [dh -h は GiBかGBか](#dh--h-は-gibかgbか)
 
 # 非0の戻り値で中断させたい
 
@@ -104,3 +108,11 @@ fi
 ```
 
 出処: [linux - ps: How can i recursively get all child process for a given pid - Super User](https://superuser.com/questions/363169/ps-how-can-i-recursively-get-all-child-process-for-a-given-pid)
+
+
+# dh -h は GiBかGBか
+
+- `-h`オプションで2進数なのでGiB(2^30 byte)
+- `-H`オプションでSI単位。GB(10^9 byte)
+
+慣用としては`GiB`の意味で`GB`が使われることが多いので、困ったもんだ。

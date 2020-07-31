@@ -389,6 +389,9 @@ Hello worldぐらいは書いてみる。
 sdk install groovy
 groovysh
 ```
+参考:
+- [The Apache Groovy programming language - Install Groovy](https://groovy-lang.org/install.html#SDKMAN)
+- [Available SDKs - SDKMAN! the Software Development Kit Manager](https://sdkman.io/sdks#groovy)
 
 Groovy shellで
 ```
