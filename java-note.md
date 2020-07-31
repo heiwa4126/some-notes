@@ -520,7 +520,10 @@ shellが`kotlinc-jvm`ってタイプしにくいぞ。
   - [Spring Initializr](https://start.spring.io/)
 - [Spring Boot Maven プラグインのドキュメント - 日本語訳](https://spring.pleiades.io/spring-boot/docs/current/maven-plugin/reference/html/#repackage)
 - [Spring Boot Gradle プラグインリファレンスガイド - ドキュメント](https://spring.pleiades.io/spring-boot/docs/current/gradle-plugin/reference/html/)
+- [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/#reacting-to-other-plugins)
 - [Spring Web MVC サーブレットスタック - ドキュメント](https://spring.pleiades.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/web.html#mvc)
+- [Tutorial: Using Thymeleaf (ja)](https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf_ja.html)
+
 
 ```sh
 sdk install springboot
