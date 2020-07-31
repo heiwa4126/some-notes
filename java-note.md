@@ -15,7 +15,8 @@ JAVAめんどくさい。
   - [実行できるjarを作る その2](#実行できるjarを作る-その2)
 - [Gradle参考リンク](#gradle参考リンク)
 - [Groovyチュートリアル](#groovyチュートリアル)
-- [kotlinチュートリアル](#kotlinチュートリアル)
+- [Kotlinチュートリアル](#kotlinチュートリアル)
+- [Spring Boot チュートリアル](#spring-boot-チュートリアル)
 
 
 # Tomcatの新し目のやつをRHELに入れたときに参考にした記事
@@ -68,6 +69,8 @@ tomcat9では自前のloggerがちゃんとしてるので
 Linix serverでX11がなくても使える。
 
 # Ubuntuで開発
+
+TODO: SDKMANも考慮する
 
 サーバなら
 ```sh
@@ -376,6 +379,7 @@ $ ls -sh1 ./build/distributions/demo*.{tar,zip}
 # Gradle参考リンク
 
 - [いい感じのbuild.gradleが書きたい - Qiita](https://qiita.com/kuro46/items/1e42a54c9a52c1f0381c)
+- [GradleでのJavaのビルドとテスト - GitHub Docs](https://docs.github.com/ja/actions/language-and-framework-guides/building-and-testing-java-with-gradle)
 
 
 # Groovyチュートリアル
@@ -451,7 +455,7 @@ gradle init # application, groovyを選ぶ
 もっとチューニングする。
 
 
-# kotlinチュートリアル
+# Kotlinチュートリアル
 
 Hello worldぐらいは書いてみる。
 
@@ -507,3 +511,31 @@ $ javap -v HelloKt.class
 
 groovyよりは面白そうだなあ。
 shellが`kotlinc-jvm`ってタイプしにくいぞ。
+
+# Spring Boot チュートリアル
+
+- [Spring Boot 入門 - 公式ドキュメントの日本語訳](https://spring.pleiades.io/spring-boot/docs/current/reference/html/getting-started.html)
+- [Spring | ガイド - コードサンプル](https://spring.pleiades.io/guides#tutorials)
+  - [チュートリアル | Spring Boot と Kotlin を使用した Web アプリケーションの構築](https://spring.pleiades.io/guides/tutorials/spring-boot-kotlin/)
+  - [Spring Initializr](https://start.spring.io/)
+- [Spring Boot Maven プラグインのドキュメント - 日本語訳](https://spring.pleiades.io/spring-boot/docs/current/maven-plugin/reference/html/#repackage)
+- [Spring Boot Gradle プラグインリファレンスガイド - ドキュメント](https://spring.pleiades.io/spring-boot/docs/current/gradle-plugin/reference/html/)
+- [Spring Web MVC サーブレットスタック - ドキュメント](https://spring.pleiades.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/web.html#mvc)
+
+```sh
+sdk install springboot
+spring --version  # Spring CLI v2.3.2.RELEASE
+```
+
+[Spring Boot 入門 - 公式ドキュメントの日本語訳](https://spring.pleiades.io/spring-boot/docs/current/reference/html/getting-started.html)
+終わった。簡単。
+mvn + JAVAでjarまで出来る。
+
+次は
+[入門 | Spring Boot JAR を WAR へ変換](https://spring.pleiades.io/guides/gs/convert-jar-to-war/)
+...あれ。詰んだ。
+
+Gradleでwarのを試してみる。まずGradleの普通の
+[Getting Started | Building an Application with Spring Boot](https://spring.io/guides/gs/spring-boot/)
+
+なんとか動くwarまで出来たけど、手順がめんどうだなあ。
