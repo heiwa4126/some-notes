@@ -65,7 +65,8 @@ sdb1          ext4              1167997e-38d3-4f0c-a3b8-b6c1d49b9394   /mnt
 
 ## 拡張
 
-sdkman & gradle & spring boot とかやってたら、あっというまに/homeが不足したので拡張してみる。
+sdkman & gradle & spring boot とかやってたら、
+あっというまに/homeが不足したので拡張してみる。
 
 ```
 $ df -h /home
@@ -77,21 +78,21 @@ pvdisplayによると
 4 MiB * 9732/1000 = 38.928 GiB
 40ギビバイト(ギガバイトじゃなくて)ぐらいFreeある。
 
-/homeを2GiB増やす。
+/homeを2GiB増やしてみる。
 ```
 lvextend -L +2G /dev/rootvg/homelv
 lvs /dev/rootvg/homelv  # 3GiBになったのを確認
 xfs_growfs /dev/rootvg/homelv # 最大サイズまで増やす
 ```
 
+結果:
 ```
 $ df -h /home
 Filesystem                 Size  Used Avail Use% Mounted on
 /dev/mapper/rootvg-homelv  3.0G  985M  2.1G  33% /home
 ```
 
-無事3GBになりました。
-
+無事3GBになりました。あとPVのサイズ確認
 ```sh
 sudo pvdisplay | grep Free
 ```
