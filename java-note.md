@@ -506,3 +506,4 @@ $ javap -v HelloKt.class
 ```
 
 groovyよりは面白そうだなあ。
+shellが`kotlinc-jvm`ってタイプしにくいぞ。
