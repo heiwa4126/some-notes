@@ -110,6 +110,7 @@ PTP (Precision Time Protocol) クロック ソース
 - [Azure での Linux VM の時刻同期 - Azure Linux Virtual Machines | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync#configuration-options)
 - [18.6. ハードウェアのタイムスタンプを使用した Chrony Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-hw_timestamping)
 
+確認:
 ```
 $ lsmod | grep hv_utils
 hv_utils               25808  1
@@ -122,6 +123,13 @@ ptp0
 $ cat /sys/class/ptp/ptp0/clock_name
 hyperv
 ```
+
+設定は`/etc/chrony.conf`に
+```
+# hyperv PTP clock source
+refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
+```
+追加して、他のrefclockをコメントアウト。で`systemctl restart chronyd`
 
 設定後:
 ```
