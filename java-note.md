@@ -15,6 +15,7 @@ JAVAめんどくさい。
   - [実行できるjarを作る その2](#実行できるjarを作る-その2)
 - [Gradle参考リンク](#gradle参考リンク)
 - [Groovyチュートリアル](#groovyチュートリアル)
+- [kotlinチュートリアル](#kotlinチュートリアル)
 
 
 # Tomcatの新し目のやつをRHELに入れたときに参考にした記事
@@ -436,4 +437,72 @@ $ javap -v Hello.class
 ```
 
 なんとなく何やってるかは想像がつく。
+
 実行可能なjarを作る方法は想像もつかないのでGradleでやる。
+
+```
+mkdir xxx
+cd !$
+gradle init # application, groovyを選ぶ
+./gradlew installDist
+```
+で`build/install/`の下みるとantとか入ってる。groovy-allの依存が多いらしい。
+
+もっとチューニングする。
+
+
+# kotlinチュートリアル
+
+Hello worldぐらいは書いてみる。
+
+- [Tutorials - Kotlin Programming Language](https://kotlinlang.org/docs/tutorials/)
+  - [Working with the Command Line Compiler - Kotlin Programming Language](https://kotlinlang.org/docs/tutorials/command-line.html)
+  - [Kotlin Koans - Kotlin Programming Language](https://kotlinlang.org/docs/tutorials/koans.html)
+
+```sh
+sdk install kotlin
+```
+
+```
+$ kotlin -version
+Kotlin version 1.3.72-release-468 (JRE 1.8.0_262-b10)
+```
+
+```sh
+mkdir hello-kotlin
+cd !$
+emacs hello.kt
+```
+
+`hello.kt`
+```kotlin
+fun main(args: Array<String>) {
+  println("Hello, World!")
+}
+```
+
+```sh
+kotlinc hello.kt -include-runtime -d hello.jar
+java -jar hello.jar
+```
+
+これはわかりやすい。jarの中身を覗いてみる。
+```
+$ jar -xvf hello.jar META-INF/MANIFEST.MF HelloKt.class
+
+$ cat META-INF/MANIFEST.MF
+Manifest-Version: 1.0
+Created-By: JetBrains Kotlin
+Main-Class: HelloKt
+
+$ javap HelloKt.class
+Compiled from "hello.kt"
+public final class HelloKt {
+  public static final void main(java.lang.String[]);
+}
+
+$ javap -v HelloKt.class
+(略)
+```
+
+groovyよりは面白そうだなあ。
