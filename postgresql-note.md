@@ -284,11 +284,17 @@ select * from words where japanese like '%ん%' order by japanese;
 
 # JDBC
 
-[Connecting to the Database](https://jdbc.postgresql.org/documentation/head/connect.html)
+- [PostgreSQL JDBC Driver](https://jdbc.postgresql.org/)
+- [Connecting to the Database](https://jdbc.postgresql.org/documentation/head/connect.html)
 
-UNIX Doamin Socketが使えるのは9.4かららしい。
-[PostgreSQL: support for Unix Domain socket](https://www.postgresql.org/message-id/CALU_HCMmpQejODHSoq82K2o=q97t63vODqKj+hyt2WabOYcm-A@mail.gmail.com)
+Unix Domain socketでつなぐには
+[Connecting to the Database](https://jdbc.postgresql.org/documentation/head/connect.html)の
+`Unix sockets`セクション参照。
 
+> Simply add ?socketFactory=org.newsclub.net.unix.socketfactory.PostgresqlAFUNIXSocketFactory&socketFactoryArg=[path-to-the-unix-socket] to the connection URL.
+> For many distros the default path is /var/run/postgresql/.s.PGSQL.5432
+
+[junixsocket/PostgresqlAFUNIXSocketFactory.java at master · fiken/junixsocket](https://github.com/fiken/junixsocket/blob/master/junixsocket-common/src/main/java/org/newsclub/net/unix/socketfactory/PostgresqlAFUNIXSocketFactory.java)
 
 # WALアーカイブを消す
 

@@ -14,6 +14,7 @@ JAVAめんどくさい。
   - [実行できるjarを作る その1](#実行できるjarを作る-その1)
   - [実行できるjarを作る その2](#実行できるjarを作る-その2)
 - [Gradle参考リンク](#gradle参考リンク)
+- [Groovyチュートリアル](#groovyチュートリアル)
 
 
 # Tomcatの新し目のやつをRHELに入れたときに参考にした記事
@@ -374,3 +375,62 @@ $ ls -sh1 ./build/distributions/demo*.{tar,zip}
 # Gradle参考リンク
 
 - [いい感じのbuild.gradleが書きたい - Qiita](https://qiita.com/kuro46/items/1e42a54c9a52c1f0381c)
+
+
+# Groovyチュートリアル
+
+Hello worldぐらいは書いてみる。
+
+- [The Apache Groovy programming language - Documentation](https://groovy-lang.org/documentation.html#gettingstarted)
+- [1. index - Apache Groovyチュートリアル](https://koji-k.github.io/groovy-tutorial/)
+
+インストールとGroovy shell起動
+```
+sdk install groovy
+groovysh
+```
+
+Groovy shellで
+```
+println "Hello world!"
+# cntl+dで抜ける
+```
+
+`hello.groovy`を作る
+```grooby
+println "Hello world!"
+```
+で、
+
+```sh
+groovy Hello.groovy
+# or 
+groovy Hello
+```
+または
+```sh
+groovyc Hello.groovy
+groovy Hello
+```
+
+...あんまり楽しくない。
+
+出来たclassの中身見てみる。
+```
+$ javap Hello.class
+Compiled from "Hello.groovy"
+public class Hello extends groovy.lang.Script {
+  public static transient boolean __$stMC;
+  public Hello();
+  public Hello(groovy.lang.Binding);
+  public static void main(java.lang.String...);
+  public java.lang.Object run();
+  protected groovy.lang.MetaClass $getStaticMetaClass();
+}
+
+$ javap -v Hello.class
+(略)
+```
+
+なんとなく何やってるかは想像がつく。
+実行可能なjarを作る方法は想像もつかないのでGradleでやる。
