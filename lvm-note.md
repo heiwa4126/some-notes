@@ -1,8 +1,13 @@
 LVMいろいろノート
 
-- [LVMのrootをfsck](#lvm%e3%81%aeroot%e3%82%92fsck)
-- [LVMのサイズを広げる](#lvm%e3%81%ae%e3%82%b5%e3%82%a4%e3%82%ba%e3%82%92%e5%ba%83%e3%81%92%e3%82%8b)
-- [LVMでsnapshot](#lvm%e3%81%a7snapshot)
+- [LVMのrootをfsck](#lvmのrootをfsck)
+- [LVMのサイズを広げる](#lvmのサイズを広げる)
+- [LVMでsnapshot](#lvmでsnapshot)
+- [LVMのコマンド](#lvmのコマンド)
+- [LVM snapshotの練習](#lvm-snapshotの練習)
+  - [スナップショットから復元](#スナップショットから復元)
+  - [スナップショットを削除](#スナップショットを削除)
+  - [演習のあとしまつ](#演習のあとしまつ)
 
 # LVMのrootをfsck
 
@@ -167,3 +172,172 @@ lvremove VolGroup00/snap1 -y
 リストアの参考:
 - [How to Take 'Snapshot of Logical Volume and Restore' in LVM - Part III](https://www.tecmint.com/take-snapshot-of-logical-volume-and-restore-in-lvm/)
 - [10.3. スナップショットボリュームのマージ Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/proc_merging-snapshot-volumes-snapshot-volumes)
+
+
+# LVMのコマンド
+
+頻繁に使わないし、
+名前が似ててよくわかんなくなるので、
+メモ。
+
+一覧は
+```sh
+rpm -ql lvm2 | grep bin/
+# or
+dpkg -L lvm2 | grep bin/
+```
+
+- `pvs` - PVの一覧
+- `pvdisplay` - PVの詳細
+- `vgs` - VGの一覧
+- `vgdisplay` - VGの詳細
+- `lvs` - LVの一覧
+
+なぜ `lvdisplay {lv名}`が出来ないのか?
+`lvdisplay {lv path}`はできる。
+
+- [scripting - LVM2: Obtaining lv and vg names from path (volume group name and logical volume name) - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/34917/lvm2-obtaining-lv-and-vg-names-from-path-volume-group-name-and-logical-volume)
+- [lvdisplay command shows LV Status as NOT available - Red Hat Customer Portal](https://access.redhat.com/solutions/4497071)
+
+
+# LVM snapshotの練習
+
+参考: [論理ボリュームマネージャーの管理 Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/logical_volume_manager_administration/index)
+
+
+既存のボリュームでやるのは怖いので、新しいLVを作る。
+
+ちょっと空きのあるvgがあったので
+```
+# vgdisplay --short
+  "rootvg" <63.02 GiB [27.00 GiB used / <36.02 GiB free]
+```
+ここに新しいLVを作る。
+
+```sh
+lvcreate -n testlv -L 1G rootvg
+mkfs.xfs /dev/rootvg/testlv
+mkdir -p /testv
+mount -t xfs /dev/rootvg/testlv /testv
+```
+
+確認
+```
+# df -h /testv
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-testlv 1014M   33M  982M   4% /testv
+```
+
+これになにか書く
+```sh
+yes | head -100 > /testv/text1.txt
+wc -l /testv/text1.txt
+```
+
+スナップショットを100MiB作ってみる(同じVGに空きがあることが必須)
+```sh
+lvcreate -s -L 100M -n testlv-snap /dev/rootvg/testlv
+```
+
+確認
+```
+# lvs | grep testlv
+  testlv      rootvg owi-aos---   1.00g
+  testlv-snap rootvg swi-a-s--- 100.00m      testlv 0.01
+# lvdisplay /dev/rootvg/testlv-snap
+(略)
+```
+
+追記して、長さをしらべる
+```
+yes n | head -100 >> /testv/text1.txt
+wc -l /testv/text1.txt
+```
+200になるはず。
+
+dump(xfs_dump)なら、`/dev/rootvg/testlv-snap`をバックアップすればいい。
+ここはread-onlyでマウントしてみる。
+
+``` sh
+mkdir -p /mnt/testlv-snap
+mount -t auto -o ro,nouuid /dev/rootvg/testlv-snap /mnt/testlv-snap
+wc -l /mnt/testlv-snap/text1.txt
+```
+100になるはず。
+
+**注意:**
+XFSだとnouuidオプションをつけないと
+dmesgに `Filesystem has duplicate UUID`
+が出てマウントできませんでした。
+
+## スナップショットから復元
+
+スナップショットを撮った時点に戻す。
+```sh
+cd
+umount /mnt/testlv-snap /testv
+lvconvert --merge /dev/rootvg/testlv-snap
+# ↑けっこう時間かかる
+mount -t xfs /dev/rootvg/testlv /testv
+wc -l /testv/text1.txt
+```
+100になるはず。
+スナップショットボリュームは自動的に削除される。
+
+両方ともアンマウントしないといけないのが辛い。
+
+アンマウントしないでmergeすると
+
+- どちらかのLVがアクティブになり(LVM的に。`lvchange -a`みたいな)
+- かつ両LVがマウントされていない
+
+状態になると、マージ処理が実行されるらしい。
+(要は再起動しろ、ということ)
+
+参考: [4.4.7. スナップショットボリュームのマージ Red Hat Enterprise Linux 6 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/logical_volume_manager_administration/snapshot_merge)
+
+
+アンマウントしないでmergeするテスト
+```
+# lvconvert --merge /dev/rootvg/testlv-snap
+  Delaying merge since origin is open.
+  Merging of snapshot rootvg/testlv-snap will occur on next activation of rootvg/testlv.
+# reboot
+(再起動まち)
+$ sudo -i
+# mount -t xfs /dev/rootvg/testlv /testv
+# wc -l /testv/text1.txt
+100 /testv/text1.txt
+```
+
+## スナップショットを削除
+
+もういちどスナップショットを作って、それを捨てるテスト
+```sh
+mkdir -p /testv
+mount -t xfs /dev/rootvg/testlv /testv
+lvcreate -s -L 100M -n testlv-snap /dev/rootvg/testlv
+yes n | head -100 >> /testv/text1.txt
+wc -l /testv/text1.txt
+# 200になるはず
+mkdir -p /mnt/testlv-snap
+mount -t auto -o ro,nouuid /dev/rootvg/testlv-snap /mnt/testlv-snap
+wc -l /mnt/testlv-snap/text1.txt
+# 100になるはず
+umount /mnt/testlv-snap
+```
+ここで
+
+```
+# lvremove /dev/rootvg/testlv-snap
+Do you really want to remove active logical volume rootvg/testlv-snap? [y/n]: (y[return])
+Logical volume "testlv-snap" successfully removed
+```
+
+## 演習のあとしまつ
+
+```sh
+umount /testv
+rm -rf /testv /mnt/testlv-snap
+lvremove /dev/rootvg/testlv -y
+```

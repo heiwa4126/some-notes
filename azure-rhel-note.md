@@ -92,9 +92,9 @@ Filesystem                 Size  Used Avail Use% Mounted on
 /dev/mapper/rootvg-homelv  3.0G  985M  2.1G  33% /home
 ```
 
-無事3GBになりました。あとPVのサイズ確認
+無事3GBになりました。あとVGのサイズ確認
 ```sh
-sudo pvdisplay | grep Free
+sudo vgdisplay
 ```
 
 9732 -> 9220
