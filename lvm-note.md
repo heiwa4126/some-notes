@@ -9,6 +9,7 @@ LVMいろいろノート
   - [スナップショットを削除](#スナップショットを削除)
   - [演習のあとしまつ](#演習のあとしまつ)
   - [スナップショットがあふれた場合](#スナップショットがあふれた場合)
+- [lvsコマンドのattrフィールド](#lvsコマンドのattrフィールド)
 
 # LVMのrootをfsck
 
@@ -354,3 +355,14 @@ lvremove /dev/rootvg/testlv -y
 - あふれそうなら
   - スナップショットをエクステンドする。
   - or スナップショットをバックアップ後、マージするか捨てるか。
+
+
+# lvsコマンドのattrフィールド
+
+参考: [4.8.2. オブジェクトの選択 Red Hat Enterprise Linux 6 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/logical_volume_manager_administration/report_object_selection)
+
+> 論理ボリュームのステータス。論理ボリュームの属性ビットは以下のようになります。
+
+> pvs、vgs、および lvs 出力の属性フィールドにある文字数は、以降のリリースで増加する可能性があります。
+
+コピペするには長すぎるので↑のリンクを参照。
