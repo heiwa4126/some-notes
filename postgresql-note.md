@@ -24,6 +24,20 @@ libpq.soのあるパスなのかlibpq.so.5までのフルパスなのか
 
 で出るやつでいいのでは。
 
+例:
+```
+# ls -la `pg_config --libdir`/libpq*
+lrwxrwxrwx 1 root root     12 Jul 27 05:10 /usr/lib64/libpq.so -> libpq.so.5.5
+lrwxrwxrwx 1 root root     12 Jul 27 02:24 /usr/lib64/libpq.so.5 -> libpq.so.5.5
+-rwxr-xr-x 1 root root 197544 Feb 24 13:24 /usr/lib64/libpq.so.5.5
+```
+
+シンボリックリンクを除外するなら
+```sh
+find `pg_config --libdir` -maxdepth 1 -type f -not -type l -name libpq\*
+```
+長いな。
+
 
 # valuntilがNULLの時
 
