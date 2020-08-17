@@ -10,6 +10,7 @@ LVMいろいろノート
   - [演習のあとしまつ](#演習のあとしまつ)
   - [スナップショットがあふれた場合](#スナップショットがあふれた場合)
 - [lvsコマンドのattrフィールド](#lvsコマンドのattrフィールド)
+- [新しいディスクメモ](#新しいディスクメモ)
 
 # LVMのrootをfsck
 
@@ -366,3 +367,48 @@ lvremove /dev/rootvg/testlv -y
 > pvs、vgs、および lvs 出力の属性フィールドにある文字数は、以降のリリースで増加する可能性があります。
 
 コピペするには長すぎるので↑のリンクを参照。
+
+
+# 新しいディスクメモ
+
+メモなのでまとまってません。
+
+`/dev/sdc`
+cfdisk/cgdiskでパーティション切ってLVM(8E)にする。
+
+テスト用LV`root`を作る。
+```sh
+pvcreate /dev/sdc1
+vgcreate VolGroup00 /dev/sdc1
+lvcreate -n root -l 100%FREE VolGroup00
+lvscan
+# ↑/dev/VolGroup00/rootが出来てるはず
+mkfs.ext4 /dev/VolGroup00/root
+mkdir -p /mnt/x
+mount -t ext4 /dev/VolGroup00/root /mnt/x
+ls /mnt/x
+# ↑lost+foundディレクトリができてるはず
+```
+
+VolGroup00に空きはない。
+```
+# vgs
+  VG         #PV #LV #SN Attr   VSize   VFree
+  VolGroup00   1   1   0 wz--n- <14.90g      0
+```
+
+`/dev/sdc`が(何らかの手段で)+16G拡張されるとする。
+
+VolGroup00を拡張する手順。拡張分全部割り振る。
+```sh
+echo -e "p\nresizepart 1 100%\np\nq\n" | parted /dev/sdc
+pvresize /dev/sdc1
+```
+
+VolGroup00に空きが出来た。
+```
+# vgs
+  VG         #PV #LV #SN Attr   VSize   VFree
+  VolGroup00   1   1   0 wz--n- <32.00g <17.10g
+```
+
