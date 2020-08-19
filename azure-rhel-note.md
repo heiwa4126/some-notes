@@ -5,6 +5,7 @@ AzureでRHEL7のメモ
 - [最近の状況 - GPTでLVMでxfsで](#最近の状況---gptでlvmでxfsで)
   - [拡張](#拡張)
 - [chronyでPTPクロックソース](#chronyでptpクロックソース)
+- [Azureのパスワード](#azureのパスワード)
 
 
 # 最近の状況 - GPTでLVMでxfsで
@@ -139,3 +140,16 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 ===============================================================================
 #* PHC0                          0   3   377     9  -4893ns[-8974ns] +/- 1982ns
 ```
+
+# Azureのパスワード
+
+AzureのLinuxにはシリアルコンソールがあるのだけど、
+sshで使ってるとパスワードの設定を忘れがちなので、
+作業ユーザにだけはパスワードを設定しておくといいと思う。
+
+ちなみにrootは
+```
+$ sudo grep root /etc/shadow
+root:*LOCK*:14600::::::
+```
+lockのままにしとくべき(作業ユーザでsudo)。

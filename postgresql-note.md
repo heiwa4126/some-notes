@@ -1,8 +1,11 @@
 - [PostgreSQLのサンプルデータ](#postgresqlのサンプルデータ)
 - [PostgreSQLのlibパスは?](#postgresqlのlibパスは)
+- [/usr/pgsql-XX/binにパスが通ってない問題](#usrpgsql-xxbinにパスが通ってない問題)
 - [valuntilがNULLの時](#valuntilがnullの時)
 - [PostgreSQLをインストールする](#postgresqlをインストールする)
 - [PostgreSQLの認証問題](#postgresqlの認証問題)
+- [Postgres配布のPostgreSQL](#postgres配布のpostgresql)
+- [ユーザ一覧](#ユーザ一覧)
 - [よくあるテストユーザとテストデータの作り方](#よくあるテストユーザとテストデータの作り方)
 - [JDBC](#jdbc)
 - [WALアーカイブを消す](#walアーカイブを消す)
@@ -23,6 +26,7 @@ libpq.soのあるパスなのかlibpq.so.5までのフルパスなのか
 `pg_config --libdir`
 
 で出るやつでいいのでは。
+(Postgres配布のパッケージだとpg_configはPATHが通ってないことが多い。`/usr/pgsql-9.6/bin/pg_config`とかにある。)
 
 例:
 ```
@@ -37,6 +41,18 @@ lrwxrwxrwx 1 root root     12 Jul 27 02:24 /usr/lib64/libpq.so.5 -> libpq.so.5.5
 find `pg_config --libdir` -maxdepth 1 -type f -not -type l -name libpq\*
 ```
 長いな。
+
+
+# /usr/pgsql-XX/binにパスが通ってない問題
+
+`/var/lib/pgsql/.pgsql_profile`に
+
+```
+export PATH=$PATH:/usr/pgsql-9.6/bin
+```
+とか書いておく。
+
+`/var/lib/pgsql`は(大概)postgresユーザのホームディレクトリ。
 
 
 # valuntilがNULLの時
@@ -234,6 +250,30 @@ localhost:*:postgres:postgres:{password}
 
 `{password}`のところはさっきのパスワード。
 
+
+# Postgres配布のPostgreSQL
+
+基本は
+[Repo RPMs - PostgreSQL YUM Repository](https://yum.postgresql.org/repopackages/)から
+OSのリンクをコピーして
+```
+yum install <ここにペースト>
+yum install postgresqlXX-server postgresqlXX-contrib
+su - postgres
+initdb
+```
+でOK.
+
+Debian,Ubuntuだったら
+[Apt - PostgreSQL wiki](https://wiki.postgresql.org/wiki/Apt)
+から。
+
+
+# ユーザ一覧
+
+すぐ忘れるのでメモ
+- `\du`
+- `select usename,passwd,valuntil from pg_user;`
 
 
 # よくあるテストユーザとテストデータの作り方
