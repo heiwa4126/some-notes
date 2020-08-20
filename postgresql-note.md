@@ -9,7 +9,9 @@
 - [よくあるテストユーザとテストデータの作り方](#よくあるテストユーザとテストデータの作り方)
 - [JDBC](#jdbc)
 - [WALアーカイブとは](#walアーカイブとは)
-- [WALアーカイブを消す](#walアーカイブを消す)
+- [pg_basebackup](#pg_basebackup)
+- [サーバからWALアーカイブを消す](#サーバからwalアーカイブを消す)
+  - [.backupファイルサンプル](#backupファイルサンプル)
 - [Slony-Iでレプリケーション](#slony-iでレプリケーション)
 
 # PostgreSQLのサンプルデータ
@@ -355,17 +357,30 @@ Unix Domain socketでつなぐには
 
 # WALアーカイブとは
 
-WALのアーカイブ(をぃ)。
+WALのアーカイブ(をぃ)。チェックポイントで反映済みのWAL。完了したWALファイルのアーカイブ。
 
 カレントのベースバックアップ(PG_DATAの下全部)と、すべてのWALのアーカイブがあれば、
 PostgreSQLが起動して以来のすべての時点にデータベースを復元できる。
-WALにはすべてのredo/undoアクションが入っているから。
+WALにはすべてのredo/undoアクションが入っているから(archive_modeがreplica/archive以上の場合)。
 
-けれど普通そんなことしたいと思うだろうか。
-「バックアップ採った直前の状態に戻す」のが普通だよね。
+バックアップ先には
+- 現在の$PG_DATAの下全部
+- 過去のWALすべて(つまりWALアーカイブ)
+
+を保存するようにすれば、任意の時点にDBを戻せる。
+これをPITR(ポイントインタイムリカバリ)という。
 
 
-# WALアーカイブを消す
+# pg_basebackup 
+
+- [PostgreSQLのバックアップ手法のまとめ - Qiita](https://qiita.com/bwtakacy/items/65260e29a25b5fbde835)
+- [pg_basebackupを試す « LANCARD.LAB｜ランカードコムのスタッフブログ](https://www.lancard.com/blog/2018/03/22/pg_basebackup%E3%82%92%E8%A9%A6%E3%81%99/)
+- [第25章 バックアップとリストア](https://www.postgresql.jp/document/9.6/html/backup.html)
+
+
+# サーバからWALアーカイブを消す
+
+バックアップ先にはWALすべてを残すとして、サーバ自体にWALアーカイブすべてを残しておく必要はない。
 
 RHEL7標準のpostgresでは`postgresql-contrib`パッケージに`pg_archivecleanup`が入ってる。
 Postgre配布でも`postgresqlXX-contrib`のはず。XXは96とか12とか
@@ -395,6 +410,23 @@ fi
 で、.backupファイルは`pg_basebackup`を実行したときに出来るので、
 バックアップをとらないとWALアーカイブはどんどん増える。
 
+参考: [25.3.2. ベースバックアップの作成](https://www.postgresql.jp/document/9.6/html/continuous-archiving.html#backup-base-backup)
+
+
+## .backupファイルサンプル
+
+```
+$ cat data/pg_xlog/000000010000000000000005.00000020.backup
+START WAL LOCATION: 0/5000020 (file 000000010000000000000005)
+STOP WAL LOCATION: 0/50000A8 (file 000000010000000000000005)
+CHECKPOINT LOCATION: 0/5000020
+BACKUP METHOD: streamed
+BACKUP FROM: master
+START TIME: 2020-08-20 05:21:53 UTC
+LABEL: pg_basebackup base backup
+STOP TIME: 2020-08-20 05:21:57 UTC
+```
+なんか書いてから`pg_basebackup`すればよかったかな... あとでやりなおす。
 
 # Slony-Iでレプリケーション
 
