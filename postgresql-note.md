@@ -8,7 +8,9 @@
 - [ユーザ一覧](#ユーザ一覧)
 - [よくあるテストユーザとテストデータの作り方](#よくあるテストユーザとテストデータの作り方)
 - [JDBC](#jdbc)
+- [WALアーカイブとは](#walアーカイブとは)
 - [WALアーカイブを消す](#walアーカイブを消す)
+- [Slony-Iでレプリケーション](#slony-iでレプリケーション)
 
 # PostgreSQLのサンプルデータ
 
@@ -350,29 +352,63 @@ Unix Domain socketでつなぐには
 
 [junixsocket/PostgresqlAFUNIXSocketFactory.java at master · fiken/junixsocket](https://github.com/fiken/junixsocket/blob/master/junixsocket-common/src/main/java/org/newsclub/net/unix/socketfactory/PostgresqlAFUNIXSocketFactory.java)
 
+
+# WALアーカイブとは
+
+WALのアーカイブ(をぃ)。
+
+カレントのベースバックアップ(PG_DATAの下全部)と、すべてのWALのアーカイブがあれば、
+PostgreSQLが起動して以来のすべての時点にデータベースを復元できる。
+WALにはすべてのredo/undoアクションが入っているから。
+
+けれど普通そんなことしたいと思うだろうか。
+「バックアップ採った直前の状態に戻す」のが普通だよね。
+
+
 # WALアーカイブを消す
 
 RHEL7標準のpostgresでは`postgresql-contrib`パッケージに`pg_archivecleanup`が入ってる。
+Postgre配布でも`postgresqlXX-contrib`のはず。XXは96とか12とか
 
 `pg_archivecleanup -d {アーカイブディレクトリ} {一番新しい.backup}.backup`
 
 `-d`はデバッグオプションなのでお好みで。ドライランは`-n`
 
 スクリプトにするとこんな感じ。
+`/etc/cron.daily/WALclear`
 ``` sh
 #!/bin/bash -e
-ARCDIR=/var/lib/pgsql/data/archivedir
-
-RC=$(cd "$ARCDIR"; ls -1 *.backup 2> /dev/null | wc -l)
-if [ "0" == "$RC" ] ; then
-  # do notnig
-  exit 0
+WALDIR=/var/lib/pgsql/data/pg_xlog
+ARCDIR=/var/archive/postgres
+PGACLEAN=/usr/bin/pg_archivecleanup
+#
+RC=$(cd "$WALDIR"; ls -1 *.backup 2> /dev/null)
+CNT=$(echo -n "$RC" | wc -l)
+if [ "0" == "$CNT" ] ; then
+  exit 0 # do notnig
 fi
-
-cd "$ARCDIR"
-RC=$(ls -t *.backup | head -1)
-ls -t *.backup | tail -n +2 | xargs -r rm
-cd - &> /dev/null
-
-pg_archivecleanup -d "$ARCDIR" "$RC"
+"$PGACLEAN" -d "$ARCDIR" "$(echo -n "$RC"|tail -1)" |& \
+    logger -i -t WALclear -pinfo
 ```
+頭3つの環境変数は構成によって修正すること。
+
+で、.backupファイルは`pg_basebackup`を実行したときに出来るので、
+バックアップをとらないとWALアーカイブはどんどん増える。
+
+
+# Slony-Iでレプリケーション
+
+なぜか客先がSlony-Iを使っているので調査。(「スローニ」ロシア語で「象」)
+
+- [Slony-I (トリガーによる行単位レプリケーションツール)](https://www.sraoss.co.jp/tech-blog/pgsql/slony-i/)
+- [Slony-I の調査 | | 1Q77](https://blog.1q77.com/2018/12/what-is-slony-i/)
+- [Slony-I - Wikipedia](https://ja.wikipedia.org/wiki/Slony-I)
+- [Slony-I](https://www.slony.info/)
+- [7分で振り返るPostgreSQLレプリケーション機能の10年の歩み（NTTデータ テクノロジーカンファレンス 2019 講演資料、201…](https://www.slideshare.net/nttdata-tech/postgresql-replication-10years-nttdata-fujii)
+- [PostgreSQLレプリケーション10周年！徹底紹介！（PostgreSQL Conference Japan 2019講演資料）](https://www.slideshare.net/nttdata-tech/postgresql-replication-10years-nttdata-fujii-masao)
+
+
+なるほどいろいろ事情があるのだなあ。
+
+Postgres 10からは [論理レプリケーション](https://www.postgresql.jp/document/10/html/logical-replication.html)
+が使えるのでSlonyは減っていくと思われる。
