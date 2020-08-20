@@ -6,6 +6,7 @@
 - [PostgreSQLの認証問題](#postgresqlの認証問題)
 - [Postgres配布のPostgreSQL](#postgres配布のpostgresql)
 - [ユーザ一覧](#ユーザ一覧)
+- [show grantsみたいの](#show-grantsみたいの)
 - [よくあるテストユーザとテストデータの作り方](#よくあるテストユーザとテストデータの作り方)
 - [JDBC](#jdbc)
 - [WALアーカイブとは](#walアーカイブとは)
@@ -280,6 +281,17 @@ Debian,Ubuntuだったら
 - `select usename,passwd,valuntil from pg_user;`
 
 
+# show grantsみたいの
+
+mysqlの`show grants for user`みたいのが無い。
+`\l`と`\z`でそこそこ要は足りるけど...
+
+```sql
+select rolname, rolsuper, rolcanlogin from pg_roles;
+```
+はどうか。
+
+
 # よくあるテストユーザとテストデータの作り方
 
 初期UNIXユーザを`heiwa`として、
@@ -433,6 +445,7 @@ STOP TIME: 2020-08-20 05:21:57 UTC
 ```
 なんか書いてから`pg_basebackup`すればよかったかな... あとでやりなおす。
 
+
 # Slony-Iでレプリケーション
 
 なぜか客先がSlony-Iを使っているので調査。(「スローニ」ロシア語で「象」)
@@ -449,3 +462,5 @@ STOP TIME: 2020-08-20 05:21:57 UTC
 
 Postgres 10からは [論理レプリケーション](https://www.postgresql.jp/document/10/html/logical-replication.html)
 が使えるのでSlonyは減っていくと思われる。
+
+
