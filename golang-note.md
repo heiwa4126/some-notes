@@ -27,6 +27,8 @@
 - [golangci-lint](#golangci-lint)
 - [panic()のドキュメント](#panicのドキュメント)
 - [errorでスタックトレースが欲しいとき](#errorでスタックトレースが欲しいとき)
+- [バイナリと依存モジュールのバージョン表示](#バイナリと依存モジュールのバージョン表示)
+- [trimpathオプション](#trimpathオプション)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -818,3 +820,41 @@ go vet -vettool=$(which shadow) ./...
 引用元: [Goでエラーのスタックトレースを追える&表示する方法 - Qiita](https://qiita.com/roba4coding/items/769ddb220bc61cd19df1)
 
 みたいです。
+
+
+# バイナリと依存モジュールのバージョン表示
+
+いつのまにか
+`go version -m 対象ファイル`
+で表示できるようになった。(go 1.13以降? `go help version`参照)
+
+実行例:
+```
+$  go version -m auditfilter1
+auditfilter1: go1.14.6
+        path    github.com/heiwa4126/auditfilter1
+        mod     github.com/heiwa4126/auditfilter1       (devel)
+        dep     github.com/fatih/color  v1.7.0  h1:DkWD4oS2D8LGGgTQ6IvwJJXSL5Vp2ffcQg58nFV38Ys=
+        dep     github.com/goccy/go-yaml        v1.8.0  h1:WCe9sBiI0oZb6EC6f3kq3dv0+aEiNdstT7b4xxq4MJQ=
+        dep     github.com/mattn/go-colorable   v0.1.4  h1:snbPLB8fVfU9iwbbo30TPtbLRzwWu6aJS6Xh4eaaviA=
+        dep     github.com/mattn/go-isatty      v0.0.10 h1:qxFzApOv4WsAL965uUPIsXzAKCZxN2p9UqdhFS4ZW10=
+        dep     golang.org/x/sys        v0.0.0-20191010194322-b09406accb47      h1:/XfQ9z7ib8eEJX2hdgFTZJ/ntt0swNk5oYBziWeTCvY=
+        dep     golang.org/x/xerrors    v0.0.0-20191011141410-1b5146add898      h1:/atklqdjdhuosWIl6AIbOeHJjicWYPqR9bpxqxYG2pA=
+```
+
+# trimpathオプション
+
+`strings`コマンド使うとよくわかるけど、バイナリにパスがフルパスで入ってる。
+これを取り除くオプション。
+
+ちょっとバイナリサイズが小さくなる。snapでgo入れてると結構大きい。
+
+```sh
+go build -ldflags "-s -w" -trimpath
+```
+
+- [golangの実行ファイルからファイルパスを除きたい - Qiita](https://qiita.com/umisama/items/51d7f595d79aea577e38)
+- [how to delete source file path informatin in panic‘s stack trace](https://groups.google.com/g/golang-nuts/c/Xr2Zsa0YfKs?pli=1)
+
+
+
