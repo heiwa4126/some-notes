@@ -855,6 +855,7 @@ go build -ldflags "-s -w" -trimpath
 
 - [golangの実行ファイルからファイルパスを除きたい - Qiita](https://qiita.com/umisama/items/51d7f595d79aea577e38)
 - [how to delete source file path informatin in panic‘s stack trace](https://groups.google.com/g/golang-nuts/c/Xr2Zsa0YfKs?pli=1)
+- [go - The Go Programming Language](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies)
 
 
 
