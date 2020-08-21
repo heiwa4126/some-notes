@@ -4,11 +4,12 @@ Nginx + Let's Encrypt(Certbot)で構築したWebサーバを
 [Qualys SSL LABS SSL Server Test](https://www.ssllabs.com/ssltest/)
 でチェックしたら**評価F**だったので直す。
 
-- [SSL Server Test - 評価"F"からの脱出](#ssl-server-test---%e8%a9%95%e4%be%a1%22f%22%e3%81%8b%e3%82%89%e3%81%ae%e8%84%b1%e5%87%ba)
-  - [ステップ](#%e3%82%b9%e3%83%86%e3%83%83%e3%83%97)
-  - [メモ](#%e3%83%a1%e3%83%a2)
-  - [参考](#%e5%8f%82%e8%80%83)
-- [Apache2参考設定](#apache2%e5%8f%82%e8%80%83%e8%a8%ad%e5%ae%9a)
+- [SSL Server Test - 評価"F"からの脱出](#ssl-server-test---評価fからの脱出)
+  - [ステップ](#ステップ)
+  - [メモ](#メモ)
+  - [参考](#参考)
+- [Apache2参考設定](#apache2参考設定)
+- [RHEL7でcertbot](#rhel7でcertbot)
 
 
 ## ステップ
@@ -82,3 +83,29 @@ SSLCipherSuite HIGH:!MEDIUM:!aNULL:!MD5:!RC4:!3DES:!CBC
 ```
 
 ぐらいがいいかもしれない。
+
+# RHEL7でcertbot
+
+[Certbot - Centosrhel7 Apache](https://certbot.eff.org/lets-encrypt/centosrhel7-apache)
+にある通り、EPELを有効にして
+
+```sh
+sudo yum install certbot python2-certbot-apache
+```
+すると、`python-zope-interface`パッケージが無いって怒られる。
+
+このパッケージはRHEL7 の optional channelにあるので、
+```sh
+yum-config-manager --enable rhel-7-server-optional-rpms
+# AWSやAzureの場合はこっち↓
+yum-config-manager --enable rhui-rhel-7-server-rhui-optional-rpms
+```
+してから実行すること。
+
+で、`/etc/httpd/conf/http.conf`の最後に
+```
+<VirtualHost *:80>
+ServerName your.site.domain
+</VirtualHost>
+```
+を追加してから、`certbot --apache`
