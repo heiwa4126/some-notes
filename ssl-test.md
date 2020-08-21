@@ -109,3 +109,5 @@ ServerName your.site.domain
 </VirtualHost>
 ```
 を追加してから、`certbot --apache`
+
+あとはrenewを設定。
