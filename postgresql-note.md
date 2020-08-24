@@ -300,8 +300,7 @@ select rolname, rolsuper, rolcanlogin from pg_roles;
 ソケット経由でつなぐことができる。
 
 ``` sh
-sudo su - postgres
-psql
+sudo -iu postgres psql
 ```
 
 で
@@ -315,9 +314,6 @@ alter role heiwa with login;
 exit
 ```
 
-``` sh
-exit
-```
 でheiwaユーザに戻って
 
 ``` sh
@@ -460,7 +456,8 @@ STOP TIME: 2020-08-20 05:21:57 UTC
 
 なるほどいろいろ事情があるのだなあ。
 
-Postgres 10からは [論理レプリケーション](https://www.postgresql.jp/document/10/html/logical-replication.html)
-が使えるのでSlonyは減っていくと思われる。
+Postgres 10からは [論理レプリケーション(ロジカルレプリケーション)](https://www.postgresql.jp/document/10/html/logical-replication.html)
+が使えるのでSlonyは減っていくと思われる。10以上同士なら動く?
+
 
 

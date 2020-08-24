@@ -77,7 +77,7 @@ PATHは`/etc/profile.d/snapd.sh`で入るので、
 
 [ngompa/snapcore-el7 Copr](https://copr.fedorainfracloud.org/coprs/ngompa/snapcore-el7/)
 
-RHEL7でemacs26が使えるのが便利。
+RHEL7でemacs27が使えるのが便利。
 ```sh
 sudo snap install emacs --classic
 ```
