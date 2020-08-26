@@ -2,14 +2,14 @@
 
 ZScalerというproxyが来たので、対策
 
-- [ZScaler](#ZScaler)
+- [ZScaler](#zscaler)
 - [問題](#問題)
 - [対策](#対策)
 - [参考](#参考)
-- [ZScalerの証明書をexportする手順](#ZScalerの証明書をexportする手順)
-- [Linuxに証明書を追加する手順](#Linuxに証明書を追加する手順)
-  - [Ubuntuの場合](#Ubuntuの場合)
-  - [RHEL/CentOS 7の場合](#RHELCentOS-7の場合)
+- [ZScalerの証明書をexportする手順](#zscalerの証明書をexportする手順)
+- [Linuxに証明書を追加する手順](#linuxに証明書を追加する手順)
+  - [Ubuntuの場合](#ubuntuの場合)
+  - [RHEL/CentOS 7の場合](#rhelcentos-7の場合)
 - [そのほか](#そのほか)
 
 
@@ -77,6 +77,9 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 1. `update-ca-certificates`を実行
 
 `/etc/ssl/certs/ca-certificates.crt`が更新されるらしい
+
+立ち上がってるデーモンは再起動する必要がある(snapdとか)。
+めんどくさかったらサーバごとreboot。
 
 
 ## RHEL/CentOS 7の場合
