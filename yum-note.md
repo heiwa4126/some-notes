@@ -43,3 +43,6 @@ yum --showduplicate --disableexcludes=all list \
 すんのがいちばんいいと思う。
 RHEL 6,7,8をカバーするのは面倒だなあ...
 
+参考: [linux - How to generate a list of available updates from yum and export to CSV, including current and updated version of each package? - Stack Overflow](https://stackoverflow.com/questions/50955927/how-to-generate-a-list-of-available-updates-from-yum-and-export-to-csv-includin)
+
+世界中でyumの出力には困ってるらしい。

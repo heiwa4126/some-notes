@@ -344,7 +344,7 @@ yumコマンドのオプションでexclude無視ができるので、個別に�
 
 # yum4/dnf
 
-yum遅っそいので。
+yum3遅っそいので。
 
 ```
 yum install nextgen-yum4 dnf-plugins-core yum-utils

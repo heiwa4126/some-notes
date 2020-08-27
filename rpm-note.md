@@ -62,6 +62,8 @@ rpm -q --queryformat "[%-80{FILENAMES} %10{FILESIZES}\n]" gcc
 rpm -qa --queryformat '%{NAME},%{VERSION},%{RELEASE},%{ARCH},"%{VENDOR}",%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n' | sort -i -t, -k1,4 | grep -vi 'Red Hat'
 ```
 
+yumにもqueryformatオプションがあるといいのに。
+
 # rpmのdry-run
 
 `rpm -Uvvh foo.rpm --test`
