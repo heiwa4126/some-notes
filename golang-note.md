@@ -29,6 +29,7 @@
 - [errorでスタックトレースが欲しいとき](#errorでスタックトレースが欲しいとき)
 - [バイナリと依存モジュールのバージョン表示](#バイナリと依存モジュールのバージョン表示)
 - [trimpathオプション](#trimpathオプション)
+- [JSONからgoのtype xxxx structにするやつ](#jsonからgoのtype-xxxx-structにするやつ)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -858,4 +859,8 @@ go build -ldflags "-s -w" -trimpath
 - [go - The Go Programming Language](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies)
 
 
+# JSONからgoのtype xxxx structにするやつ
+
+いろいろあるけど
+- [JSON to Go Struct](https://transform.tools/json-to-go)
 
