@@ -104,3 +104,7 @@ jqならぬyqが便利。
 - [jqのYAML/XMLラッパー yq でJSONとYAMLを自在に操る | Developers.IO](https://dev.classmethod.jp/articles/yq/)
 
 jqのwrapperとして実装されているのでjqが必要。
+
+```sh
+pip3 install yq --user -U
+```
