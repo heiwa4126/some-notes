@@ -201,8 +201,9 @@ Host s1
 	ProxyCommand  C:\Program Files\Git\mingw64\bin\connect.exe -H proxy.your.co.uk:8080 %h %p
 	Compression yes
 ```
+ダブルクオートが不要なのがコツ。
 
-`id_rsa`のパーミッションはAdministratorsとSystemと自分だけ
+`id_rsa`のパーミッションはAdministratorsとSystemと自分だけ。
 
 
 ```
@@ -214,5 +215,4 @@ WSUSの環境だとインストールできないので諦めてくらはい。
 
 - [unable to start ssh-agent service, error :1058 - Qiita](https://qiita.com/tmak_tsukamoto/items/c72399a4a6d7ff55fcdb)
 - [Windows 10 に OpenSSH サーバをインストールする - Qiita](https://qiita.com/iShinkai/items/a12c9d26f8f4264897f9)
-
 
