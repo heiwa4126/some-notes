@@ -1,13 +1,14 @@
 # ssh tips
 
 - [ssh tips](#ssh-tips)
-- [.ssh/configでhostごとのUserがoverrideできない](#sshconfig%e3%81%a7host%e3%81%94%e3%81%a8%e3%81%aeuser%e3%81%8coverride%e3%81%a7%e3%81%8d%e3%81%aa%e3%81%84)
+- [.ssh/configでhostごとのUserがoverrideできない](#sshconfigでhostごとのuserがoverrideできない)
 - [ProxyJump](#proxyjump)
 - [DynamicForward](#dynamicforward)
 - [LocalForward](#localforward)
 - [ControlPersist](#controlpersist)
-- [各ディストリのsshd_configのCiphersのデフォルト値](#%e5%90%84%e3%83%87%e3%82%a3%e3%82%b9%e3%83%88%e3%83%aa%e3%81%aesshdconfig%e3%81%aeciphers%e3%81%ae%e3%83%87%e3%83%95%e3%82%a9%e3%83%ab%e3%83%88%e5%80%a4)
-- [sshの接続でどんなcipherが使われるか確認](#ssh%e3%81%ae%e6%8e%a5%e7%b6%9a%e3%81%a7%e3%81%a9%e3%82%93%e3%81%aacipher%e3%81%8c%e4%bd%bf%e3%82%8f%e3%82%8c%e3%82%8b%e3%81%8b%e7%a2%ba%e8%aa%8d)
+- [各ディストリのsshd_configのCiphersのデフォルト値](#各ディストリのsshd_configのciphersのデフォルト値)
+- [sshの接続でどんなcipherが使われるか確認](#sshの接続でどんなcipherが使われるか確認)
+- [Windows 10のssh](#windows-10のssh)
 
 
 # .ssh/configでhostごとのUserがoverrideできない
@@ -137,4 +138,81 @@ Ciphers  aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh
 ```
 
 ...微塵も変わらない... 単に並びを変えただけじゃダメみたい(続く)
+
+
+# Windows 10のssh
+
+Windows 10ではMicrosoft 提供のsshクライアントが簡単に使える。
+
+- [Windows Server 用 OpenSSH のインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_install_firstuse)
+- [【図解・Mac・Windows】VSCodeでRemote Developmentを使うときのSSHの設定いろいろ【多段・HTTPプロキシ(認証あり・なし)・Socks5プロキシ・Port指定】 - Qiita](https://qiita.com/ko-he-8/items/06ae39f77dd5189df59b)
+
+
+管理者として PowerShell を起動して
+
+```powershell
+Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
+# ↑で表示されるバージョンに↓をあわせる。(アップデートは?)
+Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
+```
+
+で、
+```
+C:\> ssh -V
+OpenSSH_for_Windows_7.7p1, LibreSSL 2.6.5
+
+C:\> where ssh
+C:\Windows\System32\OpenSSH\ssh.exe
+
+C:\> dir "C:\Windows\System32\OpenSSH\"
+(略)
+2018/09/16  01:55    <DIR>          .
+2018/09/16  01:55    <DIR>          ..
+2018/09/16  01:55           322,560 scp.exe
+2018/09/16  01:55           390,144 sftp.exe
+2018/09/16  01:55           491,520 ssh-add.exe
+2018/09/16  01:55           384,512 ssh-agent.exe
+2018/09/16  01:55           637,952 ssh-keygen.exe
+2018/09/16  01:55           530,432 ssh-keyscan.exe
+2018/09/16  01:55           882,688 ssh.exe
+```
+ssh-agentもついてるんだ...
+
+[connect.c](https://gist.github.com/rurban/360940),
+[connect-proxy](https://github.com/larryhou/connect-proxy)
+は Git for Windows shellについてるやつを使う。
+パスは微妙だが `C:\Program Files\Git\mingw64\bin\connect.exe`など。
+(Git Bush起動してwhere connectで調べる)
+
+.ssh/configのデフォルトは `%USERPROFILE%`の下。
+%HOME%とか設定しても見てくれない。
+あきらめて`C:\User\ユーザ名\.ssh`に置く。
+
+.ssh/configの例:
+```
+Protocol 2
+ForwardAgent yes
+
+Host s1
+	User heiwa
+	Hostname s1.example.net
+	Port 22
+	IdentityFile C:\Users\xxxxxxxxx\.ssh\id_rsa
+	ProxyCommand  C:\Program Files\Git\mingw64\bin\connect.exe -H proxy.your.co.uk:8080 %h %p
+	Compression yes
+```
+
+`id_rsa`のパーミッションはAdministratorsとSystemと自分だけ
+
+
+```
+C:\> ssh-agent
+unable to start ssh-agent service, error :1058
+```
+とか言われるとき。どうもssh-serverが要るらしい(なんで)。
+WSUSの環境だとインストールできないので諦めてくらはい。
+
+- [unable to start ssh-agent service, error :1058 - Qiita](https://qiita.com/tmak_tsukamoto/items/c72399a4a6d7ff55fcdb)
+- [Windows 10 に OpenSSH サーバをインストールする - Qiita](https://qiita.com/iShinkai/items/a12c9d26f8f4264897f9)
+
 
