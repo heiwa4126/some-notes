@@ -29,6 +29,7 @@
 - [errorでスタックトレースが欲しいとき](#errorでスタックトレースが欲しいとき)
 - [バイナリと依存モジュールのバージョン表示](#バイナリと依存モジュールのバージョン表示)
 - [trimpathオプション](#trimpathオプション)
+- [strings.HasSuffix](#stringshassuffix)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -858,4 +859,24 @@ go build -ldflags "-s -w" -trimpath
 - [go - The Go Programming Language](https://golang.org/cmd/go/#hdr-Compile_packages_and_dependencies)
 
 
+# strings.HasSuffix
 
+文字列の先頭一致、末尾一致。
+
+[strings - The Go Programming Language](https://golang.org/pkg/strings/#HasPrefix)
+
+わりとよく使うのにとっさに出てこないのは関数の名前のせいだと思う。
+メモメモ
+
+実装は↓
+```go
+// HasPrefix tests whether the string s begins with prefix.
+func HasPrefix(s, prefix string) bool {
+  return len(s) >= len(prefix) && s[0:len(prefix)] == prefix
+}
+
+// HasSuffix tests whether the string s ends with suffix.
+func HasSuffix(s, suffix string) bool {
+  return len(s) >= len(suffix) && s[len(s)-len(suffix):] == suffix
+}
+```
