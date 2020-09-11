@@ -880,3 +880,10 @@ func HasSuffix(s, suffix string) bool {
   return len(s) >= len(suffix) && s[len(s)-len(suffix):] == suffix
 }
 ```
+
+Rustだと
+
+- [str::starts_with](https://doc.rust-lang.org/std/primitive.str.html#method.starts_with)
+- [str::ends_with](https://doc.rust-lang.org/std/primitive.str.html#method.ends_with)
+
+Pythonだと str.startswith, str.endswith
