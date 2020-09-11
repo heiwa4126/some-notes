@@ -347,7 +347,7 @@ foobar 2>&1 > /dev/null | less
 
 覚えられない。なんか小さいコマンド作って
 ```sh
-foobar | err2std | less
+foobar | err2stdout | less
 ```
 みたいにできるといいんだけど。
 
