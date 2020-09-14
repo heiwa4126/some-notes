@@ -11,6 +11,7 @@ LVMいろいろノート
   - [スナップショットがあふれた場合](#スナップショットがあふれた場合)
 - [lvsコマンドのattrフィールド](#lvsコマンドのattrフィールド)
 - [新しいディスクメモ](#新しいディスクメモ)
+- [ディスクの追加](#ディスクの追加)
 
 # LVMのrootをfsck
 
@@ -412,4 +413,73 @@ VolGroup00に空きが出来た。
   VG         #PV #LV #SN Attr   VSize   VFree
   VolGroup00   1   1   0 wz--n- <32.00g <17.10g
 ```
+
+# ディスクの追加
+
+ホストにディスクを追加して、gvに追加、rootを増やす。
+
+初期状態
+```
+# lsblk -f
+NAME                     FSTYPE      LABEL UUID                                   MOUNTPOINT
+sda
+├─sda1                   ext4              237b4d15-277d-44e6-896f-d58c1b548cc2   /boot
+└─sda2                   LVM2_member       qG1KD3-Mui3-pfbB-adEQ-KQFb-Ae2I-P2QCjj
+  ├─centos_centos78-root ext4              b6d58d5d-5fac-415f-ba0e-8e3ae6a67ae6   /
+  └─centos_centos78-swap swap              83ebd5a2-843a-4458-9f2c-4c67ddb6189f   [SWAP]
+sdb
+sr0
+
+# pvdisplay --short
+  Device "/dev/sda2" has a capacity of 0
+
+# vgdisplay --short
+  "centos_centos78" <7.00 GiB [<7.00 GiB used / 0    free]
+
+# df -h /
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/centos_centos78-root  6.0G  1.9G  3.8G  34% /
+
+# lvdisplay /dev/centos_centos78/root | grep Size
+  LV Size                <6.20 GiB
+```
+
+- rootのlvにsdb(128MB)を追加する
+- 事情によりext4
+- 訳あってCentOS7
+
+/dev/sdbにID:8eで/dev/sdb1を作る。cfdiskを使うとTUIで便利。
+
+```
+# pvcreate /dev/sdb1
+  Physical volume "/dev/sdb1" successfully created.
+# pvdisplay --short
+  Device "/dev/sda2" has a capacity of 0
+  Device "/dev/sdb1" has a capacity of <127.97 MiB
+# vgextend centos_centos78 /dev/sdb1
+  Volume group "centos_centos78" successfully extended
+# vgdisplay --short
+  "centos_centos78" <7.12 GiB [<7.00 GiB used / 124.00 MiB free]
+# lvextend -l +100%FREE /dev/centos_centos78/root
+  Size of logical volume centos_centos78/root changed from <6.20 GiB (1586 extents) to <6.32 GiB (1617 extents).
+  Logical volume centos_centos78/root successfully resized.
+# lvdisplay /dev/centos_centos78/root | grep Size
+  LV Size                <6.32 GiB
+```
+
+ちょびっとだけ増えた。
+
+```
+# resize2fs /dev/centos_centos78/root
+resize2fs 1.42.9 (28-Dec-2013)
+Filesystem at /dev/centos_centos78/root is mounted on /; on-line resizing required
+old_desc_blocks = 1, new_desc_blocks = 1
+The filesystem on /dev/centos_centos78/root is now 1655808 blocks long.
+# LANG=C df -h /
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/centos_centos78-root  6.1G  1.9G  3.9G  33% /
+```
+
+できあがり。
+
 
