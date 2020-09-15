@@ -12,13 +12,60 @@ AWSのメモ
 
 # メタデータ
 
+自分のパブリックFQNDやパブリックIPなんかが取れる。
+
+IMDSv1の場合
+``` bash
+curl http://169.254.169.254/latest/meta-data/
+```
+
+↑の結果(2020-09)
+```
+ami-id
+ami-launch-index
+ami-manifest-path
+block-device-mapping/
+events/
+hostname
+identity-credentials/
+instance-action
+instance-id
+instance-life-cycle
+instance-type
+local-hostname
+local-ipv4
+mac
+metrics/
+network/
+placement/
+product-codes
+profile
+public-hostname
+public-ipv4
+public-keys/
+reservation-id
+security-groups
+```
+
+なので、
+```sh
+export PUBLIC_IP=`curl http://169.254.169.254/latest/meta-data/public-ipv4`
+export PUBLIC_HOSTNAME=`curl http://169.254.169.254/latest/meta-data/public-hostname`
+```
+とかするとよいです。
+
+参考:
+* [インスタンスメタデータの取得 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) - IMDSv2の例が
 * [インスタンスメタデータとユーザーデータ - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
 * [Instance Metadata and User Data - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
 * [AWS | AWS の169.254.169.254とは何か](https://awsjp.com/AWS/Faq/c/AWS-169.254.169.254-towa-4135.html)
 
-``` bash
-curl http://169.254.169.254/latest/meta-data/
-```
+
+
+
+
+
+
 
 # AWS CLIのインストール手順
 

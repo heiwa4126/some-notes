@@ -1,6 +1,7 @@
 Windowsのメモ
-- [Windows serverでRC4とtriple-DESを無効にする](#windows-server%E3%81%A7rc4%E3%81%A8triple-des%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B)
-- [参考](#%E5%8F%82%E8%80%83)
+- [Windows serverでRC4とtriple-DESを無効にする](#windows-serverでrc4とtriple-desを無効にする)
+- [参考](#参考)
+- [Windowsのサポート期限検索](#windowsのサポート期限検索)
 
 
 # Windows serverでRC4とtriple-DESを無効にする
@@ -51,5 +52,10 @@ $sub = 'SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Ciphers'
 
 # 参考
 
-* [Windowsのdirコマンドでファイル名の一覧を取得する](https://www.atmarkit.co.jp/ait/articles/0412/04/news014.html)
-  - 意外と知らないことが書いてあってびっくり。clipとかdir /a-dとか
+* [Windowsのdirコマンドでファイル名の一覧を取得する](https://www.atmarkit.co.jp/ait/articles/0412/04/news014.html) - 意外と知らないことが書いてあってびっくり。clipとかdir /a-dとか
+
+
+# Windowsのサポート期限検索
+
+これは便利。
+[製品およびサービスのライフサイクル情報の検索 (プレビュー) | Microsoft Docs](https://docs.microsoft.com/ja-jp/lifecycle/products/)

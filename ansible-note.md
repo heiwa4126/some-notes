@@ -64,6 +64,8 @@ ansibleメモランダム
 - [expectモジュール](#expectモジュール)
   - [複数ホストの指定](#複数ホストの指定)
 - [変数をかける場所と優先度](#変数をかける場所と優先度)
+- [dictにkeyがあるときないときの判別](#dictにkeyがあるときないときの判別)
+- [playbookを中断する](#playbookを中断する)
 
 # 感想
 
@@ -1211,3 +1213,43 @@ ansible-playbookの-lオプションでも同様。
 - [Google 翻訳](https://translate.google.com/translate?hl=&sl=en&tl=ja&u=https%3A%2F%2Fdocs.ansible.com%2Fansible%2Flatest%2Fuser_guide%2Fintro_inventory.html)
 
 
+# dictにkeyがあるときないときの判別
+
+- [Is there a way to check that a dictionary key is not defined in ansible task? - Server Fault](https://serverfault.com/questions/857973/is-there-a-way-to-check-that-a-dictionary-key-is-not-defined-in-ansible-task)
+
+```yaml
+- name: in and not-in
+  hosts: localhost
+  become: no
+  gather_facts: False
+  vars:
+    d1:
+      localhost: 1
+    d2:
+      nolocalhost: 1
+
+  tasks:
+    - debug: var=inventory_hostname
+
+    - debug: msg=OK
+      when: "inventory_hostname in d1"
+
+    - debug: msg=OK
+      when: "inventory_hostname not in d2"
+
+    - debug: msg=WRONG
+      when: "inventory_hostname not in d1"
+
+    - debug: msg=WRONG
+      when: "inventory_hostname in d2"
+```
+
+OKが2個、WRONGが0個出力されるはず
+
+
+# playbookを中断する
+
+failモジュールや metaモジュールの `meta: end_host`が使える.
+
+- [fail – Fail with custom message — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/fail_module.html)
+- [meta – Execute Ansible ‘actions’ — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/meta_module.html#meta-module)

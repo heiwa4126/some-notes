@@ -30,6 +30,7 @@
 - [バイナリと依存モジュールのバージョン表示](#バイナリと依存モジュールのバージョン表示)
 - [trimpathオプション](#trimpathオプション)
 - [JSONからgoのtype xxxx structにするやつ](#jsonからgoのtype-xxxx-structにするやつ)
+- [strings.HasSuffix](#stringshassuffix)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -864,3 +865,32 @@ go build -ldflags "-s -w" -trimpath
 いろいろあるけど
 - [JSON to Go Struct](https://transform.tools/json-to-go)
 
+
+# strings.HasSuffix
+
+文字列の先頭一致、末尾一致。
+
+[strings - The Go Programming Language](https://golang.org/pkg/strings/#HasPrefix)
+
+わりとよく使うのにとっさに出てこないのは関数の名前のせいだと思う。
+メモメモ
+
+実装は↓
+```go
+// HasPrefix tests whether the string s begins with prefix.
+func HasPrefix(s, prefix string) bool {
+  return len(s) >= len(prefix) && s[0:len(prefix)] == prefix
+}
+
+// HasSuffix tests whether the string s ends with suffix.
+func HasSuffix(s, suffix string) bool {
+  return len(s) >= len(suffix) && s[len(s)-len(suffix):] == suffix
+}
+```
+
+Rustだと
+
+- [str::starts_with](https://doc.rust-lang.org/std/primitive.str.html#method.starts_with)
+- [str::ends_with](https://doc.rust-lang.org/std/primitive.str.html#method.ends_with)
+
+Pythonだと str.startswith, str.endswith

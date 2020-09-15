@@ -80,9 +80,10 @@ yum --showduplicates list
 
 
 ```
-repoquery -a --releasever=7Server --show-duplicates | sort | uniq
+repoquery -a --releasever=7Server --showduplicates | sort | uniq
 ```
 が適切だが、repoqueryには`--disableexcludes=all`が無い。
+そのかわり`--queryformat`が使える。
 
 
 

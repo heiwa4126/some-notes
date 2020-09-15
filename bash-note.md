@@ -17,6 +17,7 @@
   - [systemdでない場合](#systemdでない場合)
   - [systemdの場合](#systemdの場合)
 - [同じパスワードでも/etc/shadowで同じ値にならない話](#同じパスワードでもetcshadowで同じ値にならない話)
+- [stderrをless](#stderrをless)
 
 
 # 参考リンク
@@ -330,5 +331,23 @@ mkpasswdはwhoisパッケージに入ってる。
 参考: [ひつまぶし食べたい: /etc/shadowについて勉強してみた](http://hitsumabushi-pc.blogspot.com/2011/12/etcshadow.html)
 
 
+# stderrをless
 
+よくあるこれなんだけど
+
+標準出力とエラー出力を混ぜてless
+```sh
+foobar 2>&1 | less
+```
+
+標準出力を捨てて、エラー出力だけをless
+```sh
+foobar 2>&1 > /dev/null | less
+```
+
+覚えられない。なんか小さいコマンド作って
+```sh
+foobar | err2stdout | less
+```
+みたいにできるといいんだけど。
 

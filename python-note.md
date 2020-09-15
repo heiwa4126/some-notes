@@ -2,32 +2,33 @@
 
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
-- [pythonのメモ](#python%e3%81%ae%e3%83%a1%e3%83%a2)
-- [pythonをインストールする(2019-12)](#python%e3%82%92%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab%e3%81%99%e3%82%8b2019-12)
+- [pythonのメモ](#pythonのメモ)
+- [pythonをインストールする(2019-12)](#pythonをインストールする2019-12)
   - [Amazon Linux 2](#amazon-linux-2)
   - [Ubuntu 18.04 TLS](#ubuntu-1804-tls)
   - [RHEL7, CentOS7](#rhel7-centos7)
   - [RHEL8, CentOS8](#rhel8-centos8)
-  - [Windows python本家の配布](#windows-python%e6%9c%ac%e5%ae%b6%e3%81%ae%e9%85%8d%e5%b8%83)
+  - [Windows python本家の配布](#windows-python本家の配布)
   - [Anaconda, miniconda](#anaconda-miniconda)
   - [Windows msys2](#windows-msys2)
   - [Windows Store](#windows-store)
 - [Jupyter notebook](#jupyter-notebook)
-- [pipをユーザーローカルに入れる](#pip%e3%82%92%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e3%83%ad%e3%83%bc%e3%82%ab%e3%83%ab%e3%81%ab%e5%85%a5%e3%82%8c%e3%82%8b)
-- [pip --user のパス](#pip---user-%e3%81%ae%e3%83%91%e3%82%b9)
-- [古いパッケージを見つける](#%e5%8f%a4%e3%81%84%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%82%92%e8%a6%8b%e3%81%a4%e3%81%91%e3%82%8b)
-- [pipで更新可能なものをすべて更新するスクリプト](#pip%e3%81%a7%e6%9b%b4%e6%96%b0%e5%8f%af%e8%83%bd%e3%81%aa%e3%82%82%e3%81%ae%e3%82%92%e3%81%99%e3%81%b9%e3%81%a6%e6%9b%b4%e6%96%b0%e3%81%99%e3%82%8b%e3%82%b9%e3%82%af%e3%83%aa%e3%83%97%e3%83%88)
-- [vscodeとpipenv](#vscode%e3%81%a8pipenv)
-- [RHEL7にpip](#rhel7%e3%81%abpip)
-- [RHEL6にpip](#rhel6%e3%81%abpip)
-- [pip10問題](#pip10%e5%95%8f%e9%a1%8c)
+- [pipをユーザーローカルに入れる](#pipをユーザーローカルに入れる)
+- [pip --user のパス](#pip---user-のパス)
+- [古いパッケージを見つける](#古いパッケージを見つける)
+- [pipで更新可能なものをすべて更新するスクリプト](#pipで更新可能なものをすべて更新するスクリプト)
+- [vscodeとpipenv](#vscodeとpipenv)
+- [RHEL7にpip](#rhel7にpip)
+- [RHEL6にpip](#rhel6にpip)
+- [pip10問題](#pip10問題)
 - [magic](#magic)
-- [Ubuntu 18.04 LTSでpython3.7](#ubuntu-1804-lts%e3%81%a7python37)
+- [Ubuntu 18.04 LTSでpython3.7](#ubuntu-1804-ltsでpython37)
 - [venv](#venv)
-- [pythonのEOL](#python%e3%81%aeeol)
-- [モジュールとパッケージ](#%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a8%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8)
-- [Windows10上でのPython](#windows10%e4%b8%8a%e3%81%a7%e3%81%aepython)
-- [Jupyter Notebookのtips](#jupyter-notebook%e3%81%aetips)
+- [pythonのEOL](#pythonのeol)
+- [モジュールとパッケージ](#モジュールとパッケージ)
+- [Windows10上でのPython](#windows10上でのpython)
+- [Jupyter Notebookのtips](#jupyter-notebookのtips)
+- [2020-resolver](#2020-resolver)
 
 
 
@@ -608,3 +609,13 @@ Jupyterのバグ回避で3.7を使ってる。
 # Jupyter Notebookのtips 
 
 - [Jupyter Notebook で Prompt の番号をリセットするたったひとつの冴えたやりかた - Qiita](https://qiita.com/iktakahiro/items/32d65ebee6b7d784eed1)
+
+# 2020-resolver
+
+```sh
+mkdir -p ~/.config/pip
+echo "
+[install]
+use-feature=2020-resolver
+" >> ~/.config/pip/pip.conf
+```
