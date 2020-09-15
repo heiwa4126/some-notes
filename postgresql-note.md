@@ -14,6 +14,7 @@
 - [サーバからWALアーカイブを消す](#サーバからwalアーカイブを消す)
   - [.backupファイルサンプル](#backupファイルサンプル)
 - [Slony-Iでレプリケーション](#slony-iでレプリケーション)
+- [スーパーユーザー権限のロールを作成](#スーパーユーザー権限のロールを作成)
 
 # PostgreSQLのサンプルデータ
 
@@ -90,7 +91,7 @@ valuntilがNULLの時のパスワードは決して無効にならない。
 
 ```sh
 sudo yum install postgresql-server postgresql postgresql-libs
-su - 
+su -
 su - postgres
 initdb
 exit # rootへ戻る
@@ -313,6 +314,8 @@ grant connect on database test01 to heiwa;
 alter role heiwa with login;
 exit
 ```
+(TODO: create roleでwith loginを使った方が早いかも。確認後修正)
+
 
 でheiwaユーザに戻って
 
@@ -384,7 +387,7 @@ WALアーカイブ先は
 まともな設計。
 
 
-# pg_basebackup 
+# pg_basebackup
 
 - [PostgreSQLのバックアップ手法のまとめ - Qiita](https://qiita.com/bwtakacy/items/65260e29a25b5fbde835)
 - [pg_basebackupを試す « LANCARD.LAB｜ランカードコムのスタッフブログ](https://www.lancard.com/blog/2018/03/22/pg_basebackup%E3%82%92%E8%A9%A6%E3%81%99/)
@@ -460,4 +463,10 @@ Postgres 10からは [論理レプリケーション(ロジカルレプリケー
 が使えるのでSlonyは減っていくと思われる。10以上同士なら動く?
 
 
+
+# スーパーユーザー権限のロールを作成
+
+```sql
+create role user1 with superuser login password 'SuperSecretPassword';
+```
 
