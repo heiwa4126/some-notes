@@ -16,6 +16,7 @@
 - [Slony-Iでレプリケーション](#slony-iでレプリケーション)
 - [スーパーユーザー権限のロールを作成](#スーパーユーザー権限のロールを作成)
 - [RHEL系でpostgresユーザのプロンプト](#rhel系でpostgresユーザのプロンプト)
+- [1台のホストに9.6,9.5,9.4](#1台のホストに969594)
 
 # PostgreSQLのサンプルデータ
 
@@ -395,6 +396,57 @@ WALアーカイブ先は
 - [第25章 バックアップとリストア](https://www.postgresql.jp/document/9.6/html/backup.html)
 
 
+準備
+```sh
+sudo -iu postgres
+mkdir /tmp/postgres_backup
+chown postgres:postgres /tmp/postgres_backup
+chmod 0700 /tmp/postgres_backup
+```
+
+あとpostgres.confでWALアーカイブの設定と
+```
+max_wal_senders = 1
+```
+さらにpg_hba.conf でreplicaを設定。以下例:
+```
+local   replication     postgres                                peer
+```
+で`pg_ctl reload`
+
+
+
+
+バックアップ
+```
+pg_basebackup -Ft -z -x -D /tmp/postgres_backup 
+```
+- Ft tar形式
+- z gzip圧縮
+- x `-X fecth`に同じ. 完全なスタンドアローンバックアップを作成
+max_wal_senders=2にして`-X s`のほうがいいかも。->ダメでした。 WAL streaming can only be used in plain modeだって
+- D バックアップするディレクトリ。「存在していて、かつ空」でなければダメ
+
+参照: [pg_basebackup](https://www.postgresql.jp/document/9.6/html/app-pgbasebackup.html)
+
+tarballのリストを出してみる。
+```
+tar ztvf /tmp/postgres_backup/base.tar.gz
+```
+ほんとにPGDATA以下全部(バックアップファイルとかも含めて)入ってるのがわかる。
+
+出来たtarballは
+完全なスタンドアローンバックアップなので
+適当なところに展開するだけで(
+  既存と共用するなら`archive_command`のパスを考慮する。
+  postgresロールのパスがわからないなら`pg_hba.conf`をいじる、など。
+)
+
+
+
+
+
+
 # サーバからWALアーカイブを消す
 
 バックアップ先にはWALすべてを残すとして、サーバ自体にWALアーカイブすべてを残しておく必要はない。
@@ -501,6 +553,7 @@ cp /etc/skel/.bashrc .
 if [ -f ~/.bashrc ]; then
   . ~/.bashrc
 fi
+```
 を入れるかで。
 
 # 1台のホストに9.6,9.5,9.4
