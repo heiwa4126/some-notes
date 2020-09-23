@@ -15,6 +15,7 @@
   - [.backupファイルサンプル](#backupファイルサンプル)
 - [Slony-Iでレプリケーション](#slony-iでレプリケーション)
 - [スーパーユーザー権限のロールを作成](#スーパーユーザー権限のロールを作成)
+- [RHEL系でpostgresユーザのプロンプト](#rhel系でpostgresユーザのプロンプト)
 
 # PostgreSQLのサンプルデータ
 
@@ -470,3 +471,74 @@ Postgres 10からは [論理レプリケーション(ロジカルレプリケー
 create role user1 with superuser login password 'SuperSecretPassword';
 ```
 
+
+# RHEL系でpostgresユーザのプロンプト
+
+RHEL系で
+[PostgreSQLのレポジトリ](https://yum.postgresql.org/repopackages/)から
+PostgreSQLをインストールすると
+プロンプトが
+```
+$ sudo -iu postgres
+-bash-4.2$ echo $PS1
+\s-\v\$
+```
+で、ホスト名が出ない。普通のPS1([\u@\h \W]\$ )とかに変更する。
+
+
+いろいろ方法はあろうけど
+```sh
+sudo -iu postgres
+echo export PS1=\'[\\u@\\h \\W]\\$ \' >> .bash_profile
+```
+または
+```sh
+sudo -iu postgres
+cp /etc/skel/.bashrc .
+```
+して、~postgres/.bash_profileの頭の方に
+```sh
+if [ -f ~/.bashrc ]; then
+  . ~/.bashrc
+fi
+を入れるかで。
+
+# 1台のホストに9.6,9.5,9.4
+
+同時起動はしないけどRHEL系1台に3つのバージョンが必要だったときのメモ。
+
+[Repo RPMs - PostgreSQL YUM Repository](https://yum.postgresql.org/repopackages/)から。↑参照
+
+```sh
+yum-config-manager --enable pgdg94
+yum install -y \
+postgresql96 postgresql96-libs postgresql96-server postgresql96-contrib \
+postgresql95 postgresql95-libs postgresql95-server postgresql95-contrib \
+postgresql94 postgresql94-libs postgresql94-server postgresql94-contrib
+systemctl disable --now postgresql-9.4 postgresql-9.5 postgresql-9.6
+```
+
+```
+# sudo -iu postgres
+[sudo] password for heiwa:
+-bash-4.2$ echo $PGDATA
+/var/lib/pgsql/9.4/data
+```
+最後にインストールしたやつののPGDATAになってる。
+~postgres/.bash_profileに記述があるので、よく使うやつに修正(PATHも追加)
+
+各バージョンのバイナリは`/usr/pgsql-9.4/bin`にあるから、
+`sudo -iu postgres`して手でPATH追加していくことにする。
+
+```
+sudo -iu postgres
+export PATH="/usr/pgsql-9.4/bin/:$PATH"
+export PGDATA=/var/lib/pgsql/9.4/data
+initdb
+(略)
+pg_ctl -D "$PGDATA" -l logfile start
+psql
+(略)
+pg_ctl -D "$PGDATA" stop
+```
+これを3バージョンくりかえす。
