@@ -1,6 +1,7 @@
 ansibleメモランダム2
 
 - [用語](#用語)
+- [2.9から2.10へアップグレード](#29から210へアップグレード)
 
 # 用語
 
@@ -26,3 +27,23 @@ ansibleメモランダム2
 
 <dt>Roles
 <dd>(TODO: ちゃんと訳す) 役割はAnsibleの組織の単位です。 役割をホストのグループ（または一連のグループ、あるいはホストパターンなど）に割り当てることは、それらが特定の動作を実装する必要があることを意味します。 役割には、特定の変数値、特定のタスク、および特定のハンドラを適用すること、またはこれらのうち1つ以上を適用することが含まれます。 ロールに関連付けられたファイル構造のため、ロールは再配布可能な単位になり、プレイブック間で（または他のユーザーとでも）動作を共有できます。
+
+# 2.9から2.10へアップグレード
+
+書いてある通りですが...
+```
+pgrading directly from ansible-2.9 or less to ansible-2.10 or greater with pip is
+                known to cause problems.  Please uninstall the old version found at:
+
+                /home/niteadmin/.local/lib/python3.6/site-packages/ansible/__init__.py
+
+                and install the new version:
+
+                    pip uninstall ansible
+                    pip install ansible
+
+                If you have a broken installation, perhaps because ansible-base was installed before
+                ansible was upgraded, try this to resolve it:
+
+                    pip install --force-reinstall ansible ansible-base
+```
