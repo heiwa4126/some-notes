@@ -615,6 +615,11 @@ select schemaname, tablename from pg_tables;
 select schemaname, tablename, tableowner from pg_tables where pg_catalog not like 'pg_%';
 -- インデックス一覧
 select tablename, indexname FROM pg_indexes where indexname not like 'pg_%';
+-- データ型
+select n.nspname, t.typname
+  from pg_type t, pg_namespace n
+  where t.typnamespace = n.oid;
+
 -- 関数一覧 \df
 select n.nspname, p.proname
   from pg_proc p, pg_namespace n
