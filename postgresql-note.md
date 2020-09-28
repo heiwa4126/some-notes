@@ -17,6 +17,7 @@
 - [スーパーユーザー権限のロールを作成](#スーパーユーザー権限のロールを作成)
 - [RHEL系でpostgresユーザのプロンプト](#rhel系でpostgresユーザのプロンプト)
 - [1台のホストに9.6,9.5,9.4](#1台のホストに969594)
+- [メタ情報](#メタ情報)
 
 # PostgreSQLのサンプルデータ
 
@@ -419,7 +420,7 @@ local   replication     postgres                                peer
 
 バックアップ
 ```
-pg_basebackup -Ft -z -x -D /tmp/postgres_backup 
+pg_basebackup -Ft -z -x -D /tmp/postgres_backup
 ```
 - Ft tar形式
 - z gzip圧縮
@@ -595,3 +596,107 @@ psql
 pg_ctl -D "$PGDATA" stop
 ```
 これを3バージョンくりかえす。
+
+
+# メタ情報
+
+pg_で始まるtableはどのdatabaseでも一緒。
+``` sql
+-- namespace(schema)一覧
+select nspname from pg_namespace;
+-- DB一覧。template1, template0は除くべき
+select datname, datdba, encoding, datcollate, datctype from pg_database;
+-- ロール一覧 \du
+select rolname from pg_roles;
+------ 以下database単位のもの
+-- テーブル一覧
+select schemaname, tablename from pg_tables;
+---- (たとえばpostgres DB以外の)テーブル一覧
+select schemaname, tablename, tableowner from pg_tables where pg_catalog not like 'pg_%';
+-- インデックス一覧
+select tablename, indexname FROM pg_indexes where indexname not like 'pg_%';
+-- データ型
+select n.nspname, t.typname
+  from pg_type t, pg_namespace n
+  where t.typnamespace = n.oid;
+
+-- 関数一覧 \df
+select n.nspname, p.proname
+  from pg_proc p, pg_namespace n
+  where p.pronamespace = n.oid;
+-- トリガ関数一覧 トリガ関数にはnamespaceがない
+select tgname from pg_trigger;
+-- ストアドプロシージャ一覧
+select proc.specific_schema as procedure_schema,
+       proc.specific_name,
+       proc.routine_name as procedure_name,
+       proc.external_language,
+       args.parameter_name,
+       args.parameter_mode,
+       args.data_type
+from information_schema.routines proc
+left join information_schema.parameters args
+          on proc.specific_schema = args.specific_schema
+          and proc.specific_name = args.specific_name
+where proc.routine_schema not in ('pg_catalog', 'information_schema')
+      and proc.routine_type = 'PROCEDURE'
+order by procedure_schema,
+         specific_name,
+         procedure_name,
+         args.ordinal_position;
+-- view 一覧
+select table_schema as schema_name,
+       table_name as view_name
+from information_schema.views
+where table_schema not in ('information_schema', 'pg_catalog')
+order by schema_name,
+         view_name;
+-- マテリアライズドビューー一覧
+select schemaname as schema_name,
+       matviewname as view_name,
+       matviewowner as owner,
+       ispopulated as is_populated,
+       definition
+from pg_matviews
+order by schema_name,
+         view_name;
+-- シーケンス一覧 pg_sequencesは10ぐらいから?
+SELECT n.nspname,c.relname
+  FROM pg_class c, pg_namespace n
+  WHERE c.relkind = 'S' and n.oid = c.relnamespace;
+-- 照合順序一覧
+SELECT n.nspname,c.collname
+  FROM pg_collation c, pg_namespace n
+  WHERE n.oid = c.collnamespace;
+-- 外部テーブル \dE[S+] 他と構造が違う
+select * from information_schema.foreign_tables;
+-- 全文検索テンプレート (ちょっと他と変えてみた)
+SELECT n.nspname||'.'||t.tmplname
+  FROM pg_ts_template t, pg_namespace n
+  WHERE n.oid = t.tmplnamespace
+  ORDER BY n.nspname, t.tmplname;
+-- 全文検索パーサー
+SELECT n.nspname||'.'||t.prsname
+  FROM pg_ts_parser t, pg_namespace n
+  WHERE n.oid = t.prsnamespace
+  ORDER BY n.nspname, t.prsname;
+-- 全文検索設定
+SELECT n.nspname||'.'||t.cfgname
+  FROM pg_ts_config t, pg_namespace n
+  WHERE n.oid = t.cfgnamespace
+  ORDER BY n.nspname, t.cfgname;
+-- 全文検索辞書
+SELECT n.nspname||'.'||t.dictname
+  FROM pg_ts_dict t, pg_namespace n
+  WHERE n.oid = t.dictnamespace
+  ORDER BY n.nspname, t.dictname;
+```
+
+別DBのテーブルの参照はいちおう出来ないことになっている。
+(DBLINK や Foreign Data Wrapperを使う)
+
+テーブル名は スキーマ名.テーブル名で。スキーマ名publicは省略できる。
+例:
+``` sql
+select * from information_schema.sql_languages;
+```
