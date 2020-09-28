@@ -5,6 +5,7 @@ shellいろいろtipsメモ
 - ['-'で始まる引数](#-で始まる引数)
 - [特定PIDのプロセスの下をツリー表示](#特定pidのプロセスの下をツリー表示)
 - [dh -h は GiBかGBか](#dh--h-は-gibかgbか)
+- [バージョン番号をソートする](#バージョン番号をソートする)
 
 # 非0の戻り値で中断させたい
 
@@ -116,3 +117,16 @@ fi
 - `-H`オプションでSI単位。GB(10^9 byte)
 
 慣用としては`GiB`の意味で`GB`が使われることが多いので、困ったもんだ。
+
+
+# バージョン番号をソートする
+
+これは知らなかった。
+```sh
+sort -V
+# or
+sort --version-sort
+```
+
+- [バージョン番号のソート](https://rcmdnk.com/blog/2020/09/25/computer-linux-mac/)
+- [sort(1) - Linux manual page](https://man7.org/linux/man-pages/man1/sort.1.html)
