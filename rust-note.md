@@ -14,6 +14,8 @@ Rustって深いよね(皮肉)。
 - [Rustのプロジェクトの始め方](#rustのプロジェクトの始め方)
 - [型を表示](#型を表示)
 - [スライスいろいろ](#スライスいろいろ)
+- [Cargo.tomlの書式](#cargotomlの書式)
+- [バージョンを表示する](#バージョンを表示する)
 
 
 # std::strにiter()がない
@@ -239,4 +241,34 @@ let mut x = [10_i32 ; 8];
 これはsliceじゃなくてarrayだ。
 [array - Rust](https://doc.rust-lang.org/std/primitive.array.html)
 
+
+# Cargo.tomlの書式
+
+- [The Manifest Format - The Cargo Book](https://doc.rust-lang.org/cargo/reference/manifest.html)
+- [cargo metadata - The Cargo Book](https://doc.rust-lang.org/cargo/commands/cargo-metadata.html)
+
+# バージョンを表示する
+
+Cargo.tomlに書いたnameやversionを表示するにはこんな感じ。
+
+```rust
+fn main() {
+    const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+    const PROCNAME: &'static str = env!("CARGO_PKG_NAME");
+    println!("{} v{}", PROCNAME, VERSION);
+}
+```
+キモはstd::env!マクロ。
+コンパイル時に環境変数の値を取得できる。
+
+```rust
+    println!("{} v{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
+```
+でもいい。
+
+
+- [How can a Rust program access metadata from its Cargo package? - Stack Overflow](https://stackoverflow.com/questions/27840394/how-can-a-rust-program-access-metadata-from-its-cargo-package)
+- [Environment Variables - The Cargo Book](https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-crates)
+- [std::env - Rust](https://doc.rust-lang.org/std/macro.env.html)
+- [crate コンパイル時に crate のバージョン文字列を得る - Qiita](https://qiita.com/uasi/items/a9dd5af3cc923496118a)
 
