@@ -16,6 +16,7 @@ Rustって深いよね(皮肉)。
 - [スライスいろいろ](#スライスいろいろ)
 - [Cargo.tomlの書式](#cargotomlの書式)
 - [バージョンを表示する](#バージョンを表示する)
+- [RAWテキストの書き方](#rawテキストの書き方)
 
 
 # std::strにiter()がない
@@ -272,3 +273,13 @@ fn main() {
 - [std::env - Rust](https://doc.rust-lang.org/std/macro.env.html)
 - [crate コンパイル時に crate のバージョン文字列を得る - Qiita](https://qiita.com/uasi/items/a9dd5af3cc923496118a)
 
+# RAWテキストの書き方
+
+- [[Rust] 文字列リテラル: エスケープあるいは raw string - Qiita](https://qiita.com/osanshouo/items/59790f5fcd515a0ae559)
+- [Rust: Raw string literals - rahul thakoor](https://rahul-thakoor.github.io/rust-raw-string-literals/)
+
+実用的かしらんけど、なんかすごい。
+
+```rust
+r#"これ"は引用符"#
+```
