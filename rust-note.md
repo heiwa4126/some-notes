@@ -6,10 +6,12 @@ Rustって深いよね(皮肉)。
 - [std::strにiter()がない](#stdstrにiterがない)
 - [type(var)みたいの](#typevarみたいの)
 - [クレート & カーゴ](#クレート--カーゴ)
-- [Rsutは何で「サビ」なの?](#rsutは何でサビなの)
+- [Rustは何で「サビ」なの?](#rustは何でサビなの)
 - [testでprintln!](#testでprintln)
 - [Rustのエラーハンドリング](#rustのエラーハンドリング)
 - [anyhow](#anyhow)
+- [Rustの更新](#rustの更新)
+- [Rustのプロジェクトの始め方](#rustのプロジェクトの始め方)
 - [型を表示](#型を表示)
 - [スライスいろいろ](#スライスいろいろ)
 
@@ -100,7 +102,7 @@ fn main() {
 
 [cargo（カーゴ）の意味 - goo国語辞書](https://dictionary.goo.ne.jp/word/%E3%82%AB%E3%83%BC%E3%82%B4/)
 
-# Rsutは何で「サビ」なの?
+# Rustは何で「サビ」なの?
 
 [Internet archaeology: the definitive, end-all source for why Rust is named "Rust" : rust](https://www.reddit.com/r/rust/comments/27jvdt/internet_archaeology_the_definitive_endall_source/)
 
@@ -181,6 +183,31 @@ implする。
 - [anyhow - Rust](https://docs.rs/anyhow/1.0.31/anyhow/)
 - [Rustの便利クレート - Qiita](https://qiita.com/qryxip/items/7c16ab9ef3072c1d7199#anyhow)
 - [anyhowの簡単な使い方 - Shinjuku.rs #8 dalance - Speaker Deck](https://speakerdeck.com/dalance/shinjuku-dot-rs-number-8-dalance)
+
+
+# Rustの更新
+
+```sh
+rustup update
+```
+
+[Install Rust - Rust Programming Language](https://www.rust-lang.org/tools/install)
+
+
+# Rustのプロジェクトの始め方
+
+```sh
+cargo init hello95
+cd hello95
+cargo run
+cargo build
+target/debug/hello95
+cargo build --release
+target/release/hello95
+RUSTFLAGS="-C link-arg=-s" cargo build --release
+target/release/hello95
+```
+
 
 
 # 型を表示
