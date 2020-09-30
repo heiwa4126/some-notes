@@ -31,6 +31,7 @@
 - [trimpathオプション](#trimpathオプション)
 - [JSONからgoのtype xxxx structにするやつ](#jsonからgoのtype-xxxx-structにするやつ)
 - [strings.HasSuffix](#stringshassuffix)
+- [標準プロジェクトレイアウト](#標準プロジェクトレイアウト)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -894,3 +895,22 @@ Rustだと
 - [str::ends_with](https://doc.rust-lang.org/std/primitive.str.html#method.ends_with)
 
 Pythonだと str.startswith, str.endswith
+
+
+# 標準プロジェクトレイアウト
+
+すこし「標準」っぽくしてみよう。
+
+- [golang-standards/project-layout: Standard Go Project Layout](https://github.com/golang-standards/project-layout)
+- [Goにはディレクトリ構成のスタンダードがあるらしい。 - Qiita](https://qiita.com/sueken/items/87093e5941bfbc09bea8)
+- [Goの標準プロジェクトレイアウトを読み解く - Tech Do | メディアドゥの技術ブログ](https://techdo.mediado.jp/entry/2019/01/18/112503)
+
+サンプルプロジェクト:
+- [vmware-tanzu/velero: Backup and migrate Kubernetes applications and their persistent volumes](https://github.com/vmware-tanzu/velero)
+
+テストデータを/testに置くのはちょっといやだ。
+/pkg, /internal も大げさではないか?
+
+プロジェクトルートにmain.goがないと`go build`ができない。
+
+やっぱりけっこうめんどくさい。利点が見えない

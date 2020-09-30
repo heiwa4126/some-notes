@@ -4,6 +4,7 @@
 - [rpmbuild関連](#rpmbuild関連)
 - [`rpm -qa`の出力をCSVっぽく](#rpm--qaの出力をcsvっぽく)
 - [rpmのdry-run](#rpmのdry-run)
+- [redhat-release-serverメモ](#redhat-release-serverメモ)
 
 # rpmbuild関連
 
@@ -69,3 +70,42 @@ yumにもqueryformatオプションがあるといいのに。
 `rpm -Uvvh foo.rpm --test`
 
 [linux - Is there a rpm command to check .rpm package installation log - Stack Overflow](https://stackoverflow.com/questions/42917414/is-there-a-rpm-command-to-check-rpm-package-installation-log)
+
+
+# redhat-release-serverメモ
+
+redhat-release-serverは他に依存がないので、
+バージョン表記は自由に変更できる。
+
+例) 7.6以上を7.5にみせかけるとき
+```sh
+sudo yum downgrade --disableexcludes=all redhat-release-server-7.5-8.el7
+```
+
+例) 現在の最新にするとき
+```sh
+sudo yum update --disableexcludes=all redhat-release-server
+```
+
+参考:
+```
+$ sudo yum --disableexcludes=all --showduplicates list redhat-release-server
+Loaded plugins: etckeeper, langpacks, product-id, search-disabled-repos, subscription-manager
+
+This system is not registered with an entitlement server. You can use subscription-manager to register.
+
+Installed Packages
+redhat-release-server.x86_64                            7.9-3.el7                               @rhui-rhel-7-server-rhui-rpms
+Available Packages
+redhat-release-server.x86_64                            7.0-1.el7                               rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.1-1.el7                               rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.2-9.el7                               rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.3-7.el7                               rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.4-18.el7                              rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.5-8.el7                               rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.5-8.el7.1                             rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.6-4.el7                               rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.7-10.el7                              rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.8-2.el7                               rhui-rhel-7-server-rhui-rpms
+redhat-release-server.x86_64                            7.9-3.el7                               rhui-rhel-7-server-rhui-rpms
+```

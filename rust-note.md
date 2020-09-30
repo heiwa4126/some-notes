@@ -16,7 +16,17 @@ Rustって深いよね(皮肉)。
 - [スライスいろいろ](#スライスいろいろ)
 - [Cargo.tomlの書式](#cargotomlの書式)
 - [バージョンを表示する](#バージョンを表示する)
+- [rls (Rust Language Server)](#rls-rust-language-server)
+- [rustfmt](#rustfmt)
+- [emacsでRust](#emacsでrust)
+- [String <-> &str](#string---str)
 - [RAWテキストの書き方](#rawテキストの書き方)
+- [Rustのモジュール](#rustのモジュール)
+- [RHEL7にllvm](#rhel7にllvm)
+- [cargo test](#cargo-test)
+- [OptionとResult](#optionとresult)
+- [RustでExcelファイルを作る](#rustでexcelファイルを作る)
+- [Boxとdyn](#boxとdyn)
 
 
 # std::strにiter()がない
@@ -154,7 +164,9 @@ implする。
 難しすぎる。
 
 この例とかを使う。
-[Error Handling - A Gentle Introduction to Rust](https://stevedonovan.github.io/rust-gentle-intro/6-error-handling.html)
+- [Error Handling - A Gentle Introduction to Rust](https://stevedonovan.github.io/rust-gentle-intro/6-error-handling.html)
+- [Boxing errors - Rust By Example](https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html)
+
 
 この辺読む:
 - [Rustのエラー処理 - Qiita](https://qiita.com/fujitayy/items/cafe661415b6aa33d884) - failureはもはやメンテされてないらしい
@@ -273,6 +285,45 @@ fn main() {
 - [std::env - Rust](https://doc.rust-lang.org/std/macro.env.html)
 - [crate コンパイル時に crate のバージョン文字列を得る - Qiita](https://qiita.com/uasi/items/a9dd5af3cc923496118a)
 
+# rls (Rust Language Server)
+
+```
+$ rls
+error: 'rls' is not installed for the toolchain 'stable-x86_64-unknown-linux-gnu'
+To install, run `rustup component add rls --toolchain stable-x86_64-unknown-linux-gnu`
+
+$ rustup component add rls --toolchain stable-x86_64-unknown-linux-gnu
+info: downloading component 'rls'
+info: installing component 'rls'
+info: Defaulting to 500.0 MiB unpack ram
+  7.9 MiB /   7.9 MiB (100 %)   5.6 MiB/s in  1s ETA:  0s
+
+$ rls -V
+rls 1.41.0 (dd341d5 2020-06-30)
+```
+
+# rustfmt
+
+Linuxの場合
+```sh
+mkdir -p "$HOME/.config/rustfmt"
+echo 'edition = "2018"' >> "$HOME/.config/rustfmt/rustfmt.toml"
+```
+
+# emacsでRust
+
+rustic (+lsp　or eglot) + rlsがいいらしい。
+rustiはEmacs 26以上でないとだめみたい。
+
+- [brotzeit/rustic: Rust development environment for Emacs](https://github.com/brotzeit/rustic)
+- [Rust開発環境 on Emacs更新](https://skoji.jp/blog/2020/03/rust-dev.html)
+
+
+# String <-> &str
+
+- [&str を String に変換する4つの方法 - Qiita](https://qiita.com/uasi/items/3b08a5ba81fede837531)
+- [rust String &str の変換と、文字列 数値 の変換 - Qiita](https://qiita.com/smicle/items/29a4d5d1d14ad7f77f60)
+
 # RAWテキストの書き方
 
 - [[Rust] 文字列リテラル: エスケープあるいは raw string - Qiita](https://qiita.com/osanshouo/items/59790f5fcd515a0ae559)
@@ -283,3 +334,57 @@ fn main() {
 ```rust
 r#"これ"は引用符"#
 ```
+
+# Rustのモジュール
+
+わけがわからない。lib.rsってなんでこれいるの?
+
+- [Rustのモジュールの使い方 2018 Edition版 | κeenのHappy Hacκing Blog](https://keens.github.io/blog/2018/12/08/rustnomoju_runotsukaikata_2018_editionhan/)
+
+Goみたいに複数のファイルで1パッケージ、というのはないみたい。
+1ファイルnモジュール。Javaっぽい。
+
+# RHEL7にllvm
+
+たまにRustでLLVM要求されるので
+
+- [Hello World - installing Clang/LLVM on RHEL 7 | Red Hat Developer](https://developers.redhat.com/HW/ClangLLVM-RHEL-7)
+- [How to Install LLVM on CentOS7 – Linux Hint](https://linuxhint.com/install_llvm_centos7/)
+  
+とりあえず
+```sh
+sudo yum install clang llvm-devel
+```
+でうんと古いのはインストールできる。
+
+# cargo test
+
+print!()を抑制しない(go test の-v)
+```sh
+cargo test -- --nocapture
+```
+
+特定のテストを実行
+```sh
+cargo test foo
+```
+fooを含む関数名だけ実行される
+
+# OptionとResult
+
+- [RustのOptionとResult - Qiita](https://qiita.com/take4s5i/items/c890fa66db3f71f41ce7)
+- [RustでOption値やResult値を上手に扱う - Qiita](https://qiita.com/tatsuya6502/items/cd41599291e2e5f38a4a)
+- 
+「unwrap()はpanic!するかもしれない」ことを忘れないこと。
+
+# RustでExcelファイルを作る
+
+- [spsheet - Rust](https://docs.rs/spsheet/0.1.0/spsheet/) - 出来たxlsxやodsが「不正」と表示されて怖くて使えない。
+- [xlsxwriter - Rust](https://docs.rs/xlsxwriter/0.3.2/xlsxwriter/) - LLVMを要求される。?の使い方が古いらしくコンパイラが通らない。
+- [simple_excel_writer - Rust](https://docs.rs/simple_excel_writer/0.1.7/simple_excel_writer/) - とりあえずまともに動く。
+
+
+# Boxとdyn
+
+- [Box<T>はヒープのデータを指し、既知のサイズである - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch15-01-box.html)
+- [Rustで複数のimpl Traitを返す - Qiita](https://qiita.com/taiki-e/items/39688f6c86b919988222)
