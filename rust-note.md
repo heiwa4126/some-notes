@@ -25,8 +25,10 @@ Rustって深いよね(皮肉)。
 - [RHEL7にllvm](#rhel7にllvm)
 - [cargo test](#cargo-test)
 - [OptionとResult](#optionとresult)
+- [型変換イディオム](#型変換イディオム)
 - [RustでExcelファイルを作る](#rustでexcelファイルを作る)
 - [Boxとdyn](#boxとdyn)
+- [print!のフォーマット](#printのフォーマット)
 
 
 # std::strにiter()がない
@@ -324,6 +326,12 @@ rustiはEmacs 26以上でないとだめみたい。
 - [&str を String に変換する4つの方法 - Qiita](https://qiita.com/uasi/items/3b08a5ba81fede837531)
 - [rust String &str の変換と、文字列 数値 の変換 - Qiita](https://qiita.com/smicle/items/29a4d5d1d14ad7f77f60)
 
+String, strの他にも
+OsString、OsStr、CString、CStr
+がある。
+
+[文字列型 - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch08-02-strings.html)
+
 # RAWテキストの書き方
 
 - [[Rust] 文字列リテラル: エスケープあるいは raw string - Qiita](https://qiita.com/osanshouo/items/59790f5fcd515a0ae559)
@@ -375,7 +383,23 @@ fooを含む関数名だけ実行される
 - [RustのOptionとResult - Qiita](https://qiita.com/take4s5i/items/c890fa66db3f71f41ce7)
 - [RustでOption値やResult値を上手に扱う - Qiita](https://qiita.com/tatsuya6502/items/cd41599291e2e5f38a4a)
 - 
+
 「unwrap()はpanic!するかもしれない」ことを忘れないこと。
+unwrap_or()やunwrap_or_else()が使えるなら使う。
+
+
+# 型変換イディオム
+
+- [Rust の型変換イディオム - Qiita](https://qiita.com/legokichi/items/0f1c592d46a9aaf9a0ea)
+- [競技プログラミングにおけるPythonとRustの対応関係まとめ - Qiita](https://qiita.com/wotsushi/items/4a6797f52080453a0440)
+
+`&[&str] -> Vec<String>`
+``` rust
+let a = &["a","b","c"];
+let b = a.itor().map(|&x| x.to_string()).collect();
+// or
+let b = a.itor().map(std::string::ToString::to_string).collect();
+```
 
 # RustでExcelファイルを作る
 
@@ -383,8 +407,14 @@ fooを含む関数名だけ実行される
 - [xlsxwriter - Rust](https://docs.rs/xlsxwriter/0.3.2/xlsxwriter/) - LLVMを要求される。?の使い方が古いらしくコンパイラが通らない。
 - [simple_excel_writer - Rust](https://docs.rs/simple_excel_writer/0.1.7/simple_excel_writer/) - とりあえずまともに動く。
 
+おまけ
+- [Rust で Excel オートメーション - Qiita](https://qiita.com/benki/items/de2e104a5866fad0ebab)
 
 # Boxとdyn
 
 - [Box<T>はヒープのデータを指し、既知のサイズである - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch15-01-box.html)
 - [Rustで複数のimpl Traitを返す - Qiita](https://qiita.com/taiki-e/items/39688f6c86b919988222)
+
+# print!のフォーマット
+
+[std::fmt - Rust](https://doc.rust-lang.org/std/fmt/)
