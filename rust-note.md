@@ -215,16 +215,15 @@ rustup update
 
 ```sh
 cargo init hello95
-cd hello95
+cd !$
 cargo run
 cargo build
-target/debug/hello95
+./target/debug/hello95
 cargo build --release
-target/release/hello95
+./target/release/hello95
 RUSTFLAGS="-C link-arg=-s" cargo build --release
-target/release/hello95
+./target/release/hello95
 ```
-
 
 
 # 型を表示
