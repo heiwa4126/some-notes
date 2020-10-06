@@ -29,6 +29,7 @@ Rustって深いよね(皮肉)。
 - [RustでExcelファイルを作る](#rustでexcelファイルを作る)
 - [Boxとdyn](#boxとdyn)
 - [print!のフォーマット](#printのフォーマット)
+- [「スタックは高速です」](#スタックは高速です)
 
 
 # std::strにiter()がない
@@ -417,3 +418,25 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 # print!のフォーマット
 
 [std::fmt - Rust](https://doc.rust-lang.org/std/fmt/)
+
+
+# 「スタックは高速です」
+
+- [所有権とは？ - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch04-01-what-is-ownership.html)
+- [What is Ownership? - The Rust Programming Language](https://doc.rust-lang.org/book/second-edition/ch04-01-what-is-ownership.html)
+
+「スタックは高速です」と書いてあったらしい2nd Editonの原文は
+"The second edition of the book is no longer distributed with Rust's documentation."
+となってて閲覧できず、カレントバージョンでは「スタックは高速です」にあたる文章がない。
+
+- [What is Ownership? - The Rust Programming Language](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html)
+- [所有権とは？ - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch04-01-what-is-ownership.html)
+- 
+「スタックは高速です」の意味はおそらくアロケート/でアロケートが早い、ということではないだろうか。
+
+いやでも「ヒープへのデータアクセスは、スタックのデータへのアクセスよりも低速です」って書いてあるな...
+
+
+[Box, スタックとヒープ - Rust By Example 日本語版](https://doc.rust-jp.rs/rust-by-example-ja/std/box.html)
+
+> ボックスとは正確にはヒープ上におかれたTの値へのスマートポインタです
