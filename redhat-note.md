@@ -997,7 +997,7 @@ mount -t cifs -o vers=2.1,username=user,password=pass,domain=dom //srv/share /mn
 [(PDF)Red Hat Enterprise Linux 7 ネットワークガイド -  RHEL 7 でネットワーク、ネットワークインターフェース、およびネットワークサービスの設定および管理](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/pdf/networking_guide/Red_Hat_Enterprise_Linux-7-Networking_Guide-ja-JP.pdf)
 
 
-# sosreport 
+# sosreport
 
 - [Red Hat Enterprise Linux 上での sosreport の役割と取得方法 - Red Hat Customer Portal](https://access.redhat.com/ja/solutions/78443)
 
@@ -1014,7 +1014,7 @@ sudo sosreport
 
 途中
 ```
-Please enter the case id that you are generating this report for []: 
+Please enter the case id that you are generating this report for []:
 ```
 とか訊かれるので、かっこいい名前を考えておくこと。
 
@@ -1043,3 +1043,17 @@ sudo sosreport --batch
 元の場所にサイズ0の同じファイルを置く、
 あるいは`chmod -r`してまう
 がいいと思う。
+
+
+# RPMのキャッシュ
+
+```sh
+yum install xxxx --downloadonly
+```
+でキャッシュしたパッケージは`/var/cache/yum`の下に入る。
+
+```sh
+find /var/cache/yum -type f -name \*.rpm
+find /var/cache/yum -type d
+```
+で見れる。
