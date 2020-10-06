@@ -29,7 +29,10 @@ Rustって深いよね(皮肉)。
 - [RustでExcelファイルを作る](#rustでexcelファイルを作る)
 - [Boxとdyn](#boxとdyn)
 - [print!のフォーマット](#printのフォーマット)
+- [trait](#trait)
+- [iter](#iter)
 - [「スタックは高速です」](#スタックは高速です)
+- [構造体に文字列](#構造体に文字列)
 
 
 # std::strにiter()がない
@@ -419,6 +422,18 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 
 [std::fmt - Rust](https://doc.rust-lang.org/std/fmt/)
 
+# trait
+
+> 注釈: 違いはあるものの、トレイトは他の言語でよくインターフェイスと呼ばれる機能に類似しています。
+
+- [トレイト：共通の振る舞いを定義する - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch10-02-traits.html)
+- [オブジェクト指向経験者のためのRust入門 - Qiita](https://qiita.com/nacika_ins/items/cf3782bd371da79def74)
+
+
+# iter
+
+- [std::iter::Iterator - Rust](https://doc.rust-lang.org/std/iter/trait.Iterator.html)
+- [Rustのイテレータの網羅的かつ大雑把な紹介 - Qiita](https://qiita.com/lo48576/items/34887794c146042aebf1)
 
 # 「スタックは高速です」
 
@@ -436,7 +451,22 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 
 いやでも「ヒープへのデータアクセスは、スタックのデータへのアクセスよりも低速です」って書いてあるな...
 
+ヒープへアクセスするにはポインタ経由だから?
+
 
 [Box, スタックとヒープ - Rust By Example 日本語版](https://doc.rust-jp.rs/rust-by-example-ja/std/box.html)
 
 > ボックスとは正確にはヒープ上におかれたTの値へのスマートポインタです
+
+
+# 構造体に文字列
+
+- [Rustの構造体に文字列を持たせるいくつかの方法 - Qiita](https://qiita.com/Kogia_sima/items/6899c5196813cf231054)
+- [Idiomatic string parmeter types: &str vs AsRef<str> vs Into<String> - The Rust Programming Language Forum](https://users.rust-lang.org/t/idiomatic-string-parmeter-types-str-vs-asref-str-vs-into-string/7934)
+
+
+`impl Into<String>`はいい感じ。
+
+- [実践Rust入門 11日目 - HacoLab](https://hacolab.hatenablog.com/entry/2019/07/13/235700)
+- [rust - How to accept &str, String and &String in a single function? - Stack Overflow](https://stackoverflow.com/questions/55079070/how-to-accept-str-string-and-string-in-a-single-function)
+- [引数でのimpl とジェネリクスの違い - Qiita](https://qiita.com/kawadumax/items/580807d3f20ddd76725f)
