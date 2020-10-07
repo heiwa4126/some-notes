@@ -9,6 +9,7 @@
 - [各ディストリのsshd_configのCiphersのデフォルト値](#各ディストリのsshd_configのciphersのデフォルト値)
 - [sshの接続でどんなcipherが使われるか確認](#sshの接続でどんなcipherが使われるか確認)
 - [Windows 10のssh](#windows-10のssh)
+- [どうしてもパスワード認証になってしまうホスト](#どうしてもパスワード認証になってしまうホスト)
 
 
 # .ssh/configでhostごとのUserがoverrideできない
@@ -89,7 +90,7 @@ ssh_configにはどう書くのか. RemoteForward など
 
 # 各ディストリのsshd_configのCiphersのデフォルト値
 
-RHEL7 default Ciphers 
+RHEL7 default Ciphers
 ```
 Ciphers chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,blowfish-cbc,cast128-cbc,3des-cbc
 ```
@@ -109,7 +110,7 @@ RHEL7のは流石にまずいので、弱いのは外すべき。
 以下引用:
 ```
 ##### セキュリティ系！重要！！ #####
-# 以下は、OpenSSH 6.8を参考にしたもの。 
+# 以下は、OpenSSH 6.8を参考にしたもの。
 # NSAフリーなChacha20を優先的に、そのあとは暗号強度の順。aes-cbcはダメらしい
 Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
 ```
@@ -216,3 +217,12 @@ WSUSの環境だとインストールできないので諦めてくらはい。
 - [unable to start ssh-agent service, error :1058 - Qiita](https://qiita.com/tmak_tsukamoto/items/c72399a4a6d7ff55fcdb)
 - [Windows 10 に OpenSSH サーバをインストールする - Qiita](https://qiita.com/iShinkai/items/a12c9d26f8f4264897f9)
 
+
+# どうしてもパスワード認証になってしまうホスト
+
+```sh
+chmod og= ~
+```
+で治るかもしれない。雑で申し訳ない。
+
+ただgroupに権限ないと困るときがあるよなあ。なんか設定で変更できると思うんだけど。
