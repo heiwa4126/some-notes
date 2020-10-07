@@ -33,6 +33,7 @@ Rustって深いよね(皮肉)。
 - [iter](#iter)
 - [「スタックは高速です」](#スタックは高速です)
 - [構造体に文字列](#構造体に文字列)
+- [concat!](#concat)
 
 
 # std::strにiter()がない
@@ -327,6 +328,7 @@ rustiはEmacs 26以上でないとだめみたい。
 # String <-> &str
 
 - [&str を String に変換する4つの方法 - Qiita](https://qiita.com/uasi/items/3b08a5ba81fede837531)
+- [How do I convert a &str to a String in Rust?](https://blog.mgattozzi.dev/how-do-i-str-string/)
 - [rust String &str の変換と、文字列 数値 の変換 - Qiita](https://qiita.com/smicle/items/29a4d5d1d14ad7f77f60)
 
 String, strの他にも
@@ -361,7 +363,7 @@ Goみたいに複数のファイルで1パッケージ、というのはない�
 
 - [Hello World - installing Clang/LLVM on RHEL 7 | Red Hat Developer](https://developers.redhat.com/HW/ClangLLVM-RHEL-7)
 - [How to Install LLVM on CentOS7 – Linux Hint](https://linuxhint.com/install_llvm_centos7/)
-  
+
 とりあえず
 ```sh
 sudo yum install clang llvm-devel
@@ -385,7 +387,7 @@ fooを含む関数名だけ実行される
 
 - [RustのOptionとResult - Qiita](https://qiita.com/take4s5i/items/c890fa66db3f71f41ce7)
 - [RustでOption値やResult値を上手に扱う - Qiita](https://qiita.com/tatsuya6502/items/cd41599291e2e5f38a4a)
-- 
+-
 
 「unwrap()はpanic!するかもしれない」ことを忘れないこと。
 unwrap_or()やunwrap_or_else()が使えるなら使う。
@@ -446,7 +448,7 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 
 - [What is Ownership? - The Rust Programming Language](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html)
 - [所有権とは？ - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch04-01-what-is-ownership.html)
-- 
+-
 「スタックは高速です」の意味はおそらくアロケート/でアロケートが早い、ということではないだろうか。
 
 いやでも「ヒープへのデータアクセスは、スタックのデータへのアクセスよりも低速です」って書いてあるな...
@@ -470,3 +472,9 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 - [実践Rust入門 11日目 - HacoLab](https://hacolab.hatenablog.com/entry/2019/07/13/235700)
 - [rust - How to accept &str, String and &String in a single function? - Stack Overflow](https://stackoverflow.com/questions/55079070/how-to-accept-str-string-and-string-in-a-single-function)
 - [引数でのimpl とジェネリクスの違い - Qiita](https://qiita.com/kawadumax/items/580807d3f20ddd76725f)
+
+# concat!
+
+[std::concat - Rust](https://doc.rust-lang.org/std/macro.concat.html)
+
+便利そうだけどリテラルにしか使えない。
