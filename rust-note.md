@@ -36,6 +36,7 @@ Rustって深いよね(皮肉)。
 - [「スタックは高速です」](#スタックは高速です)
 - [構造体に文字列](#構造体に文字列)
 - [concat!](#concat)
+- [cargo clean](#cargo-clean)
 
 
 # std::strにiter()がない
@@ -503,3 +504,34 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 [std::concat - Rust](https://doc.rust-lang.org/std/macro.concat.html)
 
 便利そうだけどリテラルにしか使えない。
+
+# cargo clean
+
+Rustのプロジェクトは、ちっちゃなコードでも500MBとかになるので、
+サンプルコードなどをためしにコンパイルしたら
+`cargo clean`しておくといいと思う。
+
+こんな感じ。`clean.sh`
+```sh
+#!/bin/bash -e
+cd `dirname $0`
+for D in `find . -type f -name Cargo.toml` ; do
+    D=`dirname "$D"`; echo "$D"
+    pushd "$D" &> /dev/null
+    cargo clean
+    popd &> /dev/null
+done
+```
+
+実行例
+```
+$ du -hs .
+1.4G    .
+
+$ ./clean.sh
+(略)
+
+$ du -hs .
+3.7M    .
+```
+
