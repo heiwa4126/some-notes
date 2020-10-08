@@ -35,6 +35,8 @@ Rustって深いよね(皮肉)。
 - [iter](#iter)
 - [「スタックは高速です」](#スタックは高速です)
 - [構造体に文字列](#構造体に文字列)
+- [derive Ordがどう実装されるか知りたい](#derive-ordがどう実装されるか知りたい)
+- [into_iter()とiter()](#into_iterとiter)
 - [concat!](#concat)
 - [cargo clean](#cargo-clean)
 
@@ -498,6 +500,20 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 - [実践Rust入門 11日目 - HacoLab](https://hacolab.hatenablog.com/entry/2019/07/13/235700)
 - [rust - How to accept &str, String and &String in a single function? - Stack Overflow](https://stackoverflow.com/questions/55079070/how-to-accept-str-string-and-string-in-a-single-function)
 - [引数でのimpl とジェネリクスの違い - Qiita](https://qiita.com/kawadumax/items/580807d3f20ddd76725f)
+
+# derive Ordがどう実装されるか知りたい
+
+(todo)
+
+[タイプのOrdの実装は厄介ですか?](https://www.366service.com/jp/qa/2af89d26e6b845e375e66880c037c79a)
+
+
+# into_iter()とiter()
+
+- [Vec< Option< T>>をオプション< Vec< T>に変換するにはどうすればよいですか](https://www.366service.com/jp/qa/04f7eb9483f2bf6fe0ace72802ce9770)
+- [iter()とinto_iter()の違いとちょっとした落とし穴 - Qiita](https://qiita.com/harvath/items/b79eaf61e73e79e3fc0f)
+- [iter()とinto_iter()の違いを整理した - さんちゃのblog](https://dawn.hateblo.jp/entry/2017/07/24/165933)
+- [iterとinto_iterの違いは何ですか？](https://qastack.jp/programming/34733811/what-is-the-difference-between-iter-and-into-iter)
 
 # concat!
 
