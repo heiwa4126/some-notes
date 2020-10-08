@@ -10,9 +10,11 @@ Rustって深いよね(皮肉)。
 - [testでprintln!](#testでprintln)
 - [Rustのエラーハンドリング](#rustのエラーハンドリング)
 - [anyhow](#anyhow)
+- [便利マクロ](#便利マクロ)
 - [Rustの更新](#rustの更新)
 - [Rustのプロジェクトの始め方](#rustのプロジェクトの始め方)
 - [型を表示](#型を表示)
+- [trait トレイト](#trait-トレイト)
 - [スライスいろいろ](#スライスいろいろ)
 - [Cargo.tomlの書式](#cargotomlの書式)
 - [バージョンを表示する](#バージョンを表示する)
@@ -207,6 +209,15 @@ implする。
 - [anyhowの簡単な使い方 - Shinjuku.rs #8 dalance - Speaker Deck](https://speakerdeck.com/dalance/shinjuku-dot-rs-number-8-dalance)
 
 
+macros:
+- [anyhow::anyhow - Rust](https://docs.rs/anyhow/1.0.32/anyhow/macro.anyhow.html)
+- [anyhow::bail - Rust](https://docs.rs/anyhow/1.0.32/anyhow/macro.bail.html) - これは便利
+- [anyhow::ensure - Rust](https://docs.rs/anyhow/1.0.32/anyhow/macro.ensure.html) - if $cond bail!
+
+# 便利マクロ
+
+[Rustの便利マクロ特集 - Qiita](https://qiita.com/elipmoc101/items/f76a47385b2669ec6db3)
+
 # Rustの更新
 
 ```sh
@@ -247,6 +258,13 @@ fn main() {
 }
 ```
 [rust playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=95e89835d488491109a897a2cad55d97)
+
+
+# trait トレイト
+
+インタフェースみたいなもの。
+
+[基本トレイト - あるマのメモ書き](https://yossan.hatenablog.com/entry/2020/08/31/215358)
 
 
 # スライスいろいろ
