@@ -355,6 +355,12 @@ OsString、OsStr、CString、CStr
 
 [文字列型 - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch08-02-strings.html)
 
+
+`impl Into<String>`は面白い。
+使い方は [Search · impl Into<String>](https://github.com/search?l=Rust&q=impl+Into%3CString%3E&type=Code)
+参照。
+
+
 # RAWテキストの書き方
 
 - [[Rust] 文字列リテラル: エスケープあるいは raw string - Qiita](https://qiita.com/osanshouo/items/59790f5fcd515a0ae559)
@@ -365,6 +371,7 @@ OsString、OsStr、CString、CStr
 ```rust
 r#"これ"は引用符"#
 ```
+
 
 # Rustのモジュール
 
