@@ -39,6 +39,7 @@ Rustって深いよね(皮肉)。
 - [into_iter()とiter()](#into_iterとiter)
 - [concat!](#concat)
 - [cargo clean](#cargo-clean)
+- [map!がない](#mapがない)
 
 
 # std::strにiter()がない
@@ -363,6 +364,8 @@ OsString、OsStr、CString、CStr
 使い方は [Search · impl Into<String>](https://github.com/search?l=Rust&q=impl+Into%3CString%3E&type=Code)
 参照。
 
+このクレートも便利
+- [big_s - crates.io: Rust Package Registry](https://crates.io/crates/big_s)
 
 # RAWテキストの書き方
 
@@ -550,4 +553,16 @@ $ ./clean.sh
 $ du -hs .
 3.7M    .
 ```
+
+# map!がない
+
+vec!はあるのにhashmapにはマクロがない。
+
+- [rust - How do I create a HashMap literal? - Stack Overflow](https://stackoverflow.com/questions/27582739/how-do-i-create-a-hashmap-literal)
+- [Rustにおける連想配列リテラル・ハッシュリテラル相当 - Qiita](https://qiita.com/qnighy/items/b1d63b1931447758d607)
+- [hashmap - HashMapリテラルを作成するにはどうすればよいですか？](https://python5.com/q/zrlajgwn)
+
+これなんかよさそう
+- [maplit - Rust](https://docs.rs/maplit/1.0.2/maplit/)
+
 
