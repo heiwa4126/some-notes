@@ -42,7 +42,9 @@ Rustって深いよね(皮肉)。
 - [cargo clean](#cargo-clean)
 - [overflow](#overflow)
 - [Rustで「普通のenum」](#rustで普通のenum)
+- [ライフタイム](#ライフタイム)
 - [Rustのデバッグ](#rustのデバッグ)
+- [ラムダを返す](#ラムダを返す)
 
 
 # std::strにiter()がない
@@ -623,10 +625,21 @@ enumを定数列挙に使いたいとき。 ...みんな困ってるんだな。
 
 「ふつうのenum」でいいなら
 ```rust
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct MyEnum(u16);
+impl Clone for MyEnum {
+    #[inline]
+    fn clone(&self) -> Arch {
+        Arch(self.0)
+    }
+}
 ```
 みたいな実装でよさそう。
+
+# ライフタイム
+
+[Rustの2種類の 'static | 俺とお前とlaysakura](https://laysakura.github.io/2020/05/21/rust-static-lifetime-and-static-bounds/)
+
 
 
 # Rustのデバッグ
@@ -637,3 +650,10 @@ gdbで普通に。lldbもあれば使える。rust-gdbやrust-lldbを使うとp�
 - [LLDBとかいう次世代高性能デバッガ - Qiita](https://qiita.com/theefool/items/8b985ce71dcdccf26abc)
 - [Rustのデバッグ体験を上げるには - verilog書く人](http://segafreder.hatenablog.com/entry/2018/12/13/145210)
 
+# ラムダを返す
+
+[Rust - クロージャーとラムダ式 | rust Tutorial](https://sodocumentation.net/ja/rust/topic/1815/%E3%82%AF%E3%83%AD%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%BC%E3%81%A8%E3%83%A9%E3%83%A0%E3%83%80%E5%BC%8F#----------)
+
+Box::newすればいいのか。
+
+[Rust勉強中 - その20 -> クロージャ - Qiita](https://qiita.com/deta-mamoru/items/85f724cab5412c056cbd)
