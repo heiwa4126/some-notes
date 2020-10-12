@@ -657,3 +657,5 @@ gdbで普通に。lldbもあれば使える。rust-gdbやrust-lldbを使うとp�
 Box::newすればいいのか。
 
 [Rust勉強中 - その20 -> クロージャ - Qiita](https://qiita.com/deta-mamoru/items/85f724cab5412c056cbd)
+
+> moveありなしで所有権の移動、借用が変化するのはクロージャ外の変数のみで
