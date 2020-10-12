@@ -11,6 +11,7 @@ Rustって深いよね(皮肉)。
 - [Rustのエラーハンドリング](#rustのエラーハンドリング)
 - [anyhow](#anyhow)
 - [便利マクロ](#便利マクロ)
+- [マクロ展開後のソースを見る](#マクロ展開後のソースを見る)
 - [Rustの更新](#rustの更新)
 - [Rustのプロジェクトの始め方](#rustのプロジェクトの始め方)
 - [型を表示](#型を表示)
@@ -41,6 +42,7 @@ Rustって深いよね(皮肉)。
 - [cargo clean](#cargo-clean)
 - [overflow](#overflow)
 - [Rustで「普通のenum」](#rustで普通のenum)
+- [Rustのデバッグ](#rustのデバッグ)
 
 
 # std::strにiter()がない
@@ -151,6 +153,9 @@ golangの
 
 # Rustのエラーハンドリング
 
+- [Rustのエラー処理 - Qiita](https://qiita.com/fujitayy/items/cafe661415b6aa33d884)
+
+
 Go言語の
 [builtin - The Go Programming Language](https://golang.org/pkg/builtin/#error)
 ```go
@@ -205,6 +210,7 @@ implする。
 ほか参考:
 - [Rustでエラーを合成する - Qiita](https://qiita.com/termoshtt/items/8c015d9289613ec640f1)
 - [RFC 2504 "fix_error": Rustの新たなErrorトレイト - Qiita](https://qiita.com/termoshtt/items/830008898f90c647a971)
+- [expect()よりunwrap_or_else()を使うべき場合 - Qiita](https://qiita.com/garkimasera/items/f39d2900f20c90d13259)
 
 # anyhow
 
@@ -222,6 +228,31 @@ macros:
 # 便利マクロ
 
 [Rustの便利マクロ特集 - Qiita](https://qiita.com/elipmoc101/items/f76a47385b2669ec6db3)
+
+
+# マクロ展開後のソースを見る
+
+- [rust - How do I see the expanded macro code that's causing my compile error? - Stack Overflow](https://stackoverflow.com/questions/28580386/how-do-i-see-the-expanded-macro-code-thats-causing-my-compile-error)
+- [dtolnay/cargo-expand: Subcommand to show result of macro expansion](https://github.com/dtolnay/cargo-expand)
+
+> $ rustc -Z unstable-options --pretty=expanded src/main.rs
+error: the option `Z` is only accepted on the nightly compiler
+
+ありゃりゃ。
+
+```sh
+rustup update nightly
+rustup default nightly
+cargo install cargo-expand
+cargo expand --bin プロジェクトの名前
+cargo expand --lib ライブラリの名前
+cargo expand -- 関数名
+```
+
+...Cloneの実装がひどい。まあ汎用だとこうなるのかな。
+
+[Rustのprintln!の中身 - Qiita](https://qiita.com/4hiziri/items/1aed9e264630f90e3dec)
+
 
 # Rustの更新
 
@@ -555,7 +586,7 @@ $ du -hs .
 
 # overflow
 
-これが実行時エラーになるところがすごい。
+これが実行時エラーになるところがすごい(releaseでなければ)。
 ```rust
 fn sub(a: u32, b: u32) -> u32 {
     a - b
@@ -575,6 +606,7 @@ fn main() {
 }
 ```
 
+releaseだとエラーにならないので注意
 
 # Rustで「普通のenum」
 
@@ -587,4 +619,21 @@ enumを定数列挙に使いたいとき。 ...みんな困ってるんだな。
 
 ここの頭のとこから:
 [serde - how can I set an enum value from an integer in rust? - Stack Overflow](https://stackoverflow.com/questions/61641338/how-can-i-set-an-enum-value-from-an-integer-in-rust)
+
+
+「ふつうのenum」でいいなら
+```rust
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct MyEnum(u16);
+```
+みたいな実装でよさそう。
+
+
+# Rustのデバッグ
+
+gdbで普通に。lldbもあれば使える。rust-gdbやrust-lldbを使うとpコマンドが楽になる。
+
+- [Rust のデバッグチートシート - Qiita](https://qiita.com/legokichi/items/e2f807f70316a916f4be)
+- [LLDBとかいう次世代高性能デバッガ - Qiita](https://qiita.com/theefool/items/8b985ce71dcdccf26abc)
+- [Rustのデバッグ体験を上げるには - verilog書く人](http://segafreder.hatenablog.com/entry/2018/12/13/145210)
 
