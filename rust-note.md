@@ -39,6 +39,8 @@ Rustって深いよね(皮肉)。
 - [into_iter()とiter()](#into_iterとiter)
 - [concat!](#concat)
 - [cargo clean](#cargo-clean)
+- [overflow](#overflow)
+- [Rustで「普通のenum」](#rustで普通のenum)
 
 
 # std::strにiter()がない
@@ -550,4 +552,39 @@ $ ./clean.sh
 $ du -hs .
 3.7M    .
 ```
+
+# overflow
+
+これが実行時エラーになるところがすごい。
+```rust
+fn sub(a: u32, b: u32) -> u32 {
+    a - b
+}
+fn main() {
+    println!("{}", sub(1, 2));
+}
+```
+
+これも。
+```rust
+fn add(a: i16, b: i16) -> i16 {
+    a + b
+}
+fn main() {
+    println!("{}", add(0x7fff, 2));
+}
+```
+
+
+# Rustで「普通のenum」
+
+enumを定数列挙に使いたいとき。 ...みんな困ってるんだな。
+多分「Rust的に正しくない」。だいたい算術orやandできないし。
+
+古い:
+- [rust で数値からenumに変換する - エンジニアですよ！](https://totem3.hatenablog.jp/entry/2015/08/07/222303)
+- [rust - How do I match enum values with an integer? - Stack Overflow](https://stackoverflow.com/questions/28028854/how-do-i-match-enum-values-with-an-integer/28029279#28029279)
+
+ここの頭のとこから:
+[serde - how can I set an enum value from an integer in rust? - Stack Overflow](https://stackoverflow.com/questions/61641338/how-can-i-set-an-enum-value-from-an-integer-in-rust)
 
