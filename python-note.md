@@ -29,6 +29,7 @@
 - [Windows10上でのPython](#windows10上でのpython)
 - [Jupyter Notebookのtips](#jupyter-notebookのtips)
 - [2020-resolver](#2020-resolver)
+- [WARNING: pip is being invoked by an old script wrapper.](#warning-pip-is-being-invoked-by-an-old-script-wrapper)
 
 
 
@@ -619,3 +620,18 @@ echo "
 use-feature=2020-resolver
 " >> ~/.config/pip/pip.conf
 ```
+
+# WARNING: pip is being invoked by an old script wrapper.
+
+[ImportError in system pip wrappers after an upgrade · Issue #5599 · pypa/pip · GitHub](https://github.com/pypa/pip/issues/5599)
+
+要は`pip`じゃなくて`python3 -m pip`を使え、ということらしいけどめんどくさい...
+
+aliasにするとか
+```sh
+#!/bin/sh -xe
+PIP="python3 -m pip"
+$PIP install --user -U pip
+```
+こんな感じで。
+
