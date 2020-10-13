@@ -18,6 +18,7 @@
   - [systemdの場合](#systemdの場合)
 - [同じパスワードでも/etc/shadowで同じ値にならない話](#同じパスワードでもetcshadowで同じ値にならない話)
 - [stderrをless](#stderrをless)
+- [xargsで入力が空の時エラーにしないオプションは](#xargsで入力が空の時エラーにしないオプションは)
 
 
 # 参考リンク
@@ -351,3 +352,7 @@ foobar | err2stdout | less
 ```
 みたいにできるといいんだけど。
 
+
+# xargsで入力が空の時エラーにしないオプションは
+
+`-r`, `--no-run-if-empty`
