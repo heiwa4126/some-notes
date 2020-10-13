@@ -8,7 +8,7 @@ EFIでは2箇所にあって
 - /boot/efi/EFI/redhat/grub.cfg (EFI用)
 - /boot/grub2/grub.cfg (BIOS用)
 
-が自動生成されている。手で修正するなら両方やっといたほうがいいかも。
+が自動生成されている(片方ない場合もある)。手で修正するなら両方やっといたほうがいいかも。
 
 `/etc/grub2.cfg`は`/boot/grub2/grub.cfg`へのsymlink
 EFIにもある。
