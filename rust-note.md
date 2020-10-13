@@ -47,6 +47,7 @@ Rustって深いよね(皮肉)。
 - [ライフタイム](#ライフタイム)
 - [Rustのデバッグ](#rustのデバッグ)
 - [ラムダを返す](#ラムダを返す)
+- [traitいろいろ](#traitいろいろ)
 <<<<<<< HEAD
 - [map!がない](#mapがない)
 =======
@@ -684,3 +685,8 @@ Box::newすればいいのか。
 [Rust勉強中 - その20 -> クロージャ - Qiita](https://qiita.com/deta-mamoru/items/85f724cab5412c056cbd)
 
 > moveありなしで所有権の移動、借用が変化するのはクロージャ外の変数のみで
+
+
+# traitいろいろ
+
+[Rust勉強中 - その19 -> ユーティリティトレイト - Qiita](https://qiita.com/deta-mamoru/items/62f5edebb359d7acd563)
