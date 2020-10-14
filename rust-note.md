@@ -48,6 +48,7 @@ Rustって深いよね(皮肉)。
 - [Rustのデバッグ](#rustのデバッグ)
 - [ラムダを返す](#ラムダを返す)
 - [traitいろいろ](#traitいろいろ)
+- [Cannot move out of X which is behind a shared reference](#cannot-move-out-of-x-which-is-behind-a-shared-reference)
 <<<<<<< HEAD
 - [map!がない](#mapがない)
 =======
@@ -690,3 +691,9 @@ Box::newすればいいのか。
 # traitいろいろ
 
 [Rust勉強中 - その19 -> ユーティリティトレイト - Qiita](https://qiita.com/deta-mamoru/items/62f5edebb359d7acd563)
+
+
+# Cannot move out of X which is behind a shared reference
+
+- [Cannot move out of X which is behind a shared reference - help - The Rust Programming Language Forum](https://users.rust-lang.org/t/cannot-move-out-of-x-which-is-behind-a-shared-reference/33263)
+- [rust - Cannot move out of borrowed content / cannot move out of behind a shared reference - Stack Overflow](https://stackoverflow.com/questions/28158738/cannot-move-out-of-borrowed-content-cannot-move-out-of-behind-a-shared-referen)
