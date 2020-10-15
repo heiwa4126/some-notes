@@ -6,6 +6,7 @@ shellいろいろtipsメモ
 - [特定PIDのプロセスの下をツリー表示](#特定pidのプロセスの下をツリー表示)
 - [dh -h は GiBかGBか](#dh--h-は-gibかgbか)
 - [バージョン番号をソートする](#バージョン番号をソートする)
+- [dateのformat](#dateのformat)
 
 # 非0の戻り値で中断させたい
 
@@ -130,3 +131,11 @@ sort --version-sort
 
 - [バージョン番号のソート](https://rcmdnk.com/blog/2020/09/25/computer-linux-mac/)
 - [sort(1) - Linux manual page](https://man7.org/linux/man-pages/man1/sort.1.html)
+
+
+# dateのformat
+
+よくバックアップ用に日付つきにする時に使うフォーマット。
+```
+cp -a foo.bar foo.bar.`date +%Y-%m-%d-%H-%M-%S`
+```
