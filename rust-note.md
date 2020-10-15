@@ -49,6 +49,8 @@ Rustって深いよね(皮肉)。
 - [ラムダを返す](#ラムダを返す)
 - [traitいろいろ](#traitいろいろ)
 - [Cannot move out of X which is behind a shared reference](#cannot-move-out-of-x-which-is-behind-a-shared-reference)
+- [Result <-> Option](#result---option)
+- [regexメモ](#regexメモ)
 <<<<<<< HEAD
 - [map!がない](#mapがない)
 =======
@@ -697,3 +699,46 @@ Box::newすればいいのか。
 
 - [Cannot move out of X which is behind a shared reference - help - The Rust Programming Language Forum](https://users.rust-lang.org/t/cannot-move-out-of-x-which-is-behind-a-shared-reference/33263)
 - [rust - Cannot move out of borrowed content / cannot move out of behind a shared reference - Stack Overflow](https://stackoverflow.com/questions/28158738/cannot-move-out-of-borrowed-content-cannot-move-out-of-behind-a-shared-referen)
+
+
+# Result <-> Option
+
+OptionをResultにする。ok_orとok_or_else
+
+[std::option::Option - Rust](https://doc.rust-lang.org/beta/std/option/enum.Option.html#method.ok_or)
+
+Eにあたるものを返して(Err(E)ではなく)、?でreturnとかできるので(.の連鎖の途中でも)、かっこよく書ける。
+
+- [OptionをResultにする - Qiita](https://qiita.com/nacika_ins/items/3a71dee5bab5a4b17a86)
+- [マクロなしでOptionをResultに簡略化する方法はありますか?](https://www.366service.com/jp/qa/93d40e68866da0f680290f8c957619f6)
+
+
+Resultをoptionにする、のはok()とerr()。
+
+[std::result::Result - Rust](https://doc.rust-lang.org/beta/std/result/enum.Result.html#method.ok)
+
+
+# regexメモ
+
+- [regex - Rust](https://docs.rs/regex/1.4.1/regex/)
+- [正規表現でつかえるパターン](https://docs.rs/regex/1.4.1/regex/#syntax)
+
+perlreのメタクォートエスケープシーケンス(\Q...\E)みたいのはなくて、regex::escapeを使う
+([quotemeta - Perldoc Browser](https://perldoc.perl.org/functions/quotemeta)相当)。
+
+例:
+```rust
+use anyhow::Result;
+use regex::{self, Regex};
+
+fn main() -> Result<()> {
+    // let re = Regex::new(r#"a.txt"#)?; // wrong
+    let re = Regex::new(&regex::escape(r#"a.txt"#))?;
+    assert!(re.is_match("baaa.txtx"));
+    assert!(!re.is_match("xxxxx.txt"));
+    assert!(!re.is_match("a1txt"));
+    Ok(())
+}
+```
+
+マッチは
