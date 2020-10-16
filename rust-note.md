@@ -51,6 +51,9 @@ Rustって深いよね(皮肉)。
 - [Cannot move out of X which is behind a shared reference](#cannot-move-out-of-x-which-is-behind-a-shared-reference)
 - [Result <-> Option](#result---option)
 - [regexメモ](#regexメモ)
+- [cargoいろいろ](#cargoいろいろ)
+- [rust-src](#rust-src)
+- [環境設定(2020-10)](#環境設定2020-10)
 <<<<<<< HEAD
 - [map!がない](#mapがない)
 =======
@@ -742,3 +745,71 @@ fn main() -> Result<()> {
 ```
 
 マッチは
+
+# cargoいろいろ
+
+[cargo-*系ツールの紹介 - Qiita](https://qiita.com/sinkuu/items/3ea25a942d80fce74a90)
+
+# rust-src
+
+- [Can't find `/src/rust/src` after running `rust-src` · Issue #2522 · rust-lang/rustup](https://github.com/rust-lang/rustup/issues/2522)
+
+つうわけで
+```sh
+rustup component add rust-src
+export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+```
+が正しいです(2020-10-16)。勝手に変えるな、
+
+
+# 環境設定(2020-10)
+
+こんなかんじか?
+```sh
+# インストール後
+rustup toolchain add nightly
+rustup update
+cargo install rls -f
+rustup component add rust-src
+export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+cargo +nightly install racer
+```
+
+rust-analysisは要るかわからん。nightlyでないとダメだし
+
+cargo-expandは便利かもしれない。
+```sh
+cargo +nightly install cargo-expand
+```
+
+RUST_SRC_PATHは展開後の値と
+```
+source $HOME/.cargo/env
+```
+を
+.xxx_profileに書いとく。
+
+ただこれやると~/.cargo ~/.rustupの下、合わせて3GBぐらいになるのが辛い。
+
+参考:
+- [Rustエディタ - Qiita](https://qiita.com/geek_777/items/5eb25ce0d12fc81a8f60)
+- [racer-rust/racer: Rust Code Completion utility](https://github.com/racer-rust/racer)
+- [rust-lang/rls: Repository for the Rust Language Server (aka RLS)](https://github.com/rust-lang/rls)
+
+emacsの場合
+```lisp
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+
+(require 'rust-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
+```
+
+で
+- rust-mode
+- racer
+- company
+- lsp-mode
+パッケージをいれる。
