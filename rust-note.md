@@ -52,6 +52,9 @@ Rustって深いよね(皮肉)。
 - [Result <-> Option](#result---option)
 - [regexメモ](#regexメモ)
 - [cargoいろいろ](#cargoいろいろ)
+- [いつか役に立つかも](#いつか役に立つかも)
+- [macro_use](#macro_use)
+- [cargo clippy](#cargo-clippy)
 - [rust-src](#rust-src)
 - [環境設定(2020-10)](#環境設定2020-10)
   - [emacsでrust-mode + racer](#emacsでrust-mode--racer)
@@ -751,6 +754,66 @@ fn main() -> Result<()> {
 
 [cargo-*系ツールの紹介 - Qiita](https://qiita.com/sinkuu/items/3ea25a942d80fce74a90)
 
+# いつか役に立つかも
+
+[Rust：Cargoでmain.rs以外のソースファイルのmain()関数を実行する - Qiita](https://qiita.com/tatsuya6502/items/7c41dd981ffa56bcab99)
+
+# macro_use
+
+```rust
+#[macro_use]
+extern crate some_crate;
+```
+とはなにか。
+
+Rust 2015までのルール。2018では
+```
+use some::macro;
+```
+みたいに書ける(はず)。
+
+書き換えられる例ではlazy_static
+```rust
+use lazy_static::lazy_static;
+```
+で全然OK。
+- [Search · use "lazy_static::lazy_static"](https://github.com/search?l=Rust&q=use+%22lazy_static%3A%3Alazy_static%22&type=code)
+- [rust-lang-nursery/lazy-static.rs: A small macro for defining lazy evaluated static variables in Rust.](https://github.com/rust-lang-nursery/lazy-static.rs)
+
+
+
+# cargo clippy
+
+なぜかcargo cleanしてからでないと
+cargo clippyがちゃんと動かない。
+
+clippy便利すぎるのでかならず使うべし。
+`rustup component add clippy`で入るし。
+
+- [rust-clippy/README.md at master · Manishearth/rust-clippy · GitHub](https://github.com/Manishearth/rust-clippy/blob/master/README.md)
+
+Cargo.tomlに書いて、debugのときはclippyになるようにする方法:
+
+- [rust - ビルドスクリプトでclippyを実行する簡単な方法はありますか？貨物プロジェクトで](https://stackoverrun.com/ja/q/11414843)
+- [Rustのlintライクなツールclippyを使う - Qiita](https://qiita.com/hhatto/items/9415cc5c11b3b201030a)
+- [clippy - crates.io: Rust Package Registry](https://crates.io/crates/clippy/0.0.94)
+
+Cargo.tomlに追加
+```ini
+[build-dependencies]
+clippy = { version = "*", optional = true }
+```
+
+main.rs と lib.rsのあたまに (実際はbinary crateならmain.rsに...でいいらしい)
+```rust
+#![cfg_attr(feature="clippy", feature(plugin))]
+#![cfg_attr(feature="clippy", plugin(clippy))]
+```
+を書いとく。
+
+これで安心。
+
+
 # rust-src
 
 - [Can't find `/src/rust/src` after running `rust-src` · Issue #2522 · rust-lang/rustup](https://github.com/rust-lang/rustup/issues/2522)
@@ -767,13 +830,16 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 こんなかんじか?
 ```sh
+# linuxの場合
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # インストール後
 rustup toolchain add nightly
 rustup update
-rustup component add rust-analysis rust-src rls
+rustup component add rust-analysis rust-src rls clippy
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 cargo +nightly install racer
 ```
+
 cargo-expandは便利かもしれない。
 ```sh
 cargo +nightly install cargo-expand
