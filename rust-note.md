@@ -796,34 +796,40 @@ source $HOME/.cargo/env
 ## emacsでrust-mode + racer
 
 emacsの場合:
+
 - rust-mode
 - racer
 - company
 - flycheck-rust
+
 パッケージをいれる。
 
 で
 ``` lisp
+;;
+;; rust - rust-mode + racer
+;;
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 (with-eval-after-load 'racer
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode)
   (define-key racer-mode-map (kbd "TAB") #'company-indent-or-complete-common)
   (define-key racer-mode-map (kbd "C-c C-d") #'racer-describe)
+  (setq company-tooltip-align-annotations t)
   )
 (with-eval-after-load 'rust-mode
   (add-hook 'rust-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'rust-mode-hook #'smartparens-mode)
   (add-hook 'rust-mode-hook #'cargo-minor-mode)
   (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (setq company-tooltip-align-annotations t)
   (setq-default rust-format-on-save t)
   (define-key rust-mode-map (kbd "C-c C-r") #'rust-run)
   (define-key rust-mode-map (kbd "C-c C-t") #'rust-test)
   (define-key rust-mode-map (kbd "C-c C-c") #'rust-run-clippy)
   )
 ```
-GNU Emacs 27.1で試した。
+GNU Emacs 27.1で試した(emacsはsnapで入れた)。
 lsp (rls,rust-analyzer)よりはサクサク動くのがよい。
 
 racerのキーバインドは
