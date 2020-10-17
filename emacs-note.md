@@ -2,6 +2,7 @@
 
 - [emacsメモ](#emacsメモ)
 - [sort & uniq](#sort--uniq)
+- [init.elを分割](#initelを分割)
 - [sharp qoute](#sharp-qoute)
 - [rainbow-delimiters](#rainbow-delimiters)
 
@@ -18,6 +19,9 @@ M-x delete-duplicate-lines
 - [Emacs 24.4 の新機能・重複行を削除する delete-duplicate-lines - 雑文発散(2014-08-05)](https://suzuki.tdiary.net/20140805.html)
 - [elisp - how to delete the repeat lines in emacs - Stack Overflow](https://stackoverflow.com/questions/13046791/how-to-delete-the-repeat-lines-in-emacs)
 
+# init.elを分割
+
+[設定ファイルを複数ファイルに分割して管理する構文のまとめ - Qiita](https://qiita.com/skkzsh/items/20af9affd5cc1e9678f8)
 
 # sharp qoute
 

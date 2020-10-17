@@ -864,6 +864,7 @@ source $HOME/.cargo/env
 emacsの場合:
 
 - rust-mode
+- cargo
 - racer
 - company
 - flycheck-rust
@@ -886,7 +887,7 @@ emacsの場合:
 (with-eval-after-load 'rust-mode
   (add-hook 'rust-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'rust-mode-hook #'smartparens-mode)
-  (add-hook 'rust-mode-hook #'cargo-minor-mode)
+  ;; (add-hook 'rust-mode-hook #'cargo-minor-mode)
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   (setq-default rust-format-on-save t)
@@ -901,3 +902,30 @@ lsp (rls,rust-analyzer)よりはサクサク動くのがよい。
 racerのキーバインドは
 [GitHub - racer-rust/emacs-racer: Racer support for Emacs](https://github.com/racer-rust/emacs-racer)
 に親切に書いてある。
+
+cargo modeのキーバインドは
+ * C-c C-c C-e - cargo-process-bench
+ * C-c C-c C-b - cargo-process-build
+ * C-c C-c C-l - cargo-process-clean
+ * C-c C-c C-d - cargo-process-doc
+ * C-c C-c C-v - cargo-process-doc-open
+ * C-c C-c C-n - cargo-process-new
+ * C-c C-c C-i - cargo-process-init
+ * C-c C-c C-r - cargo-process-run
+ * C-c C-c C-x - cargo-process-run-example
+ * C-c C-c C-s - cargo-process-search
+ * C-c C-c C-t - cargo-process-test
+ * C-c C-c C-u - cargo-process-update
+ * C-c C-c C-c - cargo-process-repeat
+ * C-c C-c C-f - cargo-process-current-test
+ * C-c C-c C-o - cargo-process-current-file-tests
+ * C-c C-c C-O - cargo-process-outdated
+ * C-c C-c C-m - cargo-process-fmt
+ * C-c C-c C-k - cargo-process-check
+ * C-c C-c C-K - cargo-process-clippy (Kが大文字)
+ * C-c C-c C-a - cargo-process-add
+ * C-c C-c C-D - cargo-process-rm
+ * C-c C-c C-U - cargo-process-upgrade
+ * C-c C-c C-A - cargo-process-audit
+
+たぶんこんなにいらない。のでコメントアウトした
