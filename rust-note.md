@@ -903,7 +903,7 @@ racerのキーバインドは
 [GitHub - racer-rust/emacs-racer: Racer support for Emacs](https://github.com/racer-rust/emacs-racer)
 に親切に書いてある。
 
-cargo modeのキーバインドは
+cargo modeのキーバインドは:
  * C-c C-c C-e - cargo-process-bench
  * C-c C-c C-b - cargo-process-build
  * C-c C-c C-l - cargo-process-clean
