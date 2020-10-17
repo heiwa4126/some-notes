@@ -54,6 +54,7 @@ Rustって深いよね(皮肉)。
 - [cargoいろいろ](#cargoいろいろ)
 - [rust-src](#rust-src)
 - [環境設定(2020-10)](#環境設定2020-10)
+  - [emacsでrust-mode + racer](#emacsでrust-mode--racer)
 <<<<<<< HEAD
 - [map!がない](#mapがない)
 =======
@@ -769,14 +770,10 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 # インストール後
 rustup toolchain add nightly
 rustup update
-cargo install rls -f
-rustup component add rust-src
+rustup component add rust-analysis rust-src rls
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 cargo +nightly install racer
 ```
-
-rust-analysisは要るかわからん。nightlyでないとダメだし
-
 cargo-expandは便利かもしれない。
 ```sh
 cargo +nightly install cargo-expand
@@ -796,20 +793,39 @@ source $HOME/.cargo/env
 - [racer-rust/racer: Rust Code Completion utility](https://github.com/racer-rust/racer)
 - [rust-lang/rls: Repository for the Rust Language Server (aka RLS)](https://github.com/rust-lang/rls)
 
-emacsの場合
-```lisp
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
+## emacsでrust-mode + racer
 
-(require 'rust-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
-```
-
-で
+emacsの場合:
 - rust-mode
 - racer
 - company
-- lsp-mode
+- flycheck-rust
 パッケージをいれる。
+
+で
+``` lisp
+(with-eval-after-load 'racer
+  (define-key racer-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+  (define-key racer-mode-map (kbd "C-c C-d") #'racer-describe)
+  )
+(with-eval-after-load 'rust-mode
+  (add-hook 'rust-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'rust-mode-hook #'smartparens-mode)
+  (add-hook 'rust-mode-hook #'cargo-minor-mode)
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode)
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (setq company-tooltip-align-annotations t)
+  (setq-default rust-format-on-save t)
+  (define-key rust-mode-map (kbd "C-c C-r") #'rust-run)
+  (define-key rust-mode-map (kbd "C-c C-t") #'rust-test)
+  (define-key rust-mode-map (kbd "C-c C-c") #'rust-run-clippy)
+  )
+```
+GNU Emacs 27.1で試した。
+lsp (rls,rust-analyzer)よりはサクサク動くのがよい。
+
+racerのキーバインドは
+[GitHub - racer-rust/emacs-racer: Racer support for Emacs](https://github.com/racer-rust/emacs-racer)
+に親切に書いてある。
