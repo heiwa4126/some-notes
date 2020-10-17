@@ -23,7 +23,9 @@ M-x delete-duplicate-lines
 
 ``# `ってやつ。
 
-[elisp - Elispで変数を指定する際 'hoge と #'hoge の違いとは - スタック・オーバーフロー](https://ja.stackoverflow.com/questions/29185/elisp%E3%81%A7%E5%A4%89%E6%95%B0%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E9%9A%9B-hoge-%E3%81%A8-hoge-%E3%81%AE%E9%81%95%E3%81%84%E3%81%A8%E3%81%AF)
+- [elisp - Elispで変数を指定する際 'hoge と #'hoge の違いとは - スタック・オーバーフロー](https://ja.stackoverflow.com/questions/29185/elisp%E3%81%A7%E5%A4%89%E6%95%B0%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E9%9A%9B-hoge-%E3%81%A8-hoge-%E3%81%AE%E9%81%95%E3%81%84%E3%81%A8%E3%81%AF)
+- [elisp - When should sharp quotes be used? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/35988/when-should-sharp-quotes-be-used)
+
 
 # rainbow-delimiters
 
