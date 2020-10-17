@@ -32,6 +32,9 @@
 - [JSONからgoのtype xxxx structにするやつ](#jsonからgoのtype-xxxx-structにするやつ)
 - [strings.HasSuffix](#stringshassuffix)
 - [標準プロジェクトレイアウト](#標準プロジェクトレイアウト)
+- [おもしろい記事](#おもしろい記事)
+- [emacsでの環境](#emacsでの環境)
+- [go-mode](#go-mode)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -914,3 +917,51 @@ Pythonだと str.startswith, str.endswith
 プロジェクトルートにmain.goがないと`go build`ができない。
 
 やっぱりけっこうめんどくさい。利点が見えない
+
+
+# おもしろい記事
+
+- [Optimized abs() for int64 in Go](http://cavaliercoder.com/blog/optimized-abs-for-int64-in-go.html)
+
+
+# emacsでの環境
+
+goplsでLSPモード。
+のコピペ。
+
+```sh
+cd
+GO111MODULE=on go get -u golang.org/x/tools/gopls@latest
+GO111MODULE=on go get -u github.com/sqs/goreturns
+```
+
+パッケージは
+- lsp
+- go-mode
+- comapny-go
+- company-lsp
+- yasnippet (使いかたがよくわからん [Emacsにyasnippetを導入＆スニペットの登録方法 | vdeep](http://vdeep.net/emacs-yasnippet))
+
+```lisp
+(add-hook
+ 'go-mode-hook
+ (lambda()
+   (setq indent-tabs-mode nil)
+   (setq c-basic-offset 2)
+   (setq tab-width 2)
+   (setq gofmt-command "goreturns")
+   (add-hook 'before-save-hook 'gofmt-before-save)
+   )
+ )
+```
+あとは
+[tools/emacs.md at master · golang/tools](https://github.com/golang/tools/blob/master/gopls/doc/emacs.md)
+の例を追加。一部を除きgo専用ってわけではないので注意。
+
+
+# go-mode
+
+emacsのgo-modeには`go test`とか実行するコマンドが無い。
+
+- [nlamirault/gotest.el: Emacs mode to go unit test command line tool](https://github.com/nlamirault/gotest.el)
+

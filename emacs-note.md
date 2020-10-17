@@ -5,6 +5,8 @@
 - [init.elを分割](#initelを分割)
 - [sharp qoute](#sharp-qoute)
 - [rainbow-delimiters](#rainbow-delimiters)
+- [use-package](#use-package)
+- [LSPモード](#lspモード)
 
 # sort & uniq
 
@@ -35,3 +37,27 @@ M-x delete-duplicate-lines
 
 - [Small rainbow-delimiters tutorial | Yoo Box](https://yoo2080.wordpress.com/2013/12/21/small-rainbow-delimiters-tutorial/)
 - [rainbow-delimiters.elの括弧色付けをデフォルトより強調する方法 - 会者定離で(ダイアリーから)以降](https://murase-syuka.hatenablog.com/entry/20140815/1408061850)
+
+# use-package
+
+はやりすたりはあるけど
+
+- [jwiegley/use-package: A use-package declaration for simplifying your .emacs](https://github.com/jwiegley/use-package)
+
+
+# LSPモード
+
+"main.go not in project or it is blacklisted"
+とか言われたら、
+
+`M-x lsp-workspace-folder-add` でプロジェクトルートを追加する。
+
+または
+
+`M-x lsp-workspace-blacklist-remove` でブラックリストから削除する。
+
+どちらも`~/.emacs.d/.lsp-session-v1`に反映される。
+
+追加/削除したら、emacsを再起動。
+
+
