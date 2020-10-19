@@ -854,49 +854,26 @@ source $HOME/.cargo/env
 
 ## emacsでrust-mode + racer
 
-emacsの場合:
-
-- rust-mode
-- flycheck-rust
-- racer
-- company
-
-パッケージをいれる。
-
 [Rustの開発環境を整える(Windows, Emacs) - magのOSS備忘録](http://boiled-mag.hatenablog.jp/entry/2017/08/15/150224)
 
-
-
 ```
 M-x package-refresh-contents
-M-x package-autoremove 
-
-M-x package-refresh-contents
-M-x package-autoremove 
-
 M-x package-install RET ... RET
-以下の順で
-use-package
-lsp-mode
-lsp-ui
-flycheck
-company
-rastic
+M-x package-autoremove 
 ```
 
-いまのところ:
-racerが軽くて楽。
-rlsのほうがエラーが的確でいい。でもAPIのcompletionがどーしてもできない。
-rust-analizerにすると、APIのcompletionもできるけど、重い。
-
-両方入れといてM-x rustic-mode で切り替えるとか。
+パッケージをいれる。
 
 - cargo
 - racer
 - company
 - flycheck-rust
+- cargo-mode (やめた)
 
-パッケージをいれる。
+おまけ
+
+- rainbow-delimiters-mode
+- smartparens-mode
 
 で
 ``` lisp
@@ -966,6 +943,10 @@ racerと比べて重い。なぜかAPIの補完してくれない。調べ中
 
 - [brotzeit/rustic: Rust development environment for Emacs](https://github.com/brotzeit/rustic)
 
+rlsのほうがエラーが的確でいい。でもAPIのcompletionがどーしてもできない。
+rust-analizerにすると、APIのcompletionもできるけど、重い。
+
+両方入れといてM-x rustic-mode で切り替えるとか。
 
 ## emacsでrust-analizer
 
