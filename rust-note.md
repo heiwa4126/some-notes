@@ -31,6 +31,7 @@ Rustって深いよね(皮肉)。
 - [型変換イディオム](#型変換イディオム)
 - [RustでExcelファイルを作る](#rustでexcelファイルを作る)
 - [Boxとdyn](#boxとdyn)
+- [impl Trait](#impl-trait)
 - [print!のフォーマット](#printのフォーマット)
 - [trait](#trait)
 - [iter](#iter)
@@ -494,10 +495,21 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 おまけ
 - [Rust で Excel オートメーション - Qiita](https://qiita.com/benki/items/de2e104a5866fad0ebab)
 
+
 # Boxとdyn
 
 - [Box<T>はヒープのデータを指し、既知のサイズである - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch15-01-box.html)
 - [Rustで複数のimpl Traitを返す - Qiita](https://qiita.com/taiki-e/items/39688f6c86b919988222)
+
+
+# impl Trait
+
+[イテレータを返す関数を書きたいんですけど？ → やめとけ。 死ぬぞ。 - Qiita](https://qiita.com/wada314/items/201ab5d66ac7daeb9c3d)
+
+そこでimpl Traitだ。
+
+[安定化間近！Rustのimpl Traitを今こそ理解する - 簡潔なQ](https://qnighy.hatenablog.com/entry/2018/01/28/220000)
+
 
 # print!のフォーマット
 
@@ -515,6 +527,7 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 
 - [std::iter::Iterator - Rust](https://doc.rust-lang.org/std/iter/trait.Iterator.html)
 - [Rustのイテレータの網羅的かつ大雑把な紹介 - Qiita](https://qiita.com/lo48576/items/34887794c146042aebf1)
+
 
 # 「スタックは高速です」
 
