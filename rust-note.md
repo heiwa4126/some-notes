@@ -54,6 +54,7 @@ Rustって深いよね(皮肉)。
 - [cargoいろいろ](#cargoいろいろ)
 - [rust-src](#rust-src)
 - [環境設定(2020-10)](#環境設定2020-10)
+- [rust-analizer](#rust-analizer)
 <<<<<<< HEAD
 - [map!がない](#mapがない)
 =======
@@ -766,16 +767,13 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 こんなかんじか?
 ```sh
-# インストール後
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup toolchain add nightly
 rustup update
-cargo install rls -f
-rustup component add rust-src
+rustup component add rls rust-analysis rust-src
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 cargo +nightly install racer
 ```
-
-rust-analysisは要るかわからん。nightlyでないとダメだし
 
 cargo-expandは便利かもしれない。
 ```sh
@@ -795,21 +793,72 @@ source $HOME/.cargo/env
 - [Rustエディタ - Qiita](https://qiita.com/geek_777/items/5eb25ce0d12fc81a8f60)
 - [racer-rust/racer: Rust Code Completion utility](https://github.com/racer-rust/racer)
 - [rust-lang/rls: Repository for the Rust Language Server (aka RLS)](https://github.com/rust-lang/rls)
+- [rust-lang/rust-clippy: A bunch of lints to catch common mistakes and improve your Rust code](https://github.com/rust-lang/rust-clippy#usage)
 
-emacsの場合
+emacsの場合 (emacsはsnapで入れたv27.1)
 ```lisp
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
-
-(require 'rust-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
+;;
+;; rust - rust-mode + racer
+;;
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(with-eval-after-load 'racer
+  (define-key racer-mode-map (kbd "TAB") #'company-indent-or-complete-common))
+(with-eval-after-load 'rust-mode
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode)
+  (setq company-tooltip-align-annotations t)
+  (setq-default rust-format-on-save t)
+  )
 ```
 
 で
 - rust-mode
+- flycheck-rust
 - racer
 - company
-- lsp-mode
+
 パッケージをいれる。
+
+[Rustの開発環境を整える(Windows, Emacs) - magのOSS備忘録](http://boiled-mag.hatenablog.jp/entry/2017/08/15/150224)
+
+
+rls使ってないねこれ。
+
+rls + rusticのパターンもあり
+
+- [brotzeit/rustic: Rust development environment for Emacs](https://github.com/brotzeit/rustic)
+
+```
+M-x package-refresh-contents
+M-x package-autoremove 
+
+M-x package-refresh-contents
+M-x package-autoremove 
+
+M-x package-install RET ... RET
+以下の順で
+use-package
+lsp-mode
+lsp-ui
+flycheck
+company
+rastic
+```
+
+いまのところ:
+racerが軽くて楽。
+rlsのほうがエラーが的確でいい。でもAPIのcompletionがどーしてもできない。
+rust-analizerにすると、APIのcompletionもできるけど、重い。
+
+両方入れといてM-x rustic-mode で切り替えるとか。
+
+# rust-analizer
+
+- [rust-analyzer/rust-analyzer: An experimental Rust compiler front-end for IDEs](https://github.com/rust-analyzer/rust-analyzer)
+- [User Manual](https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary)
+
+バイナリおとしたら動かなかったので、ソースからビルドした。
+ものすごく時間かかった。
+
+APIのcode completeもちゃんとやってくれるけど、rlsと比べると重い。
