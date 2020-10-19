@@ -3,7 +3,6 @@
 Rustって深いよね(皮肉)。
 
 - [Rustメモ](#rustメモ)
-- [- map!がない](#ullimapがないliul)
 - [std::strにiter()がない](#stdstrにiterがない)
 - [type(var)みたいの](#typevarみたいの)
 - [クレート & カーゴ](#クレート--カーゴ)
@@ -52,18 +51,14 @@ Rustって深いよね(皮肉)。
 - [Result <-> Option](#result---option)
 - [regexメモ](#regexメモ)
 - [cargoいろいろ](#cargoいろいろ)
+- [いつか役に立つかも](#いつか役に立つかも)
+- [macro_use](#macro_use)
+- [cargo clippy](#cargo-clippy)
 - [rust-src](#rust-src)
 - [環境設定(2020-10)](#環境設定2020-10)
-- [rust-analizer](#rust-analizer)
-<<<<<<< HEAD
-- [map!がない](#mapがない)
-=======
-- [overflow](#overflow)
-- [Rustで「普通のenum」](#rustで普通のenum)
-- [ライフタイム](#ライフタイム)
-- [Rustのデバッグ](#rustのデバッグ)
-- [ラムダを返す](#ラムダを返す)
->>>>>>> e08ad4979627c72e9fd15b14cd5c4523ffbc211b
+  - [emacsでrust-mode + racer](#emacsでrust-mode--racer)
+  - [emacsでrustic + rls](#emacsでrustic--rls)
+  - [emacsでrust-analizer](#emacsでrust-analizer)
 
 
 # std::strにiter()がない
@@ -751,6 +746,65 @@ fn main() -> Result<()> {
 
 [cargo-*系ツールの紹介 - Qiita](https://qiita.com/sinkuu/items/3ea25a942d80fce74a90)
 
+# いつか役に立つかも
+
+[Rust：Cargoでmain.rs以外のソースファイルのmain()関数を実行する - Qiita](https://qiita.com/tatsuya6502/items/7c41dd981ffa56bcab99)
+
+# macro_use
+
+```rust
+#[macro_use]
+extern crate some_crate;
+```
+とはなにか。
+
+Rust 2015までのルール。2018では
+```
+use some::macro;
+```
+みたいに書ける(はず)。
+
+書き換えられる例ではlazy_static
+```rust
+use lazy_static::lazy_static;
+```
+で全然OK。
+- [Search · use "lazy_static::lazy_static"](https://github.com/search?l=Rust&q=use+%22lazy_static%3A%3Alazy_static%22&type=code)
+- [rust-lang-nursery/lazy-static.rs: A small macro for defining lazy evaluated static variables in Rust.](https://github.com/rust-lang-nursery/lazy-static.rs)
+
+
+# cargo clippy
+
+なぜかcargo cleanしてからでないと
+cargo clippyがちゃんと動かない。
+
+clippy便利すぎるのでかならず使うべし。
+`rustup component add clippy`で入るし。
+
+- [rust-clippy/README.md at master · Manishearth/rust-clippy · GitHub](https://github.com/Manishearth/rust-clippy/blob/master/README.md)
+
+Cargo.tomlに書いて、debugのときはclippyになるようにする方法:
+
+- [rust - ビルドスクリプトでclippyを実行する簡単な方法はありますか？貨物プロジェクトで](https://stackoverrun.com/ja/q/11414843)
+- [Rustのlintライクなツールclippyを使う - Qiita](https://qiita.com/hhatto/items/9415cc5c11b3b201030a)
+- [clippy - crates.io: Rust Package Registry](https://crates.io/crates/clippy/0.0.94)
+
+Cargo.tomlに追加
+```ini
+[build-dependencies]
+clippy = { version = "*", optional = true }
+```
+
+main.rs と lib.rsのあたまに (実際はbinary crateならmain.rsに...でいいらしい)
+```rust
+#![cfg_attr(feature="clippy", feature(plugin))]
+#![cfg_attr(feature="clippy", plugin(clippy))]
+```
+を書いとく。
+
+これで安心。
+
+
 # rust-src
 
 - [Can't find `/src/rust/src` after running `rust-src` · Issue #2522 · rust-lang/rustup](https://github.com/rust-lang/rustup/issues/2522)
@@ -767,10 +821,12 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 こんなかんじか?
 ```sh
+# ↓linuxの場合
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# インストール後
 rustup toolchain add nightly
 rustup update
-rustup component add rls rust-analysis rust-src
+rustup component add rust-analysis rust-src rls clippy
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 cargo +nightly install racer
 ```
@@ -795,24 +851,11 @@ source $HOME/.cargo/env
 - [rust-lang/rls: Repository for the Rust Language Server (aka RLS)](https://github.com/rust-lang/rls)
 - [rust-lang/rust-clippy: A bunch of lints to catch common mistakes and improve your Rust code](https://github.com/rust-lang/rust-clippy#usage)
 
-emacsの場合 (emacsはsnapで入れたv27.1)
-```lisp
-;;
-;; rust - rust-mode + racer
-;;
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-(with-eval-after-load 'racer
-  (define-key racer-mode-map (kbd "TAB") #'company-indent-or-complete-common))
-(with-eval-after-load 'rust-mode
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
-  (setq company-tooltip-align-annotations t)
-  (setq-default rust-format-on-save t)
-  )
-```
 
-で
+## emacsでrust-mode + racer
+
+emacsの場合:
+
 - rust-mode
 - flycheck-rust
 - racer
@@ -853,7 +896,81 @@ rust-analizerにすると、APIのcompletionもできるけど、重い。
 
 両方入れといてM-x rustic-mode で切り替えるとか。
 
-# rust-analizer
+- cargo
+- racer
+- company
+- flycheck-rust
+
+パッケージをいれる。
+
+で
+``` lisp
+;;
+;; rust - rust-mode + racer
+;;
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(with-eval-after-load 'racer
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode)
+  (define-key racer-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+  (define-key racer-mode-map (kbd "C-c C-d") #'racer-describe)
+  (setq company-tooltip-align-annotations t)
+  )
+(with-eval-after-load 'rust-mode
+  (add-hook 'rust-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'rust-mode-hook #'smartparens-mode)
+  ;(add-hook 'rust-mode-hook #'cargo-minor-mode)
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (setq-default rust-format-on-save t)
+  (define-key rust-mode-map (kbd "C-c C-r") #'rust-run)
+  (define-key rust-mode-map (kbd "C-c C-t") #'rust-test)
+  (define-key rust-mode-map (kbd "C-c C-c") #'rust-run-clippy)
+  )
+```
+GNU Emacs 27.1で試した(emacsはsnapで入れた)。
+lsp (rls,rust-analyzer)よりはサクサク動くのがよい。
+
+racerのキーバインドは
+[GitHub - racer-rust/emacs-racer: Racer support for Emacs](https://github.com/racer-rust/emacs-racer)
+に親切に書いてある。
+
+cargo modeのキーバインドは:
+ * C-c C-c C-e - cargo-process-bench
+ * C-c C-c C-b - cargo-process-build
+ * C-c C-c C-l - cargo-process-clean
+ * C-c C-c C-d - cargo-process-doc
+ * C-c C-c C-v - cargo-process-doc-open
+ * C-c C-c C-n - cargo-process-new
+ * C-c C-c C-i - cargo-process-init
+ * C-c C-c C-r - cargo-process-run
+ * C-c C-c C-x - cargo-process-run-example
+ * C-c C-c C-s - cargo-process-search
+ * C-c C-c C-t - cargo-process-test
+ * C-c C-c C-u - cargo-process-update
+ * C-c C-c C-c - cargo-process-repeat
+ * C-c C-c C-f - cargo-process-current-test
+ * C-c C-c C-o - cargo-process-current-file-tests
+ * C-c C-c C-O - cargo-process-outdated
+ * C-c C-c C-m - cargo-process-fmt
+ * C-c C-c C-k - cargo-process-check
+ * C-c C-c C-K - cargo-process-clippy (Kが大文字)
+ * C-c C-c C-a - cargo-process-add
+ * C-c C-c C-D - cargo-process-rm
+ * C-c C-c C-U - cargo-process-upgrade
+ * C-c C-c C-A - cargo-process-audit
+
+たぶんこんなにいらない。
+cargo-modeはコメントアウトした or remove。
+上↑で定義したキーバインドが不足だったら考える。
+
+
+## emacsでrustic + rls
+
+racerと比べて重い。なぜかAPIの補完してくれない。調べ中
+
+
+## emacsでrust-analizer
 
 - [rust-analyzer/rust-analyzer: An experimental Rust compiler front-end for IDEs](https://github.com/rust-analyzer/rust-analyzer)
 - [User Manual](https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary)

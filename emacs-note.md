@@ -1,9 +1,17 @@
 # emacsメモ
 
+- [emacsメモ](#emacsメモ)
+- [sort & uniq](#sort--uniq)
+- [init.elを分割](#initelを分割)
+- [sharp qoute](#sharp-qoute)
+- [rainbow-delimiters](#rainbow-delimiters)
+- [use-package](#use-package)
+- [LSPモード](#lspモード)
 
 # sort & uniq
 
 よく使うのに忘れるのでメモ。なんかキーバインドしたほうがいいかも。
+ソートしてなくても使える。
 
 ```
 M-x delete-duplicate-lines
@@ -12,4 +20,44 @@ M-x delete-duplicate-lines
 参考:
 - [Emacs 24.4 の新機能・重複行を削除する delete-duplicate-lines - 雑文発散(2014-08-05)](https://suzuki.tdiary.net/20140805.html)
 - [elisp - how to delete the repeat lines in emacs - Stack Overflow](https://stackoverflow.com/questions/13046791/how-to-delete-the-repeat-lines-in-emacs)
+
+# init.elを分割
+
+[設定ファイルを複数ファイルに分割して管理する構文のまとめ - Qiita](https://qiita.com/skkzsh/items/20af9affd5cc1e9678f8)
+
+# sharp qoute
+
+``# `ってやつ。
+
+- [elisp - Elispで変数を指定する際 'hoge と #'hoge の違いとは - スタック・オーバーフロー](https://ja.stackoverflow.com/questions/29185/elisp%E3%81%A7%E5%A4%89%E6%95%B0%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E9%9A%9B-hoge-%E3%81%A8-hoge-%E3%81%AE%E9%81%95%E3%81%84%E3%81%A8%E3%81%AF)
+- [elisp - When should sharp quotes be used? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/35988/when-should-sharp-quotes-be-used)
+
+
+# rainbow-delimiters
+
+- [Small rainbow-delimiters tutorial | Yoo Box](https://yoo2080.wordpress.com/2013/12/21/small-rainbow-delimiters-tutorial/)
+- [rainbow-delimiters.elの括弧色付けをデフォルトより強調する方法 - 会者定離で(ダイアリーから)以降](https://murase-syuka.hatenablog.com/entry/20140815/1408061850)
+
+# use-package
+
+はやりすたりはあるけど
+
+- [jwiegley/use-package: A use-package declaration for simplifying your .emacs](https://github.com/jwiegley/use-package)
+
+
+# LSPモード
+
+"main.go not in project or it is blacklisted"
+とか言われたら、
+
+`M-x lsp-workspace-folder-add` でプロジェクトルートを追加する。
+
+または
+
+`M-x lsp-workspace-blacklist-remove` でブラックリストから削除する。
+
+どちらも`~/.emacs.d/.lsp-session-v1`に反映される。
+
+追加/削除したら、emacsを再起動。
+
 
