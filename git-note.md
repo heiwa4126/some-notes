@@ -59,6 +59,25 @@ find . -type l -printf '%P\n' >> .gitignore
 - [Git: Correct way to change Active Branch in a bare repository? - Stack Overflow](https://stackoverflow.com/questions/3301956/git-correct-way-to-change-active-branch-in-a-bare-repository)
 
 
+すでにcloneされてるやつのあつかいが難しい。
+
+あたらしく始めるなら
+```sh
+git branch -m main
+git remote add origin repositoryanysome
+git push -u origin main
+```
+で
+```sh
+git clone repositoryanysome -b main
+```
+みたいに。
+
+次のgitからデフォルトが`main`になるらしい。
+
+- [git/git: Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. Please follow Documentation/SubmittingPatches procedure for any of your improvements.](https://github.com/git/git)
+
+
 # 登録されているリモートリポジトリの確認
 
 ```
@@ -66,3 +85,16 @@ git remote -v
 ```
 
 `.git/conf`みるよりちょっと楽。
+
+
+# ubuntuで新しめのgitを使う
+
+- [Git stable releases : “Ubuntu Git Maintainers” team](https://launchpad.net/~git-core/+archive/ubuntu/ppa)
+- [Git](https://git-scm.com/download/linux)
+- [Ubuntu で git のバージョンを最新版にする | Lonely Mobiler](https://loumo.jp/archives/23149)
+
+```sh
+sudo add-apt-repository ppa:git-core/ppa
+sudo apt update
+sudo apt install git
+```
