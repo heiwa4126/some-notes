@@ -866,11 +866,6 @@ emacsの場合:
 [Rustの開発環境を整える(Windows, Emacs) - magのOSS備忘録](http://boiled-mag.hatenablog.jp/entry/2017/08/15/150224)
 
 
-rls使ってないねこれ。
-
-rls + rusticのパターンもあり
-
-- [brotzeit/rustic: Rust development environment for Emacs](https://github.com/brotzeit/rustic)
 
 ```
 M-x package-refresh-contents
@@ -968,6 +963,8 @@ cargo-modeはコメントアウトした or remove。
 ## emacsでrustic + rls
 
 racerと比べて重い。なぜかAPIの補完してくれない。調べ中
+
+- [brotzeit/rustic: Rust development environment for Emacs](https://github.com/brotzeit/rustic)
 
 
 ## emacsでrust-analizer
