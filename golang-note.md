@@ -939,6 +939,11 @@ Pythonだと str.startswith, str.endswith
 - godef
 - goimports
 - golint
+- impl
+- fillstruct
+- goplay
+- godoctor
+- gocode-gomod
 
 
 # emacsでの環境
