@@ -33,6 +33,7 @@
 - [strings.HasSuffix](#stringshassuffix)
 - [標準プロジェクトレイアウト](#標準プロジェクトレイアウト)
 - [おもしろい記事](#おもしろい記事)
+- [有名ツールリスト](#有名ツールリスト)
 - [emacsでの環境](#emacsでの環境)
 - [go-mode](#go-mode)
 
@@ -922,6 +923,22 @@ Pythonだと str.startswith, str.endswith
 # おもしろい記事
 
 - [Optimized abs() for int64 in Go](http://cavaliercoder.com/blog/optimized-abs-for-int64-in-go.html)
+
+
+# 有名ツールリスト
+
+- gocode
+- gopkgs
+- go-outline
+- go-symbols
+- guru
+- gorename
+- gotests
+- gomodifytags
+- dlv
+- godef
+- goimports
+- golint
 
 
 # emacsでの環境
