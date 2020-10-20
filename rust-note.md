@@ -3,7 +3,6 @@
 Rustって深いよね(皮肉)。
 
 - [Rustメモ](#rustメモ)
-- [- map!がない](#ullimapがないliul)
 - [std::strにiter()がない](#stdstrにiterがない)
 - [type(var)みたいの](#typevarみたいの)
 - [クレート & カーゴ](#クレート--カーゴ)
@@ -58,15 +57,6 @@ Rustって深いよね(皮肉)。
 - [rust-src](#rust-src)
 - [環境設定(2020-10)](#環境設定2020-10)
   - [emacsでrust-mode + racer](#emacsでrust-mode--racer)
-<<<<<<< HEAD
-- [map!がない](#mapがない)
-=======
-- [overflow](#overflow)
-- [Rustで「普通のenum」](#rustで普通のenum)
-- [ライフタイム](#ライフタイム)
-- [Rustのデバッグ](#rustのデバッグ)
-- [ラムダを返す](#ラムダを返す)
->>>>>>> e08ad4979627c72e9fd15b14cd5c4523ffbc211b
 
 
 # std::strにiter()がない
@@ -240,6 +230,7 @@ implする。
 
 - [anyhow - crates.io: Rust Package Registry](https://crates.io/crates/anyhow)
 - [anyhow - Rust](https://docs.rs/anyhow/1.0.31/anyhow/)
+- [dtolnay/anyhow: Flexible concrete Error type built on std: :Error](https://github.com/dtolnay/anyhow)
 - [Rustの便利クレート - Qiita](https://qiita.com/qryxip/items/7c16ab9ef3072c1d7199#anyhow)
 - [anyhowの簡単な使い方 - Shinjuku.rs #8 dalance - Speaker Deck](https://speakerdeck.com/dalance/shinjuku-dot-rs-number-8-dalance)
 
@@ -248,6 +239,17 @@ macros:
 - [anyhow::anyhow - Rust](https://docs.rs/anyhow/1.0.32/anyhow/macro.anyhow.html)
 - [anyhow::bail - Rust](https://docs.rs/anyhow/1.0.32/anyhow/macro.bail.html) - これは便利
 - [anyhow::ensure - Rust](https://docs.rs/anyhow/1.0.32/anyhow/macro.ensure.html) - if $cond bail!
+
+anyhowを使いたくなかたら
+```rust
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+```
+みたいのもあり。
+
+```rust
+use anyhow::Result;
+```
+してResultすると、どのResultかすぐわからなくなるので、anyhow::Resultと書くことにする。
 
 # 便利マクロ
 
