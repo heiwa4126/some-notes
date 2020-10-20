@@ -31,6 +31,7 @@ Rustって深いよね(皮肉)。
 - [型変換イディオム](#型変換イディオム)
 - [RustでExcelファイルを作る](#rustでexcelファイルを作る)
 - [Boxとdyn](#boxとdyn)
+- [impl Trait](#impl-trait)
 - [print!のフォーマット](#printのフォーマット)
 - [trait](#trait)
 - [iter](#iter)
@@ -57,6 +58,8 @@ Rustって深いよね(皮肉)。
 - [rust-src](#rust-src)
 - [環境設定(2020-10)](#環境設定2020-10)
   - [emacsでrust-mode + racer](#emacsでrust-mode--racer)
+  - [emacsでrustic + rls](#emacsでrustic--rls)
+  - [emacsでrust-analizer](#emacsでrust-analizer)
 
 
 # std::strにiter()がない
@@ -504,10 +507,21 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 おまけ
 - [Rust で Excel オートメーション - Qiita](https://qiita.com/benki/items/de2e104a5866fad0ebab)
 
+
 # Boxとdyn
 
 - [Box<T>はヒープのデータを指し、既知のサイズである - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch15-01-box.html)
 - [Rustで複数のimpl Traitを返す - Qiita](https://qiita.com/taiki-e/items/39688f6c86b919988222)
+
+
+# impl Trait
+
+[イテレータを返す関数を書きたいんですけど？ → やめとけ。 死ぬぞ。 - Qiita](https://qiita.com/wada314/items/201ab5d66ac7daeb9c3d)
+
+そこでimpl Traitだ。
+
+[安定化間近！Rustのimpl Traitを今こそ理解する - 簡潔なQ](https://qnighy.hatenablog.com/entry/2018/01/28/220000)
+
 
 # print!のフォーマット
 
@@ -525,6 +539,7 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 
 - [std::iter::Iterator - Rust](https://doc.rust-lang.org/std/iter/trait.Iterator.html)
 - [Rustのイテレータの網羅的かつ大雑把な紹介 - Qiita](https://qiita.com/lo48576/items/34887794c146042aebf1)
+
 
 # 「スタックは高速です」
 
@@ -783,7 +798,6 @@ use lazy_static::lazy_static;
 - [rust-lang-nursery/lazy-static.rs: A small macro for defining lazy evaluated static variables in Rust.](https://github.com/rust-lang-nursery/lazy-static.rs)
 
 
-
 # cargo clippy
 
 なぜかcargo cleanしてからでないと
@@ -832,7 +846,7 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 こんなかんじか?
 ```sh
-# linuxの場合
+# ↓linuxの場合
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # インストール後
 rustup toolchain add nightly
@@ -860,18 +874,31 @@ source $HOME/.cargo/env
 - [Rustエディタ - Qiita](https://qiita.com/geek_777/items/5eb25ce0d12fc81a8f60)
 - [racer-rust/racer: Rust Code Completion utility](https://github.com/racer-rust/racer)
 - [rust-lang/rls: Repository for the Rust Language Server (aka RLS)](https://github.com/rust-lang/rls)
+- [rust-lang/rust-clippy: A bunch of lints to catch common mistakes and improve your Rust code](https://github.com/rust-lang/rust-clippy#usage)
+
 
 ## emacsでrust-mode + racer
 
-emacsの場合:
+[Rustの開発環境を整える(Windows, Emacs) - magのOSS備忘録](http://boiled-mag.hatenablog.jp/entry/2017/08/15/150224)
 
-- rust-mode
+```
+M-x package-refresh-contents
+M-x package-install RET ... RET
+M-x package-autoremove 
+```
+
+パッケージをいれる。
+
 - cargo
 - racer
 - company
 - flycheck-rust
+- cargo-mode (やめた)
 
-パッケージをいれる。
+おまけ
+
+- rainbow-delimiters-mode
+- smartparens-mode
 
 で
 ``` lisp
@@ -889,7 +916,7 @@ emacsの場合:
 (with-eval-after-load 'rust-mode
   (add-hook 'rust-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'rust-mode-hook #'smartparens-mode)
-  ;; (add-hook 'rust-mode-hook #'cargo-minor-mode)
+  ;(add-hook 'rust-mode-hook #'cargo-minor-mode)
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   (setq-default rust-format-on-save t)
@@ -930,4 +957,28 @@ cargo modeのキーバインドは:
  * C-c C-c C-U - cargo-process-upgrade
  * C-c C-c C-A - cargo-process-audit
 
-たぶんこんなにいらない。のでコメントアウトした
+たぶんこんなにいらない。
+cargo-modeはコメントアウトした or remove。
+上↑で定義したキーバインドが不足だったら考える。
+
+
+## emacsでrustic + rls
+
+racerと比べて重い。なぜかAPIの補完してくれない。調べ中
+
+- [brotzeit/rustic: Rust development environment for Emacs](https://github.com/brotzeit/rustic)
+
+rlsのほうがエラーが的確でいい。でもAPIのcompletionがどーしてもできない。
+rust-analizerにすると、APIのcompletionもできるけど、重い。
+
+両方入れといてM-x rustic-mode で切り替えるとか。
+
+## emacsでrust-analizer
+
+- [rust-analyzer/rust-analyzer: An experimental Rust compiler front-end for IDEs](https://github.com/rust-analyzer/rust-analyzer)
+- [User Manual](https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary)
+
+バイナリおとしたら動かなかったので、ソースからビルドした。
+ものすごく時間かかった。
+
+APIのcode completeもちゃんとやってくれるけど、rlsと比べると重い。
