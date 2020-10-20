@@ -34,6 +34,7 @@
 - [標準プロジェクトレイアウト](#標準プロジェクトレイアウト)
 - [おもしろい記事](#おもしろい記事)
 - [有名ツールリスト](#有名ツールリスト)
+- [windowsでbtime,atime,ctime,mtime](#windowsでbtimeatimectimemtime)
 - [emacsでの環境](#emacsでの環境)
 - [go-mode](#go-mode)
 
@@ -944,6 +945,16 @@ Pythonだと str.startswith, str.endswith
 - goplay
 - godoctor
 - gocode-gomod
+
+# windowsでbtime,atime,ctime,mtime
+
+サンプル:
+[djherbis/times: #golang file times (atime, mtime, ctime, btime)](https://github.com/djherbis/times)
+
+OSごとの条件コンパイルのサンプルにもなってます。
+
+touchみたいのは
+[go - Windowsでの「ファイル作成日時」を変更する方法 - スタック・オーバーフロー](https://ja.stackoverflow.com/questions/47540/windows%E3%81%A7%E3%81%AE-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E4%BD%9C%E6%88%90%E6%97%A5%E6%99%82-%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95)
 
 
 # emacsでの環境
