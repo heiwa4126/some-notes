@@ -5,11 +5,12 @@ Powershellが絡むとすべてがめんどくさくなる
 (諸悪の根源はMSの提供するコマンドレットの品質)。
 
 - [powershell-note](#powershell-note)
-- [いつもの呪文](#%e3%81%84%e3%81%a4%e3%82%82%e3%81%ae%e5%91%aa%e6%96%87)
-  - [この呪文のいらない実行の仕方](#%e3%81%93%e3%81%ae%e5%91%aa%e6%96%87%e3%81%ae%e3%81%84%e3%82%89%e3%81%aa%e3%81%84%e5%ae%9f%e8%a1%8c%e3%81%ae%e4%bb%95%e6%96%b9)
-- [moduleの場所](#module%e3%81%ae%e5%a0%b4%e6%89%80)
-- [インストールされているモジュールをリスト](#%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab%e3%81%95%e3%82%8c%e3%81%a6%e3%81%84%e3%82%8b%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%82%92%e3%83%aa%e3%82%b9%e3%83%88)
-- [モジュールの削除](#%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%ae%e5%89%8a%e9%99%a4)
+- [いつもの呪文](#いつもの呪文)
+  - [この呪文のいらない実行の仕方](#この呪文のいらない実行の仕方)
+- [moduleの場所](#moduleの場所)
+- [インストールされているモジュールをリスト](#インストールされているモジュールをリスト)
+- [モジュールの削除](#モジュールの削除)
+- [相対パスでImport-Module](#相対パスでimport-module)
 
 
 # いつもの呪文
@@ -50,3 +51,16 @@ Get-InstalledModule -Name Az -AllVersions # Azの全バージョン
 # モジュールの削除
 
 参考になる: [Azure PowerShell のアンインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/azure/uninstall-az-ps?view=azps-2.8.0)
+
+# 相対パスでImport-Module
+
+[powershell - relative path in Import-Module - Stack Overflow](https://stackoverflow.com/questions/14382579/relative-path-in-import-module)
+
+```powershell
+$ScriptDir = Split-Path -parent $MyInvocation.MyCommand.Path
+Import-Module $ScriptDir\..\MasterScript\Script.ps1
+```
+
+あとネームスペースもどきはImport-Moduleの-prefixオプションでできる。
+
+参考: [PowerShell でも名前空間を作りたい - Qiita](https://qiita.com/nimzo6689/items/2c5c504f0340b4e5d236)
