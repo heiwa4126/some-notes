@@ -223,4 +223,6 @@ function prompt() {
 # TIPS
 
 便利なリンクなど
+
 - [PoweShellでのファイル出力方法あれこれ - Qiita](https://qiita.com/gtom7156/items/066fe8a8d48394bdbaa4)
+- [【PowerShell】ローカルのホスト名(コンピューター名)を取得する方法 - buralog](https://buralog.jp/powershell-get-hostname-or-computername/)
