@@ -21,11 +21,15 @@ Powershellが絡むとすべてがめんどくさくなる
 - [unit test](#unit-test)
 - [namespace](#namespace)
 - [functionの型ノート](#functionの型ノート)
+- [Powershellの長いプロンプトを短くする](#powershellの長いプロンプトを短くする)
+  - [vscodeの場合](#vscodeの場合)
+- [TIPS](#tips)
 
 
 # Powershellの常識、世間の非常識
 
 識別子の大文字小文字を区別しない。
+(`-eq`ですら。ケースセンシティブな文字列比較は`-ceq`,`-cne`を使う)
 
 
 # いつもの呪文
@@ -197,3 +201,26 @@ function Invoke-Notepad
   & notepad.exe | Out-Null
 }
 ```
+
+# Powershellの長いプロンプトを短くする
+
+[PowerShellのプロンプトを短くする方法 | mrkmyki＠フリーランスブログ](https://mrkmyki.com/powershell%E3%81%AE%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E3%82%92%E7%9F%AD%E3%81%8F%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95)
+
+`%userprofile%\Documents\Powershell`に
+`Microsoft.PowerShell_profile.ps1`という名前で
+以下のようなプログラムを置く
+```powershell
+function prompt() {
+  (Split-Path (Get-Location) -Leaf) + "> "
+}
+```
+
+## vscodeの場合
+
+[visual studio code - Hiding the full file path in a PowerShell command prompt in VSCode - Stack Overflow](https://stackoverflow.com/questions/52107170/hiding-the-full-file-path-in-a-powershell-command-prompt-in-vscode)
+
+
+# TIPS
+
+便利なリンクなど
+- [PoweShellでのファイル出力方法あれこれ - Qiita](https://qiita.com/gtom7156/items/066fe8a8d48394bdbaa4)
