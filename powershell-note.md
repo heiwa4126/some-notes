@@ -4,6 +4,8 @@ PowerShellはクソ。遅い。長い。わけがわからない。v7でも変�
 Powershellが絡むとすべてがめんどくさくなる
 (諸悪の根源はMSの提供するコマンドレットの品質)。
 
+建て増しを重ねた温泉旅館。火事になると大勢が焼け死ぬ。
+
 - [powershell-note](#powershell-note)
 - [Powershellの常識、世間の非常識](#powershellの常識世間の非常識)
 - [いつもの呪文](#いつもの呪文)
@@ -18,6 +20,7 @@ Powershellが絡むとすべてがめんどくさくなる
 - [using module](#using-module)
 - [unit test](#unit-test)
 - [namespace](#namespace)
+- [functionの型ノート](#functionの型ノート)
 
 
 # Powershellの常識、世間の非常識
@@ -91,6 +94,7 @@ $ErrorActionPreference = "Stop"
 
 参考:
 [PowerShell のエラーハンドリングを（今度こそ）理解する - Qiita](https://qiita.com/mkht/items/24da4850f9d000b35fc4#%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%AE%E7%A8%AE%E9%A1%9E)
+
 
 # 相対パスでImport-Module
 
@@ -174,3 +178,22 @@ newラッパも [class]::new に置き換える...
 > クラス構文の返戻値の型宣言には使えないので気を付けてください
 
 やっぱりPowerShellはクソ。
+
+
+# functionの型ノート
+
+強制力はないんだけど記述する方針で。
+ただ構文がキチガイじみてる。
+classメソッドと記述方法が違うのも異常。
+
+[about_Functions_OutputTypeAttribute - PowerShell | Microsoft Docs](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_outputtypeattribute?view=powershell-7)
+
+以下(気が付き)にくいテンプレート
+```powershell
+function Invoke-Notepad
+{
+  [OutputType([System.Void])]
+  Param ()
+  & notepad.exe | Out-Null
+}
+```
