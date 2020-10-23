@@ -8,6 +8,7 @@ Powershellが絡むとすべてがめんどくさくなる
 
 - [powershell-note](#powershell-note)
 - [Powershellの常識、世間の非常識](#powershellの常識世間の非常識)
+- [Powershellのいいところ](#powershellのいいところ)
 - [いつもの呪文](#いつもの呪文)
   - [この呪文のいらない実行の仕方](#この呪文のいらない実行の仕方)
 - [moduleの場所](#moduleの場所)
@@ -24,12 +25,23 @@ Powershellが絡むとすべてがめんどくさくなる
 - [Powershellの長いプロンプトを短くする](#powershellの長いプロンプトを短くする)
   - [vscodeの場合](#vscodeの場合)
 - [TIPS](#tips)
+- [isFile, isDirのたぐい](#isfile-isdirのたぐい)
 
 
 # Powershellの常識、世間の非常識
 
 識別子の大文字小文字を区別しない。
 (`-eq`ですら。ケースセンシティブな文字列比較は`-ceq`,`-cne`を使う)
+
+
+# Powershellのいいところ
+
+コマンドレットの機能がすごい。
+
+(副作用もすごい。あまり使われてないコマンドレットだとバグもすごい)
+
+(…なんだか「いいところ」じゃないような気がしてきた)
+
 
 
 # いつもの呪文
@@ -204,6 +216,8 @@ function Invoke-Notepad
 
 # Powershellの長いプロンプトを短くする
 
+ものすごく役に立つtips.
+
 [PowerShellのプロンプトを短くする方法 | mrkmyki＠フリーランスブログ](https://mrkmyki.com/powershell%E3%81%AE%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E3%82%92%E7%9F%AD%E3%81%8F%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95)
 
 `%userprofile%\Documents\Powershell`に
@@ -226,3 +240,23 @@ function prompt() {
 
 - [PoweShellでのファイル出力方法あれこれ - Qiita](https://qiita.com/gtom7156/items/066fe8a8d48394bdbaa4)
 - [【PowerShell】ローカルのホスト名(コンピューター名)を取得する方法 - buralog](https://buralog.jp/powershell-get-hostname-or-computername/)
+
+
+# isFile, isDirのたぐい
+
+よくネットで見るのはPSIsContainerで識別する方法だけど、
+レジストリが来たら大惨事に (例: `HKCU:\`)。
+
+知りたいのは
+**「ファイルシステム上のファイル(かディレクトリ)」**
+なのだ。
+
+正しい流れはこんな感じ。Get-Itemのところは適切に
+```
+$i = Get-Item -LiteralPath $file -ErrorAction silent
+$i -eq $null # -> 存在しない
+$i -is [System.IO.DirectoryInfo] # -> ディレクトリ
+$i -is [System.IO.FileInfo] # -> ファイル
+# -> それ以外のなにか
+```
+`LiteralPath`にしてるのはglob避け。
