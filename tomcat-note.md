@@ -33,3 +33,20 @@ CATALINA_OPTS="$CATALINA_OPTS -Djava.net.preferIPv4Stack=true"
 
 `curl https://raw.githubusercontent.com/cfmaniac/JSP-Info/master/info.jsp -O`
 で。
+
+
+# AJPのトラブル
+
+RHEL7の標準のApacheのmod_proxy_ajpは古くて、シークレットキーが使えない。
+
+Tomcatのserver.xmlのajpの部分で
+
+```xml
+<Connector protocol="AJP/1.3"
+               address="127.0.0.1"
+               port="8009"
+               enableLookups="false"
+               redirectPort="8443"
+               secretRequired="false" />
+```
+みたいに`secretRequired="false"`を入れてください。
