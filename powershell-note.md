@@ -24,6 +24,7 @@ Powershellが絡むとすべてがめんどくさくなる
 - [functionの型ノート](#functionの型ノート)
 - [Powershellの長いプロンプトを短くする](#powershellの長いプロンプトを短くする)
   - [vscodeの場合](#vscodeの場合)
+- [vscodeのterminalで使うpowershellをv6,v7にする](#vscodeのterminalで使うpowershellをv6v7にする)
 - [TIPS](#tips)
 - [isFile, isDirのたぐい](#isfile-isdirのたぐい)
 
@@ -233,6 +234,14 @@ function prompt() {
 
 [visual studio code - Hiding the full file path in a PowerShell command prompt in VSCode - Stack Overflow](https://stackoverflow.com/questions/52107170/hiding-the-full-file-path-in-a-powershell-command-prompt-in-vscode)
 
+
+# vscodeのterminalで使うpowershellをv6,v7にする
+
+だって倍早いし。
+
+[How to Configure Visual Studio Code to run PowerShell for Windows and PowerShell Core Simultaneously](https://techcommunity.microsoft.com/t5/itops-talk-blog/configure-visual-studio-code-to-run-powershell-for-windows-and/ba-p/283258)
+
+UIからできます。
 
 # TIPS
 
