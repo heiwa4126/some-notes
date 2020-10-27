@@ -33,7 +33,8 @@ Rustって深いよね(皮肉)。
 - [Boxとdyn](#boxとdyn)
 - [impl Trait](#impl-trait)
 - [print!のフォーマット](#printのフォーマット)
-- [trait](#trait)
+- [traitとcrate](#traitとcrate)
+- [pub use](#pub-use)
 - [iter](#iter)
 - [「スタックは高速です」](#スタックは高速です)
 - [構造体に文字列](#構造体に文字列)
@@ -60,6 +61,7 @@ Rustって深いよね(皮肉)。
   - [emacsでrust-mode + racer](#emacsでrust-mode--racer)
   - [emacsでrustic + rls](#emacsでrustic--rls)
   - [emacsでrust-analizer](#emacsでrust-analizer)
+- [BufReadとBufReader](#bufreadとbufreader)
 
 
 # std::strにiter()がない
@@ -126,6 +128,9 @@ fn main() {
 ```
 実行すると`世界の皆さ`になります。
 [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=9904cd1381674fed2f5350752c924315)
+
+
+
 
 
 # type(var)みたいの
@@ -527,18 +532,30 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 
 [std::fmt - Rust](https://doc.rust-lang.org/std/fmt/)
 
-# trait
+# traitとcrate
 
 > 注釈: 違いはあるものの、トレイトは他の言語でよくインターフェイスと呼ばれる機能に類似しています。
 
 - [トレイト：共通の振る舞いを定義する - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch10-02-traits.html)
 - [オブジェクト指向経験者のためのRust入門 - Qiita](https://qiita.com/nacika_ins/items/cf3782bd371da79def74)
+- [trait - Rust](https://doc.rust-lang.org/std/keyword.trait.html)
 
+クレートの方はモジュールとかパッケージとかでおおむねいいのかな。
+これがまた微妙で...
+
+[Rustのcrateとmoduleについて - Kekeの日記](https://www.1915keke.com/entry/2018/11/13/181145)
+
+
+# pub use
+
+[Rustでファイル分割 - Qiita](https://qiita.com/CreativeGP/items/496556a825486218bdaf)
 
 # iter
 
 - [std::iter::Iterator - Rust](https://doc.rust-lang.org/std/iter/trait.Iterator.html)
 - [Rustのイテレータの網羅的かつ大雑把な紹介 - Qiita](https://qiita.com/lo48576/items/34887794c146042aebf1)
+
+iteretorをstructに含めようとするとつらい。
 
 
 # 「スタックは高速です」
@@ -884,7 +901,7 @@ source $HOME/.cargo/env
 ```
 M-x package-refresh-contents
 M-x package-install RET ... RET
-M-x package-autoremove 
+M-x package-autoremove
 ```
 
 パッケージをいれる。
@@ -982,3 +999,16 @@ rust-analizerにすると、APIのcompletionもできるけど、重い。
 ものすごく時間かかった。
 
 APIのcode completeもちゃんとやってくれるけど、rlsと比べると重い。
+
+# BufReadとBufReader
+
+なんで2つあるの?
+
+- [[Rust] Read と BufRead の違い - Qiita](https://qiita.com/osanshouo/items/1cf8175e1430c64372d1)
+- [std::io::Read - Rust](https://doc.rust-lang.org/std/io/trait.Read.html) - これはtrait
+- [std::io::BufRead - Rust](https://doc.rust-lang.org/std/io/trait.BufRead.html) - これもtrait
+- [std::io::BufReader - Rust](https://doc.rust-lang.org/std/io/struct.BufReader.html) - structure
+
+structreでimplされていないtraitのデフォルト実装を使うには、
+traitもuseしないといけないらしい。
+勝手に読んでくれればいいのに。
