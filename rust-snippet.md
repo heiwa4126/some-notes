@@ -1,5 +1,6 @@
 - [`Option<&str>` -> `Option<String>`](#optionstr---optionstring)
 - [&str -> std::fs::Read](#str---stdfsread)
+- [String -> std::fs::Write](#string---stdfswrite)
 
 # `Option<&str>` -> `Option<String>`
 
@@ -66,3 +67,13 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 ```
+
+# String -> std::fs::Write
+
+Stringは
+[std::fmt::Write](https://doc.rust-lang.org/std/fmt/trait.Write.html)
+をimplしてるのでwrite!で使えるけれど、
+これは[std::io::Write](https://doc.rust-lang.org/std/io/trait.Write.html)ではないので
+ファイル代わりに渡せない。
+
+`Cursor<Vec<u8>>`なら
