@@ -1,6 +1,6 @@
 - [`Option<&str>` -> `Option<String>`](#optionstr---optionstring)
 - [&str -> std::fs::Read](#str---stdfsread)
-- [String -> std::fs::Write](#string---stdfswrite)
+- [メモリ上ファイル](#メモリ上ファイル)
 
 # `Option<&str>` -> `Option<String>`
 
@@ -68,7 +68,9 @@ fn main() -> anyhow::Result<()> {
 }
 ```
 
-# String -> std::fs::Write
+# メモリ上ファイル
+
+これもテストとかで使う。
 
 Stringは
 [std::fmt::Write](https://doc.rust-lang.org/std/fmt/trait.Write.html)
@@ -76,4 +78,37 @@ Stringは
 これは[std::io::Write](https://doc.rust-lang.org/std/io/trait.Write.html)ではないので
 ファイル代わりに渡せない。
 
-`Cursor<Vec<u8>>`なら
+`Cursor<Vec<u8>>`ならできる。
+
+
+```rust
+use std::fs::File;
+use std::io::{Cursor, Write};
+
+// ここ↓のWriteはstd::io::Write
+fn write_some_lines<T: Write>(mut w: T) -> anyhow::Result<()> {
+    write!(w, "hello")?;
+    write!(w, " world")?;
+    Ok(())
+}
+
+fn main() -> anyhow::Result<()> {
+    // ふつうのファイルでテスト
+    let w = File::create("./tmp/hello.txt")?;
+    write_some_lines(w)?;
+
+    // メモリ上でテスト
+    let mut c: Cursor<Vec<u8>> = Cursor::new(Vec::new());
+    write_some_lines(&mut c)?;
+    let s = String::from_utf8(c.into_inner())?;　// from_utf8_lossy()もあるよ
+    println!("{}", s); // -> hello world
+
+    Ok(())
+}
+```
+ちょっとめんどくさい。
+
+参考:
+- [How to create an in-memory object that can be used as a Reader, Writer, or Seek in Rust? - Stack Overflow](https://stackoverflow.com/questions/41069865/how-to-create-an-in-memory-object-that-can-be-used-as-a-reader-writer-or-seek)
+- [バイトのベクトル（u8）を文字列に変換する方法](https://qastack.jp/programming/19076719/how-do-i-convert-a-vector-of-bytes-u8-to-a-string)
+- GitHub上の使用例: [Search · rust Cursor String::from_utf8 into_inner](https://github.com/search?l=Rust&q=rust+Cursor+String%3A%3Afrom_utf8+into_inner&type=Code)
