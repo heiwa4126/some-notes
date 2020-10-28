@@ -1,6 +1,6 @@
-- [Option<&str> -> Option<String>](#optionstr---optionstring)
+- [`Option<&str>` -> `Option<String>`](#optionstr---optionstring)
 
-# Option<&str> -> Option<String>
+# `Option<&str>` -> `Option<String>`
 
 (OptionでもResultでも同じでいける)
 
