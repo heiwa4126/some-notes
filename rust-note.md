@@ -66,6 +66,7 @@ Rustって深いよね(皮肉)。
 - [BufReadとBufReader](#bufreadとbufreader)
 - [stdのとき読み込まれるモジュールは](#stdのとき読み込まれるモジュールは)
 - [AsRef](#asref)
+- [「文字列の配列」](#文字列の配列)
 
 
 # std::strにiter()がない
@@ -1089,3 +1090,40 @@ pub fn main() {
     vs(&v1);
 }
 ```
+
+# 「文字列の配列」
+
+関数の引数・戻り値によくあるのが「文字列の配列」 だけど、
+
+- `Vec<String>`
+- `Vec<&str>`
+- `&[String]`
+- `&[&str]`
+
+の4パターンがありうる。
+
+戻り値にスライスが使えるのは引数の一部を返すときだけなので、
+大抵の場合 `f(..) -> Vec<U>`になる。
+
+`Vec<T>` -> `&[T]`は超簡単なので、
+引数はスライスがいい。
+(`f(x:&[T]) -> Vec<U>`)。
+
+同じ理由で`String`->`&str`も簡単なので
+`f(x:&[&str]) -> Vec<String> {...}`
+みたいな感じ?
+
+となると
+`Vec<String> -> Vec<&str>`
+は要る。
+
+```rust
+fn like_this(v: &[String]) -> Vec<&str> {
+    v.iter().map(AsRef::as_ref).collect()
+}
+```
+こんなので。
+
+> イミュータブルな場合、スライスとVecの違いはcapacityメソッドがあるかどうかだけです
+>
+[Rustを覚えて間もない頃にやってしまいがちなこと - Qiita](https://qiita.com/mosh/items/709effc9e451b9b8a5f4)

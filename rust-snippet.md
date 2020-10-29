@@ -2,6 +2,7 @@
 - [&str -> std::fs::Read](#str---stdfsread)
 - [メモリ上ファイル](#メモリ上ファイル)
 - [`String <-> Vec<char>`](#string---vecchar)
+- [sliceでindex(),rindex()](#sliceでindexrindex)
 
 # `Option<&str> -> Option<String>`
 
@@ -135,3 +136,26 @@ fn main() {
 [string — Vec <char>を文字列に変換する方法](https://www.it-swarm-ja.tech/ja/string/vec-ltchargt%E3%82%92%E6%96%87%E5%AD%97%E5%88%97%E3%81%AB%E5%A4%89%E6%8F%9B%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/1046103135/)
 
 [Trait std::iter::FromIterator](https://doc.rust-lang.org/std/iter/trait.FromIterator.html)を使う例、iter()とinto_iter()のちがいが載ってます↑。
+
+# sliceでindex(),rindex()
+
+strにはfind,rfindがある。
+
+- [method.find - Rust](https://doc.rust-lang.org/std/primitive.str.html#method.find)
+
+slice一般にはposition,rpositionがある。
+
+- [method.position - std::iter::Iterator](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.position)
+- [method.rposition - std::iter::Iterator](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.rposition)
+
+`[u8]`から探す例。 [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2015&gist=20c53bc660ef4d00841e44e6fb050b70)
+
+```rust
+fn main(){
+    let b = b"Hello, world!";
+    let i0 = b.iter().position(|&x| x == b'o');
+    let i1 = b.iter().rposition(|&x| x == b'o');
+    let i2 = b[..8].iter().rposition(|&x| x == b'o');
+    println!("{:?},{:?},{:?}", i0, i1, i2);
+}
+```
