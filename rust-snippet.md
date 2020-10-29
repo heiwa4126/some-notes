@@ -1,8 +1,9 @@
-- [`Option<&str>` -> `Option<String>`](#optionstr---optionstring)
+- [`Option<&str> -> Option<String>`](#optionstr---optionstring)
 - [&str -> std::fs::Read](#str---stdfsread)
 - [メモリ上ファイル](#メモリ上ファイル)
+- [`String <-> Vec<char>`](#string---vecchar)
 
-# `Option<&str>` -> `Option<String>`
+# `Option<&str> -> Option<String>`
 
 (OptionでもResultでも同じでいける)
 
@@ -112,3 +113,25 @@ fn main() -> anyhow::Result<()> {
 - [How to create an in-memory object that can be used as a Reader, Writer, or Seek in Rust? - Stack Overflow](https://stackoverflow.com/questions/41069865/how-to-create-an-in-memory-object-that-can-be-used-as-a-reader-writer-or-seek)
 - [バイトのベクトル（u8）を文字列に変換する方法](https://qastack.jp/programming/19076719/how-do-i-convert-a-vector-of-bytes-u8-to-a-string)
 - GitHub上の使用例: [Search · rust Cursor String::from_utf8 into_inner](https://github.com/search?l=Rust&q=rust+Cursor+String%3A%3Afrom_utf8+into_inner&type=Code)
+
+
+# `String <-> Vec<char>`
+
+文字列を逆順にする例
+
+```rust
+fn reverse_string(s: &str) -> String {
+    let mut c: Vec<char> = s.chars().collect();
+    c.reverse();
+    c.into_iter().collect()
+}
+
+fn main() {
+    println!("{}", reverse_string("こんにちは"));
+}
+```
+
+参考:
+[string — Vec <char>を文字列に変換する方法](https://www.it-swarm-ja.tech/ja/string/vec-ltchargt%E3%82%92%E6%96%87%E5%AD%97%E5%88%97%E3%81%AB%E5%A4%89%E6%8F%9B%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/1046103135/)
+
+[Trait std::iter::FromIterator](https://doc.rust-lang.org/std/iter/trait.FromIterator.html)を使う例、iter()とinto_iter()のちがいが載ってます↑。
