@@ -55,12 +55,14 @@ Rustって深いよね(皮肉)。
 - [cargoいろいろ](#cargoいろいろ)
 - [いつか役に立つかも](#いつか役に立つかも)
 - [macro_use](#macro_use)
+- [rustupメモ](#rustupメモ)
 - [cargo clippy](#cargo-clippy)
 - [rust-src](#rust-src)
 - [環境設定(2020-10)](#環境設定2020-10)
   - [emacsでrust-mode + racer](#emacsでrust-mode--racer)
   - [emacsでrustic + rls](#emacsでrustic--rls)
   - [emacsでrust-analizer](#emacsでrust-analizer)
+- [vscode上でデバッグする](#vscode上でデバッグする)
 - [BufReadとBufReader](#bufreadとbufreader)
 
 
@@ -814,6 +816,16 @@ use lazy_static::lazy_static;
 - [Search · use "lazy_static::lazy_static"](https://github.com/search?l=Rust&q=use+%22lazy_static%3A%3Alazy_static%22&type=code)
 - [rust-lang-nursery/lazy-static.rs: A small macro for defining lazy evaluated static variables in Rust.](https://github.com/rust-lang-nursery/lazy-static.rs)
 
+# rustupメモ
+
+コンポーネント一覧
+```sh
+rustup component list
+rustup component list --installed
+rustup component list --installed --toolchain nightly
+```
+意味は見たまんまですね。わかりやすい
+
 
 # cargo clippy
 
@@ -999,6 +1011,18 @@ rust-analizerにすると、APIのcompletionもできるけど、重い。
 ものすごく時間かかった。
 
 APIのcode completeもちゃんとやってくれるけど、rlsと比べると重い。
+
+
+# vscode上でデバッグする
+
+rustのextentionだけだとデバッグできない。
+CodeLLDB (よくわかってない)を入れる。
+
+- [How to Debug Rust with Visual Studio Code](https://www.forrestthewoods.com/blog/how-to-debug-rust-with-visual-studio-code/)
+- [Rust IDE に化ける VSCode - OPTiM TECH BLOG](https://tech-blog.optim.co.jp/entry/2019/07/18/173000)
+
+
+
 
 # BufReadとBufReader
 
