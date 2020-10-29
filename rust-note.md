@@ -64,6 +64,8 @@ Rustって深いよね(皮肉)。
   - [emacsでrust-analizer](#emacsでrust-analizer)
 - [vscode上でデバッグする](#vscode上でデバッグする)
 - [BufReadとBufReader](#bufreadとbufreader)
+- [stdのとき読み込まれるモジュールは](#stdのとき読み込まれるモジュールは)
+- [AsRef](#asref)
 
 
 # std::strにiter()がない
@@ -1036,3 +1038,54 @@ CodeLLDB (よくわかってない)を入れる。
 structreでimplされていないtraitのデフォルト実装を使うには、
 traitもuseしないといけないらしい。
 勝手に読んでくれればいいのに。
+
+# stdのとき読み込まれるモジュールは
+
+ずばりこれです。
+[std::prelude - Rust](https://doc.rust-lang.org/std/prelude/index.html#prelude-contents)
+
+
+# AsRef
+
+関数に、Stringの参照が、スライスとして渡せるのは
+[Trait std::convert::AsRef](https://doc.rust-lang.org/std/convert/trait.AsRef.html)
+がimplされてるから。
+
+[string.rs.html -- source](https://doc.rust-lang.org/src/alloc/string.rs.html#2248-2253) (リンク先は変わるかも)
+```rust
+#[stable(feature = "rust1", since = "1.0.0")]
+impl AsRef<str> for String {
+    #[inline]
+    fn as_ref(&self) -> &str {
+        self
+    }
+}
+```
+
+あと `&[T]`を引数にとる関数に、`Vec<T>`の参照を渡せるのも
+`impl<T> AsRef<[T]> for Vec<T>`がimplされてるから。
+
+[vec.rs.html -- source](https://doc.rust-lang.org/src/alloc/vec.rs.html#2483-2487)  (リンク先は変わるかも)
+```rsut
+#[stable(feature = "rust1", since = "1.0.0")]
+impl<T> AsRef<[T]> for Vec<T> {
+    fn as_ref(&self) -> &[T] {
+        self
+    }
+}
+```
+
+サンプル: [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=461a3d3a4096ab7e0c1e5640c730b85f)
+```rust
+fn vs(sl: &[&str]) {
+    println!("{:?}", sl);
+
+}
+pub fn main() {
+    let s1 = &["hello","world"];
+    let v1 = vec!["goodbye","cruel","world"];
+
+    vs(s1);
+    vs(&v1);
+}
+```

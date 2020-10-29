@@ -117,7 +117,7 @@ fn main() -> anyhow::Result<()> {
 
 # `String <-> Vec<char>`
 
-文字列を逆順にする例
+文字列を逆順にする例: [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=c2eb571e17ae29e30b19c47d7b55cb8f)
 
 ```rust
 fn reverse_string(s: &str) -> String {
