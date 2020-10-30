@@ -174,3 +174,8 @@ fn main(){
 
 `encoding_rs::SHIFT_JIS`で検索するとけっこう出てくるので、
 「透過的に読もう/書こう」とする人がすくないのかもしれない。
+
+さすがに長くなったのでレポジトリつくった。
+
+[csv::StringRecord - Rust](https://docs.rs/csv/1.1.3/csv/struct.StringRecord.html)
+を参照。
