@@ -1125,5 +1125,5 @@ fn like_this(v: &[String]) -> Vec<&str> {
 こんなので。
 
 > イミュータブルな場合、スライスとVecの違いはcapacityメソッドがあるかどうかだけです
->
+
 [Rustを覚えて間もない頃にやってしまいがちなこと - Qiita](https://qiita.com/mosh/items/709effc9e451b9b8a5f4)

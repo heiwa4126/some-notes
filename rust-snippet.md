@@ -3,6 +3,7 @@
 - [メモリ上ファイル](#メモリ上ファイル)
 - [`String <-> Vec<char>`](#string---vecchar)
 - [sliceでindex(),rindex()](#sliceでindexrindex)
+- [非UTF-8のCSVを読む](#非utf-8のcsvを読む)
 
 # `Option<&str> -> Option<String>`
 
@@ -159,3 +160,17 @@ fn main(){
     println!("{:?},{:?},{:?}", i0, i1, i2);
 }
 ```
+
+# 非UTF-8のCSVを読む
+
+超ありそうな話。
+
+参考:
+- [character encoding - How to read a non-UTF8 encoded csv file? - Stack Overflow](https://stackoverflow.com/questions/53826986/how-to-read-a-non-utf8-encoded-csv-file)
+- [csv - UTF8以外でエンコードされたcsvファイルを読み取る方法は？ - ITツールウェブ](https://ja.ojit.com/so/csv/2747577) - ↑の自動翻訳
+- [character encoding - UTF8でエンコードされていないcsvファイルを読み取る方法 - 初心者向けチュートリアル](https://tutorialmore.com/questions-2197244.htm) - これも↑↑の自動翻訳
+- [encoding_rs_io::DecodeReaderBytesBuilder - Rust](https://docs.rs/encoding_rs_io/0.1.4/encoding_rs_io/struct.DecodeReaderBytesBuilder.html)
+- [Search · DecodeReaderBytesBuilder language:Rust](https://github.com/search?q=DecodeReaderBytesBuilder+language%3ARust&type=Code&ref=advsearch&l=Rust&l=) - GitHub上でもあんまり使われてない感じ... 新しいAPIとか??
+
+`encoding_rs::SHIFT_JIS`で検索するとけっこう出てくるので、
+「透過的に読もう/書こう」とする人がすくないのかもしれない。
