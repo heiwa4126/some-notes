@@ -66,7 +66,10 @@ Rustって深いよね(皮肉)。
 - [BufReadとBufReader](#bufreadとbufreader)
 - [stdのとき読み込まれるモジュールは](#stdのとき読み込まれるモジュールは)
 - [AsRef](#asref)
+- [パフォーマンス](#パフォーマンス)
 - [「文字列の配列」](#文字列の配列)
+- [encodingについてもう少し](#encodingについてもう少し)
+  - [用語を整理](#用語を整理)
 
 
 # std::strにiter()がない
@@ -1037,8 +1040,8 @@ CodeLLDB (よくわかってない)を入れる。
 - [std::io::BufReader - Rust](https://doc.rust-lang.org/std/io/struct.BufReader.html) - structure
 
 structreでimplされていないtraitのデフォルト実装を使うには、
-traitもuseしないといけないらしい。
-勝手に読んでくれればいいのに。
+traitもuseしないといけないらしい?
+
 
 # stdのとき読み込まれるモジュールは
 
@@ -1091,6 +1094,10 @@ pub fn main() {
 }
 ```
 
+# パフォーマンス
+
+[【翻訳】Rustにおけるパフォーマンスの落とし穴 - Read -> Blog](https://codom.hatenablog.com/entry/2017/06/03/221318)
+
 # 「文字列の配列」
 
 関数の引数・戻り値によくあるのが「文字列の配列」 だけど、
@@ -1127,3 +1134,19 @@ fn like_this(v: &[String]) -> Vec<&str> {
 > イミュータブルな場合、スライスとVecの違いはcapacityメソッドがあるかどうかだけです
 
 [Rustを覚えて間もない頃にやってしまいがちなこと - Qiita](https://qiita.com/mosh/items/709effc9e451b9b8a5f4)
+
+# encodingについてもう少し
+
+文字コード変換のメジャーなクレートは2種類?
+
+- [lifthrasiir/rust-encoding: Character encoding support for Rust](https://github.com/lifthrasiir/rust-encoding)
+- [hsivonen/encoding_rs: A Gecko-oriented implementation of the Encoding Standard in Rust](https://github.com/hsivonen/encoding_rs)
+
+- [Encoding - Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/encoding.html)
+
+## 用語を整理
+
+- decode - byte列を、コーディングを指定してRustの内部表現に変換
+- encode - Rustの内部表現を、コーディングを指定してbyte列に
+
+byte列のところをioにしたものがstreaming。

@@ -4,6 +4,8 @@
 - [`String <-> Vec<char>`](#string---vecchar)
 - [sliceでindex(),rindex()](#sliceでindexrindex)
 - [非UTF-8のCSVを読む](#非utf-8のcsvを読む)
+  - [他の方法](#他の方法)
+- [長さを指定して&strを作る](#長さを指定してstrを作る)
 
 # `Option<&str> -> Option<String>`
 
@@ -179,3 +181,25 @@ fn main(){
 
 [csv::StringRecord - Rust](https://docs.rs/csv/1.1.3/csv/struct.StringRecord.html)
 を参照。
+
+## 他の方法
+
+[CSV processing - Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/encoding/csv.html#read-csv-records)
+
+Serde を使うといけそう。
+[serde-rs/serde: Serialization framework for Rust](https://github.com/serde-rs/serde)
+
+
+# 長さを指定して&strを作る
+
+`&str`は`&[u8]`なんだから
+```rust
+let buf: &mut str = &mut [0u8; BUF_SIZE];
+```
+とかできそうな気がするけどコンパイルできない。
+
+```rust
+let buf = &mut [0u8; BUF_SIZE];
+let mut buf = std::str::from_utf8_mut(buf).unwrap();
+```
+みたいにしないとできない。なんだか効率が悪そう。
