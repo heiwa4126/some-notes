@@ -164,6 +164,10 @@ fn main(){
 }
 ```
 
+こういうのも
+[memchr - Rust](https://docs.rs/memchr/2.3.4/memchr/)
+u8しか探せないけど早い(らしい)。
+
 # 非UTF-8のCSVを読む
 
 超ありそうな話。

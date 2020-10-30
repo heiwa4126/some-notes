@@ -70,6 +70,7 @@ Rustって深いよね(皮肉)。
 - [「文字列の配列」](#文字列の配列)
 - [encodingについてもう少し](#encodingについてもう少し)
   - [用語を整理](#用語を整理)
+- [memchr](#memchr)
 
 
 # std::strにiter()がない
@@ -1135,6 +1136,7 @@ fn like_this(v: &[String]) -> Vec<&str> {
 
 [Rustを覚えて間もない頃にやってしまいがちなこと - Qiita](https://qiita.com/mosh/items/709effc9e451b9b8a5f4)
 
+
 # encodingについてもう少し
 
 文字コード変換のメジャーなクレートは2種類?
@@ -1150,3 +1152,9 @@ fn like_this(v: &[String]) -> Vec<&str> {
 - encode - Rustの内部表現を、コーディングを指定してbyte列に
 
 byte列のところをioにしたものがstreaming。
+
+
+# memchr
+
+- [memchr - Rust](https://docs.rs/memchr/2.3.4/memchr/)
+- [Why are functions like memchr bound to C implementations rather than being written in pure Rust? - Stack Overflow](https://stackoverflow.com/questions/39765039/why-are-functions-like-memchr-bound-to-c-implementations-rather-than-being-writt)
