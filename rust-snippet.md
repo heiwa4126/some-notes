@@ -5,6 +5,7 @@
 - [sliceでindex(),rindex()](#sliceでindexrindex)
 - [非UTF-8のCSVを読む](#非utf-8のcsvを読む)
   - [他の方法](#他の方法)
+- [How to write a non-UTF8 encoded csv file?](#how-to-write-a-non-utf8-encoded-csv-file)
 - [長さを指定して&strを作る](#長さを指定してstrを作る)
 
 # `Option<&str> -> Option<String>`
@@ -184,11 +185,17 @@ fn main(){
 
 ## 他の方法
 
-[CSV processing - Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/encoding/csv.html#read-csv-records)
+- [CSV processing - Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/encoding/csv.html#read-csv-records)
+- [csv::tutorial - Rust](https://docs.rs/csv/1.0.0/csv/tutorial/index.html)
 
 Serde を使うといけそう。
 [serde-rs/serde: Serialization framework for Rust](https://github.com/serde-rs/serde)
 
+# How to write a non-UTF8 encoded csv file?
+
+わがらん。
+goだと簡単なんだけど。
+encoding_rs_ioにWriterがあれば。
 
 # 長さを指定して&strを作る
 
