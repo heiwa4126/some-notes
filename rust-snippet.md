@@ -5,8 +5,9 @@
 - [sliceでindex(),rindex()](#sliceでindexrindex)
 - [非UTF-8のCSVを読む](#非utf-8のcsvを読む)
   - [他の方法](#他の方法)
-- [How to write a non-UTF8 encoded csv file?](#how-to-write-a-non-utf8-encoded-csv-file)
+  - [How to write a non-UTF8 encoded csv file?](#how-to-write-a-non-utf8-encoded-csv-file)
 - [長さを指定して&strを作る](#長さを指定してstrを作る)
+- [IBMをHALにする](#ibmをhalにする)
 
 # `Option<&str> -> Option<String>`
 
@@ -195,7 +196,7 @@ u8しか探せないけど早い(らしい)。
 Serde を使うといけそう。
 [serde-rs/serde: Serialization framework for Rust](https://github.com/serde-rs/serde)
 
-# How to write a non-UTF8 encoded csv file?
+## How to write a non-UTF8 encoded csv file?
 
 わがらん。
 goだと簡単なんだけど。
@@ -203,7 +204,7 @@ encoding_rs_ioにWriterがあれば。
 
 # 長さを指定して&strを作る
 
-`&str`は`&[u8]`なんだから
+`&str`は`&[u8]`なんだから (もうこの時点で間違い)
 ```rust
 let buf: &mut str = &mut [0u8; BUF_SIZE];
 ```
@@ -214,3 +215,23 @@ let buf = &mut [0u8; BUF_SIZE];
 let mut buf = std::str::from_utf8_mut(buf).unwrap();
 ```
 みたいにしないとできない。なんだか効率が悪そう。
+
+# IBMをHALにする
+
+"あいうえお"
+も
+"ぁぃぅぇぉ"
+になる。
+
+```rust
+let s = "IBM";
+
+let s = s
+    .chars()
+    .map(|x| std::char::from_u32((x as u32) - 1).unwrap())
+    .collect::<String>();
+
+println!("{:?}", s);
+```
+
+これいきなり思いつけるひとがいたら天才。
