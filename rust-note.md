@@ -71,6 +71,7 @@ Rustって深いよね(皮肉)。
 - [encodingについてもう少し](#encodingについてもう少し)
   - [用語を整理](#用語を整理)
 - [memchr](#memchr)
+- [Vecをもういちど整理](#vecをもういちど整理)
 
 
 # std::strにiter()がない
@@ -1158,3 +1159,16 @@ byte列のところをioにしたものがstreaming。
 
 - [memchr - Rust](https://docs.rs/memchr/2.3.4/memchr/)
 - [Why are functions like memchr bound to C implementations rather than being written in pure Rust? - Stack Overflow](https://stackoverflow.com/questions/39765039/why-are-functions-like-memchr-bound-to-c-implementations-rather-than-being-writt)
+
+
+# Vecをもういちど整理
+
+[std::vec::Vec - Rust](https://doc.rust-lang.org/std/vec/struct.Vec.html)
+
+- Indexing - 添え字でアクセスできる。読むのも書くのもできる。
+- Slicing - sliceと違ってmutable(sliceはread-only)。sliceにするには&で。
+- Capacity and reallocation (容量と再確保) -<br>
+(sliceと違って)「容量」の観念がある。長さと容量は違う。容量を超えると再アロケーションになる。
+容量が予測できるなら(Vec::newではなくVec::with_capacityを使え。
+- Guarantees(Vecが保障するもの -<br>Vecはポインタと長さとキャパシティのタプル。Vecがサイズ0でないならポインタはヒープを指す。この節ながいけど重要
+
