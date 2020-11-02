@@ -250,6 +250,8 @@ go get -u github.com/derekparker/delve/cmd/dlv
 
 最近(2020頭)
 ```bash
+cd
+# GOPATH以外のどこかで実行
 GO111MODULE=on go get -u golang.org/x/tools/gopls@latest
 GO111MODULE=on go get -u github.com/sqs/goreturns
 GO111MODULE=on go get -u github.com/rogpeppe/godef
@@ -259,6 +261,9 @@ GO111MODULE=on go get -u github.com/lukehoban/go-outline
 GO111MODULE=on go get -u github.com/motemen/gore/cmd/gore
 
 GO111MODULE=on go get -u github.com/nsf/gocode
+GO111MODULE=on go get -u golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
+
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0
 ```
 
 
@@ -997,4 +1002,3 @@ GO111MODULE=on go get -u github.com/sqs/goreturns
 emacsのgo-modeには`go test`とか実行するコマンドが無い。
 
 - [nlamirault/gotest.el: Emacs mode to go unit test command line tool](https://github.com/nlamirault/gotest.el)
-

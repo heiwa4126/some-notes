@@ -2,6 +2,7 @@ Windowsのメモ
 - [Windows serverでRC4とtriple-DESを無効にする](#windows-serverでrc4とtriple-desを無効にする)
 - [参考](#参考)
 - [Windowsのサポート期限検索](#windowsのサポート期限検索)
+- [Windows updateのproxy設定](#windows-updateのproxy設定)
 
 
 # Windows serverでRC4とtriple-DESを無効にする
@@ -59,3 +60,16 @@ $sub = 'SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Ciphers'
 
 これは便利。
 [製品およびサービスのライフサイクル情報の検索 (プレビュー) | Microsoft Docs](https://docs.microsoft.com/ja-jp/lifecycle/products/)
+
+
+# Windows updateのproxy設定
+
+Windows 10 より前のOSではProxyの設定が必要だった。
+
+管理者権限でcmd.exeひらいて
+```
+netsh winhttp show proxy
+netsh winhttp import proxy source=ie
+netsh winhttp set proxy proxy-server="192.168.1.2:10080" bypass-list="*.local"
+netsh winhttp reset proxy
+```

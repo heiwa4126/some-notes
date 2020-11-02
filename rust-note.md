@@ -33,7 +33,8 @@ Rustって深いよね(皮肉)。
 - [Boxとdyn](#boxとdyn)
 - [impl Trait](#impl-trait)
 - [print!のフォーマット](#printのフォーマット)
-- [trait](#trait)
+- [traitとcrate](#traitとcrate)
+- [pub use](#pub-use)
 - [iter](#iter)
 - [「スタックは高速です」](#スタックは高速です)
 - [構造体に文字列](#構造体に文字列)
@@ -54,12 +55,23 @@ Rustって深いよね(皮肉)。
 - [cargoいろいろ](#cargoいろいろ)
 - [いつか役に立つかも](#いつか役に立つかも)
 - [macro_use](#macro_use)
+- [rustupメモ](#rustupメモ)
 - [cargo clippy](#cargo-clippy)
 - [rust-src](#rust-src)
 - [環境設定(2020-10)](#環境設定2020-10)
   - [emacsでrust-mode + racer](#emacsでrust-mode--racer)
   - [emacsでrustic + rls](#emacsでrustic--rls)
   - [emacsでrust-analizer](#emacsでrust-analizer)
+- [vscode上でデバッグする](#vscode上でデバッグする)
+- [BufReadとBufReader](#bufreadとbufreader)
+- [stdのとき読み込まれるモジュールは](#stdのとき読み込まれるモジュールは)
+- [AsRef](#asref)
+- [パフォーマンス](#パフォーマンス)
+- [「文字列の配列」](#文字列の配列)
+- [encodingについてもう少し](#encodingについてもう少し)
+  - [用語を整理](#用語を整理)
+- [memchr](#memchr)
+- [Vecをもういちど整理](#vecをもういちど整理)
 
 
 # std::strにiter()がない
@@ -126,6 +138,9 @@ fn main() {
 ```
 実行すると`世界の皆さ`になります。
 [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=9904cd1381674fed2f5350752c924315)
+
+
+
 
 
 # type(var)みたいの
@@ -527,18 +542,30 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 
 [std::fmt - Rust](https://doc.rust-lang.org/std/fmt/)
 
-# trait
+# traitとcrate
 
 > 注釈: 違いはあるものの、トレイトは他の言語でよくインターフェイスと呼ばれる機能に類似しています。
 
 - [トレイト：共通の振る舞いを定義する - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch10-02-traits.html)
 - [オブジェクト指向経験者のためのRust入門 - Qiita](https://qiita.com/nacika_ins/items/cf3782bd371da79def74)
+- [trait - Rust](https://doc.rust-lang.org/std/keyword.trait.html)
 
+クレートの方はモジュールとかパッケージとかでおおむねいいのかな。
+これがまた微妙で...
+
+[Rustのcrateとmoduleについて - Kekeの日記](https://www.1915keke.com/entry/2018/11/13/181145)
+
+
+# pub use
+
+[Rustでファイル分割 - Qiita](https://qiita.com/CreativeGP/items/496556a825486218bdaf)
 
 # iter
 
 - [std::iter::Iterator - Rust](https://doc.rust-lang.org/std/iter/trait.Iterator.html)
 - [Rustのイテレータの網羅的かつ大雑把な紹介 - Qiita](https://qiita.com/lo48576/items/34887794c146042aebf1)
+
+iteretorをstructに含めようとするとつらい。
 
 
 # 「スタックは高速です」
@@ -797,6 +824,16 @@ use lazy_static::lazy_static;
 - [Search · use "lazy_static::lazy_static"](https://github.com/search?l=Rust&q=use+%22lazy_static%3A%3Alazy_static%22&type=code)
 - [rust-lang-nursery/lazy-static.rs: A small macro for defining lazy evaluated static variables in Rust.](https://github.com/rust-lang-nursery/lazy-static.rs)
 
+# rustupメモ
+
+コンポーネント一覧
+```sh
+rustup component list
+rustup component list --installed
+rustup component list --installed --toolchain nightly
+```
+意味は見たまんまですね。わかりやすい
+
 
 # cargo clippy
 
@@ -884,7 +921,7 @@ source $HOME/.cargo/env
 ```
 M-x package-refresh-contents
 M-x package-install RET ... RET
-M-x package-autoremove 
+M-x package-autoremove
 ```
 
 パッケージをいれる。
@@ -982,3 +1019,156 @@ rust-analizerにすると、APIのcompletionもできるけど、重い。
 ものすごく時間かかった。
 
 APIのcode completeもちゃんとやってくれるけど、rlsと比べると重い。
+
+
+# vscode上でデバッグする
+
+rustのextentionだけだとデバッグできない。
+CodeLLDB (よくわかってない)を入れる。
+
+- [How to Debug Rust with Visual Studio Code](https://www.forrestthewoods.com/blog/how-to-debug-rust-with-visual-studio-code/)
+- [Rust IDE に化ける VSCode - OPTiM TECH BLOG](https://tech-blog.optim.co.jp/entry/2019/07/18/173000)
+
+
+
+
+# BufReadとBufReader
+
+なんで2つあるの?
+
+- [[Rust] Read と BufRead の違い - Qiita](https://qiita.com/osanshouo/items/1cf8175e1430c64372d1)
+- [std::io::Read - Rust](https://doc.rust-lang.org/std/io/trait.Read.html) - これはtrait
+- [std::io::BufRead - Rust](https://doc.rust-lang.org/std/io/trait.BufRead.html) - これもtrait
+- [std::io::BufReader - Rust](https://doc.rust-lang.org/std/io/struct.BufReader.html) - structure
+
+structreでimplされていないtraitのデフォルト実装を使うには、
+traitもuseしないといけないらしい?
+
+
+# stdのとき読み込まれるモジュールは
+
+ずばりこれです。
+[std::prelude - Rust](https://doc.rust-lang.org/std/prelude/index.html#prelude-contents)
+
+
+# AsRef
+
+関数に、Stringの参照が、スライスとして渡せるのは
+[Trait std::convert::AsRef](https://doc.rust-lang.org/std/convert/trait.AsRef.html)
+がimplされてるから。
+
+[string.rs.html -- source](https://doc.rust-lang.org/src/alloc/string.rs.html#2248-2253) (リンク先は変わるかも)
+```rust
+#[stable(feature = "rust1", since = "1.0.0")]
+impl AsRef<str> for String {
+    #[inline]
+    fn as_ref(&self) -> &str {
+        self
+    }
+}
+```
+
+あと `&[T]`を引数にとる関数に、`Vec<T>`の参照を渡せるのも
+`impl<T> AsRef<[T]> for Vec<T>`がimplされてるから。
+
+[vec.rs.html -- source](https://doc.rust-lang.org/src/alloc/vec.rs.html#2483-2487)  (リンク先は変わるかも)
+```rsut
+#[stable(feature = "rust1", since = "1.0.0")]
+impl<T> AsRef<[T]> for Vec<T> {
+    fn as_ref(&self) -> &[T] {
+        self
+    }
+}
+```
+
+サンプル: [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=461a3d3a4096ab7e0c1e5640c730b85f)
+```rust
+fn vs(sl: &[&str]) {
+    println!("{:?}", sl);
+
+}
+pub fn main() {
+    let s1 = &["hello","world"];
+    let v1 = vec!["goodbye","cruel","world"];
+
+    vs(s1);
+    vs(&v1);
+}
+```
+
+# パフォーマンス
+
+[【翻訳】Rustにおけるパフォーマンスの落とし穴 - Read -> Blog](https://codom.hatenablog.com/entry/2017/06/03/221318)
+
+# 「文字列の配列」
+
+関数の引数・戻り値によくあるのが「文字列の配列」 だけど、
+
+- `Vec<String>`
+- `Vec<&str>`
+- `&[String]`
+- `&[&str]`
+
+の4パターンがありうる。
+
+戻り値にスライスが使えるのは引数の一部を返すときだけなので、
+大抵の場合 `f(..) -> Vec<U>`になる。
+
+`Vec<T>` -> `&[T]`は超簡単なので、
+引数はスライスがいい。
+(`f(x:&[T]) -> Vec<U>`)。
+
+同じ理由で`String`->`&str`も簡単なので
+`f(x:&[&str]) -> Vec<String> {...}`
+みたいな感じ?
+
+となると
+`Vec<String> -> Vec<&str>`
+は要る。
+
+```rust
+fn like_this(v: &[String]) -> Vec<&str> {
+    v.iter().map(AsRef::as_ref).collect()
+}
+```
+こんなので。
+
+> イミュータブルな場合、スライスとVecの違いはcapacityメソッドがあるかどうかだけです
+
+[Rustを覚えて間もない頃にやってしまいがちなこと - Qiita](https://qiita.com/mosh/items/709effc9e451b9b8a5f4)
+
+
+# encodingについてもう少し
+
+文字コード変換のメジャーなクレートは2種類?
+
+- [lifthrasiir/rust-encoding: Character encoding support for Rust](https://github.com/lifthrasiir/rust-encoding)
+- [hsivonen/encoding_rs: A Gecko-oriented implementation of the Encoding Standard in Rust](https://github.com/hsivonen/encoding_rs)
+
+- [Encoding - Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/encoding.html)
+
+## 用語を整理
+
+- decode - byte列を、コーディングを指定してRustの内部表現に変換
+- encode - Rustの内部表現を、コーディングを指定してbyte列に
+
+byte列のところをioにしたものがstreaming。
+
+
+# memchr
+
+- [memchr - Rust](https://docs.rs/memchr/2.3.4/memchr/)
+- [Why are functions like memchr bound to C implementations rather than being written in pure Rust? - Stack Overflow](https://stackoverflow.com/questions/39765039/why-are-functions-like-memchr-bound-to-c-implementations-rather-than-being-writt)
+
+
+# Vecをもういちど整理
+
+[std::vec::Vec - Rust](https://doc.rust-lang.org/std/vec/struct.Vec.html)
+
+- Indexing - 添え字でアクセスできる。読むのも書くのもできる。
+- Slicing - sliceと違ってmutable(sliceはread-only)。sliceにするには&で。
+- Capacity and reallocation (容量と再確保) -<br>
+(sliceと違って)「容量」の観念がある。長さと容量は違う。容量を超えると再アロケーションになる。
+容量が予測できるなら(Vec::newではなくVec::with_capacityを使え。
+- Guarantees(Vecが保障するもの -<br>Vecはポインタと長さとキャパシティのタプル。Vecがサイズ0でないならポインタはヒープを指す。この節ながいけど重要
+
