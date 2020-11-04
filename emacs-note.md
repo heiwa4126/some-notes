@@ -9,6 +9,7 @@
 - [packageまわりtips](#packageまわりtips)
 - [help](#help)
 - [LSPモード](#lspモード)
+- [コマンドの出力を自動スクロールする](#コマンドの出力を自動スクロールする)
 
 # sort & uniq
 
@@ -120,3 +121,12 @@ C-h w command RET
 
 追加/削除したら、emacsを再起動。
 
+
+# コマンドの出力を自動スクロールする
+
+```
+(setq shell-command-dont-erase-buffer 'end-last-out)
+```
+
+- [How to make *Shell Command Output* buffer scroll to the end? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/50299/how-to-make-shell-command-output-buffer-scroll-to-the-end)
+- [https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html](https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html) - の一番下。
