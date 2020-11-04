@@ -6,6 +6,7 @@
 - [非UTF-8のCSVを読む](#非utf-8のcsvを読む)
   - [他の方法](#他の方法)
   - [How to write a non-UTF8 encoded csv file?](#how-to-write-a-non-utf8-encoded-csv-file)
+- [mutable slice](#mutable-slice)
 - [長さを指定して&strを作る](#長さを指定してstrを作る)
 - [IBMをHALにする](#ibmをhalにする)
 
@@ -201,6 +202,53 @@ Serde を使うといけそう。
 わがらん。
 goだと簡単なんだけど。
 encoding_rs_ioにWriterがあれば。
+
+# mutable slice
+
+> Slices are either mutable or shared.
+
+と書いてあるので出来るはず(**意味あるかどうかは別として**)。
+
+- [std::slice - Rust](https://doc.rust-lang.org/std/slice/index.html)
+- [primitive slice - Rust](https://doc.rust-lang.org/std/primitive.slice.html)
+
+`std::slice`の先頭に載ってるサンプルと
+`primitive slice`の先頭に載ってるサンプルが
+違う。
+
+[Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=cbbc97ccc497d662193a72d9529972ca)
+```rust
+fn type_of<T>(_: T) -> &'static str {
+    std::any::type_name::<T>()
+}
+
+fn main() {
+    // example from [std::slice - Rust](https://doc.rust-lang.org/std/slice/index.html)
+    let x = &mut [1, 2, 3]; // mutable array, not mutable slice
+    x[1] = 7;
+    println!("x = {:?}", x);
+    println!("x = {}", type_of(x));
+
+    // example from [slice - Rust](https://doc.rust-lang.org/std/primitive.slice.html)
+    let mut x = [1, 2, 3];
+    let x = &mut x[..]; // Take a full slice of `x`.
+    x[1] = 7;
+    println!("x = {:?}", x);
+    println!("x = {}", type_of(x));
+}
+```
+primitiveの方のサンプルでmutableなsliceが作れる。
+
+実行結果
+```
+x = [1, 7, 3]
+x = &mut [i32; 3]
+x = [1, 7, 3]
+x = &mut [i32]
+```
+std::strの方はarrayのref
+
+
 
 # 長さを指定して&strを作る
 

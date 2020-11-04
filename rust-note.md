@@ -4,7 +4,10 @@ Rustって深いよね(皮肉)。
 
 - [Rustメモ](#rustメモ)
 - [std::strにiter()がない](#stdstrにiterがない)
+- [strとString](#strとstring)
+- [Vecをもういちど整理](#vecをもういちど整理)
 - [type(var)みたいの](#typevarみたいの)
+- [attribute](#attribute)
 - [クレート & カーゴ](#クレート--カーゴ)
 - [Rustは何で「サビ」なの?](#rustは何でサビなの)
 - [testでprintln!](#testでprintln)
@@ -71,7 +74,7 @@ Rustって深いよね(皮肉)。
 - [encodingについてもう少し](#encodingについてもう少し)
   - [用語を整理](#用語を整理)
 - [memchr](#memchr)
-- [Vecをもういちど整理](#vecをもういちど整理)
+- [turbofish](#turbofish)
 
 
 # std::strにiter()がない
@@ -140,7 +143,29 @@ fn main() {
 [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=9904cd1381674fed2f5350752c924315)
 
 
+# strとString
 
+strとStringが
+sliceやVecと異なるのは、
+strとStringが「中身が絶対UTF-8であり続けるようになっている」点。
+
+UTF-8でないものにしようとする努力を跳ね返すような設計になってる。
+
+
+# Vecをもういちど整理
+
+[std::vec::Vec - Rust](https://doc.rust-lang.org/std/vec/struct.Vec.html)
+
+- Indexing - 添え字でアクセスできる。読むのも書くのもできる。
+- Slicing - sliceと違ってmutable(sliceはread-only)。sliceにするには&で。
+- Capacity and reallocation (容量と再確保) -<br>
+(sliceと違って)「容量」の観念がある。長さと容量は違う。容量を超えると再アロケーションになる。
+容量が予測できるなら(Vec::newではなくVec::with_capacityを使え。
+- Guarantees(Vecが保障するもの -<br>Vecはポインタと長さとキャパシティのタプル。Vecの「中身」は必ずヒープ。ポインタはヒープを指す(Vecがサイズ0でないなら)。この節ながいけど重要
+
+
+ドキュメントに矛盾があちこちあるような気がする。
+まあデカイものだからしょうがないけど。
 
 
 # type(var)みたいの
@@ -150,6 +175,30 @@ fn main() {
 ↑要は、
 存在しないメソッドつけてコンパイルしてみろ、
 という話。
+
+```rust
+let _:() = foobar;
+```
+でcargo runしてみる。
+
+
+最近では(最初2つのアトリビュートはオマケ)
+```rust
+#[allow(dead_code)]
+#[inline]
+fn type_of<T>(_: T) -> &'static str {
+    std::any::type_name::<T>()
+}
+```
+[std::any::type_name - Rust](https://doc.rust-lang.org/std/any/fn.type_name.html)
+
+# attribute
+
+`#[...]`とか`#![...]`
+
+- [Attributes - The Rust Reference](https://doc.rust-lang.org/reference/attributes.html)
+- [Rustでよく見かけるattributeを整理する。 - Qiita](https://qiita.com/8pockets/items/0b6bb582a1bfa995559e)
+- [Rustのcustom attributeチュートリアル - Qiita](https://qiita.com/dalance/items/1911a775ee23f3e35d18)
 
 # クレート & カーゴ
 
@@ -1161,14 +1210,11 @@ byte列のところをioにしたものがstreaming。
 - [Why are functions like memchr bound to C implementations rather than being written in pure Rust? - Stack Overflow](https://stackoverflow.com/questions/39765039/why-are-functions-like-memchr-bound-to-c-implementations-rather-than-being-writt)
 
 
-# Vecをもういちど整理
+# turbofish
 
-[std::vec::Vec - Rust](https://doc.rust-lang.org/std/vec/struct.Vec.html)
+`::<>`。collect()で使う例をよく見ますね。
 
-- Indexing - 添え字でアクセスできる。読むのも書くのもできる。
-- Slicing - sliceと違ってmutable(sliceはread-only)。sliceにするには&で。
-- Capacity and reallocation (容量と再確保) -<br>
-(sliceと違って)「容量」の観念がある。長さと容量は違う。容量を超えると再アロケーションになる。
-容量が予測できるなら(Vec::newではなくVec::with_capacityを使え。
-- Guarantees(Vecが保障するもの -<br>Vecはポインタと長さとキャパシティのタプル。Vecがサイズ0でないならポインタはヒープを指す。この節ながいけど重要
-
+- [std::iter::Iterator - Rust](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect)
+- [::<>](https://turbo.fish/)
+- [Where to put the turbofish](https://matematikaadit.github.io/posts/rust-turbofish.html)
+- [What is Rust's turbofish? - Tonsser Tech Blog](https://techblog.tonsser.com/posts/what-is-rusts-turbofish)
