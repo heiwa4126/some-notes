@@ -75,6 +75,7 @@ Rustって深いよね(皮肉)。
   - [用語を整理](#用語を整理)
 - [memchr](#memchr)
 - [turbofish](#turbofish)
+- [never型](#never型)
 
 
 # std::strにiter()がない
@@ -1218,3 +1219,9 @@ byte列のところをioにしたものがstreaming。
 - [::<>](https://turbo.fish/)
 - [Where to put the turbofish](https://matematikaadit.github.io/posts/rust-turbofish.html)
 - [What is Rust's turbofish? - Tonsser Tech Blog](https://techblog.tonsser.com/posts/what-is-rusts-turbofish)
+
+# never型
+
+- [never - Rust](https://doc.rust-lang.org/std/primitive.never.html)
+- [Rust の `!` (ビックリマーク、エクスクラメーションマーク、感嘆符) 型 - Don't Repeat Yourself](https://blog-dry.com/entry/2020/11/02/000313)
+- [unit - Rust](https://doc.rust-lang.org/std/primitive.unit.html)
