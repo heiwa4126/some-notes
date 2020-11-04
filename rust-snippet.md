@@ -9,6 +9,7 @@
 - [mutable slice](#mutable-slice)
 - [長さを指定して&strを作る](#長さを指定してstrを作る)
 - [IBMをHALにする](#ibmをhalにする)
+- [Resultを返すIterator](#resultを返すiterator)
 
 # `Option<&str> -> Option<String>`
 
@@ -283,3 +284,18 @@ println!("{:?}", s);
 ```
 
 これいきなり思いつけるひとがいたら天才。
+
+
+# Resultを返すIterator
+
+[パフォーマンス比較：ループVSイテレータ - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch13-04-performance.html)
+によると、ループを使わないほうが早いらしい。
+でもResultを返すiteratorだと`?`演算子が使えなくなるよね?(たとえばBufRead::lines()) という話。
+
+そもそもiter()って中断できるの?
+
+参考:
+- [ResultやOptionが要素型の場合のiteratorの捌き方 - Qiita](https://qiita.com/knknkn1162/items/d411d6a127ece8020811) - errをハンドルしてない。panic!してるだけ
+- [Iterating over Results - Rust By Example](https://doc.rust-lang.org/stable/rust-by-example/error/iter_result.html)
+- [Rewrite help: imperative -> functional style - The Rust Programming Language Forum](https://users.rust-lang.org/t/rewrite-help-imperative-functional-style/28614)
+- [rust - How do I stop iteration and return an error when Iterator::map returns a Result::Err? - Stack Overflow](https://stackoverflow.com/questions/26368288/how-do-i-stop-iteration-and-return-an-error-when-iteratormap-returns-a-result)
