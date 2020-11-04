@@ -76,6 +76,7 @@ Rustって深いよね(皮肉)。
 - [memchr](#memchr)
 - [turbofish](#turbofish)
 - [never型](#never型)
+- [closure](#closure)
 
 
 # std::strにiter()がない
@@ -854,6 +855,11 @@ fn main() -> Result<()> {
 
 # macro_use
 
+サンプルで
+`extern crate`
+が出てきたら、
+それはRust 2018では不要になったので書かなくていいです。
+
 ```rust
 #[macro_use]
 extern crate some_crate;
@@ -1225,3 +1231,8 @@ byte列のところをioにしたものがstreaming。
 - [never - Rust](https://doc.rust-lang.org/std/primitive.never.html)
 - [Rust の `!` (ビックリマーク、エクスクラメーションマーク、感嘆符) 型 - Don't Repeat Yourself](https://blog-dry.com/entry/2020/11/02/000313)
 - [unit - Rust](https://doc.rust-lang.org/std/primitive.unit.html)
+
+# closure
+
+Rustでは無名関数(anonymous function)とかlambdaのことを
+clousreと呼ぶらしい。
