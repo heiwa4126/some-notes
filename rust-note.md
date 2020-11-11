@@ -77,6 +77,7 @@ Rustって深いよね(皮肉)。
 - [turbofish](#turbofish)
 - [never型](#never型)
 - [closure](#closure)
+- [refutable / irrefutable](#refutable--irrefutable)
 
 
 # std::strにiter()がない
@@ -1236,3 +1237,9 @@ byte列のところをioにしたものがstreaming。
 
 Rustでは無名関数(anonymous function)とかlambdaのことを
 clousreと呼ぶらしい。
+
+
+# refutable / irrefutable
+
+- refutable - 論駁可能 - `if let`など
+- inrefutable - 論駁不可能 - `let`など
