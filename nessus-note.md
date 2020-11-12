@@ -41,3 +41,8 @@
 - [ポートスキャンしただけで落ちるCentOS6サーバ - Qiita](https://qiita.com/ockeghem/items/9e8158a51cd4d3368ac5)
 - [Tenable.ioを使って脆弱性診断を15分で試してみた | Developers.IO](https://dev.classmethod.jp/articles/tenable-io-nessus-basicnetworkscan/)
 - [Tenable.ioのBasic Network Scanを実施してみた | Developers.IO](https://dev.classmethod.jp/articles/tenable-io-vulnerabilitymanagement-basicnetworkscan/)
+
+
+# registerのURLが
+
+http:が止まってる。
