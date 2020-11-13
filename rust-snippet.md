@@ -10,6 +10,7 @@
 - [長さを指定して&strを作る](#長さを指定してstrを作る)
 - [IBMをHALにする](#ibmをhalにする)
 - [Resultを返すIterator](#resultを返すiterator)
+- [structureの一部をcloneせずに取り出す。](#structureの一部をcloneせずに取り出す)
 
 # `Option<&str> -> Option<String>`
 
@@ -299,3 +300,50 @@ println!("{:?}", s);
 - [Iterating over Results - Rust By Example](https://doc.rust-lang.org/stable/rust-by-example/error/iter_result.html)
 - [Rewrite help: imperative -> functional style - The Rust Programming Language Forum](https://users.rust-lang.org/t/rewrite-help-imperative-functional-style/28614)
 - [rust - How do I stop iteration and return an error when Iterator::map returns a Result::Err? - Stack Overflow](https://stackoverflow.com/questions/26368288/how-do-i-stop-iteration-and-return-an-error-when-iteratormap-returns-a-result)
+
+
+# structureの一部をcloneせずに取り出す。
+
+[std::mem::take](https://doc.rust-lang.org/std/mem/fn.take.html)を使うと、
+&mutを受けてデフォルト値と置き換えることができる。
+
+```rust
+use std::mem;
+
+#[derive(Debug)]
+struct MCU {
+    film: String,
+    year: u32, // release year
+}
+impl MCU {
+    fn new(film: &str, year: u32) -> MCU {
+        MCU {
+            film: String::from(film),
+            year,
+        }
+    }
+}
+
+fn main() {
+    // このリストから製作年でソートされたタイトルのVecを得たい。
+    let mut l1 = vec![
+        MCU::new("Captain Marvel", 2019),
+        MCU::new("Guardians of the Galaxy", 2014),
+        MCU::new("The Incredible Hulk", 2008),
+        MCU::new("Thor", 2011),
+    ];
+    l1.sort_by(|a, b| a.year.cmp(&b.year));
+
+    // let l1 = l1.iter().map(|f| f.film.clone()).collect::<Vec<String>>();
+    // ↑期待通りに動くけど、Stringをcloneしたくない!
+    // ↓takeを使う。
+    let l1 = l1
+        .iter_mut()
+        .map(|f| mem::take(&mut f.film))
+      .collect::<Vec<String>>();
+    // 結果表示
+    println!("{:?}", &l1);
+```
+
+Stringをclone()するコストより、String::new()のほうがコストが低いだろう、という予測
+
