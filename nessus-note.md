@@ -37,7 +37,8 @@
 
 - [Nessusによる脆弱性スキャン - Qiita](https://qiita.com/prt445/items/81ea55eb3d6f0ecff329)
 - [Nessusの無料版(Nessus Essentials)をインストールしてみよう - YouTube](https://www.youtube.com/watch?v=SegCYc4_21U) - 徳丸氏によるビデオ
-- [YouTube](https://www.youtube.com/watch?v=1TDP8Rlsdnc)
+- [初めてのNessus: 徳丸本VMをNessusでプラットフォーム診断してみよう - YouTube](https://www.youtube.com/watch?v=1TDP8Rlsdnc)
+- [Nessus Essentialsのクレデンシャルスキャンによりパッチ適用状況を確認してみよう - YouTube](https://www.youtube.com/watch?v=VrP9B8tdW0g)
 - [ポートスキャンしただけで落ちるCentOS6サーバ - Qiita](https://qiita.com/ockeghem/items/9e8158a51cd4d3368ac5)
 - [Tenable.ioを使って脆弱性診断を15分で試してみた | Developers.IO](https://dev.classmethod.jp/articles/tenable-io-nessus-basicnetworkscan/)
 - [Tenable.ioのBasic Network Scanを実施してみた | Developers.IO](https://dev.classmethod.jp/articles/tenable-io-vulnerabilitymanagement-basicnetworkscan/)
