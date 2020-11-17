@@ -11,6 +11,7 @@
 - [ブート時最初に実行](#ブート時最初に実行)
 - [シャットダウン時に実行](#シャットダウン時に実行)
 - [ブート時最後に実行して、失敗したらリトライする](#ブート時最後に実行して失敗したらリトライする)
+- [@のついたユニットファイル](#のついたユニットファイル)
 
 # systemctl list-dependencies
 
@@ -282,3 +283,52 @@ WantedBy=multi-user.target
 
 (考え中)
 
+
+# @のついたユニットファイル
+
+ubuntuでpostgresql-11をインストールしたら
+
+```
+$ LANG=C ls /lib/systemd/system/postgresql* -la
+-rw-r--r-- 1 root root  337 Nov 22  2018 /lib/systemd/system/postgresql.service
+-rw-r--r-- 1 root root 1580 Nov 22  2018 /lib/systemd/system/postgresql@.service
+
+$ dlocate /lib/systemd/system/postgresql*.service
+postgresql-common: /lib/systemd/system/postgresql@.service
+postgresql-common: /lib/systemd/system/postgresql.service
+
+$ systemctl status postgresql\*
+● postgresql@11-main.service - PostgreSQL Cluster 11-main
+   Loaded: loaded (/lib/systemd/system/postgresql@.service; indirect; vendor preset: enabled)
+(略)
+```
+
+この@とはなにか?
+
+- [OpenVpnのsystemdユニットファイル - Qiita](https://qiita.com/11ohina017/items/cb30075719eab97fdaa5#%E3%82%A2%E3%83%83%E3%83%88%E3%83%9E%E3%83%BC%E3%82%AF%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+
+> @がついたユニットファイルはsystemctlの実行時に@の後ろに文字列を指定すると、ユニットファイルに定義した%iを@の後ろに設定した文字列で置換できる。
+
+[systemd.unit](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Description)
+
+> A template unit must have a single "@" at the end of the name (right before the type suffix). The name of the full unit is formed by inserting the instance name between "@" and the unit type suffix. In the unit file itself, the instance parameter may be referred to using "%i" and other specifiers, see below.
+
+`/lib/systemd/system/postgresql@.service`
+から引用。
+
+> The actual instances will be called "postgresql@version-cluster", e.g. "postgresql@9.3-main".
+> The variable %i expands to "version-cluster",
+> %I expands to "version/cluster". (%I breaks for cluster names containing dashes.)
+
+なんか
+[systemd.unit](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers)
+に書いてあることとちがうのがやだなあ。
+
+- "%i"	Instance name
+- "%I"	Unescaped instance name
+
+`escape`がなにかよくわからない。[systemd.unit](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#String%20Escaping%20for%20Inclusion%20in%20Unit%20Names)か?
+
+> given a string, any "/" character is replaced by "-"...
+
+どっちかの説明がサカサマだ。
