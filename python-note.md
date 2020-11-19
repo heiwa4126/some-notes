@@ -23,6 +23,7 @@
 - [pip10問題](#pip10問題)
 - [magic](#magic)
 - [Ubuntu 18.04 LTSでpython3.7](#ubuntu-1804-ltsでpython37)
+- [Ubuntu 20.04](#ubuntu-2004)
 - [venv](#venv)
 - [pythonのEOL](#pythonのeol)
 - [モジュールとパッケージ](#モジュールとパッケージ)
@@ -65,7 +66,7 @@ PATH=$PATH:$HOME/.local/bin:$HOME/bin
 PATH=$HOME/.local/bin:$HOME/bin:$PATH
 ```
 
-テスト 
+テスト
 ```
 $ python3 --version
 Python 3.7.4
@@ -141,7 +142,7 @@ PATH=$PATH:$HOME/.local/bin:$HOME/bin
 PATH=$HOME/.local/bin:$HOME/bin:$PATH
 ```
 
-テスト 
+テスト
 ```
 $ python3 --version
 Python 3.6.8
@@ -170,7 +171,7 @@ pip3 intsall -U --user pip
 hash -r
 ```
 
-テスト 
+テスト
 ```
 $ python3 --version
 Python 3.6.8
@@ -523,6 +524,13 @@ venvとか使うしかない。
 
 Ubuntu 20.04 LTSでは Python 3.8が標準でPython2は入らないらしい。
 
+# Ubuntu 20.04
+
+`python-is-python3`という名前のパッケージがあって、
+これをインストールすると`python`が`python3`になる。
+
+(実態はsymlink)
+
 
 # venv
 
@@ -561,11 +569,11 @@ python3.7 -m venv ~/.venv/37 --clear
 - [PEP 537 -- Python 3.7 Release Schedule | Python.org](https://www.python.org/dev/peps/pep-0537/#lifespan)
 - [PEP 569 -- Python 3.8 Release Schedule | Python.org](https://www.python.org/dev/peps/pep-0569/#lifespan)
 
-|version|date|
-|---|---|
-|Python 3.6|2021-12|
-|Python 3.7|2023-06|
-|Python 3.8|2024-08|
+| version    | date    |
+| ---------- | ------- |
+| Python 3.6 | 2021-12 |
+| Python 3.7 | 2023-06 |
+| Python 3.8 | 2024-08 |
 
 
 今後はAWS Lambdaは3.8で書く
@@ -586,7 +594,7 @@ python3.7 -m venv ~/.venv/37 --clear
   - ディレクトリに複数のモジュールを置けて、これを「サブモジュール」と呼ぶ。
   - `__init.py__`だけで、他のファイルは置かなくても良い。
   - `__init.py__`は、中身がなくてもよい(size=0)。
-  - パッケージのディレクトリは階層化できる(それぞれに`__init.py__`は必要)。 
+  - パッケージのディレクトリは階層化できる(それぞれに`__init.py__`は必要)。
 
 [5. インポートシステム — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/reference/import.html)
 
@@ -607,7 +615,7 @@ Jupyterのバグ回避で3.7を使ってる。
   - Anacondaだとめちゃめちゃ苦労した
 - Mathplotもpipですんなり入る。
 
-# Jupyter Notebookのtips 
+# Jupyter Notebookのtips
 
 - [Jupyter Notebook で Prompt の番号をリセットするたったひとつの冴えたやりかた - Qiita](https://qiita.com/iktakahiro/items/32d65ebee6b7d784eed1)
 
@@ -634,4 +642,3 @@ PIP="python3 -m pip"
 $PIP install --user -U pip
 ```
 こんな感じで。
-
