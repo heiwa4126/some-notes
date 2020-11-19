@@ -939,7 +939,13 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 # 環境設定(2020-10)
 
-こんなかんじか?
+ubuntuだと事前に
+```sh
+apt install build-essential clang
+```
+clangは要るかよくわからん。
+
+以下こんなかんじ
 ```sh
 # ↓linuxの場合
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
