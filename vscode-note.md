@@ -18,7 +18,7 @@ Git for Windowsに入ってるMINGWのsshが使える。
 Git bashを起動して、.ssh/configを修正 & id_rsaを適当に配置 etc。`ssh <host>`でつながるとこまで設定。
 
 .ssh/confiのexample
-``` 
+```
 Protocol 2
 ForwardAgent yes
 
@@ -70,3 +70,16 @@ vscodeでf1押して`Remote-SSH: Connect to Host`を実行。.ssh/configに書�
 いまのところ(2019-10)、`ProxyJump`が使えないらしい。
 MINGWのsshでは通るけど、vscodeでつなごうとすると死ぬ。
 
+
+# Powershell 7がWindows Storeで配布されるようになった
+
+pwsh.exeへのパスは通っているので、
+
+設定で
+```json
+"terminal.integrated.shell.windows": "pwsh.exe",
+```
+にすればとりあえず動く。
+フルパスはユーザプロファイルの下だっりするので、syncしてると辛い。
+
+Windows Storeだと更新が楽だからなぁ...

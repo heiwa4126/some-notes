@@ -78,6 +78,7 @@ Rustって深いよね(皮肉)。
 - [never型](#never型)
 - [closure](#closure)
 - [refutable / irrefutable](#refutable--irrefutable)
+- [impl Trait](#impl-trait-1)
 
 
 # std::strにiter()がない
@@ -1243,3 +1244,9 @@ clousreと呼ぶらしい。
 
 - refutable - 論駁可能 - `if let`など
 - inrefutable - 論駁不可能 - `let`など
+
+
+# impl Trait
+
+The Book(日本語訳)では
+[トレイトを実装している型を返す - トレイト：共通の振る舞いを定義する - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch10-02-traits.html?highlight=impl,Trait#%E3%83%88%E3%83%AC%E3%82%A4%E3%83%88%E3%82%92%E5%AE%9F%E8%A3%85%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E5%9E%8B%E3%82%92%E8%BF%94%E3%81%99)
