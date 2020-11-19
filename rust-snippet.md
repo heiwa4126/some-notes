@@ -11,6 +11,7 @@
 - [IBMをHALにする](#ibmをhalにする)
 - [Resultを返すIterator](#resultを返すiterator)
 - [structureの一部をcloneせずに取り出す。](#structureの一部をcloneせずに取り出す)
+- [内部iteratorを持つiterator](#内部iteratorを持つiterator)
 
 # `Option<&str> -> Option<String>`
 
@@ -347,3 +348,51 @@ fn main() {
 
 Stringをclone()するコストより、String::new()のほうがコストが低いだろう、という予測
 
+
+# 内部iteratorを持つiterator
+
+参考: [rust - How do I have a struct's field be an `Iterator` over `T` elements? - Stack Overflow](https://stackoverflow.com/questions/47838596/how-do-i-have-a-structs-field-be-an-iterator-over-t-elements)
+
+- impl Trailを直接structのフィールドに出来ないのでBoxにする。
+- lifetimeが面倒なのでnewの中でBoxできない。Boxしてから渡す
+- 「これが最良の方法」ではない、たぶん。
+
+```rust
+use std::fmt::Debug;
+
+struct IteratorHolder<T> {
+    itr: Box<dyn Iterator<Item = T>>,
+    // and other fields...
+}
+impl<T> IteratorHolder<T> {
+    fn new(itr: Box<dyn Iterator<Item = T>>) -> Self {
+        Self { itr }
+    }
+}
+impl<T> Iterator for IteratorHolder<T> {
+    type Item = T;
+    fn next(&mut self) -> Option<Self::Item> {
+        self.itr.next()
+        // self.nxt()
+    }
+}
+
+// omake
+fn doit<T: Debug>(ih: IteratorHolder<T>) {
+    println!("{:?}", ih.itr.collect::<Vec<T>>());
+}
+
+fn main() {
+    let ih = IteratorHolder::new(Box::new(1..4));
+    for n in ih {
+        println!("{}", n);
+    }
+
+    let ih = IteratorHolder::new(Box::new(vec!["Do", "you", "copy", "?"].into_iter()));
+    for n in ih {
+        println!("{}", n);
+    }
+
+    let ih = IteratorHolder::new(Box::new(vec![3, 3, 2, 3].into_iter()));
+    doit(ih)
+```
