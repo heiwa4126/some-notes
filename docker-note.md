@@ -390,7 +390,7 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 
 # RHEL系でdocker
 
-EPELにあるのは古いので、snapが楽。事前にdockerグループは作っておく。
+EPELにあるのは古いので、snapが楽。事前にdockerグループは作っておくと非rootユーザで作業が楽。
 
 ```sh
 sudo groupadd -r docker
@@ -417,6 +417,10 @@ Docker version 19.03.11, build dd360c7
 $ docker-compose -v
 docker-compose version 1.25.5, build unknown
 ```
+
+参考:
+- [Install Docker for Linux using the Snap Store | Snapcraft](https://snapcraft.io/docker)
+- [Post-installation steps for Linux | Docker Documentation](https://docs.docker.com/engine/install/linux-postinstall/)
 
 
 # イメージを全部消す
