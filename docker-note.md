@@ -15,7 +15,7 @@
 - [AzureでDocker](#azureでdocker)
 - [docker-compose](#docker-compose)
 - [チュートリアルズ](#チュートリアルズ)
-- [RHEL系でdocker](#rhel系でdocker)
+- [snapでdocker](#snapでdocker)
 - [イメージを全部消す](#イメージを全部消す)
 
 
@@ -388,9 +388,10 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 - [Docker入門（第四回）～Dockerfileについて～ | さくらのナレッジ](https://knowledge.sakura.ad.jp/15253/)
 
 
-# RHEL系でdocker
+# snapでdocker
 
-EPELにあるのは古いので、snapが楽。事前にdockerグループは作っておくと非rootユーザで作業が楽。
+dockeはsnapが楽。
+事前にdockerグループは作っておくと非rootユーザで作業が楽。
 
 ```sh
 sudo groupadd -r docker
