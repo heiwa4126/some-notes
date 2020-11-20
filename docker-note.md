@@ -1,19 +1,20 @@
 # Dockerメモ
 
-- [Dockerメモ](#docker%e3%83%a1%e3%83%a2)
-- [インストール](#%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab)
-  - [メモ](#%e3%83%a1%e3%83%a2)
-- [便利なコマンド](#%e4%be%bf%e5%88%a9%e3%81%aa%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89)
-- [dockerの「ボリューム」](#docker%e3%81%ae%e3%83%9c%e3%83%aa%e3%83%a5%e3%83%bc%e3%83%a0)
-- [JDKなしでJavaをコンパイル](#jdk%e3%81%aa%e3%81%97%e3%81%a7java%e3%82%92%e3%82%b3%e3%83%b3%e3%83%91%e3%82%a4%e3%83%ab)
-- [hello-worldのDockfile](#hello-world%e3%81%aedockfile)
-- [GoLangでサーバを書いてimageにしてみる](#golang%e3%81%a7%e3%82%b5%e3%83%bc%e3%83%90%e3%82%92%e6%9b%b8%e3%81%84%e3%81%a6image%e3%81%ab%e3%81%97%e3%81%a6%e3%81%bf%e3%82%8b)
+- [Dockerメモ](#dockerメモ)
+- [インストール](#インストール)
+  - [メモ](#メモ)
+- [便利なコマンド](#便利なコマンド)
+- [dockerの「ボリューム」](#dockerのボリューム)
+- [JDKなしでJavaをコンパイル](#jdkなしでjavaをコンパイル)
+- [hello-worldのDockfile](#hello-worldのdockfile)
+- [GoLangでサーバを書いてimageにしてみる](#golangでサーバを書いてimageにしてみる)
 - [Red Hat Universal Base Image](#red-hat-universal-base-image)
-- [Dockerでsyslog](#docker%e3%81%a7syslog)
-- [Credentials store (証明書ストア)](#credentials-store-%e8%a8%bc%e6%98%8e%e6%9b%b8%e3%82%b9%e3%83%88%e3%82%a2)
-- [AWSでDocker](#aws%e3%81%a7docker)
-- [AzureでDocker](#azure%e3%81%a7docker)
+- [Dockerでsyslog](#dockerでsyslog)
+- [Credentials store (証明書ストア)](#credentials-store-証明書ストア)
+- [AWSでDocker](#awsでdocker)
+- [AzureでDocker](#azureでdocker)
 - [docker-compose](#docker-compose)
+- [イメージを全部消す](#イメージを全部消す)
 
 
 # インストール
@@ -377,3 +378,27 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 
 ここから
 [Overview of Docker Compose | Docker Documentation](https://docs.docker.com/compose/)
+
+
+
+# イメージを全部消す
+
+参考: [使用していない Docker オブジェクトの削除（prune） — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/config/pruning.html)
+
+本当に全部消える。Y/n聞いてくるので答える。
+```sh
+docker image prune -a
+```
+
+普通は「dangling imageのみ削除」
+```sh
+docker image prune
+# or
+docker system prune
+```
+
+何もかも消す
+```sh
+docker system prune -a --volumes --force
+```
+もあり。
