@@ -14,6 +14,8 @@
 - [AWSでDocker](#awsでdocker)
 - [AzureでDocker](#azureでdocker)
 - [docker-compose](#docker-compose)
+- [チュートリアルズ](#チュートリアルズ)
+- [RHEL系でdocker](#rhel系でdocker)
 - [イメージを全部消す](#イメージを全部消す)
 
 
@@ -379,6 +381,42 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 ここから
 [Overview of Docker Compose | Docker Documentation](https://docs.docker.com/compose/)
 
+
+# チュートリアルズ
+
+- [Docker入門（第三回）～各種dockerコマンドとDockerイメージ作成について～ | さくらのナレッジ](https://knowledge.sakura.ad.jp/14427/)
+- [Docker入門（第四回）～Dockerfileについて～ | さくらのナレッジ](https://knowledge.sakura.ad.jp/15253/)
+
+
+# RHEL系でdocker
+
+EPELにあるのは古いので、snapが楽。事前にdockerグループは作っておく。
+
+```sh
+sudo groupadd -r docker
+sudo usermod -aG docker $USER
+```
+で、一旦ログアウト。`id`コマンドでdockerグループがあることを確認。
+
+```sh
+sudo snap install docker
+```
+
+あとは
+```sh
+docker run --name test00 hello-world
+docker rm test00
+```
+などで動作テスト。
+
+2020-11現在
+```
+$ docker -v
+Docker version 19.03.11, build dd360c7
+
+$ docker-compose -v
+docker-compose version 1.25.5, build unknown
+```
 
 
 # イメージを全部消す
