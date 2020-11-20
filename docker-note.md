@@ -17,6 +17,7 @@
 - [チュートリアルズ](#チュートリアルズ)
 - [snapでdocker](#snapでdocker)
 - [イメージを全部消す](#イメージを全部消す)
+- [docker-compose](#docker-compose-1)
 
 
 # インストール
@@ -419,6 +420,16 @@ $ docker-compose -v
 docker-compose version 1.25.5, build unknown
 ```
 
+サービス名がけっこう変
+```sh
+systemctl --type=service | grep dock
+systemctl status snap.docker.dockerd.service
+```
+
+あとイメージファイルは
+`/var/snap/docker/common/var-lib-docker/image`
+の下。
+
 参考:
 - [Install Docker for Linux using the Snap Store | Snapcraft](https://snapcraft.io/docker)
 - [Post-installation steps for Linux | Docker Documentation](https://docs.docker.com/engine/install/linux-postinstall/)
@@ -437,7 +448,7 @@ docker image prune -a
 ```sh
 docker image prune
 # or
-docker system prune
+docker system prune # たぶん一番よく使う
 ```
 
 何もかも消す
@@ -445,3 +456,24 @@ docker system prune
 docker system prune -a --volumes --force
 ```
 もあり。
+
+
+
+# docker-compose
+
+このチュートリアルがわかりやすかった。
+[Docker入門（第六回）〜Docker Compose〜 | さくらのナレッジ](https://knowledge.sakura.ad.jp/16862/)
+
+これを第1回からやるとdocker,docker-composeがだいたいわかる。
+これに加えて`docker-compose logs`を。
+
+- [docker-composeでNginxコンテナ内のログを見る | I am a software engineer](https://imanengineer.net/docker-compose-nginx-log/)
+- [logs — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/reference/logs.html)
+
+
+続けて以下などを。
+- [クィックスタート: Compose と Django — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/django.html)
+
+
+ほか参考:
+[docker-compose コマンドまとめ - Qiita](https://qiita.com/wasanx25/items/d47caf37b79e855af95f) - ちょっと古いけど
