@@ -1044,6 +1044,15 @@ sudo sosreport --batch
 あるいは`chmod -r`してまう
 がいいと思う。
 
+# yumでコマンドを探す
+
+「このコマンドはどのパッケージに入っているか?」という場合。
+`yum provides`が使える
+
+例:
+```sh
+sudo yum provides docker-compose
+```
 
 # RPMのキャッシュ
 
