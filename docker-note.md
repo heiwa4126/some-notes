@@ -15,6 +15,7 @@
 - [AzureでDocker](#azureでdocker)
 - [チュートリアルズ](#チュートリアルズ)
 - [snapでdocker](#snapでdocker)
+- [コンテナのログ](#コンテナのログ)
 - [イメージを全部消す](#イメージを全部消す)
 - [docker-compose](#docker-compose)
 
@@ -429,6 +430,24 @@ systemctl status snap.docker.dockerd.service
 - [Install Docker for Linux using the Snap Store | Snapcraft](https://snapcraft.io/docker)
 - [Post-installation steps for Linux | Docker Documentation](https://docs.docker.com/engine/install/linux-postinstall/)
 
+# コンテナのログ
+
+コンテナではlogをstdoutに出す設定になってるものが多いみたい。
+
+ログを永続化する必要がなければ
+dockerとdocker-composeでは logsサブコマンドが使える。
+
+- [logs — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/engine/reference/commandline/logs.html)
+- [logs — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/reference/logs.html)
+
+```sh
+docker logs コンテナID
+docker-compose logs
+```
+
+`-tf`オプションが便利。
+
+
 
 # イメージを全部消す
 
@@ -475,8 +494,3 @@ docker system prune -a --volumes --force
 
 ほか参考:
 [docker-compose コマンドまとめ - Qiita](https://qiita.com/wasanx25/items/d47caf37b79e855af95f) - ちょっと古いけど
-
-
-`docker-compose logs`に対応するdockerのサブコマンドはないの?
-[logs — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/engine/reference/commandline/logs.html)
-まんまか。
