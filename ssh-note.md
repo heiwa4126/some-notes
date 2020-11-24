@@ -10,6 +10,8 @@
 - [sshの接続でどんなcipherが使われるか確認](#sshの接続でどんなcipherが使われるか確認)
 - [Windows 10のssh](#windows-10のssh)
 - [どうしてもパスワード認証になってしまうホスト](#どうしてもパスワード認証になってしまうホスト)
+- [sshdのホストキーを作り直す](#sshdのホストキーを作り直す)
+- [private keyからpublic key](#private-keyからpublic-key)
 
 
 # .ssh/configでhostごとのUserがoverrideできない
@@ -226,3 +228,46 @@ chmod og= ~
 で治るかもしれない。雑で申し訳ない。
 
 ただgroupに権限ないと困るときがあるよなあ。なんか設定で変更できると思うんだけど。
+
+
+# sshdのホストキーを作り直す
+
+仮想マシンをクローンしたときなど。クラウドだとCloud-Initに書くやつ。
+
+もちろん/etc/sshの下のキーを全部消して作り直せばいいのだけど
+専用のコマンドがあると楽。
+
+Ubuntuの場合 (たぶんDebianも):
+[How To: Ubuntu / Debian Linux Regenerate OpenSSH Host Keys - nixCraft](https://www.cyberciti.biz/faq/howto-regenerate-openssh-host-keys/)
+
+```sh
+sudo rm /etc/ssh/ssh_host_*key*
+sudo dpkg-reconfigure openssh-server
+```
+
+Red Hat系には残念ながらそういう便利コマンドがない模様。
+
+rootで
+```sh
+cd /etc/ssh
+rm -f ssh_host_*key*
+ssh-keygen -A
+rm ssh_host_key ssh_host_key.pub -f
+chmod 0640 ssh_host_*key
+chown root:ssh_keys ssh_host_*key
+chmod 0644 ssh_host_*key.pub
+```
+して
+```sh
+systemctl restart sshd
+```
+でOK。
+
+
+# private keyからpublic key
+
+RSAだと
+```sh
+ssh-keygen -y -f ~/.ssh/id_rsa
+```
+が出来る。他のアルゴリズムでは?

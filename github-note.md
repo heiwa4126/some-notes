@@ -6,6 +6,7 @@
 - [releaseの練習](#releaseの練習)
   - [タグをつける](#タグをつける)
   - [GitHub側](#github側)
+- [GitHubからssh公開鍵をインポート](#githubからssh公開鍵をインポート)
 
 
 
@@ -34,7 +35,7 @@ Windowsだったら
   - host: **ssh**.github.com
   - Auto-login username: git
   - Proxyを環境に合わせて設定
-  - 鍵 
+  - 鍵
 * Close window on ExitでNeverを選んで接続することで`ssh -T git@github.com`に相当するテストを行う。
 
 のがコツ。Repositry to cloneは、githubの緑のボタンで出てくるやつをそのまま使える(ここだったら`git@github.com:heiwa4126/some-notes.git`で)
@@ -90,3 +91,16 @@ goreleaser:
 - [goreleaser を使って Github Releases へ簡単デプロイ #golang - Qiita](https://qiita.com/ynozue/items/f939cff562ec782b33f0)
 - [GoReleaser](https://goreleaser.com/)
 - [goreleaser/goreleaser: Deliver Go binaries as fast and easily as possible](https://github.com/goreleaser/goreleaser)
+
+
+# GitHubからssh公開鍵をインポート
+
+GitHubの公開鍵は `https://github.com/ユーザ名.keys` で公開されているので curlかなんかで>>すればいいけど、専用のコマンドもある。
+
+[Ubuntu Manpage: ssh-import-id - retrieve one or more public keys from a public keyserver and append them](http://manpages.ubuntu.com/manpages/xenial/man1/ssh-import-id.1.html)
+
+>  ssh-import-id-gh USER_ID_1 [USER_ID_2] ... [USER_ID_n]
+
+GitHubのsshキーの操作は以下参照
+- [GitHub アカウントへの新しい SSH キーの追加 - GitHub Docs](https://docs.github.com/ja/free-pro-team@latest/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account)
+- [SSH and GPG keys](https://github.com/settings/keys)
