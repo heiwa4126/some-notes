@@ -13,11 +13,10 @@
 - [Credentials store (証明書ストア)](#credentials-store-証明書ストア)
 - [AWSでDocker](#awsでdocker)
 - [AzureでDocker](#azureでdocker)
-- [docker-compose](#docker-compose)
 - [チュートリアルズ](#チュートリアルズ)
 - [snapでdocker](#snapでdocker)
 - [イメージを全部消す](#イメージを全部消す)
-- [docker-compose](#docker-compose-1)
+- [docker-compose](#docker-compose)
 
 
 # インストール
@@ -361,7 +360,7 @@ https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 
 # AWSでDocker
 
-Amazon ECS (Elastic Container Service)を使うわけだけど、なんだか大げさな感じ... 
+Amazon ECS (Elastic Container Service)を使うわけだけど、なんだか大げさな感じ...
 Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 
 チュートリアルなど:
@@ -377,10 +376,6 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 
 [Docker for AWS setup & prerequisites | Docker Documentation](https://docs.docker.com/docker-for-aws/)
 
-# docker-compose
-
-ここから
-[Overview of Docker Compose | Docker Documentation](https://docs.docker.com/compose/)
 
 
 # チュートリアルズ
@@ -458,8 +453,11 @@ docker system prune -a --volumes --force
 もあり。
 
 
-
 # docker-compose
+
+ここから
+[Overview of Docker Compose | Docker Documentation](https://docs.docker.com/compose/)
+
 
 このチュートリアルがわかりやすかった。
 [Docker入門（第六回）〜Docker Compose〜 | さくらのナレッジ](https://knowledge.sakura.ad.jp/16862/)
@@ -477,3 +475,8 @@ docker system prune -a --volumes --force
 
 ほか参考:
 [docker-compose コマンドまとめ - Qiita](https://qiita.com/wasanx25/items/d47caf37b79e855af95f) - ちょっと古いけど
+
+
+`docker-compose logs`に対応するdockerのサブコマンドはないの?
+[logs — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/engine/reference/commandline/logs.html)
+まんまか。
