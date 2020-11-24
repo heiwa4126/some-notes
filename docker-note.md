@@ -496,4 +496,5 @@ docker system prune -a --volumes --force
 
 
 ほか参考:
-[docker-compose コマンドまとめ - Qiita](https://qiita.com/wasanx25/items/d47caf37b79e855af95f) - ちょっと古いけど
+- [docker-compose コマンドまとめ - Qiita](https://qiita.com/wasanx25/items/d47caf37b79e855af95f) - ちょっと古いけど
+- [Compose における環境変数 — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/environment-variables.html) - yamlの中で環境変数を参照する方法や.envについて。

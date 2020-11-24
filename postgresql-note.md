@@ -18,6 +18,7 @@
 - [RHEL系でpostgresユーザのプロンプト](#rhel系でpostgresユーザのプロンプト)
 - [1台のホストに9.6,9.5,9.4](#1台のホストに969594)
 - [メタ情報](#メタ情報)
+- [dockerでpostgres](#dockerでpostgres)
 
 # PostgreSQLのサンプルデータ
 
@@ -315,7 +316,7 @@ create database test01 encoding 'utf8';
 grant all on database test01 to heiwa;
 grant connect on database test01 to heiwa;
 alter role heiwa with login;
-exit
+\q
 ```
 (TODO: create roleでwith loginを使った方が早いかも。確認後修正)
 
@@ -700,3 +701,43 @@ SELECT n.nspname||'.'||t.dictname
 ``` sql
 select * from information_schema.sql_languages;
 ```
+
+# dockerでpostgres
+
+./dataにDBを永続化する例。
+
+```sh
+#!/bin/sh -e
+DIR="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )"
+PGDATA=$DIR/data
+PASSWD=kawaiikoneko
+ID=pg
+CUID=`id -u`
+CGID=`id -g`
+
+mkdir -p "$PGDATA"
+docker run --name "$ID" -d \
+  -u $CUID:$CGID \
+  -e POSTGRES_PASSWORD=$PASSWD \
+  -p 5432:5432 \
+  -v $PGDATA:/var/lib/postgresql/data \
+  postgres
+```
+
+テスト
+```sh
+docker logs pg
+psql -h 127.0.0.1 -U postgres
+```
+
+終了
+```sh
+docker stop pg
+docker rm pg
+```
+
+
+
+
+参考:
+- [postgres - Docker Hub](https://hub.docker.com/_/postgres)
