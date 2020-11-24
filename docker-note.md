@@ -446,6 +446,7 @@ docker-compose logs
 ```
 
 `-tf`オプションが便利。
+`--tail=100`とかも便利。
 
 ほか参考:
 - [JSON ファイル・ロギング・ドライバ — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/config/container/logging/json-file.html)
