@@ -18,6 +18,8 @@
 - [コンテナのログ](#コンテナのログ)
 - [イメージを全部消す](#イメージを全部消す)
 - [docker-compose](#docker-compose)
+- [CentOS7でpodman](#centos7でpodman)
+- [minikube](#minikube)
 
 
 # インストール
@@ -498,3 +500,139 @@ docker system prune -a --volumes --force
 ほか参考:
 - [docker-compose コマンドまとめ - Qiita](https://qiita.com/wasanx25/items/d47caf37b79e855af95f) - ちょっと古いけど
 - [Compose における環境変数 — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/environment-variables.html) - yamlの中で環境変数を参照する方法や.envについて。
+
+
+# CentOS7でpodman
+
+```
+sudo yum install podman
+```
+
+podman-dockerパッケージをインストールすればdockerコマンドのふりができる。
+manも入ってるけどメンテされてないのかまともに動かない。
+```
+$ man docker
+man: can't open /usr/share/man/man1/./docs/build/man/podman.1: No such file or directory
+No manual entry for docker
+```
+
+で
+```
+$ podman run hello-world
+Trying to pull registry.access.redhat.com/hello-world...
+  name unknown: Repo not found
+Trying to pull registry.redhat.io/hello-world...
+  unable to retrieve auth token: invalid username/password: unauthorized: Please login to the Red Hat Registry using your Customer Portal credentials. Further instructions can be found here: https://access.redhat.com/RegistryAuthentication
+...
+```
+
+先にregistry.redhat.ioを探しに行くのをやめさせるには?
+あるいはdocker.ioを先にするには?
+
+man podman-pullに書いてあった。`/etc/containers/registries.conf`だ。
+
+
+docker-composeに相当するものは
+[containers/podman-compose: a script to run docker-compose.yml using podman](https://github.com/containers/podman-compose)。
+
+python3なので、pipでインストール。
+```
+sudo yum install python3
+pip3 install --user -U pip
+# 一旦logout
+pip install --user -U podman-compose
+hash -r
+podman-compose --help
+```
+
+podman-composeには`--version`が無い。
+
+podman-composeにはpsサブコマンドがない。
+podman-composeにはlogsサブコマンドがない。
+
+podman的にはKubernetesを使え、ということらしい。
+
+参考: [Podman で Compose したかったらどうするの？ - Qiita](https://qiita.com/thirdpenguin/items/c9e58c27e96f02b0a96d)
+
+
+# minikube
+
+AWS上のUbuntu 18.04LTSにminikubeを作ってみる。
+
+参考: [勉強用にminikubeをEC2上で実行する - Qiita](https://qiita.com/masahiko_katayose/items/34605e04b4a81610e668)
+
+```sh
+sudo apt-get install docker.io conntrack
+# kubectl(kubernetesのCLI操作ツール) を導入
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+# minkubeを導入
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+chmod +x minikube
+sudo mv minikube /usr/local/bin/
+# minikube開始
+sudo -i
+minikube start --vm-driver=none
+```
+
+
+実行例
+```
+$ minikube version
+minikube version: v1.15.1
+commit: 23f40a012abb52eff365ff99a709501a61ac5876
+
+$ sudo -i
+
+# minikube start --vm-driver=none
+
+* Ubuntu 18.04 (xen/amd64) 上の minikube v1.15.1
+* 設定を元に、 none ドライバを使用します
+* コントロールプレーンのノード minikube を minikube 上で起動しています
+* Running on localhost (CPUs=2, Memory=3933MB, Disk=29715MB) ...
+* OS は Ubuntu 18.04.5 LTS です。
+* Docker 19.03.14 で Kubernetes v1.19.4 を準備しています...
+  - kubelet.resolv-conf=/run/systemd/resolve/resolv.conf
+    > kubectl.sha256: 64 B / 64 B [--------------------------] 100.00% ? p/s 0s
+    > kubelet.sha256: 64 B / 64 B [--------------------------] 100.00% ? p/s 0s
+    > kubeadm.sha256: 64 B / 64 B [--------------------------] 100.00% ? p/s 0s
+    > kubectl: 41.01 MiB / 41.01 MiB [---------------] 100.00% 89.13 MiB p/s 0s
+    > kubeadm: 37.30 MiB / 37.30 MiB [---------------] 100.00% 54.47 MiB p/s 1s
+    > kubelet: 104.92 MiB / 104.92 MiB [-------------] 100.00% 64.00 MiB p/s 2s
+* Configuring local host environment ...
+*
+! The 'none' driver is designed for experts who need to integrate with an existing VM
+* Most users should use the newer 'docker' driver instead, which does not require root!
+* For more information, see: https://minikube.sigs.k8s.io/docs/reference/drivers/none/
+*
+! kubectl と minikube の構成は /root に保存されます
+! kubectl か minikube コマンドを独自のユーザーとして使用するには、そのコマンドの再配置が必要な場合があります。たとえば、独自の設定を上書きするには、以下を実行します
+*
+  - sudo mv /root/.kube /root/.minikube $HOME
+  - sudo chown -R $USER $HOME/.kube $HOME/.minikube
+*
+* これは環境変数 CHANGE_MINIKUBE_NONE_USER=true を設定して自動的に行うこともできます
+* Kubernetes コンポーネントを検証しています...
+* 有効なアドオン: storage-provisioner, default-storageclass
+* Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+```
+
+停止は`minikube stop`
+
+なんか一般ユーザでも動かせそうだが
+`the 'none' driver must be run as the root user`
+と言われて動かない。
+
+ステータスは
+```
+sudo -i minikube status
+```
+`-i`オプションがいる。
+
+[Hello Minikube | Kubernetes](https://kubernetes.io/ja/docs/tutorials/hello-minikube/)
+
+```
+minikube dashboard --url=false
+```
+毎回違うポートになるな... 固定できないのか。
