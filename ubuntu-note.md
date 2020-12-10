@@ -2,31 +2,32 @@
 
 AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
-- [Ubuntu,Debain おぼえがき](#ubuntudebain-%e3%81%8a%e3%81%bc%e3%81%88%e3%81%8c%e3%81%8d)
-- [タイムゾーン](#%e3%82%bf%e3%82%a4%e3%83%a0%e3%82%be%e3%83%bc%e3%83%b3)
+- [Ubuntu,Debain おぼえがき](#ubuntudebain-おぼえがき)
+- [タイムゾーン](#タイムゾーン)
 - [locale](#locale)
-- [EDITORを変更](#editor%e3%82%92%e5%a4%89%e6%9b%b4)
-- [デフォルトユーザ](#%e3%83%87%e3%83%95%e3%82%a9%e3%83%ab%e3%83%88%e3%83%a6%e3%83%bc%e3%82%b6)
+- [EDITORを変更](#editorを変更)
+- [デフォルトユーザ](#デフォルトユーザ)
   - [AWS](#aws)
   - [Azure](#azure)
 - [cloud-init](#cloud-init)
-- [userを追加](#user%e3%82%92%e8%bf%bd%e5%8a%a0)
-    - [ubuntu on AWS編](#ubuntu-on-aws%e7%b7%a8)
-- [sudoでパスワードがいらないのを無効(有効)にする](#sudo%e3%81%a7%e3%83%91%e3%82%b9%e3%83%af%e3%83%bc%e3%83%89%e3%81%8c%e3%81%84%e3%82%89%e3%81%aa%e3%81%84%e3%81%ae%e3%82%92%e7%84%a1%e5%8a%b9%e6%9c%89%e5%8a%b9%e3%81%ab%e3%81%99%e3%82%8b)
-- [絶対いれとくパッケージ](#%e7%b5%b6%e5%af%be%e3%81%84%e3%82%8c%e3%81%a8%e3%81%8f%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8)
+- [userを追加](#userを追加)
+    - [ubuntu on AWS編](#ubuntu-on-aws編)
+- [sudoでパスワードがいらないのを無効(有効)にする](#sudoでパスワードがいらないのを無効有効にする)
+- [絶対いれとくパッケージ](#絶対いれとくパッケージ)
   - [bash-completion](#bash-completion)
-- [サービスの再起動が必要かどうか知る (古い)](#%e3%82%b5%e3%83%bc%e3%83%93%e3%82%b9%e3%81%ae%e5%86%8d%e8%b5%b7%e5%8b%95%e3%81%8c%e5%bf%85%e8%a6%81%e3%81%8b%e3%81%a9%e3%81%86%e3%81%8b%e7%9f%a5%e3%82%8b-%e5%8f%a4%e3%81%84)
-- [ホストの再起動が必要かどうか知る](#%e3%83%9b%e3%82%b9%e3%83%88%e3%81%ae%e5%86%8d%e8%b5%b7%e5%8b%95%e3%81%8c%e5%bf%85%e8%a6%81%e3%81%8b%e3%81%a9%e3%81%86%e3%81%8b%e7%9f%a5%e3%82%8b)
-- [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebian%e3%81%a7apt-autoremove%e3%81%a7%e3%82%ad%e3%83%bc%e3%83%97%e3%81%95%e3%82%8c%e3%82%8bkernel%e3%83%91%e3%83%83%e3%82%b1%e3%83%bc%e3%82%b8%e3%81%ae%e6%95%b0)
-- [no_proxy](#noproxy)
-- [参考](#%e5%8f%82%e8%80%83)
-- [Unattended Upgradesの有効/無効](#unattended-upgrades%e3%81%ae%e6%9c%89%e5%8a%b9%e7%84%a1%e5%8a%b9)
-- [A start job is running for wait for network to be configured で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-%e3%81%a7%e8%b5%b7%e5%8b%95%e3%81%8c%e9%81%85%e3%81%84)
-- [yum history みたいのを Debian/Ubuntu で](#yum-history-%e3%81%bf%e3%81%9f%e3%81%84%e3%81%ae%e3%82%92-debianubuntu-%e3%81%a7)
+- [サービスの再起動が必要かどうか知る (古い)](#サービスの再起動が必要かどうか知る-古い)
+- [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
+- [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
+- [no_proxy](#no_proxy)
+- [参考](#参考)
+- [Unattended Upgradesの有効/無効](#unattended-upgradesの有効無効)
+- [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
+- [yum history みたいのを Debian/Ubuntu で](#yum-history-みたいのを-debianubuntu-で)
 - [netplan.io](#netplanio)
-- [Let's Encryptで証明書が更新されたか知る](#lets-encrypt%e3%81%a7%e8%a8%bc%e6%98%8e%e6%9b%b8%e3%81%8c%e6%9b%b4%e6%96%b0%e3%81%95%e3%82%8c%e3%81%9f%e3%81%8b%e7%9f%a5%e3%82%8b)
+- [Let's Encryptで証明書が更新されたか知る](#lets-encryptで証明書が更新されたか知る)
 - [import debian.deb822](#import-debiandeb822)
-- [ubuntuでIPAfont](#ubuntu%e3%81%a7ipafont)
+- [ubuntuでIPAfont](#ubuntuでipafont)
+- [netplanでDHCPをrenewする](#netplanでdhcpをrenewする)
 
 # タイムゾーン
 
@@ -395,3 +396,11 @@ $ dlocate fonts-ipafont | fgrep .ttf | cut -d' ' -f2
 /usr/share/fonts/opentype/ipafont-mincho/ipam.ttf
 /usr/share/fonts/opentype/ipafont-mincho/ipamp.ttf
 ```
+
+# netplanでDHCPをrenewする
+
+netplan以外では
+[Linux Force DHCP Client (dhclient) to Renew IP Address - nixCraft](https://www.cyberciti.biz/faq/howto-linux-renew-dhcp-client-ip-address/)
+が参考になる。
+
+netplanで `dhclient -r; dhclient`するとdhcpでIPとってるnicにエリアスが生える。

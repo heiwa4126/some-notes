@@ -13,11 +13,14 @@
 - [Credentials store (証明書ストア)](#credentials-store-証明書ストア)
 - [AWSでDocker](#awsでdocker)
 - [AzureでDocker](#azureでdocker)
-- [docker-compose](#docker-compose)
 - [チュートリアルズ](#チュートリアルズ)
 - [snapでdocker](#snapでdocker)
+- [コンテナのログ](#コンテナのログ)
 - [イメージを全部消す](#イメージを全部消す)
-- [docker-compose](#docker-compose-1)
+- [docker-compose](#docker-compose)
+- [CentOS7でpodman](#centos7でpodman)
+- [minikube](#minikube)
+- [BuildKit](#buildkit)
 
 
 # インストール
@@ -361,7 +364,7 @@ https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 
 # AWSでDocker
 
-Amazon ECS (Elastic Container Service)を使うわけだけど、なんだか大げさな感じ... 
+Amazon ECS (Elastic Container Service)を使うわけだけど、なんだか大げさな感じ...
 Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 
 チュートリアルなど:
@@ -377,10 +380,6 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 
 [Docker for AWS setup & prerequisites | Docker Documentation](https://docs.docker.com/docker-for-aws/)
 
-# docker-compose
-
-ここから
-[Overview of Docker Compose | Docker Documentation](https://docs.docker.com/compose/)
 
 
 # チュートリアルズ
@@ -393,6 +392,10 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 
 dockeはsnapが楽。
 事前にdockerグループは作っておくと非rootユーザで作業が楽。
+
+RHEL7とかだとDocker社がRed Hatと喧嘩して
+snapしかDockerを使う方法がないみたい。
+
 
 ```sh
 sudo groupadd -r docker
@@ -434,6 +437,27 @@ systemctl status snap.docker.dockerd.service
 - [Install Docker for Linux using the Snap Store | Snapcraft](https://snapcraft.io/docker)
 - [Post-installation steps for Linux | Docker Documentation](https://docs.docker.com/engine/install/linux-postinstall/)
 
+# コンテナのログ
+
+コンテナではlogをstdoutに出す設定になってるものが多いみたい。
+
+ログを永続化する必要がなければ
+dockerとdocker-composeでは logsサブコマンドが使える。
+
+- [logs — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/engine/reference/commandline/logs.html)
+- [logs — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/reference/logs.html)
+
+```sh
+docker logs コンテナID
+docker-compose logs
+```
+
+`-tf`オプションが便利。
+`--tail=100`とかも便利。
+
+ほか参考:
+- [JSON ファイル・ロギング・ドライバ — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/config/container/logging/json-file.html)
+
 
 # イメージを全部消す
 
@@ -458,8 +482,11 @@ docker system prune -a --volumes --force
 もあり。
 
 
-
 # docker-compose
+
+ここから
+[Overview of Docker Compose | Docker Documentation](https://docs.docker.com/compose/)
+
 
 このチュートリアルがわかりやすかった。
 [Docker入門（第六回）〜Docker Compose〜 | さくらのナレッジ](https://knowledge.sakura.ad.jp/16862/)
@@ -478,3 +505,161 @@ docker system prune -a --volumes --force
 ほか参考:
 - [docker-compose コマンドまとめ - Qiita](https://qiita.com/wasanx25/items/d47caf37b79e855af95f) - ちょっと古いけど
 - [How to run docker-compose up -d at system start up? - Stack Overflow](https://stackoverflow.com/questions/43671482/how-to-run-docker-compose-up-d-at-system-start-up) - ホスト起動時にdocker-compose upする手法いろいろ。
+- [Compose における環境変数 — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/environment-variables.html) - yamlの中で環境変数を参照する方法や.envについて。
+
+
+# CentOS7でpodman
+
+```
+sudo yum install podman
+```
+
+podman-dockerパッケージをインストールすればdockerコマンドのふりができる。
+manも入ってるけどメンテされてないのかまともに動かない。
+```
+$ man docker
+man: can't open /usr/share/man/man1/./docs/build/man/podman.1: No such file or directory
+No manual entry for docker
+```
+
+で
+```
+$ podman run hello-world
+Trying to pull registry.access.redhat.com/hello-world...
+  name unknown: Repo not found
+Trying to pull registry.redhat.io/hello-world...
+  unable to retrieve auth token: invalid username/password: unauthorized: Please login to the Red Hat Registry using your Customer Portal credentials. Further instructions can be found here: https://access.redhat.com/RegistryAuthentication
+...
+```
+
+先にregistry.redhat.ioを探しに行くのをやめさせるには?
+あるいはdocker.ioを先にするには?
+
+man podman-pullに書いてあった。`/etc/containers/registries.conf`だ。
+
+
+docker-composeに相当するものは
+[containers/podman-compose: a script to run docker-compose.yml using podman](https://github.com/containers/podman-compose)。
+
+python3なので、pipでインストール。
+```
+sudo yum install python3
+pip3 install --user -U pip
+# 一旦logout
+pip install --user -U podman-compose
+hash -r
+podman-compose --help
+```
+
+podman-composeには`--version`が無い。
+
+podman-composeにはpsサブコマンドがない。
+podman-composeにはlogsサブコマンドがない。
+
+podman的にはKubernetesを使え、ということらしい。
+
+参考: [Podman で Compose したかったらどうするの？ - Qiita](https://qiita.com/thirdpenguin/items/c9e58c27e96f02b0a96d)
+
+
+# minikube
+
+AWS上のUbuntu 18.04LTSにminikubeを作ってみる。
+
+参考: [勉強用にminikubeをEC2上で実行する - Qiita](https://qiita.com/masahiko_katayose/items/34605e04b4a81610e668)
+
+```sh
+sudo apt-get install docker.io conntrack
+# kubectl(kubernetesのCLI操作ツール) を導入
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+# minkubeを導入
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+chmod +x minikube
+sudo mv minikube /usr/local/bin/
+# minikube開始
+sudo -i
+minikube start --vm-driver=none
+```
+
+
+実行例
+```
+$ minikube version
+minikube version: v1.15.1
+commit: 23f40a012abb52eff365ff99a709501a61ac5876
+
+$ sudo -i
+
+# minikube start --vm-driver=none
+
+* Ubuntu 18.04 (xen/amd64) 上の minikube v1.15.1
+* 設定を元に、 none ドライバを使用します
+* コントロールプレーンのノード minikube を minikube 上で起動しています
+* Running on localhost (CPUs=2, Memory=3933MB, Disk=29715MB) ...
+* OS は Ubuntu 18.04.5 LTS です。
+* Docker 19.03.14 で Kubernetes v1.19.4 を準備しています...
+  - kubelet.resolv-conf=/run/systemd/resolve/resolv.conf
+    > kubectl.sha256: 64 B / 64 B [--------------------------] 100.00% ? p/s 0s
+    > kubelet.sha256: 64 B / 64 B [--------------------------] 100.00% ? p/s 0s
+    > kubeadm.sha256: 64 B / 64 B [--------------------------] 100.00% ? p/s 0s
+    > kubectl: 41.01 MiB / 41.01 MiB [---------------] 100.00% 89.13 MiB p/s 0s
+    > kubeadm: 37.30 MiB / 37.30 MiB [---------------] 100.00% 54.47 MiB p/s 1s
+    > kubelet: 104.92 MiB / 104.92 MiB [-------------] 100.00% 64.00 MiB p/s 2s
+* Configuring local host environment ...
+*
+! The 'none' driver is designed for experts who need to integrate with an existing VM
+* Most users should use the newer 'docker' driver instead, which does not require root!
+* For more information, see: https://minikube.sigs.k8s.io/docs/reference/drivers/none/
+*
+! kubectl と minikube の構成は /root に保存されます
+! kubectl か minikube コマンドを独自のユーザーとして使用するには、そのコマンドの再配置が必要な場合があります。たとえば、独自の設定を上書きするには、以下を実行します
+*
+  - sudo mv /root/.kube /root/.minikube $HOME
+  - sudo chown -R $USER $HOME/.kube $HOME/.minikube
+*
+* これは環境変数 CHANGE_MINIKUBE_NONE_USER=true を設定して自動的に行うこともできます
+* Kubernetes コンポーネントを検証しています...
+* 有効なアドオン: storage-provisioner, default-storageclass
+* Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+```
+
+停止は`minikube stop`
+
+なんか一般ユーザでも動かせそうだが
+`the 'none' driver must be run as the root user`
+と言われて動かない。
+
+ステータスは
+```
+sudo -i minikube status
+```
+`-i`オプションがいる。
+
+[Hello Minikube | Kubernetes](https://kubernetes.io/ja/docs/tutorials/hello-minikube/)
+
+```
+minikube dashboard --url=false
+```
+毎回違うポートになるな... 固定できないのか。
+
+
+# BuildKit
+
+最近のdockerなら
+```
+DOCKER_BUILDKIT=1 docker build .
+```
+でOK。
+
+参考:
+- [BuildKit でイメージ構築 — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/develop/develop-images/build_enhancements.html)
+- [BuildKit によるイメージ構築 | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/develop/develop-images/build_enhancements/) 同じ内容
+- [BuildKitによる高速でセキュアなイメージビルド](https://www.slideshare.net/AkihiroSuda/buildkit) - 「使えない」と書いてある機能は使えるようになってる模様
+- [Docker 18.09 新機能 (イメージビルド&セキュリティ) | by Akihiro Suda | nttlabs | Medium](https://medium.com/nttlabs/docker-v18-09-%E6%96%B0%E6%A9%9F%E8%83%BD-%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%83%93%E3%83%AB%E3%83%89-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3-9534714c26e2) 同じ内容(同じ筆者?)ちょっと詳しい。よみやすい
+- [Docker の BuildKit を使ってセキュアなビルドを試す - Qiita](https://qiita.com/takasp/items/56e1399a484ed5bfaade)
+
+
+
+さらにつおいbuildx
+[Docker Buildx | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/buildx/working-with-buildx/)

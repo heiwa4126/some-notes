@@ -7,6 +7,7 @@ shellいろいろtipsメモ
 - [dh -h は GiBかGBか](#dh--h-は-gibかgbか)
 - [バージョン番号をソートする](#バージョン番号をソートする)
 - [dateのformat](#dateのformat)
+- [$UID,$GID](#uidgid)
 
 # 非0の戻り値で中断させたい
 
@@ -138,4 +139,24 @@ sort --version-sort
 よくバックアップ用に日付つきにする時に使うフォーマット。
 ```
 cp -a foo.bar foo.bar.`date +%Y-%m-%d-%H-%M-%S`
+```
+
+# $UID,$GID
+
+$UIDはbashのInternal Variables.
+
+- [Bash Variables (Bash Reference Manual)](https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html)
+- [Internal Variables](https://tldp.org/LDP/abs/html/internalvariables.html)
+
+で、GIDはない。なので汎用でUID/GIDの値をとりたかったら
+
+```sh
+UID2=`id -u`
+GID=`id -g`
+```
+みたいにする。UID2になってるのは以下のようなエラーになるから
+
+```
+$ UID=101
+-bash: UID: readonly variable
 ```
