@@ -186,7 +186,12 @@ systemctl start systemd-timesyncd
 timedatectl set-ntp true
 timedatectl set-local-rtc 0
 systemctl enable systemd-timesyncd
+systemctl restart systemd-timesyncd
 ```
+
+169.254.169.123については
+[Amazon Time Sync Service で時間を維持する | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/keeping-time-with-amazon-time-sync-service/)
+を参照。
 
 RHEL7, CentOS7, Amazon Linuxではsystemdパッケージに`systemd-timesyncd`が入ってない。
 systemdのバージョンが古いらしい。
