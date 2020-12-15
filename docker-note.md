@@ -504,6 +504,7 @@ docker system prune -a --volumes --force
 
 ほか参考:
 - [docker-compose コマンドまとめ - Qiita](https://qiita.com/wasanx25/items/d47caf37b79e855af95f) - ちょっと古いけど
+- [How to run docker-compose up -d at system start up? - Stack Overflow](https://stackoverflow.com/questions/43671482/how-to-run-docker-compose-up-d-at-system-start-up) - ホスト起動時にdocker-compose upする手法いろいろ。
 - [Compose における環境変数 — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/environment-variables.html) - yamlの中で環境変数を参照する方法や.envについて。
 
 

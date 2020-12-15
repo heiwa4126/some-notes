@@ -1,15 +1,16 @@
 # Azure忘備録
 
-- [Azure忘備録](#azure%e5%bf%98%e5%82%99%e9%8c%b2)
+- [Azure忘備録](#azure忘備録)
 - [Azure CLI](#azure-cli)
   - [Debian/Ubuntu](#debianubuntu)
   - [Windows](#windows)
-  - [Azure CLI コマンド補完](#azure-cli-%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%e8%a3%9c%e5%ae%8c)
-- [azure-cliでアカウントの切り替え方](#azure-cli%e3%81%a7%e3%82%a2%e3%82%ab%e3%82%a6%e3%83%b3%e3%83%88%e3%81%ae%e5%88%87%e3%82%8a%e6%9b%bf%e3%81%88%e6%96%b9)
-- [テナントID](#%e3%83%86%e3%83%8a%e3%83%b3%e3%83%88id)
+  - [Azure CLI コマンド補完](#azure-cli-コマンド補完)
+- [azure-cliでアカウントの切り替え方](#azure-cliでアカウントの切り替え方)
+- [テナントID](#テナントid)
 - [Azure AD Graph API](#azure-ad-graph-api)
-- [Azureでの時刻同期](#azure%e3%81%a7%e3%81%ae%e6%99%82%e5%88%bb%e5%90%8c%e6%9c%9f)
-- [hv-fcopy-daemon.service が fail](#hv-fcopy-daemonservice-%e3%81%8c-fail)
+- [Azureでの時刻同期](#azureでの時刻同期)
+- [hv-fcopy-daemon.service が fail](#hv-fcopy-daemonservice-が-fail)
+- [omsagentをとめる](#omsagentをとめる)
 
 # Azure CLI
 
@@ -152,3 +153,9 @@ $ systemctl status hv-fcopy-daemon
  6月 18 12:03:52 u9 systemd[1]: hv-fcopy-daemon.service: Failed with result 'exit-code'.
 ```
 確かに/dev/vmbus/hv_fcopyは無い。(つづく)
+
+
+# omsagentをとめる
+
+[Disable monitoring in Azure Monitor for VMs - Azure Monitor | Microsoft Docs](https://docs.microsoft.com/en-us/azure/azure-monitor/insights/vminsights-optout)
+
