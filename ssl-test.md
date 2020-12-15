@@ -10,6 +10,8 @@ Nginx + Let's Encrypt(Certbot)で構築したWebサーバを
   - [参考](#参考)
 - [Apache2参考設定](#apache2参考設定)
 - [RHEL7でcertbot](#rhel7でcertbot)
+- [Ubuntu 20.04LTSだと](#ubuntu-2004ltsだと)
+- [AWSのroute53でCAA](#awsのroute53でcaa)
 
 
 ## ステップ
@@ -111,3 +113,14 @@ ServerName your.site.domain
 を追加してから、`certbot --apache`
 
 あとはrenewを設定。
+
+# Ubuntu 20.04LTSだと
+
+デフォルトのインストールでAがもらえる(apache2+certbot)。
+減点はDNS CAAだけか?
+
+そうでもなかった、古いブラウザ対応みたいだけど、そのへんはもうサポート外でいいや。
+
+# AWSのroute53でCAA
+
+[DNS CAAレコードに Let’s Encrypt 認証局を設定する | あぱーブログ](https://blog.apar.jp/web/7334/)

@@ -12,6 +12,7 @@
 - [シャットダウン時に実行](#シャットダウン時に実行)
 - [ブート時最後に実行して、失敗したらリトライする](#ブート時最後に実行して失敗したらリトライする)
 - [@のついたユニットファイル](#のついたユニットファイル)
+- [systemctl list-timers](#systemctl-list-timers)
 
 # systemctl list-dependencies
 
@@ -337,3 +338,8 @@ $ systemctl status postgresql\*
 > given a string, any "/" character is replaced by "-"...
 
 どっちかの説明がサカサマだ。
+
+
+# systemctl list-timers
+
+systemdのcronみたいなやつ。*.timerを列挙する。

@@ -62,13 +62,20 @@ export PUBLIC_HOSTNAME=`curl http://169.254.169.254/latest/meta-data/public-host
 * [AWS | AWS の169.254.169.254とは何か](https://awsjp.com/AWS/Faq/c/AWS-169.254.169.254-towa-4135.html)
 
 
-
-
-
-
-
-
 # AWS CLIのインストール手順
+
+[Linux での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html)
+
+```sh
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+rm -rf aws awscliv2.zip
+```
+更新するのも同じ手順で(本当)
+
+
+以下は古い。
 
 [AWS CLI のインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-chap-install.html)
 
@@ -208,8 +215,8 @@ EC2のインスタンスにタグをつける
 ```
 ↑[元サイト](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)からコピペ。`HOSTED-ZONE-ID`のとこは「上で得たホストゾーン ID」に書き換えて。
 
-ポータルのアクション-セキュリティ-IAMロールを変更
 
+ポータルのアクション-セキュリティ-IAMロールを変更
 
 rootでawsコマンドを使うのでawsコマンドを用意。
 [Linux での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html)
