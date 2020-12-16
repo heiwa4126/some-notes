@@ -19,6 +19,7 @@
 - [1台のホストに9.6,9.5,9.4](#1台のホストに969594)
 - [メタ情報](#メタ情報)
 - [dockerでpostgres](#dockerでpostgres)
+- [systemdで起動されるpostgresのPGDATAを変更する](#systemdで起動されるpostgresのpgdataを変更する)
 
 # PostgreSQLのサンプルデータ
 
@@ -736,8 +737,38 @@ docker stop pg
 docker rm pg
 ```
 
-
-
-
 参考:
 - [postgres - Docker Hub](https://hub.docker.com/_/postgres)
+
+
+# systemdで起動されるpostgresのPGDATAを変更する
+
+postgres*.serviceファイルを直接変更しちゃダメ。
+
+(以下の例はRHEL系のpostgresのレポジトリからインストールした9.5のもの。
+Debian,Ubuntuでは微妙に違うかも)
+
+```
+sudo systemctl edit postgresql-9.5
+```
+して
+```
+[Service]
+# Override location of database directory
+Environment=PGDATA=/data
+```
+する。(/dataのところは書き換える)
+
+/dataのパーミッションは
+```
+sudo mkdir -p /data -m 0700
+sudo chown postgres:postgres /data
+```
+
+あと~postgresの.profileや.bash_profileでPGDATAを設定しているなら
+それも書き換えたほうが生活が楽。
+PATHも
+```
+export PATH="/usr/pgsql-9.5/bin/:$PATH"
+```
+など。
