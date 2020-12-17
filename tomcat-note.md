@@ -22,6 +22,7 @@ CATALINA_OPTS="$CATALINA_OPTS -Djava.net.preferIPv4Stack=true"
 みたいに書いておくと、altanativeシステムとうまく付き合える。
 
 ここにCATALINA_HOMEも書けるので環境変数設定する必要がなくなる。
+(その場合CATALINA_BASEも設定すること)
 
 参考:
 [UbuntuにおけるTomcatの覚え書き - Qiita](https://qiita.com/hidekuro/items/119317f826253326e490)
