@@ -114,6 +114,41 @@ curl http://127.0.0.1/tomcat-test/hello.jsp
 ```
 でテスト(上:Tomcat直接、下:Apache経由)
 
+# AJPでシークレットキーを使う
+
+server.xmlの設定
+```xml
+   <Connector protocol="AJP/1.3"
+              address="127.0.0.1"
+              port="8009"
+              redirectPort="8443"
+              enableLookups="false"
+              secret="YOUR_PASSWORD"
+              />
+```
+
+参考:
+- [Apacheにsecretを設定して、安全にTomcatとAJP通信する - Qiita](https://qiita.com/polarbear08/items/f016a0675e6c9637e7b8)
+
+
+# UbuntuのApache2でajp
+
+```sh
+sudo a2enmod proxy
+sudo a2enmod proxy_ajp
+```
+
+/etc/apache2/conf-available/ajp.confを書いて(以下例)
+```
+ProxyPass /tomcat9/ ajp://localhost:8009/ secret=YOUR_PASSWORD
+ProxyPassReverse /tomcat9/ ajp://localhost:8009/ secret=YOUR_PASSWORD
+```
+
+```sh
+sudo a2enconf ajp
+apache2ctl configtest
+```
+
 # warファイルのサンプル
 
 Tomcatのドキュメントにsample.warが入ってる。

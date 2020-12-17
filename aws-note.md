@@ -10,6 +10,7 @@ AWSのメモ
 - [AWS CLI コマンド補完](#aws-cli-コマンド補完)
 - [EC2ってntpは要るの?](#ec2ってntpは要るの)
 - [ElasticIPなしのEC2で外部IPをroute53でFQDNをふる](#elasticipなしのec2で外部ipをroute53でfqdnをふる)
+  - [欠点](#欠点)
 
 # メタデータ
 
@@ -266,3 +267,8 @@ $AWS route53 change-resource-record-sets --hosted-zone-id $ZONE_TAG --change-bat
 
 EC2をpoweroffして、もういちど電源を入れる。
 IPが更新されていたらOK。
+
+## 欠点
+
+- EC2を停止してもAレコードが消えない。FQDNで死活監視とかすると混乱が起きる。
+- TTLが300秒はいかにも短いがどうしようもない。
