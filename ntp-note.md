@@ -1,5 +1,6 @@
 NTP関係メモ
 
+- [systemdのtimesyncd](#systemdのtimesyncd)
 
 # systemdのtimesyncd
 
