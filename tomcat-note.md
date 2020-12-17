@@ -110,3 +110,69 @@ curl http://127.0.0.1:8080/test/hello.jsp
 curl http://127.0.0.1/tomcat-test/hello.jsp
 ```
 でテスト(上:Tomcat直接、下:Apache経由)
+
+# warファイルのサンプル
+
+Tomcatのドキュメントにsample.warが入ってる。
+[Sample Application](https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/)
+
+webappsディレクトリで
+```sh
+curl https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war -O
+```
+とかすればOk
+
+テストは
+```sh
+curl 127.0.0.1:8080/sample/
+```
+など。
+
+# UbuntuでTomcat
+
+Ubuntu 18.04LTSで
+```sh
+sudo apt install tomcat9 openjdk-11-jdk-headless
+```
+サービス名は `tomcat9.service`
+```sh
+systemctl status tomcat9.service
+```
+- catalona.homeは`/usr/share/tomcat9` (環境変数は設定されない)
+- webappsは`/var/lib/tomcat9/webapps`
+
+```
+$ find /var/lib/tomcat9/webapps -ls
+  1290989      4 drwxrwxr-x   3 tomcat   tomcat       4096 12月 11 10:21 /var/lib/tomcat9/webapps
+  1290255      4 drwxr-xr-x   3 root     root         4096 12月 11 10:21 /var/lib/tomcat9/webapps/ROOT
+  1291004      4 -rw-r--r--   1 root     root         1895 12月 11 10:21 /var/lib/tomcat9/webapps/ROOT/index.html
+  1290954      4 drwxr-xr-x   2 root     root         4096 12月 11 10:21 /var/lib/tomcat9/webapps/ROOT/META-INF
+  1291003      4 -rw-r--r--   1 root     root           49 12月 11 10:21 /var/lib/tomcat9/webapps/ROOT/META-INF/context.xml
+```
+
+とりあえずテスト
+```sh
+curl 127.0.0.1:8080
+```
+
+さすがにつまらないので
+```sh
+sudo bash -c "mkdir -p /var/lib/tomcat9/webapps/test88 -m 0750 ; chown $UID:tomcat /var/lib/tomcat9/webapps/test88"
+# test88は好きに変えてね
+cd /var/lib/tomcat9/webapps/test88
+cat <<EOL > index.jsp
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" session="false"%><!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Hello world</title>
+</head>
+<body>
+<h1><% out.print("Hello world"); %></h1>
+</body>
+</html>
+EOL
+curl 127.0.0.1:8080/test88/index.jsp -v
+```
+
+これで動作確認できた。
