@@ -3,6 +3,7 @@
 AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
 - [Ubuntu,Debain おぼえがき](#ubuntudebain-おぼえがき)
+- [ホスト名の設定](#ホスト名の設定)
 - [タイムゾーン](#タイムゾーン)
 - [locale](#locale)
 - [EDITORを変更](#editorを変更)
@@ -28,6 +29,23 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [import debian.deb822](#import-debiandeb822)
 - [ubuntuでIPAfont](#ubuntuでipafont)
 - [netplanでDHCPをrenewする](#netplanでdhcpをrenewする)
+
+# ホスト名の設定
+
+```
+sudo hostnamectl set-hostname foo
+sudo echo "127.0.0.1 foo.example.com foo" >> /etc/hosts
+```
+Debian/Ubuntu系ではホスト名はFQDNじゃない。
+
+このあと
+```sh
+hostname
+hostname -f
+hostname -d
+```
+で確認。
+
 
 # タイムゾーン
 

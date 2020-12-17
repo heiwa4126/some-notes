@@ -629,6 +629,14 @@ use-feature=2020-resolver
 " >> ~/.config/pip/pip.conf
 ```
 
+2020-12ごろ
+
+> WARNING: --use-feature=2020-resolver no longer has any effect, since it is now the default dependency resolver in pip. This will become an error in pip 21.0.
+
+とか言い出したので `~/.config/pip/pip.conf`の該当行をコメントアウトした。
+
+
+
 # WARNING: pip is being invoked by an old script wrapper.
 
 [ImportError in system pip wrappers after an upgrade · Issue #5599 · pypa/pip · GitHub](https://github.com/pypa/pip/issues/5599)

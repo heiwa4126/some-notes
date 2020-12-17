@@ -5,6 +5,8 @@
 - [proxy](#proxy)
 - [snapdで古いのを消す](#snapdで古いのを消す)
 - [RHEL/CentOS 7でsnappy](#rhelcentos-7でsnappy)
+- [refresh all](#refresh-all)
+- [古いsnapをみんな消す](#古いsnapをみんな消す)
 
 
 # リンク
@@ -80,4 +82,28 @@ PATHは`/etc/profile.d/snapd.sh`で入るので、
 RHEL7でemacs27が使えるのが便利。
 ```sh
 sudo snap install emacs --classic
+```
+
+# refresh all
+
+ほっとけばかってに更新されるので、あまり使う機会はないだろうけどAWSでEC2を立ち上げたてのときなど。
+
+rootで
+```sh
+snap list --all | awk 'NR>1 {print $1}' | sort | uniq | xargs snap refresh
+```
+
+# 古いsnapをみんな消す
+
+けっこうサイズおおきいので。
+
+[How to remove disabled (unused) snap packages with a single line of command? - Ask Ubuntu](https://askubuntu.com/questions/1036633/how-to-remove-disabled-unused-snap-packages-with-a-single-line-of-command)
+
+```sh
+#!/bin/sh
+set -eu
+snap list --all | awk '/disabled/{print $1, $3}' |
+    while read snapname revision; do
+        snap remove "$snapname"
+    done
 ```

@@ -9,6 +9,7 @@ AWSのメモ
   - [RHEL 7, CentOS 7](#rhel-7-centos-7)
 - [AWS CLI コマンド補完](#aws-cli-コマンド補完)
 - [EC2ってntpは要るの?](#ec2ってntpは要るの)
+- [ElasticIPなしのEC2で外部IPをroute53でFQDNをふる](#elasticipなしのec2で外部ipをroute53でfqdnをふる)
 
 # メタデータ
 
@@ -61,13 +62,20 @@ export PUBLIC_HOSTNAME=`curl http://169.254.169.254/latest/meta-data/public-host
 * [AWS | AWS の169.254.169.254とは何か](https://awsjp.com/AWS/Faq/c/AWS-169.254.169.254-towa-4135.html)
 
 
-
-
-
-
-
-
 # AWS CLIのインストール手順
+
+[Linux での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html)
+
+```sh
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+rm -rf aws awscliv2.zip
+```
+更新するのも同じ手順で(本当)
+
+
+以下は古い。
 
 [AWS CLI のインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-chap-install.html)
 
@@ -104,7 +112,7 @@ hash -r
 [コマンド補完 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-completion.html)
 
 bashだったら~/.bashrcの最後の方に
-``` 
+```
 # AWS CLI aws_completer
 complete -C "$HOME/.local/bin/aws_completer" aws
 ```
@@ -156,3 +164,96 @@ sntpやsystemd-timesyncdのようなSNTPクライアントだけのものが軽�
 systemd-timesyncdはVMだと動かない? [ゆきろぐ: systemd-timesyncdによる時刻同期](http://yukithm.blogspot.com/2014/09/systemd-timesyncd.html)
 試してみたが動くみたい。
 
+
+# ElasticIPなしのEC2で外部IPをroute53でFQDNをふる
+
+予算がなくてElasticIPのないEC2(動的に外部IPは割り振られる)を
+Route53でFQDNを振る方法。
+
+- [Elastic IP を利用せずに、Amazon EC2と Route 53 のドメイン名を紐付ける](https://www.kiminonahaseichi.link/memo/2017/08/elastic-ip-amazon-ec2-route-53.html)
+- [【AWS】EC2サーバに固定IPなしで独自ドメインでアクセスする方法 - Movable Type技術ブログ](http://www.mtcms.jp/movabletype-blog/aws/201401302220.html)
+- [Amazon Route 53: How to automatically update IP addresses without using Elastic IPs - DEV](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)
+
+この最後のやつをためしてみる。
+
+FQDNを決める。もうホストゾーンが1つ以上あるものと仮定している(なければ作る)。
+
+EC2インスタンスを起動して
+現在の「パブリック IPv4 アドレス」を得る。
+(別に適当でもいいのだがテストにつかえる)
+
+(もうホストゾーンが1つ以上あるものとして)
+[Route 53 Console Hosted Zones](https://console.aws.amazon.com/route53/v2/hostedzones#)
+で、該当ドメインの「ホストゾーン ID」を得る。
+
+きめたFQDNと現在の「パブリック IPv4 アドレス」で、
+そこのホストゾーンに
+Aレコードを登録する。
+TTLは300(5分)で。
+
+EC2のインスタンスにタグをつける
+- AUTO_DNS_NAME - 上で決めたFQDN
+- AUTO_DNS_ZONE - 上で得た「ホストゾーン ID」
+
+さらにこのEC2インスタンスに以下のIAMポリシーをもったロールを作る(すでにロールが付いてるなら混ぜる)。
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "ec2:DescribeTags",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "route53:ChangeResourceRecordSets",
+            "Resource": "arn:aws:route53:::hostedzone/HOSTED-ZONE-ID"
+        }
+    ]
+}
+```
+↑[元サイト](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)からコピペ。`HOSTED-ZONE-ID`のとこは「上で得たホストゾーン ID」に書き換えて。
+
+
+ポータルのアクション-セキュリティ-IAMロールを変更
+
+rootでawsコマンドを使うのでawsコマンドを用意。
+[Linux での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html)
+
+で、/var/lib/cloud/scripts/per-boot/の下に好きな名前でシェルスクリプトおく。
+```sh
+#!/bin/bash
+# see [Amazon Route 53: How to automatically update IP addresses without using Elastic IPs - DEV](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)
+AWS=/usr/local/bin/aws
+
+# Extract information about the Instance
+INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id/)
+AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone/)
+MY_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4/)
+
+# Extract tags associated with instance
+ZONE_TAG=$($AWS ec2 describe-tags --region ${AZ::-1} --filters "Name=resource-id,Values=${INSTANCE_ID}" --query 'Tags[?Key==`AUTO_DNS_ZONE`].Value' --output text)
+NAME_TAG=$($AWS ec2 describe-tags --region ${AZ::-1} --filters "Name=resource-id,Values=${INSTANCE_ID}" --query 'Tags[?Key==`AUTO_DNS_NAME`].Value' --output text)
+
+# DEBUG
+cat <<EOF
+INSTANCE_ID = $INSTANCE_ID
+AZ = $AZ
+MY_IP = $MY_IP
+ZONE_TAG = $ZONE_TAG
+NAME_TAG = $NAME_TAG
+EOF
+
+# Update Route 53 Record Set based on the Name tag to the current Public IP address of the Instance
+$AWS route53 change-resource-record-sets --hosted-zone-id $ZONE_TAG --change-batch '{"Changes":[{"Action":"UPSERT","ResourceRecordSet":{"Name":"'$NAME_TAG'","Type":"A","TTL":300,"ResourceRecords":[{"Value":"'$MY_IP'"}]}}]}'
+```
+
+↑[元サイト](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)からコピペ。ちょっとだけアレンジ。
+
+いちおう手動で実行して、変なtypoとかないかを確認しておく。
+
+↑は[gistに置いたので](https://gist.githubusercontent.com/heiwa4126/57831f4a3607de798a116eea5ac49298/raw/4a0d84d96eaf7c8abf0759f4072b246fba727c52/r53register.sh)、←のURLをwgetかcurl -Oして、 chmod +x してください。
+
+EC2をpoweroffして、もういちど電源を入れる。
+IPが更新されていたらOK。
