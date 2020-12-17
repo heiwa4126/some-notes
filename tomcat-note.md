@@ -129,7 +129,8 @@ server.xmlの設定
 
 参考:
 - [Apacheにsecretを設定して、安全にTomcatとAJP通信する - Qiita](https://qiita.com/polarbear08/items/f016a0675e6c9637e7b8)
-
+- [aegif Labo Blog: Tomcat9をアップデートしたらWebサーバ(Apache)とAJP接続できなくなった話](http://labo-blog.aegif.jp/2020/05/tomcat9webapacheajp.html)
+- [Apache Tomcat 9 Configuration Reference (9.0.41) - The AJP Connector](https://tomcat.apache.org/tomcat-9.0-doc/config/ajp.html)
 
 # UbuntuのApache2でajp
 
@@ -144,9 +145,11 @@ ProxyPass /tomcat9/ ajp://localhost:8009/ secret=YOUR_PASSWORD
 ProxyPassReverse /tomcat9/ ajp://localhost:8009/ secret=YOUR_PASSWORD
 ```
 
+で
 ```sh
 sudo a2enconf ajp
 apache2ctl configtest
+systemctl restart apache2
 ```
 
 # warファイルのサンプル
