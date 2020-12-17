@@ -221,6 +221,15 @@ EC2のインスタンスにタグをつける
 rootでawsコマンドを使うのでawsコマンドを用意。
 [Linux での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html)
 
+```sh
+sudo apt install unzip
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+rm -rf awscliv2.zip aws
+/usr/local/bin/aws --version
+```
+
 で、/var/lib/cloud/scripts/per-boot/の下に好きな名前でシェルスクリプトおく。
 ```sh
 #!/bin/bash

@@ -3,6 +3,7 @@ Windowsのメモ
 - [参考](#参考)
 - [Windowsのサポート期限検索](#windowsのサポート期限検索)
 - [Windows updateのproxy設定](#windows-updateのproxy設定)
+- [Windowsのしつこいアニメーションを無くする](#windowsのしつこいアニメーションを無くする)
 
 
 # Windows serverでRC4とtriple-DESを無効にする
@@ -73,3 +74,17 @@ netsh winhttp import proxy source=ie
 netsh winhttp set proxy proxy-server="192.168.1.2:10080" bypass-list="*.local"
 netsh winhttp reset proxy
 ```
+
+# Windowsのしつこいアニメーションを無くする
+
+管理者権限で
+```
+REG ADD "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics" /v MinAnimate /t REG_SZ /d 0 /f
+```
+ログアウト必要
+
+
+参考: 
+- [Windows10のアニメーション無効化、レジストリ操作まで | GWT Center](https://www.gwtcenter.com/stop-win10-animation)
+- [Windows 10 Disable Animations via regedit/script - Super User](https://superuser.com/questions/1052763/windows-10-disable-animations-via-regedit-script)
+- [Windows animations (maximize, minimize) are gone.](https://social.technet.microsoft.com/Forums/en-US/4aa71ed5-3500-4d11-a461-7d80c0847f91/windows-animations-maximize-minimize-are-gone?forum=itprovistadesktopui)

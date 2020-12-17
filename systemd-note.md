@@ -13,6 +13,8 @@
 - [ブート時最後に実行して、失敗したらリトライする](#ブート時最後に実行して失敗したらリトライする)
 - [@のついたユニットファイル](#のついたユニットファイル)
 - [systemctl list-timers](#systemctl-list-timers)
+- [systemdのユーザーモード](#systemdのユーザーモード)
+- [.serviceファイルを書く](#serviceファイルを書く)
 
 # systemctl list-dependencies
 
@@ -343,3 +345,43 @@ $ systemctl status postgresql\*
 # systemctl list-timers
 
 systemdのcronみたいなやつ。*.timerを列挙する。
+
+# systemdのユーザーモード
+
+参考: 
+- マニュアル - [systemd.unit](https://www.freedesktop.org/software/systemd/man/systemd.unit.html)
+- [ユーザー毎の systemd を使ってシステム全体設定と個人用設定を分ける。 - それマグで！](https://takuya-1st.hatenablog.jp/entry/2019/08/09/004829)
+
+systemdにはuserモードというのがあって(pipの--userみたいなやつ)
+
+1. `~/.config/systemd/user.control`フォルダにunitファイル書く
+1. `systemctl --user daemon-reload`で読み込む
+1. あとは普通にstartやらenableやらする。(--userつけて)
+
+実行されるのはユーザがログインしたとき。
+
+# .serviceファイルを書く
+
+非パッケージ版のTomcat9を非rootユーザで起動する必要があったので、
+そのときのメモ。
+
+- 
+
+
+
+
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=network.target
+
+[Service]
+User=tomcat
+Group=tomcat
+Type=forking
+
+ExecStart=/etc/tomcat9/bin/startup.sh
+ExecStop=/etc/tomcat9/bin/shutdown.sh
+Environment="CATALINA_PID=/etc/tomcat9/tomcat9.pid"
+
+[Install]
+WantedBy=multi-user.target
