@@ -1,6 +1,10 @@
 # ssh tips
 
 - [ssh tips](#ssh-tips)
+- [sshdのconfigtest](#sshdのconfigtest)
+- [sshd_configでまちがいやすい設定メモ](#sshd_configでまちがいやすい設定メモ)
+	- [AllowUsers](#allowusers)
+	- [Port](#port)
 - [.ssh/configでhostごとのUserがoverrideできない](#sshconfigでhostごとのuserがoverrideできない)
 - [ProxyJump](#proxyjump)
 - [DynamicForward](#dynamicforward)
@@ -12,6 +16,28 @@
 - [どうしてもパスワード認証になってしまうホスト](#どうしてもパスワード認証になってしまうホスト)
 - [sshdのホストキーを作り直す](#sshdのホストキーを作り直す)
 - [private keyからpublic key](#private-keyからpublic-key)
+
+
+# sshdのconfigtest
+
+```sh
+sshd -t
+```
+...そのまんまですね。
+
+
+# sshd_configでまちがいやすい設定メモ
+
+## AllowUsers
+複数ユーザは` `(whitespace)で区切る
+
+## Port
+複数ポートは書けない。
+```
+Port 22
+Port 2222
+```
+みたいに複数行にする。
 
 
 # .ssh/configでhostごとのUserがoverrideできない
