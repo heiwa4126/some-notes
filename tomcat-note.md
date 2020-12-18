@@ -217,3 +217,16 @@ curl 127.0.0.1:8080/test88/index.jsp -v
 ```
 
 これで動作確認できた。
+
+
+# CATALINA_HOME と CATALINA_BASE
+
+Tomcatの環境変数のドキュメントが貧弱なのがよくない。
+
+`catalina.sh`に書いてある。
+[tomcat/catalina.sh at 0a2ee9b1ba7ded327c2aa2361cccff6a16cdef84 · apache/tomcat](https://github.com/apache/tomcat/blob/0a2ee9b1ba7ded327c2aa2361cccff6a16cdef84/bin/catalina.sh)
+
+で CATALINA_HOME と CATALINA_BASE の違いは:
+[java - tomcat - CATALINA_BASE and CATALINA_HOME variables - Stack Overflow](https://stackoverflow.com/questions/3090398/tomcat-catalina-base-and-catalina-home-variables#:~:text=CATALINA_HOME%20vs%20CATALINA_BASE&text=CATALINA_HOME%20represents%20the%20root%20of,is%20the%20same%20as%20%24CATALINA_HOME%20.)
+
+Tomcatの複数インスタンスを起動するときに便利
