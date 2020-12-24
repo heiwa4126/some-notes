@@ -120,6 +120,13 @@ $ cat /proc/sys/net/core/default_qdisc
 pfifo_fast
 ```
 
+bbrに一時的にしてみるなら
+```sh
+sysctl -w net.core.default_qdisc=fq
+sysctl -w net.ipv4.tcp_congestion_control=bbr
+```
+
+パーマネントにするなら
 適当なエディタで
 `/etc/sysctl.d/10-tcp-bbr.conf`のようなファイルを作成。
 ```
