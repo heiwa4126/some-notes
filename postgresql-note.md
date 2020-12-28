@@ -485,6 +485,42 @@ fi
 参考: [25.3.2. ベースバックアップの作成](https://www.postgresql.jp/document/9.6/html/continuous-archiving.html#backup-base-backup)
 
 
+
+[postgresql - pg_archivecleanupでファイルの保存期間または日付でクリーンアップを指定する方法](https://stackoverrun.com/ja/q/4609920)
+↑ちょこっとだけbugがある
+
+6日より前のアーカイブ済みを消す例。
+```sh
+PG_ARCH=/usr/pgsql-9.5/bin/pg_archivecleanup
+ARCHIVEDIR=.
+find $ARCHIVEDIR -mtime +6 -name '*backup' -printf '%f\n' | sort -r | head -1 | xargs $PG_ARCH -d $ARCHIVEDIR
+```
+`*backup`は消えないので
+
+```sh
+find $ARCHIVEDIR -mtime +6 -name '*backup' | sort -r | tail -n +2 | xargs rm -v
+```
+こんな感じで
+
+まとめると
+```sh
+#!/bin/bash -e
+DAYS=6
+ARCDIR=/home/heiwa/works/wala
+PG_ARCH=/usr/pgsql-9.5/bin/pg_archivecleanup
+LOGGER="logger -i -t WALclear -pinfo"
+#
+find $ARCDIR -mtime +$DAYS -name '*backup' -printf '%f\n' | sort -r | head -1 |\
+    xargs -r $PG_ARCH -d $ARCDIR 2>&1 |\
+    $LOGGER
+
+find $ARCDIR -mtime +$DAYS -name '*backup' | sort -r | tail -n +2 |\
+    xargs -r rm -v |\
+    $LOGGER
+```
+これを`/etc/cron.daily/WALclear`に置く。変数はアレンジすること。
+
+
 ## .backupファイルサンプル
 
 ```
