@@ -15,6 +15,7 @@
 - [systemctl list-timers](#systemctl-list-timers)
 - [systemdのユーザーモード](#systemdのユーザーモード)
 - [.serviceファイルを書く](#serviceファイルを書く)
+- [override.confの自動化](#overrideconfの自動化)
 
 # systemctl list-dependencies
 
@@ -348,7 +349,7 @@ systemdのcronみたいなやつ。*.timerを列挙する。
 
 # systemdのユーザーモード
 
-参考: 
+参考:
 - マニュアル - [systemd.unit](https://www.freedesktop.org/software/systemd/man/systemd.unit.html)
 - [ユーザー毎の systemd を使ってシステム全体設定と個人用設定を分ける。 - それマグで！](https://takuya-1st.hatenablog.jp/entry/2019/08/09/004829)
 
@@ -365,11 +366,7 @@ systemdにはuserモードというのがあって(pipの--userみたいなや�
 非パッケージ版のTomcat9を非rootユーザで起動する必要があったので、
 そのときのメモ。
 
-- 
-
-
-
-
+```
 [Unit]
 Description=Apache Tomcat Web Application Container
 After=network.target
@@ -385,3 +382,23 @@ Environment="CATALINA_PID=/etc/tomcat9/tomcat9.pid"
 
 [Install]
 WantedBy=multi-user.target
+```
+
+# override.confの自動化
+
+`systemctl edit`の入力をstdinにする例。
+
+```sh
+echo -e '[Service]\n# Override location of database directory\nEnvironment=PGDATA=/data4' \
+ | SYSTEMD_EDITOR=tee systemctl edit postgresql-9.5.service
+```
+
+非rootからなら
+```sh
+echo -e '[Service]\n# Override location of database directory\nEnvironment=PGDATA=/data4' \
+ | sudo SYSTEMD_EDITOR=tee systemctl edit postgresql-9.5.service
+```
+
+参考:
+- [pipe input into systemctl edit / System Administration / Arch Linux Forums](https://bbs.archlinux.org/viewtopic.php?id=195782)
+- [systemctl](https://www.freedesktop.org/software/systemd/man/systemctl.html)のEnvironのところ。
