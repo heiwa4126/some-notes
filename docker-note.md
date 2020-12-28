@@ -20,6 +20,7 @@
 - [docker-compose](#docker-compose)
 - [CentOS7でpodman](#centos7でpodman)
 - [minikube](#minikube)
+- [rootless mode](#rootless-mode)
 - [BuildKit](#buildkit)
 
 
@@ -643,6 +644,57 @@ minikube dashboard --url=false
 ```
 毎回違うポートになるな... 固定できないのか。
 
+
+# rootless mode
+
+v.19で試験的導入。v.20で正規機能。
+
+- [Run the Docker daemon as a non-root user (Rootless mode) | Docker Documentation](https://docs.docker.com/engine/security/rootless/)
+- [root ユーザー以外による Docker デーモン起動（rootless モード） | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/engine/security/rootless/)
+
+
+Dockerそのもののインストール: [Install Docker Engine on Ubuntu | Docker Documentation](https://docs.docker.com/engine/install/ubuntu/)
+```sh
+sudo apt-get update
+sudo apt-get install -y \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg-agent \
+  software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+```
+
+いるもの
+```
+sudo apt install uidmap
+```
+
+systemdのuserモードでdockerが上がる。ログインするとdockerが起動する。
+ここ `/home/YOURHOME/.config/systemd/user/docker.service`
+
+```sh
+systemctl --user status docker.service
+```
+で確認。
+
+
+PATHを通すのと環境変数1個。.bashrcとかに入れる
+```
+export PATH=/home/heiwa/bin:$PATH
+export DOCKER_HOST=unix:///run/user/1000/docker.sock
+```
+
+docker-composeは?
+
+[DockerにRootlessモードが入ったぞ！という話 - Qiita](https://qiita.com/inductor/items/75db0c1c0d49646dd68a)
 
 # BuildKit
 
