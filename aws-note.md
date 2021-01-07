@@ -229,6 +229,7 @@ unzip awscliv2.zip
 sudo ./aws/install
 rm -rf awscliv2.zip aws
 /usr/local/bin/aws --version
+aws --version
 ```
 
 で、/var/lib/cloud/scripts/per-boot/の下に好きな名前でシェルスクリプトおく。
