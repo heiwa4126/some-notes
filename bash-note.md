@@ -19,6 +19,7 @@
 - [同じパスワードでも/etc/shadowで同じ値にならない話](#同じパスワードでもetcshadowで同じ値にならない話)
 - [stderrをless](#stderrをless)
 - [xargsで入力が空の時エラーにしないオプションは](#xargsで入力が空の時エラーにしないオプションは)
+- [日付でソート](#日付でソート)
 
 
 # 参考リンク
@@ -135,7 +136,7 @@ shが予約している領域があるよ、という話。
 
 ただしWindowsのosモジュールはos.EX_xxxが無い(POSIXじゃないから)。
 
-参考: 
+参考:
 - [Linux: .bashrcと.bash_profileの違いを今度こそ理解する](https://techracho.bpsinc.jp/hachi8833/2019_06_06/66396)
 
 
@@ -255,7 +256,7 @@ xxd
 - [man xxd (1): 16 進ダンプを作成したり、元に戻したり。](http://ja.manpages.org/xxd)
 
 
-# /rootのfsck 
+# /rootのfsck
 
 ## systemdでない場合
 
@@ -356,3 +357,19 @@ foobar | err2stdout | less
 # xargsで入力が空の時エラーにしないオプションは
 
 `-r`, `--no-run-if-empty`
+
+
+# 日付でソート
+
+syslogの出力で、先頭が
+`Jan 19 23:56:40: ...`
+みたいなやつをソートする方法
+
+例)
+```
+fgrep -h SomeWordToSearch /var/log/messages* | sort -k1M -k2n -k3
+```
+
+[Sort logs by date field in bash](https://stackoverflow.com/questions/5242986/sort-logs-by-date-field-in-bash)
+
+降順にするのは `sort -k1Mr -k2nr -k3r` とするか、tacコマンドを使う。
