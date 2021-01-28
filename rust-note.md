@@ -304,6 +304,7 @@ implする。
 - [dtolnay/anyhow: Flexible concrete Error type built on std: :Error](https://github.com/dtolnay/anyhow)
 - [Rustの便利クレート - Qiita](https://qiita.com/qryxip/items/7c16ab9ef3072c1d7199#anyhow)
 - [anyhowの簡単な使い方 - Shinjuku.rs #8 dalance - Speaker Deck](https://speakerdeck.com/dalance/shinjuku-dot-rs-number-8-dalance)
+- [Rust エラー処理2020 - 電気ひつじ牧場](https://cha-shu00.hatenablog.com/entry/2020/12/08/060000)
 
 
 macros:
