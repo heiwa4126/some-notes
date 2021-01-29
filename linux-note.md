@@ -85,3 +85,33 @@ pkill -9 -t pts/1
 自分以外だったらsudoで。
 
 `-u`オプションを使ってユーザ名を明示してもいい。
+
+
+# /usr/lib/firmwareがでかい
+
+から始まるディスク容量を増やす作戦
+
+- [arch linux - How do I minimize disk space usage - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/2027/how-do-i-minimize-disk-space-usage)
+
+
+これとか知らなかった
+```
+journalctl --disk-usage
+sudo journalctl --vacuum-size=100M
+# or
+sudo journalctl --vacuum-time=7d
+```
+
+または
+```
+/etc/systemd/journald.conf
+に
+SystemMaxUse=100M
+などと書いて
+systemctl restart systemd-journald.service
+```
+
+参考:
+- [man journald.conf の訳 - kandamotohiro](https://sites.google.com/site/kandamotohiro/systemd/man-journald-conf-no-yi)
+
+デフォルト値はファイルシステムの15%らしい。
