@@ -31,6 +31,7 @@
 - [Jupyter Notebookのtips](#jupyter-notebookのtips)
 - [2020-resolver](#2020-resolver)
 - [WARNING: pip is being invoked by an old script wrapper.](#warning-pip-is-being-invoked-by-an-old-script-wrapper)
+- [ubuntu20.04LTS以降でpythonをpython3にする](#ubuntu2004lts以降でpythonをpython3にする)
 
 
 
@@ -650,3 +651,17 @@ PIP="python3 -m pip"
 $PIP install --user -U pip
 ```
 こんな感じで。
+
+# ubuntu20.04LTS以降でpythonをpython3にする
+
+```sh
+sudo apt install python-is-python3
+```
+
+参考:
+[Ubuntu – パッケージ検索結果 -- python-is-python3](https://packages.ubuntu.com/search?keywords=python-is-python3&searchon=names)
+
+あと標準だとpipも入ってない。
+```
+sudo apt install python3-pip
+```
