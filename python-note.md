@@ -661,6 +661,10 @@ sudo apt install python-is-python3
 参考:
 [Ubuntu – パッケージ検索結果 -- python-is-python3](https://packages.ubuntu.com/search?keywords=python-is-python3&searchon=names)
 
+逆に
+`python-is-python2-but-deprecated`
+というパッケージもある。
+
 あと標準だとpipも入ってない。
 ```
 sudo apt install python3-pip
