@@ -669,3 +669,18 @@ sudo apt install python-is-python3
 ```
 sudo apt install python3-pip
 ```
+
+開発するなら
+```sh
+pip install --user 'python-language-server[all]'
+```
+など。
+
+参考:
+- [Python (Palantir) - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/)
+- [GitHub - palantir/python-language-server: An implementation of the Language Server Protocol for Python](https://github.com/palantir/python-language-server)
+
+自分はフォーマッタはblackが楽で好きなので
+```
+pip install --user black pyls-black
+```
