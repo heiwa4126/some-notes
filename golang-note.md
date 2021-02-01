@@ -168,6 +168,8 @@ Ubuntuだとsnapd使うのが便利。
 [Install Go for Linux using the Snap Store | Snapcraft](https://snapcraft.io/go)
 
 ``` bash
+sudo snap install go --classic
+# バージョンを指定するなら↓
 sudo snap install go --channel=1.13/stable --classic
 ```
 
