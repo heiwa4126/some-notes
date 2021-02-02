@@ -113,6 +113,10 @@ Oracleの提供するOpenJDKのバイナリには「インストーラー」が�
 
 その性質上、基本6ヶ月ごとにアップグレードするべき。
 
+JDK8はここから
+
+[Java SE Development Kit 8 - Downloads](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
+Oracleのアカウントが必要(free)
 
 # Oracle以外が配布するOpenJDKのバイナリ
 
