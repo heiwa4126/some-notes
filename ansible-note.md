@@ -66,6 +66,7 @@ ansibleメモランダム
 - [変数をかける場所と優先度](#変数をかける場所と優先度)
 - [dictにkeyがあるときないときの判別](#dictにkeyがあるときないときの判別)
 - [playbookを中断する](#playbookを中断する)
+- [ansible.cfg](#ansiblecfg)
 
 # 感想
 
@@ -422,7 +423,7 @@ Pythonはだいたいこれ。roleでもtaskでも変数でもなんでも`-`は
 > [DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host XXX should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future Ansible release will default to using the discovered platform python for this host. See https://docs.ansible.com/ansible/2.8/reference_appendices/interpreter_discovery.html for more information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
 
 ```
-deprecation_warnings=False 
+deprecation_warnings=False
 ```
 しちゃうと、ありとあらゆる廃止の警告が消えてしまうであろうなので、[Interpreter Discovery — Ansible Documentation](https://docs.ansible.com/ansible/2.8/reference_appendices/interpreter_discovery.html) にあるように
 `./ansible.cfg`
@@ -1253,3 +1254,23 @@ failモジュールや metaモジュールの `meta: end_host`が使える.
 
 - [fail – Fail with custom message — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/fail_module.html)
 - [meta – Execute Ansible ‘actions’ — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/meta_module.html#meta-module)
+
+
+# ansible.cfg
+
+オリジナルはgithub上にある。
+
+[ansible/ansible.cfg at devel · ansible/ansible](https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg)
+
+```sh
+curl -O https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
+```
+
+優先順位は(引用元:[Ansible の動作の制御: 優先順位のルール — Ansible Documentation](https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html))
+
+- ANSIBLE_CONFIG (environment variable if set)
+- ansible.cfg (in the current directory)
+- ~/.ansible.cfg (in the home directory)
+- /etc/ansible/ansible.cfg
+
+ANSIBLE_CONFIGは独自の.cfgファイルのパス
