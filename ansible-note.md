@@ -67,6 +67,7 @@ ansibleメモランダム
 - [dictにkeyがあるときないときの判別](#dictにkeyがあるときないときの判別)
 - [playbookを中断する](#playbookを中断する)
 - [ansible.cfg](#ansiblecfg)
+- [notify handlerの実行順](#notify-handlerの実行順)
 
 # 感想
 
@@ -1274,3 +1275,7 @@ curl -O https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible
 - /etc/ansible/ansible.cfg
 
 ANSIBLE_CONFIGは独自の.cfgファイルのパス
+
+# notify handlerの実行順
+
+**yamlに書いた順に上から実行される。**

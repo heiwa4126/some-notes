@@ -115,3 +115,20 @@ systemctl restart systemd-journald.service
 - [man journald.conf の訳 - kandamotohiro](https://sites.google.com/site/kandamotohiro/systemd/man-journald-conf-no-yi)
 
 デフォルト値はファイルシステムの15%らしい。
+
+
+# cron.dailyはいつ実行される?
+
+ディストリによって起動方法が変わるので
+
+anacronで起動されるRHEL7などでは
+```sh
+grep daily /etc/anacrontab
+```
+で確認。
+
+Debian、Ubuntuはデフォルトではanacronは使わないので(インストールすれば使える)
+```sh
+grep daily /etc/crontab
+```
+で。
