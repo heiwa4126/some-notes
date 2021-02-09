@@ -3,6 +3,7 @@ LVMいろいろノート
 - [LVMのrootをfsck](#lvmのrootをfsck)
 - [LVMのサイズを広げる](#lvmのサイズを広げる)
 - [LVMでsnapshot](#lvmでsnapshot)
+  - [snapshotがfullになるとどうなるか](#snapshotがfullになるとどうなるか)
 - [LVMのコマンド](#lvmのコマンド)
 - [LVM snapshotの練習](#lvm-snapshotの練習)
   - [スナップショットから復元](#スナップショットから復元)
@@ -177,6 +178,99 @@ lvremove VolGroup00/snap1 -y
 - [How to Take 'Snapshot of Logical Volume and Restore' in LVM - Part III](https://www.tecmint.com/take-snapshot-of-logical-volume-and-restore-in-lvm/)
 - [10.3. スナップショットボリュームのマージ Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/proc_merging-snapshot-volumes-snapshot-volumes)
 
+## snapshotがfullになるとどうなるか
+
+```
+# vgs
+  VG     #PV #LV #SN Attr   VSize   VFree
+  rootvg   1   6   0 wz--n- <63.02g <24.02g
+```
+
+rootvgに空きがあるので、ここに新しいLVMつくってテスト
+
+```
+# lvcreate -n testlv -L 10g rootvg
+  Logical volume "testlv" created.
+# mkfs.ext3 /dev/mapper/rootvg-testlv
+# mkdir -p /mnt/test
+# LANG=C  df -h /mnt/test
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-testlv  9.8G   23M  9.2G   1% /mnt/test
+```
+
+最初のファイルを作る
+```
+cd /mnt/test
+yes test | head > test.txt
+```
+
+スナップショット作成
+```
+lvcreate -s -L 10k -n snap1 /dev/mapper/rootvg-testlv
+mkdir /mnt/snap1
+mount -t ext3 /dev/mapper/rootvg-snap1 /mnt/snap1
+```
+
+で、
+```
+# ls -la /mnt/test /mnt/snap1
+/mnt/snap1:
+合計 28
+drwxr-xr-x 3 root root  4096  2月  9 07:10 .
+drwxr-xr-x 5 root root  4096  2月  9 07:15 ..
+drwx------ 2 root root 16384  2月  9 07:07 lost+found
+-rw-r--r-- 1 root root    50  2月  9 07:10 test.txt
+
+/mnt/test:
+合計 28
+drwxr-xr-x 3 root root  4096  2月  9 07:10 .
+drwxr-xr-x 5 root root  4096  2月  9 07:15 ..
+drwx------ 2 root root 16384  2月  9 07:07 lost+found
+-rw-r--r-- 1 root root    50  2月  9 07:10 test.txt
+```
+
+/mnt/testで、ファイルを追記してみる
+```
+# yes test | head >> test.txt
+# ls -la /mnt/test/test.txt /mnt/snap1/test.txt
+-rw-r--r-- 1 root root  50  2月  9 07:10 /mnt/snap1/test.txt
+-rw-r--r-- 1 root root 100  2月  9 07:18 /mnt/test/test.txt
+```
+いいようですね。
+
+では/mnt/testの方をdisk fullにしてみる。
+```
+# yes test >> test.txt
+## 終わらないのでc-Cでとめる
+# ls -la /mnt/test/test.txt /mnt/snap1/test.txt
+ls: /mnt/snap1/test.txt にアクセスできません: そのようなファイルやディレクトリはありません
+-rw-r--r-- 1 root root 1.1G  2月  9 07:21 /mnt/test/test.txt
+```
+
+syslogの出力は
+```
+Feb  9 07:21:06 r7 kernel: device-mapper: snapshots: Invalidating snapshot: Unable to allocate exception.
+Feb  9 07:21:06 r7 lvm[9396]: WARNING: Snapshot rootvg-snap1 changed state to: Invalid and should be removed.
+Feb  9 07:21:06 r7 lvm[9396]: Unmounting invalid snapshot rootvg-snap1 from /mnt/snap1.
+Feb  9 07:21:18 r7 kernel: buffer_io_error: 10 callbacks suppressed
+Feb  9 07:21:18 r7 kernel: Buffer I/O error on dev dm-9, logical block 0, lost sync page write
+Feb  9 07:21:18 r7 dmeventd[9396]: No longer monitoring snapshot rootvg-snap1.
+```
+
+つまり
+「LVMスナップショットがあふれると、スナップショットはアンマウントされる」
+ということらしい。
+
+参考:
+[LVMでスナップショットの作成と状態の復元 - Qiita](https://qiita.com/TsutomuNakamura/items/a68377952d07397db448#%E3%82%B9%E3%83%8A%E3%83%83%E3%83%97%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%E3%81%8C%E6%BA%A2%E3%82%8C%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9)
+
+
+テストが終わったらあとしまつ
+```
+umount /mnt/test
+lvremove rootvg/snap1
+lvremove rootvg/testlv
+```
 
 # LVMのコマンド
 
