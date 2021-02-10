@@ -29,6 +29,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [import debian.deb822](#import-debiandeb822)
 - [ubuntuでIPAfont](#ubuntuでipafont)
 - [netplanでDHCPをrenewする](#netplanでdhcpをrenewする)
+- [friendly-recovery](#friendly-recovery)
 
 # ホスト名の設定
 
@@ -422,3 +423,20 @@ netplan以外では
 が参考になる。
 
 netplanで `dhclient -r; dhclient`するとdhcpでIPとってるnicにエリアスが生える。
+
+
+# friendly-recovery
+
+メモ
+
+```
+$ apt-cache show friendly-recovery
+
+Description-en:
+Make recovery boot mode more user-friendly Make the recovery boot mode more user-friendly by providing a menu with luggable options.
+
+リカバリーブートモードをより使いやすくするメニューを提供することで、よりユーザーフレンドリーにします。プラグイン可能なオプションを使用しています。
+```
+
+- [Ubuntu – パッケージのファイル一覧: friendly-recovery/xenial/all](https://packages.ubuntu.com/ja/xenial/all/friendly-recovery/filelist)
+- [FriendlyRecoverySpec - Ubuntu Wiki](https://wiki.ubuntu.com/FriendlyRecoverySpec)
