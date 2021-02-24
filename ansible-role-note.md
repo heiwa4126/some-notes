@@ -4,7 +4,9 @@ ansibleのroleのメモ
 
 - [scaffolding](#scaffolding)
   - [vars/ と defaults/](#vars-と-defaults)
-- [ドキュメント](#ドキュメント)
+  - [ドキュメント](#ドキュメント)
+  - [defaultのオーバーライド](#defaultのオーバーライド)
+  - [import_roleの変なところ](#import_roleの変なところ)
 
 # scaffolding
 
@@ -49,7 +51,30 @@ sample1/
 
 ほとんどはdefaults/main.ymlに書いとけばいいということだ。
 
-# ドキュメント
+## ドキュメント
 
 - [ロール — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/playbooks_reuse_roles.html)
 - [Roles — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html)
+
+## defaultのオーバーライド
+
+taskでset_factに書くか、import_roleでvarsに書く。
+
+```yaml
+ tasks:
+  - set_fact:
+      foo: foo1
+  - import_role:
+      name: sample1
+
+  # or
+  - import_role:
+      name: sample1
+    vars:
+      foo: foo2
+```
+
+## import_roleの変なところ
+
+tasks_from は指定したymlを実行するのに、
+defaults_from はmainと指定したymlを実行するところ。
