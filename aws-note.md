@@ -11,6 +11,8 @@ AWSのメモ
 - [EC2ってntpは要るの?](#ec2ってntpは要るの)
 - [ElasticIPなしのEC2で外部IPをroute53でFQDNをふる](#elasticipなしのec2で外部ipをroute53でfqdnをふる)
   - [欠点](#欠点)
+- [127.0.0.53](#1270053)
+
 
 # メタデータ
 
@@ -273,3 +275,19 @@ IPが更新されていたらOK。
 
 - EC2を停止してもAレコードが消えない。FQDNで死活監視とかすると混乱が起きる。
 - TTLが300秒はいかにも短いがどうしようもない。
+
+# 127.0.0.53
+
+AWSで
+```
+# grep nameserver /etc/resolv.conf
+nameserver 127.0.0.53
+
+# fuser -v 53/udp
+                     USER        PID ACCESS COMMAND
+53/udp:              systemd-resolve    707 F.... systemd-resolve
+```
+
+systemd-resolveとは何か?
+
+[AWS EC2 (Ubuntu) で DNS のスタブリゾルバ 127.0.0.53 と Amazon Provided DNS の関連を確認する - Qiita](https://qiita.com/nasuvitz/items/b67100028f7245ebe9b9)
