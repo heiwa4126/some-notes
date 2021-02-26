@@ -7,6 +7,7 @@
   - [Debian, Ubuntu Linux系](#debian-ubuntu-linux系)
   - [RHEL 7, CentOS 7](#rhel-7-centos-7)
   - [Windows](#windows)
+  - [Windows(古い)](#windows古い)
 - [pipでawscliのインストールに失敗する](#pipでawscliのインストールに失敗する)
 
 
@@ -83,6 +84,22 @@ hash -r
 
 ## Windows
 
+[Windows での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-windows.html)
+
+
+クレデンシャルの場所
+[構成設定はどこに保存されていますか](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where)
+
+Windowsについて記述がない... `aws configure`で。
+
+aws cliがv2なら `aws configure list-profiles`でリストも出せる。
+
+
+
+
+
+## Windows(古い)
+
 まずAnacondaを更新する。
 Anaconda promptを管理者権限で起動して
 
@@ -112,4 +129,3 @@ sudo apt install libssl-dev
 sudo apt install python3-cryptography
 ```
 してから。
-
