@@ -66,6 +66,8 @@ ansibleメモランダム
 - [変数をかける場所と優先度](#変数をかける場所と優先度)
 - [dictにkeyがあるときないときの判別](#dictにkeyがあるときないときの判別)
 - [playbookを中断する](#playbookを中断する)
+- [ansible-lint](#ansible-lint)
+  - [ansible-lint tips](#ansible-lint-tips)
 - [ansible.cfg](#ansiblecfg)
 - [notify handlerの実行順](#notify-handlerの実行順)
 
@@ -1256,6 +1258,39 @@ failモジュールや metaモジュールの `meta: end_host`が使える.
 - [fail – Fail with custom message — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/fail_module.html)
 - [meta – Execute Ansible ‘actions’ — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/meta_module.html#meta-module)
 
+# ansible-lint
+
+使おう!
+[ansible-community/ansible-lint: Best practices checker for Ansible](https://github.com/ansible-community/ansible-lint)
+
+
+インストールはだいたい以下の通り
+```sh
+pip3 install -U --user "ansible-lint[community,yamllint]"
+```
+参考: [Installing — Ansible Lint Documentation](https://ansible-lint.readthedocs.io/en/latest/installing.html#using-pip)
+
+使い方は:
+```sh
+ansible-lint foo.yml
+```
+playbookの複数指定できるので、findやxargsと組み合わせて使える。
+include/importしてるtasksも見る。
+
+メッセージの意味は以下参照:
+- [Default Rules — Ansible Lint Documentation](https://ansible-lint.readthedocs.io/en/latest/default_rules.html)
+- [ansible-lintのルールに関するメモ - 遠い叫び](https://magai.hateblo.jp/entry/2018/04/20/162648)
+
+## ansible-lint tips
+
+警告の抑制は
+``` yaml
+- name: Run shell.
+  shell: "{{ cmd }}"    # noqa command-instead-of-shell
+```
+こんな感じに`noqa`でできる。
+
+[Rules — Ansible Lint Documentation](https://ansible-lint.readthedocs.io/en/latest/rules.html)
 
 # ansible.cfg
 
