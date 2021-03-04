@@ -70,6 +70,7 @@ ansibleメモランダム
   - [ansible-lint tips](#ansible-lint-tips)
 - [ansible.cfg](#ansiblecfg)
 - [notify handlerの実行順](#notify-handlerの実行順)
+- [Windowsドメインアカウントで接続する](#windowsドメインアカウントで接続する)
 
 # 感想
 
@@ -1314,3 +1315,14 @@ ANSIBLE_CONFIGは独自の.cfgファイルのパス
 # notify handlerの実行順
 
 **yamlに書いた順に上から実行される。**
+
+
+# Windowsドメインアカウントで接続する
+
+いまのところローカルアドミンでしかつないだことないんだけど、
+あとでやるかもしれないのでメモ
+
+[【Ansible】Windowsドメインアカウントで接続する - Qiita](https://qiita.com/myalpine/items/9361ecd46e3705d8425e)
+
+ansible_winrm_transport で Kerberos を指定するらしい。
+[Windows リモート管理 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/windows_winrm.html#id2)
