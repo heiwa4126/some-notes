@@ -165,6 +165,7 @@ $ UID=101
 # bashのpipefailオプション
 
 - [bashのpipefailオプション - 技術メモのかけら](https://eichisanden.hateblo.jp/entry/2018/01/23/112255)
+- [サブシェルやパイプラインの途中で失敗した場合に直ちにエラーコードを返すようにする - Qiita](https://qiita.com/billthelizard/items/224e36ad183bd389831c)
 - [Pipelines (Bash Reference Manual)](https://www.gnu.org/software/bash/manual/html_node/Pipelines.html)
 - [The Set Builtin (Bash Reference Manual)](https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html)
 
