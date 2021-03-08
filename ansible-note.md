@@ -71,6 +71,8 @@ ansibleメモランダム
 - [ansible.cfg](#ansiblecfg)
 - [notify handlerの実行順](#notify-handlerの実行順)
 - [Windowsドメインアカウントで接続する](#windowsドメインアカウントで接続する)
+- [windowsでbecome:true](#windowsでbecometrue)
+- [Galaxyコレクション](#galaxyコレクション)
 
 # 感想
 
@@ -1322,7 +1324,29 @@ ANSIBLE_CONFIGは独自の.cfgファイルのパス
 いまのところローカルアドミンでしかつないだことないんだけど、
 あとでやるかもしれないのでメモ
 
+ansible_winrm_transport で Kerberos を指定するらしい。
 [【Ansible】Windowsドメインアカウントで接続する - Qiita](https://qiita.com/myalpine/items/9361ecd46e3705d8425e)
 
-ansible_winrm_transport で Kerberos を指定するらしい。
-[Windows リモート管理 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/windows_winrm.html#id2)
+Kerberosだとローカルアカウントには接続できないのに注意。
+
+必要な手順は↑よりは公式参照。各ディストリで要るライブラリ書いてある。
+- [Windows リモート管理 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/windows_winrm.html#id2)
+- [Windows リモート管理 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/windows_winrm.html#id8)
+
+あと ansible_winrm_transport のデフォルトは NTLM
+[Windows Remote Management — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#ntlm)
+
+
+# windowsでbecome:true
+
+[権限昇格の理解: become — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/become.html#become-windows)
+
+
+# Galaxyコレクション
+
+> コレクションは、Playbook、ロール、モジュール、およびプラグインを含むことができる Ansible コンテンツのディストリビューション形式です
+
+よくわからん。
+
+- [コレクションの使用 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/collections_using.html)
+- [Using collections — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)

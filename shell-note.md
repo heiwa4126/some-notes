@@ -8,6 +8,7 @@ shellいろいろtipsメモ
 - [バージョン番号をソートする](#バージョン番号をソートする)
 - [dateのformat](#dateのformat)
 - [$UID,$GID](#uidgid)
+- [bashのpipefailオプション](#bashのpipefailオプション)
 
 # 非0の戻り値で中断させたい
 
@@ -160,3 +161,24 @@ GID=`id -g`
 $ UID=101
 -bash: UID: readonly variable
 ```
+
+# bashのpipefailオプション
+
+- [bashのpipefailオプション - 技術メモのかけら](https://eichisanden.hateblo.jp/entry/2018/01/23/112255)
+- [Pipelines (Bash Reference Manual)](https://www.gnu.org/software/bash/manual/html_node/Pipelines.html)
+- [The Set Builtin (Bash Reference Manual)](https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html)
+
+bashの直感を裏切る動作の1つとして、
+「パイプの左側でエラーが起きても右側が実行される」
+というのがある。
+
+スクリプトになんかエラーがあったら止まる、にしたかったら
+`set -e`
+ではなく
+`set -eo pipeline`
+にするがよいです。
+
+```
+grep 'foo' bar.txt | sort
+```
+とかでfooがbar.txtにない場合でも死ぬようになります。
