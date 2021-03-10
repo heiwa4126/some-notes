@@ -230,6 +230,8 @@ function prompt() {
 }
 ```
 
+[PowerShell 5 と 6 で Profile の場所が違う](http://www.vwnet.jp/Windows/PowerShell/2018032601/PS6Profile.htm)
+
 ## vscodeの場合
 
 [visual studio code - Hiding the full file path in a PowerShell command prompt in VSCode - Stack Overflow](https://stackoverflow.com/questions/52107170/hiding-the-full-file-path-in-a-powershell-command-prompt-in-vscode)
