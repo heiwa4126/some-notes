@@ -4,6 +4,7 @@ Windowsのメモ
 - [Windowsのサポート期限検索](#windowsのサポート期限検索)
 - [Windows updateのproxy設定](#windows-updateのproxy設定)
 - [Windowsのしつこいアニメーションを無くする](#windowsのしつこいアニメーションを無くする)
+- [ms-settings:](#ms-settings)
 
 
 # Windows serverでRC4とtriple-DESを無効にする
@@ -84,7 +85,15 @@ REG ADD "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics" /v MinAnimate /t
 ログアウト必要
 
 
-参考: 
+参考:
 - [Windows10のアニメーション無効化、レジストリ操作まで | GWT Center](https://www.gwtcenter.com/stop-win10-animation)
 - [Windows 10 Disable Animations via regedit/script - Super User](https://superuser.com/questions/1052763/windows-10-disable-animations-via-regedit-script)
 - [Windows animations (maximize, minimize) are gone.](https://social.technet.microsoft.com/Forums/en-US/4aa71ed5-3500-4d11-a461-7d80c0847f91/windows-animations-maximize-minimize-are-gone?forum=itprovistadesktopui)
+
+
+# ms-settings:
+
+便利。「設定開いて...」よりは全然楽
+
+- [Windows 10のショートカット「ms-settings:URI」は使い始めると止められない：山市良のうぃんどうず日記（99）（2/2 ページ） - ＠IT](https://www.atmarkit.co.jp/ait/articles/1707/11/news009_2.html)
+- [Launch the Windows Settings app - UWP applications | Microsoft Docs](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/launch-settings-app#ms-settings-uri-scheme-reference)
