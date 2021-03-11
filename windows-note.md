@@ -97,3 +97,5 @@ REG ADD "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics" /v MinAnimate /t
 
 - [Windows 10のショートカット「ms-settings:URI」は使い始めると止められない：山市良のうぃんどうず日記（99）（2/2 ページ） - ＠IT](https://www.atmarkit.co.jp/ait/articles/1707/11/news009_2.html)
 - [Launch the Windows Settings app - UWP applications | Microsoft Docs](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/launch-settings-app#ms-settings-uri-scheme-reference)
+
+`ms-windows-store:`とかもある。上記参照。

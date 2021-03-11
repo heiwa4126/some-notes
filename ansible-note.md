@@ -74,6 +74,7 @@ ansibleメモランダム
 - [windowsでbecome:true](#windowsでbecometrue)
 - [Galaxyコレクション](#galaxyコレクション)
 - [yumモジュールのstateのpresentとlatestの違い](#yumモジュールのstateのpresentとlatestの違い)
+- [quoteフィルタ](#quoteフィルタ)
 
 # 感想
 
@@ -1358,3 +1359,15 @@ Kerberosだとローカルアカウントには接続できないのに注意。
 
 - [centos - What is the difference between two "state" option values, "present" and "installed", available in Ansible's yum module? - Stack Overflow](https://stackoverflow.com/questions/40410270/what-is-the-difference-between-two-state-option-values-present-and-install#:~:text=State%20as%20'Present'%20and%20',of%20the%20latest%20available%20version.)
 - [6 practices for super smooth Ansible experience - Max Chernyak](https://max.engineer/six-ansible-practices#separate-your-setup-and-deploy-playbooks)
+
+
+# quoteフィルタ
+
+[Using filters to manipulate data — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#manipulating-strings)
+
+```yaml
+- name: Run a shell command
+  ansible.builtin.shell: echo {{ string_value | quote }}
+```
+
+このページ、全体に面白い。
