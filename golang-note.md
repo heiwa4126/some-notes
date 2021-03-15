@@ -37,6 +37,7 @@
 - [windowsでbtime,atime,ctime,mtime](#windowsでbtimeatimectimemtime)
 - [emacsでの環境](#emacsでの環境)
 - [go-mode](#go-mode)
+- [WindowsとLinuxでソースを分ける](#windowsとlinuxでソースを分ける)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -1004,3 +1005,12 @@ GO111MODULE=on go get -u github.com/sqs/goreturns
 emacsのgo-modeには`go test`とか実行するコマンドが無い。
 
 - [nlamirault/gotest.el: Emacs mode to go unit test command line tool](https://github.com/nlamirault/gotest.el)
+
+
+# WindowsとLinuxでソースを分ける
+
+- `foo_linux.go` と `foo_windows.go` みたいにする
+- `runtime.GOOS`で分岐する (参照:[go/syslist.go at master · golang/go](https://github.com/golang/go/blob/master/src/go/build/syslist.go))
+- build constraintsを使う
+  -  `go help buildconstraint | less`参照 or [build - The Go Programming Language](https://golang.org/pkg/go/build/#hdr-Build_Constraints)
+  -  [GoのBuild Constraintsに関するメモ - Qiita](https://qiita.com/hnw/items/7dd4d10e837158d6156a)
