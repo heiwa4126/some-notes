@@ -32,11 +32,11 @@ CA bundleを作る。
 
 そのファイルのパスをいくつかの環境変数に設定してやる。
 
-|製品|環境変数|
-| ---- | ---- |
-|Python|REQUESTS_CA_BUNDLE|
-|Curl|CURL_CA_BUNDLE|
-|OpenSSL|SSL_CERT_FILE|
+| 製品    | 環境変数           |
+| ------- | ------------------ |
+| Python  | REQUESTS_CA_BUNDLE |
+| Curl    | CURL_CA_BUNDLE     |
+| OpenSSL | SSL_CERT_FILE      |
 
 CA bundleにしないと
 ZScalerがZScalerで署名してくるものと、
@@ -64,16 +64,17 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 
 参考:
 * [Certificates](https://help.ubuntu.com/lts/serverguide/certificates-and-security.html.en)
+* [独自(root)CA のインストール方法 - Qiita](https://qiita.com/msi/items/9cb90271836386dafce3)
 * [ubuntuに自己認証局の証明書を登録 | misty-magic.h](https://mistymagich.wordpress.com/2012/01/17/ubuntu%E3%81%AB%E8%87%AA%E5%B7%B1%E8%AA%8D%E8%A8%BC%E5%B1%80%E3%81%AE%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92%E7%99%BB%E9%8C%B2/)
 
 1. `/usr/share/ca-certificates`
 に
 `zscaler`ディレクトリを作成。
 1. `/usr/share/ca-certificates/zscaler`に
-`ZscalerRootCertificate.cer`ファイルを置く。
+`ZscalerRootCertificate.cer`ファイルを置く。(拡張子は.crtかも。PEM形式ならOK)
 1. `/etc/ca-certificates.conf`の末尾に
 `zscaler/ZscalerRootCertificate.cer`
-を追加。
+を追加。最後に改行が必要。
 1. `update-ca-certificates`を実行
 
 `/etc/ssl/certs/ca-certificates.crt`が更新されるらしい

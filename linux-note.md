@@ -132,3 +132,14 @@ Debian、Ubuntuはデフォルトではanacronは使わないので(インスト
 grep daily /etc/crontab
 ```
 で。
+
+
+# lsでディレクトリ名だけ表示する
+
+```sh
+ls -d */
+# or
+ls -ld */
+```
+
+[lsでディレクトリ名のみ表示する(grepは使わない) - Qiita](https://qiita.com/github-nakasho/items/1433f6601bb3efc14474#%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E5%90%8D%E3%81%A0%E3%81%91%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%81%9F%E3%81%84)
