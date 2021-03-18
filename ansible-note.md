@@ -1371,3 +1371,14 @@ Kerberosだとローカルアカウントには接続できないのに注意。
 ```
 
 このページ、全体に面白い。
+
+
+# ansible-playbookの便利オプション
+
+- --syntax-check - perform a syntax check on the playbook, but do not execute it
+- --list-hosts - outputs a list of matching hosts; does not execute anything else
+- --list-tags - list all available tags
+- --list-tasks - list all tasks that would be executed
+- -C - don't make any changes; instead, try to predict some of the changes that may occur
+
+Cオプションは便利だけど、shell実行するとことかでは無力。
