@@ -98,3 +98,37 @@ sudo add-apt-repository ppa:git-core/ppa
 sudo apt update
 sudo apt install git
 ```
+
+# git-secrets
+
+どれだけ役立つかはよくわからないけど、後悔先に立たずだから入れとけ。
+
+- [awslabs/git-secrets: Prevents you from committing secrets and credentials into git repositories](https://github.com/awslabs/git-secrets)
+- [AWS Access Keyを外部に公開してしまった話 | mediba Creator × Engineer Blog](https://ceblog.mediba.jp/post/638125766874415104/aws-access-key%E3%82%92%E5%A4%96%E9%83%A8%E3%81%AB%E5%85%AC%E9%96%8B%E3%81%97%E3%81%A6%E3%81%97%E3%81%BE%E3%81%A3%E3%81%9F%E8%A9%B1)
+
+git-secretsインストールしたら
+既存または新規のgitプロジェクトで
+```sh
+git secrets --install
+git secrets --register-aws
+```
+
+参考: [git-secretsはじめました - Qiita](https://qiita.com/jqtype/items/9196e047eddb53d07a91)
+
+でもめんどくさいので
+[advanced-configuration](https://github.com/awslabs/git-secrets#advanced-configuration)
+にあるように全レポジトリに設定したほうがいいとおもう。
+
+↑から引用
+```sh
+git secrets --register-aws --global
+# Add hooks to all your local repositories.
+git secrets --install ~/.git-templates/git-secrets
+git config --global init.templateDir ~/.git-templates/git-secrets
+```
+
+既存のgitをスキャンとかもできる
+(
+    プロジェクトに移動して、
+    `git secrets --scan-history`
+)
