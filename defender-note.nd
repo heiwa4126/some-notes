@@ -1,6 +1,13 @@
-[Microsoft Defender ATP for Linux | Microsoft Docs](https://docs.microsoft.com/ja-jp/microsoft-365/security/defender-endpoint/microsoft-defender-endpoint-linux?view=o365-worldwide)
+略称: mdatp
 
-ATPはAdvanced Threat Protectionの頭文字らしいよ
+- [Microsoft Defender for Endpoint documentation | Microsoft Docs](https://docs.microsoft.com/ja-jp/microsoft-365/security/defender-endpoint/?view=o365-worldwide)
+- [Microsoft Defender ATP for Linux | Microsoft Docs](https://docs.microsoft.com/ja-jp/microsoft-365/security/defender-endpoint/microsoft-defender-endpoint-linux?view=o365-worldwide)
+
+Microsoft Defender for Endpoint と Microsoft Defender ATP は同じものらしい。
+
+略語:
+- ATP(Advanced Threat Protection)
+- EDR(Endpoint Detection and Response)
 
 試用とか: [Microsoft Defender for Endpoint、Microsoft 365](https://www.microsoft.com/ja-jp/microsoft-365/security/endpoint-defender?ocid=docs-wdatp-exposedapis-abovefoldlink&rtc=1)
 
@@ -9,3 +16,13 @@ ATPはAdvanced Threat Protectionの頭文字らしいよ
 [Deploy Microsoft Defender ATP for Linux manually | Microsoft Docs](https://docs.microsoft.com/ja-jp/microsoft-365/security/defender-endpoint/linux-install-manually?view=o365-worldwide#installer-script)
 
 価格がさっぱりわからん。
+
+`Onboard`とは何?
+
+概要:
+[Microsoft Defender for Endpoint | Microsoft Docs](https://docs.microsoft.com/ja-jp/microsoft-365/security/defender-endpoint/microsoft-defender-advanced-threat-protection?view=o365-worldwide)
+
+
+他リンク:
+- [Windows Defender ATP Advanced Hunting の概要 - Windows Blog for Japan](https://blogs.windows.com/japan/2018/09/13/getting-started-with-windows-defender-atp-advanced-hunting/)
+- [Microsoft Defender for Endpoint（旧：Microsoft Defender ATP） | 製品・サービス | Microsoft ソリューション | 企業の情報セキュリティ対策・ITシステム運用のＪＢＳ　ＪＢサービス株式会社 ＪＢサービス株式会社](https://www.jbsvc.co.jp/products/ms/defender/windows_defender_advanced_threat_protectionatp.html)
