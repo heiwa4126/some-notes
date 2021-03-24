@@ -2,14 +2,14 @@ LVMいろいろノート
 
 - [LVMのrootをfsck](#lvmのrootをfsck)
 - [LVMのサイズを広げる](#lvmのサイズを広げる)
-- [LVMでsnapshot](#lvmでsnapshot)
-  - [snapshotがfullになるとどうなるか](#snapshotがfullになるとどうなるか)
 - [LVMのコマンド](#lvmのコマンド)
 - [LVM snapshotの練習](#lvm-snapshotの練習)
   - [スナップショットから復元](#スナップショットから復元)
   - [スナップショットを削除](#スナップショットを削除)
   - [演習のあとしまつ](#演習のあとしまつ)
   - [スナップショットがあふれた場合](#スナップショットがあふれた場合)
+- [LVM snapshotの練習 part2](#lvm-snapshotの練習-part2)
+  - [snapshotがfullになるとどうなるか](#snapshotがfullになるとどうなるか)
 - [lvsコマンドのattrフィールド](#lvsコマンドのattrフィールド)
 - [新しいディスクメモ](#新しいディスクメモ)
 - [ディスクの追加](#ディスクの追加)
@@ -113,164 +113,6 @@ GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力
 
 ```
 
-# LVMでsnapshot
-
-VMでテスト
-
-```
-# lsblk -f
-NAME                FSTYPE      LABEL UUID                                   MOUNTPOINT
-sda
-├─sda1              vfat        efi   8EA4-09AF                              /boot/efi
-├─sda2              ext4        boot  da20638e-6d5b-4412-b091-5d1a845dab42   /boot
-└─sda3              LVM2_member       sPpKdm-n05w-KJo3-tAnJ-K2cH-Vzbh-XgZgxz
-  ├─VolGroup00-root ext4        root  979940c6-73bc-4587-8652-d22e47bd7022   /
-  └─VolGroup00-swap swap        swap  861754ca-7d31-4bce-aaf8-d5739e648523   [SWAP]
-
-# pvdisplay | grep Free
-  Free PE               0
-```
-で空きがぜんぜん無い。
-
-sdaを1GB広げて
-VolGroup00に追加して
-拡張分をスナップショット領域にする。
-
-VMマネージャで広げて、
-`parted /dev/sda`で`p Fix Fix resizepart 3 100%`で
-`pvresize /dev/sda3`
-
-これで
-```
-# vgdisplay VolGroup00 | grep Free
-  Free  PE / Size       256 / 1.00 GiB
-```
-
-root用にsnapshot領域を作成
-``` sh
-lvcreate -s -l 100%FREE -n snap1 /dev/mapper/VolGroup00-root
-ls -lad /dev/mapper/VolGroup00-snap1
-```
-
-この`/dev/mapper/VolGroup00-snap1`に対してdumpとかを行う。
-
-状態の確認は
-```sh
-lvdisplay VolGroup00/snap1
-# or
-lvdisplay /dev/mapper/VolGroup00-snap1
-```
-
-特にディスク使用量は
-```sh
-lvdisplay VolGroup00/snap1 | fgrep 'Allocated to snapshot'
-```
-
-`yum clean all ; yum update`とかしてみるといいです。
-
-バックアップが終わったら
-スナップショット領域を解放
-```
-lvremove VolGroup00/snap1 -y
-```
-
-リストアの参考:
-- [How to Take 'Snapshot of Logical Volume and Restore' in LVM - Part III](https://www.tecmint.com/take-snapshot-of-logical-volume-and-restore-in-lvm/)
-- [10.3. スナップショットボリュームのマージ Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/proc_merging-snapshot-volumes-snapshot-volumes)
-
-## snapshotがfullになるとどうなるか
-
-```
-# vgs
-  VG     #PV #LV #SN Attr   VSize   VFree
-  rootvg   1   6   0 wz--n- <63.02g <24.02g
-```
-
-rootvgに空きがあるので、ここに新しいLVMつくってテスト
-
-```
-# lvcreate -n testlv -L 10g rootvg
-  Logical volume "testlv" created.
-# mkfs.ext3 /dev/mapper/rootvg-testlv
-# mkdir -p /mnt/test
-# LANG=C  df -h /mnt/test
-Filesystem                 Size  Used Avail Use% Mounted on
-/dev/mapper/rootvg-testlv  9.8G   23M  9.2G   1% /mnt/test
-```
-
-最初のファイルを作る
-```
-cd /mnt/test
-yes test | head > test.txt
-```
-
-スナップショット作成
-```
-lvcreate -s -L 10k -n snap1 /dev/mapper/rootvg-testlv
-mkdir /mnt/snap1
-mount -t ext3 /dev/mapper/rootvg-snap1 /mnt/snap1
-```
-
-で、
-```
-# ls -la /mnt/test /mnt/snap1
-/mnt/snap1:
-合計 28
-drwxr-xr-x 3 root root  4096  2月  9 07:10 .
-drwxr-xr-x 5 root root  4096  2月  9 07:15 ..
-drwx------ 2 root root 16384  2月  9 07:07 lost+found
--rw-r--r-- 1 root root    50  2月  9 07:10 test.txt
-
-/mnt/test:
-合計 28
-drwxr-xr-x 3 root root  4096  2月  9 07:10 .
-drwxr-xr-x 5 root root  4096  2月  9 07:15 ..
-drwx------ 2 root root 16384  2月  9 07:07 lost+found
--rw-r--r-- 1 root root    50  2月  9 07:10 test.txt
-```
-
-/mnt/testで、ファイルを追記してみる
-```
-# yes test | head >> test.txt
-# ls -la /mnt/test/test.txt /mnt/snap1/test.txt
--rw-r--r-- 1 root root  50  2月  9 07:10 /mnt/snap1/test.txt
--rw-r--r-- 1 root root 100  2月  9 07:18 /mnt/test/test.txt
-```
-いいようですね。
-
-では/mnt/testの方をdisk fullにしてみる。
-```
-# yes test >> test.txt
-## 終わらないのでc-Cでとめる
-# ls -la /mnt/test/test.txt /mnt/snap1/test.txt
-ls: /mnt/snap1/test.txt にアクセスできません: そのようなファイルやディレクトリはありません
--rw-r--r-- 1 root root 1.1G  2月  9 07:21 /mnt/test/test.txt
-```
-
-syslogの出力は
-```
-Feb  9 07:21:06 r7 kernel: device-mapper: snapshots: Invalidating snapshot: Unable to allocate exception.
-Feb  9 07:21:06 r7 lvm[9396]: WARNING: Snapshot rootvg-snap1 changed state to: Invalid and should be removed.
-Feb  9 07:21:06 r7 lvm[9396]: Unmounting invalid snapshot rootvg-snap1 from /mnt/snap1.
-Feb  9 07:21:18 r7 kernel: buffer_io_error: 10 callbacks suppressed
-Feb  9 07:21:18 r7 kernel: Buffer I/O error on dev dm-9, logical block 0, lost sync page write
-Feb  9 07:21:18 r7 dmeventd[9396]: No longer monitoring snapshot rootvg-snap1.
-```
-
-つまり
-「LVMスナップショットがあふれると、スナップショットはアンマウントされる」
-ということらしい。
-
-参考:
-[LVMでスナップショットの作成と状態の復元 - Qiita](https://qiita.com/TsutomuNakamura/items/a68377952d07397db448#%E3%82%B9%E3%83%8A%E3%83%83%E3%83%97%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%E3%81%8C%E6%BA%A2%E3%82%8C%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9)
-
-
-テストが終わったらあとしまつ
-```
-umount /mnt/test
-lvremove rootvg/snap1
-lvremove rootvg/testlv
-```
 
 # LVMのコマンド
 
@@ -442,6 +284,8 @@ lvremove /dev/rootvg/testlv -y
 
 ## スナップショットがあふれた場合
 
+(↓part2の [snapshotがfullになるとどうなるか](#snapshotがfullになるとどうなるか) 参照)
+
 [スナップショットが溢れるケース - LVMでスナップショットの作成と状態の復元 - Qiita](https://qiita.com/TsutomuNakamura/items/a68377952d07397db448#%E3%82%B9%E3%83%8A%E3%83%83%E3%83%97%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%E3%81%8C%E6%BA%A2%E3%82%8C%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9)
 
 > 上記のように、スナップショットからフェイルバックすることができないようになっていることがわかります。
@@ -451,6 +295,167 @@ lvremove /dev/rootvg/testlv -y
 - あふれそうなら
   - スナップショットをエクステンドする。
   - or スナップショットをバックアップ後、マージするか捨てるか。
+
+
+# LVM snapshotの練習 part2
+
+VMでテスト
+
+```
+# lsblk -f
+NAME                FSTYPE      LABEL UUID                                   MOUNTPOINT
+sda
+├─sda1              vfat        efi   8EA4-09AF                              /boot/efi
+├─sda2              ext4        boot  da20638e-6d5b-4412-b091-5d1a845dab42   /boot
+└─sda3              LVM2_member       sPpKdm-n05w-KJo3-tAnJ-K2cH-Vzbh-XgZgxz
+  ├─VolGroup00-root ext4        root  979940c6-73bc-4587-8652-d22e47bd7022   /
+  └─VolGroup00-swap swap        swap  861754ca-7d31-4bce-aaf8-d5739e648523   [SWAP]
+
+# pvdisplay | grep Free
+  Free PE               0
+```
+で空きがぜんぜん無い。
+
+sdaを1GB広げて
+VolGroup00に追加して
+拡張分をスナップショット領域にする。
+
+VMマネージャで広げて、
+`parted /dev/sda`で`p Fix Fix resizepart 3 100%`で
+`pvresize /dev/sda3`
+
+これで
+```
+# vgdisplay VolGroup00 | grep Free
+  Free  PE / Size       256 / 1.00 GiB
+```
+
+root用にsnapshot領域を作成
+``` sh
+lvcreate -s -l 100%FREE -n snap1 /dev/mapper/VolGroup00-root
+ls -lad /dev/mapper/VolGroup00-snap1
+```
+
+この`/dev/mapper/VolGroup00-snap1`に対してdumpとかを行う。
+
+状態の確認は
+```sh
+lvdisplay VolGroup00/snap1
+# or
+lvdisplay /dev/mapper/VolGroup00-snap1
+```
+
+特にディスク使用量は
+```sh
+lvdisplay VolGroup00/snap1 | fgrep 'Allocated to snapshot'
+```
+
+`yum clean all ; yum update`とかしてみるといいです。
+
+バックアップが終わったら
+スナップショット領域を解放
+```
+lvremove VolGroup00/snap1 -y
+```
+
+リストアの参考:
+- [How to Take 'Snapshot of Logical Volume and Restore' in LVM - Part III](https://www.tecmint.com/take-snapshot-of-logical-volume-and-restore-in-lvm/)
+- [10.3. スナップショットボリュームのマージ Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/proc_merging-snapshot-volumes-snapshot-volumes)
+
+## snapshotがfullになるとどうなるか
+
+```
+# vgs
+  VG     #PV #LV #SN Attr   VSize   VFree
+  rootvg   1   6   0 wz--n- <63.02g <24.02g
+```
+
+rootvgに空きがあるので、ここに新しいLVMつくってテスト
+
+```
+# lvcreate -n testlv -L 10g rootvg
+  Logical volume "testlv" created.
+# mkfs.ext3 /dev/mapper/rootvg-testlv
+# mkdir -p /mnt/test
+# LANG=C  df -h /mnt/test
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-testlv  9.8G   23M  9.2G   1% /mnt/test
+```
+
+最初のファイルを作る
+```
+cd /mnt/test
+yes test | head > test.txt
+```
+
+スナップショット作成
+```
+lvcreate -s -L 10k -n snap1 /dev/mapper/rootvg-testlv
+mkdir /mnt/snap1
+mount -t ext3 /dev/mapper/rootvg-snap1 /mnt/snap1
+```
+
+で、
+```
+# ls -la /mnt/test /mnt/snap1
+/mnt/snap1:
+合計 28
+drwxr-xr-x 3 root root  4096  2月  9 07:10 .
+drwxr-xr-x 5 root root  4096  2月  9 07:15 ..
+drwx------ 2 root root 16384  2月  9 07:07 lost+found
+-rw-r--r-- 1 root root    50  2月  9 07:10 test.txt
+
+/mnt/test:
+合計 28
+drwxr-xr-x 3 root root  4096  2月  9 07:10 .
+drwxr-xr-x 5 root root  4096  2月  9 07:15 ..
+drwx------ 2 root root 16384  2月  9 07:07 lost+found
+-rw-r--r-- 1 root root    50  2月  9 07:10 test.txt
+```
+
+/mnt/testで、ファイルを追記してみる
+```
+# yes test | head >> test.txt
+# ls -la /mnt/test/test.txt /mnt/snap1/test.txt
+-rw-r--r-- 1 root root  50  2月  9 07:10 /mnt/snap1/test.txt
+-rw-r--r-- 1 root root 100  2月  9 07:18 /mnt/test/test.txt
+```
+いいようですね。
+
+では/mnt/testの方をdisk fullにしてみる。
+```
+# yes test >> test.txt
+## 終わらないのでc-Cでとめる
+# ls -la /mnt/test/test.txt /mnt/snap1/test.txt
+ls: /mnt/snap1/test.txt にアクセスできません: そのようなファイルやディレクトリはありません
+-rw-r--r-- 1 root root 1.1G  2月  9 07:21 /mnt/test/test.txt
+```
+
+syslogの出力は
+```
+Feb  9 07:21:06 r7 kernel: device-mapper: snapshots: Invalidating snapshot: Unable to allocate exception.
+Feb  9 07:21:06 r7 lvm[9396]: WARNING: Snapshot rootvg-snap1 changed state to: Invalid and should be removed.
+Feb  9 07:21:06 r7 lvm[9396]: Unmounting invalid snapshot rootvg-snap1 from /mnt/snap1.
+Feb  9 07:21:18 r7 kernel: buffer_io_error: 10 callbacks suppressed
+Feb  9 07:21:18 r7 kernel: Buffer I/O error on dev dm-9, logical block 0, lost sync page write
+Feb  9 07:21:18 r7 dmeventd[9396]: No longer monitoring snapshot rootvg-snap1.
+```
+
+つまり
+「LVMスナップショットがあふれると、スナップショットはアンマウントされる」
+ということらしい。
+
+参考:
+[LVMでスナップショットの作成と状態の復元 - Qiita](https://qiita.com/TsutomuNakamura/items/a68377952d07397db448#%E3%82%B9%E3%83%8A%E3%83%83%E3%83%97%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%E3%81%8C%E6%BA%A2%E3%82%8C%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9)
+
+
+テストが終わったらあとしまつ
+```
+umount /mnt/test
+lvremove rootvg/snap1
+lvremove rootvg/testlv
+```
+
 
 
 # lvsコマンドのattrフィールド
@@ -575,5 +580,3 @@ Filesystem                        Size  Used Avail Use% Mounted on
 ```
 
 できあがり。
-
-
