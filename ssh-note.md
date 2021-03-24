@@ -6,6 +6,7 @@
 	- [AllowUsers](#allowusers)
 	- [Port](#port)
 - [.ssh/configでhostごとのUserがoverrideできない](#sshconfigでhostごとのuserがoverrideできない)
+- [SELinux](#selinux)
 - [ProxyJump](#proxyjump)
 - [DynamicForward](#dynamicforward)
 - [LocalForward](#localforward)
@@ -32,7 +33,7 @@ sshd -t
 複数ユーザは` `(whitespace)で区切る
 
 ## Port
-複数ポートは書けない。
+複数ポートは書けない。コンマで区切る、とか無い。
 ```
 Port 22
 Port 2222
@@ -63,6 +64,25 @@ Host *
 
 - [linux - OpenSSH ~/.ssh/config host-specific overrides not working - Super User](https://superuser.com/questions/718346/openssh-ssh-config-host-specific-overrides-not-working)
 
+
+# SELinux
+
+↑みたいに複数ポートにしたとき、selinuxが有効だと動きません。
+SELinuxを無効にするのは簡単だけど。
+
+参考: [「SELinuxのせいで動かない」撲滅ガイド - Qiita](https://qiita.com/yunano/items/857ab36faa0d695573dd)
+
+
+```sh
+sudo semanage port -a -t ssh_port_t -p tcp 2222
+```
+オプションの`-a`はappend、`-m`はmodify。
+tcp/2222がすでに別で使ってたら`-a`じゃなくて`-m`にする。
+
+確認は
+```sh
+sudo semanage port -l | grep 2222
+```
 
 # ProxyJump
 
