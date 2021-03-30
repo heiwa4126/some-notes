@@ -29,12 +29,13 @@ AD環境だったらADでやるのが基本。
 
 # LGPO(とローカルセキュリティポリシー)
 
-- gpedit.msc - ローカルグループポリシーをいじるGUI
+- gpedit.msc - ローカルグループポリシー(LGPO)をいじるGUI
 - secpol.msc - ローカルセキュリティポリシーをいじるGUI
 
-(ローカルセキュリティポリシーはLSPとは言わないみたい)
+なんで2本立てになってるのかよくわからん。
+ローカルセキュリティポリシーはLSPとは言わないみたい。
 
-ローカルグループポリシーを適応する手順
+(LGPOでなく)ローカルセキュリティポリシーを適応する手順:
 1. secpol.mscでポリシーを設定する
 2. secpolで「ポリシーのエクスポート」をする(secedit.exeでエクスポートもできる)
 3. secedit.exe でエクスポートしたポリシーを他所に設定
@@ -42,12 +43,13 @@ AD環境だったらADでやるのが基本。
 gpedit.mscには「ポリシーのエクスポート」がない。
 secedit.exeに当たるものもない。自動化できない。
 
-というわけで `lgpo.exe`
+
+というところで `lgpo.exe`
 - [Microsoft Security Compliance Toolkit 1.0 - Windows security | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows/security/threat-protection/security-compliance-toolkit-10)
 - [LGPO.exe - Local Group Policy Object Utility, v1.0 - Microsoft Tech Community](https://techcommunity.microsoft.com/t5/microsoft-security-baselines/lgpo-exe-local-group-policy-object-utility-v1-0/ba-p/701045)
 - [Download Microsoft Security Compliance Toolkit 1.0 from Official Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=55319) - lgpo.zipがダウンロードできる
 
-実はこういうのもあるので参照
+実はこういうのもあるので要調査
 [Florian's Blog » How can I export local Group Policy settings made in gpedit.msc?](http://www.frickelsoft.net/blog/?p=31)
 
 LGPOもローカルグループポリシーと同様の手順でいける(はず、これから試す)。
@@ -68,3 +70,6 @@ LGPOもローカルグループポリシーと同様の手順でいける(はず
 レジストリみたいに「この項目をこの値に設定したい」というのはできない。
 ただpolファイルを人間に読みやすくparseするのはできる。
 lgpo.exe添付のpdf読むこと。
+
+ほか気づいた点:
+「未構成」をインポートはできないみたい(そもそもエクスポートされない)。
