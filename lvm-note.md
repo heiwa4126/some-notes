@@ -373,13 +373,14 @@ lvremove VolGroup00/snap1 -y
 rootvgに空きがあるので、ここに新しいLVMつくってテスト
 
 ```
-# lvcreate -n testlv -L 10g rootvg
+# lvcreate -n testlv -L 1g rootvg
   Logical volume "testlv" created.
 # mkfs.ext3 /dev/mapper/rootvg-testlv
 # mkdir -p /mnt/test
+# mount -t auto -o defaults /dev/mapper/rootvg-testlv /mnt/test
 # LANG=C  df -h /mnt/test
 Filesystem                 Size  Used Avail Use% Mounted on
-/dev/mapper/rootvg-testlv  9.8G   23M  9.2G   1% /mnt/test
+/dev/mapper/rootvg-testlv  976M  1.3M  924M   1% /mnt/test
 ```
 
 最初のファイルを作る
@@ -395,8 +396,17 @@ mkdir /mnt/snap1
 mount -t ext3 /dev/mapper/rootvg-snap1 /mnt/snap1
 ```
 
+
 で、
 ```
+# df -h /mnt/test /mnt/snap1
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-testlv  976M  1.3M  924M   1% /mnt/test
+/dev/mapper/rootvg-snap1   976M  1.3M  924M   1% /mnt/snap1
+
+# lvdisplay | fgrep "Allocated to snapshot"
+Allocated to snapshot  0.29%
+
 # ls -la /mnt/test /mnt/snap1
 /mnt/snap1:
 合計 28
@@ -415,20 +425,31 @@ drwx------ 2 root root 16384  2月  9 07:07 lost+found
 
 /mnt/testで、ファイルを追記してみる
 ```
-# yes test | head >> test.txt
+# yes test | head >> /mnt/test/test.txt
 # ls -la /mnt/test/test.txt /mnt/snap1/test.txt
 -rw-r--r-- 1 root root  50  2月  9 07:10 /mnt/snap1/test.txt
 -rw-r--r-- 1 root root 100  2月  9 07:18 /mnt/test/test.txt
+
+# lvdisplay | fgrep "Allocated to snapshot"
+Allocated to snapshot  0.88%
 ```
 いいようですね。
 
 では/mnt/testの方をdisk fullにしてみる。
 ```
-# yes test >> test.txt
-## 終わらないのでc-Cでとめる
+# yes test >> /mnt/test/test.txt
+# (しばらくして)
+yes: standard output: No space left on device
 # ls -la /mnt/test/test.txt /mnt/snap1/test.txt
 ls: /mnt/snap1/test.txt にアクセスできません: そのようなファイルやディレクトリはありません
 -rw-r--r-- 1 root root 1.1G  2月  9 07:21 /mnt/test/test.txt
+
+# lvdisplay | fgrep "Allocated to snapshot"
+(何も出ない)
+
+# lvdisplay /dev/rootvg/snap1
+(略)
+  LV snapshot status     INACTIVE destination for testlv
 ```
 
 syslogの出力は
@@ -442,8 +463,12 @@ Feb  9 07:21:18 r7 dmeventd[9396]: No longer monitoring snapshot rootvg-snap1.
 ```
 
 つまり
-「LVMスナップショットがあふれると、スナップショットはアンマウントされる」
+- LVMスナップショットがあふれると、スナップショットはアンマウントされる
+- LVリストからは削除されないけど、再マウントもなにも出来ない
+
 ということらしい。
+
+
 
 参考:
 [LVMでスナップショットの作成と状態の復元 - Qiita](https://qiita.com/TsutomuNakamura/items/a68377952d07397db448#%E3%82%B9%E3%83%8A%E3%83%83%E3%83%97%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%E3%81%8C%E6%BA%A2%E3%82%8C%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9)
