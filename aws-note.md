@@ -12,6 +12,7 @@ AWSのメモ
 - [ElasticIPなしのEC2で外部IPをroute53でFQDNをふる](#elasticipなしのec2で外部ipをroute53でfqdnをふる)
   - [欠点](#欠点)
 - [127.0.0.53](#1270053)
+- [「インスタンスの開始」と「インスタンスの起動」](#インスタンスの開始とインスタンスの起動)
 
 
 # メタデータ
@@ -291,3 +292,15 @@ nameserver 127.0.0.53
 systemd-resolveとは何か?
 
 [AWS EC2 (Ubuntu) で DNS のスタブリゾルバ 127.0.0.53 と Amazon Provided DNS の関連を確認する - Qiita](https://qiita.com/nasuvitz/items/b67100028f7245ebe9b9)
+
+# 「インスタンスの開始」と「インスタンスの起動」
+
+EC2でよく間違えるやつ。「停止」と「終了」もよく間違える。
+
+インスタンスの:
+- 起動 - [run-instances — AWS CLI 2.1.33 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/run-instances.html)
+- 開始 - [start-instances — AWS CLI 2.1.33 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/start-instances.html)
+- 停止 - [stop-instances — AWS CLI 2.1.33 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/stop-instances.html)
+- 終了 - [terminate-instances — AWS CLI 2.1.33 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/terminate-instances.html)
+
+参考: [Amazon EC2 インスタンスの起動、一覧表示、および終了 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-services-ec2-instances.html)
