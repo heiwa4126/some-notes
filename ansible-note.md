@@ -1,7 +1,9 @@
 ansibleメモランダム
 
+- [ansibleの学習2021](#ansibleの学習2021)
 - [感想](#感想)
 - [インストール](#インストール)
+  - [自分の好きな手順](#自分の好きな手順)
   - [RHEL7](#rhel7)
   - [Ubuntu/Debian](#ubuntudebian)
   - [pip](#pip)
@@ -75,6 +77,18 @@ ansibleメモランダム
 - [Galaxyコレクション](#galaxyコレクション)
 - [yumモジュールのstateのpresentとlatestの違い](#yumモジュールのstateのpresentとlatestの違い)
 - [quoteフィルタ](#quoteフィルタ)
+- [ansible-playbookの便利オプション](#ansible-playbookの便利オプション)
+
+
+# ansibleの学習2021
+
+公式が日本語で読めるようになってた。時代はかわっていくんだねぇ。
+[はじめに — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/intro_getting_started.html)
+
+ansible.comのトップページも
+[Ansible is Simple IT Automation](https://www.ansible.com/)
+こんな感じに。
+
 
 # 感想
 
@@ -104,10 +118,18 @@ ansibleメモランダム
 
 個人的にはpipでuserに入れるのがいいと思う。
 
-
-
 公式:
-[Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+- [Ansible のインストール — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/installation_guide/intro_installation.html)
+
+
+## 自分の好きな手順
+
+1. ディストリのパッケージでpython3入れる
+2. [pypa/get-pip](https://github.com/pypa/get-pip) を使って、ユーザーローカルにpip3を入れる(`curl -kL https://bootstrap.pypa.io/get-pip.py -O; python3 get-pip.py -U --user`)
+3. ~/.local/binにPATHを通す
+4. `python3 -m pip install --user -U ansible "ansible-lint[community,yamllint]" pywinrm pexpect` する。
+
 
 ## RHEL7
 
