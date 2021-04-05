@@ -1,10 +1,14 @@
 YAMLメモ
 
+YAML関連メモ
+
 - [リンク](#リンク)
 - [フロースタイル / ブロックスタイル](#フロースタイル--ブロックスタイル)
 - [literal style (“|”) / folded style (“>”)](#literal-style---folded-style-)
 - [エスケープ](#エスケープ)
 - [yq](#yq)
+- [構造化データ(structured data)](#構造化データstructured-data)
+- [YAMLの先進的記述](#yamlの先進的記述)
 
 # リンク
 
@@ -94,7 +98,7 @@ yaml2json (`python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), s
 * [Ansible 2.6 | 不可能なWindowsの使用 - CODE Q&A 問題解決](https://code.i-harness.com/ja/docs/ansible~2.6/user_guide/windows_usage#path-formatting-for-windows)
 * [Ansible 2.6 | Using Ansible and Windows - CODE Q&A Solved](https://code.i-harness.com/en/docs/ansible~2.6/user_guide/windows_usage)
 
-> 二重引用符"を使用する場合、バックスラッシュはエスケープ文字とみなされ、別のバックスラッシュでエスケープする必要があります。 
+> 二重引用符"を使用する場合、バックスラッシュはエスケープ文字とみなされ、別のバックスラッシュでエスケープする必要があります。
 
 # yq
 
@@ -108,3 +112,13 @@ jqのwrapperとして実装されているのでjqが必要。
 ```sh
 pip3 install yq --user -U
 ```
+
+# 構造化データ(structured data)
+
+XML,YAML,JSONなどのデータ構造をそう呼ぶみたいだけど、厳密な定義が見つからない。
+
+
+# YAMLの先進的記述
+
+see
+[Advanced_components - YAML - Wikipedia](https://en.wikipedia.org/wiki/YAML#Advanced_components)
