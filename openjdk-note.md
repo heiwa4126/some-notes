@@ -11,6 +11,7 @@
   - [Azul Systemsによる配布 (Zulu)](#azul-systemsによる配布-zulu)
   - [Red Hatによる配布](#red-hatによる配布)
   - [Amazonによる配布 (Amazon Corretto)](#amazonによる配布-amazon-corretto)
+  - [Microsoft Build of OpenJDK](#microsoft-build-of-openjdk)
   - [その他の配布](#その他の配布)
 
 # 参考リンク
@@ -150,13 +151,13 @@ Oracleのアカウントが必要(free)
 - コミュニティベース(スポンサーにIBMがいる)
 - JRE相当の配布あり
 - OpenJDK(HotSpot)にIBMのOpenJ9を追加したバージョンの配布あり
-- OpenJDK 11をLTS(4年)  
+- OpenJDK 11をLTS(4年)
 
 リンク:
 
 - [AdoptOpenJDK - Open source, prebuilt OpenJDK binaries](https://adoptopenjdk.net/)
 - [コミュニティのOpenJDKビルドファームが稼働](https://www.infoq.com/jp/news/2018/04/AdoptOpenJDKMar18)
-  
+
 
 ## Azul Systemsによる配布 (Zulu)
 
@@ -201,6 +202,13 @@ MicrosoftはAzure上ではZuluを推していく模様。
 - [Amazon Corretto 8 とは - Amazon Corretto 8](https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-8-ug/what-is-corretto-8.html)
 - [What Is Amazon Corretto 11? - Amazon Corretto](https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-11-ug/what-is-corretto-11.html)
 
+## Microsoft Build of OpenJDK
+
+- [Microsoft Build of OpenJDK](https://msopenjdk.azurewebsites.net/)
+- [マイクロソフトが無償でJavaの長期サポートを提供へ、「Microsoft Build of OpenJDK」をリリース － Publickey](https://www.publickey1.jp/blog/21/javamicrosoft_build_of_openjdk.html)
+
+(2021-04現在)OpenJDK 11でいいなら、これかな...
+
 
 ## その他の配布
 
@@ -208,5 +216,3 @@ MicrosoftはAzure上ではZuluを推していく模様。
 
 - [OpenJDK Builds - OpenJDK - Wikipedia](https://en.wikipedia.org/wiki/OpenJDK#OpenJDK_Builds)
 - [パーミッシブ・ライセンス - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%91%E3%83%BC%E3%83%9F%E3%83%83%E3%82%B7%E3%83%96%E3%83%BB%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9)
-
-
