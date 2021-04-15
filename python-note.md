@@ -32,6 +32,8 @@
 - [2020-resolver](#2020-resolver)
 - [WARNING: pip is being invoked by an old script wrapper.](#warning-pip-is-being-invoked-by-an-old-script-wrapper)
 - [ubuntu20.04LTS以降でpythonをpython3にする](#ubuntu2004lts以降でpythonをpython3にする)
+- [Python Static Analysis Tools](#python-static-analysis-tools)
+- [emacsでLSPでpython](#emacsでlspでpython)
 
 
 
@@ -684,3 +686,97 @@ pip install --user 'python-language-server[all]'
 ```
 pip install --user black pyls-black
 ```
+
+# Python Static Analysis Tools
+
+pyflakes
+pycheckers
+pyre
+(TODO) pyreおもしろそう。
+
+
+
+# emacsでLSPでpython
+
+2021-04ぐらい。Python2は考えない。
+emacs >= 26.1 で。
+これより低かったら、いろいろ悩むよりは
+snapでemacs 27がかんたんにインストールできるので、そっちを使う。
+`sudo snap install emacs`
+
+pythonのLSP、
+[Languages - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/page/languages/)
+には4つリストされているけど、pylsを使う例。
+
+- [Python (Palantir) - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/)
+- [GitHub - palantir/python-language-server: An implementation of the Language Server Protocol for Python](https://github.com/palantir/python-language-server)
+
+
+自分はフォーマッタはblackが楽で好きなので
+```
+pip3 install --user -U 'python-language-server[all]' black pyls-black
+hash -r
+```
+
+`~/.local/bin/pyls`ができて、パスが通ってることを確認(`which pyls`とかで)。
+
+emacsの設定は`~/.emacs.d`式で。
+
+```sh
+mkdir ~/.emacs.d/elpa/gnupg -p --mode 0700
+echo "keyserver hkp://keys.gnupg.net" > ~/.emacs.d/elpa/gnupg/gpg.conf
+gpg --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
+```
+(gpgの`--keyserver`オプションでもいいかも。
+`gpg --keyserver hkp://keys.gnupg.net ...`)
+
+
+で、`emacs -q ~/.emacs.d/init.el`
+
+```lisp
+(require 'package)
+;; package-archivesを上書き
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("org" . "https://orgmode.org/elpa/")
+        ("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+(line-number-mode t)
+(column-number-mode t)
+(require 'paren) (show-paren-mode t)
+(save-place-mode 1)
+(prefer-coding-system 'utf-8)
+(setq save-place-file "~/.emacs.d/.emacs-places")
+(setq next-line-add-newlines nil)
+(put 'narrow-to-region 'disabled nil)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(setq-default show-trailing-whitespace t)
+
+(setq-default tab-width 2 indent-tabs-mode nil)
+(define-key esc-map "g" 'goto-line)   ;; \M-g で 指定行へジャンプ
+
+;; completion
+(setq completion-ignore-case t)
+
+;; python LSP mode
+(add-hook 'python-mode-hook #'lsp)
+```
+重要なのは最後の2行だけ。
+
+
+emacsたちあげて
+
+`M-x package-refresh-contents`
+`M-x package-install[ret] lsp-ui[ret]`
+
+これでOK.
+
+他flycheckとかお好みで入れる。
+`pip3 install --user --upgrade pyflakes flake8`
+`M-x package-install[ret] flycheck-pyflakes[ret]`

@@ -12,6 +12,7 @@
   - [LSPモード TIPS](#lspモード-tips)
 - [コマンドの出力を自動スクロールする](#コマンドの出力を自動スクロールする)
 - [ELPAのPGPキー](#elpaのpgpキー)
+- [Ubuntu 1804にemacs27](#ubuntu-1804にemacs27)
 
 # sort & uniq
 
@@ -156,6 +157,7 @@ Pythonで元祖pyls使うなら
 - [https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html](https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html) - の一番下。
 
 
+
 # ELPAのPGPキー
 
 `M-x package-list-package`で
@@ -178,4 +180,22 @@ gpg --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
 参考:
 - [Cannot run melpa package refresh due to gpg errors - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/60554/cannot-run-melpa-package-refresh-due-to-gpg-errors)
 - [Emacs に yaml-mode をインストールできなかった。 - Qiita](https://qiita.com/ryo-sato/items/d42e301648175b41c522)
+
+
+# Ubuntu 1804にemacs27
+
+snapが簡単だが(`sudo snap install emacs`)
+そこそこデカいし、パス設定も面倒なので(/snap/bin)
+それ以外の方法。
+
+```sh
+sudo apt remove emacs emacs25 emacs25-nox
+sudo add-apt-repository ppa:kelleyk/emacs
+sudo apt update
+sudo apt install emacs27-nox
+```
+25を残しといて `sudo update-alternatives --config emacs`する手もあります。
+
+LSPのバージョンが変わるので
+`rm ~/.emacs.d/.lsp-session-v1`
 
