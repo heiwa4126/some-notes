@@ -11,6 +11,7 @@
 - [LSPモード](#lspモード)
   - [LSPモード TIPS](#lspモード-tips)
 - [コマンドの出力を自動スクロールする](#コマンドの出力を自動スクロールする)
+- [ELPAのPGPキー](#elpaのpgpキー)
 
 # sort & uniq
 
@@ -153,3 +154,28 @@ Pythonで元祖pyls使うなら
 
 - [How to make *Shell Command Output* buffer scroll to the end? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/50299/how-to-make-shell-command-output-buffer-scroll-to-the-end)
 - [https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html](https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html) - の一番下。
+
+
+# ELPAのPGPキー
+
+`M-x package-list-package`で
+
+```
+Failed to verify signature archive-contents.sig:
+No public key for 066DAFCB81E42C40 created at 2021-04-15T06:05:02+0900 using RSA
+```
+になるとき。
+
+正しい手順は以下の通り(2021-04頃)
+```sh
+mkdir ~/.emacs.d/elpa/gnupg -p --mode 0700
+echo "keyserver hkp://keys.gnupg.net" > ~/.emacs.d/elpa/gnupg/gpg.conf
+gpg --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
+```
+
+古いgpgだと`--receive-keys`オプションがないので`--recv-keys`
+
+参考:
+- [Cannot run melpa package refresh due to gpg errors - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/60554/cannot-run-melpa-package-refresh-due-to-gpg-errors)
+- [Emacs に yaml-mode をインストールできなかった。 - Qiita](https://qiita.com/ryo-sato/items/d42e301648175b41c522)
+
