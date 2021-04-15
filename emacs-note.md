@@ -9,6 +9,7 @@
 - [packageまわりtips](#packageまわりtips)
 - [help](#help)
 - [LSPモード](#lspモード)
+  - [LSPモード TIPS](#lspモード-tips)
 - [コマンドの出力を自動スクロールする](#コマンドの出力を自動スクロールする)
 
 # sort & uniq
@@ -108,6 +109,24 @@ C-h w command RET
 
 # LSPモード
 
+
+- [LSP Mode - Language Server Protocol support for Emacs - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/)
+
+各言語の設定は
+[Languages - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/page/languages/)
+から
+
+Pythonで元祖pyls使うなら
+- [Python (Palantir) - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/)
+- [GitHub - palantir/python-language-server: An implementation of the Language Server Protocol for Python](https://github.com/palantir/python-language-server)
+
+
+
+
+
+
+## LSPモード TIPS
+
 "main.go not in project or it is blacklisted"
 とか言われたら、
 
@@ -120,6 +139,10 @@ C-h w command RET
 どちらも`~/.emacs.d/.lsp-session-v1`に反映される。
 
 追加/削除したら、emacsを再起動。
+
+
+フォーマットは
+`M-x lsp-format-buffer`
 
 
 # コマンドの出力を自動スクロールする
