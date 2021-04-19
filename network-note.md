@@ -147,3 +147,21 @@ echo -e 'net.core.default_qdisc=fq\nnet.ipv4.tcp_congestion_control=bbr' > /etc/
 - [コラム - グーグルのクラウドを支えるテクノロジー | 第23回　パケットロスに基づかない新しい輻輳制御の仕組み ― BBR（後編）｜CTC教育サービス 研修/トレーニング](https://www.school.ctc-g.co.jp/columns/nakai2/nakai223.html)
 - [RHEL 8 における TCP BBR サポート](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/considerations_in_adopting_rhel_8/networking_considerations-in-adopting-rhel-8#tcp_bbr_networking)
 - [How to configure TCP BBR as the default congestion control algorithm? - Red Hat Customer Portal](https://access.redhat.com/solutions/3713681)
+
+
+# curlのテスト
+
+curlでネットのテストをするときに
+リダイレクトするサイトを使うと、
+bodyが少ないので、ちょっと楽。
+
+例)
+```
+$ curl https://google.com/
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="https://www.google.com/">here</A>.
+</BODY></HTML>
+```
