@@ -30,6 +30,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [ubuntuでIPAfont](#ubuntuでipafont)
 - [netplanでDHCPをrenewする](#netplanでdhcpをrenewする)
 - [friendly-recovery](#friendly-recovery)
+- [インストールされているパッケージの一覧](#インストールされているパッケージの一覧)
 
 # ホスト名の設定
 
@@ -440,3 +441,9 @@ Make recovery boot mode more user-friendly Make the recovery boot mode more user
 
 - [Ubuntu – パッケージのファイル一覧: friendly-recovery/xenial/all](https://packages.ubuntu.com/ja/xenial/all/friendly-recovery/filelist)
 - [FriendlyRecoverySpec - Ubuntu Wiki](https://wiki.ubuntu.com/FriendlyRecoverySpec)
+
+
+# インストールされているパッケージの一覧
+
+- `dpkg-query --list` or `dpkg -l` - フォーマットされてるのでスクリプトで扱いにくい(COLUMNS=999とかする)。早い。
+- `apt list` - 普通こっちか。
