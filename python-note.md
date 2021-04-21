@@ -34,6 +34,7 @@
 - [ubuntu20.04LTS以降でpythonをpython3にする](#ubuntu2004lts以降でpythonをpython3にする)
 - [Python Static Analysis Tools](#python-static-analysis-tools)
 - [emacsでLSPでpython](#emacsでlspでpython)
+- [bytesとbytearray](#bytesとbytearray)
 
 
 
@@ -780,3 +781,27 @@ emacsたちあげて
 他flycheckとかお好みで入れる。
 `pip3 install --user --upgrade pyflakes flake8`
 `M-x package-install[ret] flycheck-pyflakes[ret]`
+
+
+# bytesとbytearray
+
+- [bytes - 組み込み型 — Python 3.9.4 ドキュメント](https://docs.python.org/ja/3/library/stdtypes.html#bytes)
+- [bytearray - 組み込み型 — Python 3.9.4 ドキュメント](https://docs.python.org/ja/3/library/stdtypes.html#bytearray)
+
+> bytearray オブジェクトは可変なので、 bytes と bytearray の操作 で解説されている bytes オブジェクトと共通の操作に加えて、 mutable シーケンス操作もサポートしています。
+
+[ミュータブルなシーケンス型 - 組み込み型 — Python 3.9.4 ドキュメント](https://docs.python.org/ja/3/library/stdtypes.html#typesseq-mutable)
+
+例:
+```python
+b1 = b"b\x00\x01\x02"  # bytes
+b2 = bytearray(b1)     # bytearray
+
+print(b2)
+b2[1] = 0x11  # bytearrayはmutable
+print(b2)
+
+print(b1)
+b1[1] = 0x11  # raise TypeError: 'bytes' object does not support item assignment
+print(b1)
+```
