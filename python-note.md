@@ -35,6 +35,7 @@
 - [Python Static Analysis Tools](#python-static-analysis-tools)
 - [emacsでLSPでpython](#emacsでlspでpython)
 - [bytesとbytearray](#bytesとbytearray)
+- [vscodeでpylance使うときに](#vscodeでpylance使うときに)
 
 
 
@@ -805,3 +806,16 @@ print(b1)
 b1[1] = 0x11  # raise TypeError: 'bytes' object does not support item assignment
 print(b1)
 ```
+
+# vscodeでpylance使うときに
+
+settings.jsonに
+```json
+{
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic"
+}
+```
+
+表示されるルール一覧はここに
+[pylance-release/DIAGNOSTIC_SEVERITY_RULES.md at main · microsoft/pylance-release · GitHub](https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md)
