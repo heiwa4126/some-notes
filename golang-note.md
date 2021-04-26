@@ -38,6 +38,7 @@
 - [emacsでの環境](#emacsでの環境)
 - [go-mode](#go-mode)
 - [WindowsとLinuxでソースを分ける](#windowsとlinuxでソースを分ける)
+- [事前に型のわからないJSONを読む](#事前に型のわからないjsonを読む)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -1014,3 +1015,21 @@ emacsのgo-modeには`go test`とか実行するコマンドが無い。
 - build constraintsを使う
   -  `go help buildconstraint | less`参照 or [build - The Go Programming Language](https://golang.org/pkg/go/build/#hdr-Build_Constraints)
   -  [GoのBuild Constraintsに関するメモ - Qiita](https://qiita.com/hnw/items/7dd4d10e837158d6156a)
+
+
+# 事前に型のわからないJSONを読む
+
+普通は構造体にアノテーション使うけど、
+REST APIみたいに型が変わるものが帰ってくる場合など。
+
+- [JSONの処理 · Build web application with Golang](https://astaxie.gitbooks.io/build-web-application-with-golang/content/ja/07.2.html)
+- [JSON · Build web application with Golang](https://astaxie.gitbooks.io/build-web-application-with-golang/content/en/07.2.html) - "Parse to interface" の節
+- [bitly/go-simplejson: a Go package to interact with arbitrary JSON](https://github.com/bitly/go-simplejson)
+- [simplejson · pkg.go.dev](https://pkg.go.dev/github.com/bitly/go-simplejson)
+- [golang は ゆるふわに JSON を扱えまぁす! — KaoriYa](https://www.kaoriya.net/blog/2016/06/25/)
+- [koron/go-dproxy: dProxy - document proxy](https://github.com/koron/go-dproxy)
+- [mattn/go-jsonpointer](https://github.com/mattn/go-jsonpointer)
+
+
+そもそも違う構造体指定してもjson.Unmarshal()はエラーにならない。
+逆に、バリデーションしたい場合はどうすればいい?
