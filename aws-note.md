@@ -13,6 +13,7 @@ AWSのメモ
   - [欠点](#欠点)
 - [127.0.0.53](#1270053)
 - [「インスタンスの開始」と「インスタンスの起動」](#インスタンスの開始とインスタンスの起動)
+- [EC2Launch v2](#ec2launch-v2)
 
 
 # メタデータ
@@ -293,6 +294,7 @@ systemd-resolveとは何か?
 
 [AWS EC2 (Ubuntu) で DNS のスタブリゾルバ 127.0.0.53 と Amazon Provided DNS の関連を確認する - Qiita](https://qiita.com/nasuvitz/items/b67100028f7245ebe9b9)
 
+
 # 「インスタンスの開始」と「インスタンスの起動」
 
 EC2でよく間違えるやつ。「停止」と「終了」もよく間違える。
@@ -304,3 +306,99 @@ EC2でよく間違えるやつ。「停止」と「終了」もよく間違え�
 - 終了 - [terminate-instances — AWS CLI 2.1.33 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/terminate-instances.html)
 
 参考: [Amazon EC2 インスタンスの起動、一覧表示、および終了 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-services-ec2-instances.html)
+
+
+# EC2Launch v2
+
+[EC2Launch v2](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2.html)
+
+
+設定ファイルの場所: `C:\ProgramData\Amazon\EC2Launch\config`
+
+
+設定ファイルの例:
+```yaml
+version: 1.0
+config:
+  - stage: boot
+    tasks:
+      - task: extendRootPartition
+  - stage: preReady
+    tasks:
+      - task: activateWindows
+        inputs:
+          activation:
+            type: amazon
+      - task: setDnsSuffix
+        inputs:
+          suffixes:
+            - $REGION.ec2-utilities.amazonaws.com
+      - task: setAdminAccount
+        inputs:
+          password:
+            type: random
+      - task: setWallpaper
+        inputs:
+          path: C:\ProgramData\Amazon\EC2Launch\wallpaper\Ec2Wallpaper.jpg
+          attributes:
+            - hostName
+            - instanceId
+            - privateIpAddress
+            - publicIpAddress
+            - instanceSize
+            - availabilityZone
+            - architecture
+            - memory
+            - network
+  - stage: postReady
+    tasks:
+      - task: startSsm
+```
+
+
+[EC2Launch v2 の設定 \- Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2-settings.html)
+
+実際のGUIと↑のGUI画面がぜんぜん違う... v1のだ。
+
+v2の設定ツールの場所
+`C:\Program Files\Amazon\EC2Launch\settings\EC2LaunchSettings.exe`
+
+なんか様子がおかしかったら移行ツールを使う。
+[EC2Launch v2 に移行する \- Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2-migrate.html)
+
+v2の本体
+`C:\Program Files\Amazon\EC2Launch\EC2Launch.exe`
+
+Goで書いてあるらしい。サブコマンド式。パスは通っていない。
+
+```
+C:\Users\Administrator>"C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" help
+EC2Launch command line tool, providing commands like
+        sysprep <-logs> <-reboot/shutdown>
+        collect-logs
+
+Usage:
+  ec2launch [flags]
+  ec2launch [command]
+
+Available Commands:
+  collect-logs     Collect log files for EC2Launch
+  get-agent-config Print agent-config.yml content in selected format.
+  help             Help about any command
+  list-volumes     List volumes attached to this instance
+  reset            Reset agent state and optionally clean instance logs.
+  run              To run EC2Launch
+  status           Get the status of the EC2Launch service.
+  sysprep          Sysprep the instance to prepare it for imaging.
+  validate         Validate agent config file agent-config.yml
+  version          Get executable version
+  wallpaper        Set wallpaper command for EC2Launch
+
+Flags:
+  -h, --help   help for ec2launch
+
+Use "ec2launch [command] --help" for more information about a command.
+```
+
+ユーザコマンドを実行する例
+[EC2Launch v2 の設定 \- Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2-settings.html#ec2launch-v2-task-configuration)
