@@ -13,7 +13,9 @@ AWSのメモ
   - [欠点](#欠点)
 - [127.0.0.53](#1270053)
 - [「インスタンスの開始」と「インスタンスの起動」](#インスタンスの開始とインスタンスの起動)
+- [EC2インスタンスを停止するとどうなるか](#ec2インスタンスを停止するとどうなるか)
 - [EC2Launch v2](#ec2launch-v2)
+  - [EC2Launch TIPS](#ec2launch-tips)
 
 
 # メタデータ
@@ -308,14 +310,27 @@ EC2でよく間違えるやつ。「停止」と「終了」もよく間違え�
 参考: [Amazon EC2 インスタンスの起動、一覧表示、および終了 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-services-ec2-instances.html)
 
 
+# EC2インスタンスを停止するとどうなるか
+
+- [インスタンスの停止と起動 - Windows - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/Stop_Start.html#what-happens-stop)
+- [インスタンスの停止と起動 - Linux - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/Stop_Start.html#what-happens-stop)
+- [「EC2: インスタンスを停止」アクションによる停止はOSからシャットダウンしたときの動作と同じですか？ – 株式会社サーバーワークス サポートページ](https://support.serverworks.co.jp/hc/ja/articles/900004772883--EC2-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%92%E5%81%9C%E6%AD%A2-%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AB%E3%82%88%E3%82%8B%E5%81%9C%E6%AD%A2%E3%81%AFOS%E3%81%8B%E3%82%89%E3%82%B7%E3%83%A3%E3%83%83%E3%83%88%E3%83%80%E3%82%A6%E3%83%B3%E3%81%97%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AE%E5%8B%95%E4%BD%9C%E3%81%A8%E5%90%8C%E3%81%98%E3%81%A7%E3%81%99%E3%81%8B-)
+
+
+
 # EC2Launch v2
+
+Windows用cloud-init的ななにか。
 
 [EC2Launch v2](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2.html)
 
 
-設定ファイルの場所: `C:\ProgramData\Amazon\EC2Launch\config`
+- 設定ファイルの場所: `C:\ProgramData\Amazon\EC2Launch\config`
+- 設定ファイル: `agent-config.yml`
+- ログフォルダ: `C:\ProgramData\Amazon\EC2Launch\log`
+- v2の本体: `C:\Program Files\Amazon\EC2Launch\EC2Launch.exe`
+- v2の設定ツールの場所: `C:\Program Files\Amazon\EC2Launch\settings\EC2LaunchSettings.exe`
 
-設定ファイル: `agent-config.yml`
 
 設定ファイルの例:
 ```yaml
@@ -356,19 +371,12 @@ config:
       - task: startSsm
 ```
 
-
 [EC2Launch v2 の設定 \- Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2-settings.html)
 
 実際のGUIと↑のGUI画面がぜんぜん違う... v1のだ。
 
-v2の設定ツールの場所
-`C:\Program Files\Amazon\EC2Launch\settings\EC2LaunchSettings.exe`
-
 なんか様子がおかしかったら移行ツールを使う。
 [EC2Launch v2 に移行する \- Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2-migrate.html)
-
-v2の本体
-`C:\Program Files\Amazon\EC2Launch\EC2Launch.exe`
 
 Goで書いてあるらしい。サブコマンド式。パスは通っていない。
 
@@ -453,3 +461,19 @@ config:
         New-Item -Path 'C:\PowerShellTest.txt' -ItemType File
         Set-Content 'C:\PowerShellTest.txt' "hello world"
 ```
+
+## EC2Launch TIPS
+
+PowerShell使うとログファイル出力がUTF-8とUTF-16まじりになって死ねる。
+
+Powershellを実行すると
+`C:\ProgramData\Amazon\EC2Launch\log\agent.log`
+に、
+```
+2021-05-07 11:45:15 Info: Script file is created at: C:\Windows\TEMP\EC2Launch900411335\UserScript.ps1
+2021-05-07 11:45:15 Info: Error file is created at: C:\Windows\TEMP\EC2Launch900411335\err583552122.tmp
+2021-05-07 11:45:15 Info: Output file is created at: C:\Windows\TEMP\EC2Launch900411335\output399549329.tmp
+```
+みたいにファイルを作る。
+エラーがおきた場合、これらが消えないで残るので、
+これらを参照すること。これはよい設計。真似る。
