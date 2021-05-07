@@ -315,6 +315,7 @@ EC2でよく間違えるやつ。「停止」と「終了」もよく間違え�
 
 設定ファイルの場所: `C:\ProgramData\Amazon\EC2Launch\config`
 
+設定ファイル: `agent-config.yml`
 
 設定ファイルの例:
 ```yaml
@@ -402,3 +403,53 @@ Use "ec2launch [command] --help" for more information about a command.
 
 ユーザコマンドを実行する例
 [EC2Launch v2 の設定 \- Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2-settings.html#ec2launch-v2-task-configuration)
+
+ユーザコマンドを追加した設定ファイル (末尾参照)
+`C:\ProgramData\Amazon\EC2Launch\config\agent-config.yml`
+
+```yaml
+version: "1.0"
+config:
+- stage: boot
+  tasks:
+  - task: extendRootPartition
+- stage: preReady
+  tasks:
+  - task: activateWindows
+    inputs:
+      activation:
+        type: amazon
+  - task: setDnsSuffix
+    inputs:
+      suffixes:
+      - $REGION.ec2-utilities.amazonaws.com
+  - task: setAdminAccount
+    inputs:
+      password:
+        type: random
+  - task: setWallpaper
+    inputs:
+      path: C:\ProgramData\Amazon\EC2Launch\wallpaper\Ec2Wallpaper.jpg
+      attributes:
+      - hostName
+      - instanceId
+      - privateIpAddress
+      - publicIpAddress
+      - instanceSize
+      - availabilityZone
+      - architecture
+      - memory
+      - network
+- stage: postReady
+  tasks:
+  - task: startSsm
+  # example https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2-settings.html#ec2launch-v2-task-configuration
+  - task: executeScript
+    inputs:
+    - frequency: always
+      type: powershell
+      runAs: admin
+      content: |-
+        New-Item -Path 'C:\PowerShellTest.txt' -ItemType File
+        Set-Content 'C:\PowerShellTest.txt' "hello world"
+```
