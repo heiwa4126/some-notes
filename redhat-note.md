@@ -232,6 +232,14 @@ package-cleanup から oldkernelsオプションがなくなった。
 
 どうも自動で古いのが消えるみたいだが、いくつ残すか、など制御する方法が不明。
 
+[CentOS8 で古いカーネルを削除する \- らくがきちょう](https://sig9.hatenablog.com/entry/2019/09/30/000000)
+
+# yumのキャッシュを消す
+
+標準のキャッシュ(`/var/cache/yum/*`)を消す
+```sh
+yum clean packages
+```
 
 
 # パッケージが最新か確認する例
