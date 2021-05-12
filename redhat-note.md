@@ -241,9 +241,16 @@ package-cleanup から oldkernelsオプションがなくなった。
 yum clean packages
 ```
 
+# 依存パッケージを表示する
 
-# パッケージが最新か確認する例
+例)
+```
+rpm -q --whatrequires audit-libs
+```
 
+# パッケージが最新か確認する
+
+例)
 ```
 # yum --disableexcludes=all --showduplicates list openssh-server
 読み込んだプラグイン:langpacks, product-id, search-disabled-repos, subscription-manager
