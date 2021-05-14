@@ -78,6 +78,7 @@ ansibleメモランダム
 - [yumモジュールのstateのpresentとlatestの違い](#yumモジュールのstateのpresentとlatestの違い)
 - [quoteフィルタ](#quoteフィルタ)
 - [ansible-playbookの便利オプション](#ansible-playbookの便利オプション)
+- [デバッガ](#デバッガ)
 
 
 # ansibleの学習2021
@@ -1404,3 +1405,10 @@ Kerberosだとローカルアカウントには接続できないのに注意。
 - -C - don't make any changes; instead, try to predict some of the changes that may occur
 
 Cオプションは便利だけど、shell実行するとことかでは無力。
+
+
+# デバッガ
+
+普通のデバッガとはかなりちがうけど、一応ある。
+
+[Debugging tasks — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html)
