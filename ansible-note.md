@@ -79,6 +79,7 @@ ansibleメモランダム
 - [quoteフィルタ](#quoteフィルタ)
 - [ansible-playbookの便利オプション](#ansible-playbookの便利オプション)
 - [デバッガ](#デバッガ)
+- [varsの優先順序](#varsの優先順序)
 
 
 # ansibleの学習2021
@@ -1412,3 +1413,59 @@ Cオプションは便利だけど、shell実行するとことかでは無力�
 普通のデバッガとはかなりちがうけど、一応ある。
 
 [Debugging tasks — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html)
+
+
+# varsの優先順序
+
+[変数の優先度 - 変数の使用 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/playbooks_variables.html#ansible-variable-precedence)
+
+> 追加変数 `-e` は常に優先される
+
+[コマンドラインで変数を渡す - 変数の使用 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/playbooks_variables.html#passing-variables-on-the-command-line)
+
+`-e @xxxx`とすればxxxxはファイルとみなす。yamlかjsonが使える。
+
+
+よくある例: vars2.yml
+```yaml
+---
+- name: vars example 2
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    msg1: "world"
+
+  tasks:
+    - debug:
+        msg: "Hello, {{ msg1 }}!"
+```
+
+読みこむファイル: `vars2.json`
+```json
+{
+  "msg1": "こんにちは"
+}
+```
+
+```
+$ ap vars2.yml
+(略)
+TASK [debug] **********************************************************************************************************************************
+ok: [localhost] =>
+  msg: Hello, world!
+(略)
+
+$ ap vars2.yml -e msg1=goodbye
+TASK [debug] **********************************************************************************************************************************
+ok: [localhost] =>
+  msg: Hello, goodbye!
+
+$ ap vars2.yml -e "@vars2.json"
+TASK [debug] **********************************************************************************************************************************
+ok: [localhost] =>
+  msg: Hello, こんにちは!
+```
+
+playbook varsをデフォルト値として(roleのdefaultみたいな)、
+`-e`でオーバライド、みたいに使うのがいいかな。

@@ -107,6 +107,7 @@ ansible-galaxy collection install azure.azcollection
 
 - [azure.azcollection.azure_rm_virtualmachine – Manage Azure virtual machines — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_virtualmachine_module.html#azure-rm-virtualmachine-module) - VMを開始したり停止したりディアロケートしたり。
 
+
 # サンプルとチュートリアル
 
 [Azure 上の Ansible のドキュメント \- Ansible \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/)
