@@ -11,6 +11,7 @@
 - [Azureでの時刻同期](#azureでの時刻同期)
 - [hv-fcopy-daemon.service が fail](#hv-fcopy-daemonservice-が-fail)
 - [omsagentをとめる](#omsagentをとめる)
+- [Azureのスケーリング](#azureのスケーリング)
 
 # Azure CLI
 
@@ -105,7 +106,7 @@ hyper-vで同期する
 
 はずなのでntpdもchronyもいらないはず、だが、2本立てが推奨されている。
 
-``` 
+```
 lsmod | grep hv_utils
 ps -ef | grep hv
 ls /sys/class/ptp
@@ -117,7 +118,7 @@ PTPソースを使えるchronyで
 ```
 refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
 ```
-のように設定。 
+のように設定。
 
 設定してしばらく後
 ```
@@ -159,3 +160,19 @@ $ systemctl status hv-fcopy-daemon
 
 [Disable monitoring in Azure Monitor for VMs - Azure Monitor | Microsoft Docs](https://docs.microsoft.com/en-us/azure/azure-monitor/insights/vminsights-optout)
 
+
+
+# Azureのスケーリング
+
+- [Azure 仮想マシン スケール セットの概要 \- Azure Virtual Machine Scale Sets \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machine-scale-sets/overview)
+- [仮想マシン スケール セットを使用してスケーラブルなアプリケーションを構築する \- Learn \| Microsoft Docs](https://docs.microsoft.com/ja-jp/learn/modules/build-app-with-scale-sets/)
+
+- スケールアップ/ダウン(垂直スケーリング vertical scaling)
+- スケールアウト/イン(水平スケーリング horizontal scaling)
+
+の両方が出来る。
+
+- スケジュールスケーリング
+- 自動スケーリング
+
+も。
