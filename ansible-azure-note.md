@@ -5,6 +5,8 @@
 - [普通のホストで](#普通のホストで)
 - [よく使いそうなモジュールへのリンク](#よく使いそうなモジュールへのリンク)
 - [サンプルとチュートリアル](#サンプルとチュートリアル)
+- [azure.azcollection.azure_rm_networkinterface](#azureazcollectionazure_rm_networkinterface)
+- [azure.azcollection.azure_rm_virtualmachine](#azureazcollectionazure_rm_virtualmachine)
 
 
 # 参考リンク
@@ -78,7 +80,11 @@ ansible-galaxy collection install azure.azcollection
 
 
 次に「Azure 資格情報の作成」になるわけだけど
-(参考: [Azure 資格情報の作成 \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/install-on-linux-vm?tabs=ansible#create-azure-credentials))
+(参考:
+- [Azure 資格情報の作成 \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/install-on-linux-vm?tabs=ansible#create-azure-credentials)
+- [Sign in with the Azure CLI \| Microsoft Docs](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest)
+
+)
 `az login`
 で、使えるようになったので、このへん曖昧。あとで調査する。
 
@@ -115,3 +121,25 @@ ansible-galaxy collection install azure.azcollection
 
 - [GitHub \- microsoft/AnsibleLabs: Ansible on Azure Lab playbooks and documentation](https://github.com/microsoft/AnsibleLabs)のlab1
 - [GitHub \- Azure\-Samples/ansible\-playbooks: Ansible Playbook Samples for Azure](https://github.com/Azure-Samples/ansible-playbooks)
+
+
+# azure.azcollection.azure_rm_networkinterface
+
+[azure\.azcollection\.azure\_rm\_networkinterface – Manage Azure network interfaces — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_networkinterface_module.html)
+
+同じパラメータを指定してもchangedになる。
+
+retuenでetagが変わってるぐらいで理由がわからない。
+
+
+# azure.azcollection.azure_rm_virtualmachine
+
+[azure\.azcollection\.azure\_rm\_virtualmachine – Manage Azure virtual machines — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_virtualmachine_module.html)
+
+このモジュールで
+- VMの作成
+- VMの開始・終了・ディアロケート
+
+が出来るんだけど、
+デフォルトが `started: true` になってるので、
+VMが存在するときに、開始・終了・ディアロケートの状態を先に見てやらないと、冪等性が保てないのが辛い。
