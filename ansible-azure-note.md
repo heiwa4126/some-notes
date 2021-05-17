@@ -122,6 +122,9 @@ ansible-galaxy collection install azure.azcollection
 - [GitHub \- microsoft/AnsibleLabs: Ansible on Azure Lab playbooks and documentation](https://github.com/microsoft/AnsibleLabs)のlab1
 - [GitHub \- Azure\-Samples/ansible\-playbooks: Ansible Playbook Samples for Azure](https://github.com/Azure-Samples/ansible-playbooks)
 
+これとか面白そう:
+[チュートリアル \- Ansible を使用して Azure 内に仮想マシン スケール セットを構成する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/vm-scale-set-configure)
+
 
 # azure.azcollection.azure_rm_networkinterface
 
