@@ -125,6 +125,8 @@ ansible-galaxy collection install azure.azcollection
 これとか面白そう:
 [チュートリアル \- Ansible を使用して Azure 内に仮想マシン スケール セットを構成する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/vm-scale-set-configure)
 
+スケールセットがよくわからない場合は [仮想マシン スケール セットを使用してスケーラブルなアプリケーションを構築する \- Learn \| Microsoft Docs](https://docs.microsoft.com/ja-jp/learn/modules/build-app-with-scale-sets/)
+
 
 # azure.azcollection.azure_rm_networkinterface
 
