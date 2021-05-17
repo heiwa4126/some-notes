@@ -1,5 +1,15 @@
 # gitメモ
 
+- [gitメモ](#gitメモ)
+- [gitの設定をリスト](#gitの設定をリスト)
+- [symlinkの扱い](#symlinkの扱い)
+- [master to main](#master-to-main)
+- [登録されているリモートリポジトリの確認](#登録されているリモートリポジトリの確認)
+- [ubuntuで新しめのgitを使う](#ubuntuで新しめのgitを使う)
+- [git-secrets](#git-secrets)
+- [diffをgithubみたくする](#diffをgithubみたくする)
+
+
 # gitの設定をリスト
 
 ``` bash
@@ -132,3 +142,9 @@ git config --global init.templateDir ~/.git-templates/git-secrets
     プロジェクトに移動して、
     `git secrets --scan-history`
 )
+
+
+# diffをgithubみたくする
+
+- [unix \- ターミナルの diff で、github のように、行の中で具体的に差分がある部分に色付けをしたい \- スタック・オーバーフロー](https://ja.stackoverflow.com/questions/75829/%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%81%AE-diff-%E3%81%A7-github-%E3%81%AE%E3%82%88%E3%81%86%E3%81%AB-%E8%A1%8C%E3%81%AE%E4%B8%AD%E3%81%A7%E5%85%B7%E4%BD%93%E7%9A%84%E3%81%AB%E5%B7%AE%E5%88%86%E3%81%8C%E3%81%82%E3%82%8B%E9%83%A8%E5%88%86%E3%81%AB%E8%89%B2%E4%BB%98%E3%81%91%E3%82%92%E3%81%97%E3%81%9F%E3%81%84)
+- [gitのdiff\-highlightを使い始めた \- りんごとバナナとエンジニア](https://udomomo.hatenablog.com/entry/2019/12/01/181404)
