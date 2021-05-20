@@ -300,3 +300,4 @@ $ pwmake 56 | pwscore
 ```
 
 [第4章 ツールおよびサービスを使用したシステムのハードニング Red Hat Enterprise Linux 7 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/security_guide/chap-hardening_your_system_with_tools_and_services)
+[意外に複雑なLinuxのパスワード生成事情とパスワード生成方法 \- Qiita](https://qiita.com/yamada-hakase/items/7b4c8c662767f451edf7)
