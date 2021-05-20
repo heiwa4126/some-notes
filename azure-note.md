@@ -12,6 +12,7 @@
 - [hv-fcopy-daemon.service が fail](#hv-fcopy-daemonservice-が-fail)
 - [omsagentをとめる](#omsagentをとめる)
 - [Azureのスケーリング](#azureのスケーリング)
+- [AADでLinuxログイン](#aadでlinuxログイン)
 
 # Azure CLI
 
@@ -176,3 +177,11 @@ $ systemctl status hv-fcopy-daemon
 - 自動スケーリング
 
 も。
+
+# AADでLinuxログイン
+
+調べ中
+
+- [Linux ログインをAzureADで認証する！！](https://www.cloudou.net/azure-active-directory/aad009/) - 非sssd。まあAADは死なないと思うけど
+- [Ubuntu VM を Azure AD Domain Services に参加させる \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory-domain-services/join-ubuntu-linux-vm)
+

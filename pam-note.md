@@ -3,6 +3,8 @@
 
 > Red Hat Enterprise Linux 7 では、pam_pwquality PAM モジュールが pam_cracklib に置き換えられました。
 
+これ逆だ。
+
 引用元: [第4章 ツールおよびサービスを使用したシステムのハードニング Red Hat Enterprise Linux 7 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/security_guide/chap-hardening_your_system_with_tools_and_services)
 
 ```sh
@@ -73,6 +75,11 @@ includeについては
 - [Understanding PAM Authentication and Security](https://www.aplawrence.com/Basics/understandingpam.html)
 - [Configure and Use Linux\-PAM \- Like Geeks](https://likegeeks.com/linux-pam-easy-guide/)
 - [PAM \(Pluggable Authentication Modules\) \- Carpe Diem](https://christina04.hatenablog.com/entry/pluggable-authentication-module)
+- [Linux PAM \- Wikipedia](https://en.wikipedia.org/wiki/Linux_PAM)
+- [GitHub \- linux\-pam/linux\-pam: Linux PAM \(Pluggable Authentication Modules for Linux\) project](https://github.com/linux-pam/linux-pam)
+
+- [PAMを利用して認証を行う](https://www.atmarkit.co.jp/flinux/samba/sambatips02/sambatips02.html)
+  
 
 # /etc/pam.d/*
 
@@ -156,4 +163,120 @@ off by default.
 # PAM設定のデバッグ
 
 [Debugging PAM configuration \- Red Hat Customer Portal](https://access.redhat.com/articles/1314883)
+
+
+# man 8 pam_pwquality
+
+[pam\_pwquality\(8\) \- Linux man page](https://linux.die.net/man/8/pam_pwquality)
+
+(DeepLで翻訳して、ちょっとづつ修正)
+
+## 概要
+
+このモジュールは、あるサービスのパスワードスタックにプラグインして、パスワードの強度チェックをプラグインで提供することができます。このコードは元々 pam_cracklib モジュールをベースにしており、このモジュールはそのオプションとの下位互換性があります。
+
+このモジュールの動作は、ユーザにパスワードの入力を促し、システムの辞書と、不適切な選択を識別するためのルールのセットに対して、その強度をチェックすることです。
+
+最初のアクションは、1つのパスワードを入力させ、その強度をチェックし、強度が高いと判断された場合は、2回目のパスワード入力を促します（1回目に正しく入力されたかどうかを確認するためです）。問題がなければ、そのパスワードは後続のモジュールに渡され、新しい認証トークンとしてインストールされます。
+
+まず、Cracklibルーチンが呼び出され、パスワードが辞書に含まれているかどうかがチェックされます。これらのチェックは次のとおりです。
+
+### 回文
+新しいパスワードが回文であるか？
+
+### 大文字小文字の変更のみ
+新しいパスワードは、古いパスワードの大文字と小文字を変えただけのものか？
+
+### 類似
+新しいパスワードが古いパスワードに似すぎているか？
+これは主に1つの引数、difokによって制御されており、古いものと新しいものの間のいくつかの変更が新しいパスワードを受け入れるのに十分である。
+
+### 単純
+新しいパスワードが小さすぎませんか？
+これは5つの引数 minlen, dcredit, ucredit, lcredit, ocredit で制御されます。
+これらがどのように機能するのか、またデフォルト値については、引数のセクションを参照してください。
+
+### 回転
+新しいパスワードは古いパスワードを回転させたものですか？
+
+### 同じ連続した文字
+オプションで、同じ連続した文字をチェックします。
+
+### ユーザー名を含むか
+オプションで、パスワードに何らかの形でユーザー名が含まれているかどうかをチェックします。
+
+これらのチェックは、モジュールの引数を使用するか、`/etc/security/pwquality.conf` 設定ファイルを変更することで設定できます。
+
+## オプション
+
+### debug
+このオプションは、モジュールの動作を示す情報をsyslog(3)に書き込ませます（このオプションでは、ログファイルにパスワード情報は書き込まれません）。
+
+### authtok_type=XXX
+デフォルトの動作は、モジュールがパスワードを要求する際に以下のプロンプトを使用することです。
+"New UNIX password: " および "Retype UNIX password: "
+この例のUNIXという単語はこのオプションで置き換えることができ、デフォルトでは空になっています。
+
+### retry=N
+エラーで戻る前に、最大でN回、ユーザーにプロンプトを表示します。デフォルトは1です。
+
+### difok=N
+この引数は、古いパスワードと新しいパスワードの変更文字数をデフォルトの5から変更します。
+
+### minlen=N
+(この節ややこしいです。例えば単にminlen=8とか設定しただけでは最小パスワード長が8文字にはなりません)
+
+新しいパスワードの最小許容サイズ（デフォルトでクレジットが無効になっていない場合はプラス1）
+
+異なる種類の文字（それ以外の文字、英大文字、英小文字、英数字）ごとに長さ+1が与えられます。
+
+このパラメータのデフォルトは9です。
+
+なお、Cracklibにも長さ制限のペアがあります。
+「あまりにも短すぎる」として設定された制限は4で(これはハードコーディングされています)
+そしてコンパイル時に定義される制限(=6)は、
+minlenの設定と無関係にチェックされます。
+
+### dcredit=N
+
+(N >= 0の場合)
+この値は、新しいパスワードに含まれる英数字の最大値です。
+英数字がN文字以下の場合、各桁が現在のminlenの値を満たすために+1カウントされます。
+
+dcreditのデフォルトは1で、これはminlenが10以下の場合に推奨される値です。
+
+(N < 0の場合)
+新しいパスワードに必要な最小の英数字数です。
+
+
+# pam_pwquality の minlen,dcredit,ucredit,lcredit and ocredit の例
+
+文字種に関係なく、最小パスワード長10
+```
+lcredit=0 ucredit=0 dcredit=0 ocredit=0 minlen=10
+```
+
+文字種に関係なく
+数字が入っていれば最小パスワード長9、そうでなければ最小パスワード長10
+```
+lcredit=0 ucredit=0 dcredit=1 ocredit=0 minlen=10
+```
+
+
+
+
+参考:
+- [How to enforce password complexity on Linux \| Network World](https://www.networkworld.com/article/2726217/how-to-enforce-password-complexity-on-linux.html)
+- [LX139\-1\.pdf](https://www.neclearning.jp/sample_text/LX139-1.pdf)
+- [\[CentOS 7\] パスワードポリシーを設定する方法](https://mseeeen.msen.jp/how-to-set-password-policy-in-centos7/)
+
+パスワードの長さは
+`/etc/login.defs` の `PASS_MIN_LEN`
+でも制御される。
+
+こんなの間違いなく設定することができようとは思えない。
+[GitHub \- libpwquality/libpwquality: Password quality checking library](https://github.com/libpwquality/libpwquality)
+のpython bindとかないのか?
+
+python2.7用のパッケージはある。
 
