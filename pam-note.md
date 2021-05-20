@@ -280,3 +280,23 @@ lcredit=0 ucredit=0 dcredit=1 ocredit=0 minlen=10
 
 python2.7用のパッケージはある。
 
+libpwquality付属の
+`pwscore`が使えそうだが、
+設定が、`/etc/security/pwquality.conf` に固定だ。
+
+設定変えられるといいんだけど...
+
+オマケでパスワードを作る`pwmake`もlibpwquality付属
+(Ubuntuだと`apt install libpwquality-tools`)
+```
+$ rpm -ql libpwquality | grep bin/
+/usr/bin/pwmake
+/usr/bin/pwscore
+
+$ pwmake 128 | pwscore
+100
+$ pwmake 56 | pwscore
+67
+```
+
+[第4章 ツールおよびサービスを使用したシステムのハードニング Red Hat Enterprise Linux 7 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/security_guide/chap-hardening_your_system_with_tools_and_services)
