@@ -185,3 +185,4 @@ $ systemctl status hv-fcopy-daemon
 - [Linux ログインをAzureADで認証する！！](https://www.cloudou.net/azure-active-directory/aad009/) - 非sssd。まあAADは死なないと思うけど
 - [Ubuntu VM を Azure AD Domain Services に参加させる \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory-domain-services/join-ubuntu-linux-vm)
 
+公開鍵認証ができないみたい。
