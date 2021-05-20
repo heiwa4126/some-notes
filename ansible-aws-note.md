@@ -28,10 +28,10 @@ pip3 install --user -U requests
  match a supported version!
   RequestsDependencyWarning)
 
+`amazon.aws`と`community.aws`の2つがある。
 
-
+`ansible-galaxy collection install amazon.aws`
 `ansible-galaxy collection install community.aws`
-
 
 [How To Create A VPC In AWS using Ansible](https://www.infinitypp.com/ansible/create-vpc-ansible-aws/)
 
