@@ -191,8 +191,8 @@ $ systemctl status hv-fcopy-daemon
 
 # Azure AZ
 
-可用性セット（Availability Set）だけじゃなく、
-Availability Zonesが指定できるようになってた。
+可用性セット(Availability Set)だけじゃなく、
+可用性ゾーン(Availability Zones)が指定できるようになってた。
 
 - [ASCII\.jp：Azureに登場した「アベイラビリティ・ゾーン」とは](https://ascii.jp/elem/000/001/556/1556413/#:~:text=Azure%20AZ%E3%81%AF%E3%80%81IaaS%E3%81%AE,%E3%81%A8%E3%81%97%E3%81%A6%E8%A8%AD%E8%A8%88%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82)
 - [Availability Zones をサポートする Azure サービス \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/availability-zones/az-region)
