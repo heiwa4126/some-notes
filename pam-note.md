@@ -77,9 +77,9 @@ includeについては
 - [PAM \(Pluggable Authentication Modules\) \- Carpe Diem](https://christina04.hatenablog.com/entry/pluggable-authentication-module)
 - [Linux PAM \- Wikipedia](https://en.wikipedia.org/wiki/Linux_PAM)
 - [GitHub \- linux\-pam/linux\-pam: Linux PAM \(Pluggable Authentication Modules for Linux\) project](https://github.com/linux-pam/linux-pam)
-
+- [10\.2\. PAM 設定ファイルについて Red Hat Enterprise Linux 7 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/pam_configuration_files)
 - [PAMを利用して認証を行う](https://www.atmarkit.co.jp/flinux/samba/sambatips02/sambatips02.html)
-  
+
 
 # /etc/pam.d/*
 
@@ -106,7 +106,7 @@ service type control module-path module-arguments
 ```
 [4\.1\. Configuration file syntax](http://www.linux-pam.org/Linux-PAM-html/sag-configuration-file.html)
 
-- モジュールの目的 (PAM インターフェース) 
+- モジュールの目的 (PAM インターフェース)
 - a
 - モジュールの名前
 - モジュールの引数
@@ -156,8 +156,8 @@ authorization of the login session.
 still  asks  for the password so the following modules in the stack can use the use_authtok option.  This option is
 off by default.
 
-このモジュールは、/etc/passwd ファイルに存在しないユーザーのパスワード品質をテストしません。 
-モジュールはモジュールは依然としてパスワードを要求するので、スタック内の次のモジュールは use_authtok オプションを使うことができます。 
+このモジュールは、/etc/passwd ファイルに存在しないユーザーのパスワード品質をテストしません。
+モジュールはモジュールは依然としてパスワードを要求するので、スタック内の次のモジュールは use_authtok オプションを使うことができます。
 このオプションはデフォルトではオフになっています。
 
 # PAM設定のデバッグ
@@ -221,14 +221,18 @@ off by default.
 エラーで戻る前に、最大でN回、ユーザーにプロンプトを表示します。デフォルトは1です。
 
 ### difok=N
+
 この引数は、古いパスワードと新しいパスワードの変更文字数をデフォルトの5から変更します。
 
 ### minlen=N
-(この節ややこしいです。例えば単にminlen=8とか設定しただけでは最小パスワード長が8文字にはなりません)
 
-新しいパスワードの最小許容サイズ（デフォルトでクレジットが無効になっていない場合はプラス1）
+(注: この節ややこしいです。例えば単にminlen=8とか設定しただけでは最小パスワード長が8文字にはなりません。例を参照)
 
-異なる種類の文字（それ以外の文字、英大文字、英小文字、英数字）ごとに長さ+1が与えられます。
+新しいパスワードの最小許容サイズ。
+(「クレジット」が無効化されていない場合、この値に+1が最小許容サイズになります。デフォルトでは「クレジット」は無効化されていません。
+注:「クレジット」についてはこのあとdcreditなどで説明されます)
+
+異なる種類の文字（英大文字、英小文字、英数字、それ以外の文字）ごとに長さ+1が与えられます。
 
 このパラメータのデフォルトは9です。
 
@@ -237,16 +241,155 @@ off by default.
 そしてコンパイル時に定義される制限(=6)は、
 minlenの設定と無関係にチェックされます。
 
+
 ### dcredit=N
 
 (N >= 0の場合)
-この値は、新しいパスワードに含まれる英数字の最大値です。
-英数字がN文字以下の場合、各桁が現在のminlenの値を満たすために+1カウントされます。
+これは、新しいパスワードに数字が含まれている場合の最大クレジットです。
+
+英数字がN桁未満またはN桁の場合、各桁は現在のminlen値を満たすために+1としてカウントされます。
+(注:要は「
+英数字の数が
+0だったらクレジット0
+N以下だったらクレジットは英数字の数、
+N+1以上だったらクレジットはN、
+」ということらしい)
 
 dcreditのデフォルトは1で、これはminlenが10以下の場合に推奨される値です。
 
 (N < 0の場合)
 新しいパスワードに必要な最小の英数字数です。
+
+(注:たとえばdcredit=-2だったら最低でも2文字英数字が必要)
+
+### ucredit=N
+
+dcredit=Nの項参照。英大文字
+
+### lcredit=N
+
+dcredit=Nの項参照。英小文字
+
+### ocredit=N
+
+dcredit=Nの項参照。「英小文字、英大文字、数字」以外の文字
+
+### maxrepeat=N
+
+N個以上の同じ連続した文字を含むパスワードを拒否します。デフォルトは0で、このチェックが無効になっていることを意味します。
+
+### maxclassrepeat=N
+
+同じクラスの連続したN個以上の文字を含むパスワードを拒否します。デフォルトは0で、このチェックが無効になっていることを意味します。
+
+(注: クラスは英小文字、英大文字、数字、それ以外のあれです)
+
+### gecoscheck=N
+
+ゼロ以外の場合は、ユーザーのpasswd GECOSフィールドの3文字を超える個々の単語が新しいパスワードに含まれているかどうかを確認します。デフォルトは0で、このチェックが無効になっていることを意味します。
+
+(注: GECOSフィールドは`/etc/passwd`の5番目のカラムでユーザのフルネームなどを入れるのに使用します。要はユーザのフルネームに基づいたパスワードを拒否するかどうか、の設定)
+
+### badwords=<list of words>
+
+このスペースで区切られたリストから3文字以上の単語が個別に検索され、新しいパスワードでは禁止されます。デフォルトでは、このリストは空で、このチェックは無効になっています。
+
+(TODO: リストをダブルクォートで囲むとかそういうのが不明。単に並べるだけでいいのか確認すること)
+
+
+### enforce_for_root
+
+このモジュールは、パスワードを変更するユーザーが root であっても、チェックに失敗するとエラーを返します。このオプションはデフォルトではオフになっており、デフォルトではrootユーザはチェックに失敗したというメッセージだけが出力され、パスワードを変更することができます。
+
+(注: 逆に言うと、一般ユーザが自分のパスワードを変更する場合には、ポリシーチェックにひっかかるとエラーになってパスワード変更ができない、ということ)
+
+
+### use_authtok
+
+この引数は、ユーザーに新しいパスワードの入力を求めず、
+前にスタックされたpasswordモジュールによって提供されれたものを使用するように強制します。
+
+(注: pam_pwqualityのオプションではない。下の例参照)
+
+
+### dictpath=/path/to/dict
+
+cracklibで使う辞書ファイルのパス
+
+
+## 提供されるモジュールタイプ
+
+passwordモジュールタイプのみ提供されます。
+
+## 戻り値
+
+(注: `_pam_types.h`で定義されています)
+
+### PAM_SUCCESS
+新しいパスワードは、すべてのチェックをパスしました。
+
+### PAM_AUTHTOK_ERR
+新しいパスワードが入力されなかった、
+またはユーザー名が判別できない、
+または新しいパスワードが強度チェックに失敗した。
+
+### PAM_AUTHTOK_RECOVERY_ERR
+
+以前のパスワードが、スタックモジュールによって供給されなかったか、
+ユーザーから要求されなかった。
+
+最初のエラーは use_authtok が指定されている場合に発生します。
+
+### PAM_SERVICE_ERR
+
+内部エラーが起きた。
+
+## 例
+
+このモジュールの使用例として、[pam\_unix\(8\)](https://linux.die.net/man/8/pam_unix) のパスワードコンポーネントと組み合わせた場合を示します。
+
+```
+#
+# これらの行は、2つのパスワードタイプのモジュールをスタックします。
+# この例では、ユーザは強力なパスワードを入力する機会を3回与えられます。
+# use_authtokオプションは、pam_unixモジュールがパスワードの入力を
+# 求めないようにし、代わりにpam_pwqualityによって提供されたもの
+# を使用します。
+#
+passwd  password required       pam_pwquality.so retry=3
+passwd  password required       pam_unix.so use_authtok
+```
+
+もうひとつは（`/etc/pam.d/passwd`形式）は、md5パスワード暗号化を使用したい場合の例です:
+
+```
+#%PAM-1.0
+#
+# 最低でも14バイト長のパスワード (注: 誤訳でもtypoでもないです)
+# ただし英数字の場合は最大2の追加クレジット、
+# その他文字種の場合は最大2の追加クレジットがあり、
+# 新しいパスワードには古いパスワードに存在しない文字が
+# 少なくとも3バイトが必要です。
+#
+password  required pam_pwquality.so \
+               difok=3 minlen=15 dcredit= 2 ocredit=2
+password  required pam_unix.so use_authtok nullok md5
+```
+
+また、クレジットを使用したくない場合には、別の例があります。
+
+```
+#%PAM-1.0
+#
+# この設定では、ユーザーは最低8の長さで、
+# 少なくとも1桁の数字、1つの大文字、1つのその他の文字を含む
+# パスワードを選択する必要があります。
+#
+password  required pam_pwquality.so \
+               dcredit=-1 ucredit=-1 ocredit=-1 lcredit=0 minlen=8
+password  required pam_unix.so use_authtok nullok md5
+```
+
 
 
 # pam_pwquality の minlen,dcredit,ucredit,lcredit and ocredit の例
