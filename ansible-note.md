@@ -833,9 +833,19 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 暗号は実行時に展開される。キーは
 
 - ansible.confにvault_password_fileオプションで指定
-- 実行時にオプションで指定
+- 環境変数ANSIBLE_VAULT_PASSWORD_FILEで指定
+- 実行時にオプション`--vault-password-file`で指定
 
-これをgit管理パス以外に置けばいい。
+で、keyファイルをgit管理パス以外に置く。
+
+暗号はデフォルトでAES256らしいので、256bit(=32byte)の鍵があればいい。
+
+例)
+```sh
+mkdir -p ~/.config/ansible
+dd if=/dev/urandom of=~/.config/ansible/.ansible_vault bs=32 count=1
+```
+
 
 # ansible.conf
 
