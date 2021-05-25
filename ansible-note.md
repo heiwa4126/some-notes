@@ -132,6 +132,21 @@ ansible.comのトップページも
 3. ~/.local/binにPATHを通す
 4. `python3 -m pip install --user -U ansible "ansible-lint[community,yamllint]" pywinrm pexpect` する。
 
+(2021-05) ansible-core==2.12がpython3.8未満をサポートしなくなるので
+
+pthon 3.6の場合
+```sh
+PIP3="python3 -m pip"
+$PIP3 install --user -U pip setuptools wheel
+$PIP3 install --user -U 'ansible-core==2.11.*' ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
+```
+
+pthon 3.8以上の場合
+```sh
+PIP3="python3 -m pip"
+$PIP3 install --user -U pip setuptools wheel
+$PIP3 install --user -U ansible-core ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
+```
 
 ## RHEL7
 
