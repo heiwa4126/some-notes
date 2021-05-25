@@ -270,7 +270,20 @@ $AWS route53 change-resource-record-sets --hosted-zone-id $ZONE_TAG --change-bat
 
 いちおう手動で実行して、変なtypoとかないかを確認しておく。
 
-↑は[gistに置いたので](https://gist.githubusercontent.com/heiwa4126/57831f4a3607de798a116eea5ac49298/raw/4a0d84d96eaf7c8abf0759f4072b246fba727c52/r53register.sh)、←のURLをwgetかcurl -Oして、 chmod +x してください。
+↑は[gistに置いたので](https://gist.githubusercontent.com/heiwa4126/57831f4a3607de798a116eea5ac49298/raw/4a0d84d96eaf7c8abf0759f4072b246fba727c52/r53register.sh)、←のURLをwgetかcurl -Oして、
+`chmod +x` して
+`/var/lib/cloud/scripts/per-boot`においてください。
+
+こんな感じ
+```sh
+curl 'https://gist.githubusercontent.com/heiwa4126/57831f4a3607de798a116eea5ac49298/raw/4a0d84d96eaf7c8abf0759f4072b246fba727c52/r53register.sh' -O
+chmod +x r53register.sh
+sudo mv r53register.sh /var/lib/cloud/scripts/per-boot
+```
+テストは
+```sh
+/var/lib/cloud/scripts/per-boot/r53register.sh
+```
 
 EC2をpoweroffして、もういちど電源を入れる。
 IPが更新されていたらOK。
