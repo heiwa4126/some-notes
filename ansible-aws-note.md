@@ -6,9 +6,12 @@
 
 
 pythonは3.8以上おすすめ (2021-05)
+
+RHEL8だったら 
 ```sh
 sudo yum install python39 python39-setuptools python39-pip
 ```
+あと他のバージョンのpython3を消す。
 
 awscliがv1でper userに入ってたら
 ```
