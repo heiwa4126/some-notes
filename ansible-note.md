@@ -143,6 +143,15 @@ $PIP3 install --user -U pip setuptools
 $PIP3 install --user -U 'ansible-core=2.11.*' ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
 ```
 
+2.11.*だと紫色で
+> [DEPRECATION WARNING]: Ansible will require Python 3.8 or newer on the controller starting with Ansible 2.12. Current version: 3.6.9 (default,
+ Jan 26 2021, 15:33:00) [GCC 8.4.0]. This feature will be removed from ansible-core in version 2.12. Deprecation warnings can be disabled by
+setting deprecation_warnings=False in ansible.cfg.
+
+って言われるので、上にある通り`deprecation_warnings=False`って書くか(他のdeprecation警告も消えそうなのでおすすめしない)、
+`2.10.*`にするか。
+
+
 ## RHEL7
 
 ansibleパッケージは別レポジトリなので
