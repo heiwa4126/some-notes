@@ -151,6 +151,12 @@ setting deprecation_warnings=False in ansible.cfg.
 って言われるので、上にある通り`deprecation_warnings=False`って書くか(他のdeprecation警告も消えそうなのでおすすめしない)、
 `2.10.*`にするか。
 
+Ubuntu 18.04LTSだと公式のpython3.8+venvでいけた。
+
+[Ansible\-core 2\.12 — Ansible Core Documentation](https://docs.ansible.com/ansible-core/devel/roadmap/ROADMAP_2_12.html)
+- 2021-10-25 Release
+
+これまで↑にいろいろ準備する。
 
 ## RHEL7
 
