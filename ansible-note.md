@@ -133,6 +133,16 @@ ansible.comのトップページも
 4. `python3 -m pip install --user -U ansible "ansible-lint[community,yamllint]" pywinrm pexpect` する。
 
 
+(2021-05-24)
+ansible-core>=2.12ではPython 3.8以上必須らしいので
+Python 3.6から上げにくいホストでは(RHEL7など)
+こんなかんじで
+```sh
+export PIP3="python3 -m pip"
+$PIP3 install --user -U pip setuptools
+$PIP3 install --user -U 'ansible-core=2.11.*' ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
+```
+
 ## RHEL7
 
 ansibleパッケージは別レポジトリなので
@@ -402,6 +412,9 @@ ansible all -i hosts -m setup
 net_systemモジュールみたいのがほしい。
 
 # yaml2json
+
+(古い。yqを使うのが楽)
+
 
 混乱したらJSONに変換してみるとらくだと思う。
 pythonでワンライナーを書いてるひとがいたので(

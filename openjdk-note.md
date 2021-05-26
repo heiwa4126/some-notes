@@ -7,6 +7,7 @@
   - [Java8](#java8)
 - [Oracleの提供するOpenJDKのバイナリ](#oracleの提供するopenjdkのバイナリ)
 - [Oracle以外が配布するOpenJDKのバイナリ](#oracle以外が配布するopenjdkのバイナリ)
+  - [Microsoftによる配布](#microsoftによる配布)
   - [AdoptOpenJDKによる配布](#adoptopenjdkによる配布)
   - [Azul Systemsによる配布 (Zulu)](#azul-systemsによる配布-zulu)
   - [Red Hatによる配布](#red-hatによる配布)
@@ -144,6 +145,13 @@ Oracleのアカウントが必要(free)
 - [Javaのサポートについてのまとめ - Qiita](https://qiita.com/nowokay/items/edb5c5df4dbfc4a99ffb)
 - [Oracle JDK 8 の無償アップデート終了後の選択肢は何があるのか | そるでぶろぐ](https://devlog.arksystems.co.jp/2018/09/21/5953/)
 - [Oracle Java 更新版公開、ただしライセンス変更に注意。抵触する場合はOpenJDKへの移行を - 特に重要なセキュリティ欠陥・ウイルス情報](https://www.st.ryukoku.ac.jp/blog/vuln/01058)
+
+## Microsoftによる配布
+
+(2021-05)Windowsだったらもうこれでいいのでは。(JDK11)
+
+[Microsoft Build of OpenJDK](https://www.microsoft.com/openjdk)
+
 
 
 ## AdoptOpenJDKによる配布
