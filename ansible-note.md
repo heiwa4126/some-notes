@@ -80,6 +80,8 @@ ansibleメモランダム
 - [ansible-playbookの便利オプション](#ansible-playbookの便利オプション)
 - [デバッガ](#デバッガ)
 - [varsの優先順序](#varsの優先順序)
+- [トラブルシューティングいろいろ](#トラブルシューティングいろいろ)
+  - [requests](#requests)
 
 
 # ansibleの学習2021
@@ -151,11 +153,14 @@ $PIP3 install --user -U ansible-core ansible 'ansible-lint[community,yamllint]' 
 (2021-05-24)
 ansible-core>=2.12ではPython 3.8以上必須らしいので
 Python 3.6から上げにくいホストでは(RHEL7など)
-こんなかんじで
+いろいろあるけどこんなかんじでおおむねOK
 ```sh
 export PIP3="python3 -m pip"
-$PIP3 install --user -U pip setuptools
-$PIP3 install --user -U 'ansible-core=2.11.*' ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
+$PIP3 install --user -U pip
+hash -r
+$PIP3 install --user -U setuptools wheel
+$PIP3 install --user -U requests jinja2
+$PIP3 install --user -U 'ansible-core==2.11.*' ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
 ```
 
 2.11.*だと紫色で
@@ -1452,13 +1457,15 @@ Kerberosだとローカルアカウントには接続できないのに注意。
 
 # ansible-playbookの便利オプション
 
-- --syntax-check - perform a syntax check on the playbook, but do not execute it
-- --list-hosts - outputs a list of matching hosts; does not execute anything else
-- --list-tags - list all available tags
-- --list-tasks - list all tasks that would be executed
-- -C - don't make any changes; instead, try to predict some of the changes that may occur
+- --syntax-check - playbookのシンタックスチェックだけ。実行しない
+- --list-hosts - 対象になるホストのリストを出力して終わる
+- --list-tasks - 実行されるであろう全タスクをリスト
+- --list-tags - 全タグをリスト
+- --check (-C) - 変更はしないで、起こるかもしれない変化のいくつかを予測する
+- --diff (-D) - ファイルやテンプレートを変更したときに、それらのファイルの差分を表示。--checkと一緒に使うと効果的
 
-Cオプションは便利だけど、shell実行するとことかでは無力。
+`-C`オプションは便利だけど、shell実行するとことかでは無力。
+
 
 
 # デバッガ
@@ -1522,3 +1529,15 @@ ok: [localhost] =>
 
 playbook varsをデフォルト値として(roleのdefaultみたいな)、
 `-e`でオーバライド、みたいに使うのがいいかな。
+
+# トラブルシューティングいろいろ
+
+## requests
+
+> urllib3 (1.26.4) or chardet (3.0.4) doesn't match a supported version!
+
+みたいのが出たら、requestsを更新しましょう
+
+```sh
+pip3 install --user -U requests
+```
