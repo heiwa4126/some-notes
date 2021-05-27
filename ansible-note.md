@@ -148,6 +148,31 @@ $PIP3 install --user -U pip setuptools wheel
 $PIP3 install --user -U ansible-core ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
 ```
 
+(2021-05-24)
+ansible-core>=2.12ではPython 3.8以上必須らしいので
+Python 3.6から上げにくいホストでは(RHEL7など)
+こんなかんじで
+```sh
+export PIP3="python3 -m pip"
+$PIP3 install --user -U pip setuptools
+$PIP3 install --user -U 'ansible-core=2.11.*' ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
+```
+
+2.11.*だと紫色で
+> [DEPRECATION WARNING]: Ansible will require Python 3.8 or newer on the controller starting with Ansible 2.12. Current version: 3.6.9 (default,
+ Jan 26 2021, 15:33:00) [GCC 8.4.0]. This feature will be removed from ansible-core in version 2.12. Deprecation warnings can be disabled by
+setting deprecation_warnings=False in ansible.cfg.
+
+って言われるので、上にある通り`deprecation_warnings=False`って書くか(他のdeprecation警告も消えそうなのでおすすめしない)、
+`2.10.*`にするか。
+
+Ubuntu 18.04LTSだと公式のpython3.8+venvでいけた。
+
+[Ansible\-core 2\.12 — Ansible Core Documentation](https://docs.ansible.com/ansible-core/devel/roadmap/ROADMAP_2_12.html)
+- 2021-10-25 Release
+
+これまで↑にいろいろ準備する。
+
 ## RHEL7
 
 ansibleパッケージは別レポジトリなので
@@ -417,6 +442,9 @@ ansible all -i hosts -m setup
 net_systemモジュールみたいのがほしい。
 
 # yaml2json
+
+(古い。yqを使うのが楽)
+
 
 混乱したらJSONに変換してみるとらくだと思う。
 pythonでワンライナーを書いてるひとがいたので(
