@@ -896,6 +896,9 @@ dd if=/dev/urandom of=~/.config/ansible/.ansible_vault bs=32 count=1
 設定できる値の例(ansible 2.4)
 * [Configuration file — Ansible Documentation](https://docs.ansible.com/ansible/2.4/intro_configuration.html)
 
+デフォルトのansible.cfgはexamplesの下参照
+- [ansible/ansible\.cfg at devel · ansible/ansible](https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg)
+
 
 # 改行問題
 
