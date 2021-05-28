@@ -17,6 +17,7 @@
 - [どうしてもパスワード認証になってしまうホスト](#どうしてもパスワード認証になってしまうホスト)
 - [sshdのホストキーを作り直す](#sshdのホストキーを作り直す)
 - [private keyからpublic key](#private-keyからpublic-key)
+- [Putty Alternatives](#putty-alternatives)
 
 
 # sshdのconfigtest
@@ -97,6 +98,7 @@ PuttyにはProxyJumpはないのでProxyCommandで実現する
 
 * [SSH/多段接続/PuTTYのRemoteCommandを使う - yanor.net/wiki](http://yanor.net/wiki/?SSH/%E5%A4%9A%E6%AE%B5%E6%8E%A5%E7%B6%9A/PuTTY%E3%81%AERemoteCommand%E3%82%92%E4%BD%BF%E3%81%86)
 * [SSH/多段接続 - yanor.net/wiki](http://yanor.net/wiki/?SSH/%E5%A4%9A%E6%AE%B5%E6%8E%A5%E7%B6%9A)
+* [windows \- How to setup proxy jump with PuTTY \- Super User](https://superuser.com/questions/1448180/how-to-setup-proxy-jump-with-putty)
 
 
 # DynamicForward
@@ -317,3 +319,8 @@ RSAだと
 ssh-keygen -y -f ~/.ssh/id_rsa
 ```
 が出来る。他のアルゴリズムでは?
+
+
+# Putty Alternatives
+
+[Putty Alternatives for SSH/Telnet/HTTPS Client Transfers & Connections](https://www.ittsystems.com/putty-alternatives/)
