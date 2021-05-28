@@ -5,6 +5,13 @@
 [Ansible Galaxy](https://galaxy.ansible.com/community/aws)
 
 
+pythonは3.8以上おすすめ (2021-05)
+
+RHEL8だったら 
+```sh
+sudo yum install python39 python39-setuptools python39-pip
+```
+あと他のバージョンのpython3を消す。
 
 awscliがv1でper userに入ってたら
 ```
@@ -30,8 +37,10 @@ pip3 install --user -U requests
 
 `amazon.aws`と`community.aws`の2つがある。
 
-`ansible-galaxy collection install amazon.aws`
-`ansible-galaxy collection install community.aws`
+```sh
+ansible-galaxy collection install amazon.aws -f
+ansible-galaxy collection install community.aws -f
+```
 
 [How To Create A VPC In AWS using Ansible](https://www.infinitypp.com/ansible/create-vpc-ansible-aws/)
 
