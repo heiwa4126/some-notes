@@ -918,7 +918,7 @@ dd if=/dev/urandom of=~/.config/ansible/.ansible_vault bs=32 count=1
 
 デフォルトのansible.cfgはexamplesの下参照
 - [ansible/ansible\.cfg at devel · ansible/ansible](https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg)
-
+↑のraw をcurlでもってきておくと便利。
 
 # 改行問題
 
