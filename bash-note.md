@@ -20,6 +20,7 @@
 - [stderrをless](#stderrをless)
 - [xargsで入力が空の時エラーにしないオプションは](#xargsで入力が空の時エラーにしないオプションは)
 - [日付でソート](#日付でソート)
+- [bashのショートカットキー](#bashのショートカットキー)
 
 
 # 参考リンク
@@ -373,3 +374,11 @@ fgrep -h SomeWordToSearch /var/log/messages* | sort -k1M -k2n -k3
 [Sort logs by date field in bash](https://stackoverflow.com/questions/5242986/sort-logs-by-date-field-in-bash)
 
 降順にするのは `sort -k1Mr -k2nr -k3r` とするか、tacコマンドを使う。
+
+
+# bashのショートカットキー
+
+- [Readline Interaction \(Bash Reference Manual\)](https://www.gnu.org/software/bash/manual/html_node/Readline-Interaction.html)
+- [リードライン相互作用](https://runebook.dev/ja/docs/bash/readline-interaction) - 機械翻訳?
+
+cut & yank あるって知ってました? undoもあるよ。
