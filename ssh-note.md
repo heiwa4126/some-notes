@@ -18,6 +18,7 @@
 - [sshdのホストキーを作り直す](#sshdのホストキーを作り直す)
 - [private keyからpublic key](#private-keyからpublic-key)
 - [Putty Alternatives](#putty-alternatives)
+- [Windows の OpenSSH](#windows-の-openssh)
 
 
 # sshdのconfigtest
@@ -325,3 +326,13 @@ ssh-keygen -y -f ~/.ssh/id_rsa
 # Putty Alternatives
 
 [Putty Alternatives for SSH/Telnet/HTTPS Client Transfers & Connections](https://www.ittsystems.com/putty-alternatives/)
+
+
+# Windows の OpenSSH
+
+Windows 10 1803+ / Server 2016/2019 1803+ならMicrosoftがビルドしたOpenSSHが使える。
+
+- [OpenSSH をインストールする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_install_firstuse)
+- [Windows 用 OpenSSH キーの管理 \| Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_keymanagement)
+
+ssh-agentがサービスなのがちょっといや。
