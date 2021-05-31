@@ -19,6 +19,8 @@
 - [private keyからpublic key](#private-keyからpublic-key)
 - [Putty Alternatives](#putty-alternatives)
 - [Windows の OpenSSH](#windows-の-openssh)
+	- [やりなおし](#やりなおし)
+	- [欠点](#欠点)
 
 
 # sshdのconfigtest
@@ -330,9 +332,69 @@ ssh-keygen -y -f ~/.ssh/id_rsa
 
 # Windows の OpenSSH
 
-Windows 10 1803+ / Server 2016/2019 1803+ならMicrosoftがビルドしたOpenSSHが使える。
+Windows 10 1803+ / Server 2016/2019 1803+ならMicrosoftがビルドしたOpenSSHが使える。らしい。
 
 - [OpenSSH をインストールする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_install_firstuse)
 - [Windows 用 OpenSSH キーの管理 \| Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_keymanagement)
 
-ssh-agentがサービスなのがちょっといや。
+ssh-agentがサービスなのがちょっとイヤ。
+
+[Windows 用 OpenSSH キーの管理](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_keymanagement)
+に書いてある手順だと、いきなり
+```powershell
+Install-Module -Force OpenSSHUtils -Scope AllUsers
+```
+でエラーがでる。
+
+[PowerShell Gallery \| OpenSSHUtils 1\.0\.0\.1](https://www.powershellgallery.com/packages/OpenSSHUtils/1.0.0.1)
+なんか
+> The owner has unlisted this package. This could mean that the module is deprecated or shouldn't be used anymore.
+とか書いてある。だめじゃん。
+
+- [混沌を極めるWindowsのssh-agent事情 - Qiita](https://qiita.com/slotport/items/e1d5a5dbd3aa7c6a2a24)
+- [Windows10 で ssh\-agent のサービスを登録する \- Qiita](https://qiita.com/mizutoki79/items/074d11cf9bc82b87385f)
+
+どうも公式のドキュメントに従うとうまくいかないようだ。
+
+```
+c:> sc query | findstr "OpenSSH"
+DISPLAY_NAME: OpenSSH Authentication Agent
+```
+
+## やりなおし
+
+- [OpenSSH をインストールする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_install_firstuse)
+
+でsshをインストールする。ssh-agentのサービスも同時にインストールされるみたい。
+
+scコマンドでチェック。
+```
+c:\> sc query state= all | findstr "OpenSSH"
+DISPLAY_NAME: OpenSSH Authentication Agent
+```
+(allの前に空白が必要)
+
+services.mscかなにかで
+`OpenSSH Authentication Agent`が起動していることを確認する。
+
+`%USERPROFILE%\.ssh`に .sshの内容を置く。
+ここ以外に置くとパーミッションがすごくややこしい。
+
+で `ssh-add %USERPROFILE%\.ssh\id_rsa` してパスフレーズいれる。
+(`id_rsa`のところはアレンジ)
+
+エージェントにはいったキーは`ssh-add -l`で確認できる。
+
+であとはsshで接続。.ssh/configも書くと完璧。
+ちゃんとForwardAgentも動く。
+
+## 欠点
+
+cmd.exeでもpowershell.exeでもWindows Terminalでも
+xtermみたいには使えない。
+
+- middle clickでペーストができない
+- C-SPCもC-@も手前で喰われてemacsが使えない
+
+あとProxyJumpは使えない。 ProxyCommandではいけるらしい。
+`posix_spawn: no such file or directory proxyjump` で検索。
