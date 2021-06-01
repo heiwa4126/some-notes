@@ -20,6 +20,7 @@
 - [Putty Alternatives](#putty-alternatives)
 - [Windows の OpenSSH](#windows-の-openssh)
 	- [やりなおし](#やりなおし)
+	- [おどろいたこと](#おどろいたこと)
 	- [欠点](#欠点)
 
 
@@ -387,6 +388,13 @@ services.mscかなにかで
 
 であとはsshで接続。.ssh/configも書くと完璧。
 ちゃんとForwardAgentも動く。
+
+## おどろいたこと
+
+ssh-agent、再起動してもキーを覚えてる。
+
+削除するには `ssh-add -k {file}`。
+削除できない場合はいっぺん同じキーを追加してから削除(なんでや)。
 
 ## 欠点
 
