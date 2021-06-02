@@ -2,6 +2,7 @@
 
 - [gitメモ](#gitメモ)
 - [gitの設定をリスト](#gitの設定をリスト)
+- [gitignoreのデフォルト](#gitignoreのデフォルト)
 - [symlinkの扱い](#symlinkの扱い)
 - [master to main](#master-to-main)
 - [登録されているリモートリポジトリの確認](#登録されているリモートリポジトリの確認)
@@ -28,6 +29,20 @@ git config --local -l # local設定だけ
 の5通り。
 
 gitデフォルト値も出るといいなあ(好きな設定をつっこめるので、ちょっとむずかしい)
+
+# gitignoreのデフォルト
+
+`~/.config/git/ignore`
+
+- [Git \- gitignore Documentation](https://git-scm.com/docs/gitignore)
+- [~/\.gitignore\_global を指定するのをやめ、デフォルトの置き場に置こう](https://zenn.dev/qnighy/articles/1a756f2857dc20)
+
+```sh
+mkdir -p ~/.config/git/
+echo '*~' >> ~/.config/git/ignore
+```
+
+Windowsは? 調べる。
 
 
 # symlinkの扱い

@@ -80,6 +80,8 @@ ansibleメモランダム
 - [ansible-playbookの便利オプション](#ansible-playbookの便利オプション)
 - [デバッガ](#デバッガ)
 - [varsの優先順序](#varsの優先順序)
+- [トラブルシューティングいろいろ](#トラブルシューティングいろいろ)
+  - [requests](#requests)
 
 
 # ansibleの学習2021
@@ -132,6 +134,49 @@ ansible.comのトップページも
 3. ~/.local/binにPATHを通す
 4. `python3 -m pip install --user -U ansible "ansible-lint[community,yamllint]" pywinrm pexpect` する。
 
+(2021-05) ansible-core==2.12がpython3.8未満をサポートしなくなるので
+
+pthon 3.6の場合
+```sh
+PIP3="python3 -m pip"
+$PIP3 install --user -U pip setuptools wheel
+$PIP3 install --user -U 'ansible-core==2.11.*' ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
+```
+
+pthon 3.8以上の場合
+```sh
+PIP3="python3 -m pip"
+$PIP3 install --user -U pip setuptools wheel
+$PIP3 install --user -U ansible-core ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
+```
+
+(2021-05-24)
+ansible-core>=2.12ではPython 3.8以上必須らしいので
+Python 3.6から上げにくいホストでは(RHEL7など)
+いろいろあるけどこんなかんじでおおむねOK
+```sh
+export PIP3="python3 -m pip"
+$PIP3 install --user -U pip
+hash -r
+$PIP3 install --user -U setuptools wheel
+$PIP3 install --user -U requests jinja2
+$PIP3 install --user -U 'ansible-core==2.11.*' ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
+```
+
+2.11.*だと紫色で
+> [DEPRECATION WARNING]: Ansible will require Python 3.8 or newer on the controller starting with Ansible 2.12. Current version: 3.6.9 (default,
+ Jan 26 2021, 15:33:00) [GCC 8.4.0]. This feature will be removed from ansible-core in version 2.12. Deprecation warnings can be disabled by
+setting deprecation_warnings=False in ansible.cfg.
+
+って言われるので、上にある通り`deprecation_warnings=False`って書くか(他のdeprecation警告も消えそうなのでおすすめしない)、
+`2.10.*`にするか。
+
+Ubuntu 18.04LTSだと公式のpython3.8+venvでいけた。
+
+[Ansible\-core 2\.12 — Ansible Core Documentation](https://docs.ansible.com/ansible-core/devel/roadmap/ROADMAP_2_12.html)
+- 2021-10-25 Release
+
+これまで↑にいろいろ準備する。
 
 ## RHEL7
 
@@ -402,6 +447,9 @@ ansible all -i hosts -m setup
 net_systemモジュールみたいのがほしい。
 
 # yaml2json
+
+(古い。yqを使うのが楽)
+
 
 混乱したらJSONに変換してみるとらくだと思う。
 pythonでワンライナーを書いてるひとがいたので(
@@ -833,9 +881,19 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 暗号は実行時に展開される。キーは
 
 - ansible.confにvault_password_fileオプションで指定
-- 実行時にオプションで指定
+- 環境変数ANSIBLE_VAULT_PASSWORD_FILEで指定
+- 実行時にオプション`--vault-password-file`で指定
 
-これをgit管理パス以外に置けばいい。
+で、keyファイルをgit管理パス以外に置く。
+
+暗号はデフォルトでAES256らしいので、256bit(=32byte)の鍵があればいい。
+
+例)
+```sh
+mkdir -p ~/.config/ansible
+dd if=/dev/urandom of=~/.config/ansible/.ansible_vault bs=32 count=1
+```
+
 
 # ansible.conf
 
@@ -858,6 +916,9 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 設定できる値の例(ansible 2.4)
 * [Configuration file — Ansible Documentation](https://docs.ansible.com/ansible/2.4/intro_configuration.html)
 
+デフォルトのansible.cfgはexamplesの下参照
+- [ansible/ansible\.cfg at devel · ansible/ansible](https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg)
+↑のraw をcurlでもってきておくと便利。
 
 # 改行問題
 
@@ -1399,13 +1460,15 @@ Kerberosだとローカルアカウントには接続できないのに注意。
 
 # ansible-playbookの便利オプション
 
-- --syntax-check - perform a syntax check on the playbook, but do not execute it
-- --list-hosts - outputs a list of matching hosts; does not execute anything else
-- --list-tags - list all available tags
-- --list-tasks - list all tasks that would be executed
-- -C - don't make any changes; instead, try to predict some of the changes that may occur
+- --syntax-check - playbookのシンタックスチェックだけ。実行しない
+- --list-hosts - 対象になるホストのリストを出力して終わる
+- --list-tasks - 実行されるであろう全タスクをリスト
+- --list-tags - 全タグをリスト
+- --check (-C) - 変更はしないで、起こるかもしれない変化のいくつかを予測する
+- --diff (-D) - ファイルやテンプレートを変更したときに、それらのファイルの差分を表示。--checkと一緒に使うと効果的
 
-Cオプションは便利だけど、shell実行するとことかでは無力。
+`-C`オプションは便利だけど、shell実行するとことかでは無力。
+
 
 
 # デバッガ
@@ -1469,3 +1532,15 @@ ok: [localhost] =>
 
 playbook varsをデフォルト値として(roleのdefaultみたいな)、
 `-e`でオーバライド、みたいに使うのがいいかな。
+
+# トラブルシューティングいろいろ
+
+## requests
+
+> urllib3 (1.26.4) or chardet (3.0.4) doesn't match a supported version!
+
+みたいのが出たら、requestsを更新しましょう
+
+```sh
+pip3 install --user -U requests
+```

@@ -234,6 +234,14 @@ package-cleanup から oldkernelsオプションがなくなった。
 
 [CentOS8 で古いカーネルを削除する \- らくがきちょう](https://sig9.hatenablog.com/entry/2019/09/30/000000)
 
+これだ
+[How to properly remove old kernels RHEL/CentOS 8 | GoLinuxCloud](https://www.golinuxcloud.com/remove-old-kernels-rhel-centos-8/)
+
+```
+# grep limit /etc/dnf/dnf.conf
+installonly_limit=3
+```
+
 # yumのキャッシュを消す
 
 標準のキャッシュ(`/var/cache/yum/*`)を消す

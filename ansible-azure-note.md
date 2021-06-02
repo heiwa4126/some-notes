@@ -69,7 +69,7 @@ ansible-lint==5.0.4
 
 ```sh
 curl -O https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt
-$PIP3 install --user -U -r requirements-azure.txt
+pip3 install --user -U -r requirements-azure.txt
 rm requirements-azure.txt
 ansible-galaxy collection install azure.azcollection
 ```
