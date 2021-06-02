@@ -38,3 +38,39 @@ pip3 install --user -U requests
 どうもVPCとサブネットの関係がわかってないことに気がついた。
 [VPC とサブネット \- Amazon Virtual Private Cloud](https://docs.aws.amazon.com/ja_jp/vpc/latest/userguide/VPC_Subnets.html)
 VPCがCIDR複数持てるし。
+
+
+# amazon.aws.ec2
+
+`exact_count`
+で指定した数だけインスタンスが立つようにする。
+
+インスタンスの同一性は
+`count_tag`
+で指定したタグの一致で見る。
+
+`instance_tags`
+は、ほかの`tags:`と同じ。
+
+例えば
+```yaml
+        instance_tags:
+          Name: "test1"
+          Owner: "{{ owner }}"
+        count_tag:
+          Name: "test1"
+        exact_count: 2
+```
+
+Name = test1というタグのついたインスタンスがすでに2つあれば何もしない。
+
+
+- [amazon\.aws\.ec2 – create, terminate, start or stop an instance in ec2 — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/amazon/aws/ec2_module.html)
+- [AnsibleによるEC2インスタンスの構築 \| DevelopersIO](https://dev.classmethod.jp/articles/ec2_using_ansible/#toc-4)
+
+
+
+タグの一致以外にタグの存在も条件に指定できる。参考:
+[instances with tags foo & bar & baz=bang](https://docs.ansible.com/ansible/latest/collections/amazon/aws/ec2_module.html#examples)
+
+
