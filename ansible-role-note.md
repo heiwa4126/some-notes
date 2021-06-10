@@ -12,6 +12,8 @@ ansibleのroleのメモ
 
 ```sh
 ansible-galaxy init sample1
+# or
+ansible-galaxy role init sample1
 ```
 
 カレントディレクトリにこんな感じに生成される
