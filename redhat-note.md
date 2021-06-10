@@ -1089,3 +1089,29 @@ find /var/cache/yum -type f -name \*.rpm
 find /var/cache/yum -type d
 ```
 で見れる。
+
+# errata
+
+erattaの一覧: [Red Hat Product Errata - Red Hat Customer Portal](https://access.redhat.com/errata/)
+
+RHNのアカウント不要
+
+フィルタリングができるので、例えばRHEL6 ELSのやつなら
+[こんな感じ](https://access.redhat.com/errata/#/?q=&p=1&sort=portal_publication_date%20desc&rows=10&portal_product=Red%20Hat%20Enterprise%20Linux&portal_product_variant=Red%20Hat%20Enterprise%20Linux%20Server%20-%20Extended%20Life%20Cycle%20Support&portal_product_version=6&portal_architecture=x86_64)で。
+
+
+# ELSの設定
+
+アタッチの仕方: [How to attach "Red Hat Enterprise Linux Extended Life Cycle Support " subscription to RHEL6 systems registered to Subscription Management \- Red Hat Customer Portal](https://access.redhat.com/solutions/2941791) (要RHNアカウント)
+
+ELSをvirt-who用に大量に買う、なんてこともあるかもしれない。
+ライセンスは2種類ある。
+
+- Red Hat Enterprise Linux Extended Life Cycle Support (Physical or Virtual Nodes) - SKU : RH00270
+- Red Hat Enterprise Linux Extended Life Cycle Support (Unlimited Guests) - SKU : RH00271
+
+ELSレポジトリは自動で有効にならないらしい(RHEL6だけ?)
+```sh
+subscription-manager repos --enable=rhel-6-server-els-rpms
+```
+とかする。
