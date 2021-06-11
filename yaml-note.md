@@ -9,6 +9,7 @@ YAML関連メモ
 - [yq](#yq)
 - [構造化データ(structured data)](#構造化データstructured-data)
 - [YAMLの先進的記述](#yamlの先進的記述)
+- [汎用YAML lint](#汎用yaml-lint)
 
 # リンク
 
@@ -122,3 +123,12 @@ XML,YAML,JSONなどのデータ構造をそう呼ぶみたいだけど、厳密�
 
 see
 [Advanced_components - YAML - Wikipedia](https://en.wikipedia.org/wiki/YAML#Advanced_components)
+
+
+# 汎用YAML lint
+
+[GitHub - adrienverge/yamllint: A linter for YAML files.](https://github.com/adrienverge/yamllint)
+
+```sh
+pip install --user -U yamllint
+```
