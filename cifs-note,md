@@ -1,0 +1,12 @@
+たまにしかつかわないCIFS
+
+```sh
+yum install samba-client cifs-util -y
+# いちばんかんたんなパターン.
+mkdir /mnt/unkan
+mount.cifs -o "username=bakabaka,password=ahoaho" //111.222.333.444/e$ /mnt/unkan
+# 埋め込みやばいのでクレデンシャルファイルにする
+mount.cifs -o uid=1001,credentials=/etc/credentials/unkan //111.222.333.444/e$ /mnt/unkan
+# systemdのオートマウントにする
+
+```
