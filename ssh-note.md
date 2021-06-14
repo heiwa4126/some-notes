@@ -10,6 +10,7 @@
 - [ProxyJump](#proxyjump)
 - [DynamicForward](#dynamicforward)
 - [LocalForward](#localforward)
+	- [実験](#実験)
 - [ControlPersist](#controlpersist)
 - [各ディストリのsshd_configのCiphersのデフォルト値](#各ディストリのsshd_configのciphersのデフォルト値)
 - [sshの接続でどんなcipherが使われるか確認](#sshの接続でどんなcipherが使われるか確認)
@@ -131,8 +132,43 @@ ssh xxx.example.com -L 8080:127.0.0.1:8080 -g -N -f
 みたいの。-Lは複数使えることなど。
 ssh_configにはどう書くのか. RemoteForward など
 
+> ssh (SSH サーバのアドレス) -L (ローカルで使用するポート):(目的サーバのアドレス):(目的サーバで待ち受けてるポート番号)
+> ssh (SSH サーバのアドレス) -R (ローカルで待ち受けてるポート):(SSH サーバのアドレス):(SSH サーバで待ち受けるポート番号)
+
 * [楽しいトンネルの掘り方(オプション: -L, -R, -f, -N -g) — 京大マイコンクラブ (KMC)](https://www.kmc.gr.jp/advent-calendar/ssh/2013/12/09/tunnel2.html)
 * [.ssh/config ファイルによるSSHオプション - HEPtech](https://heptech.wpblog.jp/2017/08/10/ssh-options-in-config-file/)
+
+
+## 実験
+
+前提:
+- sa1とsa2というサーバ。どちらもssh(22/tcp), httpd(80/tcp)が動いている。
+
+sa2からsa1へssh接続して、
+sa2の28080/tcpをsa1の80/tcpにする。
+(正ssh tunneling)
+```sh
+# sa2で実行
+ssh sa1 -L 28080:127.0.0.1:80 -g -N -f
+ss -tapn | grep 28080
+curl http://127.0.0.1:28080/
+pkill -f 'ssh sa1 -L'
+```
+
+sa2からsa1へssh接続して、
+sa1の28080/tcpをsa2の80/tcpにする。
+(逆ssh tunneling)
+```sh
+# sa2で実行
+ssh sa1 -R 28080:127.0.0.1:80 -g -N -f
+# sa1で実行
+ss -tapn | grep 28080
+curl http://127.0.0.1:28080/
+# sa2で実行
+pkill -f 'ssh sa1 -R'
+```
+> ssh (SSH サーバのアドレス) -R (ローカルで待ち受けてるポート):(SSH サーバのアドレス):(SSH サーバで待ち受けるポート番号)
+
 
 
 # ControlPersist
