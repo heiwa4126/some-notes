@@ -773,8 +773,9 @@ gpg --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
 
 ;; python LSP mode
 (add-hook 'python-mode-hook #'lsp)
+(add-hook 'before-save-hook 'lsp-format-buffer)
 ```
-重要なのは最後の2行だけ。
+重要なのは最後の3行だけ。
 
 
 emacsたちあげて
