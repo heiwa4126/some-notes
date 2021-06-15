@@ -1,4 +1,4 @@
-AzureでRHEL7のメモ 
+AzureでRHEL7のメモ
 
 時代は変わる。
 
@@ -6,6 +6,7 @@ AzureでRHEL7のメモ
   - [拡張](#拡張)
 - [chronyでPTPクロックソース](#chronyでptpクロックソース)
 - [Azureのパスワード](#azureのパスワード)
+- [マシンイメージが古くてyum updateで証明書が古い、って言われるとき](#マシンイメージが古くてyum-updateで証明書が古いって言われるとき)
 
 
 # 最近の状況 - GPTでLVMでxfsで
@@ -153,3 +154,31 @@ $ sudo grep root /etc/shadow
 root:*LOCK*:14600::::::
 ```
 lockのままにしとくべき(作業ユーザでsudo)。
+
+
+# マシンイメージが古くてyum updateで証明書が古い、って言われるとき
+
+こんな場合
+```
+# yum update
+Loaded plugins: langpacks, product-id, search-disabled-repos
+rhui-microsoft-azure-rhel7                                                                       | 2.1 kB  00:00:00
+https://rhui-1.microsoft.com/pulp/repos//content/dist/rhel/rhui/server/7/7Server/x86_64/dotnet/1/debug/repodata/repomd.x
+ml: [Errno 14] curl#58 - "SSL peer rejected your certificate as expired."
+Trying other mirror.
+https://rhui-2.microsoft.com/pulp/repos//content/dist/rhel/rhui/server/7/7Server/x86_64/dotnet/1/debug/repodata/repomd.x
+ml: [Errno 14] curl#58 - "SSL peer rejected your certificate as expired."
+Trying other mirror.
+https://rhui-3.microsoft.com/pulp/repos//content/dist/rhel/rhui/server/7/7Server/x86_64/dotnet/1/debug/repodata/repomd.x
+ml: [Errno 14] curl#58 - "SSL peer rejected your certificate as expired."
+Trying other mirror.
+```
+
+こうする。
+```sh
+sudo yum update -y --disablerepo='*' --enablerepo='*microsoft*'
+```
+- [Azure RedHat vm yum update fails with "SSL peer rejected your certificate as expired\." \- Stack Overflow](https://stackoverflow.com/questions/53436443/azure-redhat-vm-yum-update-fails-with-ssl-peer-rejected-your-certificate-as-exp)
+- [Update expired RHUI client certificate on a VM](https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/redhat/redhat-rhui#update-expired-rhui-client-certificate-on-a-vm)
+
+このページいいね: [Red Hat Update Infrastructure \- Azure Virtual Machines \| Microsoft Docs](https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/redhat/redhat-rhui#update-expired-rhui-client-certificate-on-a-vm)
