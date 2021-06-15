@@ -16,6 +16,7 @@
 - 一例として - [Install GNU Emacs for Linux using the Snap Store | Snapcraft](https://snapcraft.io/emacs)
 - [Snappy - Wikipedia](https://ja.wikipedia.org/wiki/Snappy)
 - [Snappy (package manager) - Wikipedia](https://en.wikipedia.org/wiki/Snappy_(package_manager))
+- [snapcore/snapd: The snapd and snap tools enable systems to work with \.snap files\.](https://github.com/snapcore/snapd)
 
 
 # proxy

@@ -704,7 +704,7 @@ pyre
 emacs >= 26.1 で。
 これより低かったら、いろいろ悩むよりは
 snapでemacs 27がかんたんにインストールできるので、そっちを使う。
-`sudo snap install emacs`
+`sudo snap install emacs --classic`
 
 pythonのLSP、
 [Languages - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/page/languages/)
@@ -715,12 +715,17 @@ pythonのLSP、
 
 
 自分はフォーマッタはblackが楽で好きなので
-```
+```sh
 pip3 install --user -U 'python-language-server[all]' black pyls-black
 hash -r
 ```
 
 `~/.local/bin/pyls`ができて、パスが通ってることを確認(`which pyls`とかで)。
+
+pylsは古い、って言われるようになった。
+```sh
+pip3 install --user -U python-lsp-server python-lsp-black
+```
 
 emacsの設定は`~/.emacs.d`式で。
 
