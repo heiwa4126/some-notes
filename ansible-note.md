@@ -83,6 +83,7 @@ ansibleメモランダム
 - [トラブルシューティングいろいろ](#トラブルシューティングいろいろ)
   - [requests](#requests)
 - [インストール済みのモジュールの一覧を表示する](#インストール済みのモジュールの一覧を表示する)
+- [ansible.windows.win_package用のproduct_idを探す。](#ansiblewindowswin_package用のproduct_idを探す)
 
 
 # ansibleの学習2021
@@ -1557,3 +1558,22 @@ ansible-doc -l
 ```sh
 ansible-doc yum
 ```
+
+# ansible.windows.win_package用のproduct_idを探す。
+
+まとめるとこんなかんじ。要管理者権限
+```powershell
+$a = Get-ChildItem -Path(
+  'HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
+  'HKLM:SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall',
+  'HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall'
+)|
+?{$_.PSChildName -like '{*' -and $_.PSChildName -like '*}'}|
+%{[PSCustomObject]@{"id"=$_.PSChildName.ToUpper();"Name"=($_|Get-ItemProperty).DisplayName}}|
+Sort-Object -Property Name
+$a
+$a|Export-Csv -NoTypeInformation -Encoding default -Path test1.csv
+```
+
+これで見つからなければ、コンパネに表示されるプロダクト名はDisplayNameとして保存されてるので、
+regeditで検索。おなじ場所にUninstallStringという名前で削除方法が書かれてる。
