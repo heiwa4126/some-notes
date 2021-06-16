@@ -13,6 +13,7 @@
 - [コマンドの出力を自動スクロールする](#コマンドの出力を自動スクロールする)
 - [ELPAのPGPキー](#elpaのpgpキー)
 - [Ubuntu 1804にemacs27](#ubuntu-1804にemacs27)
+- [コンソールからペーストするときインデントさせない](#コンソールからペーストするときインデントさせない)
 - [git以下でバックアップファイルができない](#git以下でバックアップファイルができない)
 
 # sort & uniq
@@ -199,6 +200,16 @@ sudo apt install emacs27-nox
 
 LSPのバージョンが変わるので
 `rm ~/.emacs.d/.lsp-session-v1`
+
+
+# コンソールからペーストするときインデントさせない
+
+[Any Emacs command like paste\-mode in vim? \- Stack Overflow](https://stackoverflow.com/questions/986592/any-emacs-command-like-paste-mode-in-vim)
+
+```
+M-x electric-indent-mode RET
+```
+呼ぶたびにON/OFFする。
 
 
 # git以下でバックアップファイルができない
