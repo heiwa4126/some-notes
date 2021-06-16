@@ -13,6 +13,7 @@
 - [コマンドの出力を自動スクロールする](#コマンドの出力を自動スクロールする)
 - [ELPAのPGPキー](#elpaのpgpキー)
 - [Ubuntu 1804にemacs27](#ubuntu-1804にemacs27)
+- [git以下でバックアップファイルができない](#git以下でバックアップファイルができない)
 
 # sort & uniq
 
@@ -199,3 +200,28 @@ sudo apt install emacs27-nox
 LSPのバージョンが変わるので
 `rm ~/.emacs.d/.lsp-session-v1`
 
+
+# git以下でバックアップファイルができない
+
+version controlあると`*~`ができない。まあ好き好きだろうけど。
+
+```lisp
+(setq vc-make-backup-files t)
+```
+でバックアップファイル
+
+- [emacs does not backup files in git repo](https://stackoverflow.com/questions/56915816/emacs-does-not-backup-files-in-git-repo)
+- [vc\-make\-backup\-file](https://ayatakesi.github.io/emacs/24.5/Backup.html)
+
+履歴とかも含めて、init.elにはこうしてみた(ほぼコピペ)。
+```lisp
+(setq
+ backup-by-copying t      ; don't clobber symlinks
+ backup-directory-alist
+ '(("." . "~/.emacs.d/backups/"))       ; don't litter my fs tree
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t                      ; use versioned backups
+ vc-make-backup-files t                 ; we need backup files under version control
+```
