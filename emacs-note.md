@@ -224,4 +224,5 @@ version controlあると`*~`ができない。まあ好き好きだろうけど�
  kept-old-versions 2
  version-control t                      ; use versioned backups
  vc-make-backup-files t                 ; we need backup files under version control
+)
 ```
