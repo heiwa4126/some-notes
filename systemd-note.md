@@ -17,6 +17,7 @@
 - [systemdのユーザーモード](#systemdのユーザーモード)
 - [.serviceファイルを書く](#serviceファイルを書く)
 - [override.confの自動化](#overrideconfの自動化)
+- [systemctl --failed](#systemctl---failed)
 
 # systemctl list-dependencies
 
@@ -417,3 +418,27 @@ echo -e '[Service]\n# Override location of database directory\nEnvironment=PGDAT
 参考:
 - [pipe input into systemctl edit / System Administration / Arch Linux Forums](https://bbs.archlinux.org/viewtopic.php?id=195782)
 - [systemctl](https://www.freedesktop.org/software/systemd/man/systemctl.html)のEnvironのところ。
+
+
+# systemctl --failed
+
+よく使ってたんだけど `systemctl --help` で出てこない。
+
+(`systemctl  list-unit-files --state=failed`と同じ? 出力が微妙に違うし)
+
+
+その上こんな話まで。
+[systemd \- systemctl \-\-failed not listing failed instantiated service \- Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/396075/systemctl-failed-not-listing-failed-instantiated-service)
+
+まあ
+```
+$ systemctl --failed
+0 loaded units listed. Pass --all to see loaded but inactive units, too.
+```
+と出てくるとおりに
+
+今後は
+```sh
+systemctl --failed --all
+```
+とする。
