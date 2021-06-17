@@ -34,7 +34,6 @@
 - [ubuntu20.04LTS以降でpythonをpython3にする](#ubuntu2004lts以降でpythonをpython3にする)
 - [Python Static Analysis Tools](#python-static-analysis-tools)
 - [emacsでLSPでpython](#emacsでlspでpython)
-- [bytesとbytearray](#bytesとbytearray)
 - [vscodeでpylance使うときに](#vscodeでpylance使うときに)
 
 
@@ -773,8 +772,7 @@ gpg --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
 
 ;; python LSP mode
 (add-hook 'python-mode-hook #'lsp)
-(add-hook 'before-save-hook 'lsp-format-buffer)
-```
+(add-hook 'before-save-hook 'lsp-format-buffer 'append)
 重要なのは最後の3行だけ。
 
 
