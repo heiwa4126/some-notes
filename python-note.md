@@ -35,6 +35,7 @@
 - [Python Static Analysis Tools](#python-static-analysis-tools)
 - [emacsでLSPでpython](#emacsでlspでpython)
 - [vscodeでpylance使うときに](#vscodeでpylance使うときに)
+- [pythonのregexにPCREの\Q...\E的なもの](#pythonのregexにpcreのqe的なもの)
 
 
 
@@ -823,3 +824,14 @@ settings.jsonに
 
 表示されるルール一覧はここに
 [pylance-release/DIAGNOSTIC_SEVERITY_RULES.md at main · microsoft/pylance-release · GitHub](https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md)
+
+
+# pythonのregexにPCREの\Q...\E的なもの
+
+PCREには\Q...\Eではさむとメタ文字が意味を失う、というのがあって
+> If you want to remove the special meaning from a sequence of characters, you can do so by putting them between \Q and \E
+[pcrepattern specification](https://www.pcre.org/original/doc/html/pcrepattern.html)
+
+`re.escape(pattern)`で。
+
+
