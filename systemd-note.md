@@ -419,6 +419,35 @@ echo -e '[Service]\n# Override location of database directory\nEnvironment=PGDAT
 - [pipe input into systemctl edit / System Administration / Arch Linux Forums](https://bbs.archlinux.org/viewtopic.php?id=195782)
 - [systemctl](https://www.freedesktop.org/software/systemd/man/systemctl.html)のEnvironのところ。
 
+overrideをつかうとDrop-In:のところに表示される。
+```
+$ sudo systemctl status postgresql-9.5
+● postgresql-9.5.service - PostgreSQL 9.5 database server
+   Loaded: loaded (/usr/lib/systemd/system/postgresql-9.5.service; disabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/postgresql-9.5.service.d
+           └─override.conf
+   Active: active (running) since Tue 2021-06-22 14:01:41 UTC; 5s ago
+     Docs: https://www.postgresql.org/docs/9.5/static/
+  Process: 2883 ExecStart=/usr/pgsql-9.5/bin/pg_ctl start -D ${PGDATA} -s -w -t 300 (code=exited, status=0/SUCCESS)
+  Process: 2878 ExecStartPre=/usr/pgsql-9.5/bin/postgresql95-check-db-dir ${PGDATA} (code=exited, status=0/SUCCESS)
+ Main PID: 2886 (postgres)
+   CGroup: /system.slice/postgresql-9.5.service
+           ├─2886 /usr/pgsql-9.5/bin/postgres -D /var/lib/pgsql/9.5/data
+           ├─2887 postgres: logger process
+           ├─2889 postgres: checkpointer process
+           ├─2890 postgres: writer process
+           ├─2891 postgres: wal writer process
+           ├─2892 postgres: autovacuum launcher process
+           └─2893 postgres: stats collector process
+
+$ sudo cat /etc/systemd/system/postgresql-9.5.service.d/override.conf
+[Service]
+# Override location of database directory
+Environment=PGDATA=/var/lib/pgsql/9.5/data
+```
+
+
+
 
 # systemctl --failed
 
