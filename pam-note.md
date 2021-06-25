@@ -440,7 +440,21 @@ $ pwmake 128 | pwscore
 100
 $ pwmake 56 | pwscore
 67
+$ pwmake 64 | pwscore
+100
+$ seq 10 | xargs -i{} pwmake 64
+UjZiH.yqOk3pGo
+JUHpIl5apmacoL
+Yh9AdTER84PIPd
+]YDzifGuv4Dj3w
+YPuG#AmyGrUqhe
+DELetDInn4Satu
+Q4RZavuHKIzEzP
+laq%idJ4pocb4b
+2IniR&Afv4Loh3
+24xmImHeHPob3M
 ```
+
 
 [第4章 ツールおよびサービスを使用したシステムのハードニング Red Hat Enterprise Linux 7 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/security_guide/chap-hardening_your_system_with_tools_and_services)
 [意外に複雑なLinuxのパスワード生成事情とパスワード生成方法 \- Qiita](https://qiita.com/yamada-hakase/items/7b4c8c662767f451edf7)
