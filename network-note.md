@@ -48,7 +48,7 @@ NetworkManagerを使っている場合は
 ```sh
 sudo yum install nmap-ncat -y
 ```
-で`-z`の使えるncになります
+でふつうに`-z`の使えるncになります
 
 
 以下古い:
