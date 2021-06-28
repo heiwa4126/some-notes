@@ -44,6 +44,15 @@ NetworkManagerを使っている場合は
 
 # ポートの疎通確認
 
+いつのまにか
+```sh
+sudo yum install nmap-ncat -y
+```
+で`-z`の使えるncになります
+
+
+以下古い:
+
 Linuxでポートの疎通確認を行う際によく用いるのが
 ```
 nc -w1 -vz <host> <port>
