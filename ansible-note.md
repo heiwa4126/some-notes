@@ -84,6 +84,7 @@ ansibleメモランダム
   - [requests](#requests)
 - [インストール済みのモジュールの一覧を表示する](#インストール済みのモジュールの一覧を表示する)
 - [ansible.windows.win_package用のproduct_idを探す。](#ansiblewindowswin_package用のproduct_idを探す)
+- [filter pluginsのサンプルは](#filter-pluginsのサンプルは)
 - [collectionの開発](#collectionの開発)
 
 
@@ -1580,6 +1581,13 @@ $a|Export-Csv -NoTypeInformation -Encoding default -Path test1.csv
 regeditで検索。おなじ場所にUninstallStringという名前で削除方法が書かれてる。
 
 
+# filter pluginsのサンプルは
+
+[ansible/core\.py at devel · ansible/ansible · GitHub](https://github.com/ansible/ansible/blob/devel/lib/ansible/plugins/filter/core.py)
+で `FilterModule`を検索。
+
+
+
 # collectionの開発
 
 - [Developing collections — Ansible Documentation](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections.html)
@@ -1639,3 +1647,6 @@ class FilterModule(object):
         msg: '{{ "hello" | heiwa4126.helloworld.add_stars }}'
 ```
 長いな。namespaceだけでもimportできないのか。
+
+
+[\[Ansible\] 自作のコレクションを作ってGalaxyで公開するまで \- Qiita](https://qiita.com/zaki-lknr/items/4771b65b2385591e0678)
