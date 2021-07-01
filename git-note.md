@@ -9,6 +9,7 @@
 - [ubuntuで新しめのgitを使う](#ubuntuで新しめのgitを使う)
 - [git-secrets](#git-secrets)
 - [diffをgithubみたくする](#diffをgithubみたくする)
+- [プロジェクトスケルトンを作るツールで、空のディレクトリに.gitkeep](#プロジェクトスケルトンを作るツールで空のディレクトリにgitkeep)
 
 
 # gitの設定をリスト
@@ -163,3 +164,14 @@ git config --global init.templateDir ~/.git-templates/git-secrets
 
 - [unix \- ターミナルの diff で、github のように、行の中で具体的に差分がある部分に色付けをしたい \- スタック・オーバーフロー](https://ja.stackoverflow.com/questions/75829/%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%81%AE-diff-%E3%81%A7-github-%E3%81%AE%E3%82%88%E3%81%86%E3%81%AB-%E8%A1%8C%E3%81%AE%E4%B8%AD%E3%81%A7%E5%85%B7%E4%BD%93%E7%9A%84%E3%81%AB%E5%B7%AE%E5%88%86%E3%81%8C%E3%81%82%E3%82%8B%E9%83%A8%E5%88%86%E3%81%AB%E8%89%B2%E4%BB%98%E3%81%91%E3%82%92%E3%81%97%E3%81%9F%E3%81%84)
 - [gitのdiff\-highlightを使い始めた \- りんごとバナナとエンジニア](https://udomomo.hatenablog.com/entry/2019/12/01/181404)
+
+
+# プロジェクトスケルトンを作るツールで、空のディレクトリに.gitkeep
+
+ありがち
+
+```sh
+find -type d -empty | xargs -i{} touch {}/.gitkeep
+```
+
+TODO:「空でなくなったディレクトリにある.etckeepを消す」も。

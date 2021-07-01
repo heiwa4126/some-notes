@@ -84,6 +84,7 @@ ansibleメモランダム
   - [requests](#requests)
 - [インストール済みのモジュールの一覧を表示する](#インストール済みのモジュールの一覧を表示する)
 - [ansible.windows.win_package用のproduct_idを探す。](#ansiblewindowswin_package用のproduct_idを探す)
+- [collectionの開発](#collectionの開発)
 
 
 # ansibleの学習2021
@@ -1577,3 +1578,64 @@ $a|Export-Csv -NoTypeInformation -Encoding default -Path test1.csv
 
 これで見つからなければ、コンパネに表示されるプロダクト名はDisplayNameとして保存されてるので、
 regeditで検索。おなじ場所にUninstallStringという名前で削除方法が書かれてる。
+
+
+# collectionの開発
+
+- [Developing collections — Ansible Documentation](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections.html)
+- [コレクションの開発 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/dev_guide/developing_collections.html)
+
+作業ディレクトリ作って、デフォルトのコレクションパスにsymlink置く、という手法でいく。
+
+```sh
+mkdir -p workdir ; cd workdir
+ansible-galaxy collection init heiwa4126.helloworld
+cd heiwa4126
+ln -s `pwd -p` ~/.ansible/collections/ansible_collections
+```
+
+で、`ansible-galaxy collection list`に`heiwa4126.helloworld`があればOK
+
+```sh
+cd helloworld/roles
+ansible-galaxy role init helloworld
+cd helloworld
+emacs tasks/main.yml
+```
+
+```yaml
+---
+- debug: msg="hello world"
+```
+とか書いて、
+
+playbookは
+```yaml
+---
+- hosts: localhost
+  roles:
+    - heiwa4126.helloworld.helloworld
+```
+でOK
+
+roleだけでは寂しいので、`collections/heiwa4126/helloworld/plugins/filter/star.py`として
+```python
+class FilterModule(object):
+    def filters(self):
+        return {
+            "add_stars": lambda str: f"** {str} **",
+        }
+```
+
+で、playbookを
+```yaml
+- hosts: localhost
+  become: false
+  gather_facts: false
+  roles:
+    - heiwa4126.helloworld.helloworld
+  tasks:
+    - debug:
+        msg: '{{ "hello" | heiwa4126.helloworld.add_stars }}'
+```
+長いな。namespaceだけでもimportできないのか。
