@@ -86,6 +86,7 @@ ansibleメモランダム
 - [ansible.windows.win_package用のproduct_idを探す。](#ansiblewindowswin_package用のproduct_idを探す)
 - [filter pluginsのサンプルは](#filter-pluginsのサンプルは)
 - [collectionの開発](#collectionの開発)
+- [roles=,collections= と *_plugins= のちがい](#rolescollections-と-_plugins-のちがい)
 
 
 # ansibleの学習2021
@@ -1650,3 +1651,11 @@ class FilterModule(object):
 
 
 [\[Ansible\] 自作のコレクションを作ってGalaxyで公開するまで \- Qiita](https://qiita.com/zaki-lknr/items/4771b65b2385591e0678)
+
+
+# roles=,collections= と *_plugins= のちがい
+
+どうもroles=,collections=は、書いたパスしか探しに行かないけど、
+*_plugins=はデフォルトパスも探しに行くみたい。
+
+ソース読むか...
