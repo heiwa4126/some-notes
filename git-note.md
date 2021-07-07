@@ -10,6 +10,7 @@
 - [git-secrets](#git-secrets)
 - [diffをgithubみたくする](#diffをgithubみたくする)
 - [プロジェクトスケルトンを作るツールで、空のディレクトリに.gitkeep](#プロジェクトスケルトンを作るツールで空のディレクトリにgitkeep)
+- [gitのシェル補完](#gitのシェル補完)
 
 
 # gitの設定をリスト
@@ -175,3 +176,17 @@ find -type d -empty | xargs -i{} touch {}/.gitkeep
 ```
 
 TODO:「空でなくなったディレクトリにある.etckeepを消す」も。
+
+
+# gitのシェル補完
+
+[git/contrib/completion at master · git/git](https://github.com/git/git/tree/master/contrib/completion)
+
+Ubuntuだとgitパッケージに最初から入ってた。
+
+```
+$ dpkg -S /usr/share/bash-completion/completions/git
+git: /usr/share/bash-completion/completions/git
+```
+
+古いRHELだとどうか?
