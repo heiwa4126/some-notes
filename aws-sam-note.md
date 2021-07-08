@@ -160,3 +160,28 @@ Resources:
 - [AWS Lambda のバージョン管理の仕組み ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/lambda-versioning/)
 - [AWS Lambdaバージョン管理のススメ - Qiita](https://qiita.com/quotto/items/4c364074edc69cb67d70)
 - [TECHSCORE｜知っておきたかったAWS SAM の小ネタ4選 | TECHSCORE BLOG](https://www.techscore.com/blog/2018/12/07/aws-sam-tips/) - `--parameter-overrides`の使い所が参考になる。
+
+
+# まずはここかから
+
+- [Linux への AWS SAM CLI のインストール \- AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-install-linux.html)
+- [チュートリアル: Hello World アプリケーションのデプロイ \- AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html)
+
+チュートリアルの翻訳が変。
+
+[AWS SAMCLI コマンドリファレンス \- AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html)
+
+- sam build
+- [sam local invoke](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-local-invoke.html)
+- sam local start-api
+- 
+- sam deploy --guided
+- sam build
+
+消すのはないので
+```sh
+aws cloudformation delete-stack --stack-name sam-app-hello-by-heiwa
+```
+とかで。
+
+[aws\-sam\-cliの新機能 Local Lambda Endpoint と sam logs を試す \- Qiita](https://qiita.com/hayao_k/items/244e74c6c0f8935c2f36)
