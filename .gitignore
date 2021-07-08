@@ -2,3 +2,5 @@
 *.bak
 *.html
 *.pdf
+*.tmp
+tmp*.*
