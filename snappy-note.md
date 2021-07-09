@@ -33,6 +33,23 @@ sudo systemctl restart snapd.service
 sudo snap refresh
 ```
 
+ごめんこれ`systemctl edit snapd`のほうがいいや。
+```
+sudo systemctl edit snapd
+[Service]
+Environment="HTTP_PROXY=http://10.250.42.37:3128"
+Environment="HTTPS_PROXY=http://10.250.42.37:3128"
+EOF
+sudo snap refresh
+```
+
+さらにまちがい
+```
+sudo snap set system proxy.http=http://10.250.42.37:3128
+sudo snap set system proxy.https=http://10.250.42.37:3128
+```
+が正しい。
+
 # snapdで古いのを消す
 
 snapdは新しいのどんどん更新する。
