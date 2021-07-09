@@ -87,6 +87,7 @@ ansibleメモランダム
 - [filter pluginsのサンプルは](#filter-pluginsのサンプルは)
 - [collectionの開発](#collectionの開発)
 - [roles_path=,collections_path= と *_plugins= のちがい](#roles_pathcollections_path-と-_plugins-のちがい)
+- [rolesやcollectionsのfiles/やtemplate/はオーバライドできるか?](#rolesやcollectionsのfilesやtemplateはオーバライドできるか)
 
 
 # ansibleの学習2021
@@ -1659,3 +1660,19 @@ class FilterModule(object):
 *_plugins=はデフォルトパスも探しに行くみたい。
 
 ソース読むか...
+
+
+# rolesやcollectionsのfiles/やtemplate/はオーバライドできるか?
+
+playbook側でオーバライドできるか。またオーバライドされたくないときはどうするかをチェックする。
+
+サーチパスが
+標準では
+ロール側のtemplates/のほうが優先なので、
+playbookでオーバライドできない。
+この順: [ansibleはどこからtemplateを探すのか？ - gom68の日記](https://gom.hatenablog.com/entry/2018/03/06/183000)
+
+公式ドキュメントはこれかな。 [Search paths in Ansible — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbook_pathing.html)
+
+
+defaults/に変数書いて、それをplaybookで書き換えるしかなさそう。
