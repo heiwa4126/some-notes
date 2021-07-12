@@ -1,5 +1,13 @@
 # AWS CloudFormaton 練習帳
 
+- [AWS CloudFormaton 練習帳](#aws-cloudformaton-練習帳)
+- [リファレンス](#リファレンス)
+  - [Ref](#ref)
+- [チュートリアル](#チュートリアル)
+- [CloudFormationでS3を作る](#cloudformationでs3を作る)
+- [CloudFormationでstackの外のリソースのIAMをマネージするかっこいい方法](#cloudformationでstackの外のリソースのiamをマネージするかっこいい方法)
+
+
 YAMLでリソースを作るアレ。
 「せっかく書いても、手動で修正したら(統合性が)壊れちゃうんでしょ」とか思ってたら、
 
@@ -8,6 +16,19 @@ YAMLでリソースを作るアレ。
 - [ドリフト検出をサポートしているリソース - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/using-cfn-stack-drift-resource-list.html)
 
 こんなことに↑なったので、ちゃんとやる。(2019-11)
+
+# リファレンス
+
+- [組み込み関数リファレンス - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html)
+
+
+## Ref
+
+[Ref \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-ref.html)
+
+> リソースの論理名を指定すると、それはそのリソースを参照するために通常使用できる値を返します (Logical ID)。
+
+
 
 # チュートリアル
 
@@ -65,4 +86,3 @@ aws cloudformation create-stack \
 
 
 - [AWS CloudFormation のベストプラクティス - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/best-practices.html)
-
