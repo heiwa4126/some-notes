@@ -211,4 +211,38 @@ Certificate、まずポータルで作ってみる
 
 けっこう難しかった。とりあえずACM証明書先に作っといてやってみた(若干ディレイがあるのと、そもそも他で証明書作ってる場合がありそうだし)。
 
-[AWS::CertificateManager::Certificate \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-certificatemanager-certificate.html)
+ACM(AWS Certificate Manager)は
+- [\[アップデート\] CloudFormation で AWS Certificate Manager のDNS検証を自動化できるようになりました \| DevelopersIO](https://dev.classmethod.jp/articles/acm-extends-automation-certificate-issuance-via-cloudformation/)
+- [AWS::CertificateManager::Certificate - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-certificatemanager-certificate.html)
+
+ACMもできた。
+- create-stack時に時間が結構掛かる(これ重要)
+- delete-stack時にcnameが消えない
+
+
+IAMとrole
+
+[AWS SAM テンプレートのポリシーとロールを使用して Lambda 関数に権限を付与する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/lambda-sam-template-permissions/)
+
+
+api-id
+[API Gateway Amazon リソースネーム \(ARN\) リファレンス \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/arn-format-reference.html)
+
+
+API IDを得るには
+```
+aws apigateway get-rest-apis
+```
+[aws apigateway get\-rest\-apis](https://stackoverflow.com/questions/34433224/how-to-get-the-id-of-a-api-from-aws-api-gateway)
+
+
+
+ステージ変数
+[Amazon API Gateway のステージ変数の使用 - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
+
+
+
+
+[API Gateway リソースポリシーを使用して API へのアクセスを制御する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-resource-policies.html)
+
+[CustomStatements](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-resource-policies.html)
