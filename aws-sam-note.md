@@ -71,7 +71,7 @@ SomeBucket=********** sam local invoke
 
 stack外にあるリソースにアクセスするケース。
 
-案1: 
+案1:
 ``` yaml
 Resources:
   SecretTestFunctionRole:
@@ -174,7 +174,7 @@ Resources:
 - sam build
 - [sam local invoke](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-local-invoke.html)
 - sam local start-api
-- 
+-
 - sam deploy --guided
 - sam build
 
@@ -185,3 +185,30 @@ aws cloudformation delete-stack --stack-name sam-app-hello-by-heiwa
 とかで。
 
 [aws\-sam\-cliの新機能 Local Lambda Endpoint と sam logs を試す \- Qiita](https://qiita.com/hayao_k/items/244e74c6c0f8935c2f36)
+
+
+# API Gatewayにカスタムドメインを
+
+
+[REST API のカスタムドメイン名を設定する \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/how-to-custom-domains.html)
+
+
+DomainName
+と
+CertificateArn
+が必須.
+
+`aws acm list-certificates`
+
+Certificate、まずポータルで作ってみる
+[AWS Certificate Manager](https://ap-northeast-1.console.aws.amazon.com/acm/)
+
+参考:
+- [How to set up a custom domain name for Lambda & API Gateway with Serverless](https://www.serverless.com/blog/serverless-api-gateway-domain)
+- [API Gateway API のカスタムドメイン名を定義する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/custom-domain-name-amazon-api-gateway/)
+- [REST API のカスタムドメイン名を設定する \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/how-to-custom-domains.html)
+
+
+けっこう難しかった。とりあえずACM証明書先に作っといてやってみた(若干ディレイがあるのと、そもそも他で証明書作ってる場合がありそうだし)。
+
+[AWS::CertificateManager::Certificate \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-certificatemanager-certificate.html)

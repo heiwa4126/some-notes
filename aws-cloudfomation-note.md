@@ -6,6 +6,8 @@
 - [チュートリアル](#チュートリアル)
 - [CloudFormationでS3を作る](#cloudformationでs3を作る)
 - [CloudFormationでstackの外のリソースのIAMをマネージするかっこいい方法](#cloudformationでstackの外のリソースのiamをマネージするかっこいい方法)
+- [route53](#route53)
+- [CLI](#cli)
 
 
 YAMLでリソースを作るアレ。
@@ -20,7 +22,7 @@ YAMLでリソースを作るアレ。
 # リファレンス
 
 - [組み込み関数リファレンス - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html)
-
+- [形式バージョン \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/format-version-structure.html)
 
 ## Ref
 
@@ -86,3 +88,23 @@ aws cloudformation create-stack \
 
 
 - [AWS CloudFormation のベストプラクティス - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/best-practices.html)
+
+
+# route53
+
+[Route 53 テンプレートスニペット - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/quickref-route53.html)
+
+
+# CLI
+
+[AWS Command Line Interface の使用 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/cfn-using-cli.html)
+
+
+よく使うパターン
+
+[スタックの削除](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/using-cfn-cli-deleting-stack.html):
+`aws cloudformation delete-stack --stack-name YourStackName`
+
+
+[スタックの作成](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/using-cfn-cli-creating-stack.html)
+`aws cloudformation create-stack --stack-name YourStackName --template-body file://Your.yaml`

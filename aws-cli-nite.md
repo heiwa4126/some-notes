@@ -9,6 +9,7 @@
   - [Windows](#windows)
   - [Windows(古い)](#windows古い)
 - [pipでawscliのインストールに失敗する](#pipでawscliのインストールに失敗する)
+- [コマンド補完](#コマンド補完)
 
 
 # pipの最新版をユーザーローカルにインストールする
@@ -129,3 +130,9 @@ sudo apt install libssl-dev
 sudo apt install python3-cryptography
 ```
 してから。
+
+
+# コマンド補完
+
+v2では
+`/usr/local/bin/aws_completer` (symlink)
