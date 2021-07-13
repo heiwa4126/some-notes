@@ -246,3 +246,51 @@ aws apigateway get-rest-apis
 [API Gateway リソースポリシーを使用して API へのアクセスを制御する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-resource-policies.html)
 
 [CustomStatements](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-resource-policies.html)
+
+
+
+# CFnの変数
+
+SAMの`Output:`でスタック変数を設定できるんだけど、これlambdaとかから見えるのか?
+
+`Export`で、クロススタック参照として使う例
+- [チュートリアル: 別の AWS CloudFormation スタックのリソース出力を参照する - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/walkthrough-crossstackref.html)
+- [出力 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html)
+
+ほかは
+- 応答として返す (スタック呼び出しについて記述)
+- AWS CloudFormation コンソールで表示する
+
+しかないみたい。
+
+まあlambdaならEnvironで渡せばOK
+
+
+# log
+
+logGroupのRetentionInDaysを設定したいとき。
+[amazon cloudwatchlogs - Set expiration of CloudWatch Log Group for Lambda Function - Stack Overflow](https://stackoverflow.com/questions/45364967/set-expiration-of-cloudwatch-log-group-for-lambda-function)
+
+```yaml
+Resources:
+  # ...
+  HelloWorldFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    DependsOn: HelloWorldFunction
+    Properties:
+      RetentionInDays: 7
+      LogGroupName: !Join ["", ["/aws/lambda/", !Ref HelloWorldFunction]]
+```
+
+これLogGroupNameがデフォルトと一緒なので、
+あとから追加するとエラーになる(スタック消して作りなおし)。
+
+最初に書くか、別のパスにするか。
+```yaml
+      LogGroupName: !Join ["/", ["/aws/lambda", !Ref AWS::StackName, !Ref HelloWorldFunction]]
+```
+みたいにするといいとおもう。
+
+あとRetentionInDaysのmodifyは失敗する。バグだと思う。スタックをまるごと消すこと。
+
+あとLog書いとくと、stack消したときにロググループも消えるので便利。
