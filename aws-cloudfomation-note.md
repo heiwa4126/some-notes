@@ -8,7 +8,9 @@
 - [CloudFormationでstackの外のリソースのIAMをマネージするかっこいい方法](#cloudformationでstackの外のリソースのiamをマネージするかっこいい方法)
 - [route53](#route53)
 - [CLI](#cli)
+- [CFnのサンプル](#cfnのサンプル)
 - [CloudFormation Macros](#cloudformation-macros)
+- [CloudFomationのYAMLで anchors/aliasesを使うには?](#cloudfomationのyamlで-anchorsaliasesを使うには)
 
 
 YAMLでリソースを作るアレ。
@@ -111,10 +113,28 @@ aws cloudformation create-stack \
 `aws cloudformation create-stack --stack-name YourStackName --template-body file://Your.yaml`
 
 
+# CFnのサンプル
+
+[Asia Pacific \(Tokyo\) Region \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/cfn-sample-templates-ap-northeast-1.html)
+
+
 # CloudFormation Macros
 
 - [AWS CloudFormation Macros について](https://aws.amazon.com/jp/about-aws/whats-new/2018/09/introducing-aws-cloudformation-macros/)
 - [AWS CloudFormation を AWS Lambda によるマクロで拡張する | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/cloudformation-macros/)
 - [CloudFormationのマクロ機能でLambda関数と一緒にCloudWatch LogsのLog Groupを自動作成してみる | DevelopersIO](https://dev.classmethod.jp/articles/craete-log-group-by-cfnmacro/)
 
-要はLambdaで変換コードを書いて、それを呼び出すしかけ。ローカルで動けばいいのに...
+要はLambdaで変換コードを書いて、最後にそれを呼び出してまとめて変換する。マクロというよりはフィルターみたいなもの。
+ローカルで動けばいいのに...
+複数指定はできるの?
+
+デフォルトで存在する
+[変換のリファレンス \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/transform-reference.html)
+
+
+# CloudFomationのYAMLで anchors/aliasesを使うには?
+
+リクエストはけっこう出てるけどいまのところ使えないみたい。
+
+- [Support YAML anchors/aliases in CFN yaml templates · Issue \#613 · aws\-cloudformation/cloudformation\-coverage\-roadmap](https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/613)
+- [CloudFormation coding using YAML\. This is not a “101” on CloudFormation… \| by Bob van den Heuvel \| Schuberg Philis](https://stories.schubergphilis.com/cloudformation-coding-using-yaml-9127025813bb)

@@ -300,3 +300,8 @@ Resources:
 
 
 [【小ネタ】AWS SAMでLambda関数を作成する場合はCloudWatch LogsのLog Groupも同時に作った方がいいという話 | DevelopersIO](https://dev.classmethod.jp/articles/should-create-cloudwatch-logs-log-group-when-creating-lambda-with-aws-sam/)
+
+
+# SAMのtemplate.yamlでFn::Transeformが使えない
+
+少なくともresource:の下で使おうとすると死ぬ。
