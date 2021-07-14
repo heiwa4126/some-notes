@@ -8,6 +8,7 @@
 - [CloudFormationでstackの外のリソースのIAMをマネージするかっこいい方法](#cloudformationでstackの外のリソースのiamをマネージするかっこいい方法)
 - [route53](#route53)
 - [CLI](#cli)
+- [CloudFormation Macros](#cloudformation-macros)
 
 
 YAMLでリソースを作るアレ。
@@ -108,3 +109,12 @@ aws cloudformation create-stack \
 
 [スタックの作成](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/using-cfn-cli-creating-stack.html)
 `aws cloudformation create-stack --stack-name YourStackName --template-body file://Your.yaml`
+
+
+# CloudFormation Macros
+
+- [AWS CloudFormation Macros について](https://aws.amazon.com/jp/about-aws/whats-new/2018/09/introducing-aws-cloudformation-macros/)
+- [AWS CloudFormation を AWS Lambda によるマクロで拡張する | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/cloudformation-macros/)
+- [CloudFormationのマクロ機能でLambda関数と一緒にCloudWatch LogsのLog Groupを自動作成してみる | DevelopersIO](https://dev.classmethod.jp/articles/craete-log-group-by-cfnmacro/)
+
+要はLambdaで変換コードを書いて、それを呼び出すしかけ。ローカルで動けばいいのに...
