@@ -335,3 +335,7 @@ integrationの方、`sam init`のままだとデフォルト以外のregionの�
 
 
 
+# SAMのpolicyのテンプレート
+
+便利。使いそうなやつだいたいある。
+[ポリシーテンプレート - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-policy-template-list.html)
