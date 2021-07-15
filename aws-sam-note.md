@@ -292,3 +292,19 @@ Resources:
 みたいにするといいとおもう。
 
 あとLog書いとくと、stack消したときにロググループも消えるので便利。
+あとRetentionInDaysは任意の値を設定できるわけじゃないのに注意。
+[AWS::Logs::LogGroup - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html#cfn-logs-loggroup-retentionindays)
+
+> 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, and 3653
+
+あとLog書いとくと、stack消したときにロググループも消えるので便利。
+
+
+[【小ネタ】AWS SAMでLambda関数を作成する場合はCloudWatch LogsのLog Groupも同時に作った方がいいという話 | DevelopersIO](https://dev.classmethod.jp/articles/should-create-cloudwatch-logs-log-group-when-creating-lambda-with-aws-sam/)
+
+
+# SAMのtemplate.yamlでFn::Transeformが使えない
+
+少なくともresource:の下で使おうとすると死ぬ。
+
+
