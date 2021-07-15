@@ -308,3 +308,30 @@ Resources:
 少なくともresource:の下で使おうとすると死ぬ。
 
 
+# SAMの自動テスト
+
+参考リンク:
+- [[AWS] Lambda関数のユニットテストをローカル環境で実行してみよう - Qiita](https://qiita.com/herohit-tool/items/68b414fa85b6beea7e50)
+- [自動テストとの統合 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-using-automated-tests.html) - ちょっと違うんだけど参考になる
+
+必要なモジュール(適宜venvなどしてください)
+```sh
+pip install -r tests/requirements.txt --user -U
+# or
+pip install pytest pytest-mock mocker moto --user -U
+```
+`tests/requirements.txt`にはboto入ってるので、そのへんアレンジ
+
+
+テストの実行
+```sh
+# ユニットテスト
+python -m pytest tests/unit -v
+# 統合テスト(deploy後)
+AWS_SAM_STACK_NAME=スタック名 python3 -m pytest tests/integration -v
+```
+integrationの方、`sam init`のままだとデフォルト以外のregionのサポートがない。
+ちょっとコード追加する必要がある。
+
+
+
