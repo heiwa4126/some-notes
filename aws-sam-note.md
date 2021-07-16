@@ -307,6 +307,11 @@ Resources:
 
 少なくともresource:の下で使おうとすると死ぬ。
 
+どうもSAMからCloudFormationの変換がまるごとFn::Transeformになってるらしい。
+
+これね。[AWS::Serverless transform - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-aws-serverless.html)
+
+
 
 # SAMの自動テスト
 
