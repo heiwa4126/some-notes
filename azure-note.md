@@ -238,7 +238,10 @@ azureポータルのVMの左ペインから「ID」を選ぶ。
 
 - [Azure CLI を使用して、リソースにマネージド ID アクセスを割り当てる \- Azure AD \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/howto-assign-access-cli)
 
+もうちょっと狭い範囲のスコープのロールを作る方法を考える。
 
+- [はじめての Azure リソース マネージド ID (概要編) - Qiita](https://qiita.com/Shinya-Yamaguchi/items/edd75f7ee47471a98670)
+- [マネージド ID をサポートする Azure サービス - Azure AD | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities#azure-services-that-support-managed-identities-for-azure-resources)
 
 # az cli よくつかうコマンド
 
