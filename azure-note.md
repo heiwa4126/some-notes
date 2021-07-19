@@ -14,6 +14,8 @@
 - [Azureのスケーリング](#azureのスケーリング)
 - [AADでLinuxログイン](#aadでlinuxログイン)
 - [Azure AZ](#azure-az)
+- [MSIとは](#msiとは)
+- [az cli よくつかうコマンド](#az-cli-よくつかうコマンド)
 
 # Azure CLI
 
@@ -197,3 +199,52 @@ $ systemctl status hv-fcopy-daemon
 - [ASCII\.jp：Azureに登場した「アベイラビリティ・ゾーン」とは](https://ascii.jp/elem/000/001/556/1556413/#:~:text=Azure%20AZ%E3%81%AF%E3%80%81IaaS%E3%81%AE,%E3%81%A8%E3%81%97%E3%81%A6%E8%A8%AD%E8%A8%88%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82)
 - [Availability Zones をサポートする Azure サービス \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/availability-zones/az-region)
 - [Azure のリージョンと Availability Zones \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/availability-zones/az-overview)
+
+
+# MSIとは
+
+またMicrosoftが名前変えやがった。
+> Azure リソースのマネージド ID は、以前のマネージドサービス ID (MSI) の新しい名前です。
+
+[Azure リソースのマネージド ID | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/overview)
+
+
+```
+$ az login --identity
+Failed to connect to MSI. Please make sure MSI is configured correctly.
+Get Token request returned http error: 400, reason: Bad Request
+```
+
+MSI とは Managed Service Identity
+
+- [Keep credentials out of code: Introducing Azure AD Managed Service Identity | Azure のブログと更新プログラム | Microsoft Azure](https://azure.microsoft.com/ja-jp/blog/keep-credentials-out-of-code-introducing-azure-ad-managed-service-identity/)
+- [Azure リソースのマネージド ID | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/overview)
+- [Azure VM 上でマネージド ID を使用してサインインする \- Azure ADV \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in)
+
+
+VMに割り当てられているマネージドIDは?
+
+[チュートリアル\`:\` マネージド ID を使用して Azure Resource Manager にアクセスする \- Windows \- Azure AD \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/tutorial-windows-vm-access-arm)
+
+
+まず システム割り当てマネージドID(system-assigned managed identity)が有効になってるかを確認する方法
+
+[Azure リソースのマネージド ID を使ったセキュアなパスワード管理 \| SBテクノロジー \(SBT\)](https://www.softbanktech.co.jp/special/blog/cloud_blog/2019/0006/)
+
+ポータルから
+azureポータルのVMの左ペインから「ID」を選ぶ。
+追加できるけど削除するUIがない... (2021-07)
+
+
+- [Azure CLI を使用して、リソースにマネージド ID アクセスを割り当てる \- Azure AD \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/howto-assign-access-cli)
+
+
+
+# az cli よくつかうコマンド
+
+VM一覧
+```sh
+az vm list -d -o table
+#
+az vm list -d --query "[].{Name:name,privateIps:privateIps}" -o table
+```
