@@ -69,6 +69,12 @@ export PUBLIC_HOSTNAME=`curl http://169.254.169.254/latest/meta-data/public-host
 * [AWS | AWS の169.254.169.254とは何か](https://awsjp.com/AWS/Faq/c/AWS-169.254.169.254-towa-4135.html)
 
 
+GCPやAzureにも(おなじアドレスで)存在する。
+- [Windows 用の Azure Instance Metadata Service - Azure Virtual Machines | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/instance-metadata-service?tabs=linux)
+- [仮想マシン上でマネージド ID を使用してアクセス トークンを取得する \- Azure AD \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token)
+
+
+
 # AWS CLIのインストール手順
 
 [Linux での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html)
