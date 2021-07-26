@@ -204,5 +204,9 @@ exit codeは以下の標準を使いましょう。
 シェルスクリプトにもlintがあります。
 [koalaman/shellcheck: ShellCheck, a static analysis tool for shell scripts](https://github.com/koalaman/shellcheck)
 
+- [SC2162 · koalaman/shellcheck Wiki](https://github.com/koalaman/shellcheck/wiki/SC2162)
+- [SC2034 · koalaman/shellcheck Wiki](https://github.com/koalaman/shellcheck/wiki/SC2034)
+
+
 シェルスクリプトには-eオプションと-uオプションをセットしましょう。参考:[Options](https://tldp.org/LDP/abs/html/options.html)
 (欠点あり。`cmd1||cmd2` みたいのができなくなります)
