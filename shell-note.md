@@ -9,6 +9,8 @@ shellいろいろtipsメモ
 - [dateのformat](#dateのformat)
 - [$UID,$GID](#uidgid)
 - [bashのpipefailオプション](#bashのpipefailオプション)
+- [exit codeの標準](#exit-codeの標準)
+- [メモ](#メモ)
 
 # 非0の戻り値で中断させたい
 
@@ -176,10 +178,31 @@ bashの直感を裏切る動作の1つとして、
 スクリプトになんかエラーがあったら止まる、にしたかったら
 `set -e`
 ではなく
-`set -eo pipeline`
+`set -eo pipefail`
 にするがよいです。
 
 ```
 grep 'foo' bar.txt | sort
 ```
 とかでfooがbar.txtにない場合でも死ぬようになります。
+
+[パイプラインの左側でエラーが発生したら処理を止めたい \- はい！今やってます！](https://yuji-ueda.hatenadiary.jp/entry/2019/11/15/180743)
+
+
+
+# exit codeの標準
+
+exit codeは以下の標準を使いましょう。
+- [Exit Codes With Special Meanings](http://tldp.org/LDP/abs/html/exitcodes.html)
+- POSIX標準 - [https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h](https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h)
+
+
+# メモ
+
+あとで整理
+
+シェルスクリプトにもlintがあります。
+[koalaman/shellcheck: ShellCheck, a static analysis tool for shell scripts](https://github.com/koalaman/shellcheck)
+
+シェルスクリプトには-eオプションと-uオプションをセットしましょう。参考:[Options](https://tldp.org/LDP/abs/html/options.html)
+(欠点あり。`cmd1||cmd2` みたいのができなくなります)

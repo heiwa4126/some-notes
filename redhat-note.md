@@ -1115,3 +1115,14 @@ ELSレポジトリは自動で有効にならないらしい(RHEL6だけ?)
 subscription-manager repos --enable=rhel-6-server-els-rpms
 ```
 とかする。
+
+
+# apt-cron的なもの
+
+- RHEL7 - yum-cron - [How to use yum-cron to automatically update RHEL/CentOS Linux - nixCraft](https://www.cyberciti.biz/faq/fedora-automatic-update-retrieval-installation-with-cron/)
+- RHEL8以降 - dnf-automatic - [How to enable automatic updates for RHEL/CentOS 8 - nixCraft](https://www.cyberciti.biz/faq/install-enable-automatic-updates-rhel-centos-8/)
+
+
+## DNF Automatic
+
+[DNF Automatic — dnf latest documentation](https://dnf.readthedocs.io/en/latest/automatic.html)

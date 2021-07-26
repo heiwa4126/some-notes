@@ -36,6 +36,8 @@
 - [emacsでLSPでpython](#emacsでlspでpython)
 - [vscodeでpylance使うときに](#vscodeでpylance使うときに)
 - [pythonのregexにPCREの\Q...\E的なもの](#pythonのregexにpcreのqe的なもの)
+- [black](#black)
+- [black + flake8](#black--flake8)
 
 
 
@@ -835,3 +837,17 @@ PCREには\Q...\Eではさむとメタ文字が意味を失う、というのが
 `re.escape(pattern)`で。
 
 
+# black
+
+[psf/black: The uncompromising Python code formatter](https://github.com/psf/black)
+
+無設定で使える。
+
+たぶん行の最大長だけは変えたほうがいい(88)。
+[The Black code style — Black 21.7b0 documentation](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#line-length)
+
+
+# black + flake8
+
+
+[Using Black with other tools — Black 21.7b0 documentation](https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html?highlight=E203#flake8)
