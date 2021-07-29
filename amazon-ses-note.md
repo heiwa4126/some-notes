@@ -42,3 +42,10 @@ Verification は `Status: verified`になった。
 > You can send email from any email address on this domain.
 
 となった。
+
+# SESのSMTPインタフェース
+
+このへんから。
+
+- [Amazon SES SMTP 認証情報を取得 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/smtp-credentials.html)
+- [Amazon SES とPostfixの統合 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/postfix.html)

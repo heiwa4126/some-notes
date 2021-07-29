@@ -16,6 +16,9 @@ AWSのメモ
 - [EC2インスタンスを停止するとどうなるか](#ec2インスタンスを停止するとどうなるか)
 - [EC2Launch v2](#ec2launch-v2)
   - [EC2Launch TIPS](#ec2launch-tips)
+- [cloudformationの更新と進行の表示](#cloudformationの更新と進行の表示)
+- [S3でWWW](#s3でwww)
+  - [cloudformationで](#cloudformationで)
 
 
 # メタデータ
@@ -496,3 +499,40 @@ Powershellを実行すると
 みたいにファイルを作る。
 エラーがおきた場合、これらが消えないで残るので、
 これらを参照すること。これはよい設計。真似る。
+
+
+# cloudformationの更新と進行の表示
+
+ここから:
+[AWS CloudFormation スタックの更新 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks.html)
+
+
+
+
+
+# S3でWWW
+
+基本は:
+[S3でウェブサイトを公開する - Qiita](https://qiita.com/SSMU3/items/94d60998038e9af80cf9)
+
+で
+[Amazon S3 のウェブサイトエンドポイントを使用している CloudFront ディストリビューションからの Access Denied エラーを解決する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/s3-website-cloudfront-error-403/)
+
+次のいずれかの方法で、オブジェクトへのパブリック読み取りアクセスを許可します。
+
+- バケット内のすべてのオブジェクトに対してパブリック読み取りアクセスを許可するバケットポリシーを作成します。[バケットポリシーの例 - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/example-bucket-policies.html#example-bucket-policies-use-case-2)
+- Amazon S3 コンソールを使用してオブジェクトに対するパブリック読み取りアクセスを許可します。[ACL の設定 - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/managing-acls.html)
+
+さらに
+[Route 53 に登録されたカスタムドメインを使用した静的ウェブサイトの設定 - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html)
+
+S3のWWWってhttpsにはならない?
+[AWS S3でのhttps対応含む静的ウェブサイト公開 - Qiita](https://qiita.com/THacker/items/11eadffe6b3ce3491e3b)
+CloudFront(と独自ドメイン)がいるらしい。
+
+
+
+## cloudformationで
+
+[AWS::S3::Bucket WebsiteConfiguration \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-s3-websiteconfiguration.html)
+
