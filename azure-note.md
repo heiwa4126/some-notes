@@ -288,5 +288,8 @@ azcopy cp "$BLOBURL" x --recurse
 fileだとどうか?
 共有/ディレクトリSAS認証(Share/directory SAS authentication)とはなにか?
 
-
 [Azure SAS入門 \- Qiita](https://qiita.com/azaraseal/items/2eaea4cbb9e3faa57517)
+
+
+「Storage Explorer (プレビュー)」でfileのフォルダを右クリックすると
+「Shared Access Signatureの取得」がある。
