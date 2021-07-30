@@ -75,6 +75,20 @@ date +'%Y-%m-%d %T' -d '1970-1-1 1604482445 sec'
 date +'%Y-%m-%d %T' -d '1970-1-1 09:00:00 1604482445 sec'
 ```
 
+# dateコマンドいろいろ
+
+UTCで
+```
+date -u '+%Y-%m-%dT%H:%M:%SZ'
+```
+
+UTCで1時間後
+```
+date --date "1 hour" -u '+%Y-%m-%dT%H:%M:%SZ'
+```
+
+[[Shell Script] dateコマンドで日時(日付、時刻)計算をする方法 - Life with IT](https://l-w-i.net/t/shell/date_001.txt)
+
 # wで出てくるtty名のユーザを強制ログアウトさせる
 
 psでgrepして...より早い。
