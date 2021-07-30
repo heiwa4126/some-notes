@@ -294,6 +294,5 @@ fileだとどうか?
 「Storage Explorer (プレビュー)」でfileのフォルダを右クリックすると
 「Shared Access Signatureの取得」がある。
 
-
-
 [逆引き Azure CLI: Azure ストレージの SAS トークンを生成する (storage container generate-sas)｜まくろぐ](https://maku.blog/p/n4yqdys/)
+[Azure Key Vault と Azure CLI を使用してストレージ アカウント キーを管理する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/key-vault/secrets/overview-storage-keys)
