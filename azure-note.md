@@ -16,6 +16,7 @@
 - [Azure AZ](#azure-az)
 - [MSIとは](#msiとは)
 - [az cli よくつかうコマンド](#az-cli-よくつかうコマンド)
+- [azcopy](#azcopy)
 
 # Azure CLI
 
@@ -251,3 +252,41 @@ az vm list -d -o table
 #
 az vm list -d --query "[].{Name:name,privateIps:privateIps}" -o table
 ```
+
+
+# azcopy
+
+blobへアップロード・ダウンロードしてみる
+
+ストレージアカウトを作るか既存のものをえらぶ。
+左ペインから「コンテナー」
+今回はコンテナーを新規に作る。手抜きでパブリック・アクセスレベルはBLOBで
+いまつくったコンテナーを選択して、
+共有アクセストークンから
+アクセス許可を全部選んで「SASトークン及びURLを作成」
+でURLを得る。
+
+長いんで環境変数BLOBURLに設定して
+
+[AzCopy v10 を使用して Azure Storage にデータをコピーまたは移動する | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10)
+
+```sh
+wget https://aka.ms/downloadazcopy-v10-linux
+tar zxvf downloadazcopy-v10-linux
+azcopy_linux_amd64_10.11.0/azcopy --version
+sudo mv azcopy_linux_amd64_10.11.0/azcopy /usr/local/bin
+```
+
+で
+```sh
+# upload
+azcopy cp test.txt "$BLOBURL"
+# download
+azcopy cp "$BLOBURL" x --recurse
+```
+
+fileだとどうか?
+共有/ディレクトリSAS認証(Share/directory SAS authentication)とはなにか?
+
+
+[Azure SAS入門 \- Qiita](https://qiita.com/azaraseal/items/2eaea4cbb9e3faa57517)
