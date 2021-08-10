@@ -344,3 +344,11 @@ integrationの方、`sam init`のままだとデフォルト以外のregionの�
 
 便利。使いそうなやつだいたいある。
 [ポリシーテンプレート - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-policy-template-list.html)
+
+
+# 他人のSAMを参考にする
+
+基本は
+[AWS Serverless Application Model Developer Guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html)
+
+GitHubなら [Search · filename:template.yaml AWS::Serverless](https://github.com/search?q=filename%3Atemplate.yaml+AWS%3A%3AServerless) で検索。(わりと玉石混交)

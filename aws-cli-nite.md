@@ -1,6 +1,7 @@
 # AWS CLIのメモ
 
 - [AWS CLIのメモ](#aws-cliのメモ)
+- [aws cliの最新バージョンは?](#aws-cliの最新バージョンは)
 - [pipの最新版をユーザーローカルにインストールする](#pipの最新版をユーザーローカルにインストールする)
 - [AWS CLIのインストール手順](#aws-cliのインストール手順)
   - [Amazon Linux 2](#amazon-linux-2)
@@ -10,6 +11,13 @@
   - [Windows(古い)](#windows古い)
 - [pipでawscliのインストールに失敗する](#pipでawscliのインストールに失敗する)
 - [コマンド補完](#コマンド補完)
+
+
+# aws cliの最新バージョンは?
+
+ここ参照
+[aws\-cli/CHANGELOG\.rst at v2 · aws/aws\-cli](https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst)
+
 
 
 # pipの最新版をユーザーローカルにインストールする
