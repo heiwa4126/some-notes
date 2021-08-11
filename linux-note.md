@@ -170,3 +170,9 @@ EDITOR=emacs visudo -f /etc/sudoers.d/heiwa
 `EDITOR=`は必須じゃありません。
 
 あとファイルの最後に改行が必須(忘れやすい)。
+
+
+# Errata
+
+- Red Hat : [Red Hat Product Errata - Red Hat Customer Portal](https://access.redhat.com/errata/)
+- Ubuntu : [CVEs \| Ubuntu](https://ubuntu.com/security/cve)
