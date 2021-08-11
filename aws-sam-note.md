@@ -352,3 +352,55 @@ integrationの方、`sam init`のままだとデフォルト以外のregionの�
 [AWS Serverless Application Model Developer Guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html)
 
 GitHubなら [Search · filename:template.yaml AWS::Serverless](https://github.com/search?q=filename%3Atemplate.yaml+AWS%3A%3AServerless) で検索。(わりと玉石混交)
+
+
+# layer
+
+[AWS::Lambda::LayerVersion - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-layerversion.html#cfn-lambda-layerversion-content)
+[Creating and sharing Lambda layers - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html#invocation-layers-cloudformation)
+
+python3.8で、このスタックでのみ使うレイヤーを作る例。
+
+まずレイヤーを作る。中身はrequests。好きなだけモジュールはまとめられる(サイズ制限があるかも)
+```sh
+mkdir -p ./layers/python
+cd ./layers/python
+pip3.8 install -U requests
+# ↑ここは必要に応じて変える
+cd ..
+zip -r python.zip python/
+cd ..
+```
+
+で、template.ymlで
+```yaml
+resources:
+# 略
+  layers:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: PythonCommon-xGjbVnJyDP0uZ # TODO:名前をなんとかする
+      LicenseInfo: MIT
+      Description: Dependencies for SAM sample app.
+      ContentUri: layers/.
+      RetentionPolicy: Delete
+      CompatibleRuntimes:
+        - python3.8
+```
+
+で、このfunctionを使うリソースで、requirements.txtからrequestsを消して
+```yaml
+resources:
+# 略
+  foobarFunction:
+    Properties:
+      Layers:
+        - !Ref layers
+    # 以下略
+```
+
+
+## 注意
+
+layerの中身なんかが変わるたびに、あたらしいバージョンが増えていく。
+prodとdevel的なことができるわけだけど、気がついたらサイズがすごいことになるかもしれない。
