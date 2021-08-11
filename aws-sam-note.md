@@ -466,11 +466,26 @@ Template selection:
 [を使用して Step Functions ステートマシンを作成するAWS SAM - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/tutorial-state-machine-using-sam.html)
 
 
+# AWS::Serverless::HttpApi
+
+- [HTTP API と REST API 間で選択する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/http-api-vs-rest.html)
+- [AWS::Serverless::HttpApi \- AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-httpapi.html)
+- [Amazon API Gateway HTTP API チュートリアル - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-http-tutorials.html)
+- [HTTP API の操作 - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/http-api.html)
 
 
 # 認証が必要なlambdaを書く
 
 まずはAPIキーから。
 
+- [Controlling access to API Gateway APIs - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis.html)
 - [API キーの例 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
 - [API key example - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
+- [ApiFunctionAuth - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-property-function-apifunctionauth.html)
+- [amazon web services - Can you create Usage Plan with Cloud Formation? - Stack Overflow](https://stackoverflow.com/questions/39910734/can-you-create-usage-plan-with-cloud-formation)
+
+Usage Planって何?
+- [API GatewayのAPIキーと使用量プランについて調べてみた | DevelopersIO](https://dev.classmethod.jp/articles/try-api-gateway-usage-plan/)
+
+ApiKey 意外とむずかしい。
+Lambda オーソライザーかcognitoのほうが楽かも...調べる
