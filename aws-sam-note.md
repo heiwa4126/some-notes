@@ -399,8 +399,78 @@ resources:
     # 以下略
 ```
 
-
 ## 注意
 
 layerの中身なんかが変わるたびに、あたらしいバージョンが増えていく。
 prodとdevel的なことができるわけだけど、気がついたらサイズがすごいことになるかもしれない。
+
+
+# CloudWatch Eventsで定期実行するSAMプロジェクト
+
+[CloudWatch Events アプリケーションの AWS SAM テンプレート - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/with-scheduledevents-example-use-app-spec.html)
+
+こんなかんじでOK
+```yaml
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello_world/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        HelloWorldScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+```
+
+いま気がついたんだけど`Events:`って複数イベント書けそう。
+定期実行とURLで実行を1つの関数でできるのでは。
+
+- [Python の Lambda 関数ハンドラー - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/python-handler.html)
+
+
+あとAPI GatewayがないSAMプロジェクトだと
+```sh
+sam local start-api
+```
+は動かない。
+
+> Error: Template does not have any APIs connected to Lambda functions
+
+とか言われます。
+
+
+# テンプレート
+
+sam initで
+```
+AWS quick start application templates:
+        1 - Hello World Example
+        2 - EventBridge Hello World
+        3 - EventBridge App from scratch (100+ Event Schemas)
+        4 - Step Functions Sample App (Stock Trader)
+        5 - Elastic File System Sample App
+Template selection:
+```
+って出るやつ。
+
+[aws/aws-sam-cli-app-templates](https://github.com/aws/aws-sam-cli-app-templates)
+
+例えば `Hello World Example` はこれ。(Python 3.8版)
+[aws\-sam\-cli\-app\-templates/python3\.8/cookiecutter\-aws\-sam\-hello\-python/\{\{cookiecutter\.project\_name\}\} at master · aws/aws\-sam\-cli\-app\-templates](https://github.com/aws/aws-sam-cli-app-templates/tree/master/python3.8/cookiecutter-aws-sam-hello-python/%7B%7Bcookiecutter.project_name%7D%7D)
+
+
+4番の「Stock Trader」がおもしろそう
+[を使用して Step Functions ステートマシンを作成するAWS SAM - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/tutorial-state-machine-using-sam.html)
+
+
+
+
+# 認証が必要なlambdaを書く
+
+まずはAPIキーから。
+
+- [API キーの例 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
+- [API key example - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
