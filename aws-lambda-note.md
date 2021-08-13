@@ -9,6 +9,7 @@
 - [AWS SAM](#aws-sam-1)
 - [API Gatewayの「リソース」と「ステージ」](#api-gatewayのリソースとステージ)
 - [API GatewayのサンプルPetStoreについて](#api-gatewayのサンプルpetstoreについて)
+- [API Gateway ステージ変数](#api-gateway-ステージ変数)
 
 
 # ハンドラのeventに値を渡す
@@ -161,3 +162,10 @@ OpenAPI定義ファイルについて学ばないといけないのがめんど�
 /petsのPOSTは
 `http://petstore.execute-api.ap-northeast-1.amazonaws.com/petstore/pets`
 
+
+# API Gateway ステージ変数
+
+こんなのあるなんて知らなかった
+
+- [REST API デプロイのステージ変数のセットアップ \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/stage-variables.html)
+- [Amazon API Gateway のステージ変数の使用 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)

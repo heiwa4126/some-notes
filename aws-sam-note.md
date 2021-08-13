@@ -495,7 +495,13 @@ SAMがどうこう以前に、API Gatewayの認証認可がややこしい。
 HTTP APIにはリソースポリシー(IP元で制限)がないのか... そもそもhttpsでもないし、とりあえずREST APIから調べる。
 
 SSLクライアント証明書も使えるらしい。
-[API Gatewayにクライアント証明書による認証を設定してみる | DevelopersIO](https://dev.classmethod.jp/articles/api-gateway-support-mutual-tls-auth/)
+- [API Gatewayにクライアント証明書による認証を設定してみる | DevelopersIO](https://dev.classmethod.jp/articles/api-gateway-support-mutual-tls-auth/)
+- [Amazon API Gateway が相互 TLS 認証のサポートを開始](https://aws.amazon.com/jp/about-aws/whats-new/2020/09/amazon-api-gateway-supports-mutual-tls-authentication/)
+- [REST API の相互 TLS 認証の設定 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/rest-api-mutual-tls.html)
+- [HTTP API の相互 TLS 認証の設定 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/http-api-mutual-tls.html)
+- [【図解】mutual\-TLS \(mTLS, 2way TLS\),クライアント認証とトークンバインディング over http \| SEの道標](https://milestone-of-se.nesuke.com/nw-basic/tls/mutual-tls-token-binding/)
+
+
 
 ## APIキー
 - [API キーの例 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
@@ -508,6 +514,14 @@ Usage Planって何?
 
 ApiKey 意外とむずかしい。
 Lambda オーソライザーかcognitoのほうが楽かも...調べる
+
+(戻ってきた)
+APIキーがなぜAPI Gatewayのオーソライザーの中にないか? どうもこれはOpenAPI(swaggr)の規格だかららしい。
+[API キーを使用する理由と条件  |  OpenAPI を使用した Cloud Endpoints  |  Google Cloud](https://cloud.google.com/endpoints/docs/openapi/when-why-api-key?hl=ja)　←これわかりやすい。Googleの翻訳は良い。
+
+↑から引用↓
+- API キーは、API の呼び出し元のプロジェクト（アプリケーションまたはサイト）を識別します。
+- 認証トークンは、アプリまたはサイトを利用するユーザー（個人）を識別します
 
 ## Lambda オーソライザー
 
@@ -531,10 +545,40 @@ WebSocket API では、リクエストパラメータベースのオーソライ
 [API Gateway Lambda オーソライザーを使用する \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html#api-gateway-lambda-authorizer-create)
 
 
-ex1-lambda-authorizer
+ex1-lambda-authorizer　TOKEN
+ex2-lambda-authorizer　REQUEST
 PetStore (6059g6rlr4) [チュートリアル: サンプルをインポートして REST API を作成する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-create-api-from-example.html)
-
-
 
 JWT(JSON Web Token ジョット)
 [rfc7519](https://datatracker.ietf.org/doc/html/rfc7519)
+
+だいたいわかったと思う。
+REQUESTオーソライザーのほうがかんたんなので、
+なにか特殊なヘッダを追加してやらないとエラーになるlambdaを書いてみる。
+
+サンプルはここにある。けどTOKENだけだな。
+[GitHub - awslabs/aws-apigateway-lambda-authorizer-blueprints: Blueprints and examples for Lambda-based custom Authorizers for use in API Gateway.](https://github.com/awslabs/aws-apigateway-lambda-authorizer-blueprints)
+
+レスポンスを組み立てるのがめんどくさそう。
+- [Amazon API Gateway Lambda オーソライザーへの入力 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-lambda-authorizer-input.html) - TOKENとREQUEST
+- [Amazon API Gateway Lambda オーソライザーからの出力 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-lambda-authorizer-output.html) - 共通らしい
+
+その前にCognito調べてみる。
+
+(戻ってきた)
+これを参考にSAM書いてみる
+[API GatewayのLambda オーソライザーから後続のLambdaにデータを引き渡す | DevelopersIO](https://dev.classmethod.jp/articles/lambda-authorizer/)
+
+
+## Cognito
+
+[Amazon Cognito ユーザープールをオーソライザーとして使用して REST API へのアクセスを制御する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html)
+
+> API で Amazon Cognito ユーザープールを使用するには、COGNITO_USER_POOLS タイプのオーソライザーを作成してから、そのオーソライザーを使用する API メソッドを構成する
+
+[ユーザープールの開始方法。 - Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/getting-started-with-cognito-user-pools.html)
+[ユーザーアカウントのサインアップと確認 - Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/signing-up-users-in-your-app.html)
+[管理者としてのユーザーアカウントの作成 - Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/how-to-create-user-accounts.html)
+
+もっとかんたんかと思ったら異常にめんどくさい。
+
