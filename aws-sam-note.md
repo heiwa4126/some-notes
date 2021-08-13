@@ -344,3 +344,14 @@ integrationの方、`sam init`のままだとデフォルト以外のregionの�
 
 便利。使いそうなやつだいたいある。
 [ポリシーテンプレート - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-policy-template-list.html)
+
+
+# SAMでlayerを使う
+
+- [Building layers \- AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/building-layers.html#building-applications-examples)
+- [AWS::Serverless::LayerVersion - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-layerversion.html)
+
+あまりlayerのことわかってなかったので
+- [Creating and sharing Lambda layers - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html?icmpid=docs_lambda_help)
+- [Using layers with your Lambda function - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/invocation-layers.html)
+- [aws-lambda-developer-guide/sample-apps/blank-python at main · awsdocs/aws-lambda-developer-guide](https://github.com/awsdocs/aws-lambda-developer-guide/tree/main/sample-apps/blank-python)
