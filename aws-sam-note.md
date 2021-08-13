@@ -483,11 +483,18 @@ Template selection:
 - [HTTP API の操作 - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/http-api.html)
 
 
-# 認証が必要なlambdaを書く
+# SAMで認証が必要なlambdaを書く
 
-まずはAPIキーから。
-
+使える認証一覧
 - [Controlling access to API Gateway APIs - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis.html)
+- [API Gateway での HTTP API へのアクセスの制御と管理 - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/http-api-access-control.html)
+- [API Gateway での REST API へのアクセスの制御と管理 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-control-access-to-api.html)
+
+HTTP APIにはリソースポリシー(IP元で制限)がないのか... そもそもhttpsでもないし、とりあえずREST APIから調べる。
+
+
+
+## APIキー
 - [API キーの例 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
 - [API key example - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
 - [ApiFunctionAuth - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-property-function-apifunctionauth.html)
@@ -498,3 +505,5 @@ Usage Planって何?
 
 ApiKey 意外とむずかしい。
 Lambda オーソライザーかcognitoのほうが楽かも...調べる
+
+## Lambda オーソライザー
