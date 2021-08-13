@@ -483,7 +483,9 @@ Template selection:
 - [HTTP API の操作 - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/http-api.html)
 
 
-# SAMで認証が必要なlambdaを書く
+# SAMで認証認可が必要なlambdaを書く
+
+SAMがどうこう以前に、API Gatewayの認証認可がややこしい。
 
 使える認証一覧
 - [Controlling access to API Gateway APIs - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis.html)
@@ -492,7 +494,8 @@ Template selection:
 
 HTTP APIにはリソースポリシー(IP元で制限)がないのか... そもそもhttpsでもないし、とりあえずREST APIから調べる。
 
-
+SSLクライアント証明書も使えるらしい。
+[API Gatewayにクライアント証明書による認証を設定してみる | DevelopersIO](https://dev.classmethod.jp/articles/api-gateway-support-mutual-tls-auth/)
 
 ## APIキー
 - [API キーの例 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
@@ -507,3 +510,31 @@ ApiKey 意外とむずかしい。
 Lambda オーソライザーかcognitoのほうが楽かも...調べる
 
 ## Lambda オーソライザー
+
+[API Gateway Lambda オーソライザーを使用する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
+[Lambda オーソライザー - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-lambda-authorizer.html)
+ほか参考
+[AWS SAMを利用してAPI GatewayとLambda Authorizer\(Golang\)の構築をやってみた \- カミナシ開発者ブログ](https://kaminashi-developer.hatenablog.jp/entry/2021/03/30/111529)
+[API Gateway Lambdaオーソライザーでアクセス制御する - Qiita](https://qiita.com/favolabo/items/369631ca7696fad9307a)
+
+- TOKENオーソライザー
+- REQUESTオーソライザー
+
+>トークンベース の Lambda オーソライザー (TOKEN オーソライザーとも呼ばれる) は、JSON ウェブトークン (JWT) や OAuth トークンなどのベアラートークンで発信者 ID を受け取ります。
+
+> リクエストパラメータベースの Lambda オーソライザー (REQUEST オーソライザーとも呼ばれます) は、ヘッダー、クエリ文字列パラメータ、stageVariables、および $context 変数の組み合わせで発信者 ID を受け取ります。
+
+WebSocket API では、リクエストパラメータベースのオーソライザーのみがサポートされています。
+
+
+まずこれからやってみる。
+[API Gateway Lambda オーソライザーを使用する \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html#api-gateway-lambda-authorizer-create)
+
+
+ex1-lambda-authorizer
+PetStore (6059g6rlr4) [チュートリアル: サンプルをインポートして REST API を作成する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-create-api-from-example.html)
+
+
+
+JWT(JSON Web Token ジョット)
+[rfc7519](https://datatracker.ietf.org/doc/html/rfc7519)

@@ -1,12 +1,14 @@
 # AWS Lmabdaメモ
 
-- [AWS Lmabdaメモ](#aws-lmabda%e3%83%a1%e3%83%a2)
-- [ハンドラのeventに値を渡す](#%e3%83%8f%e3%83%b3%e3%83%89%e3%83%a9%e3%81%aeevent%e3%81%ab%e5%80%a4%e3%82%92%e6%b8%a1%e3%81%99)
-- [AWS CodeCommitとCodePiplineでCI/CD](#aws-codecommit%e3%81%a8codepipline%e3%81%a7cicd)
-- [AWS Lambdaのデプロイツール](#aws-lambda%e3%81%ae%e3%83%87%e3%83%97%e3%83%ad%e3%82%a4%e3%83%84%e3%83%bc%e3%83%ab)
+- [AWS Lmabdaメモ](#aws-lmabdaメモ)
+- [ハンドラのeventに値を渡す](#ハンドラのeventに値を渡す)
+- [AWS CodeCommitとCodePiplineでCI/CD](#aws-codecommitとcodepiplineでcicd)
+- [AWS Lambdaのデプロイツール](#aws-lambdaのデプロイツール)
 - [AWS SAM](#aws-sam)
 - [2019-11](#2019-11)
 - [AWS SAM](#aws-sam-1)
+- [API Gatewayの「リソース」と「ステージ」](#api-gatewayのリソースとステージ)
+- [API GatewayのサンプルPetStoreについて](#api-gatewayのサンプルpetstoreについて)
 
 
 # ハンドラのeventに値を渡す
@@ -131,4 +133,31 @@ SAM CLI now collects telemetry to better understand customer needs.
 ```
 Telemetry endpoint configured to be https://aws-serverless-tools-telemetry.us-west-2.amazonaws.com/metrics
 ```
+
+# API Gatewayの「リソース」と「ステージ」
+
+
+
+# API GatewayのサンプルPetStoreについて
+
+[チュートリアル: サンプルをインポートして REST API を作成する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-create-api-from-example.html)
+
+OpenAPIのモデルはAPI Gatewayポータルで見れる
+
+/のGET
+普通ならlambdaがあるところに「Mock エンドポイント」がある。
+[API Gateway でモック 統合を設定する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/how-to-mock-integration.html)
+
+文字通り、開発前にコードレスでモックのREST APIを作る機能らしい。
+OpenAPI定義ファイルについて学ばないといけないのがめんどそう。
+
+> Swagger 3.0 から OpenAPI に名前が変わったため、 OpenAPI 3.0 は Swagger 3.0 でもあります。
+
+- [OpenAPI \(Swagger\) 超入門 \- Qiita](https://qiita.com/teinen_qiita/items/e440ca7b1b52ec918f1b)
+- [Swagger Editor](https://editor.swagger.io/)
+- [OpenAPI (Swagger) の基本的なあれこれ - ばうあーろぐ](https://girigiribauer.com/tech/20190318/)
+
+
+/petsのPOSTは
+`http://petstore.execute-api.ap-northeast-1.amazonaws.com/petstore/pets`
 
