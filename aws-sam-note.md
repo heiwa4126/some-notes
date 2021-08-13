@@ -355,3 +355,146 @@ integrationの方、`sam init`のままだとデフォルト以外のregionの�
 - [Creating and sharing Lambda layers - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html?icmpid=docs_lambda_help)
 - [Using layers with your Lambda function - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/invocation-layers.html)
 - [aws-lambda-developer-guide/sample-apps/blank-python at main · awsdocs/aws-lambda-developer-guide](https://github.com/awsdocs/aws-lambda-developer-guide/tree/main/sample-apps/blank-python)
+# 他人のSAMを参考にする
+
+基本は
+[AWS Serverless Application Model Developer Guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html)
+
+GitHubなら [Search · filename:template.yaml AWS::Serverless](https://github.com/search?q=filename%3Atemplate.yaml+AWS%3A%3AServerless) で検索。(わりと玉石混交)
+
+
+# layer
+
+[AWS::Lambda::LayerVersion - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-layerversion.html#cfn-lambda-layerversion-content)
+[Creating and sharing Lambda layers - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html#invocation-layers-cloudformation)
+
+python3.8で、このスタックでのみ使うレイヤーを作る例。
+
+まずレイヤーを作る。中身はrequests。好きなだけモジュールはまとめられる(サイズ制限があるかも)
+```sh
+mkdir -p ./layers/python
+cd ./layers/python
+pip3.8 install -U requests
+# ↑ここは必要に応じて変える
+cd ..
+zip -r python.zip python/
+cd ..
+```
+
+で、template.ymlで
+```yaml
+resources:
+# 略
+  layers:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: PythonCommon-xGjbVnJyDP0uZ # TODO:名前をなんとかする
+      LicenseInfo: MIT
+      Description: Dependencies for SAM sample app.
+      ContentUri: layers/.
+      RetentionPolicy: Delete
+      CompatibleRuntimes:
+        - python3.8
+```
+
+で、このfunctionを使うリソースで、requirements.txtからrequestsを消して
+```yaml
+resources:
+# 略
+  foobarFunction:
+    Properties:
+      Layers:
+        - !Ref layers
+    # 以下略
+```
+
+## 注意
+
+layerの中身なんかが変わるたびに、あたらしいバージョンが増えていく。
+prodとdevel的なことができるわけだけど、気がついたらサイズがすごいことになるかもしれない。
+
+
+# CloudWatch Eventsで定期実行するSAMプロジェクト
+
+[CloudWatch Events アプリケーションの AWS SAM テンプレート - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/with-scheduledevents-example-use-app-spec.html)
+
+こんなかんじでOK
+```yaml
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello_world/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Events:
+        HelloWorldScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+```
+
+いま気がついたんだけど`Events:`って複数イベント書けそう。
+定期実行とURLで実行を1つの関数でできるのでは。
+
+- [Python の Lambda 関数ハンドラー - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/python-handler.html)
+
+
+あとAPI GatewayがないSAMプロジェクトだと
+```sh
+sam local start-api
+```
+は動かない。
+
+> Error: Template does not have any APIs connected to Lambda functions
+
+とか言われます。
+
+
+# テンプレート
+
+sam initで
+```
+AWS quick start application templates:
+        1 - Hello World Example
+        2 - EventBridge Hello World
+        3 - EventBridge App from scratch (100+ Event Schemas)
+        4 - Step Functions Sample App (Stock Trader)
+        5 - Elastic File System Sample App
+Template selection:
+```
+って出るやつ。
+
+[aws/aws-sam-cli-app-templates](https://github.com/aws/aws-sam-cli-app-templates)
+
+例えば `Hello World Example` はこれ。(Python 3.8版)
+[aws\-sam\-cli\-app\-templates/python3\.8/cookiecutter\-aws\-sam\-hello\-python/\{\{cookiecutter\.project\_name\}\} at master · aws/aws\-sam\-cli\-app\-templates](https://github.com/aws/aws-sam-cli-app-templates/tree/master/python3.8/cookiecutter-aws-sam-hello-python/%7B%7Bcookiecutter.project_name%7D%7D)
+
+
+4番の「Stock Trader」がおもしろそう
+[を使用して Step Functions ステートマシンを作成するAWS SAM - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/tutorial-state-machine-using-sam.html)
+
+
+# AWS::Serverless::HttpApi
+
+- [HTTP API と REST API 間で選択する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/http-api-vs-rest.html)
+- [AWS::Serverless::HttpApi \- AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-httpapi.html)
+- [Amazon API Gateway HTTP API チュートリアル - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-http-tutorials.html)
+- [HTTP API の操作 - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/http-api.html)
+
+
+# 認証が必要なlambdaを書く
+
+まずはAPIキーから。
+
+- [Controlling access to API Gateway APIs - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis.html)
+- [API キーの例 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
+- [API key example - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-keys.html)
+- [ApiFunctionAuth - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-property-function-apifunctionauth.html)
+- [amazon web services - Can you create Usage Plan with Cloud Formation? - Stack Overflow](https://stackoverflow.com/questions/39910734/can-you-create-usage-plan-with-cloud-formation)
+
+Usage Planって何?
+- [API GatewayのAPIキーと使用量プランについて調べてみた | DevelopersIO](https://dev.classmethod.jp/articles/try-api-gateway-usage-plan/)
+
+ApiKey 意外とむずかしい。
+Lambda オーソライザーかcognitoのほうが楽かも...調べる

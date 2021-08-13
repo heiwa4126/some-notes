@@ -1126,3 +1126,29 @@ subscription-manager repos --enable=rhel-6-server-els-rpms
 ## DNF Automatic
 
 [DNF Automatic — dnf latest documentation](https://dnf.readthedocs.io/en/latest/automatic.html)
+
+
+# yum-changelog plugin
+
+[yum-changelog(1) - Linux man page](https://linux.die.net/man/1/yum-changelog)
+
+インストール
+```sh
+sudo yum install yum-changelog
+```
+
+シンプルな使い方
+```sh
+# さいきんの
+sudo yum changelog recent | less
+# 特定のパッケージ
+sudo yum changelog openssl | less
+```
+
+Debian/Ubuntuだと
+```sh
+# 特定のパッケージ
+apt changelog openssl
+```
+
+RHEL8ではどうなの?

@@ -75,6 +75,20 @@ date +'%Y-%m-%d %T' -d '1970-1-1 1604482445 sec'
 date +'%Y-%m-%d %T' -d '1970-1-1 09:00:00 1604482445 sec'
 ```
 
+# dateコマンドいろいろ
+
+UTCで
+```
+date -u '+%Y-%m-%dT%H:%M:%SZ'
+```
+
+UTCで1時間後
+```
+date --date "1 hour" -u '+%Y-%m-%dT%H:%M:%SZ'
+```
+
+[[Shell Script] dateコマンドで日時(日付、時刻)計算をする方法 - Life with IT](https://l-w-i.net/t/shell/date_001.txt)
+
 # wで出てくるtty名のユーザを強制ログアウトさせる
 
 psでgrepして...より早い。
@@ -156,3 +170,9 @@ EDITOR=emacs visudo -f /etc/sudoers.d/heiwa
 `EDITOR=`は必須じゃありません。
 
 あとファイルの最後に改行が必須(忘れやすい)。
+
+
+# Errata
+
+- Red Hat : [Red Hat Product Errata - Red Hat Customer Portal](https://access.redhat.com/errata/)
+- Ubuntu : [CVEs \| Ubuntu](https://ubuntu.com/security/cve)
