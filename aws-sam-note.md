@@ -494,12 +494,25 @@ SAMがどうこう以前に、API Gatewayの認証認可がややこしい。
 
 HTTP APIにはリソースポリシー(IP元で制限)がないのか... そもそもhttpsでもないし、とりあえずREST APIから調べる。
 
-SSLクライアント証明書も使えるらしい。
+## SSLクライアント証明書も使えるらしい
+
 - [API Gatewayにクライアント証明書による認証を設定してみる | DevelopersIO](https://dev.classmethod.jp/articles/api-gateway-support-mutual-tls-auth/)
 - [Amazon API Gateway が相互 TLS 認証のサポートを開始](https://aws.amazon.com/jp/about-aws/whats-new/2020/09/amazon-api-gateway-supports-mutual-tls-authentication/)
 - [REST API の相互 TLS 認証の設定 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/rest-api-mutual-tls.html)
 - [HTTP API の相互 TLS 認証の設定 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/http-api-mutual-tls.html)
 - [【図解】mutual\-TLS \(mTLS, 2way TLS\),クライアント認証とトークンバインディング over http \| SEの道標](https://milestone-of-se.nesuke.com/nw-basic/tls/mutual-tls-token-binding/)
+- [Automating mutual TLS setup for Amazon API Gateway \| AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/automating-mutual-tls-setup-for-amazon-api-gateway/)
+
+
+ACMでプライベートCAつくって、クライアント証明書だせるのか...
+- [AWS::ACMPCA::CertificateAuthority](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-acmpca-certificateauthority-subject.html)
+- [ACM プライベート CA とは何ですか。 - AWS Certificate Manager Private Certificate Authority](https://docs.aws.amazon.com/ja_jp/acm-pca/latest/userguide/PcaWelcome.html)
+- [プライベート証明書の取得 - AWS Certificate Manager Private Certificate Authority](https://docs.aws.amazon.com/ja_jp/acm-pca/latest/userguide/PcaGetCert.html)
+
+ただなんだか値段が高いらしい(ひとつにつき、400USD/月。[\[新機能\]ACM Private Certificate Authorityを試してみた \| DevelopersIO](https://dev.classmethod.jp/articles/tried-acm-private-certificate-authority/))のでCA.plで地道にやる。
+
+
+
 
 
 
@@ -581,4 +594,3 @@ REQUESTオーソライザーのほうがかんたんなので、
 [管理者としてのユーザーアカウントの作成 - Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/how-to-create-user-accounts.html)
 
 もっとかんたんかと思ったら異常にめんどくさい。
-
