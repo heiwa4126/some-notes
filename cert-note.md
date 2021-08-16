@@ -1,14 +1,25 @@
 # 証明書関連メモ
 
+- [証明書関連メモ](#証明書関連メモ)
+- [CA.pl](#capl)
+  - [クライアント証明書](#クライアント証明書)
+  - [mutual TLS authentication](#mutual-tls-authentication)
+  - [AWS Lambdaで](#aws-lambdaで)
+- [他](#他)
+
 # CA.pl
 
-昔っからopensslパッケージについているCA.plでCAを作ってみる。
+昔っからopensslパッケージについているCA.plで
+プライベートCA(オレオレ認証局)を作ってみるメモ。
+
+- Red Hat系だと`openssl-perl`パッケージで、パスは`/etc/pki/tls/misc/CA.pl`。
+- Debian系だと`openssl`パッケージに同梱で、パスは`/usr/lib/ssl/misc/CA.pl`
 
 - [4\.9\. Setting Up a Certifying Authority \- Linux Security Cookbook \[Book\]](https://www.oreilly.com/library/view/linux-security-cookbook/0596003919/ch04s09.html)
 - [インストール](http://archive.linux.or.jp/JF/JFdocs/SSL-Certificates-HOWTO/x129.html)
 
 CA.plのパス長いので、
-aliasかPATHに追加するか、作業ディレクトリにsymlink
+aliasかPATHに追加するか、作業ディレクトリにsymlink。/usr/local/bin/CA.plとかにsymlinkでもいいね。
 ```sh
 ln -sf /usr/lib/ssl/misc/CA.pl .
 ```
@@ -84,7 +95,14 @@ demoCA/
 `-- serial
 ```
 
-ふつうに証明書つくってみる.
+WindowsなんかでプライベートCAを簡単にインポートできるようにDER形式に変換したバージョンも作っておく。
+```
+openssl x509 -outform der -in cacert.pem -out cacert.der
+```
+
+
+
+ふつうにサイト証明書つくってみる.
 
 ```sh
 mkdir cert1
@@ -143,8 +161,53 @@ CA.plを使うなら
 ```
 で`newcert.p12`ができる。
 
-
 [PKCS#12形式証明書に関するコマンド - Qiita](https://qiita.com/niko-pado/items/c864ca5b9b22ccaeb0ec)
+
+で、これを使ってみるnginx + curlで。
+
+curl用にpem形式のクライアント証明書`curl.pem`を作る。
+```sh
+openssl pkcs12 -in newcert.p12 -out curl.pem -nodes -clcerts
+```
+で、
+```sh
+curl -E ./curl.pem {URL}
+```
+みたいに。
+
+nginx側はいろいろあるけど、「特定のディレクトリ以下をクライアント証明が必要」にしてみる
+```
+# -*- mode: nginx -*-
+
+# ssl_verify_client on;
+ssl_verify_client optional;
+ssl_client_certificate {CA.plで作ったcacert.pemへのパス};
+
+location /clientauth/ {
+  if ($ssl_client_verify != SUCCESS) {
+    return 403;
+    # ほんとうは 400 Bad Request - No required SSL certificate was sent と返すべき
+  }
+  alias /somewhere/clientauth/;
+  index index.htm;
+}
+```
+
+[ssl_client_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_client_certificate)
+はサイトごとに1つしかもてないみたい。
+
+
+## mutual TLS authentication
+
+mutual TLS(mTLS または 2way TLS)
+
+[【図解】mutual\-TLS \(mTLS, 2way TLS\),クライアント認証とトークンバインディング over http \| SEの道標](https://milestone-of-se.nesuke.com/nw-basic/tls/mutual-tls-token-binding/)
+
+
+## AWS Lambdaで
+
+
+
 
 # 他
 
