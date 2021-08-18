@@ -7,4 +7,4 @@ bcrypyを使うのが普通らしい。
 - [総当たり攻撃時のパスワード最大解読時間の表(by 上野宣)について分析した](https://qiita.com/ockeghem/items/5a5e73528eb0ee055428)
 - [BCryptのすすめ](https://qiita.com/ponkotuy/items/1a703b866ddf5c9fe80c)
 - [Pythonでbcryptを使ってパスワードをゆっくりハッシュ化](https://qiita.com/matsulib/items/2bcf59c2b2cb5eb5c5c4)
-- [Ansible password_hash wont' use bcrypt even though passlib is installed](https://stackoverflow.com/questions/55875213/ansible-password-hash-wont-use-bcrypt-even-though-passlib-is-installed)
+- [Ansible password_hash wont' use bcrypt even though passlib is installed](https://stackoverflow.com/questions/55875213/ansible-password-hash-wont-use-bcrypt-even-though-passlib-is-installed) - `pip3 install passlib`
