@@ -174,3 +174,8 @@ The document has moved
 <A HREF="https://www.google.com/">here</A>.
 </BODY></HTML>
 ```
+
+
+# Get-NetNeighbor
+
+[ASCII.jp：WindowsのコマンドでLAN内のデバイスを探す (1/2)](https://ascii.jp/elem/000/004/066/4066675/)
