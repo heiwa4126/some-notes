@@ -39,6 +39,7 @@
 - [go-mode](#go-mode)
 - [WindowsとLinuxでソースを分ける](#windowsとlinuxでソースを分ける)
 - [事前に型のわからないJSONを読む](#事前に型のわからないjsonを読む)
+- [インタフェースメモ](#インタフェースメモ)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -955,6 +956,9 @@ Pythonだと str.startswith, str.endswith
 - godoctor
 - gocode-gomod
 
+(古い。あとで直す)
+
+
 # windowsでbtime,atime,ctime,mtime
 
 サンプル:
@@ -1033,3 +1037,15 @@ REST APIみたいに型が変わるものが帰ってくる場合など。
 
 そもそも違う構造体指定してもjson.Unmarshal()はエラーにならない。
 逆に、バリデーションしたい場合はどうすればいい?
+
+
+# インタフェースメモ
+
+(以下は間違ってるかもしれません)
+
+インタフェースを関数にわたす、または戻り値として受け取るときに、
+インタフェースはすでにstructureのpointerみたいになってるので、
+宣言で `*MyInterface` みたいに書くと、コンパイル通りません。
+いつでもどこでも `MyInterface` が正しい。
+
+
