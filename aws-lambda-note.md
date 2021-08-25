@@ -10,6 +10,7 @@
 - [API Gatewayの「リソース」と「ステージ」](#api-gatewayのリソースとステージ)
 - [API GatewayのサンプルPetStoreについて](#api-gatewayのサンプルpetstoreについて)
 - [API Gateway ステージ変数](#api-gateway-ステージ変数)
+- [コールドスタート vs ウォームスタート](#コールドスタート-vs-ウォームスタート)
 
 
 # ハンドラのeventに値を渡す
@@ -169,3 +170,12 @@ OpenAPI定義ファイルについて学ばないといけないのがめんど�
 
 - [REST API デプロイのステージ変数のセットアップ \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/stage-variables.html)
 - [Amazon API Gateway のステージ変数の使用 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
+
+
+# コールドスタート vs ウォームスタート
+
+- [Lambdaの実行時間について | Oji-Cloud](https://oji-cloud.net/2019/07/15/post-2418/)
+- [AWS における サーバーレスの基礎からチューニングまで](https://www.slideshare.net/shimy_net/aws-79149218)
+- [Keeping Functions Warm \- How To Fix AWS Lambda Cold Start Issues](https://www.serverless.com/blog/keep-your-lambdas-warm)
+- [New for AWS Lambda – Predictable start\-up times with Provisioned Concurrency \| AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/new-for-aws-lambda-predictable-start-up-times-with-provisioned-concurrency/)
+- [Operating Lambda: Performance optimization – Part 1 | AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/operating-lambda-performance-optimization-part-1/)
