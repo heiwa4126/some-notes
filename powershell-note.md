@@ -27,6 +27,7 @@ Powershellが絡むとすべてがめんどくさくなる
 - [vscodeのterminalで使うpowershellをv6,v7にする](#vscodeのterminalで使うpowershellをv6v7にする)
 - [TIPS](#tips)
 - [isFile, isDirのたぐい](#isfile-isdirのたぐい)
+- [Powershellで bash の '&' みたいの](#powershellで-bash-の--みたいの)
 
 
 # Powershellの常識、世間の非常識
@@ -271,3 +272,19 @@ $i -is [System.IO.FileInfo] # -> ファイル
 # -> それ以外のなにか
 ```
 `LiteralPath`にしてるのはglob避け。
+
+
+# Powershellで bash の '&' みたいの
+
+```sh
+a ; b & c & d & e
+```
+みたいのをPowershellでやる方法。
+(cmd.exeでできればもっといいのだがそれはさすがに無理でしょう)
+
+- [Powershell equivalent of bash ampersand (&) for forking/running background processes - Stack Overflow](https://stackoverflow.com/questions/185575/powershell-equivalent-of-bash-ampersand-for-forking-running-background-proce)
+- [Start\-Job \(Microsoft\.PowerShell\.Core\) \- PowerShell \| Microsoft Docs](https://docs.microsoft.com/en-us/powershell/module/Microsoft.PowerShell.Core/Start-Job?view=powershell-7.1)
+
+
+書いた。
+[heiwa4126/powershell-bg: bashで `a; b & c & d ; e` みたいのをPowershellでやるサンプル。](https://github.com/heiwa4126/powershell-bg)
