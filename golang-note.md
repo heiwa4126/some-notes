@@ -40,6 +40,7 @@
 - [WindowsとLinuxでソースを分ける](#windowsとlinuxでソースを分ける)
 - [事前に型のわからないJSONを読む](#事前に型のわからないjsonを読む)
 - [インタフェースメモ](#インタフェースメモ)
+- ["//go:build"](#gobuild)
 
 # LinuxでWindowsのバイナリを作る
 
@@ -1048,4 +1049,8 @@ REST APIみたいに型が変わるものが帰ってくる場合など。
 宣言で `*MyInterface` みたいに書くと、コンパイル通りません。
 いつでもどこでも `MyInterface` が正しい。
 
+
+# "//go:build"
+
+[Build Constraints](https://pkg.go.dev/go/build#hdr-Build_Constraints)というもの。
 
