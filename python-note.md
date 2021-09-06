@@ -39,6 +39,7 @@
 - [black](#black)
 - [black + flake8](#black--flake8)
 - [nose](#nose)
+- [ローカルタイムゾーンを得る](#ローカルタイムゾーンを得る)
 
 
 
@@ -867,3 +868,15 @@ executableだとスキップされます。
 nosetests -vv --collect-only
 ```
 が便利
+
+
+# ローカルタイムゾーンを得る
+
+pythonスクリプトの動いているホストのローカルタイムゾーンを得る。
+
+[datetime - Python: Figure out local timezone - Stack Overflow](https://stackoverflow.com/questions/2720319/python-figure-out-local-timezone)
+
+```python
+from datetime import datetime,timezone
+LOCAL_TIMEZONE = datetime.now(timezone.utc).astimezone().tzinfo
+```
