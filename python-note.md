@@ -38,6 +38,7 @@
 - [pythonのregexにPCREの\Q...\E的なもの](#pythonのregexにpcreのqe的なもの)
 - [black](#black)
 - [black + flake8](#black--flake8)
+- [nose](#nose)
 
 
 
@@ -851,3 +852,18 @@ PCREには\Q...\Eではさむとメタ文字が意味を失う、というのが
 
 
 [Using Black with other tools — Black 21.7b0 documentation](https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html?highlight=E203#flake8)
+
+
+# nose
+
+`nosetests`がテストファイルを見つけてくれないとき。
+
+[python \- Nose unable to find tests in ubuntu \- Stack Overflow](https://stackoverflow.com/questions/1457104/nose-unable-to-find-tests-in-ubuntu)
+
+executableだとスキップされます。
+
+トラブルシューティングには
+```sh
+nosetests -vv --collect-only
+```
+が便利
