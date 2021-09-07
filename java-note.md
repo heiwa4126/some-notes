@@ -8,11 +8,14 @@ JAVAめんどくさい。
 - [JAVAのCLASSPATH](#javaのclasspath)
 - [headlessとは](#headlessとは)
 - [Ubuntuで開発](#ubuntuで開発)
+- [sdkman](#sdkman)
+- [Spring Initializr](#spring-initializr)
 - [Gradleインストール](#gradleインストール)
 - [Gradleチュートリアル](#gradleチュートリアル)
   - [実行](#実行)
   - [実行できるjarを作る その1](#実行できるjarを作る-その1)
   - [実行できるjarを作る その2](#実行できるjarを作る-その2)
+- [Gradleのappでpostgres](#gradleのappでpostgres)
 - [Gradle参考リンク](#gradle参考リンク)
 - [Groovyチュートリアル](#groovyチュートリアル)
 - [Kotlinチュートリアル](#kotlinチュートリアル)
@@ -91,6 +94,45 @@ OpenJDK 64-Bit Server VM (build 11.0.8+10-post-Ubuntu-0ubuntu118.04.1, mixed mod
 $ javac -version
 javac 11.0.8
 ```
+
+# sdkman
+
+SDKMAN!入れる
+参考: [Installation - SDKMAN! the Software Development Kit Manager](https://sdkman.io/install)
+
+```sh
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+```
+
+# Spring Initializr
+
+[Spring Initializr](https://start.spring.io/)
+
+CLIはないの?
+curlでできます。
+[Spring Initializr Reference Guide](https://docs.spring.io/initializr/docs/0.9.1/reference/html/#command-line)
+
+demo1.zipとか作って、ホストへコピーしてunzip。
+gradle版だと
+```sh
+./gradlew init
+./gradlew wrapper
+```
+で初期化。
+
+```sh
+./gradlew bootRun
+```
+で起動。
+
+```sh
+./gradlew -stop
+```
+で終了
+
+
+
 
 # Gradleインストール
 
@@ -201,7 +243,10 @@ Hello world!
 普通はこっち。
 ```
 ./gradlew installDist
+# 古い
 build/install/demo/bin/demo
+# 7ぐらい
+./app/build/install/app/bin/app
 ```
 でもOK.
 
@@ -275,7 +320,8 @@ Hello world.
 「その1」で「依存するjarなし」にして作ったわけだけど、
 そんなプロジェクトはあるとも思えないので、
 最初から入ってた
-[Google Guava - Wikipedia](https://ja.wikipedia.org/wiki/Google_Guava)
+- [Google Guava - Wikipedia](https://ja.wikipedia.org/wiki/Google_Guava)
+- [google/guava: Google core libraries for Java](https://github.com/google/guava)
 を使ったApp.javaに変えてみる。
 
 [com.google.common.base.Strings#repeat](https://guava.dev/releases/19.0/api/docs/com/google/common/base/Strings.html#repeat(java.lang.String,%20int))を使って、Hello worldの上下に罫線を引く。
@@ -322,6 +368,9 @@ java -jar ./build/libs/demo.jar
 ってエラーが出る。
 
 ここで、`shadow plugin` を使う。
+
+- [johnrengelman/shadow: Gradle plugin to create fat/uber JARs, apply file transforms, and relocate packages for applications and libraries\. Gradle version of Maven's Shade plugin\.](https://github.com/johnrengelman/shadow)
+
 
 `bundle.gradle`を編集して
 ```diff
@@ -375,6 +424,13 @@ $ ls -sh1 ./build/distributions/demo*.{tar,zip}
 3.0M ./build/distributions/demo.tar
 2.6M ./build/distributions/demo.zip
 ```
+
+# Gradleのappでpostgres
+
+[// https://mvnrepository\.com/artifact/org\.postgresql/postgresql
+implementation group: 'org\.postgresql', name: 'postgresql', version: '42\.2\.23'
+](https://mvnrepository.com/artifact/org.postgresql/postgresql/42.2.23)
+
 
 # Gradle参考リンク
 
@@ -540,5 +596,8 @@ mvn + JAVAでjarまで出来る。
 
 Gradleでwarのを試してみる。まずGradleの普通の
 [Getting Started | Building an Application with Spring Boot](https://spring.io/guides/gs/spring-boot/)
+
+[Spring Boot 92\. 従来のデプロイ \- リファレンス](https://spring.pleiades.io/spring-boot/docs/2.1.4.RELEASE/reference/html/howto-traditional-deployment.html)
+
 
 なんとか動くwarまで出来たけど、手順がめんどうだなあ。
