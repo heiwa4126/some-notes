@@ -20,6 +20,7 @@ JAVAめんどくさい。
 - [Groovyチュートリアル](#groovyチュートリアル)
 - [Kotlinチュートリアル](#kotlinチュートリアル)
 - [Spring Boot チュートリアル](#spring-boot-チュートリアル)
+- [formatter](#formatter)
 
 
 # Tomcatの新し目のやつをRHELに入れたときに参考にした記事
@@ -468,7 +469,7 @@ println "Hello world!"
 
 ```sh
 groovy Hello.groovy
-# or 
+# or
 groovy Hello
 ```
 または
@@ -601,3 +602,7 @@ Gradleでwarのを試してみる。まずGradleの普通の
 
 
 なんとか動くwarまで出来たけど、手順がめんどうだなあ。
+
+# formatter
+
+Gradleならこれだ。[sherter/google\-java\-format\-gradle\-plugin](https://github.com/sherter/google-java-format-gradle-plugin)
