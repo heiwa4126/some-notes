@@ -340,11 +340,10 @@ psql -h localhost -U heiwa test01
 ```sql
 CREATE TABLE words (
 id SERIAL NOT NULL,
-english varchar(128),
+english varchar(128) unique,
 japanese varchar(128),
 PRIMARY KEY (id)
 );
-create unique index on words (english);
 insert into words(english,japanese) values('apple','りんご');
 insert into words(english,japanese) values('banana','バナナ');
 insert into words(english,japanese) values('cherry','さくらんぼ');
