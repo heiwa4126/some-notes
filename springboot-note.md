@@ -25,10 +25,29 @@ pom.xmlやbuild.gradeに追加
 
 エンティティクラスつくる。package com.example.domain.xxxx.model。Lombokの@Data
 
-↑のレポジトリつくる。＠Mapperで。interfaceで
+↑のレポジトリつくる。＠Mapperで。interfaceで。
 
-↑のクラスと同じ名前の.xmlにSQL書く。クラス
+↑のクラスと同じ名前の.xmlにSQL書く。
+
+サービスのinterface書く。implも。
+(これよくわからん。なぜ一旦抽象をつくるのか)
+
+
 
 application.configにmybatis.mapper-location書く。
 
-JavaConfigでmodel mapper登録する。
+@Configurationのクラス作ってmodel mapper登録する。
+
+サービスつくる。
+
+コントローラを修正する。
+
+
+[絶対分かるMyBatis！MyBatisで覚えるべきチェックルール25（中編） - Qiita](https://qiita.com/5zm/items/0864d6641c65f976d415)
+
+
+# <where>
+
+[MyBatis – MyBatis 3 | 動的 SQL](https://mybatis.org/mybatis-3/ja/dynamic-sql.html)
+
+> where 要素は、内包するタグのどれかが結果を返すときだけ "WHERE" を挿入します。更に、内包するタグから返された結果が "AND" または "OR" で始まっていた場合はこれを削除します。
