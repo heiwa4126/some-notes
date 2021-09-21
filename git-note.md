@@ -11,6 +11,7 @@
 - [diffをgithubみたくする](#diffをgithubみたくする)
 - [プロジェクトスケルトンを作るツールで、空のディレクトリに.gitkeep](#プロジェクトスケルトンを作るツールで空のディレクトリにgitkeep)
 - [gitのシェル補完](#gitのシェル補完)
+- [Git for Windows付属のmsys2 mingwはp11-kitが入ってない](#git-for-windows付属のmsys2-mingwはp11-kitが入ってない)
 
 
 # gitの設定をリスト
@@ -190,3 +191,17 @@ git: /usr/share/bash-completion/completions/git
 ```
 
 古いRHELだとどうか?
+
+
+# Git for Windows付属のmsys2 mingwはp11-kitが入ってない
+
+で、オレオレ証明書を使って運営しているGitLabにhttpsでつながらない。
+プライベートCAの証明書はあるのだが、update-ca-trustがp11-kitがなくて死ぬ。
+
+pacmanも無いのでインストールできない。
+
+あきらめて
+```
+git config --global http.sslVerify false
+```
+した。敗北だ。
