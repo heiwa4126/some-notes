@@ -51,3 +51,40 @@ application.configにmybatis.mapper-location書く。
 [MyBatis – MyBatis 3 | 動的 SQL](https://mybatis.org/mybatis-3/ja/dynamic-sql.html)
 
 > where 要素は、内包するタグのどれかが結果を返すときだけ "WHERE" を挿入します。更に、内包するタグから返された結果が "AND" または "OR" で始まっていた場合はこれを削除します。
+
+
+
+
+# 古いmavenやgradleを更新ってできるの?
+
+時々セキュリティアップデートとか出てるのでgradlewなどのwrapperは更新できるのかチェック。
+まあむやみに更新すると動かなくなるけど、それは別問題。
+
+- [The Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html)
+
+```
+$ gradle --version
+Gradle 6.9.1
+(略)
+
+$ ./gradlew --version
+Gradle 6.8.3
+(略)
+
+$ gradle wrapper
+(略)
+
+$ ./gradlew --version
+(略)
+Gradle 6.9.1
+(略)
+
+$ git status
+(略)
+        modified:   gradle/wrapper/gradle-wrapper.jar
+        modified:   gradle/wrapper/gradle-wrapper.properties
+        modified:   gradlew
+        modified:   gradlew.bat
+```
+
+
