@@ -133,3 +133,5 @@ Spring Bootのプロパティって1000以上もあるらしい。
 - [1\.5\. 非 Web アプリケーションを作成する](https://spring.pleiades.io/spring-boot/docs/current/reference/html/howto.html#howto.application.non-web-application) - うむ、わからん。
 - [Spring Bootで簡単なコマンドラインアプリケーションを作成してみる \- Reasonable Code](https://reasonable-code.com/command-line-runner/)
 - [Spring BootでCommandLineRunnerを使ってはいけない - Qiita](https://qiita.com/taka_22/items/7320642d1cafe88c7bf8)
+- [1\.10\. ApplicationRunner または CommandLineRunner の使用](https://spring.pleiades.io/spring-boot/docs/current/reference/html/features.html#features.spring-application.command-line-runner)
+- 
