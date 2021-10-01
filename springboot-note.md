@@ -1,4 +1,11 @@
 
+# チュートリアル
+
+[ガイド - 公式サンプルコード](https://spring.pleiades.io/guides)
+
+これ全部やればエキスパートになれると思う。
+
+
 # MyBatis
 
 [MyBatis – MyBatis 3 | イントロダクション](https://mybatis.org/mybatis-3/ja/index.html)
@@ -88,3 +95,41 @@ $ git status
 ```
 
 
+# application.propertiesを切り替える
+
+- [Spring Bootでapplication.propertiesを環境ごとに切り替える方法 - 知的好奇心](https://intellectual-curiosity.tokyo/2019/04/29/spring-boot%E3%81%A7application-properties%E3%82%92%E7%92%B0%E5%A2%83%E3%81%94%E3%81%A8%E3%81%AB%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B%E6%96%B9%E6%B3%95/)
+- [Springのプロファイル機能、そしてSpring Bootのapplication.properties - Qiita](https://qiita.com/suke_masa/items/98b4c1b562ea6ec89bf7)
+
+
+`application.properties`に、`spring.profiles.active`だけ書いて
+`-Dspring.profiles.active=xxxxx`で切替えるのが普通らしい。
+
+`application.properties`に書いた`spring.profiles.active`以外のプロパティは
+共通で読まれるらしい。
+
+環境変数 SPRING_PROFILES_ACTIVE もあり。
+
+`--spring.profiles.active=`も使える。
+
+`-D`は`-jar`の前。
+`--spring.profiles.active=`は`-jar`の後。
+
+サンプル作りました。
+[heiwa4126/springboot-cmdline-hello1: Spring Bootでコマンドラインアプリのサンプル。加えてプロファイル切替の実験。](https://github.com/heiwa4126/springboot-cmdline-hello1)
+
+参考:
+
+- [7\.3\. Profiles](https://docs.spring.io/spring-boot/docs/2.5.5/reference/htmlsingle/#features.profiles)
+- [12\.2\.6\. Set the Active Spring Profiles](https://docs.spring.io/spring-boot/docs/2.5.5/reference/htmlsingle/#features.profiles)
+- [7\.3\. プロファイル](https://spring.pleiades.io/spring-boot/docs/2.5.4/reference/htmlsingle/#features.profiles) - 日本語
+- [12\.2\.6\. アクティブ Spring プロファイルを設定する](https://spring.pleiades.io/spring-boot/docs/2.5.4/reference/htmlsingle/#features.profiles) - 日本語
+
+Spring Bootのプロパティって1000以上もあるらしい。
+[Spring Boot アプリケーションプロパティ設定一覧 \- リファレンス](https://spring.pleiades.io/spring-boot/docs/current/reference/html/application-properties.html)
+
+
+# Spring Bootで非Webアプリは作れるの?
+
+- [1\.5\. 非 Web アプリケーションを作成する](https://spring.pleiades.io/spring-boot/docs/current/reference/html/howto.html#howto.application.non-web-application) - うむ、わからん。
+- [Spring Bootで簡単なコマンドラインアプリケーションを作成してみる \- Reasonable Code](https://reasonable-code.com/command-line-runner/)
+- [Spring BootでCommandLineRunnerを使ってはいけない - Qiita](https://qiita.com/taka_22/items/7320642d1cafe88c7bf8)
