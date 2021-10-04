@@ -7,7 +7,7 @@
 
 pythonは3.8以上おすすめ (2021-05)
 
-RHEL8だったら 
+RHEL8だったら
 ```sh
 sudo yum install python39 python39-setuptools python39-pip
 ```
@@ -83,3 +83,9 @@ Name = test1というタグのついたインスタンスがすでに2つあれ�
 [instances with tags foo & bar & baz=bang](https://docs.ansible.com/ansible/latest/collections/amazon/aws/ec2_module.html#examples)
 
 
+# community.aws
+
+- [Community.Aws — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/community/aws/index.html)
+- [ansible\-collections/community\.aws: Ansible Collection for Community AWS](https://github.com/ansible-collections/community.aws)
+
+- [Amazon\.Aws — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/amazon/aws/index.html)
