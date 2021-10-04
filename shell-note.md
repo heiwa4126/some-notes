@@ -10,6 +10,7 @@ shellいろいろtipsメモ
 - [$UID,$GID](#uidgid)
 - [bashのpipefailオプション](#bashのpipefailオプション)
 - [exit codeの標準](#exit-codeの標準)
+- [/dev/null](#devnull)
 - [メモ](#メモ)
 
 # 非0の戻り値で中断させたい
@@ -195,6 +196,32 @@ grep 'foo' bar.txt | sort
 exit codeは以下の標準を使いましょう。
 - [Exit Codes With Special Meanings](http://tldp.org/LDP/abs/html/exitcodes.html)
 - POSIX標準 - [https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h](https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h)
+
+
+# /dev/null
+
+test1.sh
+```sh
+#!/bin/sh -ue
+echo stdout
+echo stderr 1>&2
+```
+で、
+```sh
+# stdout/stderrともサプレス
+./test1.sh &> /dev/null
+# stderrのみ表示
+./test1.sh > /dev/null
+# stdoutのみ表示
+./test1.sh 2> /dev/null
+```
+
+詳しくは:
+- [Redirections (Bash Reference Manual)](https://www.gnu.org/software/bash/manual/html_node/Redirections.html)
+- [Bash - Redirections - コマンドが実行される前に、シェルによって解釈される特別な表記法を使用して、その入力と出力を redirected できます。リダイレクトにより、コマンドのファイ - 日本語](https://runebook.dev/ja/docs/bash/redirections#Redirections)
+
+Windowsでもできるみたいよ。
+[batファイルでコマンドの実行結果を出力しないようにする方法 \- Qiita](https://qiita.com/uhooi/items/b8b25761a5c4efe9025a)
 
 
 # メモ
