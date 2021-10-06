@@ -10,6 +10,7 @@ YAML関連メモ
 - [構造化データ(structured data)](#構造化データstructured-data)
 - [YAMLの先進的記述](#yamlの先進的記述)
 - [汎用YAML lint](#汎用yaml-lint)
+- [YAMLにはincludeがない](#yamlにはincludeがない)
 
 # リンク
 
@@ -132,3 +133,43 @@ see
 ```sh
 pip install --user -U yamllint
 ```
+
+
+# YAMLにはincludeがない
+
+YAML書いてると
+
+- インデントが深くなりがち
+- 巨大になりがち
+
+でもYAMLの仕様上includeはない。そこでプリプロセッサーを使う。
+
+これがいちばん有名らしい。
+[javanile/yamlinc: Compose multiple YAML files into one with $include tag. Split Swagger/OpenAPI into multiple YAML files.](https://github.com/javanile/yamlinc)
+
+ただ古いので
+```
+$ npm install yamlinc
+(略)
+found 212 vulnerabilities (31 low, 111 moderate, 70 high)
+  run `npm audit fix` to fix them, or `npm audit` for details
+```
+とか言われるのが辛い。
+
+nodeなので
+```sh
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bash_profile
+```
+みたいのを忘れないこと。
+
+欠点は:
+
+- 不要なシンタックスチェックがついてる。`!Ref`みたいのをエラーにするので困る。
+
+
+他:
+- [birchb1024/yamp: Yet Another Macro Processor - for YAML - Superseded by Goyamp](https://github.com/birchb1024/yamp)
+- [dakusui/jq-front: A tool to empower your JSON](https://github.com/dakusui/jq-front)
+- [monken/cfn-include: Preprocessor for CloudFormation templates with support for loops and flexible include statements](https://github.com/monken/cfn-include) - CloudFormation用で便利かも
