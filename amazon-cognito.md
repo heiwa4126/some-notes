@@ -1,14 +1,22 @@
+以下のメモは嘘が多いです。だんだん嘘を減らしていきます。
+
 [Amazon Cognito コンソール](https://console.aws.amazon.com/cognito/home)
 
 ユーザープールとIDプール
 
-> Amazon Cognito の主な 2 つのコンポーネントは、ユーザープールと ID プールです。
+```
+Amazon Cognito の主な 2 つのコンポーネントは、ユーザープールと ID プールです。
+ユーザープールは、ウェブおよびモバイルユーザーにサインアップとサインインオプションを提供するユーザーディレクトリです。
+ID プールは、AWS の他のサービスへのアクセス権をユーザーに付与する AWS 認証情報を提供します。
+ユーザープールと ID プールは個別に使用することも、一緒に使用することもできます。
+```
 
-> ユーザープールは、ウェブおよびモバイルユーザーにサインアップとサインインオプションを提供するユーザーディレクトリです。
+- IDプール - CognitoがOpenIDConnectのID providerになるよ [Open ID Connect プロバイダー \(ID プール\)](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/open-id.html)
+- ユーザープール - CognitoがOAuth2で認可
 
-> ID プールは、AWS の他のサービスへのアクセス権をユーザーに付与する AWS 認証情報を提供します。
+IAMでOpenIDConnectのID providerもできるらしい。
+[OpenID Connect \(OIDC\) ID プロバイダーの作成](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_roles_providers_create_oidc.html)
 
-> ユーザープールと ID プールは個別に使用することも、一緒に使用することもできます。
 
 * [Amazon Cognito の使用開始方法 - Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/cognito-getting-started.html)
 * [一般的な Amazon Cognito シナリオ \- Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/cognito-scenarios.html)
