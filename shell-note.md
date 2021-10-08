@@ -11,7 +11,9 @@ shellいろいろtipsメモ
 - [bashのpipefailオプション](#bashのpipefailオプション)
 - [exit codeの標準](#exit-codeの標準)
 - [/dev/null](#devnull)
+- [shell-quote](#shell-quote)
 - [メモ](#メモ)
+
 
 # 非0の戻り値で中断させたい
 
@@ -222,6 +224,28 @@ echo stderr 1>&2
 
 Windowsでもできるみたいよ。
 [batファイルでコマンドの実行結果を出力しないようにする方法 \- Qiita](https://qiita.com/uhooi/items/b8b25761a5c4efe9025a)
+
+
+# shell-quote
+
+シェルのエスケープ処理はややこしくて、2段階以上になるともう人間の手には負えない。
+そこでなにかクォートしてくれるユーティリティをかますとご安全。
+
+いくつかあるけどUbuntuのパッケージ(libstring-shellquote-perl)にもある
+[shell\-quote \- quote arguments for safe use, unmodified in a shell command \- metacpan\.org](https://metacpan.org/dist/String-ShellQuote/view/shell-quote)
+など。サンプルは
+
+```sh
+ssh host touch 'hi there'           # fails
+```
+これだと意外なことにhiとthereの2つファイルができてしまう。
+そこで
+
+```sh
+cmd=`shell-quote touch 'hi there'`
+ssh host "$cmd"
+```
+とするとちゃんと`hi there`ができます。
 
 
 # メモ
