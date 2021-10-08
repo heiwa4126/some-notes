@@ -233,7 +233,9 @@ Windowsでもできるみたいよ。
 
 いくつかあるけどUbuntuのパッケージ(libstring-shellquote-perl)にもある
 [shell\-quote \- quote arguments for safe use, unmodified in a shell command \- metacpan\.org](https://metacpan.org/dist/String-ShellQuote/view/shell-quote)
-など。サンプルは
+など。
+
+サンプルは
 
 ```sh
 ssh host touch 'hi there'           # fails
