@@ -1,6 +1,17 @@
 OpenID Connect(OIDC)とOAuth2メモ
 
-# OpenID ConnetcとOAuth2を理解する
+- [OpenID ConnectとOAuth2を理解する](#openid-connectとoauth2を理解する)
+- [プロバイダ](#プロバイダ)
+- [クライアント側](#クライアント側)
+  - [Flaskの例](#flaskの例)
+- [OpenID Connect(OIDC)とOAuth2のちがい](#openid-connectoidcとoauth2のちがい)
+- [OIDCのエンドポイント](#oidcのエンドポイント)
+  - [認可エンドポイント(Authorization Endpoint)](#認可エンドポイントauthorization-endpoint)
+  - [トークンエンドポイント(Token Endpoint)](#トークンエンドポイントtoken-endpoint)
+  - [リダイレクションエンドポイント(Redirection Endpoint)](#リダイレクションエンドポイントredirection-endpoint)
+- [おまけ](#おまけ)
+
+# OpenID ConnectとOAuth2を理解する
 
 まずこれを読む
 [一番分かりやすい OAuth の説明 - Qiita](https://qiita.com/TakahikoKawasaki/items/e37caf50776e00e733be)
@@ -65,3 +76,60 @@ app(native app, web app)やサーババックエンドの側
 - [Basic Flask OpenID Connect example - Stack Overflow](https://stackoverflow.com/questions/29046866/basic-flask-openid-connect-example)
 - [How to Add User Authentication to Flask Apps with Okta - Full Stack Python](https://www.fullstackpython.com/blog/add-user-authentication-flask-apps-okta.html)
 - [Flask-OIDC — Flask-OIDC 1.1 documentation](https://flask-oidc.readthedocs.io/en/latest/)
+
+
+# OpenID Connect(OIDC)とOAuth2のちがい
+
+OAuth2は「認可」のプロトコル。
+OpenID Connectは「認証+認可(ない場合も)+属性(ない場合も)」ができる。
+
+OAuth2はアクセストークンを操る。
+OpenID ConnectはIDトークンとアクセストークンを操る。
+
+OAuth2とOICDでは同じものでも呼び名が違う。
+
+| |OAuth2|OIDC|
+|:----|:----|:----|
+|人間|resource owner|End-User|
+|人間が使う端末|user agent|特になし|
+|アクセストークンを発行してもらうもの|client|Relaying Party (RP)|
+|アクセストークンを発行するもの|authorization server|OpenID provider(IdP)|
+|アクセストークンを使ってアクセスされるもの|resource server|特になし|
+
+> OpenID Connect 1.0 は, OAuth 2.0 プロトコルの上にシンプルなアイデンティティレイヤーを付与したものである
+
+-- [Final: OpenID Connect Core 1.0 incorporating errata set 1](http://openid-foundation-japan.github.io/openid-connect-core-1_0.ja.html)
+
+
+# OIDCのエンドポイント
+
+OIDCの「フロー」によって3つ全部あったりなかったりする。
+
+## 認可エンドポイント(Authorization Endpoint)
+
+* [Authorization Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1)
+* [認可エンドポイント \- Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/authorization-endpoint.html)
+
+`OAuth 2.0 endpoint`ともいう。OpenID provider(authorization server)上にある。
+
+
+## トークンエンドポイント(Token Endpoint)
+
+* [Token Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2)
+* [トークンエンドポイント \- Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/token-endpoint.html)
+
+
+
+
+## リダイレクションエンドポイント(Redirection Endpoint)
+
+[Redirection Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2)
+
+`Redirect URI`などともいう。relaying party(client)上にある。
+
+
+# おまけ
+
+OpenID と OpenID Connectは全然別物
+
+アプリにスキーマを割り当てる(逆か?)にはどうすればいいのか?
