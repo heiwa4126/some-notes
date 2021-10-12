@@ -89,4 +89,4 @@ kdumpctl restart &> /tmp/debug.txt
 - 
 
 
-kexdump /sys/firmware/efi/efivars/SecureBoot Operation not permitte
+kexdump /sys/firmware/efi/efivars/SecureBoot Operation not permitted
