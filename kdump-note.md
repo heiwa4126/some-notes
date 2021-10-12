@@ -10,6 +10,7 @@ kdumpのメモ
 - [カーネルコマンドラインパラメータ(kernel command-line parameters)](#カーネルコマンドラインパラメータkernel-command-line-parameters)
   - [参考](#参考-1)
 - [kdumpが起動しないけどエラーメッセージがあっさりしすぎている](#kdumpが起動しないけどエラーメッセージがあっさりしすぎている)
+- [kdumpとセキュアブート](#kdumpとセキュアブート)
 
 
 # 設定
@@ -80,3 +81,12 @@ KEXEC_ARGS="-d"
 ```sh
 kdumpctl restart &> /tmp/debug.txt
 ```
+
+# kdumpとセキュアブート
+
+- [4.5.3 Secure Bootが有効なシステムでKdumpサービスが起動に失敗します - Oracle® Linux 8リリース・ノートfor Oracle Linux 8 - 第4章 既知の問題](https://docs.oracle.com/cd/F22978_01/8/relnotes8.0/ol8-issues-known.html#ol8-issues-29954639)
+- [kdump service fails with message "kexec_file_load failed: Required key not available" - Red Hat Customer Portal](https://access.redhat.com/solutions/3683241)
+- 
+
+
+kexdump /sys/firmware/efi/efivars/SecureBoot Operation not permitte
