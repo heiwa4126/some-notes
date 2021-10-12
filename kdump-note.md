@@ -9,6 +9,7 @@ kdumpのメモ
 - [メモリサイズとダンプファイルのサイズ](#メモリサイズとダンプファイルのサイズ)
 - [カーネルコマンドラインパラメータ(kernel command-line parameters)](#カーネルコマンドラインパラメータkernel-command-line-parameters)
   - [参考](#参考-1)
+- [kdumpが起動しないけどエラーメッセージがあっさりしすぎている](#kdumpが起動しないけどエラーメッセージがあっさりしすぎている)
 
 
 # 設定
@@ -65,3 +66,17 @@ kdumpセカンドカーネル用のメモリサイズとかは、最近はauto�
 - [Chapter 7. Kernel crash dump guide Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/kernel_administration_guide/kernel_crash_dump_guide)
 - [クラッシュダンプについて: Linuxサービスセット | NEC](https://jpn.nec.com/linux/linux-os/ss/d_dump.html)
 - [7.4. kdump 設定のテスト - 第7章 カーネルクラッシュダンプガイド Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/kernel_administration_guide/kernel_crash_dump_guide#sect-kdump-test)
+
+
+# kdumpが起動しないけどエラーメッセージがあっさりしすぎている
+
+[kdump service fails with message "kexec_file_load failed: Required key not available" - Red Hat Customer Portal](https://access.redhat.com/solutions/3683241) の一番下。
+
+/etc/sysconfig/kdump に
+```
+KEXEC_ARGS="-d"
+```
+を追加して、
+```sh
+kdumpctl restart &> /tmp/debug.txt
+```
