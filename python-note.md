@@ -40,6 +40,10 @@
 - [black + flake8](#black--flake8)
 - [nose](#nose)
 - [ローカルタイムゾーンを得る](#ローカルタイムゾーンを得る)
+- [~/.config/flake8サンプル](#configflake8サンプル)
+- [PyFlakes](#pyflakes)
+- [fleak8](#fleak8)
+- [コードレビューもどき](#コードレビューもどき)
 
 
 
@@ -880,3 +884,80 @@ pythonスクリプトの動いているホストのローカルタイムゾー�
 from datetime import datetime,timezone
 LOCAL_TIMEZONE = datetime.now(timezone.utc).astimezone().tzinfo
 ```
+
+# ~/.config/flake8サンプル
+
+```
+[flake8]
+max-line-length = 166
+# ignore = E203, E266, E501, W503, F403, F401, E999
+ignore = E203, E266, E501, W503, F403, F401
+select = B,C,E,F,W,T4,B9
+```
+
+# PyFlakes
+
+[PyCQA/pyflakes: A simple program which checks Python source files for errors](https://github.com/PyCQA/pyflakes)
+
+
+# fleak8
+
+[PyCQA/flake8: flake8 is a python tool that glues together pycodestyle, pyflakes, mccabe, and third-party plugins to check the style and quality of some python code.](https://github.com/PyCQA/flake8)
+
+```
+Flake8 is a wrapper around these tools:
+
+PyFlakes
+pycodestyle
+Ned Batchelder's McCabe script
+```
+
+McCabe? 循環的複雑度?
+
+- [PyCQA/mccabe: McCabe complexity checker for Python](https://github.com/PyCQA/mccabe)
+- [McCabe 循環的複雑度 | Rogue Wave - Documentation](https://docs.roguewave.com/jp/klocwork/current/mccabecyclomaticcomplexity)
+
+よくわからないけどネストが深いと警告してくれる、ってことかな...
+
+
+# コードレビューもどき
+
+オートフォーマッタを使いましょう。
+おすすめ: black (psf/black)
+ 
+lintを使いましょう。
+おすすめ: flake8 (PyCQA/flake8)
+ 
+(TIPS: black + flake8の場合、flake8の設定に(例えば~/.config/flake8)
+`ignore = E203`
+だけは追加しましょう)
+
+↑[Using Black with other tools — Black 21.9b0 documentation](https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html)
+
+使い方を書きましょう。
+ 
+requirements.txtを書きましょう。
+ 
+.gitignoreを書いて __pycache__ などはgitから除外しましょう。
+ 
+pyflakesなどで未使用のimportを検出しましょう。
+ 
+ローカルなモジュールはサブディレクトリを作ってその下に置きましょう。
+
+例)
+
+gencacert/app/crypt.py ->　gencacert/app/lib/crypt.py
+
+from crypt import AESCipher -> from lib.crypt import AESCipher
+ 
+コマンドラインからパラメータを受け取るなら DIっぽくモジュール解析部分と、関数本体を分けましょう。
+ 
+docstringはなるべく書きましょう。
+ 
+ネストは深くならないようにしましょう。 Pythonのインデントが4だったり、max-line-lengthが80や88などだったりするのはそれなりに意味があります。
+ 
+定数を形だけでもいいからなるべく外出しにしましょう。
+ 
+デプロイ方法を書きましょう。
+ 
+モジュールでないCLIから実行するコードには、shebang書いて、実行権限もつけましょう。
