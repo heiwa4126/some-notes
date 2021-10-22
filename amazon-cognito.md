@@ -50,6 +50,6 @@ IDトークン or アクセストークン
 - [CognitoユーザープールをCFnで構築し、TypeScriptでユーザーを追加する - HAPPY HACKING Oouchi's BLOG](https://www.ooooouchi.info/entry/2020/06/03/083000)
 - [AWS::Cognito::IdentityPool - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-identitypool.html)
 
-手順としては、
+CFnを調べる手順としては、
 ポータルでつくる(UIを英語モードで)、AWS::Cognito::UserPool(例)と、その設定の英語名で[ググる(英語モードで)](https://www.google.com/webhp?hl=en)
 という感じで進めれば短時間で調査が終わる感じ。
