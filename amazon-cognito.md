@@ -34,8 +34,22 @@ IAMでOpenIDConnectのID providerもできるらしい。
 * [Amazon API Gateway の Custom Authorizerを使い、User PoolsのユーザでAPI認証を行う \| Serverless Operations](https://serverless.co.jp/blog/262/)
 * [Amazon Cognito User Poolsを使って、webサイトにユーザ認証基盤を作る \- Qiita](https://qiita.com/horike37/items/1d522f66452d3abe1203)
 * [REST API と Amazon Cognito ユーザープールを統合する \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-enable-cognito-user-pool.html)
-  
+
 
 IDトークン or アクセストークン
 [【OAuth 2\.0 / OIDC】アクセストークンとIDトークンの違い ＋ OIDC誕生の歴史 \- yyh\-gl's Tech Blog](https://yyh-gl.github.io/tech-blog/blog/id_token_and_access_token/#:~:text=2%E3%81%A4%E3%81%AE%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%81%AE%E9%81%95%E3%81%84,-%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%20%E3%81%A8&text=%E8%AA%8D%E5%8F%AF%E3%81%AB%E4%BD%BF%E3%81%86%E3%81%9F%E3%82%81%E3%81%AE,%E3%81%AE%E3%81%8CID%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%81%A7%E3%81%99%E3%80%82)
 まずIDトークンで
+
+
+# CFnでCognito
+
+- [Amazon Cognito resource type reference - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/AWS_Cognito.html)
+- [Amazon Cognito ユーザープールの例 \- AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-cognito-user-pool.html)
+- [@aws-cdk/aws-cognito](https://awscdk.io/packages/@aws-cdk/aws-cognito@1.113.0/#/)
+- [CloudFormation で Cognito - Qiita](https://qiita.com/y13i/items/1923b47079bdf7c44eec)
+- [CognitoユーザープールをCFnで構築し、TypeScriptでユーザーを追加する - HAPPY HACKING Oouchi's BLOG](https://www.ooooouchi.info/entry/2020/06/03/083000)
+- [AWS::Cognito::IdentityPool - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-identitypool.html)
+
+手順としては、
+ポータルでつくる(UIを英語モードで)、AWS::Cognito::UserPool(例)と、その設定の英語名で[ググる(英語モードで)](https://www.google.com/webhp?hl=en)
+という感じで進めれば短時間で調査が終わる感じ。
