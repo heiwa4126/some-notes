@@ -2,6 +2,10 @@
 
 メールを送る
 
+* [Amazon SES コンソールを使用して E メールを送信する \- Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-an-email-from-console.html)
+* [Amazon SES コンソール](https://console.aws.amazon.com/ses/)
+* [AWS Simple Email Service (新しいコンソール)](https://console.aws.amazon.com/sesv2/)
+
 # ドメイン認証
 
 ドメインを認証すると、送信アドレスをいちいち認証しなくても、
@@ -34,7 +38,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx._domainkey.example.com CNAME xxxxxxxxxxxxxxxxxx
 (TTLはあとで伸ばす。AWSのroute53でのサンプルでは1800になってた)
 
 これで最大48時間待てばいいらしい。
--> そんなに待たなかった。2時間ぐらい?で 
+-> そんなに待たなかった。2時間ぐらい?で
 Verification は `Status: verified`になった。
 
 これで
@@ -49,3 +53,64 @@ Verification は `Status: verified`になった。
 
 - [Amazon SES SMTP 認証情報を取得 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/smtp-credentials.html)
 - [Amazon SES とPostfixの統合 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/postfix.html)
+
+
+# Amazon SES メールボックスシミュレーター
+
+バウンスのテストなどに使えるemailアドレス一覧
+
+[Amazon SES での E メール送信のテスト - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-email-simulator.html)
+
+
+# どこでも好きなアドレスにメールを送る
+
+※ バウンスについてはあとで考える。
+
+* [Moving out of the Amazon SES sandbox - Amazon Simple Email Service](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html)
+* [(自動翻訳) Amazon SES サンドボックス外への移動 - Amazon Simple Email Service](https://docs.aws.amazon.com/ja_jp/ses/latest/dg/request-production-access.html)
+
+
+サンドボックスの制限(↑から引用):
+
+* E メールの送信先は、検証済み E メールアドレスおよびドメイン、または Amazon SES メールボックスシミュレーターに制限されます。
+* 最大で 24 時間あたり 200 メッセージを送信できます。
+* 最大で 1 秒あたり 1 メッセージを送信できます。
+
+これらに加えてサンドボックス内でも外でも適応される制限:
+
+* E メールは、検証済み E メールアドレスまたはドメインからのみ送信できます。
+
+
+サンドボックス外への移動の申請は自動化できる
+(CLIは
+[上記](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html)参照)。
+
+[(自動翻訳) Amazon SES サンドボックス外への移動](https://docs.aws.amazon.com/ja_jp/ses/latest/dg/request-production-access.html)
+から引用:
+
+```
+アカウントの詳細のレビューを送信すると、レビューが完了するまで詳細を編集できなくなります。AWS Support チームは、お客様のリクエストに対して、24 時間以内に一次回答を行います。
+
+迷惑なコンテンツや悪意のあるコンテンツを送信するためにシステムが悪用されないように、各リクエストを慎重に検討する必要があります。可能であれば、24 時間以内にリクエストを承認します。ただし、お客様から追加情報を取得する必要がある場合は、お客様のリクエストの解決に時間がかかる場合があります。お客様のユースケースが AWS の方針と一致しない場合は、リクエストを承認できない場合があります。
+```
+
+...なんかEC2立ててSendGrid使ったほうが楽かもしれない。
+
+サンドボックスの中外の状態はテナントで1個しかないみたい。ドメインを複数ホストしても1個。
+
+
+# SESでメール送るのに最低でも必要なもの
+
+* 検証されたメールアドレス
+* または信頼されたドメイン
+
+が必要。
+
+メールアドレスを検証する、は自動ではできない(「届いたメールについてるURLをクリック」式だから。届くメールもかなりSPAMっぽい)。
+検証メールは自動で送れる。
+
+[E メールアドレスの検証 \- Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/verify-email-addresses-procedure.html)
+
+```sh
+aws sesv2 create-email-identity --email-identity foobarbaz@gmail.com
+```
