@@ -945,11 +945,13 @@ pyflakesなどで未使用のimportを検出しましょう。
 ローカルなモジュールはサブディレクトリを作ってその下に置きましょう。
 
 例)
-
+```
 gencacert/app/crypt.py ->　gencacert/app/lib/crypt.py
-
+んで
 from crypt import AESCipher -> from lib.crypt import AESCipher
- 
+とする
+```
+
 コマンドラインからパラメータを受け取るなら DIっぽくモジュール解析部分と、関数本体を分けましょう。
  
 docstringはなるべく書きましょう。

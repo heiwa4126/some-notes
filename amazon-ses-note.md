@@ -6,6 +6,7 @@
 * [Amazon SES コンソール](https://console.aws.amazon.com/ses/)
 * [AWS Simple Email Service (新しいコンソール)](https://console.aws.amazon.com/sesv2/)
 
+
 # ドメイン認証
 
 ドメインを認証すると、送信アドレスをいちいち認証しなくても、
@@ -114,3 +115,17 @@ Verification は `Status: verified`になった。
 ```sh
 aws sesv2 create-email-identity --email-identity foobarbaz@gmail.com
 ```
+
+# 返送率と苦情率
+
+* 返送率、バウンス率、 bounce rate
+* 苦情率、 complaint rate
+
+[Amazon SES で返送率または苦情率のしきい値に関する通知を設定する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/ses-reputation-dashboard-bounce-rate/)
+
+バウンス率はわかるけど、苦情率って何?
+
+- [Email Definitions: Complaint Rate \| AWS Messaging & Targeting Blog](https://aws.amazon.com/jp/blogs/messaging-and-targeting/email-definitions-complaint-rate/?nc1=h_ls)
+- [電子メールの定義：苦情率\| AWSメッセージングおよびターゲティングブログ](https://aws-amazon-com.translate.goog/jp/blogs/messaging-and-targeting/email-definitions-complaint-rate/?_x_tr_sl=en&_x_tr_tl=ja&_x_tr_hl=ja&_x_tr_pto=nui)
+
+なにこれ... 「苦情の総数」を知る方法がなんだかダークだ。
