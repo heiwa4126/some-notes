@@ -1,5 +1,13 @@
 # Visual Studio Code メモ
 
+- [Visual Studio Code メモ](#visual-studio-code-メモ)
+- [Remote Development](#remote-development)
+	- [step1](#step1)
+	- [step 2](#step-2)
+	- [step 3](#step-3)
+	- [メモ](#メモ)
+- [Powershell 7がWindows Storeで配布されるようになった](#powershell-7がwindows-storeで配布されるようになった)
+- [Widnows11で"Open with Code"が出ない件](#widnows11でopen-with-codeが出ない件)
 
 # Remote Development
 
@@ -83,3 +91,13 @@ pwsh.exeへのパスは通っているので、
 フルパスはユーザプロファイルの下だっりするので、syncしてると辛い。
 
 Windows Storeだと更新が楽だからなぁ...
+
+
+# Widnows11で"Open with Code"が出ない件
+
+エクスプローラー拡張の
+「Codeで開く」
+が出てこない件。
+
+[Integrate with the Windows 11 Context Menu · Issue \#127365 · microsoft/vscode](https://github.com/microsoft/vscode/issues/127365)
+
