@@ -12,6 +12,7 @@ shellいろいろtipsメモ
 - [exit codeの標準](#exit-codeの標準)
 - [/dev/null](#devnull)
 - [shell-quote](#shell-quote)
+- [dfの出力をjsonで](#dfの出力をjsonで)
 - [メモ](#メモ)
 
 
@@ -249,6 +250,15 @@ ssh host "$cmd"
 ```
 とするとちゃんと`hi there`ができます。
 
+# dfの出力をjsonで
+
+[bash - Store output diskspace df -h JSON - Stack Overflow](https://stackoverflow.com/questions/35211716/store-output-diskspace-df-h-json)
+
+このワンライナーがいい感じ
+
+```sh
+df -Ph | awk '/^\// {print $1"\t"$2"\t"$4}' | python -c 'import json, fileinput; print json.dumps({"diskarray":[dict(zip(("mount", "spacetotal", "spaceavail"), l.split())) for l in fileinput.input()]}, indent=2)'
+```
 
 # メモ
 
