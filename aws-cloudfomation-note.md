@@ -11,6 +11,7 @@
 - [CFnのサンプル](#cfnのサンプル)
 - [CloudFormation Macros](#cloudformation-macros)
 - [CloudFomationのYAMLで anchors/aliasesを使うには?](#cloudfomationのyamlで-anchorsaliasesを使うには)
+- [ARN](#arn)
 
 
 YAMLでリソースを作るアレ。
@@ -138,3 +139,12 @@ aws cloudformation create-stack \
 
 - [Support YAML anchors/aliases in CFN yaml templates · Issue \#613 · aws\-cloudformation/cloudformation\-coverage\-roadmap](https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/613)
 - [CloudFormation coding using YAML\. This is not a “101” on CloudFormation… \| by Bob van den Heuvel \| Schuberg Philis](https://stories.schubergphilis.com/cloudformation-coding-using-yaml-9127025813bb)
+
+# ARN
+
+`!GetAttr FooBar.arn`
+でエラーになって散々悩んだ。
+
+正しくは
+`!GetAttr FooBar.Arn`
+です。
