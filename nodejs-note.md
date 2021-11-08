@@ -138,7 +138,17 @@ npm root -g
 ```
 node -e "console.log(global.module.paths)" 
 ```
-カレントパスから1個づつ上の/node_modules
+カレントパスから1個づつ上の/node_modulesになる。
+
+$HOMEの下の/node_modulesにper userで使うモジュールを集めておきたいなら
+```sh
+mkdir -p $HOME/node_modules
+cd $HOME/node_modules
+npm install foobar
+```
+で
+$HOME/node_modules/.binにパスを通せばいい。
+
 
 これに加えて環境変数NODE_PATHを対象にする。
 
