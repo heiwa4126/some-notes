@@ -23,6 +23,9 @@
 	- [やりなおし](#やりなおし)
 	- [おどろいたこと](#おどろいたこと)
 	- [欠点](#欠点)
+- [Simple SSH Security](#simple-ssh-security)
+	- [弱い素数を削除](#弱い素数を削除)
+	- [強力な暗号のみ使う](#強力な暗号のみ使う)
 
 
 # sshdのconfigtest
@@ -442,3 +445,45 @@ xtermみたいには使えない。
 
 あとProxyJumpは使えない。 ProxyCommandではいけるらしい。
 `posix_spawn: no such file or directory proxyjump` で検索。
+
+
+# Simple SSH Security
+
+* [Simple SSH Security \| Disk Notifier](https://disknotifier.com/blog/simple-ssh-security/)
+* ↑のGoogle翻訳 [シンプルなSSHセキュリティ| ディスク通知機能](https://disknotifier-com.translate.goog/blog/simple-ssh-security/?_x_tr_sl=en&_x_tr_tl=ja&_x_tr_hl=ja&_x_tr_pto=nui)
+
+/etc/ssh/sshd_configで
+
+KbdInteractiveAuthenticationをnoに設定。
+ChallengeResponseAuthenticationはこれの別名だけど、この名前で設定しないこと(わかりにくいから)。
+
+PasswordAuthenticationをnoに設定。
+
+ここで `systemctl reload sshd.service`
+
+## 弱い素数を削除
+
+```sh
+awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
+mv /etc/ssh/moduli.safe /etc/ssh/moduli
+```
+
+## 強力な暗号のみ使う
+
+`/etc/ssh/sshd_config.d/ssh_hardening.conf`
+という名前で以下を作成
+```
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com
+
+HostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-256,rsa-sha2-512,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com
+```
+
+で `systemctl reload sshd.service`
+
+確認は
+`ssh -c aes128-cbc localhost`
+で、接続に失敗するはず。
