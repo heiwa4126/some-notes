@@ -1,3 +1,16 @@
+# AWS CDK
+
+- [AWS CDK](#aws-cdk)
+- [AWS CDK Workshop](#aws-cdk-workshop)
+- [AWS CloudShell](#aws-cloudshell)
+
+# AWS CDK Workshop
+
+素性はよくわからないけど日本語あった
+[AWS Cloud Development Kit \(AWS CDK\) ワークショップへようこそ！ ](https://summit-online-japan-cdk.workshop.aws/)
+
+オリジナル: [AWS CDK Intro Workshop :: AWS Cloud Development Kit (AWS CDK) Workshop](https://cdkworkshop.com/)
+
 
 # AWS CloudShell
 
