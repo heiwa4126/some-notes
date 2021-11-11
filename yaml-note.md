@@ -11,6 +11,7 @@ YAML関連メモ
 - [YAMLの先進的記述](#yamlの先進的記述)
 - [汎用YAML lint](#汎用yaml-lint)
 - [YAMLにはincludeがない](#yamlにはincludeがない)
+- [yqの出力をcolorでless](#yqの出力をcolorでless)
 
 # リンク
 
@@ -173,3 +174,25 @@ echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bash_profile
 - [birchb1024/yamp: Yet Another Macro Processor - for YAML - Superseded by Goyamp](https://github.com/birchb1024/yamp)
 - [dakusui/jq-front: A tool to empower your JSON](https://github.com/dakusui/jq-front)
 - [monken/cfn-include: Preprocessor for CloudFormation templates with support for loops and flexible include statements](https://github.com/monken/cfn-include) - CloudFormation用で便利かも
+
+
+# yqの出力をcolorでless
+
+jqだと
+
+```sh
+jq -C . hoge.json | less -R
+```
+yq にはカラー出力がない。batを使え。
+
+* [kislyuk/yq: Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents](https://github.com/kislyuk/yq)
+  * [Color output of keys and values like jq · Issue \#17 · kislyuk/yq](https://github.com/kislyuk/yq/issues/17)
+* [sharkdp/bat: A cat\(1\) clone with wings\.](https://github.com/sharkdp/bat)
+
+
+```sh
+bat hoge.yaml
+# or
+bat --color always -p hoge.yaml | less -R
+```
+batはYAMLに限らず便利
