@@ -1,5 +1,33 @@
 # AWS SAM と AWS Lambdaのメモ
 
+- [AWS SAM と AWS Lambdaのメモ](#aws-sam-と-aws-lambdaのメモ)
+- [template.yamlでリソースを作り、lamdaにそれのアクセス権を与える](#templateyamlでリソースを作りlamdaにそれのアクセス権を与える)
+- [template.yamlで作っていないリソースに対して、lamdaにアクセス権を与える](#templateyamlで作っていないリソースに対してlamdaにアクセス権を与える)
+- [SAMのアップロード用S3 bucketが同じ名前になるのはなんで?](#samのアップロード用s3-bucketが同じ名前になるのはなんで)
+- [AWS LambdaとSAMの参考](#aws-lambdaとsamの参考)
+- [AWS Lambda 関数のバージョン](#aws-lambda-関数のバージョン)
+- [まずはここかから](#まずはここかから)
+- [API Gatewayにカスタムドメインを](#api-gatewayにカスタムドメインを)
+- [CFnの変数](#cfnの変数)
+- [log](#log)
+- [SAMのtemplate.yamlでFn::Transeformが使えない](#samのtemplateyamlでfntranseformが使えない)
+- [SAMの自動テスト](#samの自動テスト)
+- [SAMのpolicyのテンプレート](#samのpolicyのテンプレート)
+- [SAMでlayerを使う](#samでlayerを使う)
+- [他人のSAMを参考にする](#他人のsamを参考にする)
+- [layer](#layer)
+  - [注意](#注意)
+- [CloudWatch Eventsで定期実行するSAMプロジェクト](#cloudwatch-eventsで定期実行するsamプロジェクト)
+- [テンプレート](#テンプレート)
+- [AWS::Serverless::HttpApi](#awsserverlesshttpapi)
+- [SAMで認証認可が必要なlambdaを書く](#samで認証認可が必要なlambdaを書く)
+  - [SSLクライアント証明書も使えるらしい](#sslクライアント証明書も使えるらしい)
+  - [APIキー](#apiキー)
+  - [Lambda オーソライザー](#lambda-オーソライザー)
+  - [Cognito](#cognito)
+- [AWS::Serverless::Function が自動的につくるリソース](#awsserverlessfunction-が自動的につくるリソース)
+
+
 # template.yamlでリソースを作り、lamdaにそれのアクセス権を与える
 
 例えば「S3バケツを作って、それに対する読み書きできるようにする」方法
@@ -594,3 +622,13 @@ REQUESTオーソライザーのほうがかんたんなので、
 [管理者としてのユーザーアカウントの作成 - Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/how-to-create-user-accounts.html)
 
 もっとかんたんかと思ったら異常にめんどくさい。
+
+
+# AWS::Serverless::Function が自動的につくるリソース
+
+指定すればそれになるけど、指定しない場合は自動でつくってくれるのが
+`ServerlessRestApi`などだけど、これのドキュメントが見当たらないのでさがしてみた。
+
+[Fix Documentation: Document the default LogicalIds created by SAM · Issue #70 · aws/serverless-application-model](https://github.com/aws/serverless-application-model/issues/70)
+
+なんかこれしか見つからない... 困ったもんだ。
