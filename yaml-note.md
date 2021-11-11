@@ -185,9 +185,9 @@ jq -C . hoge.json | less -R
 ```
 yq にはカラー出力がない。batを使え。
 
+* [sharkdp/bat: A cat\(1\) clone with wings\.](https://github.com/sharkdp/bat)
 * [kislyuk/yq: Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents](https://github.com/kislyuk/yq)
   * [Color output of keys and values like jq · Issue \#17 · kislyuk/yq](https://github.com/kislyuk/yq/issues/17)
-* [sharkdp/bat: A cat\(1\) clone with wings\.](https://github.com/sharkdp/bat)
 
 
 ```sh
@@ -195,4 +195,4 @@ bat hoge.yaml
 # or
 bat --color always -p hoge.yaml | less -R
 ```
-batはYAMLに限らず便利
+batはYAMLに限らず便利。詳しくはgithubのREADME参照。
