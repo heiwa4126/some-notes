@@ -196,3 +196,4 @@ bat hoge.yaml
 bat --color always -p hoge.yaml | less -R
 ```
 batはYAMLに限らず便利。詳しくはgithubのREADME参照。
+[bat/README-ja.md at master · sharkdp/bat](https://github.com/sharkdp/bat/blob/master/doc/README-ja.md)
