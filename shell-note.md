@@ -13,6 +13,11 @@ shellいろいろtipsメモ
 - [/dev/null](#devnull)
 - [shell-quote](#shell-quote)
 - [dfの出力をjsonで](#dfの出力をjsonで)
+- [shfmt - shellスクリプトのフォーマッター](#shfmt---shellスクリプトのフォーマッター)
+- [shellcheck](#shellcheck)
+  - [SC2155の直し方](#sc2155の直し方)
+    - [Problematic code in the case of `export`:](#problematic-code-in-the-case-of-export)
+      - [Correct code:](#correct-code)
 - [メモ](#メモ)
 
 
@@ -259,6 +264,44 @@ ssh host "$cmd"
 ```sh
 df -Ph | awk '/^\// {print $1"\t"$2"\t"$4}' | python -c 'import json, fileinput; print json.dumps({"diskarray":[dict(zip(("mount", "spacetotal", "spaceavail"), l.split())) for l in fileinput.input()]}, indent=2)'
 ```
+
+# shfmt - shellスクリプトのフォーマッター
+
+- [mvdan/sh: A shell parser, formatter, and interpreter (sh/bash/mksh), including shfmt](https://github.com/mvdan/sh#shfmt)
+- [シェルスクリプトのコードを整形してくれるツール `shfmt` | ゲンゾウ用ポストイット](https://genzouw.com/entry/2019/02/15/085003/874/)
+
+Golangなのでビルド&インストールかんたん。
+```
+go install mvdan.cc/sh/v3/cmd/shfmt@latest
+```
+もちろん [Releases · mvdan/sh](https://github.com/mvdan/sh/releases) から落として適当な場所に置いてもいい。
+
+
+オプションも他のフォーマッターとよく似てる。とりあえず
+```
+shfmt -l -w *.sh
+```
+でカレントのshを全部再フォーマット。
+
+# shellcheck
+
+## SC2155の直し方
+
+[SC2155 · koalaman/shellcheck Wiki](https://github.com/koalaman/shellcheck/wiki/SC2155) から引用
+
+### Problematic code in the case of `export`:
+
+```sh
+export foo="$(mycmd)"
+```
+
+#### Correct code:
+
+```sh
+foo="$(mycmd)"
+export foo
+```
+
 
 # メモ
 

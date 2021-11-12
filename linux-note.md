@@ -44,7 +44,7 @@ sudo apt install neofetch
 
 Golangなのでビルド&インストールかんたん。
 ```
-go get -u github.com/mvdan/sh/cmd/shfmt
+go install mvdan.cc/sh/v3/cmd/shfmt@latest
 ```
 もちろん [Releases · mvdan/sh](https://github.com/mvdan/sh/releases) から落として適当な場所に置いてもいい。
 
