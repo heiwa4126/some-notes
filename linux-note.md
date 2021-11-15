@@ -37,25 +37,6 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   GPU: Vendor 1234 Device 1111
 sudo apt install neofetch
 ```
 
-# shfmt - shellスクリプトのフォーマッター
-
-- [mvdan/sh: A shell parser, formatter, and interpreter (sh/bash/mksh), including shfmt](https://github.com/mvdan/sh#shfmt)
-- [シェルスクリプトのコードを整形してくれるツール `shfmt` | ゲンゾウ用ポストイット](https://genzouw.com/entry/2019/02/15/085003/874/)
-
-Golangなのでビルド&インストールかんたん。
-```
-go install mvdan.cc/sh/v3/cmd/shfmt@latest
-```
-もちろん [Releases · mvdan/sh](https://github.com/mvdan/sh/releases) から落として適当な場所に置いてもいい。
-
-
-オプションも他のフォーマッターとよく似てる。とりあえず
-```
-shfmt -l -w *.sh
-```
-でカレントのshを全部再フォーマット。
-
-
 # fstabの第4フィールドで
 
 noautoもautoもつけなかったら、どっちになるのか?
