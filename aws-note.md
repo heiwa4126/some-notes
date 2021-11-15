@@ -11,6 +11,7 @@ AWSのメモ
 - [EC2ってntpは要るの?](#ec2ってntpは要るの)
 - [ElasticIPなしのEC2で外部IPをroute53でFQDNをふる](#elasticipなしのec2で外部ipをroute53でfqdnをふる)
   - [欠点](#欠点)
+- [ElasticIPなしのEC2で外部IPをnoipでFQDNをふる](#elasticipなしのec2で外部ipをnoipでfqdnをふる)
 - [127.0.0.53](#1270053)
 - [「インスタンスの開始」と「インスタンスの起動」](#インスタンスの開始とインスタンスの起動)
 - [EC2インスタンスを停止するとどうなるか](#ec2インスタンスを停止するとどうなるか)
@@ -302,6 +303,20 @@ IPが更新されていたらOK。
 - EC2を停止してもAレコードが消えない。FQDNで死活監視とかすると混乱が起きる。
 - TTLが300秒はいかにも短いがどうしようもない。
 
+
+# ElasticIPなしのEC2で外部IPをnoipでFQDNをふる
+
+自分の保持するドメインでなくていいなら
+[Amazon Linux インスタンスでの動的な DNS のセットアップ - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/dynamic-dns.html)
+で `xxxx.xxxxxxxx.ddns.com` みたいに使える。
+
+[No-IPの登録とDDNSクライアントの設定 | tarufulog](https://tarufu.info/domain_acquisition_no-ip/)
+
+ほかにもfreeipとかのサービスがあるのでそれも参照。
+
+登録とか広告とか制限とかめんどくさそうなので、あんまり使いたくない...
+
+
 # 127.0.0.53
 
 AWSで
@@ -535,4 +550,3 @@ CloudFront(と独自ドメイン)がいるらしい。
 ## cloudformationで
 
 [AWS::S3::Bucket WebsiteConfiguration \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-s3-websiteconfiguration.html)
-
