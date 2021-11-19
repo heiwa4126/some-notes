@@ -224,7 +224,8 @@ function Invoke-Notepad
 
 `%userprofile%\Documents\Powershell`に
 `Microsoft.PowerShell_profile.ps1`という名前で
-以下のようなプログラムを置く
+以下のようなプログラムを置く (フォルダがなかったら作る。ファイルがなかったら作る。すでにあればマージ)。
+
 ```powershell
 function prompt() {
   (Split-Path (Get-Location) -Leaf) + "> "
@@ -232,6 +233,20 @@ function prompt() {
 ```
 
 [PowerShell 5 と 6 で Profile の場所が違う](http://www.vwnet.jp/Windows/PowerShell/2018032601/PS6Profile.htm)
+
+```
+PS5 : %userprofile%\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+PS6 : %userprofile%\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+```
+
+**ここ参照。だいたいなんでも書いてある。**
+[プロファイルについて \- PowerShell \| Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_profiles?view=powershell-7.2)
+
+プロファイルパスはケースバイケースなのでpowershellで
+```powershell
+$PROFILE
+```
+で。
 
 ## vscodeの場合
 
