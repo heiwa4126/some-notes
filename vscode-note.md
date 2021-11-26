@@ -8,6 +8,7 @@
 	- [メモ](#メモ)
 - [Powershell 7がWindows Storeで配布されるようになった](#powershell-7がwindows-storeで配布されるようになった)
 - [Widnows11で"Open with Code"が出ない件](#widnows11でopen-with-codeが出ない件)
+- [ゼロ幅スペース (Zero Width Space: U+200B)](#ゼロ幅スペース-zero-width-space-u200b)
 
 # Remote Development
 
@@ -101,3 +102,15 @@ Windows Storeだと更新が楽だからなぁ...
 
 [Integrate with the Windows 11 Context Menu · Issue \#127365 · microsoft/vscode](https://github.com/microsoft/vscode/issues/127365)
 
+
+
+# ゼロ幅スペース (Zero Width Space: U+200B)
+
+MS-OfficeやWEBからコピペしたりすると混入するときがある。
+「ゼロ幅スペース」なんで目で見えない。
+
+vscodeでは
+\u200bを正規表現で置換
+すると消せる。
+
+![UI](./imgs/u200b.png)
