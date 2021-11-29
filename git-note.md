@@ -12,6 +12,7 @@
 - [プロジェクトスケルトンを作るツールで、空のディレクトリに.gitkeep](#プロジェクトスケルトンを作るツールで空のディレクトリにgitkeep)
 - [gitのシェル補完](#gitのシェル補完)
 - [Git for Windows付属のmsys2 mingwはp11-kitが入ってない](#git-for-windows付属のmsys2-mingwはp11-kitが入ってない)
+- [submoduleまで含めてgitリポジトリの内容をzipファイルにする](#submoduleまで含めてgitリポジトリの内容をzipファイルにする)
 
 
 # gitの設定をリスト
@@ -205,3 +206,26 @@ pacmanも無いのでインストールできない。
 git config --global http.sslVerify false
 ```
 した。敗北だ。
+
+
+# submoduleまで含めてgitリポジトリの内容をzipファイルにする
+
+```sh
+git clone hoge --recursive
+# で時々↓でサブモジュールを更新して
+git fetch # or `git submodule foreach git pull`
+git commit -am 'hogehoge'
+```
+したレポジトリからzipを作る話。
+
+```sh
+pip install git-archive-all
+git-archive-all my_repo.zip
+```
+
+* [submoduleまで含めてgitリポジトリの内容をzipファイルにする - Qiita](https://qiita.com/yohm/items/248fcc36707d5d3b5b86)
+* [git archive export with submodules (git archive all / recursive) - Stack Overflow](https://stackoverflow.com/questions/14783127/git-archive-export-with-submodules-git-archive-all-recursive)
+* [Kentzo/git-archive-all: A python script wrapper for git-archive that archives a git superproject and its submodules, if it has any. Takes into account .gitattributes](https://github.com/Kentzo/git-archive-all)
+
+おまけ
+* [git submodule はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ](https://www.m3tech.blog/entry/git-submodule)
