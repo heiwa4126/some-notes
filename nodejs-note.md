@@ -21,6 +21,7 @@
   - [続き: git](#続き-git)
   - [続き: node-dev](#続き-node-dev)
 - [そのほか参考リンク](#そのほか参考リンク)
+- [npm install dev抜き](#npm-install-dev抜き)
 
 ## node.jsのインストール
 
@@ -342,3 +343,15 @@ node-dev index.js &
 # そのほか参考リンク
 
 - [npm initでauthorやlicenseなどの初期値を指定する - teppeis blog](https://teppeis.hatenablog.com/entry/2015/12/configure-npm-init)
+
+
+
+# npm install dev抜き
+
+```sh
+npm i --only=prod
+# or
+npm i --production
+```
+
+ちょっと気に入らない。あとnpmのバージョンによっても変わるらしい。
