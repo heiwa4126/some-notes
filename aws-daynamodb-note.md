@@ -24,3 +24,11 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/movieda
 これを CFnに食わせると `Property AttributeName cannot be empty.`　全然意味不明なエラーになる。
 
 `TimeToLiveSpecification: false`だったらデフォルトなので、これをコメントアウトする。
+
+[AWS::DynamoDB::Table TimeToLiveSpecification \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-dynamodb-timetolivespecification.html)
+にあるとおり
+```yaml
+  AttributeName: String
+  Enabled: Boolean
+```
+なんで、 `Enabled: false`は無理ですね。
