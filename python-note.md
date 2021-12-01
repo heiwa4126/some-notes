@@ -44,6 +44,7 @@
 - [PyFlakes](#pyflakes)
 - [fleak8](#fleak8)
 - [コードレビューもどき](#コードレビューもどき)
+- [pythonにタイプヒント](#pythonにタイプヒント)
 
 
 
@@ -963,3 +964,19 @@ docstringはなるべく書きましょう。
 デプロイ方法を書きましょう。
  
 モジュールでないCLIから実行するコードには、shebang書いて、実行権限もつけましょう。
+
+
+# pythonにタイプヒント
+
+[typing --- 型ヒントのサポート — Python 3.10.0b2 ドキュメント](https://docs.python.org/ja/3/library/typing.html)
+
+型ヒント書くと補完が効くので便利なんだけど、
+ちょっと複雑になるともう手に負えないのが欠点。GoLangがどれだけ偉大かわかる。
+
+んで例えばboto3の場合
+
+* [alliefitter/boto3_type_annotations: Deprecated. A maintained fork is available at https://github.com/vemel/mypy_boto3](https://github.com/alliefitter/boto3_type_annotations)
+* [boto3\-stubs · PyPI](https://pypi.org/project/boto3-stubs/)
+* [boto3\-stubs を使って、boto3 でコード補完を有効にしよう \- Qiita](https://qiita.com/smatsumt/items/5235bcd794e634153982)
+
+でも全然効かない...
