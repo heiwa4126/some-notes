@@ -22,7 +22,7 @@
 
 * [Netlify: Develop & deploy the best web experiences in record time](https://www.netlify.com/)
 * [AWS で React アプリケーションを構築する - AWS Amplify を使用してシンプルなウェブアプリケーションを作成する](https://aws.amazon.com/jp/getting-started/hands-on/build-react-app-amplify-graphql/)
-* [create-react-appとTypeScriptでサラッと作ったSPAをgh-pagesにスルッとデプロイすっぞ！ - Qiita](https://qiita.com/rhirayamaaan/items/cdbda70670157a8fb705)
+* [[React] GitHub Pagesにデプロイ - create-react-appで作ったReactプロジェクトをGitHub Pagesにデプロイしてみましょう。](https://dev-yakuza.posstree.com/react/github-pages/)
 
 # 参考
 

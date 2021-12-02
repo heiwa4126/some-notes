@@ -2,16 +2,16 @@
 
 - [AWS CLIのメモ](#aws-cliのメモ)
 - [aws cliの最新バージョンは?](#aws-cliの最新バージョンは)
-- [pipの最新版をユーザーローカルにインストールする](#pipの最新版をユーザーローカルにインストールする)
+- [aws cliのプロファイルの場所](#aws-cliのプロファイルの場所)
+- [コマンド補完](#コマンド補完)
 - [AWS CLIのインストール手順](#aws-cliのインストール手順)
+  - [pipの最新版をユーザーローカルにインストールする](#pipの最新版をユーザーローカルにインストールする)
   - [Amazon Linux 2](#amazon-linux-2)
   - [Debian, Ubuntu Linux系](#debian-ubuntu-linux系)
   - [RHEL 7, CentOS 7](#rhel-7-centos-7)
   - [Windows](#windows)
   - [Windows(古い)](#windows古い)
 - [pipでawscliのインストールに失敗する](#pipでawscliのインストールに失敗する)
-- [コマンド補完](#コマンド補完)
-
 
 # aws cliの最新バージョンは?
 
@@ -19,8 +19,31 @@
 [aws\-cli/CHANGELOG\.rst at v2 · aws/aws\-cli](https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst)
 
 
+# aws cliのプロファイルの場所
 
-# pipの最新版をユーザーローカルにインストールする
+* Windows: `%USERPROFILE%\.aws` - v1では%HOMEが定義されていれば `%HOME%\.aws` だった。
+* Linux & Mac: `~/.aws/credentials`
+
+[名前付きプロファイル - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-profiles.html)
+
+
+# コマンド補完
+
+v2では
+`/usr/local/bin/aws_completer` (symlink)
+
+
+# AWS CLIのインストール手順
+
+**以下v1の場合。v2はPython 3ごと配布されてる**
+
+[AWS CLI のインストール](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-chap-install.html)
+に書かれているとおりなのだが、
+pipを使った例しか出ておらず、
+そのpipが意外と面倒(Python2と3の混乱のせいで)だったりして、
+実際にやってみるとかなり面倒。
+
+## pipの最新版をユーザーローカルにインストールする
 
 [Installation — pip 19.2.1 documentation](https://pip.pypa.io/en/stable/installing/)
 
@@ -41,15 +64,6 @@ $ which pip
 $ pip --version
 ```
 で確認。
-
-
-# AWS CLIのインストール手順
-
-[AWS CLI のインストール](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-chap-install.html)
-に書かれているとおりなのだが、
-pipを使った例しか出ておらず、
-そのpipが意外と面倒(Python2と3の混乱のせいで)だったりして、
-実際にやってみるとかなり面倒。
 
 
 ## Amazon Linux 2
@@ -105,8 +119,6 @@ aws cliがv2なら `aws configure list-profiles`でリストも出せる。
 
 
 
-
-
 ## Windows(古い)
 
 まずAnacondaを更新する。
@@ -138,9 +150,3 @@ sudo apt install libssl-dev
 sudo apt install python3-cryptography
 ```
 してから。
-
-
-# コマンド補完
-
-v2では
-`/usr/local/bin/aws_completer` (symlink)
