@@ -10,6 +10,9 @@ AWS CLIなら
 SES emailアイデンティティを作成してベリファイメールを送る [verify-email-identity](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ses/verify-email-identity.html)
 をつかってできる。boto3でも同様。
 
+参考: [E メールアドレスの検証 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/verify-email-addresses-procedure.html)
+
+
 で、バウンスは
 [Amazon SES での E メール送信のテスト \- Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-email-simulator.html)
 のアドレスのうち、
@@ -18,6 +21,10 @@ SES emailアイデンティティを作成してベリファイメールを送�
 * complaint (やや特殊なメールがとどく)
 
 がSENDERに届く(デフォルト設定の`ForwardingEnabled: true`)。
+
+> E メールのフィードバック転送はデフォルトで有効です
+
+[E メールで送信された Amazon SES 通知 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/monitor-sending-activity-using-notifications-email.html)
 
 
 デフォルト動作以外に
@@ -34,3 +41,15 @@ SES IDにひもづいた属性をリストする方は
 [get-identity-notification-attributes](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ses/get-identity-notification-attributes.html)
 で、こちらは
 オプションが `--identities` と複数になるのに注意。
+
+# ベリファイメール
+
+これでカスタマイズできるらしい。
+[カスタム検証 E メールテンプレートの使用 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-email-verify-address-custom.html)
+試す。
+
+
+# 調べる
+
+SES IDがドメインだったら?
+→ まあおおむね同じみたい。
