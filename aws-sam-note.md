@@ -26,6 +26,11 @@
   - [Lambda オーソライザー](#lambda-オーソライザー)
   - [Cognito](#cognito)
 - [AWS::Serverless::Function が自動的につくるリソース](#awsserverlessfunction-が自動的につくるリソース)
+- [sam local invoke](#sam-local-invoke)
+  - [オプション -n (--env-vars)](#オプション--n---env-vars)
+  - [オプション -e  (--event)](#オプション--e----event)
+  - [オプション --region](#オプション---region)
+- [HelloWorldFunction may not have authorization defined](#helloworldfunction-may-not-have-authorization-defined)
 
 
 # template.yamlでリソースを作り、lamdaにそれのアクセス権を与える
@@ -632,3 +637,29 @@ REQUESTオーソライザーのほうがかんたんなので、
 [Fix Documentation: Document the default LogicalIds created by SAM · Issue #70 · aws/serverless-application-model](https://github.com/aws/serverless-application-model/issues/70)
 
 なんかこれしか見つからない... 困ったもんだ。
+
+
+# sam local invoke
+
+[sam local invoke - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-local-invoke.html)
+
+
+## オプション -n (--env-vars)
+
+[関数のローカルでの呼び出し - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-using-invoke.html#serverless-sam-cli-using-invoke-environment-file)
+
+これはわかりやすい。lambdaに環境変数で何か渡してる場合はここで設定。
+
+## オプション -e  (--event)
+
+内部でurl見てルーティングしてる時など。必要なとこだけあればOK
+
+## オプション --region
+
+sam local invokeは
+samconfig.tomlに書いてあるregionを見てくれない。
+
+
+# HelloWorldFunction may not have authorization defined
+
+じゃあなにをすればこれを聞かれないのか? という話
