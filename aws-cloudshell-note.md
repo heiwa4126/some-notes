@@ -1,6 +1,12 @@
-OSはAmazon Linux2
+# 概要
 
-aws cliもSAMもある。けどPython3は3.7
+[AWS CloudShell の使用 - AWS CloudShell](https://docs.aws.amazon.com/ja_jp/cloudshell/latest/userguide/working-with-cloudshell.html)
+意外と重要なことが書いてある。
+
+OSはAmazon Linux2。1 CPU 3GHz メモリ 4GB
+
+
+aws cliもSAMもある(ちょっと古い)。けどPython3は3.7
 LambdaのPython3.8が動かない。
 
 3.8入れて、venvでならいけるはず。
@@ -25,3 +31,57 @@ tmuxも入ってるんだがctrl-tがブラウザに食われる。
 
 - HOMEは永続する。ただし最後にログインしてから120日まで。容量は各リージョンで1GBまで
 - 10セッションまで同時接続可能 (タブブラウザっぽく使える)。でもw叩いても他の人は見えない。
+
+# だいたいのバージョン
+
+```
+$ date
+Thu Dec 16 23:48:07 UTC 2021
+
+$ cat /etc/os-release 
+NAME="Amazon Linux"
+VERSION="2"
+ID="amzn"
+ID_LIKE="centos rhel fedora"
+VERSION_ID="2"
+PRETTY_NAME="Amazon Linux 2"
+ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2"
+HOME_URL="https://amazonlinux.com/"
+
+$ aws --version
+aws-cli/2.4.5 Python/3.8.8 Linux/4.14.248-189.473.amzn2.x86_64 exec-env/CloudShell exe/x86_64.amzn.2 prompt/off
+
+$ sam --version
+SAM CLI, version 1.33.0
+
+$ python --version
+Python 2.7.18
+
+$ python3 --version
+Python 3.7.10
+
+$ python3.8 --version
+bash: python3.8: command not found
+
+$ node -v
+v14.18.0
+
+$ npm -v
+6.14.15
+
+$ yarn -v
+bash: yarn: command not found
+```
+
+Amazon Linux 2 なので必要ならyumやamazon-linux-extrasで更新。
+
+**ただし再起動すると変更は全部消えます**
+
+
+# awsのデフォルトプロファイル
+
+```sh
+aws sts get-caller-identity
+```
+で確認。ポータルのログインユーザと同じ。リージョンもポータルといっしょ(ターミナルの左上)。
