@@ -19,6 +19,7 @@ shellいろいろtipsメモ
     - [Problematic code in the case of `export`:](#problematic-code-in-the-case-of-export)
       - [Correct code:](#correct-code)
 - [メモ](#メモ)
+- [壊れたsymlinkをみつける](#壊れたsymlinkをみつける)
 
 
 # 非0の戻り値で中断させたい
@@ -316,3 +317,12 @@ export foo
 
 シェルスクリプトには-eオプションと-uオプションをセットしましょう。参考:[Options](https://tldp.org/LDP/abs/html/options.html)
 (欠点あり。`cmd1||cmd2` みたいのができなくなります)
+
+
+# 壊れたsymlinkをみつける
+
+```sh
+find -L . -type l
+```
+
+[Linux: 壊れたシンボリックリンクを探す – エラーの向こうへ](https://tech.mktime.com/entry/479)
