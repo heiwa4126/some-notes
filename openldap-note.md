@@ -16,6 +16,10 @@ Red Hat Directory Server (RHDS) を使いましょう。
 * [技術メモメモ: OpenLDAP入門② (OpenLDAPでLDAPSを有効化する)](https://tech-mmmm.blogspot.com/2021/11/openldap-openldapldaps.html)
 * [技術メモメモ: OpenLDAP入門③ (LinuxのSSSDを使ってOpenLDAPと認証連携する)](https://tech-mmmm.blogspot.com/2021/12/openldap-linuxsssdopenldap.html)
 * [OpenLDAPの設定をしてたら死にそうだった話](http://dmiyakawa.blogspot.com/2012/09/openldap.html)
+* [第9章 LDAP サーバー Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/ldap_servers)
+* [9.2. OpenLDAP Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/openldap)
+* [付録A トラブルシューティング Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/trouble#sssctl)
+* [9.2.3.7. レプリケーションの設定 Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/s3-setting_up_replication)
 
 
 # slapd.confがないとき
@@ -26,9 +30,8 @@ slapd.conf
 ConfigDBを読む(/etc/ldap/slapd.d以下。OLCというらしい)
 
 **「slapd.confを編集して...」と書いてあるweb記事は、
-ことごとく古いので参考程度にとどめて起きましょう。**
-
-変換して別ディレクトリに出したLDIFを参考にするのはOK。
+ことごとく古いので参考程度にとどめて起きましょう。
+変換して別ディレクトリに出したLDIFを参考にするのはOK。**
 
 ConfigDBはldapなのでldapadd/ldapmodifyで修正できるけど
 **そんなのやってられない**ので
@@ -97,6 +100,8 @@ ConfigDBは
 ldapsearch -LLL -Y EXTERNAL -H ldapi:/// -b cn=config
 # or
 slapcat -b cn=config
+# or
+slapcat -n0
 ```
 で見れる
 し
