@@ -9,6 +9,7 @@ Red Hat Directory Server (RHDS) を使いましょう。
 * [1.2. Directory Server の概要 Red Hat Directory Server 11 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_directory_server/11/html/deployment_guide/introduction_to_directory_services-introduction_to_ds)
 
 
+
 # リンク集
 
 * [技術メモメモ: OpenLDAP入門① (OpenLDAP初期構築手順)](https://tech-mmmm.blogspot.com/2021/11/openldap-openldap.html)
@@ -17,13 +18,17 @@ Red Hat Directory Server (RHDS) を使いましょう。
 * [OpenLDAPの設定をしてたら死にそうだった話](http://dmiyakawa.blogspot.com/2012/09/openldap.html)
 
 
-
 # slapd.confがないとき
 
 最近のslapdは
 slapd.conf
 を読まない。
 ConfigDBを読む(/etc/ldap/slapd.d以下。OLCというらしい)
+
+**「slapd.confを編集して...」と書いてあるweb記事は、
+ことごとく古いので参考程度にとどめて起きましょう。**
+
+変換して別ディレクトリに出したLDIFを参考にするのはOK。
 
 ConfigDBはldapなのでldapadd/ldapmodifyで修正できるけど
 **そんなのやってられない**ので
@@ -65,6 +70,9 @@ chown -R openldap:openldap /tmp/slapd.d    # これ重要
 の
 README.Debian.gz
 参照
+
+
+
 
 ## 重要
 
