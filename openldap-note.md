@@ -136,9 +136,7 @@ slapdが起動してると厳密には一貫性がとれなくなる。
 
 `objectClass: posixAccount` だったらuidインデックスだけでも作っておくといい感じ。
 
-sssdキャッシュを消すのは `sssctl cache-remove` 
-[付録A トラブルシューティング Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/trouble#debug-sssd-conf)
-
+ldapi:スキーマはunix socket
 
 # backup
 
@@ -168,3 +166,60 @@ systemctl start slapd
 * `-n2`はデフォルトなので不要かも
 * RedHat系だと `openldap:openldap` のかわりに `ldap:ldap`
 * RedHat系だと `/etc/ldap/slapd.d` のかわりに `/etc/openldap/slapd.d`
+
+# sssdのキャッシュ
+
+まるごと消すなら `sssctl cache-remove`  
+[付録A トラブルシューティング Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/trouble#debug-sssd-conf)
+
+インストールは
+`yum install sssd-tools sssd-dbus`
+
+
+普通は
+```sh
+# 特定ユーザだけ消す
+sudo sss_cache -u jsmith
+# ユーザ関連だけ消す
+sudo sss_cache -U
+# なにもかも消す
+sudo sss_cache -E
+````
+sss_cahceはsssd-commonに入ってるのでsssdが動いてるとこならたいてい使える。
+
+[11.2.26. SSSD キャッシュの管理 Red Hat Enterprise Linux 6 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/deployment_guide/sssd-cache)
+
+> sss_cache は、有効期限のタイムスタンプを過去に設定することで機能します。これにより、次回は強制的にルックアップされますが、エントリが完全に削除されるわけではないため、クライアントがオフラインになる場合に備えて、エントリは引き続き存在します。
+
+テスト
+```
+# sssctl user-show user01
+Name: user01
+Cache entry creation date: 12/22/21 07:12:33
+Cache entry last update time: 12/22/21 08:36:19
+Cache entry expiration time: 12/22/21 10:06:19
+Initgroups expiration time: 12/22/21 10:06:19
+Cached in InfoPipe: No
+
+# sss_cache -u user01
+
+# sssctl user-show user01
+Name: user01
+Cache entry creation date: 12/22/21 07:12:33
+Cache entry last update time: 12/22/21 08:36:19
+Cache entry expiration time: Expired
+Initgroups expiration time: Expired
+Cached in InfoPipe: No
+
+# id user01
+uid=10001(user01) gid=10000(ldapgrp) groups=10000(ldapgrp)
+
+# sssctl user-show user01
+Name: user01
+Cache entry creation date: 12/22/21 07:12:33
+Cache entry last update time: 12/22/21 08:38:18
+Cache entry expiration time: 12/22/21 10:08:18
+Initgroups expiration time: 12/22/21 10:08:18
+Cached in InfoPipe: No
+```
+なるほど。
