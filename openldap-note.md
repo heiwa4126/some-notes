@@ -1,11 +1,29 @@
 OpenLDAPのメモ
 
+# RHEL8だったら
+
+OpenLDAP + nss + sssd ではなくて
+Red Hat Directory Server (RHDS) を使いましょう。
+
+* [Product Documentation for Red Hat Directory Server 11 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_directory_server/11)
+* [1.2. Directory Server の概要 Red Hat Directory Server 11 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_directory_server/11/html/deployment_guide/introduction_to_directory_services-introduction_to_ds)
+
+
+# リンク集
+
+* [技術メモメモ: OpenLDAP入門① (OpenLDAP初期構築手順)](https://tech-mmmm.blogspot.com/2021/11/openldap-openldap.html)
+* [技術メモメモ: OpenLDAP入門② (OpenLDAPでLDAPSを有効化する)](https://tech-mmmm.blogspot.com/2021/11/openldap-openldapldaps.html)
+* [技術メモメモ: OpenLDAP入門③ (LinuxのSSSDを使ってOpenLDAPと認証連携する)](https://tech-mmmm.blogspot.com/2021/12/openldap-linuxsssdopenldap.html)
+* [OpenLDAPの設定をしてたら死にそうだった話](http://dmiyakawa.blogspot.com/2012/09/openldap.html)
+
+
+
 # slapd.confがないとき
 
 最近のslapdは
 slapd.conf
 を読まない。
-ConfigDBを読む(/etc/ldap/slapd.d)
+ConfigDBを読む(/etc/ldap/slapd.d以下。OLCというらしい)
 
 ConfigDBはldapなのでldapadd/ldapmodifyで修正できるけど
 **そんなのやってられない**ので
@@ -65,6 +83,7 @@ rootpw
 
 
 ## メモ
+
 ConfigDBは
 ```sh
 ldapsearch -LLL -Y EXTERNAL -H ldapi:/// -b cn=config
@@ -80,3 +99,5 @@ slapcat -b cn=config
 find /etc/ldap/slapd.d -type f -name \*.ldif -exec grep olcRootPW {} \+
 ```
 `/etc/ldap/slapd.d/cn=config/olcDatabase={1}mdb.ldif` で設定されてるのがわかる。
+
+slapcatはファイルを直接見るのでslapdが起動している必要がない。
