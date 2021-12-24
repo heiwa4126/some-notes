@@ -30,7 +30,7 @@
   - [オプション -n (--env-vars)](#オプション--n---env-vars)
   - [オプション -e  (--event)](#オプション--e----event)
   - [オプション --region](#オプション---region)
-- [HelloWorldFunction may not have authorization defined](#helloworldfunction-may-not-have-authorization-defined)
+- [HelloWorldFunction may not have authorization defined, Is this okay?](#helloworldfunction-may-not-have-authorization-defined-is-this-okay)
 
 
 # template.yamlでリソースを作り、lamdaにそれのアクセス権を与える
@@ -660,6 +660,16 @@ sam local invokeは
 samconfig.tomlに書いてあるregionを見てくれない。
 
 
-# HelloWorldFunction may not have authorization defined
+# HelloWorldFunction may not have authorization defined, Is this okay?
 
 じゃあなにをすればこれを聞かれないのか? という話
+[AWS SAM HelloWorldFunction may not have authorization defined, Is this okay - Google Search](https://www.google.com/search?q=AWS+SAM+HelloWorldFunction+may+not+have+authorization+defined%2C+Is+this+okay&hl=en)
+
+AWS::Serverless::ApiのAuthプロパティを設定する。
+
+* [AWS::Serverless::Api - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-resource-api.html#sam-api-auth)
+* [API Gateway API へのアクセスの制御 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis.html)
+* [ApiAuth - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-property-api-apiauth.html)
+
+めんどくさいときは実はNoneが指定できるらしい
+[How to set authorization to queryESFunction in Amazon ElasticSearch while deploying the application? - Stack Overflow](https://stackoverflow.com/questions/64414472/how-to-set-authorization-to-queryesfunction-in-amazon-elasticsearch-while-deploy)
