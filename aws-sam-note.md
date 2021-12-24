@@ -673,3 +673,5 @@ AWS::Serverless::ApiのAuthプロパティを設定する。
 
 めんどくさいときは実はNoneが指定できるらしい
 [How to set authorization to queryESFunction in Amazon ElasticSearch while deploying the application? - Stack Overflow](https://stackoverflow.com/questions/64414472/how-to-set-authorization-to-queryesfunction-in-amazon-elasticsearch-while-deploy)
+→
+やってみたらできませんでした。Invalid value for 'Auth' property

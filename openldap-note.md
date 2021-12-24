@@ -150,15 +150,26 @@ systemctl start slapd
 * `20211221` はタイムスタンプ
 * `-n2`はデフォルトなので不要かも
 
+/var/lib/ldap/DB_CONFIGもあるといいかも
+/etc/openldap/certs (CAはそのまま)
+/etc/sysconfig/slapd
 
 # restore
 
 ```sh
 systemctl stop slapd
+# Debian, Ubunts
 slapadd -n0 -F /etc/ldap/slapd.d -l ldap-config-20211221.ldif
+# RHEL
+slapadd -n0 -F /etc/openldap/slapd.d -l ldap-config.ldif
+slapadd -n2 -F /etc/openldap/slapd.d -l ldap.ldif
+
+# Debian, Ubunts
 chown -R openldap:openldap /etc/ldap/slapd.d
-slapadd -n2 -l ldap-20211221.ldif
 chown -R openldap:openldap /var/lib/ldap
+# RHEL
+chown -R ldap:ldap /etc/openldap/slapd.d /var/lib/ldap
+
 systemctl start slapd
 ```
 
