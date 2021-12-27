@@ -563,11 +563,12 @@ Lambda オーソライザーかcognitoのほうが楽かも...調べる
 
 (戻ってきた)
 APIキーがなぜAPI Gatewayのオーソライザーの中にないか? どうもこれはOpenAPI(swaggr)の規格だかららしい。
-[API キーを使用する理由と条件  |  OpenAPI を使用した Cloud Endpoints  |  Google Cloud](https://cloud.google.com/endpoints/docs/openapi/when-why-api-key?hl=ja)　←これわかりやすい。Googleの翻訳は良い。
+[API キーを使用する理由と条件  |  OpenAPI を使用した Cloud Endpoints  |  Google Cloud](https://cloud.google.com/endpoints/docs/openapi/when-why-api-key?hl=ja) ←これわかりやすい。Googleの翻訳は良い。
 
 ↑から引用↓
 - API キーは、API の呼び出し元のプロジェクト（アプリケーションまたはサイト）を識別します。
 - 認証トークンは、アプリまたはサイトを利用するユーザー（個人）を識別します
+
 
 ## Lambda オーソライザー
 
@@ -591,8 +592,8 @@ WebSocket API では、リクエストパラメータベースのオーソライ
 [API Gateway Lambda オーソライザーを使用する \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html#api-gateway-lambda-authorizer-create)
 
 
-ex1-lambda-authorizer　TOKEN
-ex2-lambda-authorizer　REQUEST
+ex1-lambda-authorizer TOKEN
+ex2-lambda-authorizer REQUEST
 PetStore (6059g6rlr4) [チュートリアル: サンプルをインポートして REST API を作成する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-create-api-from-example.html)
 
 JWT(JSON Web Token ジョット)
@@ -666,10 +667,16 @@ samconfig.tomlに書いてあるregionを見てくれない。
 [AWS SAM HelloWorldFunction may not have authorization defined, Is this okay - Google Search](https://www.google.com/search?q=AWS+SAM+HelloWorldFunction+may+not+have+authorization+defined%2C+Is+this+okay&hl=en)
 
 AWS::Serverless::ApiのAuthプロパティを設定する。
+AWS::Serverless::FunctionのEvents:のType:Apiでも。
+(していできるものがちがう)
+> API でグローバルオーソライザーを指定しており、特定の関数を公開する場合は、Authorizer を NONE に設定して上書きします。
 
 * [AWS::Serverless::Api - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-resource-api.html#sam-api-auth)
 * [API Gateway API へのアクセスの制御 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis.html)
 * [ApiAuth - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-property-api-apiauth.html)
+* [Api \- AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/sam-property-function-api.html#sam-function-api-auth)
+* [Lambda オーソライザーの例 - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-lambda-authorizer.html)
+* [API Gateway Lambda オーソライザーを使用する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
 
 めんどくさいときは実はNoneが指定できるらしい
 [How to set authorization to queryESFunction in Amazon ElasticSearch while deploying the application? - Stack Overflow](https://stackoverflow.com/questions/64414472/how-to-set-authorization-to-queryesfunction-in-amazon-elasticsearch-while-deploy)
