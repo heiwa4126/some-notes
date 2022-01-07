@@ -186,7 +186,7 @@ OpenAPI定義ファイルについて学ばないといけないのがめんど�
 
 引用元 [コンソールで確認できないLambda関数のコードを確認する \| DevelopersIO](https://dev.classmethod.jp/articles/confirm-lambda-code/)
 
-コンソールからexportできる。
+コンソールからexportできる。アクション -> 関数のエクスポート
 
 CLIからなら
 ```sh
