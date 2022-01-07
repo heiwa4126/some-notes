@@ -11,6 +11,7 @@
 - [API GatewayのサンプルPetStoreについて](#api-gatewayのサンプルpetstoreについて)
 - [API Gateway ステージ変数](#api-gateway-ステージ変数)
 - [コールドスタート vs ウォームスタート](#コールドスタート-vs-ウォームスタート)
+- [既存のLambdaのコードを取得する](#既存のlambdaのコードを取得する)
 
 
 # ハンドラのeventに値を渡す
@@ -179,3 +180,22 @@ OpenAPI定義ファイルについて学ばないといけないのがめんど�
 - [Keeping Functions Warm \- How To Fix AWS Lambda Cold Start Issues](https://www.serverless.com/blog/keep-your-lambdas-warm)
 - [New for AWS Lambda – Predictable start\-up times with Provisioned Concurrency \| AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/new-for-aws-lambda-predictable-start-up-times-with-provisioned-concurrency/)
 - [Operating Lambda: Performance optimization – Part 1 | AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/operating-lambda-performance-optimization-part-1/)
+
+
+# 既存のLambdaのコードを取得する
+
+引用元 [コンソールで確認できないLambda関数のコードを確認する \| DevelopersIO](https://dev.classmethod.jp/articles/confirm-lambda-code/)
+
+コンソールからexportできる。
+
+CLIからなら
+```sh
+#!/bin/sh -ue
+LAMBDA_NAME=myPythonHello
+
+aws lambda get-function --function-name  "$LAMBDA_NAME" \
+  | jq .Code.Location -r \
+  | xargs curl -o code.zip
+```
+
+みたいな感じで。
