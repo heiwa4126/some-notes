@@ -2,6 +2,7 @@
 
 - [DNSメモ](#dnsメモ)
 - [プライベートDNSモード または DNS over TLS](#プライベートdnsモード-または-dns-over-tls)
+- [リンク](#リンク)
 
 # プライベートDNSモード または DNS over TLS
 
@@ -31,3 +32,10 @@ $ dig A 1dot1dot1dot3.cloudflare-dns.com
 (略)
 ```
 あれ? 1.1.1.3, 1.0.0.3になってないな... (2020-4-15)
+
+
+# リンク
+
+* [Introducing 1.1.1.1 for Families](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/)
+* [paulmillr/encrypted-dns: Configuration profiles for DNS HTTPS and DNS over TLS for iOS 14 and MacOS Big Sur](https://github.com/paulmillr/encrypted-dns)
+* [Set up 1.1.1.1 for Families · Cloudflare 1.1.1.1 docs](https://developers.cloudflare.com/1.1.1.1/1.1.1.1-for-families)
