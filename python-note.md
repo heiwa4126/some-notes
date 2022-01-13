@@ -23,6 +23,7 @@
 - [pip10問題](#pip10問題)
 - [magic](#magic)
 - [Ubuntu 18.04 LTSでpython3.7](#ubuntu-1804-ltsでpython37)
+- [Ubuntu 18.04 LTSでpython3.9](#ubuntu-1804-ltsでpython39)
 - [Ubuntu 20.04](#ubuntu-2004)
 - [venv](#venv)
 - [pythonのEOL](#pythonのeol)
@@ -537,6 +538,26 @@ python3-aptパッケージのこのへんが
 venvとか使うしかない。
 
 Ubuntu 20.04 LTSでは Python 3.8が標準でPython2は入らないらしい。
+
+
+# Ubuntu 18.04 LTSでpython3.9
+
+いちおうこんな感じで(おすすめしない)
+```sh
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.9 python3.9-venv python3.9-dev
+python3.9 -V
+```
+
+もういいかげんOSをアップグレードするべき。
+
+
+んでvenv
+```sh
+python3.9 -m venv ~/.venv/39
+.  ~/.venv/39/bin/activate
+```
+
 
 # Ubuntu 20.04
 
