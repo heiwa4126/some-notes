@@ -12,6 +12,7 @@
 - [API Gateway ステージ変数](#api-gateway-ステージ変数)
 - [コールドスタート vs ウォームスタート](#コールドスタート-vs-ウォームスタート)
 - [既存のLambdaのコードを取得する](#既存のlambdaのコードを取得する)
+- [既存のLambda layerのコードを取得する](#既存のlambda-layerのコードを取得する)
 
 
 # ハンドラのeventに値を渡す
@@ -199,3 +200,9 @@ aws lambda get-function --function-name  "$LAMBDA_NAME" \
 ```
 
 みたいな感じで。
+
+# 既存のLambda layerのコードを取得する
+
+できるの?
+
+[AWS Lambda Layersのアーカイブファイルをダウンロードする | ヤマムギ](https://www.yamamanx.com/aws-lambda-layers-archive/)

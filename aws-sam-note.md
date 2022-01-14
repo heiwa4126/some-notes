@@ -31,6 +31,7 @@
   - [オプション -e  (--event)](#オプション--e----event)
   - [オプション --region](#オプション---region)
 - [HelloWorldFunction may not have authorization defined, Is this okay?](#helloworldfunction-may-not-have-authorization-defined-is-this-okay)
+- [FunctionsのPoliciesにManagedPolicyを書く方法](#functionsのpoliciesにmanagedpolicyを書く方法)
 
 
 # template.yamlでリソースを作り、lamdaにそれのアクセス権を与える
@@ -682,3 +683,33 @@ AWS::Serverless::FunctionのEvents:のType:Apiでも。
 [How to set authorization to queryESFunction in Amazon ElasticSearch while deploying the application? - Stack Overflow](https://stackoverflow.com/questions/64414472/how-to-set-authorization-to-queryesfunction-in-amazon-elasticsearch-while-deploy)
 →
 やってみたらできませんでした。Invalid value for 'Auth' property
+
+# FunctionsのPoliciesにManagedPolicyを書く方法
+
+AWS::Serverless::Function の Properties: で
+
+```yaml
+    Policies:
+      # AWS管理ポリシーは文字列を書く
+      ## - AWSLambdaBasicExecutionRole は自動で追加される
+      - AWSLambdaExecute
+      # AWS SAMポリシーテンプレート書く
+      - CloudWatchPutMetricPolicy: {}
+      # このテンプレートのユーザ管理ポリシーは!Refで書く
+      - !Ref SomeManagedPolicy1
+      - !Ref SomeManagedPolicy2
+      # inline policyを書く
+      - Statement:
+        - Condition: ...
+          Action: ...
+          Resouce: ...
+          Effect: Allow
+```
+
+(順不同)
+
+参考:
+
+* [AWS SAM ポリシーテンプレート - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-policy-templates.html)
+* [Possible to attach customer-managed policies? · Issue #76 · aws/serverless-application-model](https://github.com/aws/serverless-application-model/issues/76)
+* [AWS SAMがめちゃめちゃアップデートされてる件 – ClassmethodサーバーレスAdvent Calendar 2017 #serverless #adventcalendar #reinvent | DevelopersIO](https://dev.classmethod.jp/articles/20171203-updates-about-aws-serverless-application-model/)
