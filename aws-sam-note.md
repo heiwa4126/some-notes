@@ -32,6 +32,7 @@
   - [オプション --region](#オプション---region)
 - [HelloWorldFunction may not have authorization defined, Is this okay?](#helloworldfunction-may-not-have-authorization-defined-is-this-okay)
 - [FunctionsのPoliciesにManagedPolicyを書く方法](#functionsのpoliciesにmanagedpolicyを書く方法)
+- [aws-sam-cli-managed-defaultというスタック](#aws-sam-cli-managed-defaultというスタック)
 
 
 # template.yamlでリソースを作り、lamdaにそれのアクセス権を与える
@@ -713,3 +714,22 @@ AWS::Serverless::Function の Properties: で
 * [AWS SAM ポリシーテンプレート - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-policy-templates.html)
 * [Possible to attach customer-managed policies? · Issue #76 · aws/serverless-application-model](https://github.com/aws/serverless-application-model/issues/76)
 * [AWS SAMがめちゃめちゃアップデートされてる件 – ClassmethodサーバーレスAdvent Calendar 2017 #serverless #adventcalendar #reinvent | DevelopersIO](https://dev.classmethod.jp/articles/20171203-updates-about-aws-serverless-application-model/)
+
+
+# aws-sam-cli-managed-defaultというスタック
+
+aws-sam-cli-managed-defaultというスタックがあるか?
+aws-sam-cli-managed-defaultにはS3 bucketとそのpolicyの2個。
+そのS3 bucketにSAMが入る。
+
+aws-sam-cli-managed-defaultスタックがあれば
+outputのSourceBucketからバケット名を得る、みたいな感じらしい。
+
+このスタックがなくてもSAMはS3バケットを作る。
+バケット名のポストフィックスの乱数みたいのが何からできてるかよくわからん。
+
+> Saved arguments to config file
+> Running 'sam deploy' for future deployments will use the parameters saved above.
+> The above parameters can be changed by modifying samconfig.toml
+> Learn more about samconfig.toml syntax at
+> https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
