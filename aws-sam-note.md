@@ -33,6 +33,7 @@
 - [HelloWorldFunction may not have authorization defined, Is this okay?](#helloworldfunction-may-not-have-authorization-defined-is-this-okay)
 - [FunctionsのPoliciesにManagedPolicyを書く方法](#functionsのpoliciesにmanagedpolicyを書く方法)
 - [aws-sam-cli-managed-defaultというスタック](#aws-sam-cli-managed-defaultというスタック)
+- [sam deploy でデプロイする](#sam-deploy-でデプロイする)
 
 
 # template.yamlでリソースを作り、lamdaにそれのアクセス権を与える
@@ -733,3 +734,29 @@ outputのSourceBucketからバケット名を得る、みたいな感じらし�
 > The above parameters can be changed by modifying samconfig.toml
 > Learn more about samconfig.toml syntax at
 > https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+
+
+# sam deploy でデプロイする
+
+`sam build` できない環境で(たとえばtargetがpython 3.8なのに3.7しかない)、
+さらに
+`sam deploy --guided` もできない環境で (aws-sam-cli-managed-defaultスタックが作れない & SAMのS3バケットがわからない)
+samのprojectをzipでかためたやつを持っていって `sam deploy`する話。
+
+`sam build`はあらかじめやっておく。でzip。
+
+SAMのS3バケットは、
+
+aws-sam-cli-managed-default stackはあるか。
+
+なければ
+```json
+{"AWSTemplateFormatVersion": "2010-09-09", "Transform": "AWS::Serverless-2016-10-31", "Description": "Managed Stack for AWS SAM CLI", "Metadata": {"SamCliInfo": {"version": "1.33.0", "installationId": "c61a8b52-fb4c-4488-a5ea-de314c54ad2b"}}, "Resources": {"SamCliSourceBucket": {"Type": "AWS::S3::Bucket", "Properties": {"VersioningConfiguration": {"Status": "Enabled"}, "Tags": [{"Key": "ManagedStackSource", "Value": "AwsSamCli"}]}}, "SamCliSourceBucketBucketPolicy": {"Type": "AWS::S3::BucketPolicy", "Properties": {"Bucket": {"Ref": "SamCliSourceBucket"}, "PolicyDocument": {"Statement": [{"Action": ["s3:GetObject"], "Effect": "Allow", "Resource": {"Fn::Join": ["", ["arn:", {"Ref": "AWS::Partition"}, ":s3:::", {"Ref": "SamCliSourceBucket"}, "/*"]]}, "Principal": {"Service": "serverlessrepo.amazonaws.com"}, "Condition": {"StringEquals": {"aws:SourceAccount": {"Ref": "AWS::AccountId"}}}}]}}}}, "Outputs": {"SourceBucket": {"Value": {"Ref": "SamCliSourceBucket"}}}}
+```
+こんなテンプレートでaws-sam-cli-managed-default stackを作る。
+
+aws-sam-cli-managed-default stackのoutputのSourceBucketからバケット名をとる。
+
+という手順で。
+
+でこれでsamconfig.tomlを書き換えて、`sam deploy`。
