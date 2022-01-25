@@ -760,3 +760,19 @@ aws-sam-cli-managed-default stackのoutputのSourceBucketからバケット名�
 という手順で。
 
 でこれでsamconfig.tomlを書き換えて、`sam deploy`。
+
+`sam deploy --guided` は便利なんだが、対話的にオペレーションが必要。  
+`sam deploy` だとSAMのS3バケットがあったりなかったりしてうまくいかない。
+
+非対話にしたい場合は、
+1. samconfig.tomlからs3_bucket="..."を取り除いて
+2. `sam deploy --resolve-s3`
+
+でいける。`aws-sam-cli-managed-default` stackも(つまりSAM用S3バケットも)つくってくれる。
+
+ただし、上の手法だとsamconfig.tomlにバケット名を書き戻してくれないので、
+- 毎回 `--resolve-s3` つきでdeploy
+- または手でsamconfig.tomlに書き込む
+- または1回だけ`sam deploy --guided` (samconfig.tomlを更新してくれる)
+
+のいずれかを実行すること。
