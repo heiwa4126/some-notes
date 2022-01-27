@@ -24,13 +24,16 @@ python get-pip.py -U
 tmuxも入ってるんだがctrl-tがブラウザに食われる。
 そのへんさえ我慢できれば
 
-あと制限がある。
+# 制限
 
 - [AWS CloudShell – AWS リソースへのコマンドラインアクセス | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/aws-cloudshell-command-line-access-to-aws-resources/)
 - [の制限と制約AWS CloudShell - AWS CloudShell](https://docs.aws.amazon.com/ja_jp/cloudshell/latest/userguide/limits.html#persistent-storage-limitations)
 
 - HOMEは永続する。ただし最後にログインしてから120日まで。容量は各リージョンで1GBまで
 - 10セッションまで同時接続可能 (タブブラウザっぽく使える)。でもw叩いても他の人は見えない。
+- **再起動すると変更は全部消えます**. ある意味便利
+- shellのhistoryが残らない。
+
 
 # だいたいのバージョン
 
@@ -85,3 +88,38 @@ Amazon Linux 2 なので必要ならyumやamazon-linux-extrasで更新。
 aws sts get-caller-identity
 ```
 で確認。ポータルのログインユーザと同じ。リージョンもポータルといっしょ(ターミナルの左上)。
+
+
+# 自分環境
+
+
+```sh
+sudo yum update -y
+sudo amazon-linux-extras install -y python3.8
+curl -kL https://bootstrap.pypa.io/get-pip.py -O
+python get-pip.py -U
+rm get-pip.py
+sudo yum -y groupinstall "Development Tools"
+sudo yum -y install openssl-devel bzip2-devel libffi-devel jq emacs-nox
+curl https://www.python.org/ftp/python/3.9.9/Python-3.9.9.tar.xz -O
+tar xf Python-3.9.9.tar.xz
+cd Python-3.9.9
+./configure --enable-optimizations
+sudo make altinstall
+cd ..
+sudo rm -rf Python-3.9.9 Python-3.9.9.tar.xz
+sudo /usr/local/bin/python3.9 -m pip install --upgrade pip
+```
+
+```sh
+curl https://www.python.org/ftp/python/3.10.2/Python-3.10.2.tar.xz -O
+tar xf Python-3.10.2.tar.xz
+cd Python-3.10.2
+./configure --enable-optimizations
+sudo make altinstall
+cd ..
+sudo rm -rf Python-3.10.2 Python-3.10.2.tar.xz
+sudo /usr/local/bin/python3.10 -m pip install --upgrade pip
+```
+
+考えてみるとRPM作ったほうがよくないか?
