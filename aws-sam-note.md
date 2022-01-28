@@ -754,9 +754,12 @@ aws-sam-cli-managed-default stackはあるか。
 {"AWSTemplateFormatVersion": "2010-09-09", "Transform": "AWS::Serverless-2016-10-31", "Description": "Managed Stack for AWS SAM CLI", "Metadata": {"SamCliInfo": {"version": "1.33.0", "installationId": "c61a8b52-fb4c-4488-a5ea-de314c54ad2b"}}, "Resources": {"SamCliSourceBucket": {"Type": "AWS::S3::Bucket", "Properties": {"VersioningConfiguration": {"Status": "Enabled"}, "Tags": [{"Key": "ManagedStackSource", "Value": "AwsSamCli"}]}}, "SamCliSourceBucketBucketPolicy": {"Type": "AWS::S3::BucketPolicy", "Properties": {"Bucket": {"Ref": "SamCliSourceBucket"}, "PolicyDocument": {"Statement": [{"Action": ["s3:GetObject"], "Effect": "Allow", "Resource": {"Fn::Join": ["", ["arn:", {"Ref": "AWS::Partition"}, ":s3:::", {"Ref": "SamCliSourceBucket"}, "/*"]]}, "Principal": {"Service": "serverlessrepo.amazonaws.com"}, "Condition": {"StringEquals": {"aws:SourceAccount": {"Ref": "AWS::AccountId"}}}}]}}}}, "Outputs": {"SourceBucket": {"Value": {"Ref": "SamCliSourceBucket"}}}}
 ```
 こんなテンプレートでaws-sam-cli-managed-default stackを作る。
+https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/using-cfn-cli-creating-stack.html
 
 aws-sam-cli-managed-default stackのoutputのSourceBucketからバケット名をとる。
 
 という手順で。
 
 でこれでsamconfig.tomlを書き換えて、`sam deploy`。
+
+リージョンは? カレントリージョンでいいのか?
