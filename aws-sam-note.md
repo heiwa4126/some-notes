@@ -762,9 +762,6 @@ aws-sam-cli-managed-default stackのoutputのSourceBucketからバケット名�
 
 でこれでsamconfig.tomlを書き換えて、`sam deploy`。
 
-<<<<<<< HEAD
-リージョンは? カレントリージョンでいいのか?
-=======
 `sam deploy --guided` は便利なんだが、対話的にオペレーションが必要。  
 `sam deploy` だとSAMのS3バケットがあったりなかったりしてうまくいかない。
 
@@ -780,4 +777,3 @@ aws-sam-cli-managed-default stackのoutputのSourceBucketからバケット名�
 - または1回だけ`sam deploy --guided` (samconfig.tomlを更新してくれる)
 
 のいずれかを実行すること。
->>>>>>> db4129bfd8723412c80d360bd3e572f9a76d4bca
