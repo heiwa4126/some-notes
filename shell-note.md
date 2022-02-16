@@ -284,6 +284,19 @@ shfmt -l -w *.sh
 ```
 でカレントのshを全部再フォーマット。
 
+ただ
+[styleguide | Style guides for Google-originated open-source projects](https://google.github.io/styleguide/shellguide.html#indentation)
+みたいにタブじゃなくて2 spacesにするのはどうしたらいいのか。
+
+`-i 2` か
+
+```sh
+shfmt -i 2 -w *.sh
+```
+で。
+
+
+
 # shellcheck
 
 ## SC2155の直し方
