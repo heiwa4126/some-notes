@@ -31,6 +31,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [netplanでDHCPをrenewする](#netplanでdhcpをrenewする)
 - [friendly-recovery](#friendly-recovery)
 - [インストールされているパッケージの一覧](#インストールされているパッケージの一覧)
+- [パッケージの更新履歴](#パッケージの更新履歴)
 
 # ホスト名の設定
 
@@ -447,3 +448,47 @@ Make recovery boot mode more user-friendly Make the recovery boot mode more user
 
 - `dpkg-query --list` or `dpkg -l` - フォーマットされてるのでスクリプトで扱いにくい(COLUMNS=999とかする)。早い。
 - `apt list` - 普通こっちか。
+
+
+# パッケージの更新履歴
+
+まず
+- /var/log/apt/history.log
+- /var/log/dpkg.log
+
+が更新履歴。
+
+で、パッケージにどんな更新があったかは `apt changelog`
+
+例)
+```
+$ apt changelog libc-bin
+Get:1 https://changelogs.ubuntu.com glibc 2.27-3ubuntu1.5 Changelog [809 kB]
+Fetched 809 kB in 2s (345 kB/s)
+
+glibc (2.27-3ubuntu1.5) bionic-security; urgency=medium
+
+  * SECURITY UPDATE: infinite loop in iconv
+    - debian/patches/any/CVE-2016-10228-pre1.patch: add xsetlocale function
+      in support/Makefile, support/support.h, support/xsetlocale.c.
+    - debian/patches/any/CVE-2016-10228-1.patch: rewrite iconv option
+      parsing in iconv/Makefile, iconv/Versions, iconv/gconv_charset.c,
+      iconv/gconv_charset.h, iconv/gconv_int.h, iconv/gconv_open.c,
+      iconv/iconv_open.c, iconv/iconv_prog.c, iconv/tst-iconv-opt.c,
+      iconv/tst-iconv_prog.sh, intl/dcigettext.c.
+    - debian/patches/any/CVE-2016-10228-2.patch: handle translation output
+      codesets with suffixes in iconv/Versions, iconv/gconv_charset.c,
+      iconv/gconv_charset.h, iconv/gconv_int.h, iconv/iconv_open.c,
+      iconv/iconv_prog.c, intl/dcigettext.c, intl/tst-codeset.c.
+    - CVE-2016-10228
+  * SECURITY UPDATE: buffer over-read in iconv
+    - debian/patches/any/CVE-2019-25013.patch: fix buffer overrun in EUC-KR
+      conversion module in iconvdata/bug-iconv13.c, iconvdata/euc-kr.c,
+      iconvdata/ksc5601.h.
+    - CVE-2019-25013
+(snip)
+```
+
+で、上からも分かる通り
+https://changelogs.ubuntu.com/
+からもわかる。
