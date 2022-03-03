@@ -492,3 +492,8 @@ glibc (2.27-3ubuntu1.5) bionic-security; urgency=medium
 で、上からも分かる通り
 https://changelogs.ubuntu.com/
 からもわかる。
+
+例)
+https://changelogs.ubuntu.com/changelogs/binary/s/ssh/1:8.9p1-3/
+
+まあコマンドのほうが全然楽。
