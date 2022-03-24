@@ -32,3 +32,18 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/movieda
   Enabled: Boolean
 ```
 なんで、 `Enabled: false`は無理ですね。
+
+
+# DynamoDBには予約語がある
+
+[Reserved Words in DynamoDB - Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html)
+
+項目名にこれら予約語を使うとProjectionExpressionとかで
+
+> Invalid UpdateExpression: Attribute name is a reserved keyword; reserved keyword: (属性名)
+
+と言われて死ぬので避けたほうがいいです。
+
+いまさら変えられない、という場合には以下参照、
+
+[AWS lambdaのDynamoDB更新処理で "Invalid UpdateExpression: Attribute name is a reserved keyword"になった時の対処方法 - Qiita](https://qiita.com/shimajiri/items/715c7da4467dd048c93f)
