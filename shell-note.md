@@ -20,6 +20,7 @@ shellいろいろtipsメモ
       - [Correct code:](#correct-code)
 - [メモ](#メモ)
 - [壊れたsymlinkをみつける](#壊れたsymlinkをみつける)
+- [shellで絶対パス](#shellで絶対パス)
 
 
 # 非0の戻り値で中断させたい
@@ -339,3 +340,10 @@ find -L . -type l
 ```
 
 [Linux: 壊れたシンボリックリンクを探す – エラーの向こうへ](https://tech.mktime.com/entry/479)
+
+
+# shellで絶対パス
+
+[How to obtain the absolute path of a file via Shell (BASH/ZSH/SH)? - Stack Overflow](https://stackoverflow.com/questions/3915040/how-to-obtain-the-absolute-path-of-a-file-via-shell-bash-zsh-sh)
+
+realpath, readlink はcoreutils(debian)なのでだいたい入ってるのでは。
