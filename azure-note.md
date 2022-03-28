@@ -18,6 +18,7 @@
 - [az cli よくつかうコマンド](#az-cli-よくつかうコマンド)
 - [azcopy](#azcopy)
 - [168.63.129.16](#1686312916)
+- [AzureのストレージアカウントでSFTP](#azureのストレージアカウントでsftp)
 
 # Azure CLI
 
@@ -305,3 +306,8 @@ fileだとどうか?
 [IP アドレス 168.63.129.16 とは | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-network/what-is-ip-address-168-63-129-16)
 
 Azure VMのスペシャルIPらしい。メモ。
+
+
+# AzureのストレージアカウントでSFTP
+
+[Azure Blob Storage の SFTP のサポート (プレビュー) | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/storage/blobs/secure-file-transfer-protocol-support)

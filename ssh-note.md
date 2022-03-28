@@ -26,6 +26,7 @@
 - [Simple SSH Security](#simple-ssh-security)
 	- [弱い素数を削除](#弱い素数を削除)
 	- [強力な暗号のみ使う](#強力な暗号のみ使う)
+- [sftpをscpのように使う例](#sftpをscpのように使う例)
 
 
 # sshdのconfigtest
@@ -487,3 +488,23 @@ HostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@op
 確認は
 `ssh -c aes128-cbc localhost`
 で、接続に失敗するはず。
+
+
+# sftpをscpのように使う例
+
+- [linux \- Using sftp like scp \- Super User](https://superuser.com/questions/1434225/using-sftp-like-scp)
+- [15 Examples of SFTP command in Linux](https://geekflare.com/sftp-command-examples/)
+
+アップロード
+```sh
+scp {local-path} {user}@{remote-host}:{remote-path}
+# ↑は↓と同じ
+sftp {user}@{host}:{remote-path} <<< $'put {local-path}'
+# or 
+echo 'put {local-path}' | sftp {user}@{host}:{remote-path}
+```
+
+ダウンロードはもっと普通
+```sh
+sftp {user}@{remote-host}:{remote-file-name} {local-file-name}
+```
