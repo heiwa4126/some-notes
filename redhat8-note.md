@@ -1,5 +1,11 @@
 # Red Hat Enterprise Linux 8
 
+- [Red Hat Enterprise Linux 8](#red-hat-enterprise-linux-8)
+- [install](#install)
+- [dnf-makecache](#dnf-makecache)
+
+# install
+
 Azureで入れてみた。
 [Red Hat Enterprise Linux 8 (.latest, LVM) - Microsoft Azure](https://portal.azure.com/#create/hub)
 
@@ -94,3 +100,58 @@ semanage port -a -t ssh_port_t -p tcp 4126
 semanage port -l | grep ssh
 ```
 あとfirewalldも。
+
+
+# dnf-makecache
+
+よくエラーが出ている。
+
+```
+$ systemctl status dnf-makecache.timer
+  dnf-makecache.timer - dnf makecache --timer
+   Loaded: loaded (/usr/lib/systemd/system/dnf-makecache.timer; enabled; vendor preset: enabled)
+   Active: active (waiting) since Wed 2022-03-30 00:56:13 UTC; 10min ago
+  Trigger: Wed 2022-03-30 01:33:28 UTC; 26min left
+
+Mar 30 00:56:13 drill-r8.nexs-demo.com systemd[1]: Started dnf makecache --timer.
+
+
+$ cat /usr/lib/systemd/system/dnf-makecache.timer
+[Unit]
+Description=dnf makecache --timer
+ConditionKernelCommandLine=!rd.live.image
+# See comment in dnf-makecache.service
+ConditionPathExists=!/run/ostree-booted
+Wants=network-online.target
+
+[Timer]
+OnBootSec=10min
+OnUnitInactiveSec=1h
+RandomizedDelaySec=60m
+Unit=dnf-makecache.service
+
+[Install]
+WantedBy=timers.target
+
+
+$ cat /usr/lib/systemd/system/dnf-makecache.service
+[Unit]
+Description=dnf makecache
+# On systems managed by either rpm-ostree/ostree, dnf is read-only;
+# while someone might theoretically want the cache updated, in practice
+# anyone who wants that could override this via a file in /etc.
+ConditionPathExists=!/run/ostree-booted
+
+After=network-online.target
+
+[Service]
+Type=oneshot
+Nice=19
+IOSchedulingClass=2
+IOSchedulingPriority=7
+Environment="ABRT_IGNORE_PYTHON=1"
+ExecStart=/usr/bin/dnf makecache --timer
+
+$ sudo dnf makecache
+(略)
+```
