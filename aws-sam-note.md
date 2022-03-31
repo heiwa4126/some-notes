@@ -786,3 +786,7 @@ aws-sam-cli-managed-default stackのoutputのSourceBucketからバケット名�
 
 意外と重要かもしれない。
 template.yamlに "aws:" って書いてあるところ全部治すべき。
+
+似たものに
+[AWS::URLSuffix](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html#cfn-pseudo-param-urlsuffix)
+がある、こっちはあんまりないかも。
