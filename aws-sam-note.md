@@ -34,7 +34,11 @@
 - [FunctionsのPoliciesにManagedPolicyを書く方法](#functionsのpoliciesにmanagedpolicyを書く方法)
 - [aws-sam-cli-managed-defaultというスタック](#aws-sam-cli-managed-defaultというスタック)
 - [sam deploy でデプロイする](#sam-deploy-でデプロイする)
+<<<<<<< HEAD
 - [AWS SAMの擬似パラメータ](#aws-samの擬似パラメータ)
+=======
+- [AWS::Partition 疑似パラメータ](#awspartition-疑似パラメータ)
+>>>>>>> f72f03abe1bc2b8bd7cc1eb31681931e9869e607
 
 
 # template.yamlでリソースを作り、lamdaにそれのアクセス権を与える
@@ -780,6 +784,19 @@ aws-sam-cli-managed-default stackのoutputのSourceBucketからバケット名�
 のいずれかを実行すること。
 
 
+<<<<<<< HEAD
 # AWS SAMの擬似パラメータ
 
 [擬似パラメータ参照 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html)
+=======
+# AWS::Partition 疑似パラメータ
+
+[AWS::Partition](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html#cfn-pseudo-param-partition)
+
+意外と重要かもしれない。
+template.yamlに "aws:" って書いてあるところ全部治すべき。
+
+似たものに
+[AWS::URLSuffix](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html#cfn-pseudo-param-urlsuffix)
+がある、こっちはあんまりないかも。
+>>>>>>> f72f03abe1bc2b8bd7cc1eb31681931e9869e607
