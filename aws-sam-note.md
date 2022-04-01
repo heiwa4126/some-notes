@@ -1,6 +1,7 @@
 # AWS SAM と AWS Lambdaのメモ
 
 - [AWS SAM と AWS Lambdaのメモ](#aws-sam-と-aws-lambdaのメモ)
+- [- AWS SAMの擬似パラメータ](#--aws-samの擬似パラメータ)
 - [template.yamlでリソースを作り、lamdaにそれのアクセス権を与える](#templateyamlでリソースを作りlamdaにそれのアクセス権を与える)
 - [template.yamlで作っていないリソースに対して、lamdaにアクセス権を与える](#templateyamlで作っていないリソースに対してlamdaにアクセス権を与える)
 - [SAMのアップロード用S3 bucketが同じ名前になるのはなんで?](#samのアップロード用s3-bucketが同じ名前になるのはなんで)
@@ -34,6 +35,7 @@
 - [FunctionsのPoliciesにManagedPolicyを書く方法](#functionsのpoliciesにmanagedpolicyを書く方法)
 - [aws-sam-cli-managed-defaultというスタック](#aws-sam-cli-managed-defaultというスタック)
 - [sam deploy でデプロイする](#sam-deploy-でデプロイする)
+- [AWS::Partition 疑似パラメータ](#awspartition-疑似パラメータ)
 <<<<<<< HEAD
 - [AWS SAMの擬似パラメータ](#aws-samの擬似パラメータ)
 =======
@@ -784,11 +786,6 @@ aws-sam-cli-managed-default stackのoutputのSourceBucketからバケット名�
 のいずれかを実行すること。
 
 
-<<<<<<< HEAD
-# AWS SAMの擬似パラメータ
-
-[擬似パラメータ参照 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html)
-=======
 # AWS::Partition 疑似パラメータ
 
 [AWS::Partition](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html#cfn-pseudo-param-partition)
@@ -799,4 +796,3 @@ template.yamlに "aws:" って書いてあるところ全部治すべき。
 似たものに
 [AWS::URLSuffix](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html#cfn-pseudo-param-urlsuffix)
 がある、こっちはあんまりないかも。
->>>>>>> f72f03abe1bc2b8bd7cc1eb31681931e9869e607
