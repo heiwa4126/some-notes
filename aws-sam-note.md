@@ -34,6 +34,7 @@
 - [FunctionsのPoliciesにManagedPolicyを書く方法](#functionsのpoliciesにmanagedpolicyを書く方法)
 - [aws-sam-cli-managed-defaultというスタック](#aws-sam-cli-managed-defaultというスタック)
 - [sam deploy でデプロイする](#sam-deploy-でデプロイする)
+- [AWS SAMの擬似パラメータ](#aws-samの擬似パラメータ)
 
 
 # template.yamlでリソースを作り、lamdaにそれのアクセス権を与える
@@ -777,3 +778,8 @@ aws-sam-cli-managed-default stackのoutputのSourceBucketからバケット名�
 - または1回だけ`sam deploy --guided` (samconfig.tomlを更新してくれる)
 
 のいずれかを実行すること。
+
+
+# AWS SAMの擬似パラメータ
+
+[擬似パラメータ参照 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html)
