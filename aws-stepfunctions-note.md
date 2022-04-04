@@ -59,7 +59,7 @@ JsonPath。ASL内では使えない関数あり(lenght()とか)
 
 [InputPath、パラメータ、および ResultSelector - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/ja_jp/step-functions/latest/dg/input-output-inputpath-params.html#input-output-parameters)
 
-> パスを使用して値を選択するキーと値のペアの場合、キーの名前は .$ で終わる必要があります。
+> **パスを使用して値を選択するキーと値のペアの場合**、キーの名前は .$ で終わる必要があります。
 
 
 # アクティビティとは?
@@ -73,3 +73,51 @@ AWSの外のやつをWorkerというらしい。
 WorkerのPythonでのサンプル:
 - [Step Function Activity with Python | by Yuvaraj Ravikumar | Medium](https://medium.com/@yuvarajmailme/step-function-activity-with-python-c007178037af)
 - [awsboto3/stepfunction_activity.py at master · yuvarajskr/awsboto3](https://github.com/yuvarajskr/awsboto3/blob/master/stepfunction_activity.py)
+
+
+# ASLでlambdaを呼ぶ
+
+Resourceにlambda ARNを書く方法と "arn:aws:states:::lambda:invoke" + Parametersでやる方法と2つあるらしい。
+
+- [Step FunctionsからLambda関数を実行する書き方2つの違い | DevelopersIO](https://dev.classmethod.jp/articles/differences-between-2-ways-of-invoking-lambda-functions-with-step-functions/)
+- [Invoke - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/API_Invoke.html#API_Invoke_RequestParameters)
+
+Invokeの方のFunctionNameには、名前(:alias)かARNが使える。
+
+コールバック? 
+[サービス統合パターン - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/connect-to-resource.html#connect-wait-token)
+
+# stateのtype
+
+[States - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/ja_jp/step-functions/latest/dg/concepts-states.html)
+
+- Task
+- Choice
+- Fail or Succeed
+- Pass
+- Wait
+- Parallel
+- Map
+
+# Parallel
+
+Parallelのブランチへの入力は同じものになるみたい。
+
+別々にしたかったらMapを使う。
+
+
+
+# ASLメモ
+
+Nextがなければ、"End: true"扱いになるらしい。
+
+↑誤り
+> Fail 状態は常にステートマシンを終了するため、Next フィールドはなく、End フィールドも不要です。
+
+Fail or SucceedステートではEndがいらない、ということらしい。
+
+
+ResultPathの文法がわかりにくい。
+迷ったら
+[データフローシミュレーター](https://ap-northeast-1.console.aws.amazon.com/states/home?region=ap-northeast-1#/simulator)
+で試す。
