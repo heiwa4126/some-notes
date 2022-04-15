@@ -13,3 +13,15 @@
 `public.ecr.aws`レポジトリにあるイメージには
 RICとRIE入りのやつと
 RIEだけのやつがある。
+
+
+# SAM/CFn
+
+`PackageType: Image`のときのMetadataのドキュメントは?
+[コンテナイメージの構築](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-using-build.html#build-container-image)
+
+Dockerfileを使う方法しかなさそう。
+
+ECRにすでにあるものをコンテナlambdaとして使うことはできるか?
+デプロイしてformer2で調べてみる。
+(そもそも普通のlambdaでそれはできるか? パーミッションがあれば多分...)
