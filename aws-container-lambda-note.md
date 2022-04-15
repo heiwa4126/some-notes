@@ -60,8 +60,7 @@ SAMの `AWS::Serverless::Function` では `ImageUri`はProperties直下にある
 
 なんとかSAMでできた。ただリージョンは同じでないとダメ。
 "Image repository must be in the same region."
-と言われる。
-
+と言われる。これはAPIでも同じ。
 
 # クロスアカウント
 
@@ -69,3 +68,10 @@ SAMの `AWS::Serverless::Function` では `ImageUri`はProperties直下にある
 
 - [AWS Lambda は Amazon Elastic Container Registry からのクロスアカウントコンテナイメージのプルをサポートするようになりました](https://aws.amazon.com/jp/about-aws/whats-new/2021/11/aws-lambda-support-cross-account-image-amazon-elastic-container-registry/)
 - [Amazon ECR クロスアカウント許可](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/configuration-images.html)
+
+ECRのポリシーはどこで設定するのか...
+[プライベートリポジトリポリシーステートメントの設定 \- Amazon ECR](https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/set-repository-policy.html)
+
+[AWS::ECR::RegistryPolicy](https://docs.amazonaws.cn/en_us/AWSCloudFormation/latest/UserGuide/aws-resource-ecr-registrypolicy.html)
+
+[get-repository-policy — AWS CLI 2.5.5 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ecr/get-repository-policy.html)
