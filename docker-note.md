@@ -23,6 +23,7 @@
 - [minikube](#minikube)
 - [rootless mode](#rootless-mode)
 - [BuildKit](#buildkit)
+- [dockerでコンテナが実行されているときに、元のイメージを書き換えるとどうなる?](#dockerでコンテナが実行されているときに元のイメージを書き換えるとどうなる)
 
 
 # インストール
@@ -728,3 +729,30 @@ DOCKER_BUILDKIT=1 docker build .
 
 さらにつおいbuildx
 [Docker Buildx | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/buildx/working-with-buildx/)
+
+
+# dockerでコンテナが実行されているときに、元のイメージを書き換えるとどうなる?
+
+予想では
+「Repository=<none>になって残るので何も起きない」
+「i-nodeを掴んでいるので何も起きない(Windowsとかは知らない)」
+だと思われる。
+
+素のAlpineにttyでつないでいるところをscratchに書き換えてみる。
+
+...予想通りだった。
+おそらくrepository:tag が image IDかハッシュに変換されて読み込んでるのであろう。
+
+じゃいま動いてるイメージをrmiするとどうなる。
+
+```
+$ docker rmi b11fdd96e58e
+Error response from daemon: conflict: unable to delete b11fdd96e58e (cannot be forced) - image is being used by running container 726262b5a406
+
+# いちおう
+$ docker rmi b11fdd96e58e --force
+Error response from daemon: conflict: unable to delete b11fdd96e58e (cannot be forced) - image is being used by running container 726262b5a406
+```
+
+rmiできないし、forceオプションでもダメ。
+ある意味当然か。
