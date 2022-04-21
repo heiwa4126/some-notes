@@ -17,6 +17,7 @@ AWSのメモ
 - [EC2インスタンスを停止するとどうなるか](#ec2インスタンスを停止するとどうなるか)
 - [EC2Launch v2](#ec2launch-v2)
   - [EC2Launch TIPS](#ec2launch-tips)
+  - [EC2Launch v2の便利なコマンド](#ec2launch-v2の便利なコマンド)
 - [cloudformationの更新と進行の表示](#cloudformationの更新と進行の表示)
 - [S3でWWW](#s3でwww)
   - [cloudformationで](#cloudformationで)
@@ -359,8 +360,8 @@ EC2でよく間違えるやつ。「停止」と「終了」もよく間違え�
 
 Windows用cloud-init的ななにか。
 
-[EC2Launch v2](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2.html)
-
+* [EC2Launch v2](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2.html)
+* [EC2Launch v2 (Ver.2.0.651) のインストール・移行に失敗する件について | DevelopersIO](https://dev.classmethod.jp/articles/how-to-fix-ec2launch-v2-0-651-migration-error/)
 
 - 設定ファイルの場所: `C:\ProgramData\Amazon\EC2Launch\config`
 - 設定ファイル: `agent-config.yml`
@@ -514,6 +515,14 @@ Powershellを実行すると
 みたいにファイルを作る。
 エラーがおきた場合、これらが消えないで残るので、
 これらを参照すること。これはよい設計。真似る。
+
+## EC2Launch v2の便利なコマンド
+
+- "C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" version
+- "C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" validate
+- "C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" run
+
+[EC2Launch v2の機能一覧 | DevelopersIO](https://dev.classmethod.jp/articles/ec2launch-v2-all-features-202007/)
 
 
 # cloudformationの更新と進行の表示
