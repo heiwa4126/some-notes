@@ -23,6 +23,7 @@
 - [minikube](#minikube)
 - [rootless mode](#rootless-mode)
 - [BuildKit](#buildkit)
+- [dockerのtag](#dockerのtag)
 
 
 # インストール
@@ -227,7 +228,7 @@ func main() {
 
 clock.goのビルド
 ``` bash
-$ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o clock -ldflags="-w -s" clock.go
+$ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o clock -trimpath -ldflags="-w -s" clock.go
 ```
 upxも使えるので`upx --best clock`も試して
 
@@ -728,3 +729,9 @@ DOCKER_BUILDKIT=1 docker build .
 
 さらにつおいbuildx
 [Docker Buildx | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/buildx/working-with-buildx/)
+
+
+# dockerのtag
+
+1つのイメージに複数のタグをつけることができる。
+`docker images` (or `docker image ls`) で同じIDのイメージが複数あるように見える。
