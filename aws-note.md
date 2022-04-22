@@ -522,6 +522,8 @@ Powershellを実行すると
 - "C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" validate
 - "C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" run
 
+powershellからだったら頭に&つけて。
+
 [EC2Launch v2の機能一覧 | DevelopersIO](https://dev.classmethod.jp/articles/ec2launch-v2-all-features-202007/)
 
 
@@ -532,7 +534,7 @@ Powershellを実行すると
 
 
 
-
+えっ、そんなんできるんですか(©内場勝則)
 
 # S3でWWW
 
