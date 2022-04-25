@@ -232,6 +232,16 @@ function prompt() {
 }
 ```
 
+```powershell
+
+echo 'function prompt() {
+  (Split-Path (Get-Location) -Leaf) + "> "
+}
+' >> $PROFILE
+```
+
+
+
 [PowerShell 5 と 6 で Profile の場所が違う](http://www.vwnet.jp/Windows/PowerShell/2018032601/PS6Profile.htm)
 
 ```
