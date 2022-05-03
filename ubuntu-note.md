@@ -32,6 +32,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [friendly-recovery](#friendly-recovery)
 - [インストールされているパッケージの一覧](#インストールされているパッケージの一覧)
 - [パッケージの更新履歴](#パッケージの更新履歴)
+- [/etc/groupの編集](#etcgroupの編集)
 
 # ホスト名の設定
 
@@ -497,3 +498,26 @@ https://changelogs.ubuntu.com/
 https://changelogs.ubuntu.com/changelogs/binary/s/ssh/1:8.9p1-3/
 
 まあコマンドのほうが全然楽。
+
+
+# /etc/groupの編集
+
+サーバ以降のときに、
+単に vigrで/etc/groupを編集すると
+/etc/group- と統合がとれなくなるので
+
+```sh
+grpunconv
+vigr
+grpconv
+```
+
+という手順で修正する。たまにやると忘れる。
+
+もちろんpasswdのほうも
+
+```sh
+pwunconv
+vipw
+pwconv
+```
