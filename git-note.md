@@ -13,6 +13,7 @@
 - [gitのシェル補完](#gitのシェル補完)
 - [Git for Windows付属のmsys2 mingwはp11-kitが入ってない](#git-for-windows付属のmsys2-mingwはp11-kitが入ってない)
 - [submoduleまで含めてgitリポジトリの内容をzipファイルにする](#submoduleまで含めてgitリポジトリの内容をzipファイルにする)
+- [gitでsymlinkを扱いたい](#gitでsymlinkを扱いたい)
 
 
 # gitの設定をリスト
@@ -229,3 +230,18 @@ git-archive-all my_repo.zip
 
 おまけ
 * [git submodule はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ](https://www.m3tech.blog/entry/git-submodule)
+
+
+# gitでsymlinkを扱いたい
+
+OSの違いなどを無視してsymlinkをsymlinkとして扱いたいとき。
+
+```sh
+git config --global core.symlinks true
+# レポジトリごとに変更する場合は
+git config core.symlinks true
+git config --unset core.symlinks
+# などなど
+```
+
+参考: [シンボリックリンクの使い方](https://zenn.dev/kunosu/articles/f2a459431c3a4dfc48cb)
