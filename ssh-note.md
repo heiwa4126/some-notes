@@ -27,6 +27,7 @@
 	- [弱い素数を削除](#弱い素数を削除)
 	- [強力な暗号のみ使う](#強力な暗号のみ使う)
 - [sftpをscpのように使う例](#sftpをscpのように使う例)
+- [sftpのみ かつ chrootするユーザを作るときのコツ](#sftpのみ-かつ-chrootするユーザを作るときのコツ)
 
 
 # sshdのconfigtest
@@ -508,3 +509,15 @@ echo 'put {local-path}' | sftp {user}@{host}:{remote-path}
 ```sh
 sftp {user}@{remote-host}:{remote-file-name} {local-file-name}
 ```
+
+# sftpのみ かつ chrootするユーザを作るときのコツ
+
+参考:
+- [ssh - "client_loop: send disconnect: Broken pipe" for chroot sftp user, with correct password? - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/598520/client-loop-send-disconnect-broken-pipe-for-chroot-sftp-user-with-correct-p)
+- [SSHD_CONFIG(5) - ファイルフォーマット - YOS OPENSONAR](http://www.yosbits.com/opensonar/rest/man/freebsd/man/ja/man5/sshd_config.5.html?l=ja)
+
+ChrootDirectory で指定するディレクトリは
+
+> パス名のすべての構成要素は、いかなる他のユーザまたはグループによって書き込み可能でない root で所有されているディレクトリでなければなりません。
+
+これにハマることが多いので注意。
