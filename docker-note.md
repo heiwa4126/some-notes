@@ -25,6 +25,7 @@
 - [BuildKit](#buildkit)
 - [dockerのtag](#dockerのtag)
 - [dockerでコンテナが実行されているときに、元のイメージを書き換えるとどうなる?](#dockerでコンテナが実行されているときに元のイメージを書き換えるとどうなる)
+- [いらんイメージを手早く消す](#いらんイメージを手早く消す)
 
 
 # インストール
@@ -763,3 +764,13 @@ Error response from daemon: conflict: unable to delete b11fdd96e58e (cannot be f
 
 rmiできないし、forceオプションでもダメ。
 ある意味当然か。
+
+
+# いらんイメージを手早く消す
+
+```sh
+docker images prune -f
+```
+[使用していない Docker オブジェクトの削除（prune） — Docker-docs-ja 20.10 ドキュメント](https://docs.docker.jp/config/pruning.html)
+
+`prune`には他いろんなものが消せるオプションがあるので↑参考。
