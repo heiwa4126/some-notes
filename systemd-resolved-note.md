@@ -22,6 +22,7 @@ systemd-resolve --status
 
 [systemd - Why is resolvectl no longer included in Bionic and what's the alternative - Ask Ubuntu](https://askubuntu.com/questions/1149364/why-is-resolvectl-no-longer-included-in-bionic-and-whats-the-alternative)
 
+
 # etc
 
 forwarderは
@@ -30,8 +31,7 @@ forwarderは
 メカニズムがわからないけど、どこかで横取りするらしい。
 
 
-
-自前がコンテンツサーバになってるやつは
+自前がコンテンツサーバになってて、そっちに参照させたいやつは
 `/etc/systemd/resolved.conf.d/cascade.conf` (例)
 に
 ```
@@ -39,7 +39,8 @@ forwarderは
 DNS=x.x.x.x x.x.x.y
 Domains=~sub1.example.net ~sub2.example.com
 ```
-みたいに書く。スペース区切り。最初の`~`は? globの*みたいなものらしい。
+みたいに書く。スペース区切り。最初の`~`は? globの*みたいなものらしい。`~`がなければ、書いたホスト名そのもの
+
 
 # 参考
 
