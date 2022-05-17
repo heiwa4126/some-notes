@@ -21,6 +21,7 @@ AWSのメモ
 - [cloudformationの更新と進行の表示](#cloudformationの更新と進行の表示)
 - [S3でWWW](#s3でwww)
   - [cloudformationで](#cloudformationで)
+- [DNS](#dns)
 
 
 # メタデータ
@@ -561,3 +562,12 @@ CloudFront(と独自ドメイン)がいるらしい。
 ## cloudformationで
 
 [AWS::S3::Bucket WebsiteConfiguration \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-s3-websiteconfiguration.html)
+
+
+# DNS
+
+169.254.169.253
+または VPCのCIDR(ネットワーク範囲)に2をプラスした値
+
+> 「10.0.0.0/16」のCIDRのVPCなら「10.0.0.2」、「172.31.0.0/16」なら「172.31.0.2」という具合
+[VPCデフォルトのDNSサーバへの通信はSecurity GroupのOutboundルールで制御できないことを確認してみた | DevelopersIO](https://dev.classmethod.jp/articles/security-group-outbound-rule-cannot-filter-traffic-to-amazon-dns-server/)
