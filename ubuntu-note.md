@@ -18,6 +18,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
   - [bash-completion](#bash-completion)
 - [サービスの再起動が必要かどうか知る (古い)](#サービスの再起動が必要かどうか知る-古い)
 - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
+- [auto-upgrades, unattended-upgrades](#auto-upgrades-unattended-upgrades)
 - [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
 - [no_proxy](#no_proxy)
 - [参考](#参考)
@@ -234,8 +235,20 @@ sudo apt install update-notifier-common
 する。
 
 
+# auto-upgrades, unattended-upgrades
 
+いろいろ考えたんだけど、
+- 自動更新はする
+- 再起動しない
 
+がいいのではないか。(20.04LTSではデフォルトみたい)
+
+`/etc/apt/apt.conf.d/20auto-upgrades`
+をさわる。
+
+ログは `/var/log/unattended-upgrades/*`
+
+cron-aptパッケージとの関係があやしいので調査。
 
 
 # Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数
