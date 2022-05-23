@@ -34,6 +34,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [インストールされているパッケージの一覧](#インストールされているパッケージの一覧)
 - [パッケージの更新履歴](#パッケージの更新履歴)
 - [/etc/groupの編集](#etcgroupの編集)
+- [xzのzgrep](#xzのzgrep)
 
 # ホスト名の設定
 
@@ -534,3 +535,12 @@ pwunconv
 vipw
 pwconv
 ```
+
+# xzのzgrep
+
+`xzgrep` gz,bzip2,xz,lzop,lzma 対応
+
+ただ `lzgrep`がlzoと無関係にaltanativeになってるので、こっちを使うといいと思われる。
+
+あるいは
+[BurntSushi/ripgrep: ripgrep recursively searches directories for a regex pattern while respecting your gitignore](https://github.com/BurntSushi/ripgrep)
