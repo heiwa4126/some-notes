@@ -342,6 +342,13 @@ python -c "import site; print(site.USER_BASE)"
 - [29.13. site — サイト固有の設定フック — Python 3.6.5 ドキュメント](https://docs.python.jp/3/library/site.html)
 
 
+よくわからないときは
+```sh
+python3 -m site
+```
+を実行。
+
+[site --- サイト固有の設定フック — Python 3.10.4 ドキュメント](https://docs.python.org/ja/3/library/site.html)
 
 
 # 古いパッケージを見つける
