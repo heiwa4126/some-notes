@@ -255,7 +255,7 @@ etckeeperでgitを使うなら、
 ```sh
 sudo -i
 cd /etc
-git config core.symlinks true
+git config --local core.symlinks true
 ```
 
 しとくといいと思う。
