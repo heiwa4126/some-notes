@@ -35,6 +35,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [パッケージの更新履歴](#パッケージの更新履歴)
 - [/etc/groupの編集](#etcgroupの編集)
 - [xzのzgrep](#xzのzgrep)
+- [ppa](#ppa)
 
 # ホスト名の設定
 
@@ -544,3 +545,20 @@ pwconv
 
 あるいは
 [BurntSushi/ripgrep: ripgrep recursively searches directories for a regex pattern while respecting your gitignore](https://github.com/BurntSushi/ripgrep)
+
+
+# ppa
+
+使ってるもの
+- [Emacs stable releases : Kevin Kelley](https://launchpad.net/~kelleyk/+archive/ubuntu/emacs)
+- [Git stable releases : “Ubuntu Git Maintainers” team](https://launchpad.net/~git-core/+archive/ubuntu/ppa)
+- [Git release candidates : “Ubuntu Git Maintainers” team](https://launchpad.net/~git-core/+archive/ubuntu/candidate)
+- [New Python Versions : “deadsnakes” team](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa)
+
+
+18.04LTSから20.04にするときに調べた
+```sh
+dpkg-query --show -f '${Maintainer}\t${binary:Package}\n' \
+| grep -F -e "Matthias Klose" -e "Kevin Kelley" -e "Jonathan Nieder" \
+| sort
+```
