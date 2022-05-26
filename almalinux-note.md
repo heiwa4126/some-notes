@@ -5,10 +5,10 @@
 cockpit入ってた。
 
 ```sh
-sudo systemctl disable --now waagent-network-setup.service
 sudo yum install python39 git tmux -y
-sudo yum remove cockpit python36 -y
+sudo yum remove cockpit -y
 sudo yum autoremove -y
+sudo systemctl disable --now waagent-network-setup.service
 ```
 
 etckeeperとsnapがない
@@ -41,3 +41,5 @@ ncも-vzが使えるバージョンに
 sudo yum install netcat
 sudo update-alternatives --config netcat
 ```
+
+update-alternatives、非対話式に選べないの? 調べる
