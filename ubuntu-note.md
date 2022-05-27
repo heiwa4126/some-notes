@@ -565,4 +565,5 @@ dpkg-query --show -f '${Maintainer}\t${binary:Package}\n' \
 
 ```
 sudo add-apt-repository ppa:kelleyk/emacs
+sudo add-apt-repository ppa:git-core/ppa
 ```
