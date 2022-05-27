@@ -19,6 +19,8 @@
 - [azcopy](#azcopy)
 - [168.63.129.16](#1686312916)
 - [AzureのストレージアカウントでSFTP](#azureのストレージアカウントでsftp)
+- [「仮想マシンエージェントの状態の準備ができていません」](#仮想マシンエージェントの状態の準備ができていません)
+- [「セキュリティを強化するには、この VM でJust-In-Time アクセスを有効にします」](#セキュリティを強化するにはこの-vm-でjust-in-time-アクセスを有効にします)
 
 # Azure CLI
 
@@ -311,3 +313,32 @@ Azure VMのスペシャルIPらしい。メモ。
 # AzureのストレージアカウントでSFTP
 
 [Azure Blob Storage の SFTP のサポート (プレビュー) | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/storage/blobs/secure-file-transfer-protocol-support)
+
+
+# 「仮想マシンエージェントの状態の準備ができていません」
+
+お前は何を言ってるんだ。
+こういう場合は英語モードにする。
+
+"virtual machine agent status is not ready."
+
+このへんらしい。
+
+- [Linux 用の Azure VM 拡張機能とその機能 - Azure Virtual Machines | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/features-linux?WT.mc_id=Portal-Microsoft_Azure_Support)
+- [Azure Linux VM エージェントの概要 - Azure Virtual Machines | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/agent-linux)
+- [GitHub - Azure/WALinuxAgent: Microsoft Azure Linux Guest Agent](https://github.com/Azure/WALinuxAgent)
+
+```sh
+git clone https://github.com/Azure/WALinuxAgent.git
+cd WALinuxAgent/
+sudo python3 setup.py install --register-service
+```
+
+[Azure VMでLinuxインスタンスを起動したら最初にやっておくべき初期設定［PR］ - Build Insider](https://www.buildinsider.net/pr/microsoft/azure/dictionary04)
+
+
+# 「セキュリティを強化するには、この VM でJust-In-Time アクセスを有効にします」
+
+お前は何を言ってるんだ。
+
+「Just-In-Time アクセスを有効にするため Security Center サブスクリプションをアップグレードする」だそうです。

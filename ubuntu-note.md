@@ -562,3 +562,7 @@ dpkg-query --show -f '${Maintainer}\t${binary:Package}\n' \
 | grep -F -e "Matthias Klose" -e "Kevin Kelley" -e "Jonathan Nieder" \
 | sort
 ```
+
+```
+sudo add-apt-repository ppa:kelleyk/emacs
+```
