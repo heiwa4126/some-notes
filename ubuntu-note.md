@@ -36,6 +36,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [/etc/groupの編集](#etcgroupの編集)
 - [xzのzgrep](#xzのzgrep)
 - [ppa](#ppa)
+- [Ubuntu 22.04で python3.8, 3.9がいるとき](#ubuntu-2204で-python38-39がいるとき)
 
 # ホスト名の設定
 
@@ -566,4 +567,46 @@ dpkg-query --show -f '${Maintainer}\t${binary:Package}\n' \
 ```
 sudo add-apt-repository ppa:kelleyk/emacs
 sudo add-apt-repository ppa:git-core/ppa
+```
+
+他Azureだったら
+- [walinuxagent package : Ubuntu](https://launchpad.net/ubuntu/+source/walinuxagent)
+だったのだけど、いつのまにかUbuntu本体に取り込まれてる。
+
+# Ubuntu 22.04で python3.8, 3.9がいるとき
+
+AWSのlambdaとか用。dockerでもいいけど遅いような気がする。
+
+3.8はsnapがあるけど古すぎる。
+
+```sh
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.8 python3.8-venv python3.8-dev
+sudo apt install python3.9 python3.9-venv python3.9-dev
+```
+pip3.8,3.9はパッケージがないので慎重になんとかする。
+pip, pip3がシステムワイドのpython3.10を置き換えないように。
+
+とりあえずローカルユーザーでいいなら
+```sh
+ls -la /usr/bin/pip* ~/.local/bin/pip*
+curl -sSL https://bootstrap.pypa.io/get-pip.py -O
+python3.8 get-pip.py
+python3.9 get-pip.py
+python3.10 get-pip.py
+# 確認
+hash -r
+pip -V
+pip3 -V
+pip3.10 -V
+pip3.9 -V
+pip3.8 -V
+```
+
+venvもテスト
+```sh
+python3.9 -m venv ~/.venv/39/
+. ~/.venv/39/bin/activate
+pip -V
+deactivate
 ```
