@@ -90,7 +90,7 @@ ansibleメモランダム
 - [rolesやcollectionsのfiles/やtemplate/はオーバライドできるか?](#rolesやcollectionsのfilesやtemplateはオーバライドできるか)
 - [RHEL 8](#rhel-8)
   - [ほかメモ](#ほかメモ)
-- [RHEL8非コントロールノードのpython](#rhel8非コントロールノードのpython)
+- [RHEL8 ターゲットノードのpython](#rhel8-ターゲットノードのpython)
 
 
 # ansibleの学習2021
@@ -1739,9 +1739,9 @@ https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/
 [Red Hat よくある質問](https://aws.amazon.com/jp/partners/redhat/faqs/)
 
 
-# RHEL8非コントロールノードのpython
+# RHEL8 ターゲットノードのpython
 
-RHEL7までは必ずpython2が入っていて、コントロールマシン以外ではそれを使っていたわけだけど
+RHEL7までは必ずpython2が入っていて、コントロールマシン以外ではそれを使っていたわけだけど、
 RHEL8からは /usr/libexec/platform-python 式になって、パスに`python`が無い。
 
 [RHEL8系ディストリビューションでPython 3を使う - Qiita](https://qiita.com/yamada-hakase/items/ed38a66ac10cf9cfe07e)
