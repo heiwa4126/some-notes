@@ -36,6 +36,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [/etc/groupの編集](#etcgroupの編集)
 - [xzのzgrep](#xzのzgrep)
 - [ppa](#ppa)
+- [パッケージのchangelog](#パッケージのchangelog)
 - [Ubuntu 22.04で python3.8, 3.9がいるとき](#ubuntu-2204で-python38-39がいるとき)
 
 # ホスト名の設定
@@ -572,6 +573,20 @@ sudo add-apt-repository ppa:git-core/ppa
 他Azureだったら
 - [walinuxagent package : Ubuntu](https://launchpad.net/ubuntu/+source/walinuxagent)
 だったのだけど、いつのまにかUbuntu本体に取り込まれてる。
+
+# パッケージのchangelog
+
+例えばapache2だったら
+```sh
+apt-get changelog apache2
+# or
+apt changelog apache2
+```
+
+おまけ：RedHat系だったら
+```sh
+rpm -q --changelog httpd
+```
 
 # Ubuntu 22.04で python3.8, 3.9がいるとき
 
