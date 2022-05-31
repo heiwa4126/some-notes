@@ -90,7 +90,7 @@ ansibleメモランダム
 - [rolesやcollectionsのfiles/やtemplate/はオーバライドできるか?](#rolesやcollectionsのfilesやtemplateはオーバライドできるか)
 - [RHEL 8](#rhel-8)
   - [ほかメモ](#ほかメモ)
-- [RHEL8 ターゲットノードのpython](#rhel8-ターゲットノードのpython)
+- [RHEL8 ターゲットノードのPython](#rhel8-ターゲットノードのpython)
 
 
 # ansibleの学習2021
@@ -1739,7 +1739,7 @@ https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/
 [Red Hat よくある質問](https://aws.amazon.com/jp/partners/redhat/faqs/)
 
 
-# RHEL8 ターゲットノードのpython
+# RHEL8 ターゲットノードのPython
 
 RHEL7までは必ずpython2が入っていて、コントロールマシン以外ではそれを使っていたわけだけど、
 RHEL8からは /usr/libexec/platform-python 式になって、パスに`python`が無い。
