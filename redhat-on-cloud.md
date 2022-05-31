@@ -1,9 +1,48 @@
+- [クラウド上のRed Hat Enterprise Linux](#クラウド上のred-hat-enterprise-linux)
+  - [AWS](#aws)
+  - [Azure](#azure)
+- [そうは言ってもこのメッセージが気になる場合](#そうは言ってもこのメッセージが気になる場合)
+- [AWS上でRHEL8の例](#aws上でrhel8の例)
+- [Red Hat Developer Subscription のとりかたメモ](#red-hat-developer-subscription-のとりかたメモ)
+
 # クラウド上のRed Hat Enterprise Linux
 
 AWSではRHELがサブスクリプション無しでyumが使える。
 
 ただsubscription-managerの練習にはならないので、
 １つくらいは Red Hat Developer Subscription を取得しておくべき。
+
+## AWS
+
+> Red Hat Enterprise Linux (RHEL) のすべてのオンデマンド Amazon マシンイメージ (AMI) は、AWS で Red Hat Update Infrastructure (RHUI) を使用するように構成されています。
+ 
+[Red Hat よくある質問](https://aws.amazon.com/jp/partners/redhat/faqs/)
+
+## Azure
+
+Red HatでもRHUI
+
+[Red Hat Update Infrastructure - Azure Virtual Machines | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui)
+
+
+# そうは言ってもこのメッセージが気になる場合
+
+AzureやAWSのRed Hatでyum(dnf)使うと
+"Unable to read consumer identity"
+とか
+"This system is not registered with an entitlement server. You can use subscription-manager to register."
+出てくるのが気になる場合。
+
+`/etc/yum/pluginconf.d/subscription-manager.conf`
+の
+`enabled=1`
+を
+`enabled=0`
+にしましょう。
+
+- [Solution for “This system is not registered with an entitlement server” | SahliTech, Inc](https://sahlitech.com/entitlement-server-fix/)
+- [EC2(RHEL)で dnf upgrade を実行した際に「This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.」というエラーが発生した場合の対処方法 | DevelopersIO](https://dev.classmethod.jp/articles/tsnote-ec2-dnf-upgrade-error-001/)
+
 
 # AWS上でRHEL8の例
 
@@ -75,7 +114,7 @@ Running transaction check
 
 
 
-# Red Hat Developer Subscription のとりかた
+# Red Hat Developer Subscription のとりかたメモ
 
 [Red Hat アカウントの作成](https://www.redhat.com/wapps/ugc/register.html)でアカウントを作る。
 

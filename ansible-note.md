@@ -89,6 +89,7 @@ ansibleメモランダム
 - [roles_path=,collections_path= と *_plugins= のちがい](#roles_pathcollections_path-と-_plugins-のちがい)
 - [rolesやcollectionsのfiles/やtemplate/はオーバライドできるか?](#rolesやcollectionsのfilesやtemplateはオーバライドできるか)
 - [RHEL 8](#rhel-8)
+  - [ほかメモ](#ほかメモ)
 - [RHEL8非コントロールノードのpython](#rhel8非コントロールノードのpython)
 
 
@@ -1682,8 +1683,9 @@ defaults/に変数書いて、それをplaybookで書き換えるしかなさそ
 
 # RHEL 8
 
-とりあえず古いけどRedHatがメンテしてると思うので、これでもいいなら。
+とりあえず古い(2.9)けどRedHatがメンテしてると思うので、これでもいいなら。
 
+参考:
 - https://access.redhat.com/articles/3174981
 - https://access.redhat.com/ja/articles/4208241
 
@@ -1693,9 +1695,22 @@ sudo yum repolist | grep ansible-2-for-rhel-8-rhui-rpms
 sudo yum install ansible -y
 ```
 
-AWSとかAzureのRedHatではシステムがregisteredされてなくてsubscription-manager使えないとか
-言われるかもしれないけど無視していいです。
+AWSとかAzureのRedHatではシステムがregisteredされてなくて
+subscription-manager使えないとか言われるかもしれないけど
+その場合は
 
+```sh
+grep -i ansible /etc/yum.repos.d/*.repo
+```
+でファイルを見つけて、該当部分をenabled=1にしてださい。
+
+```sh
+sudo yum-config-manager --enablerepo ansible-2-for-rhel-8-rhui-rpms
+```
+みたいのはRHEL8ではできません。
+
+
+入れた結果:
 ```
 $ ansible --version
 ansible 2.9.27
@@ -1709,11 +1724,19 @@ ansible 2.9.27
 EPELから入れたほうが楽だとは思うけど
 なんか不幸な現場でこういう方法もあり。
 
-ここにRPMもあるので、いよいよダメなら
+ここにRPMもあるので、いよいよダメならここからどうぞ
 https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/
 
-このansibleの使うpythonってどこにあるの?
-/usr/libexec/platform-python (python 3.6)を使うらしい。
+このパッケージ版のansibleの使うpythonってどこにあるの?
+/usr/libexec/platform-python (Python 3.6)を使うらしい。
+
+
+
+## ほかメモ
+
+> Red Hat Enterprise Linux (RHEL) のすべてのオンデマンド Amazon マシンイメージ (AMI) は、AWS で Red Hat Update Infrastructure (RHUI) を使用するように構成されています。
+ 
+[Red Hat よくある質問](https://aws.amazon.com/jp/partners/redhat/faqs/)
 
 
 # RHEL8非コントロールノードのpython
