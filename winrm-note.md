@@ -314,3 +314,20 @@ p.close_shell(shell_id)
 #print(std_out)
 print(std_out.decode('sjis'))
 ```
+
+
+# WinRMのTrustedHosts
+
+```powershell
+Get-Item WSMan:\localhost\Client\TrustedHosts
+# or
+winrm get winrm/config/client
+```
+
+TrustedHosts に書くのと
+Windows Firewallにtcp/5985,5986 allowを書くのとは
+or関係らしい。
+
+どっちかでallowだとつながる。
+
+なんか変だがMicrosoftなのでそんなもんだろう。
