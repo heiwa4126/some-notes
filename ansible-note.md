@@ -88,6 +88,9 @@ ansibleメモランダム
 - [collectionの開発](#collectionの開発)
 - [roles_path=,collections_path= と *_plugins= のちがい](#roles_pathcollections_path-と-_plugins-のちがい)
 - [rolesやcollectionsのfiles/やtemplate/はオーバライドできるか?](#rolesやcollectionsのfilesやtemplateはオーバライドできるか)
+- [RHEL 8](#rhel-8)
+  - [ほかメモ](#ほかメモ)
+- [RHEL8 ターゲットノードのPython](#rhel8-ターゲットノードのpython)
 
 
 # ansibleの学習2021
@@ -1676,3 +1679,79 @@ playbookでオーバライドできない。
 
 
 defaults/に変数書いて、それをplaybookで書き換えるしかなさそう。
+
+
+# RHEL 8
+
+とりあえず古い(2.9)けどRedHatがメンテしてると思うので、これでもいいなら。
+
+参考:
+- https://access.redhat.com/articles/3174981
+- https://access.redhat.com/ja/articles/4208241
+
+```sh
+sudo subscription-manager repos --enable=ansible-2-for-rhel-8-rhui-rpms
+sudo yum repolist | grep ansible-2-for-rhel-8-rhui-rpms
+sudo yum install ansible -y
+```
+
+AWSとかAzureのRedHatではシステムがregisteredされてなくて
+subscription-manager使えないとか言われるかもしれないけど
+その場合は
+
+```sh
+grep -i ansible /etc/yum.repos.d/*.repo
+```
+でファイルを見つけて、該当部分をenabled=1にしてださい。
+
+```sh
+sudo yum-config-manager --enablerepo ansible-2-for-rhel-8-rhui-rpms
+```
+みたいのはRHEL8ではできません。
+
+
+入れた結果:
+```
+$ ansible --version
+ansible 2.9.27
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = ['/home/user1/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3.6/site-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 3.6.8 (default, Jan 14 2022, 11:04:20) [GCC 8.5.0 20210514 (Red Hat 8.5.0-7)]
+```
+
+EPELから入れたほうが楽だとは思うけど
+なんか不幸な現場でこういう方法もあり。
+
+ここにRPMもあるので、いよいよダメならここからどうぞ
+https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/
+
+このパッケージ版のansibleの使うpythonってどこにあるの?
+/usr/libexec/platform-python (Python 3.6)を使うらしい。
+
+
+
+## ほかメモ
+
+> Red Hat Enterprise Linux (RHEL) のすべてのオンデマンド Amazon マシンイメージ (AMI) は、AWS で Red Hat Update Infrastructure (RHUI) を使用するように構成されています。
+ 
+[Red Hat よくある質問](https://aws.amazon.com/jp/partners/redhat/faqs/)
+
+
+# RHEL8 ターゲットノードのPython
+
+RHEL7までは必ずpython2が入っていて、コントロールマシン以外ではそれを使っていたわけだけど、
+RHEL8からは /usr/libexec/platform-python 式になって、パスに`python`が無い。
+
+[RHEL8系ディストリビューションでPython 3を使う - Qiita](https://qiita.com/yamada-hakase/items/ed38a66ac10cf9cfe07e)
+
+んで
+
+[RHEL8 を Ansible から触ってみよう！ - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/ansible_on_rhel8)
+
+いいのかこんなんで。まあRedHatの人が書いてるんだからいいんでしょうけど。
+
+いまRed Hat 8.6とパッケージ版のansible2.9でやってみたら
+/usr/libexec/platform-pythonをdiscoverしたので
+なんの設定もいらないみたい。なんか環境依存っぽいような気もする。
