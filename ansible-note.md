@@ -92,6 +92,7 @@ ansibleメモランダム
   - [ほかメモ](#ほかメモ)
 - [RHEL8 ターゲットノードのPython](#rhel8-ターゲットノードのpython)
 - [とりあえずインベントリーのチェックだけしたいとき](#とりあえずインベントリーのチェックだけしたいとき)
+- [ansible-coreとansible](#ansible-coreとansible)
 
 
 # ansibleの学習2021
@@ -1763,6 +1764,7 @@ RHEL8からは /usr/libexec/platform-python 式になって、パスに`python`�
 ```sh
 ansible --list-hosts all
 ```
+でホストのリストがでます。
 
 `all` のところは好きなグループを。
 認証がどうでもネットワークがなにもなくとも動きます。
@@ -1770,4 +1772,29 @@ ansible --list-hosts all
 こういうのも
 ```sh
 ansible -m debug all
+```
+
+
+# ansible-coreとansible
+
+```
+$ pip3 list | grep ansible
+
+ansible                5.8.0
+ansible-compat         2.1.0
+ansible-core           2.12.6
+ansible-lint           6.2.2
+
+$ cd $HOME/.local/lib/python3.10/site-packages/
+$ ls ansible* -d
+
+/home/heiwa/.local/lib/python3.10/site-packages/ansible
+/home/heiwa/.local/lib/python3.10/site-packages/ansible-5.8.0.dist-info
+/home/heiwa/.local/lib/python3.10/site-packages/ansible_collections
+/home/heiwa/.local/lib/python3.10/site-packages/ansible_compat
+/home/heiwa/.local/lib/python3.10/site-packages/ansible_compat-2.1.0.dist-info
+/home/heiwa/.local/lib/python3.10/site-packages/ansible_core-2.12.6.dist-info
+/home/heiwa/.local/lib/python3.10/site-packages/ansible_lint-6.2.2.dist-info
+/home/heiwa/.local/lib/python3.10/site-packages/ansible_test
+/home/heiwa/.local/lib/python3.10/site-packages/ansiblelint
 ```
