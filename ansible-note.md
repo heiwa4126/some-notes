@@ -93,6 +93,8 @@ ansibleメモランダム
 - [RHEL8 ターゲットノードのPython](#rhel8-ターゲットノードのpython)
 - [とりあえずインベントリーのチェックだけしたいとき](#とりあえずインベントリーのチェックだけしたいとき)
 - [ansible-coreとansible](#ansible-coreとansible)
+- [コンテナベースのPlaybook実行環境 - Ansible Navigator](#コンテナベースのplaybook実行環境---ansible-navigator)
+  - [Ansible Runner](#ansible-runner)
 
 
 # ansibleの学習2021
@@ -1798,3 +1800,18 @@ $ ls ansible* -d
 /home/heiwa/.local/lib/python3.10/site-packages/ansible_test
 /home/heiwa/.local/lib/python3.10/site-packages/ansiblelint
 ```
+
+
+# コンテナベースのPlaybook実行環境 - Ansible Navigator
+
+- [Ansible Navigator Documentation — Ansible Navigator Documentation](https://ansible-navigator.readthedocs.io/en/latest/)
+- [2022年のAnsibleとわたし - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/ansible_future_2022)
+- [Ansible Navigator Creator ガイド Red Hat Ansible Automation Platform 2.0-ea | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_ansible_automation_platform/2.0-ea/html/ansible_navigator_creator_guide/index)
+- [(512) つまずき Ansible 【Part36】ansible-navigator - YouTube](https://www.youtube.com/watch?v=q2DBQ-4fK18&list=PLf_-SnMN4mXMnwXkRefiN2FExpdUVCIsw&index=1)
+- [ansible/ansible-navigator: A text-based user interface (TUI) for the Red Hat Ansible Automation Platform.](https://github.com/ansible/ansible-navigator)
+
+## Ansible Runner
+
+- [ansible/ansible-runner · Quay](https://quay.io/repository/ansible/ansible-runner)
+- [Ansible Runner — ansible-runner documentation](https://ansible-runner.readthedocs.io/en/stable/)
+- [Ansible Runner v2.0.0 を触ってみた - Qiita](https://qiita.com/aoen210/items/ccfdb9060229b9b7fb16)

@@ -36,23 +36,27 @@ Docker CE (コミュニティエディション)をインストールしてみ�
 
 [Get Docker CE for Ubuntu | Docker Documentation](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
-```
-$ sudo docker run hello-world
+```sh
+sudo docker run hello-world
 ```
 まで実行して、動作確認できたら
 
 [Post-installation steps for Linux | Docker Documentation](https://docs.docker.com/install/linux/linux-postinstall/)
 
-で、「sudoなしでdocker実行」ができるようになる。
-```
-$ docker run hello-world
+で、「sudoなしでdocker実行」ができるようになる。(一旦logoutする必要があるかも)
+
+```sh
+docker run hello-world
+# or
+docker run --rm hello-world
 ```
 
 ここまで終わったら、
 終了したコンテナは消しておく。
+```sh
+docker rm $(docker ps -aq)
 ```
-$ docker rm $(docker ps -aq)
-```
+
 
 ## メモ
 
