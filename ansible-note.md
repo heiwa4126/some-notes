@@ -91,6 +91,7 @@ ansibleメモランダム
 - [RHEL 8](#rhel-8)
   - [ほかメモ](#ほかメモ)
 - [RHEL8 ターゲットノードのPython](#rhel8-ターゲットノードのpython)
+- [とりあえずインベントリーのチェックだけしたいとき](#とりあえずインベントリーのチェックだけしたいとき)
 
 
 # ansibleの学習2021
@@ -1755,3 +1756,18 @@ RHEL8からは /usr/libexec/platform-python 式になって、パスに`python`�
 いまRed Hat 8.6とパッケージ版のansible2.9でやってみたら
 /usr/libexec/platform-pythonをdiscoverしたので
 なんの設定もいらないみたい。なんか環境依存っぽいような気もする。
+
+
+# とりあえずインベントリーのチェックだけしたいとき
+
+```sh
+ansible --list-hosts all
+```
+
+`all` のところは好きなグループを。
+認証がどうでもネットワークがなにもなくとも動きます。
+
+こういうのも
+```sh
+ansible -m debug all
+```
