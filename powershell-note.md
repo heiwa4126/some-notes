@@ -28,6 +28,7 @@ Powershellが絡むとすべてがめんどくさくなる
 - [TIPS](#tips)
 - [isFile, isDirのたぐい](#isfile-isdirのたぐい)
 - [Powershellで bash の '&' みたいの](#powershellで-bash-の--みたいの)
+- [Powershellで、プロパティ全部出す](#powershellでプロパティ全部出す)
 
 
 # Powershellの常識、世間の非常識
@@ -313,3 +314,20 @@ a ; b & c & d & e
 
 書いた。
 [heiwa4126/powershell-bg: bashで `a; b & c & d ; e` みたいのをPowershellでやるサンプル。](https://github.com/heiwa4126/powershell-bg)
+
+
+# Powershellで、プロパティ全部出す
+
+なんかプロパティを全部出さない機能があって不便。
+回避する例(`Get-NetAdapter`で)
+
+```powershell
+Get-NetAdapter
+# 不便
+
+Get-NetAdapter | fl
+# コンソール向け
+
+Get-NetAdapter | select * | out-grid
+# GUI向け
+```

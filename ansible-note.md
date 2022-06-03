@@ -871,7 +871,7 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 [Template Designer Documentation — Jinja2 Documentation (2.10)](http://jinja.pocoo.org/docs/2.10/templates/#list-of-global-functions)
 
 くだらないサンプル
-```
+```yaml
 ---
 - name: jinja2 functions test
   hosts: all
