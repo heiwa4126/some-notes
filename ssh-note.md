@@ -28,6 +28,7 @@
 	- [強力な暗号のみ使う](#強力な暗号のみ使う)
 - [sftpをscpのように使う例](#sftpをscpのように使う例)
 - [sftpのみ かつ chrootするユーザを作るときのコツ](#sftpのみ-かつ-chrootするユーザを作るときのコツ)
+- [ClientAliveInterval と ServerAliveInterval](#clientaliveinterval-と-serveraliveinterval)
 
 
 # sshdのconfigtest
@@ -521,3 +522,32 @@ ChrootDirectory で指定するディレクトリは
 > パス名のすべての構成要素は、いかなる他のユーザまたはグループによって書き込み可能でない root で所有されているディレクトリでなければなりません。
 
 これにハマることが多いので注意。
+
+
+# ClientAliveInterval と ServerAliveInterval
+
+WiMAXでSSHがぶちぶち切れるので、設定してみる。
+
+- sshd_config に ClientAliveInterval
+- ssh_config(~/.ssh/config) に ServerAliveInterval
+
+- [sshd_config(5): OpenSSH SSH daemon config file - Linux man page](https://linux.die.net/man/5/sshd_config)
+- [ssh_config(5): OpenSSH SSH client config files - Linux man page](https://linux.die.net/man/5/ssh_config)
+
+sshd_configのチェックには`sshd -t`があるけど、クライアント側には同等のものが無い?
+
+とりあえず
+
+/etc/ssh/sshd_configに
+```
+ClientAliveInterval 60
+ClientAliveCountMax 3
+```
+
+~/.ssh/configに
+```
+ServerAliveInterval 42
+ServerAliveCountMax 3
+```
+
+いまのところどちらの値も根拠がないので使ってみて調整する。

@@ -104,6 +104,13 @@ select-editor
 
 `/usr/bin/sensible-editor`を読むと何をやってるかわかる。
 
+```sh
+echo 'SELECTED_EDITOR="/usr/bin/emacs"' > ~/.selected_editor
+chmod og= ~/.selected_editor
+```
+みたいな方法でもOK。
+
+
 # デフォルトユーザ
 
 毎回忘れて困惑する。
