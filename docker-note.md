@@ -5,6 +5,7 @@
   - [メモ](#メモ)
 - [便利なコマンド](#便利なコマンド)
 - [dockerの「ボリューム」](#dockerのボリューム)
+- [dockerが実際にどれぐらいディスクを使っているか](#dockerが実際にどれぐらいディスクを使っているか)
 - [JDKなしでJavaをコンパイル](#jdkなしでjavaをコンパイル)
 - [hello-worldのDockfile](#hello-worldのdockfile)
 - [GoLangでサーバを書いてimageにしてみる](#golangでサーバを書いてimageにしてみる)
@@ -87,6 +88,11 @@ docker system df
 > ボリューム(=データを永続化できる場所) は２種類ある
 
 
+# dockerが実際にどれぐらいディスクを使っているか
+
+```bash
+sudo du -hs /var/lib/docker/
+```
 
 
 # JDKなしでJavaをコンパイル
@@ -385,10 +391,10 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 - [Amazon Elastic Container Service、Docker、および Amazon EC2 を使用してモノリシックアプリケーションをマイクロサービスに分割する方法 | AWS](https://aws.amazon.com/jp/getting-started/projects/break-monolith-app-microservices-ecs-docker-ec2/)
 - [Set Up a Continuous Delivery Pipeline for Containers Using AWS CodePipeline and Amazon ECS | AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/set-up-a-continuous-delivery-pipeline-for-containers-using-aws-codepipeline-and-amazon-ecs/)
 
+
 # AzureでDocker
 
 [Docker for AWS setup & prerequisites | Docker Documentation](https://docs.docker.com/docker-for-aws/)
-
 
 
 # チュートリアルズ
@@ -773,7 +779,7 @@ rmiできないし、forceオプションでもダメ。
 # いらんイメージを手早く消す
 
 ```sh
-docker images prune -f
+docker image prune -f
 ```
 [使用していない Docker オブジェクトの削除（prune） — Docker-docs-ja 20.10 ドキュメント](https://docs.docker.jp/config/pruning.html)
 

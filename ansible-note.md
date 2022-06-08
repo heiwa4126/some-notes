@@ -95,6 +95,7 @@ ansibleメモランダム
 - [ansible-coreとansible](#ansible-coreとansible)
 - [コンテナベースのPlaybook実行環境 - Ansible Navigator](#コンテナベースのplaybook実行環境---ansible-navigator)
   - [Ansible Runner](#ansible-runner)
+- [Ansible Runner](#ansible-runner-1)
 
 
 # ansibleの学習2021
@@ -1815,3 +1816,10 @@ $ ls ansible* -d
 - [ansible/ansible-runner · Quay](https://quay.io/repository/ansible/ansible-runner)
 - [Ansible Runner — ansible-runner documentation](https://ansible-runner.readthedocs.io/en/stable/)
 - [Ansible Runner v2.0.0 を触ってみた - Qiita](https://qiita.com/aoen210/items/ccfdb9060229b9b7fb16)
+
+
+# Ansible Runner
+
+```bash
+pip3 install --user -U ansible-runner
+```
