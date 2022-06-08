@@ -1035,3 +1035,24 @@ import sys; sys.path.append("..")
 これでとりあえず動くけど、コードのあるディレクトリ!=cwdでない場合問題になる。
 
 PYTHONPATH環境変数を使うほうがいいかもしれない。
+
+パス類をさっくり見たいときは
+```sh
+python3 -m site
+```
+で。
+
+```
+$ python3 -m site
+sys.path = [
+    '/home/heiwa',
+    '/usr/lib/python310.zip',
+    '/usr/lib/python3.10',
+    '/usr/lib/python3.10/lib-dynload',
+    '/usr/local/lib/python3.10/dist-packages',
+    '/usr/lib/python3/dist-packages',
+]
+USER_BASE: '/home/hoge/.local' (doesn't exist)
+USER_SITE: '/home/hoge/.local/lib/python3.10/site-packages' (doesn't exist)
+ENABLE_USER_SITE: True
+```
