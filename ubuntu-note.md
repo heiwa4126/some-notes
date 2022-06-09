@@ -603,8 +603,8 @@ AWSのlambdaとか用。dockerでもいいけど遅いような気がする。
 
 ```sh
 sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt install python3.8 python3.8-venv python3.8-dev
-sudo apt install python3.9 python3.9-venv python3.9-dev
+sudo apt install python3.8 python3.8-venv python3.8-dev -y
+sudo apt install python3.9 python3.9-venv python3.9-dev -y
 ```
 pip3.8,3.9はパッケージがないので慎重になんとかする。
 pip, pip3がシステムワイドのpython3.10を置き換えないように。
@@ -623,6 +623,8 @@ pip3 -V
 pip3.10 -V
 pip3.9 -V
 pip3.8 -V
+
+rm get-pip.py
 ```
 
 venvもテスト
