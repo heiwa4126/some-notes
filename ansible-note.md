@@ -96,6 +96,7 @@ ansibleメモランダム
 - [コンテナベースのPlaybook実行環境 - Ansible Navigator](#コンテナベースのplaybook実行環境---ansible-navigator)
   - [Ansible Runner](#ansible-runner)
 - [Ansible Runner](#ansible-runner-1)
+- [ansible-lint 6](#ansible-lint-6)
 
 
 # ansibleの学習2021
@@ -1823,3 +1824,13 @@ $ ls ansible* -d
 ```bash
 pip3 install --user -U ansible-runner
 ```
+
+# ansible-lint 6
+
+ansible-lint 6からansible-core 2.11以上 をインストールするようになったので、
+
+coreでない古いansibleとansible-lintを使いたいときは、
+```bash
+pip3 install --user -U 'ansible==2.9.*' 'ansible-lint==5.*'
+```
+にしないとダメ。
