@@ -575,6 +575,9 @@ dpkg-query --show -f '${Maintainer}\t${binary:Package}\n' \
 ```
 sudo add-apt-repository ppa:kelleyk/emacs
 sudo add-apt-repository ppa:git-core/ppa
+#
+sudo apt install git emacs28-nox
+sudo -i ln -sf $(which emacs) /etc/alternatives/editor
 ```
 
 他Azureだったら
