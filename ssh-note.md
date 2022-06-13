@@ -38,6 +38,11 @@ sshd -t
 ```
 ...そのまんまですね。
 
+```sh
+sshd -T
+```
+で、シンタックスチェックと `/etc/ssh/sshd_config.d/*`を含めたリストを出してくれるので、これも便利。
+
 
 # sshd_configでまちがいやすい設定メモ
 
@@ -458,7 +463,7 @@ xtermみたいには使えない。
 /etc/ssh/sshd_configで
 
 KbdInteractiveAuthenticationをnoに設定。
-ChallengeResponseAuthenticationはこれの別名だけど、この名前で設定しないこと(わかりにくいから)。
+ChallengeResponseAuthentication はこれの別名だけど、この名前で設定しないこと(わかりにくいから)。
 
 PasswordAuthenticationをnoに設定。
 
