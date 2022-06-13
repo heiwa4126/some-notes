@@ -38,6 +38,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [ppa](#ppa)
 - [パッケージのchangelog](#パッケージのchangelog)
 - [Ubuntu 22.04で python3.8, 3.9がいるとき](#ubuntu-2204で-python38-39がいるとき)
+- [dmesg: read kernel buffer failed: Operation not permitted](#dmesg-read-kernel-buffer-failed-operation-not-permitted)
 
 # ホスト名の設定
 
@@ -637,3 +638,26 @@ python3.9 -m venv ~/.venv/39/
 pip -V
 deactivate
 ```
+
+# dmesg: read kernel buffer failed: Operation not permitted
+
+```
+$ LANG=C dmesg
+dmesg: read kernel buffer failed: Operation not permitted
+
+$ dmesg
+dmesg: カーネルバッファの読み込みに失敗しました: 許可されていない操作です
+
+$ cat /dev/kmsg
+cat: /dev/kmsg: 許可されていない操作です
+```
+
+これがでたら
+```bash
+sudo sysctl kernel.dmesg_restrict=0
+```
+必要なら永続化
+
+
+* [linux - dmesg: read kernel buffer failed: Permission denied - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/390184/dmesg-read-kernel-buffer-failed-permission-denied)
+* [dmesg のアクセス制限を外す方法 - pyopyopyo - Linuxとかプログラミングの覚え書き -](https://pyopyopyo.hatenablog.com/entry/2019/02/15/023159)
