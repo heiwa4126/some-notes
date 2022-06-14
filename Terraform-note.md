@@ -74,10 +74,21 @@ TF_LOGは TRACE DEBUG INFO WARN ERROR OFF
 [Environment Variables | Terraform by HashiCorp](https://www.terraform.io/cli/config/environment-variables)
 
 
-# "aws_instance"でsecurity_groupsを使うな
+# security_groups で forces replacement とか言われたら
 
+aws_instance で security_groupsを使うな。
 vpc_security_group_idsを使うこと。
 
+
+# associate_public_ip_address で forces replacement とか言われたら
+
+```
+  lifecycle {
+    ignore_changes = [associate_public_ip_address]
+  }
+```
+
+[Get terraform to ignore "associate_public_ip_address" status for stopped instance - Stack Overflow](https://stackoverflow.com/questions/52519463/get-terraform-to-ignore-associate-public-ip-address-status-for-stopped-instanc)
 
 # you need to accept terms and subscribe
 
@@ -88,4 +99,10 @@ To do so please visit https://aws.amazon.com/marketplace/pp?sku=cotnnspjrsi38lfn
 
 1. (AWSのアカウントでログインしたまま) このページに行く。
 2. `Continue to Subscribe` ボタン
-3. `Accept Term` ボタン
+3. `Accept Term` ボタン (このへんプロダクトによりけり)
+
+#  terraform import aws_key_pair. が失敗する
+
+[Terraform fails to import key pair with Amazon EC2 - Stack Overflow](https://stackoverflow.com/questions/40120065/terraform-fails-to-import-key-pair-with-amazon-ec2)
+
+key-XXXXX の IDではなくて、名前のほうを引数にする。

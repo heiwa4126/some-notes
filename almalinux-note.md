@@ -59,6 +59,44 @@ sudo localectl set-locale LANG=ja_JP.UTF-8
 なんか  /etc/profile.d/lang.sh 無視されるな...
 
 
+# AWS
+
+ec2-userだった。
+
+```bash
+aws ec2 describe-images --owners aws-marketplace \
+  --query 'reverse(sort_by(Images, &Name))[].[Name,ImageId,CreationDate]' --output table \
+  --filters 'Name=name,Values="AlmaLinux OS 8*x86_64*"'
+```
+
+marketplace似た名前のがいろいろあってヤバい。
+
+
+```
+#cloud-config
+repo_update: true
+repo_upgrade: none
+# repo_upgrade: all だとなぜかkernelが更新されない。runcmdでやる。
+
+locale: ja_JP.utf8
+timezone: Asia/Tokyo
+
+# packages:
+#  - tmux
+#  - git
+#  - emacs-nox
+
+runcmd:
+ - yum remove cockpit-bridge cockpit-system cockpit-ws -y
+ - yum autoremove -y
+ - yum config-manager --set-enabled powertools -y
+ - yum install epel-release -y
+ - yum upgrade -y
+ - yum install emacs-nox tmux git etckeeper mlocate -y
+ - reboot
+```
+
+
 # resolver
 
 Almaってsystemd-resolvedじゃないのか... Centもそうだな。
