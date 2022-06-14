@@ -14,6 +14,12 @@ sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(l
 sudo apt-get update && sudo apt-get install terraform
 ```
 
+この手順通りにやると
+`W: https://apt.releases.hashicorp.com/dists/jammy/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.`
+が出る。
+
+あとで調査。
+[21.10 - apt-key deprecation warning when updating system - Ask Ubuntu](https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system)
 
 
 ## 直接落とす
@@ -47,3 +53,39 @@ terraform -install-autocomplete
 # ドキュメント
 
 [Overview - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language)
+
+
+# サンプルなど
+
+[terraform-aws-modules/ec2-instance/aws | Terraform Registry](https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/latest)
+
+
+
+# ログを出す
+
+
+```bash
+export TF_LOG=WARN
+export TF_LOG_PATH=./terraform.log
+```
+
+TF_LOGは TRACE DEBUG INFO WARN ERROR OFF
+
+[Environment Variables | Terraform by HashiCorp](https://www.terraform.io/cli/config/environment-variables)
+
+
+# "aws_instance"でsecurity_groupsを使うな
+
+vpc_security_group_idsを使うこと。
+
+
+# you need to accept terms and subscribe
+
+```
+Error: creating EC2 Instance: OptInRequired: In order to use this AWS Marketplace product you need to accept terms and subscribe.
+To do so please visit https://aws.amazon.com/marketplace/pp?sku=cotnnspjrsi38lfn8qo4ibnnm
+```
+
+1. (AWSのアカウントでログインしたまま) このページに行く。
+2. `Continue to Subscribe` ボタン
+3. `Accept Term` ボタン
