@@ -36,8 +36,6 @@ man 8 apt-key の DEPRECATION(廃止)セクションの記述によると
 
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/terraform.asc
 
-teeじゃなくてcatでいいのでは。
-
 まず `sudo apt-key list hashicorp`で確認 & `sudo apt-key remove "E8A0 32E0 94D8 EB4E A189  D270 DA41 8C88 A321 9F7B"`
 で、改めて
 `curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/terraform.asc`
@@ -47,7 +45,7 @@ teeじゃなくてcatでいいのでは。
 まとめると
 ```bash
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/hashicorp.asc
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/hashicorp.asc > /dev/null
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 sudo apt-get update && sudo apt-get install terraform
 ```
@@ -137,3 +135,10 @@ To do so please visit https://aws.amazon.com/marketplace/pp?sku=cotnnspjrsi38lfn
 [Terraform fails to import key pair with Amazon EC2 - Stack Overflow](https://stackoverflow.com/questions/40120065/terraform-fails-to-import-key-pair-with-amazon-ec2)
 
 key-XXXXX の IDではなくて、名前のほうを引数にする。
+
+# 特定のリソースだけdestory
+
+```bash
+terraform destroy -target={リソース名} -target={リソース名} ...
+```
+
