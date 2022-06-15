@@ -7,6 +7,7 @@
 パッケージで
 [Install Terraform | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started)
 
+
 ```bash
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
@@ -19,7 +20,37 @@ sudo apt-get update && sudo apt-get install terraform
 が出る。
 
 あとで調査。
-[21.10 - apt-key deprecation warning when updating system - Ask Ubuntu](https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system)
+
+- [21.10 - apt-key deprecation warning when updating system - Ask Ubuntu](https://askubuntu.com/questions/1398344/apt-key-deprecation-warning-when-updating-system)
+- [Ubuntu Manpage: apt-key - Deprecated APT key management utility](https://manpages.ubuntu.com/manpages/jammy/en/man8/apt-key.8.html)
+
+man 8 apt-key の DEPRECATION(廃止)セクションの記述によると
+
+> wget -qO- https://myrepo.example/myrepo.asc | sudo apt-key add -
+
+みたいのは、こうやれ
+
+> wget -qO- https://myrepo.example/myrepo.asc | sudo tee /etc/apt/trusted.gpg.d/myrepo.asc
+
+ということなので
+
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/terraform.asc
+
+teeじゃなくてcatでいいのでは。
+
+まず `sudo apt-key list hashicorp`で確認 & `sudo apt-key remove "E8A0 32E0 94D8 EB4E A189  D270 DA41 8C88 A321 9F7B"`
+で、改めて
+`curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/terraform.asc`
+`sudo apt-key list hashicorp`で再確認
+
+
+まとめると
+```bash
+sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/hashicorp.asc
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install terraform
+```
 
 
 ## 直接落とす
