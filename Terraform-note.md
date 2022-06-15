@@ -142,3 +142,18 @@ key-XXXXX の IDではなくて、名前のほうを引数にする。
 terraform destroy -target={リソース名} -target={リソース名} ...
 ```
 
+# outputをoutput
+
+```bash
+terraform output
+# 個別指定も
+terraform output <name>
+# クォートなしで出したいときは
+terraform output -raw <name>
+# JSONでも
+terraform output -json
+```
+
+# Terraformのbackend
+
+stateファイルを管理共有流用できる。
