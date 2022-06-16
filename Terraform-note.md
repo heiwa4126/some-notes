@@ -156,7 +156,7 @@ terraform output -json
 
 # Terraformのbackend
 
-stateファイルを管理共有流用できる。
+stateファイルを管理共有参照流用できる。
 
 - [Backend Overview - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends)
 - [Backend Type: local | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends/local)

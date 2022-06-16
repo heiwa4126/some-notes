@@ -39,6 +39,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [パッケージのchangelog](#パッケージのchangelog)
 - [Ubuntu 22.04で python3.8, 3.9がいるとき](#ubuntu-2204で-python38-39がいるとき)
 - [dmesg: read kernel buffer failed: Operation not permitted](#dmesg-read-kernel-buffer-failed-operation-not-permitted)
+- [crypto-policies](#crypto-policies)
 
 # ホスト名の設定
 
@@ -661,3 +662,34 @@ sudo sysctl kernel.dmesg_restrict=0
 
 * [linux - dmesg: read kernel buffer failed: Permission denied - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/390184/dmesg-read-kernel-buffer-failed-permission-denied)
 * [dmesg のアクセス制限を外す方法 - pyopyopyo - Linuxとかプログラミングの覚え書き -](https://pyopyopyo.hatenablog.com/entry/2019/02/15/023159)
+
+
+# crypto-policies
+
+[第4章 システム全体の暗号化ポリシーの使用 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/security_hardening/using-the-system-wide-cryptographic-policies_security-hardening)
+
+ubuntuにもあった。
+
+```bash
+sudo apt install crypto-policies
+```
+
+```
+$ update-crypto-policies --show
+DEFAULT
+```
+
+で、FUTUREにしてみる。
+```
+$ sudo update-crypto-policies --set FUTURE
+Setting system policy to FUTURE
+Note: System-wide crypto policies are applied on application start-up.
+It is recommended to restart the system for the change of policies
+to fully take place.
+
+# /etc/crypto-policiesができる。他はかわらん。rebootしろ、とのことなのでrebootする。
+
+$ sudo reboot
+```
+
+よくわからん。とりあえず何か変わったようには見えないんだけど。
