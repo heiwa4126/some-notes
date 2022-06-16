@@ -88,7 +88,9 @@ terraform -install-autocomplete
 
 [terraform-aws-modules/ec2-instance/aws | Terraform Registry](https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/latest)
 
+# チュートリアル
 
+[Terraform Tutorials - HashiCorp Learn](https://learn.hashicorp.com/terraform)
 
 # ログを出す
 
@@ -162,3 +164,16 @@ stateファイルを管理共有参照流用できる。
 - [Backend Type: local | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends/local)
 - [Backend Type: s3 | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends/s3)
 - [Backend Type: azurerm | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends/azurerm) 
+
+あとこれ
+[Store Remote State | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/aws-remote?in=terraform/aws-get-started)
+
+backendのkeyにvarが使えない。
+[Terraformの「ここはvariable使えないのか...」となった所 - Qiita](https://qiita.com/ymmy02/items/e7368abd8e3dafbc5c52)
+
+
+
+# Linter
+
+- [terraform-linters/tflint: A Pluggable Terraform Linter](https://github.com/terraform-linters/tflint)
+- [aquasecurity/tfsec: Security scanner for your Terraform code](https://github.com/aquasecurity/tfsec)
