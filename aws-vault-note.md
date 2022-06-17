@@ -27,6 +27,8 @@ CLIで使えるやつがあるかな。
 
 ```bash
 sudo apt install pass
+# or
+sudo yum install pass
 ```
 
 GPG Keyがないので作る。対話式。
