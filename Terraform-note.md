@@ -181,8 +181,26 @@ backendのkeyにvarが使えない。
 [Terraformの「ここはvariable使えないのか...」となった所 - Qiita](https://qiita.com/ymmy02/items/e7368abd8e3dafbc5c52)
 
 
+## backendのkeyにvarが使えないのが辛い
+
+いちおうこういう解決方法が。
+
+`terraform init -backend-config=backend.conf`
+
+[snowflake cloud data platform - "Variables may not be used here" during terraform init - Stack Overflow](https://stackoverflow.com/questions/65838989/variables-may-not-be-used-here-during-terraform-init)
+
+
 
 # Linter
 
 - [terraform-linters/tflint: A Pluggable Terraform Linter](https://github.com/terraform-linters/tflint)
 - [aquasecurity/tfsec: Security scanner for your Terraform code](https://github.com/aquasecurity/tfsec)
+
+
+# ランダムな名前
+
+AWS SAMみたいなことをやりたいとき。
+
+[How to use unique resource names with Terraform - Advanced Web Machinery](https://advancedweb.hu/how-to-use-unique-resource-names-with-terraform/)
+
+name必須のもの以外でname省略すればOKみたい。
