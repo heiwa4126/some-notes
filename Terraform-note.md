@@ -201,6 +201,8 @@ backendのkeyにvarが使えない。
 
 AWS SAMみたいなことをやりたいとき。
 
-[How to use unique resource names with Terraform - Advanced Web Machinery](https://advancedweb.hu/how-to-use-unique-resource-names-with-terraform/)
-
 name必須のもの以外でname省略すればOKみたい。
+ただ普通はもうちょっと意味のある名前にしたいわけだ。
+
+- [How to use unique resource names with Terraform - Advanced Web Machinery](https://advancedweb.hu/how-to-use-unique-resource-names-with-terraform/)
+- [Docs overview | hashicorp/random | Terraform Registry](https://registry.terraform.io/providers/hashicorp/random/latest/docs)
