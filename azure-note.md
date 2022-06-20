@@ -109,11 +109,14 @@ az account set -s <ここにidをペースト>
 # Azureでの時刻同期
 
 Azureでは
-[Azure での Linux VM の時刻同期 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync)
+- [Azure での Linux VM の時刻同期 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync)
+- [Manage Hyper-V Integration Services | Microsoft Docs](https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/manage/manage-hyper-v-integration-services#start-and-stop-an-integration-service-from-a-linux-guest)
 
 hyper-vで同期する(統合サービス (hv_utils) )
 
 はずなのでntpdもchronyもいらないはず、だが、2本立てが推奨されている。
+
+ソースは [PTP クロック ソースを確認する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync#check-for-ptp-clock-source) で確認すること。
 
 ```
 lsmod | grep hv_utils
@@ -129,7 +132,7 @@ refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
 ```
 のように設定。
 
-ソースは [PTP クロック ソースを確認する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync#check-for-ptp-clock-source) で確認すること。
+systemd-timesyncdはPTPをサポートしてない
 
 設定してしばらく後
 ```
