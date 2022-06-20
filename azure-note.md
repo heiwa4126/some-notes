@@ -111,7 +111,7 @@ az account set -s <ここにidをペースト>
 Azureでは
 [Azure での Linux VM の時刻同期 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync)
 
-hyper-vで同期する
+hyper-vで同期する(統合サービス (hv_utils) )
 
 はずなのでntpdもchronyもいらないはず、だが、2本立てが推奨されている。
 
@@ -128,6 +128,8 @@ PTPソースを使えるchronyで
 refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
 ```
 のように設定。
+
+ソースは [PTP クロック ソースを確認する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync#check-for-ptp-clock-source) で確認すること。
 
 設定してしばらく後
 ```
