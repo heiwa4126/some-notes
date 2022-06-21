@@ -1,4 +1,5 @@
 
+
 [99designs/aws\-vault: A vault for securely storing and accessing AWS credentials in development environments](https://github.com/99designs/aws-vault)
 
 Ubuntu 22.04LTSで (2022-06)
@@ -61,3 +62,9 @@ tmuxだと.bashrcにも
 export GPG_TTY=$(tty)
 ```
 は要ると思う。
+
+
+# 参考
+
+- [aws-vaultをLinux環境でも使う方法【セキュリティ向上】 – Hacker's High](https://hackers-high.com/aws/aws-vault-on-linux/)
+- 
