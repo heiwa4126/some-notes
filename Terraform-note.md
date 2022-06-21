@@ -206,3 +206,20 @@ name必須のもの以外でname省略すればOKみたい。
 
 - [How to use unique resource names with Terraform - Advanced Web Machinery](https://advancedweb.hu/how-to-use-unique-resource-names-with-terraform/)
 - [Docs overview | hashicorp/random | Terraform Registry](https://registry.terraform.io/providers/hashicorp/random/latest/docs)
+
+
+#  .terraform.lock.hcl
+
+`go.mod` みたいなやつ。
+
+gitには残すべきなんだけど、ちがうプラットフォームに持ってくと死ぬ。(Goのバイナリのハッシュが違うから当然だけど)
+CI/CDとかで問題になるかも。
+
+
+# Windows用の.terraformrc
+
+[CLI Configuration | Terraform by HashiCorp](https://www.terraform.io/cli/config/config-file)
+
+`%APPDATA%\terraform.rc`
+
+plugin_cache_dirとかは掘ってくれない。￥は\\。 

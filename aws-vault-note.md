@@ -51,9 +51,9 @@ pass init メールアドレス
 
 このへんの変数を.profileに
 ```bash
-export AWS_VAULT_BACKEND=/usr/bin/pass
+export AWS_VAULT_BACKEND=pass   # /usr/bin/pass ではなく
 export AWS_VAULT_PASS_PREFIX=aws-vault
-export AWS_SESSION_TOKEN_TTL=3h
+export AWS_SESSION_TOKEN_TTL=6h   # 6H
 export GPG_TTY=$(tty)
 ```
 
@@ -62,6 +62,12 @@ tmuxだと.bashrcにも
 export GPG_TTY=$(tty)
 ```
 は要ると思う。
+
+環境変数については
+[aws-vault/USAGE.md at master · 99designs/aws-vault](https://github.com/99designs/aws-vault/blob/master/USAGE.md#environment-variables)
+
+
+aws-vault add bob
 
 
 # 参考
