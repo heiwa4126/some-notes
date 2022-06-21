@@ -82,3 +82,7 @@ aws-vault add bob
 ほかのシステムからうつすには
 [Migrating to pass](https://www.passwordstore.org/#migration)
 参照。
+
+# Passが何で書かれているか
+
+`less $(which pass)`
