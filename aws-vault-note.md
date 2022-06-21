@@ -73,4 +73,12 @@ aws-vault add bob
 # 参考
 
 - [aws-vaultをLinux環境でも使う方法【セキュリティ向上】 – Hacker's High](https://hackers-high.com/aws/aws-vault-on-linux/)
-- 
+
+
+# Passのストアをよそにコピーする
+
+`~ /.password-store/` をコピーすればOK。(GPG秘密鍵は別途必要)
+
+ほかのシステムからうつすには
+[Migrating to pass](https://www.passwordstore.org/#migration)
+参照。
