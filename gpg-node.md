@@ -33,14 +33,16 @@ gpg --edit-key bob
 
 # キーサーバー
 
-keys.gnupg.netは死んでるみたい。
 
 デフォルトは
 hkps://keys.openpgp.org
+ですが、
+keys.gnupg.netは死んでるみたい。
 
 ほか
 - pgp.mit.edu
 - pgp.nic.ad.jp
-- keyserver.ubuntu.com
+- keyserver.ubuntu.com - いちばんまともっぽい
+- keys.mailvelope.com
 
-など
+など [Key server (cryptographic) - Wikipedia](https://en.wikipedia.org/wiki/Key_server_(cryptographic)#Keyserver_examples)
