@@ -1,4 +1,5 @@
 
+
 [99designs/aws\-vault: A vault for securely storing and accessing AWS credentials in development environments](https://github.com/99designs/aws-vault)
 
 Ubuntu 22.04LTSで (2022-06)
@@ -50,9 +51,9 @@ pass init メールアドレス
 
 このへんの変数を.profileに
 ```bash
-export AWS_VAULT_BACKEND=/usr/bin/pass
+export AWS_VAULT_BACKEND=pass   # /usr/bin/pass ではなく
 export AWS_VAULT_PASS_PREFIX=aws-vault
-export AWS_SESSION_TOKEN_TTL=3h
+export AWS_SESSION_TOKEN_TTL=6h   # 6H
 export GPG_TTY=$(tty)
 ```
 
@@ -61,3 +62,27 @@ tmuxだと.bashrcにも
 export GPG_TTY=$(tty)
 ```
 は要ると思う。
+
+環境変数については
+[aws-vault/USAGE.md at master · 99designs/aws-vault](https://github.com/99designs/aws-vault/blob/master/USAGE.md#environment-variables)
+
+
+aws-vault add bob
+
+
+# 参考
+
+- [aws-vaultをLinux環境でも使う方法【セキュリティ向上】 – Hacker's High](https://hackers-high.com/aws/aws-vault-on-linux/)
+
+
+# Passのストアをよそにコピーする
+
+`~ /.password-store/` をコピーすればOK。(GPG秘密鍵は別途必要)
+
+ほかのシステムからうつすには
+[Migrating to pass](https://www.passwordstore.org/#migration)
+参照。
+
+# Passが何で書かれているか
+
+`less $(which pass)`

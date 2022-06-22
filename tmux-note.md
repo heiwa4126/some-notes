@@ -6,6 +6,7 @@
 とりあえずこれを使ってます
 [ssh先のtmuxでssh-agentの接続が切れてしまう問題の回避策 - Qiita](https://qiita.com/yamasaki-masahide/items/cbf57c07ff21b4100056)
 
+
 上記から引用: ~/.bashrcに
 ```sh
 # for tmux
@@ -14,3 +15,5 @@
   && export SSH_AUTH_SOCK="$HOME/.ssh/sock"
 ```
 を追加
+
+欠点: もう1個別のターミナルからつなぐと死ぬ。SSH_AUTH_SOCKが毎回違う名前になってるのはちゃんと理由がある、ということ。すこし考えないとダメ。

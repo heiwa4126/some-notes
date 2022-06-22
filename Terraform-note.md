@@ -79,11 +79,20 @@ terraform -install-autocomplete
 . ~/.bashrc 
 ```
 
+# プラグインのキャッシュ
+
+プラグイン、GoLangなのででかい。キャッシュするべき。
+
+```
+$ cat ~/.terraformrc
+plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
+```
+
+[CLI Configuration \| Terraform by HashiCorp](https://www.terraform.io/cli/config/config-file#plugin_cache_dir)
 
 # ドキュメント
 
 [Overview - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language)
-
 
 # サンプルなど
 
@@ -173,8 +182,45 @@ backendのkeyにvarが使えない。
 [Terraformの「ここはvariable使えないのか...」となった所 - Qiita](https://qiita.com/ymmy02/items/e7368abd8e3dafbc5c52)
 
 
+## backendのkeyにvarが使えないのが辛い
+
+いちおうこういう解決方法が。
+
+`terraform init -backend-config=backend.conf`
+
+[snowflake cloud data platform - "Variables may not be used here" during terraform init - Stack Overflow](https://stackoverflow.com/questions/65838989/variables-may-not-be-used-here-during-terraform-init)
+
+
 
 # Linter
 
 - [terraform-linters/tflint: A Pluggable Terraform Linter](https://github.com/terraform-linters/tflint)
 - [aquasecurity/tfsec: Security scanner for your Terraform code](https://github.com/aquasecurity/tfsec)
+
+
+# ランダムな名前
+
+AWS SAMみたいなことをやりたいとき。
+
+name必須のもの以外でname省略すればOKみたい。
+ただ普通はもうちょっと意味のある名前にしたいわけだ。
+
+- [How to use unique resource names with Terraform - Advanced Web Machinery](https://advancedweb.hu/how-to-use-unique-resource-names-with-terraform/)
+- [Docs overview | hashicorp/random | Terraform Registry](https://registry.terraform.io/providers/hashicorp/random/latest/docs)
+
+
+#  .terraform.lock.hcl
+
+`go.mod` みたいなやつ。
+
+gitには残すべきなんだけど、ちがうプラットフォームに持ってくと死ぬ。(Goのバイナリのハッシュが違うから当然だけど)
+CI/CDとかで問題になるかも。
+
+
+# Windows用の.terraformrc
+
+[CLI Configuration | Terraform by HashiCorp](https://www.terraform.io/cli/config/config-file)
+
+`%APPDATA%\terraform.rc`
+
+plugin_cache_dirとかは掘ってくれない。￥は\\。 

@@ -157,3 +157,10 @@ EDITOR=emacs visudo -f /etc/sudoers.d/heiwa
 
 - Red Hat : [Red Hat Product Errata - Red Hat Customer Portal](https://access.redhat.com/errata/)
 - Ubuntu : [CVEs \| Ubuntu](https://ubuntu.com/security/cve)
+
+
+# EFIかどうか知る
+
+```bash
+ls -lad /sys/firmware/efi
+```

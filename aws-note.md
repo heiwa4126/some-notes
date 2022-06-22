@@ -22,6 +22,7 @@ AWSのメモ
 - [S3でWWW](#s3でwww)
   - [cloudformationで](#cloudformationで)
 - [DNS](#dns)
+- [AWS アカウントのエイリアス](#aws-アカウントのエイリアス)
 
 
 # メタデータ
@@ -571,3 +572,8 @@ CloudFront(と独自ドメイン)がいるらしい。
 
 > 「10.0.0.0/16」のCIDRのVPCなら「10.0.0.2」、「172.31.0.0/16」なら「172.31.0.2」という具合
 [VPCデフォルトのDNSサーバへの通信はSecurity GroupのOutboundルールで制御できないことを確認してみた | DevelopersIO](https://dev.classmethod.jp/articles/security-group-outbound-rule-cannot-filter-traffic-to-amazon-dns-server/)
+
+
+# AWS アカウントのエイリアス
+
+[AWS アカウント ID とそのエイリアス - AWS Identity and Access Management](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/console_account-alias.html#CreateAccountAlias)
