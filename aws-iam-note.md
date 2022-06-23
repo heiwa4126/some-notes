@@ -107,6 +107,9 @@ CloudWatchにlogを書く方は AssumeRolePolicyDocument に
 ...リソースに対してロールじゃなくてポリシーを設定できるようになってればよかったのでは。
 ロールにする理由がわかったら追記。
 
+- [AWS Lambda のリソースベースのポリシーを使用する - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/access-control-resource-based.html)
+- [AWS Lambda 実行ロール - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/lambda-intro-execution-role.html)
+- もう1つ - [AWS Lambda アプリケーションに対するアクセス許可の境界の使用 - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/permissions-boundary.html)
 
 # Principalに指定できるもの
 
@@ -120,3 +123,20 @@ CloudWatchにlogを書く方は AssumeRolePolicyDocument に
 - すべてのプリンシパル - '*'
   
 あとはよくわからん。
+
+# statementが複数あったとき、それらはorなの?
+
+orらしい?
+
+[複数の否定条件を使ったS3バケットポリシーを正しく理解してますか？ | DevelopersIO](https://dev.classmethod.jp/articles/s3-bucket-policy-multi-condition/)
+
+デフォルトは allowなのdenyなの? 
+
+[ポリシーの評価論理 - AWS Identity and Access Management](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_policies_evaluation-logic.html) ... わからん。
+
+やさしい解説。
+[IAM 評価論理ファン必見！AWS ドキュメントにリソースベースポリシー評価論理のプリンシパルごとの違いが記載されました | DevelopersIO](https://dev.classmethod.jp/articles/policies-evaluation-logic-resource-base-policy/) ... わからん。
+
+
+サンプルがあってよかった。
+[アイデンティティベースのポリシーおよびリソースベースのポリシーの評価の例](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_policies_evaluation-logic.html#policies_evaluation_example)
