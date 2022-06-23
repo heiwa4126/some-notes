@@ -649,6 +649,8 @@ REQUESTオーソライザーのほうがかんたんなので、
 
 なんかこれしか見つからない... 困ったもんだ。
 
+CFnの分はここに。
+[擬似パラメータ参照 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html)
 
 # sam local invoke
 
