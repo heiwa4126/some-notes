@@ -23,6 +23,7 @@ AWSのメモ
   - [cloudformationで](#cloudformationで)
 - [DNS](#dns)
 - [AWS アカウントのエイリアス](#aws-アカウントのエイリアス)
+- [EC2 Instance Connect](#ec2-instance-connect)
 
 
 # メタデータ
@@ -577,3 +578,17 @@ CloudFront(と独自ドメイン)がいるらしい。
 # AWS アカウントのエイリアス
 
 [AWS アカウント ID とそのエイリアス - AWS Identity and Access Management](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/console_account-alias.html#CreateAccountAlias)
+
+
+# EC2 Instance Connect
+
+EC2起動したらsshdがこんな感じで起動していた。(適当に改行してあります)
+
+```bash
+/usr/sbin/sshd -D \
+ -o AuthorizedKeysCommand /usr/share/ec2-instance-connect/eic_run_authorized_keys %u %f \
+ -o AuthorizedKeysCommandUser ec2-instance-connect [listener] 0 of 10-100 startups
+```
+
+- [EC2 Instance Connect を使用して接続 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ec2-instance-connect-methods.html)
+- [EC2 Instance Connect を使用した接続のトラブルシューティング](https://aws.amazon.com/jp/premiumsupport/knowledge-center/ec2-instance-connect-troubleshooting/)
