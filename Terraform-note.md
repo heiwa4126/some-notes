@@ -224,3 +224,12 @@ CI/CDとかで問題になるかも。
 `%APPDATA%\terraform.rc`
 
 plugin_cache_dirとかは掘ってくれない。￥は\\。 
+
+
+# localsは
+
+マクロみたいに使える感じ。スコープがよくわからん。moduleの外へ出てこれる?
+
+# aws_iam_role_policy_attachment は
+
+モジュールでもとのroleにpolicyを追加していける感じなのかな。
