@@ -226,6 +226,15 @@ CI/CDとかで問題になるかも。
 plugin_cache_dirとかは掘ってくれない。￥は\\。 
 
 
+# terraform import
+
+[Import | Terraform by HashiCorp](https://www.terraform.io/cli/import)
+
+> 現在のTerraform importの実装では、リソースをステートにインポートすることしかできません。
+
+まあそうでしょう。
+
+
 # localsは
 
 マクロみたいに使える感じ。スコープがよくわからん。moduleの外へ出てこれる?
@@ -248,3 +257,18 @@ resource "aws_instance" "web" {
 の web の名前は  local name でいいみたい。
 
 [Resources - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language/resources/syntax)
+
+
+# terraform-docs
+
+[terraform-docs/terraform-docs: Generate documentation from Terraform modules in various output formats](https://github.com/terraform-docs/terraform-docs)
+
+```bash
+curl -LO https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-linux-amd64.tar.gz
+tar zxvf terraform-docs-v0.16.0-linux-amd64.tar.gz terraform-docs
+chmod +x terraform-docs
+sudo mv terraform-docs /usr/local/bin
+```
+
+terraform.tfvarsを生成できるのは便利かも。
+[Generate terraform.tfvars | terraform-docs](https://terraform-docs.io/how-to/generate-terraform-tfvars/)
