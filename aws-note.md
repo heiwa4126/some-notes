@@ -24,6 +24,7 @@ AWSのメモ
 - [DNS](#dns)
 - [AWS アカウントのエイリアス](#aws-アカウントのエイリアス)
 - [EC2 Instance Connect](#ec2-instance-connect)
+  - [接続の条件](#接続の条件)
 
 
 # メタデータ
@@ -590,5 +591,22 @@ EC2起動したらsshdがこんな感じで起動していた。(適当に改行
  -o AuthorizedKeysCommandUser ec2-instance-connect [listener] 0 of 10-100 startups
 ```
 
-- [EC2 Instance Connect を使用して接続 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ec2-instance-connect-methods.html)
-- [EC2 Instance Connect を使用した接続のトラブルシューティング](https://aws.amazon.com/jp/premiumsupport/knowledge-center/ec2-instance-connect-troubleshooting/)
+ [EC2 Instance Connect を使用して接続 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ec2-instance-connect-methods.html)
+
+AWSコンソールからWEBベースでLinuxに接続できる機能。
+
+
+## 接続の条件
+
+- EC2 Instance ConnectをサポートするOS(Amazon LinuxとUbuntu)
+- 特定のリージョン(大阪とかはダメらしい)
+- IPv4の22/tcpでsshdが待ってること
+- セキュリティグループで↓のアドレスが許可されてること
+
+ [EC2 Instance Connect を使用した接続のトラブルシューティング](https://aws.amazon.com/jp/premiumsupport/knowledge-center/ec2-instance-connect-troubleshooting/)
+
+```bash
+curl -s https://ip-ranges.amazonaws.com/ip-ranges.json| jq -r '.prefixes[] | select(.region=="ap-northeast-1") | select(.service=="EC2_INSTANCE_CONNECT") | .ip_prefix'
+```
+
+どこのホストで実行してもいい。東京リージョンでは `3.112.23.0/29` だった。
