@@ -272,3 +272,42 @@ sudo mv terraform-docs /usr/local/bin
 
 terraform.tfvarsを生成できるのは便利かも。
 [Generate terraform.tfvars | terraform-docs](https://terraform-docs.io/how-to/generate-terraform-tfvars/)
+
+```bash
+ terraform-docs tfvars hcl .
+```
+stdoutに出るので適当に編集する。
+
+# aws_api_gateway_deployment
+
+deploymentに対処するには
+
+```bash
+terraform taint aws_api_gateway_deployment.example
+```
+みたいにするか [Serverless with AWS Lambda and API Gateway | Guides | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/2.34.0/docs/guides/serverless-with-aws-lambda-and-api-gateway)
+
+aws_api_gateway_deploymentリソースで
+stage_descriptionに時間を指定するか `stage_description = "timestamp = ${timestamp()}"`
+
+[Terraformで作った Amazon API Gatewayに変更があっても再デプロイされない問題に対処する - Qiita](https://qiita.com/tksugimoto/items/33f9fe6aa48a1343e360)
+
+[aws_api_gateway_deployment | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_deployment) にあるようにtriggerをコツコツ書くか。
+
+
+# aws_api_gateway_integration 
+
+[aws_api_gateway_integration | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_integration)
+
+[integration\_http\_method](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_integration#integration_http_method)
+> Not all methods are compatible with all AWS integrations. e.g., Lambda function can only be invoked via POST.
+
+typeが AWS* なら **integration_http_methodは絶対POSTでないとダメ**。
+
+参照:  [Lambda 統合を使用した API Gateway API の「Execution failed due to configuration」(設定エラーのため実行に失敗しました) エラーを修正する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-lambda-template-invoke-error/)
+
+
+# aws_api_gateway_rest_api で OpenAPIを使う
+
+- [aws_api_gateway_rest_api | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api)
+- [terraform-provider-aws/examples/api-gateway-rest-api-openapi at main · hashicorp/terraform-provider-aws](https://github.com/hashicorp/terraform-provider-aws/tree/main/examples/api-gateway-rest-api-openapi)
