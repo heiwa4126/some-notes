@@ -274,7 +274,7 @@ terraform.tfvarsを生成できるのは便利かも。
 [Generate terraform.tfvars | terraform-docs](https://terraform-docs.io/how-to/generate-terraform-tfvars/)
 
 ```bash
- terraform-docs tfvars hcl .
+terraform-docs tfvars hcl .
 ```
 stdoutに出るので適当に編集する。
 
@@ -311,3 +311,13 @@ typeが AWS* なら **integration_http_methodは絶対POSTでないとダメ**�
 
 - [aws_api_gateway_rest_api | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api)
 - [terraform-provider-aws/examples/api-gateway-rest-api-openapi at main · hashicorp/terraform-provider-aws](https://github.com/hashicorp/terraform-provider-aws/tree/main/examples/api-gateway-rest-api-openapi)
+
+
+# terraform outputを環境変数に出す
+
+こんな方法やあんな方法が。terraform自体では特にサポートはない。
+
+- [Assign terraform output to environment variable - Stack Overflow](https://stackoverflow.com/questions/64834935/assign-terraform-output-to-environment-variable)
+- [bash - Can I set terraform output to env variables? - Stack Overflow](https://stackoverflow.com/questions/65315202/can-i-set-terraform-output-to-env-variables)
+- [Output Data from Terraform | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/outputs)
+  

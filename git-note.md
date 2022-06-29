@@ -15,6 +15,7 @@
 - [submoduleまで含めてgitリポジトリの内容をzipファイルにする](#submoduleまで含めてgitリポジトリの内容をzipファイルにする)
 - [gitでsymlinkを扱いたい](#gitでsymlinkを扱いたい)
   - [etckeeper](#etckeeper)
+- [gitの補完](#gitの補完)
 
 
 # gitの設定をリスト
@@ -259,3 +260,12 @@ git config --local core.symlinks true
 ```
 
 しとくといいと思う。
+
+# gitの補完
+
+.bashrcに
+
+```bash
+source /usr/share/bash-completion/completions/git
+```
+で。
