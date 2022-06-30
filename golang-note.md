@@ -880,7 +880,14 @@ go build -ldflags "-s -w" -trimpath
 # JSONからgoのtype xxxx structにするやつ
 
 いろいろあるけど
+
 - [JSON to Go Struct](https://transform.tools/json-to-go)
+- [JSON-to-Go: Convert JSON to Go instantly](https://mholt.github.io/json-to-go/)
+- [mholt/json-to-go: Translates JSON into a Go type in your browser instantly (original)](https://github.com/mholt/json-to-go)
+
+もちろんYAMLもあります
+- [YAML-to-Go: Convert YAML to Go instantly](https://zhwt.github.io/yaml-to-go/)
+- [Zhwt/yaml-to-go: Translates YAML into a Go type in your browser instantly.](https://github.com/Zhwt/yaml-to-go)
 
 
 # strings.HasSuffix
@@ -1053,4 +1060,3 @@ REST APIみたいに型が変わるものが帰ってくる場合など。
 # "//go:build"
 
 [Build Constraints](https://pkg.go.dev/go/build#hdr-Build_Constraints)というもの。
-

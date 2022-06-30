@@ -138,6 +138,12 @@ sudo apt install git
 - [awslabs/git-secrets: Prevents you from committing secrets and credentials into git repositories](https://github.com/awslabs/git-secrets)
 - [AWS Access Keyを外部に公開してしまった話 | mediba Creator × Engineer Blog](https://ceblog.mediba.jp/post/638125766874415104/aws-access-key%E3%82%92%E5%A4%96%E9%83%A8%E3%81%AB%E5%85%AC%E9%96%8B%E3%81%97%E3%81%A6%E3%81%97%E3%81%BE%E3%81%A3%E3%81%9F%E8%A9%B1)
 
+Ubuntuだと
+```bash
+sudo apt install git-secrets
+```
+でOK
+
 git-secretsインストールしたら
 既存または新規のgitプロジェクトで
 ```sh
