@@ -9,3 +9,11 @@
 
 - [OpenAPI 3を完全に理解できる本 - ota42y - BOOTH](https://booth.pm/ja/items/1571902)
 - [REST API のためのコード生成入門 (OpenAPI Generator)](https://wing328.gumroad.com/l/openapi_generator_ebook_jp)
+
+
+# AWS API Gatewayから エクスポート
+
+- [API Gateway から REST API をエクスポートする - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-export-api.html)
+- [get-export — AWS CLI 2.7.12 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/apigateway/get-export.html)
+
+これはなかなか便利。swaggerかOpenAPI3で出せる。
