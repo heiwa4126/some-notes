@@ -17,3 +17,14 @@
 - [get-export — AWS CLI 2.7.12 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/apigateway/get-export.html)
 
 これはなかなか便利。swaggerかOpenAPI3で出せる。
+
+
+# コンソールからAWS API Gatewayでバリデータなどをいじった後
+
+再デプロイしないと反映されない。exportしても変化がない。
+
+[REST API をステージに再デプロイする](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/how-to-deploy-api-with-console.html#apigateway-how-to-redeploy-api-console)
+
+CLIもあると思うが調べてない。あとstackのドリフトは再デプロイしても検出できない。
+
+ほか一覧: [再デプロイが必要な REST API の更新 - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/updating-api.html)
