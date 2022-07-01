@@ -10,7 +10,10 @@ systemd .timer のメモ
 
 .serviceと.timerの2本立て。
 
-
+リストは
+```bash
+systemctl list-timers
+```
 
 # cronからの移行
 
