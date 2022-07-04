@@ -1,8 +1,21 @@
 # AWS CDK
 
 - [AWS CDK](#aws-cdk)
+- [インストール](#インストール)
 - [AWS CDK Workshop](#aws-cdk-workshop)
 - [AWS CloudShell](#aws-cloudshell)
+
+
+# インストール
+
+v1とv2でけっこう違うらしい。
+
+```bash
+npm install --location=global aws-cdk
+cdk bootstrap aws://123456789012/ap-northeast-1
+```
+
+
 
 # AWS CDK Workshop
 
