@@ -22,6 +22,7 @@
   - [続き: node-dev](#続き-node-dev)
 - [そのほか参考リンク](#そのほか参考リンク)
 - [npm install dev抜き](#npm-install-dev抜き)
+- [npm -g が --location=global になってめんどくさい](#npm--g-が---locationglobal-になってめんどくさい)
 
 ## node.jsのインストール
 
@@ -356,3 +357,10 @@ npm i --production
 
 ちょっと気に入らない。あとnpmのバージョンによっても変わるらしい。
 `--only=dev`は無い。
+
+
+# npm -g が --location=global になってめんどくさい
+
+なんとかインチキできんのか。
+
+[[Solved] npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead. npm ERR! Unexpected token '.' | NamespaceIT](https://namespaceit.com/blog/npm-warn-config-global-global-local-are-deprecated-use-locationglobal-instead-npm-err-unexpected-token)

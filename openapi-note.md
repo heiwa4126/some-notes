@@ -28,3 +28,35 @@
 CLIもあると思うが調べてない。あとstackのドリフトは再デプロイしても検出できない。
 
 ほか一覧: [再デプロイが必要な REST API の更新 - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/updating-api.html)
+
+
+# generateできるクライアントとサーバーのリスト
+
+```bash
+docker run --rm openapitools/openapi-generator-cli list
+```
+
+
+[python 3.x - ImportError: cannot import name 'escape' from 'jinja2' - Stack Overflow](https://stackoverflow.com/questions/71718167/importerror-cannot-import-name-escape-from-jinja2)
+
+
+# クライアントを作る話
+
+[OpenAPITools/openapi-generator: OpenAPI Generator allows generation of API client libraries (SDK generation), server stubs, documentation and configuration automatically given an OpenAPI Spec (v2, v3)](https://github.com/OpenAPITools/openapi-generator#16---docker)
+
+```bash
+docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
+    -i  /local/openapi.yaml \
+    -g python \
+    -o /local/out/python
+```
+
+でコードが生成されるので
+```bash
+sudo chown -R ${UID} out
+cd out/python
+python3 setup.py install --user
+```
+
+で準備完了。`README.md` にサンプルコードがあるので、それをコピペして実行。
+更に改造するには `docs/DefaultApi.md` を見る。
