@@ -78,6 +78,8 @@ vim __main__.py  # S3バケット名だけ変える
 pulumi up
 ```
 
+このへんまちがい
+
 gitにはvenvは入ってないのでクローン先では
 ```bash
 git clone xxxxx
@@ -93,6 +95,23 @@ pip install -r requirements.txt
 pulumi config
 ```
 でdev選ぶ。設定は `~/.pulumi/workspaces/`以下に保存される。
+
+このへんからただしい手順
+
+```bash
+git clone xxxxx
+cd xxxx
+python3 -m venv ./venv
+. ./venv/bin/activate
+# で、
+pulumi stack select dev
+# または
+pulumi stack new dev2
+pulumi config set aws:region us-east-2
+# で
+pulumi up  # pip install -r requirements.txtは自動で行う(手動でもいいけど)
+```
+
 
 
 
@@ -124,10 +143,25 @@ svn export https://github.com/pulumi/examples/trunk/aws-py-apigateway-lambda-ser
 cd aws-py-apigateway-lambda-serverless
 export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID> 
 export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
-pulumi stack init aws-py-apigateway-lambda-serverless
+pulumi stack init dev
 pulumi config set aws:region us-east-2
 pulumi up
 # test
 curl $(pulumi stack output apigateway-rest-endpoint)/test
 pulumi destroy
+```
+
+# Pulumiのstack
+
+「スタック」はAWS CloudFormationのstackとかではなくて、
+dev, prodみたいなもの。
+
+```bash
+pulumi stack ls
+pulumi stack select
+pulumi stack select <名前>
+
+# カレントのスタックに設定をする
+pulumi config #list
+pulumi config set <key> <value>
 ```
