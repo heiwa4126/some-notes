@@ -135,6 +135,7 @@ npm root -g
 
 ## nodeがモジュールを探しに行く先を表示
 
+
 `require('hoge')`のhogeを探しに行く先。
 
 ```
@@ -155,11 +156,21 @@ $HOME/node_modules/.binにパスを通せばいい。
 これに加えて環境変数NODE_PATHを対象にする。
 
 npm -gでインストールしたモジュールを検索するなら
-```
-export NODE_PATH=`npm -g root`
-```
+
+`export NODE_PATH=$(npm -g root)`
+
 のようなことをする
 (公開するモジュールを開発しているならやるべきではない)。
+
+
+Windowsのデフォルトは
+`%APPDATA%\npm\node_modules`
+
+パスは ``%APPDATA%\npm` に通しておけばいい。
+
+
+[folders | npm Docs](https://docs.npmjs.com/cli/v8/configuring-npm/folders)
+
 
 
 ## --saveと--save-dev
