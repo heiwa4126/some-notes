@@ -22,7 +22,7 @@ npm WARN config global `--global`, `--local` are deprecated. Use `--location=glo
 
 > Anyone who has used AWS CDK will note how horribly, horribly slow it is. When you run cdk diff, everything is funnelled through the TypeScript codebase into CloudFormation templates by a process I would only describe as slow and chunky.
 
-(訳)AWS CDKを使ったことがある人なら誰でも、それがいかに恐ろしく恐ろしく遅いかを指摘するだろう。
+(訳)AWS CDKを使ったことがある人なら誰でも、それがいかに恐ろしく遅いかを指摘するだろう。
 cdk diffを実行すると、すべてがTypeScriptコードベースを通してCloudFormationテンプレートに集約され、遅くてもっさりしているとしか言いようがない処理になる。
 
 

@@ -7,6 +7,7 @@
   - [タグをつける](#タグをつける)
   - [GitHub側](#github側)
 - [GitHubからssh公開鍵をインポート](#githubからssh公開鍵をインポート)
+- [GitHubから特定のディレクトリだけダウンロード](#githubから特定のディレクトリだけダウンロード)
 
 
 
@@ -104,3 +105,11 @@ GitHubの公開鍵は `https://github.com/ユーザ名.keys` で公開されて�
 GitHubのsshキーの操作は以下参照
 - [GitHub アカウントへの新しい SSH キーの追加 - GitHub Docs](https://docs.github.com/ja/free-pro-team@latest/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account)
 - [SSH and GPG keys](https://github.com/settings/keys)
+
+
+# GitHubから特定のディレクトリだけダウンロード
+
+全部をcloneするのは辛いとき。
+
+- [git - How to download a folder from github? - Stack Overflow](https://stackoverflow.com/questions/33066582/how-to-download-a-folder-from-github) - svnを使う方法と tarballで一部取り出す方法
+- [git - Download a single folder or directory from a GitHub repo - Stack Overflow](https://stackoverflow.com/questions/7106012/download-a-single-folder-or-directory-from-a-github-repo) - ブラウザが使えるならツールもある
