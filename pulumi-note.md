@@ -1,7 +1,8 @@
 - Terraform, AWS SAMなど同様のIaCツール
 - AWS CDKに似ているが、AWS CDKの1000倍早い
 - 既存言語で書けるのはCDK同様だが、YAMLでも書ける
-- Terraformのbackendにあたるのが pulumiのweb一択。GitHubActionみたいなUIがついてる
+- Terraformのbackendにあたるのが pulumiのweb。GitHubActionみたいなUIがついてる
+  - Local Stateもある。
 - チームで使うなら有料
 - ~/.aws/credentials とかは見てくれない。環境変数をexport
 - Terraform同様GoLangで書かれてる。インストールが簡単。
@@ -113,7 +114,7 @@ pulumi up  # pip install -r requirements.txtは自動で行う(手動でもい�
 ```
 
 
-
+[Pulumiを使用する上での実践的なTips | DevelopersIO](https://dev.classmethod.jp/articles/pulumi-tips/)
 
 # コマンド補完
 
