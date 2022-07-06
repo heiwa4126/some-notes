@@ -166,3 +166,23 @@ pulumi stack select <名前>
 pulumi config #list
 pulumi config set <key> <value>
 ```
+
+# Pulumiでマルチアカウントや異なるリージョン
+
+```typescript
+    const eastRegion = new aws.Provider("east", {
+        profile: aws.config.profile,
+        region: "us-east-1", // Per AWS, ACM certificate must be in the us-east-1 region.
+    });
+```
+にして
+
+```typescript
+    const certificateValidation = new aws.acm.CertificateValidation("certificateValidation", {
+        certificateArn: certificate.arn,
+        validationRecordFqdns: validationRecordFqdns,
+    }, { provider: eastRegion });
+```
+みたいにいけばできるらしい。
+
+[examples/index.ts at master · pulumi/examples](https://github.com/pulumi/examples/blob/master/aws-ts-static-website/index.ts)

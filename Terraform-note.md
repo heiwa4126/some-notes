@@ -323,6 +323,11 @@ typeが AWS* なら **integration_http_methodは絶対POSTでないとダメ**�
 - [Output Data from Terraform | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/outputs)
   
 
+# リソースのリスト
+
+```bash
+terraform state list
+```
 
 # AWSマルチアカウント
 
