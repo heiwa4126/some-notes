@@ -322,3 +322,28 @@ typeが AWS* なら **integration_http_methodは絶対POSTでないとダメ**�
 - [bash - Can I set terraform output to env variables? - Stack Overflow](https://stackoverflow.com/questions/65315202/can-i-set-terraform-output-to-env-variables)
 - [Output Data from Terraform | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/outputs)
   
+
+
+# AWSマルチアカウント
+
+これとこれを組合せばできるはず。
+- [amazon web services - Deploying to multiple AWS accounts with Terraform? - Stack Overflow](https://stackoverflow.com/questions/52206436/deploying-to-multiple-aws-accounts-with-terraform)
+- [amazon web services - Terraformを使用して複数のアカウントに展開しますか？ - 初心者向けチュートリアル](https://tutorialmore.com/questions-304405.htm)
+
+前者の「SSL証明書だけus-east-1でつくらなければならない」のアレは参考になる。
+[alias: Multiple Provider Configurations](https://www.terraform.io/language/providers/configuration#alias-multiple-provider-configurations)
+
+これはAWSとAzureみたいなことはできるのか?
+
+
+# フォルダの中身を全部s3にアップロード
+
+[How to Upload Files to S3 using Terraform](https://linoxide.com/upload-files-to-s3-using-terraform/)
+
+for_eachを使う。ただcontents_typeはうまくいかないよね...
+
+あと上の例は aws_s3_bucket_object なので [aws_s3_object | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object) にするように。
+
+contents_typeについては
+この "Expanding to multi-file upload"の例がいいかも。
+[Using Terraform for S3 Storage with MIME Type Association | State Farm Engineering](https://engineering.statefarm.com/blog/terraform-s3-upload-with-mime/)
