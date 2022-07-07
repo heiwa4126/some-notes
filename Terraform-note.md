@@ -381,3 +381,20 @@ aws_s3_bucket_website_configuration の website_endpointを使う。
 
 検索するといっぱい出てくるのでよくある話らしい。
 [terraform stateを移動する - Google 検索](https://www.google.co.jp/search?q=terraform+state%E3%82%92%E7%A7%BB%E5%8B%95%E3%81%99%E3%82%8B&lr=lang_ja&hl=ja&tbs=lr%3Alang_1ja&sxsrf=ALiCzsbLvXmfiW05bRGPx4PPXPUMRC543A%3A1657167797350&ei=tV_GYoD-FJ-w2roP0-Gv0Ao&ved=0ahUKEwjArJOP9-X4AhUfmFYBHdPwC6oQ4dUDCA8&uact=5&oq=terraform+state%E3%82%92%E7%A7%BB%E5%8B%95%E3%81%99%E3%82%8B&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEKIEMgUIABCiBDIFCAAQogQyBQgAEKIEMgUIABCiBDoHCAAQRxCwA0oECEEYAEoECEYYAFDjG1ioKmD7L2gBcAF4AIABwQGIAYUGkgEDNC4zmAEAoAEByAEKwAEB&sclient=gws-wiz)
+
+# 自動で読み込まれる変数ファイル (と適応順)
+
+[I tried 4 different Ways to assign variable in terraform | DevelopersIO](https://dev.classmethod.jp/articles/i-tried-4-different-ways-to-assign-variable-in-terraform/) からコピペ
+
+1. Environment variables
+1. The terraform.tfvars file,
+1. The terraform.tfvars.json file
+1. Any *.auto.tfvars or *.auto.tfvars.json files, processed in lexical order of their filenames.
+1. Any -var and -var-file options on the command line, in the order they are provided. (This includes variables set by a Terraform Cloud workspace.)
+
+1から順に適応。`*.auto.tfvars`についてはファイル名順。
+
+
+# terraform.tfvarをレポジトリに含められない問題
+
+[Terraform .tfvars files: Variables Management with Examples](https://spacelift.io/blog/terraform-tfvars)
