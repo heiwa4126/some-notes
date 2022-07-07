@@ -7,7 +7,7 @@
 パッケージで
 [Install Terraform | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started)
 
-
+(下のほうに正しい手段が)
 ```bash
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
@@ -367,3 +367,11 @@ contents_typeについては
 これバグかなにか。
 2度applyするととれる。あきらめてRegionやなんかから合成するか
 aws_s3_bucket_website_configuration の website_endpointを使う。
+
+
+# override.tf
+
+- [Override Files - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language/files/override)
+- [Terraformのstate移動とrename](https://dev.thanaism.com/2021/08/dividing-terraform-state/)
+
+> Terraformでは*_override.tfあるいはoverride.tfという名称のファイルは、実行時に上書き情報として処理されるようになっています
