@@ -277,7 +277,7 @@ terraform.tfvarsを生成できるのは便利かも。
 ```bash
 terraform-docs tfvars hcl .
 ```
-stdoutに出るので適当に編集する。
+stdoutに出るので terraform.tfvars にリダイレクトするなどして適当に編集する。
 
 # aws_api_gateway_deployment
 
@@ -352,3 +352,18 @@ for_eachを使う。ただcontents_typeはうまくいかないよね...
 contents_typeについては
 この "Expanding to multi-file upload"の例がいいかも。
 [Using Terraform for S3 Storage with MIME Type Association | State Farm Engineering](https://engineering.statefarm.com/blog/terraform-s3-upload-with-mime/)
+
+
+# backendの練習
+
+たとえばbackendをS3にとれば、別のホストでもOK、のはずなんだけど、ホントかどうかを試してみる。
+
+バックエンドは「S3バックエンドを作るTerraform」があったので、これをちょっとだけカスタマイズして使わせていただいた。
+[Backend の S3 や DynamoDB 自体を terraform で管理するセットアップ方法 - Qiita](https://qiita.com/saiya_moebius/items/a8f8aa3683c2347d607c)
+
+
+# aws_s3_bucket の website_endpoint が null になる
+
+これバグかなにか。
+2度applyするととれる。あきらめてRegionやなんかから合成するか
+aws_s3_bucket_website_configuration の website_endpointを使う。
