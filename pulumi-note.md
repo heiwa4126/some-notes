@@ -1,10 +1,10 @@
 - Terraform, AWS SAMなど同様のIaCツール
 - AWS CDKに似ているが、AWS CDKの1000倍早い
 - 既存言語で書けるのはCDK同様だが、YAMLでも書ける
-- Terraformのbackendにあたるのが pulumiのweb。GitHubActionみたいなUIがついてる
+- Terraformのbackendにあたるのが Pulumiのweb(Pulumi Cloud Console)。GitHubActionみたいなUIがついてる
   - Local Stateもある。
-- チームで使うなら有料
-- ~/.aws/credentials とかは見てくれない。環境変数をexport
+- Pulumi Cloud Consoleをチームで使うなら有料 [Pricing | Pulumi](https://www.pulumi.com/pricing/)
+- ~/.aws/credentials とかは見てくれない。環境変数をexport または 
 - Terraform同様GoLangで書かれてる。インストールが簡単。
 - すごい「こなれてる」印象。
 
@@ -15,6 +15,8 @@
 curl -fsSL https://get.pulumi.com | sh
 ```
 
+`~/.pulumi/bin`にインストールされる。
+
 ~/.profile (かそれに該当するあれに)
 ```bash
 # Pulumi
@@ -22,6 +24,40 @@ if [ -d "$HOME/.pulumi/bin" ] ; then
     PATH="$PATH:$HOME/.pulumi/bin"
 fi
 ```
+
+# コマンド補完
+
+参考: [Command\-line Completion](https://www.pulumi.com/docs/reference/cli/#command-line-completion)
+
+```bash
+~/.pulumi/bin/pulumi gen-completion bash > ~/.pulumi/bash_completion
+```
+して
+
+~/.profile (かそれに該当するあれに)
+```bash
+# Pulumi completion
+if [ -f "$HOME/.pulumi/bash_completion" ] ; then
+   .  "$HOME/.pulumi/bash_completion"
+fi
+```
+
+# 利点欠点
+
+CDKと同じく「最終的には宣言型になるのだが、その定義を手続き的に行う」やつ。これは「上から順番に処理される」ということ。
+
+利点は既存言語の文法と関数が使えること。
+
+欠点は、やっぱりフレームワークなので理解がめんどくさいこと。依存関係を勝手に解決してくれないこと(これは辛い)。
+
+これはよい - [Terraform と Pulumiを比較する | apps-gcp.com](https://www.apps-gcp.com/terraform-pulumi-comparison/)
+
+
+# メモ
+
+- dev
+- qa (Quality Assurance) QA環境 検証環境
+- prod 
 
 
 # ハングアップ
@@ -113,49 +149,73 @@ pulumi config set aws:region us-east-2
 pulumi up  # pip install -r requirements.txtは自動で行う(手動でもいいけど)
 ```
 
+この手順も不要なのがあって、venvのactivateはこのあと開発するなら必要。デプロイだけなら不要
+
+
 
 [Pulumiを使用する上での実践的なTips | DevelopersIO](https://dev.classmethod.jp/articles/pulumi-tips/)
 
-# コマンド補完
 
-参考: [Command\-line Completion](https://www.pulumi.com/docs/reference/cli/#command-line-completion)
 
-```bash
-pulumi gen-completion bash > ~/.pulumi/bash_completion
-```
-して
-
-~/.profile (かそれに該当するあれに)
-```bash
-# Pulumi completion
-if [ -f "$HOME/.pulumi/bash_completion" ] ; then
-   .  "$HOME/.pulumi/bash_completion"
-fi
-```
 
 # Pulumiのサンプル
 
 [pulumi/examples: Infrastructure, containers, and serverless apps to AWS, Azure, GCP, and Kubernetes... all deployed with Pulumi](https://github.com/pulumi/examples)
 
-たとえば AWS Lambda(python) + AWS Gatewayを試す手順
+たとえば AWS Lambda(python) + AWS Gatewayのサンプルコードを試す手順は
 
 ```bash
+# GitHubのsvn APIで特定のディレクトリ以下だけを取得
+sudo apt install subversion
 svn export https://github.com/pulumi/examples/trunk/aws-py-apigateway-lambda-serverless
+
+# プロジェクトに移動
 cd aws-py-apigateway-lambda-serverless
+pulumi stack init dev   # スタック名は自由に選んで!
+## プロジェクト名は Pulumi.yaml に書かれたものになります
+
+# AWSのIAMアカウントを環境変数で設定
 export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID> 
 export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
-pulumi stack init dev
-pulumi config set aws:region us-east-2
-pulumi up
+## または
+pulumi config set aws:profile default 
+##↑ ~/.aws/credentials,configのdefaultプロファイルが使われる(~/.aws/*以外にもできる)。
+
+# 環境設定
+pulumi config set aws:region us-east-2   # 好きなリージョンをえらんでね!
+
+# デプロイ
+pulumi up  # 自動でvenv環境を作り、pip install -r requirements.txtした上でデプロイする
+
 # test
 curl $(pulumi stack output apigateway-rest-endpoint)/test
+```
+
+このあと開発するなら
+```bash
+. ./venv/bin/activate
+```
+でpythonのvenv環境に入って `__main__.py` をいじりましょう。
+
+サンプルを消す場合は
+```bash
 pulumi destroy
 ```
+で。
+
+
+
 
 # Pulumiのstack
 
 「スタック」はAWS CloudFormationのstackとかではなくて、
-dev, prodみたいなもの。
+dev, prodみたいなもの。Terraformのworkspaceみたいなもの?
+
+スタックごとに変数(Configuration)を設定できる。
+Terraformのvariable, CFnのparameterに相当する。
+
+すごいのはこれらが Pulumi Cloud に保存されること。
+(outputsも、だがこれはCFnとかTerraformでも同じなので驚かない)
 
 ```bash
 pulumi stack ls
@@ -166,6 +226,7 @@ pulumi stack select <名前>
 pulumi config #list
 pulumi config set <key> <value>
 ```
+
 
 # Pulumiでマルチアカウントや異なるリージョン
 
@@ -186,3 +247,9 @@ pulumi config set <key> <value>
 みたいにいけばできるらしい。
 
 [examples/index.ts at master · pulumi/examples](https://github.com/pulumi/examples/blob/master/aws-ts-static-website/index.ts)
+
+
+# TerraformのDataやimportに近いもの
+
+- [Import | Pulumi](https://www.pulumi.com/docs/intro/concepts/resources/options/import/)
+- [Pulumi で既存のリソースを取り込む - tech.guitarrapc.cóm](https://tech.guitarrapc.com/entry/2019/12/09/015611)
