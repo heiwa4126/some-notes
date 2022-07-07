@@ -375,3 +375,9 @@ aws_s3_bucket_website_configuration の website_endpointを使う。
 - [Terraformのstate移動とrename](https://dev.thanaism.com/2021/08/dividing-terraform-state/)
 
 > Terraformでは*_override.tfあるいはoverride.tfという名称のファイルは、実行時に上書き情報として処理されるようになっています
+
+
+# stateの移動・分離
+
+検索するといっぱい出てくるのでよくある話らしい。
+[terraform stateを移動する - Google 検索](https://www.google.co.jp/search?q=terraform+state%E3%82%92%E7%A7%BB%E5%8B%95%E3%81%99%E3%82%8B&lr=lang_ja&hl=ja&tbs=lr%3Alang_1ja&sxsrf=ALiCzsbLvXmfiW05bRGPx4PPXPUMRC543A%3A1657167797350&ei=tV_GYoD-FJ-w2roP0-Gv0Ao&ved=0ahUKEwjArJOP9-X4AhUfmFYBHdPwC6oQ4dUDCA8&uact=5&oq=terraform+state%E3%82%92%E7%A7%BB%E5%8B%95%E3%81%99%E3%82%8B&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEKIEMgUIABCiBDIFCAAQogQyBQgAEKIEMgUIABCiBDoHCAAQRxCwA0oECEEYAEoECEYYAFDjG1ioKmD7L2gBcAF4AIABwQGIAYUGkgEDNC4zmAEAoAEByAEKwAEB&sclient=gws-wiz)
