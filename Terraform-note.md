@@ -398,3 +398,59 @@ aws_s3_bucket_website_configuration の website_endpointを使う。
 # terraform.tfvarをレポジトリに含められない問題
 
 [Terraform .tfvars files: Variables Management with Examples](https://spacelift.io/blog/terraform-tfvars)
+
+うまい方法がない。gitに「シークレットチャンネル」みたいのがあるといいんだけど。
+
+
+# Terraformのドリフト検出と反映について
+
+公式:
+
+- [Detecting and Managing Drift with Terraform](https://www.hashicorp.com/blog/detecting-and-managing-drift-with-terraform)
+- [Manage Resource Drift | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/resource-drift)
+
+上のはちょっとふるい。(-refresh-onlyオプションが無い)
+下のは [Associate Tutorial List | Terraform - HashiCorp Learn](https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials) の一部
+
+
+- `terraform refresh` - stateを現実にあわせる
+- `terraform apply --refresh` - レビュー付き
+
+基本は `terraform apply`だけでも現実との乖離をチェックする。
+`pulumi up`は`pulumi refresh`を明示しないとダメ。
+
+
+# null
+
+- [Terraformのfor_eachとnullで、効率的にAWSのセキュリティグループを定義する | DevelopersIO](https://dev.classmethod.jp/articles/terraform-securitygroup-using-foreach-and-null/)
+- [null](https://www.terraform.io/language/expressions/types#null)
+
+> 不在または省略を表す値です。
+
+[驚き最小の原則](https://ja.wikipedia.org/wiki/%E9%A9%9A%E3%81%8D%E6%9C%80%E5%B0%8F%E3%81%AE%E5%8E%9F%E5%89%87)に反している。
+こういうところが専用言語が嫌われる理由。
+
+
+# terrafomer, terracognito
+
+
+[Releases · GoogleCloudPlatform/terraformer](https://github.com/GoogleCloudPlatform/terraformer/releases)
+
+```bash
+curl -L https://github.com/GoogleCloudPlatform/terraformer/releases/download/0.8.21/terraformer-all-linux-amd64 -o terraformer
+chmod +x terraformer
+mv terraformer ~/bin   # ここは各自アレンジ
+```
+all(全プロバイダ)だとバイナリが結構でかいので、特定のだけ落としてもいい。
+
+
+```bash
+terraformer import aws list
+```
+
+plugins探しに行く先がよくわからん。
+カレントの`.terraform.d`か
+`$HOME/.terraform.d/plugins/linux_amd64`らしい。
+
+aws prviderだけのmain.tf作ってterraform applyすればOK。
+[Terraformerを使用して既存のAWS環境をエクスポートする | zoo200's MemoMemo](https://zoo200.net/export-aws-with-terraformer/)
