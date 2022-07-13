@@ -164,3 +164,16 @@ EDITOR=emacs visudo -f /etc/sudoers.d/heiwa
 ```bash
 ls -lad /sys/firmware/efi
 ```
+
+
+# カラーでless
+
+`unbuffer` と `less -R` を組み合わせるのが汎用っぽい。
+
+[less にパイプしても色が消えないようにする方法 - Qiita](https://qiita.com/mkasahara/items/60049ee20956e835738b#%E6%B1%8E%E7%94%A8%E7%9A%84%E3%81%AA%E6%96%B9%E6%B3%95)
+
+```bash
+sudo apt install expect
+unbuffer ls -al | less -R
+```
+でもこの例だと失敗する。
