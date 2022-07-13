@@ -177,3 +177,6 @@ sudo apt install expect
 unbuffer ls -al | less -R
 ```
 でもこの例だと失敗する。
+
+
+[Color output in console - ArchWiki](https://wiki.archlinux.org/title/Color_output_in_console)
