@@ -16,6 +16,7 @@
 - [gitでsymlinkを扱いたい](#gitでsymlinkを扱いたい)
   - [etckeeper](#etckeeper)
 - [gitの補完](#gitの補完)
+- [git-crypt](#git-crypt)
 
 
 # gitの設定をリスト
@@ -275,3 +276,45 @@ git config --local core.symlinks true
 source /usr/share/bash-completion/completions/git
 ```
 で。
+
+
+# git-crypt
+
+機密情報も版管理したい。
+
+透過的にGPGで暗号化するやつ:
+[AGWA/git\-crypt: Transparent file encryption in git](https://github.com/AGWA/git-crypt)
+
+GPGキーが有るのが前提で。Ubuntuだとパッケージがあった `sudo apt install git-crypt`
+
+```bash
+mkdir repo1 && cd repo1
+git init
+git config user.email "foo@exampe.com"
+git config user.name "foo bar"
+git config init.defaultBranch main
+echo "Hello world" > plain.txt
+echo "super secret" > secret.txt
+git-crypt init 
+git-crypt add-gpg-user "foo@exampe.com"
+echo "secret.txt filter=git-crypt diff=git-crypt" >> .gitattributes
+git commit -am initial
+```
+
+これで元のレポジトリができたので
+
+```bash
+cd ..
+git clone repo1 repo1-clone
+cd repo1-clone
+```
+
+ここで `secret.txt`がバイナリならOK。で
+
+```bash
+git unlock
+```
+するとGPGのキーを聞いてくるので入力すると復号される。
+
+これでとりあえず当人はOK。
+別のユーザにも共有作業させたかったら `git-crypt add-gpg-user` すればいいのか?
