@@ -454,3 +454,33 @@ plugins探しに行く先がよくわからん。
 
 aws prviderだけのmain.tf作ってterraform applyすればOK。
 [Terraformerを使用して既存のAWS環境をエクスポートする | zoo200's MemoMemo](https://zoo200.net/export-aws-with-terraformer/)
+
+
+# terraformで条件分岐
+
+terraformに条件分岐は存在しません。三項演算子はある。
+
+[Conditional Expressions - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language/expressions/conditionals)
+
+
+# tfsec、terrascan
+
+[aquasecurity/tfsec: Security scanner for your Terraform code](https://github.com/aquasecurity/tfsec)
+
+```bash
+curl https://github.com/aquasecurity/tfsec/releases/download/v1.26.3/tfsec-linux-amd64 -Lo tfsec
+chmod +x tfsec
+sudo mv tfsec /usr/local/bin
+```
+
+"aws_s3_bucket_acl"とか見てくれないで文句を言う。
+
+
+[tenable/terrascan: Detect compliance and security violations across Infrastructure as Code to mitigate risk before provisioning cloud native infrastructure.](https://github.com/tenable/terrascan)
+
+```bash
+curl https://github.com/tenable/terrascan/releases/download/v1.15.2/terrascan_1.15.2_Linux_x86_64.tar.gz -Lo terrascan.tar.gz
+tar zxvf terrascan.tar.gz terrascan
+chmod +x terrascan
+sudo mv terrascan /usr/local/bin
+```

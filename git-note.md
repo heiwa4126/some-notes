@@ -285,19 +285,21 @@ source /usr/share/bash-completion/completions/git
 透過的にGPGで暗号化するやつ:
 [AGWA/git\-crypt: Transparent file encryption in git](https://github.com/AGWA/git-crypt)
 
-GPGキーが有るのが前提で。Ubuntuだとパッケージがあった `sudo apt install git-crypt`
+GPGキーが有るのが前提で。
+Ubuntuだとパッケージがあった `sudo apt install git-crypt`
 
 ```bash
 mkdir repo1 && cd repo1
 git init
-git config user.email "foo@exampe.com"
-git config user.name "foo bar"
+git config user.email "foo@exampe.com"  # 自分のメールアドレスに変更
+git config user.name "foo bar"   # 自分の名前に変更
 git config init.defaultBranch main
 echo "Hello world" > plain.txt
 echo "super secret" > secret.txt
 git-crypt init 
-git-crypt add-gpg-user "foo@exampe.com"
+git-crypt add-gpg-user "foo@exampe.com"  # 自分のメールアドレスに変更
 echo "secret.txt filter=git-crypt diff=git-crypt" >> .gitattributes
+git add --all
 git commit -am initial
 ```
 
@@ -312,9 +314,18 @@ cd repo1-clone
 ここで `secret.txt`がバイナリならOK。で
 
 ```bash
-git unlock
+git-crypt unlock
 ```
 するとGPGのキーを聞いてくるので入力すると復号される。
 
 これでとりあえず当人はOK。
 別のユーザにも共有作業させたかったら `git-crypt add-gpg-user` すればいいのか?
+
+`.gitattributes` にファイルとかディレクトリまるごと追加するコマンドがほしい。
+
+↑これはGitHubにサンプルがあった。
+```
+secretfile filter=git-crypt diff=git-crypt
+*.key filter=git-crypt diff=git-crypt
+secretdir/** filter=git-crypt diff=git-crypt
+```
