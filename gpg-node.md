@@ -46,3 +46,21 @@ keys.gnupg.netは死んでるみたい。
 - keys.mailvelope.com
 
 など [Key server (cryptographic) - Wikipedia](https://en.wikipedia.org/wiki/Key_server_(cryptographic)#Keyserver_examples)
+
+
+登録は
+> gpg --keyserver 鍵サーバ --send-keys 鍵ID
+
+
+実行例
+```bash
+gpg -k heiwa4126
+gpg --keyserver pgp.nic.ad.jp --send-keys ZZZZZZZZZZZZZZZZZ
+gpg --keyserver keyserver.ubuntu.com --send-keys ZZZZZZZZZZZZZZZZZ
+```
+
+
+キーサーバーから検索するには
+```bash
+gpg --keyserver 鍵サーバ --search-keys メールアドレス
+```
