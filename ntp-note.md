@@ -4,7 +4,7 @@ NTP関係メモ
 
 # systemdのtimesyncd
 
-ntpdやchronyでなくてtimesyncd。
+ntpdやchronyでなくてtimesyncd (SNTP)。
 NTPサーバになるつもりがないならこれで十分。
 
 設定ファイルは`/etc/systemd/timesyncd.conf`
@@ -24,7 +24,29 @@ timedatectl については
 [第3章 日付と時刻の設定 Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-configuring_the_date_and_time)
 を参照。
 
-chronycやntpqに相当するものはないみたい。
+chronycやntpqに相当するものはないみたい。←嘘でした。
+```bash
+timedatectl timesync-status
+timedatectl show-timesync
+```
+がそれ。
+
+timedatectlはsystemd-timesyncdのUIも兼ねてる。違う機能が1個のコマンドに入ってるのでややこしい。
+
+[timedatectl](https://www.freedesktop.org/software/systemd/man/timedatectl.html)
+
+例えば、systemd-timesyncdが動いていないと
+```bash
+timedatectl timesync-status
+timedatectl show-timesync
+```
+はエラーになる。
+
+```bash
+timedatectl set-ntp false
+```
+はntpd, chronyd, systemd-timesyncd を停止する。
+これらの.serviceがntpであるかどうかはどうやってわかる? time-set.target time-sync.target
 
 systemd-time*.service 2つあるね。これは?
 
@@ -39,4 +61,3 @@ timedatedの方はtimedatectlのなにからしい。
 > systemd-timesyncdサービスは、特にSNTPのみを実装します。 この最小限のサービスは、システムクロックを大きなオフセットに設定するか、小さなデルタにゆっくりと調整します。 より複雑なユースケースは、systemd-timesyncdではカバーされていません。
 
 AzureではHyper-VのPHC0が使えるから、chronyのほうがいいな。
-
