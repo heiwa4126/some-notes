@@ -187,6 +187,11 @@ systemd-timesyncdはVMだと動かない? [ゆきろぐ: systemd-timesyncdによ
 試してみたが動くみたい。
 
 
+
+(2022-07)
+AWS EC2のUbuntu2204LTSのデフォルトではchronyで169.254.169.123が動いてた。
+
+
 # ElasticIPなしのEC2で外部IPをroute53でFQDNをふる
 
 予算がなくてElasticIPのないEC2(動的に外部IPは割り振られる)を
