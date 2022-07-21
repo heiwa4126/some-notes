@@ -484,3 +484,13 @@ tar zxvf terrascan.tar.gz terrascan
 chmod +x terrascan
 sudo mv terrascan /usr/local/bin
 ```
+
+
+# TerraformでIAMユーザを作りアクセスキーを得る
+
+PGPキーがいる。なければ `gpg --gen-key`
+
+参考
+- [Create AWS IAM User Login Profile with PGP encrypted password in Terraform | DevCoops](https://devcoops.com/create-aws-iam-user-login-profile-pgp-ecrypted-password-terraform/)
+- [Decrypt iam_user_login_profile password in Terraform | DevCoops](https://devcoops.com/decrypt-aws-iam-user-login-profile-password-terraform/)
+- [aws_iam_access_key | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key)
