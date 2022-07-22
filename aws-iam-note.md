@@ -140,3 +140,12 @@ orらしい?
 
 サンプルがあってよかった。
 [アイデンティティベースのポリシーおよびリソースベースのポリシーの評価の例](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_policies_evaluation-logic.html#policies_evaluation_example)
+
+
+# RBAC, ABAC
+
+- 役割ベースのアクセス制御 (RBAC: Role-Based Access Control)
+- 属性ベースのアクセス制御（ABAC: Attribute-Based Access Control)
+
+- [AWSにおけるABACの嬉しさ、辛さを語りました #AKIBAAWS | DevelopersIO](https://dev.classmethod.jp/articles/akibaaws-06-iam-abac/)
+- 
