@@ -27,6 +27,8 @@
 - [dockerのtag](#dockerのtag)
 - [dockerでコンテナが実行されているときに、元のイメージを書き換えるとどうなる?](#dockerでコンテナが実行されているときに元のイメージを書き換えるとどうなる)
 - [いらんイメージを手早く消す](#いらんイメージを手早く消す)
+- [docker history](#docker-history)
+- [AWS ECR のライフサイクルポリシー](#aws-ecr-のライフサイクルポリシー)
 
 
 # インストール
@@ -784,3 +786,22 @@ docker image prune -f
 [使用していない Docker オブジェクトの削除（prune） — Docker-docs-ja 20.10 ドキュメント](https://docs.docker.jp/config/pruning.html)
 
 `prune`には他いろんなものが消せるオプションがあるので↑参考。
+
+
+# docker history
+
+Dockerfileの中身的なものが見れる。
+
+```bash
+docker history <image ID or REPOSITORY:TAG> --no-trunc | less
+# or
+docker history --format "{{.CreatedBy}}" test0 --no-trunc  | less
+```
+
+出力は逆順なので `|tac|less`とかする。
+
+
+# AWS ECR のライフサイクルポリシー
+
+- [ライフサイクルポリシー - Amazon ECR](https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/LifecyclePolicies.html)
+- [aws_ecr_lifecycle_policy | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_lifecycle_policy)
