@@ -125,7 +125,10 @@ terracognita aws \
 ```
 
 
-例: ./moduleディレクトリにリソース単位のHCLファイルを出力する例
+例: ./moduleディレクトリにリソース単位風のHCLファイルを出力する例。
 ```bash
 terracognita aws --module module
 ```
+
+(実際にやってみるとわかりますが、巨大なパラメータファイルと、
+モジュール類になるので、あんまり便利じゃないです)
