@@ -1,6 +1,6 @@
 # AWSの既存リソースからterraformのHCLにするツールを使ってみた
 
-所謂 `reverse Terraform tool` であるところの
+いわゆる `reverse Terraform tool` であるところの
 
 - terraformer
 - former2
@@ -121,7 +121,7 @@ terracognita aws \
 ```bash
 terracognita aws \
   --hcl outputs/resources.tf \
-  -i aws_lambda_function aws_iam_policy aws_iam_role
+  -i aws_lambda_function,aws_iam_policy aws_iam_role
 ```
 
 
