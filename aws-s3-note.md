@@ -119,7 +119,6 @@ S3の設定は
 - 問答無用にPublicAccessBlockの全部を適応。
 - 「ACLを無効化」も併用がおすすめ(コンソールでのデフォルト。「ACL 無効 (推奨)」)
 
-
 パブリックにせざるをえない場合は(「S3でWWW公開(CloudFrontなし)」など)
 - PublicAccessBlockはRestrictPublicBucketだけfalse
 - ACLを無効化
@@ -140,3 +139,10 @@ tfsecは「S3が暗号化されてない」ってよく言ってくるけど、�
 - AWS管理のキーなら無料
 
 ってところか。
+
+# S3オブジェクトロック
+
+> オブジェクトロックは、バージョニングされたバケットでのみ機能し、保持期間とリーガルホールドは個々のオブジェクトバージョンに適用されます。
+
+- [S3 オブジェクトロックの使用 - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/object-lock.html)
+- [aws\_s3\_bucket\_object\_lock\_configuration | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_object_lock_configuration#default_retention)
