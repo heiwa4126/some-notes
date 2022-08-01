@@ -53,7 +53,7 @@ resource "aws_s3_bucket_ownership_controls" "example" {
     object_ownership = "BucketOwnerEnforced"
   }
 }
-````
+```
 
 これでACLについて考える必要はなくなった。trueでいいはず。
 
@@ -126,3 +126,17 @@ S3の設定は
 - パブリックアクセス用のバケットポリシー書く
 
 「ACLを無効化」は「オブジェクト所有者」のところにあります。
+
+
+# S3の暗号化とパフォーマンス
+
+tfsecは「S3が暗号化されてない」ってよく言ってくるけど、費用と速度的にはどうなのか。
+
+- [S3デフォルト暗号化によるパフォーマンスを検証してみた - 本日も乙](https://blog.jicoman.info/2018/06/s3-default-encrytion-performance/)
+- [Amazon S3 が管理する暗号化キーによるサーバー側の暗号化 (SSE−S3) を使用したデータの保護 - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/UsingServerSideEncryption.html)
+
+とりあえず
+- 大きなファイルだとI/Oパフォーマンスの低下は顕著
+- AWS管理のキーなら無料
+
+ってところか。
