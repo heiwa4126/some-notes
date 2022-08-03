@@ -54,3 +54,8 @@ Roleは
 **最初からフィルタって名前にしとけばいいのに**
 
 [フィルタ式を使用したコンソールでのトレースの検索 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-console-filters.html)
+
+
+では AWS::XRay::SamplingRule は?
+- [AWS::XRay::SamplingRule - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-xray-samplingrule.html)
+- [aws\_xray\_sampling\_rule | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/xray_sampling_rule)
