@@ -149,3 +149,8 @@ orらしい?
 
 - [AWSにおけるABACの嬉しさ、辛さを語りました #AKIBAAWS | DevelopersIO](https://dev.classmethod.jp/articles/akibaaws-06-iam-abac/)
 - 
+
+
+# AWS管理ポリシーを検索したり中身を見たり
+
+個別に出すのは簡単なんだけど、フィルタでタイプがURLに入らないとかあって、一覧はめんどくさい。CLIなら。

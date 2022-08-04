@@ -525,3 +525,47 @@ terraform state show aws_s3_bucket.www
 ```
 
 コマンドが違うのがいやだなあ。
+
+
+# terraformerメモ
+
+
+> Support terraform 0.13 (for terraform 0.11 use v0.7.9).
+
+tfenvを使って
+
+awsの場合:
+[terraformer/aws.md at master · GoogleCloudPlatform/terraformer](https://github.com/GoogleCloudPlatform/terraformer/blob/master/docs/aws.md)
+
+AWS_PROFILEだとダメで、
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_DEFAULT_REGION
+で指定しないと。
+
+`-r iam` だと終わらない。あんまり実用にはならん感じ。
+
+そこそこ使えるのはEC2ぐらいか?
+
+# former2メモ
+
+former2のほうがまともだが、こっちはこっちで
+roleでmanaged_policy_arns(CFnのManagedPolicyArns)が抜けたりするので辛い。
+
+CFnの出力を見ながら、Terraform出力を編集する感じ。
+
+
+# terracognitaメモ
+
+進行状況が出るのがえらい。
+フィルタリングはないみたい。リソース種別単位でinclude/excludeはできる感じ
+
+時間かかるけど、そこそこいける感じ。こっちを使おう。
+
+aws_cloudwatch_log_groupが見つからない。
+aws_lambda_permissionもない。
+
+`-i aws_cloudwatch_log_group` だと
+> could not import from AWS: the resource type is not supported
+
+ですってさ。
