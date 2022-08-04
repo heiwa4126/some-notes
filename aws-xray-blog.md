@@ -1,10 +1,13 @@
 # 使ってみよう AWS X-Ray
 
-AWSのモニタリングサービスの1つで
-主にプロファイラ、エラー検出の機能を持つ。
+AWS X-Ray(エクスレイ)は
+AWSの観測サービスの1つで
+主にプロファイラ、エラー検出などに使います。
+
+今回は AWS X-Ray を軽く触ってみましょう。
 
 
-## 用語
+## X-Rayの用語
 
 X-Rayで使われる用語は [AWS X-Ray の概念 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-concepts.html) を参照。
 とりあえず知っておく用語は以下の2つです。
