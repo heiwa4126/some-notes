@@ -30,7 +30,8 @@ LambdaがDynamDBを読んで...
 
 ### グループ
 
-グループという名前だが、実質フィルタ。トレースに対する条件式を書きます。
+グループという名前ですが、実質フィルタ。
+トレースに対する条件式を書きます。
 前述のX-Rayコンソールのトレースやサービスマップでグループを指定すると、
 フィルタされたトレースのみが表示されるようになります。
 
@@ -44,9 +45,16 @@ AWS提供のサンプルには
 - [aws-samples/eb-java-scorekeep at xray-gettingstarted](https://github.com/aws-samples/eb-java-scorekeep/tree/xray-gettingstarted)
 
 がありますが、ちょっと規模が大きすぎるので、かんたんな同期アプリを作ってみました。
-(末尾参照)。
 
-zipを展開したら、
+使うツールは
+- AWS CLI 2.7.20, AWS SAM 1.53.0 (2022-08時点での最新)
+- Python 3.9
+- [Lambda Powertools Python](https://awslabs.github.io/aws-lambda-powertools-python/latest/)
+- jq, [yq(tomlq)](https://github.com/kislyuk/yq)
+
+といった標準的なものです。
+
+zip(ここからダウンロード)を展開したら、
 
 ```bash
 sam build
@@ -54,7 +62,7 @@ sam deploy --guided
 ```
 でAWSにデプロイできます。
 
-## テスト
+## テストラン
 
 テストは
 ```bash
