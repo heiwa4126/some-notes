@@ -180,3 +180,25 @@ unbuffer ls -al | less -R
 
 
 [Color output in console - ArchWiki](https://wiki.archlinux.org/title/Color_output_in_console)
+
+
+# ディストリのバージョンを知る
+
+```
+$ lsb_release -ds
+Ubuntu 22.04.1 LTS
+
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:    Ubuntu 22.04.1 LTS
+Release:        22.04
+Codename:       jammy
+
+$ sudo apt-get install lsb-core
+# けっこうでかい
+```
+
+LSB (Linux Standard Base) 
+
+[Linux Standard Base (LSB) とは何か - Qiita](https://qiita.com/kaizen_nagoya/items/bdd121a9e366036cbaba)
