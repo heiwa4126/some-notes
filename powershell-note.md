@@ -29,6 +29,7 @@ Powershellが絡むとすべてがめんどくさくなる
 - [isFile, isDirのたぐい](#isfile-isdirのたぐい)
 - [Powershellで bash の '&' みたいの](#powershellで-bash-の--みたいの)
 - [Powershellで、プロパティ全部出す](#powershellでプロパティ全部出す)
+- [Powershellの補完](#powershellの補完)
 
 
 # Powershellの常識、世間の非常識
@@ -331,3 +332,7 @@ Get-NetAdapter | fl
 Get-NetAdapter | select * | out-grid
 # GUI向け
 ```
+
+# Powershellの補完
+
+tabよりもctrl+spaceが便利。
