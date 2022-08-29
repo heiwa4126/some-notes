@@ -17,9 +17,10 @@ Connect-AzAccount
 ```powershell
 Get-AzSubscription
 Set-AzContext -SubscriptionId "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+Get-AzContext
 ```
-[Azure PowerShell でサブスクリプションを切り替える | Windows 実践ガイド](https://win2012r2.com/2021/03/02/azure-powershell-%E3%81%A7%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B/)
- 
+- [Azure PowerShell でサブスクリプションを切り替える | Windows 実践ガイド](https://win2012r2.com/2021/03/02/azure-powershell-%E3%81%A7%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B/)
+- [\[Azure\]現在のサブスクリプションを確認する – エンジニ屋](https://sevenb.jp/wordpress/ura/2021/04/03/azure-powershell%E7%8F%BE%E5%9C%A8%E6%93%8D%E4%BD%9C%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E3%82%B5%E3%83%96%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E7%A2%BA%E8%AA%8D/) 
 
 
 # 実行例
