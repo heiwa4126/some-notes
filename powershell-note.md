@@ -232,13 +232,14 @@ function Invoke-Notepad
 function prompt() {
   (Split-Path (Get-Location) -Leaf) + "> "
 }
+Set-PSReadLineKeyHandler -Key Tab -Function Complete
 ```
 
 ```powershell
-
 echo 'function prompt() {
   (Split-Path (Get-Location) -Leaf) + "> "
 }
+Set-PSReadLineKeyHandler -Key Tab -Function Complete
 ' >> $PROFILE
 ```
 
