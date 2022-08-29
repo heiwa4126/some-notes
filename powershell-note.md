@@ -336,3 +336,9 @@ Get-NetAdapter | select * | out-grid
 # Powershellの補完
 
 tabよりもctrl+spaceが便利。
+
+他、tab補完をbash風にする
+```powershell
+Set-PSReadLineKeyHandler -Key Tab -Function Complete
+```
+[PowerShellのTab補完をbashのようにする - minus9d's diary](https://minus9d.hatenablog.com/entry/2021/01/13/214844)
