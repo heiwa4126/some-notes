@@ -2,6 +2,14 @@
 
 遅くて嫌い。PowerShell 7でも遅い。
 
+WindowsでもAzure CLIは使えるので、無理に使う必要なし。
+```powershell
+winget install -e --id Microsoft.AzureCLI
+```
+[Windows 用 Azure CLI をインストールする | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli-windows?tabs=winget)
+
+# Azure PowerShell を使ってみる
+
 インストール
 ```powershell
 Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
