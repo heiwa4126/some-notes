@@ -6,12 +6,14 @@
 ```powershell
 Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
 ```
+- [Azure Az PowerShell モジュールをインストールする | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps)
+- [MSI を使用して Azure PowerShell をインストールする | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps-msi)
 
 サインイン
 ```powershell
 Connect-AzAccount
 ```
-[Azure PowerShell を使用してサインインする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/azure/authenticate-azureps?view=azps-8.2.0)
+[Azure PowerShell を使用してサインインする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/azure/authenticate-azureps)
 
 サブスクリプションのリストと切替
 ```powershell
