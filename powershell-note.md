@@ -242,8 +242,7 @@ echo 'function prompt() {
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
 ' >> $PROFILE
 ```
-
-
+途中のディレクトリがない場合は、mkdirしてください。
 
 [PowerShell 5 と 6 で Profile の場所が違う](http://www.vwnet.jp/Windows/PowerShell/2018032601/PS6Profile.htm)
 
