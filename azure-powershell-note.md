@@ -13,6 +13,10 @@ winget install -e --id Microsoft.AzureCLI
 インストール
 ```powershell
 Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+# bicepもいるなら
+winget install -e --id Microsoft.Bicep
+# Azure CLIもいるなら
+winget install -e --id Microsoft.AzureCLI
 ```
 - [Azure Az PowerShell モジュールをインストールする | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps)
 - [MSI を使用して Azure PowerShell をインストールする | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/azure/install-az-ps-msi)
