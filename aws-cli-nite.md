@@ -12,6 +12,7 @@
   - [Windows](#windows)
   - [Windows(古い)](#windows古い)
 - [pipでawscliのインストールに失敗する](#pipでawscliのインストールに失敗する)
+- [ログインとリスト](#ログインとリスト)
 
 # aws cliの最新バージョンは?
 
@@ -150,3 +151,11 @@ sudo apt install libssl-dev
 sudo apt install python3-cryptography
 ```
 してから。
+
+
+# ログインとリスト
+
+```bash
+az login
+az account list -o table
+```
