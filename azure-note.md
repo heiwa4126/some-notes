@@ -21,6 +21,7 @@
 - [AzureのストレージアカウントでSFTP](#azureのストレージアカウントでsftp)
 - [「仮想マシンエージェントの状態の準備ができていません」](#仮想マシンエージェントの状態の準備ができていません)
 - [「セキュリティを強化するには、この VM でJust-In-Time アクセスを有効にします」](#セキュリティを強化するにはこの-vm-でjust-in-time-アクセスを有効にします)
+- [複数NIC](#複数nic)
 
 # Azure CLI
 
@@ -347,3 +348,15 @@ sudo python3 setup.py install --register-service
 お前は何を言ってるんだ。
 
 「Just-In-Time アクセスを有効にするため Security Center サブスクリプションをアップグレードする」だそうです。
+
+
+# 複数NIC
+
+VMのサイズと使えるNIC枚数のリストがほしい。
+
+- [［Azure失敗と対策］仮想マシンのNICの枚数に制限がある | 日経クロステック（xTECH）](https://xtech.nikkei.com/it/atcl/column/16/041400085/041900009/)
+- [一歩先行く Azure Computing シリーズ（全3回） 第2回 Azure VM どれを選ぶの？ Azure VM 集中講座](https://www.slideshare.net/ssuser2602c6/azure-computing-3-2-azure-vm-azure-vm)
+
+このへん?
+- [Azure Cloud Services (クラシック) の仮想マシンのサイズ | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/cloud-services/cloud-services-sizes-specs)
+- [azure-content/virtual-networks-multiple-nics.md at master · toddkitta/azure-content](https://github.com/toddkitta/azure-content/blob/master/articles/virtual-network/virtual-networks-multiple-nics.md)
