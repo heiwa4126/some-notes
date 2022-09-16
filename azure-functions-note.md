@@ -36,6 +36,7 @@ AWS Lambdaと全然違う。
 - [invoke](#invoke)
 - [テレメトリー](#テレメトリー)
 - [Docker](#docker)
+- [時は流れて2022-09](#時は流れて2022-09)
 
 # Azure Functionsで使える言語
 
@@ -572,3 +573,23 @@ see: [Azure/azure-functions-core-tools: Command line tools for Azure Functions](
 Azure Functionsでdockerを使うと、Functionを停止しても料金が発生するので、辛い。
 
 Linuxベースのfunctions(Pythonとか)はそうではなかったような気がする。
+
+
+# 時は流れて2022-09
+
+[コマンド ラインから Python 関数を作成する - Azure Functions | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/create-first-function-cli-python?tabs=azure-cli%2Cbash%2Ccurl)
+
+それでもCLIコマンドたくさん必要で、
+ちょっとしたスクリプト用意しないといけない。
+プロジェクトをgit cloneして `sam build && sam deploy --guided` みたいには行かない。
+
+デプロイ全般にわたって遅い。
+リソースグループのデプロイが空だ(ARM templateが一切使われていない)。
+
+リソースグループ消すと全部消えるのは好き。
+
+これ便利。`az config param-persist on`
+[永続化されたパラメーター オプション – Azure CLI | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/param-persist-howto)
+
+Terraformのほうがよさそう。
+[Deploy Azure Functions with Terraform](https://www.maxivanov.io/deploy-azure-functions-with-terraform/)

@@ -6,6 +6,8 @@
   - [Windows](#windows)
   - [Azure CLI コマンド補完](#azure-cli-コマンド補完)
 - [azure-cliでアカウントの切り替え方](#azure-cliでアカウントの切り替え方)
+- [whoami](#whoami)
+- [persist](#persist)
 - [テナントID](#テナントid)
 - [Azure AD Graph API](#azure-ad-graph-api)
 - [Azureでの時刻同期](#azureでの時刻同期)
@@ -79,10 +81,42 @@ az account set -s <ここにidをペースト>
 で、アカウント切り替え。
 
 
+# whoami
+
+whoami的なもの
+
+```bash
+az ad signed-in-user
+```
+
+[az ad signed-in-user | Microsoft Docs](https://docs.microsoft.com/en-us/cli/azure/ad/signed-in-user?view=azure-cli-latest#az-ad-signed-in-user-show)
+
+
+# persist
+
+便利。 [永続化されたパラメーター オプション – Azure CLI | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/param-persist-howto)
+
+```bash
+az config param-persist on
+```
+
+カレントディレクトリで設定されてる値を見る。
+```bash
+az config param-persist show
+```
+
+設定は(いまのところ) .azure/.local_context_ユーザ名 というファイルに保存される。
+ドキュメントにある .param_persist ってのはウソ (昔はこれだった、とかはあるかも)。
+
+
+
+
 # テナントID
 
 テナントIDはAAD(Azure Active Directory)を一意に識別するID。
 ディレクトリIDと呼ばれることもある。
+
+ってか「AAD ID」にしとけばいいのにまたまたまたまた変なことをしやがってMS.
 
 1つのテナント(AAD)には、複数のサブスクリプションが関連付けられる。
 「関連付け」は「信頼」ということもある。
