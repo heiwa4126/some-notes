@@ -80,13 +80,15 @@ az account set -s <ここにidをペースト>
 ```
 で、アカウント切り替え。
 
+参考:
+[Azure CLI を使用するためのヒント | Microsoft Learn](https://learn.microsoft.com/ja-jp/cli/azure/use-cli-effectively?tabs=bash%2Cbash2)
 
 # whoami
 
 whoami的なもの
 
 ```bash
-az ad signed-in-user
+az ad signed-in-user show
 ```
 
 [az ad signed-in-user | Microsoft Docs](https://docs.microsoft.com/en-us/cli/azure/ad/signed-in-user?view=azure-cli-latest#az-ad-signed-in-user-show)
