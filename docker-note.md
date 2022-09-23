@@ -532,7 +532,7 @@ docker system prune -a --volumes --force
 [Docker Compose のインストール — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/compose/install.html#linux)
 
 要は
-1. githubのreleaseページからバイナリを落とす。
+1. [githubのreleaseページ](https://github.com/docker/compose/releases)からバイナリを落とす。
 2. `/usr/local/bin/docker-compose`とかの名前で置いて、実行権限をつける。
 
 
