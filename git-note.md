@@ -17,6 +17,7 @@
   - [etckeeper](#etckeeper)
 - [gitの補完](#gitの補完)
 - [git-crypt](#git-crypt)
+- [Gitでファイルパーミッションの変更を無視する](#gitでファイルパーミッションの変更を無視する)
 
 
 # gitの設定をリスト
@@ -329,3 +330,17 @@ secretfile filter=git-crypt diff=git-crypt
 *.key filter=git-crypt diff=git-crypt
 secretdir/** filter=git-crypt diff=git-crypt
 ```
+
+# Gitでファイルパーミッションの変更を無視する
+
+LinuxとWindowsでgitで作業してるときに。Windows側で
+```bash
+git config core.filemode false
+# ついでに
+git config --global core.filemode false
+# 確認
+git config -l | select-string filemode
+# select-stringはpowershellのgrep
+```
+
+- [Git でファイルパーミッションの変更（chmod）を無視する \- git config core\.filemode false](https://blog.t5o.me/post/20121119/git-chmod-git-config-core-filemode.html)
