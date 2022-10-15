@@ -21,6 +21,7 @@ JAVAめんどくさい。
 - [Kotlinチュートリアル](#kotlinチュートリアル)
 - [Spring Boot チュートリアル](#spring-boot-チュートリアル)
 - [formatter](#formatter)
+- [PowershellからJava](#powershellからjava)
 
 
 # Tomcatの新し目のやつをRHELに入れたときに参考にした記事
@@ -606,3 +607,26 @@ Gradleでwarのを試してみる。まずGradleの普通の
 # formatter
 
 Gradleならこれだ。[sherter/google\-java\-format\-gradle\-plugin](https://github.com/sherter/google-java-format-gradle-plugin)
+
+
+# PowershellからJava
+
+`-Dfoo=bar`みたいのを渡すときの話。
+
+[java - How to pass Properties to jar from Powershell? - Stack Overflow](https://stackoverflow.com/questions/1518698/how-to-pass-properties-to-jar-from-powershell)
+
+↑からの例
+```powershell
+java -jar "-Duser.language=en" any.jar
+```
+
+なので例えばmavenだったら
+```powershell
+mvn -B archetype:generate `
+ "-DarchetypeArtifactId=maven-archetype-quickstart" `
+ "-DinteractiveMode=false" `
+ "-DarchetypeVersion=1.4" `
+ "-DgroupId=com.example.hello" `
+ "-DartifactId=hello"
+```
+こんな感じ。
