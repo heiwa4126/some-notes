@@ -1,5 +1,14 @@
 # mavenメモ
 
+# ドキュメント
+
+まあいろいろあるけど、ここから始めるのがいちばん。
+
+- [Maven – Maven in 5 Minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
+- 
+- [Maven – POM Reference](https://maven.apache.org/pom.html)
+
+
 # vscodeであったほうがよさそうな拡張機能
 
 このへんは自動で入る
@@ -44,5 +53,28 @@ maven標準は
 - [Hamcrest Tutorial](http://hamcrest.org/JavaHamcrest/tutorial)
 
 
+# ライフサイクル
 
-  
+これが参考になる
+- [Built\-in Lifecycle Bindings](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#built-in-lifecycle-bindings)
+- [Mavenの「よくわらない」を解消 ！ ライフサイクル、フェーズ、バインドの概念 | dawaan](https://dawaan.com/maven-life-cycle-in-depth/)
+
+デフォルトのデフォルトライフサイクルは(ややこしい)
+```xml
+<packaging>jar</packaging>
+```
+で、
+[Plugin bindings for jar packaging](https://maven.apache.org/ref/3.8.6/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging)
+
+```bash
+mvn package
+# 上は下とだいたい同じ
+mvn compile test jar:jar
+```
+
+
+
+
+```xml
+ <defaultGoal>clean package</defaultGoal>
+```
