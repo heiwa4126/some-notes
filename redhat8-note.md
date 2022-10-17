@@ -182,7 +182,7 @@ epel(あれば)をちょっと無効にして、また有効にしてみるテ�
 ```bash
 dnf repolist epel  # 現状の表示
 sudo dnf config-manager --disable epel
-dnf repolist InstallMedia-BaseOS  # 結果の表示
+dnf repolist epel  # 結果の表示
 sudo dnf config-manager --enable epel
-dnf repolist InstallMedia-BaseOS  # 結果の表示
+dnf repolist epel  # 結果の表示
 ```
