@@ -22,6 +22,7 @@ JAVAめんどくさい。
 - [Spring Boot チュートリアル](#spring-boot-チュートリアル)
 - [formatter](#formatter)
 - [PowershellからJava](#powershellからjava)
+- [mavenメモ](#mavenメモ)
 
 
 # Tomcatの新し目のやつをRHELに入れたときに参考にした記事
@@ -630,3 +631,8 @@ mvn -B archetype:generate `
  "-DartifactId=hello"
 ```
 こんな感じ。
+
+# mavenメモ
+
+- POM - Project Object Model
+- Mojo - Maven java object
