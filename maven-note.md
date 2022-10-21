@@ -9,6 +9,24 @@
 - [Maven – POM Reference](https://maven.apache.org/pom.html)
 
 
+
+# Mavenとは？
+
+[What is Maven?](https://maven.apache.org/guides/getting-started/index.html#What_is_Maven)の機械翻訳(+x)
+
+Mavenは一見すると様々なものであるように見えますが、一言で言うと、プロジェクトのビルドインフラにパターンを適用し、ベストプラクティスの使用における明確な道筋を提供することで理解力と生産性を促進しようとするものです。Mavenは本質的にプロジェクト管理・理解ツールであり、管理を支援する方法を提供します。
+
+- ビルド
+- ドキュメンテーション
+- レポーティング
+- 依存関係
+- SCM (ソフトウェア構成管理 software configuration management）
+- リリース
+- 配布
+
+Mavenの背景についてもっと知りたい場合は、「[Mavenの哲学](https://maven.apache.org/background/philosophy-of-maven.html)」と「[Mavenの歴史](https://maven.apache.org/background/history-of-maven.html)」をご覧ください。それでは、Mavenを使用することで、どのようなメリットがあるのかについて説明します。
+
+
 # vscodeであったほうがよさそうな拡張機能
 
 このへんは自動で入る
@@ -78,3 +96,39 @@ mvn compile test jar:jar
 ```xml
  <defaultGoal>clean package</defaultGoal>
 ```
+
+
+# 階層
+
+- ライフサイクル
+  - フェーズ
+    - ゴール
+
+`mvn` の後ろに指定できるのは フェーズかゴール。
+
+フェーズを指定するとき
+ライフサイクル名は指定できない
+そのライフサイクルの一連のフェーズのうち、指定フェーズより前のすべてのフェーズも実行される
+ (例えば`mvn deploy`はライフサイクルdefaultのフェーズpackageの実行)
+
+ゴールは単体で実行される
+
+
+# デフォルトのライフサイクル
+
+デフォルトのライフサイクルで実行される最も一般的なフェーズを紹介します(全部ではない)。
+([Maven – Maven in 5 Minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)から引用)
+
+- validate: プロジェクトが正しく、必要な情報がすべて利用可能であることを検証します。
+- compile: プロジェクトのソースコードをコンパイルする。
+- test: 適当なユニットテストフレームワークを使って、コンパイルされたソースコードをテストする。これらのテストは、コードのパッケージやデプロイメントなしに実行できるはず。
+- package: コンパイルされたコードを受け取り、JARのような配布可能な形式でパッケージ化する。
+- integration-test: パッケージを処理し、必要であれば統合テストを実行できる環境に配備する。
+- verify: パッケージが有効であり、品質基準を満たしていることを確認するためのあらゆるチェックを実行する。
+- install: パッケージをローカルリポジトリにインストールし、他のプロジェクトの依存関係としてローカルで使用する。
+- deploy: 統合またはリリース環境で行われ、他の開発者やプロジェクトと共有するために最終的なパッケージをリモートリポジトリにコピーします。
+
+フェーズは、実際には基本的な目標にマッピングされます。
+フェーズごとに実行される特定のゴールは、プロジェクトのパッケージングタイプに依存します。例えば、
+プロジェクトのタイプが JAR の場合、package は jar:jar を実行し、
+プロジェクトのタイプが WAR の場合、war:war を実行します。
