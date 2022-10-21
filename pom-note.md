@@ -1,6 +1,21 @@
-[Maven - Introduction to the POM](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html) の機械翻訳
+2022-10ごろの [Maven - Introduction to the POM](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html) 機械翻訳
 
-
+- [POMとは何ですか？](#pomとは何ですか)
+- [スーパーPOM](#スーパーpom)
+- [最小限のPOM](#最小限のpom)
+- [プロジェクトの継承](#プロジェクトの継承)
+  - [例1](#例1)
+  - [例2](#例2)
+- [プロジェクトの集約](#プロジェクトの集約)
+  - [例3](#例3)
+  - [例4](#例4)
+- [「プロジェクトの集約」対「プロジェクトの継承」](#プロジェクトの集約対プロジェクトの継承)
+  - [例5](#例5)
+- [プロジェクト補間と変数](#プロジェクト補間と変数)
+  - [利用可能な変数](#利用可能な変数)
+    - [プロジェクトモデルの変数](#プロジェクトモデルの変数)
+    - [特殊な変数](#特殊な変数)
+- [プロパティ](#プロパティ)
 
 # POMとは何ですか？
 
@@ -108,6 +123,7 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 **解決方法**
 ここで、`com.mycompany.app:my-app:1` を `com.mycompany.app:my-module:1` の親アーティファクトにする場合、`com.mycompany.app:mymodule:1` の POM を以下の構成に変更しなければならないでしょう。
 
+`com.mycompany.app:my-module:1` の POM
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
@@ -146,3 +162,292 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 ```
 
 これにより、モジュールは親POMのgroupIdやバージョンを継承することができます。
+
+
+## 例2
+
+**シナリオ**
+ただし、親プロジェクトがすでにローカルリポジトリにインストールされているか、
+その特定のディレクトリ構造（親のpom.xmlはモジュールのpom.xmlより1つ上のディレクトリ）にある場合は、うまくいくでしょう。
+
+しかし、親がまだインストールされておらず、次の例のようなディレクトリ構造になっている場合はどうでしょうか?
+
+```xml
+.
+ |-- my-module
+ |   `-- pom.xml
+ `-- parent
+     `-- pom.xml
+```
+
+**解決方法**
+このディレクトリ構造（あるいは他のディレクトリ構造）に対応するためには、親セクションに `<relativePath>` 要素を追加する必要があります。
+
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <parent>
+    <groupId>com.mycompany.app</groupId>
+    <artifactId>my-app</artifactId>
+    <version>1</version>
+    <relativePath>../parent/pom.xml</relativePath>
+  </parent>
+ 
+  <artifactId>my-module</artifactId>
+</project>
+```
+
+# プロジェクトの集約
+
+「プロジェクトの集約」は「プロジェクトの継承」と似ています。
+しかし、モジュールから親POMを指定するのではなく、親POMからモジュールを指定します。
+そうすることで、親プロジェクトはそのモジュールを知ることができるようになり、親プロジェクトに対してMavenコマンドを実行すると、そのMavenコマンドが親のモジュールに対しても実行されるようになるのです。
+プロジェクト集約を行うには、以下のようにする必要があります。
+
+- 親POMのパッケージを "pom"に変更する。
+- 親POMに、そのモジュール（子POM）のディレクトリを指定する。
+
+## 例3
+
+**シナリオ**
+以前のオリジナルアーティファクトのPOMとディレクトリ構造がある場合
+(訳注:例1参照)。
+
+`com.mycompany.app:my-app:1`  の POM
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-app</artifactId>
+  <version>1</version>
+</project>
+```
+
+`com.mycompany.app:my-module:1` の POM
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-module</artifactId>
+  <version>1</version>
+</project>
+```
+
+ディレクトリ構造
+```
+.
+ |-- my-module
+ |   `-- pom.xml
+ `-- pom.xml
+```
+
+**解決方法**
+もし、my-moduleをmy-appに集約するのであれば、my-appを修正すればよいことになります。
+
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-app</artifactId>
+  <version>1</version>
+  <packaging>pom</packaging>
+ 
+  <modules>
+    <module>my-module</module>
+  </modules>
+</project>
+```
+
+改訂版 `com.mycompany.app:my-app:1` では、
+packaging セクションと modules セクションが追加されました。
+パッケージングについては、その値を「pom」とし、
+モジュールセクションについては、`<module>my-module</module>`という要素を設けています。`<module>`の値は、`com.mycompany.app:my-app:1` から `com.mycompany.app:my-module:1` の POM への相対パスです（実際には、モジュールの artifactId をモジュールディレクトリ名として使用します）。
+
+これで、Maven コマンドが com.mycompany.app:my-app:1 を処理するたびに、その同じ Maven コマンドが com.mycompany.app:my-module:1 に対しても実行されるようになります。さらに、いくつかのコマンド（特にゴール）は、プロジェクト集約を異なる方法で処理します。
+
+
+## 例4
+
+**シナリオ**
+しかし、ディレクトリ構造を次のように変更したらどうでしょう。(訳注:例2参照)
+
+```
+.
+ |-- my-module
+ |   `-- pom.xml
+ `-- parent
+     `-- pom.xml
+```
+親POMはどのようにモジュールを指定するのでしょうか?
+
+**解決方法**
+答えは、例3と同じように、モジュールへのパスを指定します。
+
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-app</artifactId>
+  <version>1</version>
+  <packaging>pom</packaging>
+ 
+  <modules>
+    <module>../my-module</module>
+  </modules>
+</project>
+```
+
+# 「プロジェクトの集約」対「プロジェクトの継承」
+
+複数のMavenプロジェクトがあり、それらがすべて似たような設定になっている場合、それらの似たような設定を取り出して親プロジェクトを作ることで、プロジェクトをリファクタリングすることができます。そのため、Mavenプロジェクトにその親プロジェクトを継承させるだけで、それらの構成が全てに適用されることになります。
+
+また、一緒にビルドや処理を行うプロジェクト群がある場合、親プロジェクトを作成し、その親プロジェクトにそれらのプロジェクトをモジュールとして宣言させることができます。
+そうすることで、親プロジェクトだけをビルドすれば、あとは自動的にビルドされるようになります。
+
+しかし、もちろん、プロジェクトの継承とプロジェクトの集約の両方を行うことができます。
+つまり、モジュールに親プロジェクトを指定させ、同時にその親プロジェクトにMavenプロジェクトをモジュールとして指定させることができるのです。
+3つのルールをすべて適用する必要があるだけです。
+
+- すべての子POMで、親POMが誰であるかを指定する。
+- 親POMのパッケージングを "pom"に変更する。
+- 親POMに、モジュール（子POM）のディレクトリを指定する。
+
+## 例5
+
+**シナリオ**
+以前のオリジナルアーティファクトのPOMを再度みてみましょう。
+
+`com.mycompany.app:my-app:1`  の POM
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-app</artifactId>
+  <version>1</version>
+</project>
+```
+
+`com.mycompany.app:my-module:1` の POM
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-module</artifactId>
+  <version>1</version>
+</project>
+```
+
+ディレクトリ構造はこうです
+```xml
+.
+ |-- my-module
+ |   `-- pom.xml
+ `-- parent
+     `-- pom.xml
+```
+
+**解決方法**
+プロジェクトの継承と集約の両方を行うには、3つのルールをすべて適用すればよい。
+
+`com.mycompany.app:my-app:1`  の POM
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-app</artifactId>
+  <version>1</version>
+  <packaging>pom</packaging>
+ 
+  <modules>
+    <module>../my-module</module>
+  </modules>
+</project>
+```
+
+`com.mycompany.app:my-module:1` の POM
+```xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <parent>
+    <groupId>com.mycompany.app</groupId>
+    <artifactId>my-app</artifactId>
+    <version>1</version>
+    <relativePath>../parent/pom.xml</relativePath>
+  </parent>
+ 
+  <artifactId>my-module</artifactId>
+</project>
+```
+
+# プロジェクト補間と変数
+
+Mavenが推奨するプラクティスの1つは、「同じことを繰り返さない」ことです。
+しかし、複数の異なる場所で同じ値を使用する必要がある場合があります。値が一度だけ指定されるように支援するために、MavenではPOMで独自の変数と事前定義された変数の両方を使用することができます。
+
+例えば、project.version 変数にアクセスするには、次のように参照します。
+
+```xml
+  <version>${project.version}</version>
+```
+
+注意点としては、これらの変数は上記のように継承された後に処理されることです。
+つまり、親プロジェクトが変数を使用する場合、最終的に使用されるのは親ではなく子プロジェクトでの定義となります。
+
+## 利用可能な変数
+
+### プロジェクトモデルの変数
+
+モデルのフィールドのうち、単一の値要素であるものはすべて変数として参照することができます。例えば、
+`${project.groupId}`,
+`${project.version}`,
+`${project.build.sourceDirectory}`
+などです。プロパティの全リストは、POMリファレンスを参照してください。
+
+これらの変数は、すべて "project. "という接頭辞で参照されます。
+また、pom.を接頭辞とする参照や、接頭辞を完全に省略した参照も見られますが、これらの形式は現在では非推奨であり、使用すべきではありません。
+
+### 特殊な変数
+
+| 変数                  | 意味                                                                        |
+| --------------------- | --------------------------------------------------------------------------- |
+| project.basedir       | 現在のプロジェクトが存在するディレクトリです。                              |
+| project.baseUri       | 現在のプロジェクトが存在するディレクトリを URI で表します。Maven 2.1.0 以降 |
+| maven.build.timestamp | ビルドの開始を示すタイムスタンプ (UTC)。Maven 2.1.0-M1より                  |
+
+フォーマットのパターンは SimpleDateFormat の API ドキュメントで与えられているルールに従わなければなりません。このプロパティが存在しない場合、フォーマットのデフォルトは、例で既に与えられた値です。
+
+# プロパティ
+
+また、プロジェクトで定義されている任意のプロパティを変数として参照することができます。次のような例で考えてみましょう。
+
+```xml
+<project>
+  ...
+  <properties>
+    <mavenVersion>3.0</mavenVersion>
+  </properties>
+ 
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-artifact</artifactId>
+      <version>${mavenVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <version>${mavenVersion}</version>
+    </dependency>
+  </dependencies>
+  ...
+</project>
+```
