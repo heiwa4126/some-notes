@@ -274,3 +274,184 @@ maven-metadata.xmlファイルの横に、log4jライブラリの各バージョ
 </project>
 ```
 ここで、プロジェクトをコンパイル（mvn compile）すると、Mavenがlog4jの依存関係をダウンロードしてくれるのがわかります。
+
+# プラグインはどのように使用するのですか?
+
+[How do I use plugins?](https://maven.apache.org/guides/getting-started/index.html#How_do_I_use_plugins) の機械翻訳
+
+Mavenプロジェクトのビルドをカスタマイズしたい場合、プラグインを追加したり再設定したりすることで行います。
+
+この例では、JDK 5.0ソースを許可するようにJavaコンパイラーを設定します。これは、POMに追加するのと同じくらい簡単です。
+
+```xml
+...
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.3</version>
+      <configuration>
+        <source>1.5</source>
+        <target>1.5</target>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+...
+```
+
+Mavenのすべてのプラグインが依存関係に似ていることにお気づきだと思いますが、ある意味そうです。このプラグインは自動的にダウンロードされて使用され、要求があれば特定のバージョンも使用されます (デフォルトでは最新のものが使用されます)。
+
+コンフィギュレーション要素は与えられたパラメータをコンパイラープラグインからのすべてのゴールに適用します。
+上記の場合、コンパイラープラグインはすでにビルドプロセスの一部として使用されており、これは単に設定を変更するだけです。
+また、プロセスに新しいゴールを追加したり、特定のゴールを設定することも可能です。
+これについては、[ビルドライフサイクルの紹介](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)を参照してください。
+
+プラグインに対してどのような設定が可能かを調べるには、プラグインリストを参照して、使用しているプラグインとゴールに移動します。
+プラグインの利用可能なパラメータの設定方法に関する一般的な情報については、[プラグインの設定ガイド](https://maven.apache.org/guides/mini/guide-configuring-plugins.html)をご覧ください。
+
+
+# Plugin Management
+
+[Plugin Management](https://maven.apache.org/pom.html#plugin-management)の機械翻訳
+
+pluginManagement は、プラグインと一緒に表示される要素です。
+プラグイン管理は、この特定のプロジェクトビルドのプラグイン情報を設定するのではなく、このビルドを継承したプロジェクトビルドを設定することを目的としていることを除いて、ほとんど同じ方法でプラグイン要素を含んでいます。
+しかし、これは、子プロセスまたは現在の POM の plugins 要素内で実際に参照されているプラグインを設定するだけです。
+子プロセスは、pluginManagement の定義を上書きするあらゆる権利を有します。
+
+(pluginManagementの内容は子POMで上書きできる、ということか?)
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  ...
+  <build>
+    ...
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.6</version>
+          <executions>
+            <execution>
+              <id>pre-process-classes</id>
+              <phase>compile</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+              <configuration>
+                <classifier>pre-process</classifier>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    ...
+  </build>
+</project>
+```
+
+これらの仕様をplugins要素に追加した場合、単一のPOMにのみ適用されます。
+しかし、pluginManagement要素の下に適用すると、**このPOMと**、ビルドにmaven-jar-pluginを追加するすべての継承POMは、同様にpre-process-classesの実行を取得することになります。
+そのため、すべての子POM.xmlに上記のようなゴチャゴチャを含めるのではなく、以下のようにするだけでよいのです。
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  ...
+  <build>
+    ...
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+      </plugin>
+    </plugins>
+    ...
+  </build>
+</project>
+```
+
+(継承したいものだけpluginManagement要素に書けばいい、
+ということか?)
+
+おそらく自分自身でもoverrideできるのでは。
+
+
+# フェーズにゴールを追加する
+
+[Introduction to the Build Lifecycle - Plugins](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html) の機械翻訳
+
+フェーズにゴールを追加する2つ目の方法は、プロジェクトでプラグインを構成することです。
+プラグインは、Maven にゴールを提供するアーティファクトです。
+さらに、プラグインは 1 つ以上のゴールを持つことができ、各ゴールはそのプラグインの能力を表します。
+
+例えば、コンパイラプラグインは、compileとtestCompileという2つのゴールを持ちます。
+前者はメインコードのソースコードをコンパイルし、後者はテストコードのソースコードをコンパイルします。
+
+後のセクションで説明するように、プラグインには、ゴールをどのライフサイクル・フェーズにバインドするかを示す情報を含めることができます。
+プラグインを追加するだけでは十分な情報にならないことに注意しましょう。
+ビルドの一部として実行させたいゴールも指定しなければなりません。
+
+設定されたゴールは、選択されたパッケージングからすでにライフサイクルにバインドされているゴールに追加されます。
+複数のゴールが特定のフェーズにバインドされている場合、パッケージングのものが最初に実行され、次にPOMで設定されたものが実行されるという順序が使用されます。
+`<executions>`要素を使用すると、特定の目標の順序をより詳細に制御できることに注意してください。
+
+例えば、Modelloプラグインは、デフォルトでそのゴール `modello:java`をgenerate-sourcesフェーズにバインドします（注：modello:javaゴールは、Javaソースコードを生成するのです）。
+ですから、Modello プラグインを使用して、モデルからソースを生成させ、それをビルドに組み込むには、POM の `<build>` の `<plugins>` セクションに以下を追加することになります。
+
+```xml
+...
+ <plugin>
+   <groupId>org.codehaus.modello</groupId>
+   <artifactId>modello-maven-plugin</artifactId>
+   <version>1.8.1</version>
+   <executions>
+     <execution>
+       <configuration>
+         <models>
+           <model>src/main/mdo/maven.mdo</model>
+         </models>
+         <version>4.0.0</version>
+       </configuration>
+       <goals>
+         <goal>java</goal>
+       </goals>
+     </execution>
+   </executions>
+ </plugin>
+...
+```
+
+なぜ `<executions>` 要素があるのか不思議に思うかもしれません。
+それは、必要なら同じゴールを異なる設定で複数回実行できるようにするためです。
+別々の実行ファイルに ID を与えることで、継承やプロファイルの適用時に ゴールの設定をマージするか、追加の実行ファイルにするかを制御できます。
+
+特定のフェーズにマッチする複数の実行が与えられると、それらは**POMで指定された順序で実行され**、**継承された実行が最初に実行されます**。
+
+さて、modello:javaの場合、generate-sourcesのフェーズでのみ意味を持ちます。
+しかし、いくつかのゴールは複数のフェーズで使われることがあり、賢明なデフォルトがない場合があります。
+そのような場合は、自分でフェーズを指定することができます。
+たとえば、現在時刻をコマンドラインに出力するゴール display:time があり、 それを process-test-resources フェーズで実行してテストの開始時刻を示すとします。これは、次のように設定します。
+
+```xml
+...
+ <plugin>
+   <groupId>com.mycompany.example</groupId>
+   <artifactId>display-maven-plugin</artifactId>
+   <version>1.0</version>
+   <executions>
+     <execution>
+       <phase>process-test-resources</phase>
+       <goals>
+         <goal>time</goal>
+       </goals>
+     </execution>
+   </executions>
+ </plugin>
+...
+```
