@@ -2,12 +2,13 @@
 
 # ドキュメント
 
-まあいろいろあるけど、ここから始めるのがいちばん。
+まあいろいろあるけど、ここらから始めるのがいちばん。
 
 - [Maven – Maven in 5 Minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
-- 
+- [Maven – Maven Getting Started Guide](https://maven.apache.org/guides/getting-started/)
+- [Maven – Guide to Configuring Maven](https://maven.apache.org/guides/mini/guide-configuring-maven.html)
+- [Maven – Introduction to the POM](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
 - [Maven – POM Reference](https://maven.apache.org/pom.html)
-
 
 
 # Mavenとは？
