@@ -577,3 +577,23 @@ artifactId は、バージョンなしの jar の名前です。
 もしそれがサードパーティの成果物であれば、それが何であれ、またそれが奇妙に見えるかもしれませんが、そのバージョン番号を使用しなければなりません。
 
 例: 2.0, 2.0.1, 1.3.1
+
+
+# mavenのdependencyの更新チェック
+
+```bash
+mvn versions:display-dependency-updates
+```
+
+- [Versions Maven Plugin – versions:display-dependency-updates](https://www.mojohaus.org/versions-maven-plugin/display-dependency-updates-mojo.html)
+- [Versions Maven Plugin – Introduction](https://www.mojohaus.org/versions-maven-plugin/)
+
+
+もちろんpluginsのチェックもあります。
+```bash
+mvn versions:display-plugin-updates
+```
+
+
+そのほか:
+- [versions-maven-pluginでベータ版を除外する - Qiita](https://qiita.com/koko_u/items/1ca60b6203ae3295219b)
