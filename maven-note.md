@@ -11,6 +11,10 @@
 - [Maven – POM Reference](https://maven.apache.org/pom.html)
 
 
+これよくまとまってる
+- [Mavenの基本勉強メモ - Qiita](https://qiita.com/opengl-8080/items/bb32732f9aa5cb3495d2)
+
+
 # Mavenとは？
 
 [What is Maven?](https://maven.apache.org/guides/getting-started/index.html#What_is_Maven)の機械翻訳(+x)
@@ -455,3 +459,119 @@ pluginManagement は、プラグインと一緒に表示される要素です。
  </plugin>
 ...
 ```
+
+# アーティファクト(artifact)とは何か
+
+[3\. What Is a Maven Artifact?](https://www.baeldung.com/maven-artifact#what-is-a-maven-artifact) の機械翻訳
+
+アーティファクトは、プロジェクトが使用または生成することができる要素です。
+Mavenの用語では、アーティファクトはMavenプロジェクトビルドの後に生成される出力です。
+例えば、jar、war、またはその他の実行可能ファイルです。
+
+また、Mavenアーティファクトには、
+- groupId
+- artifactId
+- バージョン (version)
+- パッケージング (packaging)
+- 分類子 (classifier)
+ 
+の5つの主要な要素が含まれています。
+これらは、アーティファクトを識別するために使用する要素で、Maven座標(Maven coordinates)と呼ばれるものです。
+
+
+[4\. Maven Coordinates](https://www.baeldung.com/maven-artifact#maven-coordinates)の機械翻訳
+
+Maven座標は、指定されたアーティファクトのgroupId、artifactId、およびversionの値を組み合わせたものです。
+さらにMavenは座標を使用して、groupId、artifactId、およびバージョンの値に一致する任意のコンポーネントを見つけます。
+
+座標要素のうち、groupId、artifactId、およびversionを定義する必要があります。
+パッケージング要素はオプションであり、分類子を直接定義することはできません。
+
+例えば、下記のpom.xml設定ファイルはMavenの座標の例です。
+```xml
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.baeldung</groupId>
+    <artifactId>org.baeldung.java</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>org.baeldung.java</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.1.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+## 4.1.groupId 要素
+
+groupId 要素は、プロジェクトの起点となるグループの識別子です。
+このキーにより、プロジェクトの整理や検索が容易かつ迅速に行えるようになります。
+
+また、groupIdはJavaのパッケージと同じ命名規則に従っており、一般的にはプロジェクトのトップパッケージの名前をgroupIdとして選択します。
+
+例えば、 org.apache.commons という groupId は ${repository_home}/org/apache/commons に対応します。
+
+
+## 4.2 artifactId 要素
+
+artifactId 要素は、グループ内のプロジェクトの識別子です。
+これはデフォルトで、アーティファクトの最終的な名前を構成するために使用されます。
+そのため、この名前にはいくつかの指定があり、理想的には小さな長さであるべきです。
+artifactIdの命名のベストプラクティスは、実際のプロジェクト名を接頭辞として使用することです。
+この利点は、アーティファクトを見つけやすくなることです。
+
+groupId と同様に、artifactId は、groupId を表すディレクトリツリーの下のサブディレクトリとして表示されます。
+
+例えば、
+artifactIdがcommons-lang3、
+groupIdがorg.apache.commonsの場合、
+artifactは `${repository_home}/org/apache/commons/commons-lang3/`
+にあると判断されます。
+
+
+# どう命名するべき?
+
+[Guide to naming conventions on groupId, artifactId, and version](https://maven.apache.org/guides/mini/guide-naming-conventions.html) の機械翻訳
+
+groupId、artifactId、version の命名規則について説明します。
+groupId は、すべてのプロジェクトにわたって、プロジェクトを一意に識別します。
+グループIDは、Javaのパッケージ名の規則に従わなければなりません。
+つまり、あなたがコントロールする逆ドメイン名で始まるということです。
+
+例:
+
+- org.apache.maven
+- org.apache.commons
+
+**Mavenは、このルールを強制しません。**
+
+この規則に従わず、一語のグループIDを使用しているレガシープロジェクトはたくさんあります。
+しかし、新しい単一単語のグループIDをMaven Centralリポジトリに含めることを承認してもらうのは難しいでしょう。
+
+サブグループはいくつでも作成することができます。
+groupIdの粒度を決定する良い方法は、プロジェクト構造を使用することです。
+つまり、現在のプロジェクトが複数モジュールのプロジェクトである場合、親のgroupIdに新しい識別子を追加する必要があります。
+
+例:
+
+- org.apache.maven
+- org.apache.maven.plugins
+- org.apache.maven.reporting
+
+artifactId は、バージョンなしの jar の名前です。
+自分で作成したものであれば、**小文字で変な記号のない好きな名前にすればよいでしょう**。
+サードパーティーのjarであれば、配布されているjarの名前をそのまま使う必要があります。
+
+例: maven, commons-math
+
+バージョンは 配布しているのであれば、数字とドット（1.0, 1.1, 1.0.1, ...）を使った典型的なバージョンを選べばよいでしょう。
+日付は通常SNAPSHOT（ナイトリー）ビルドに関連するため、使用しないでください。
+もしそれがサードパーティの成果物であれば、それが何であれ、またそれが奇妙に見えるかもしれませんが、そのバージョン番号を使用しなければなりません。
+
+例: 2.0, 2.0.1, 1.3.1
