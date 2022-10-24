@@ -594,6 +594,18 @@ mvn versions:display-dependency-updates
 mvn versions:display-plugin-updates
 ```
 
-
 そのほか:
 - [versions-maven-pluginでベータ版を除外する - Qiita](https://qiita.com/koko_u/items/1ca60b6203ae3295219b)
+
+
+dependencyを更新してしまう場合は
+
+- versions:use-latest-releases - 開発版を含まない(RCは含む)
+- versions:use-latest-versions
+
+`pom.xml.versionsBackup` ができる。
+
+- versions:revert
+- versions:commit
+
+で元へ戻すか確定するか。
