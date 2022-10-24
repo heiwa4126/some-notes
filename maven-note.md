@@ -529,8 +529,8 @@ artifactId 要素は、グループ内のプロジェクトの識別子です。
 groupId と同様に、artifactId は、groupId を表すディレクトリツリーの下のサブディレクトリとして表示されます。
 
 例えば、
-artifactIdがcommons-lang3、
-groupIdがorg.apache.commonsの場合、
+artifactId が commons-lang3、
+groupId が org.apache.commons の場合、
 artifactは `${repository_home}/org/apache/commons/commons-lang3/`
 にあると判断されます。
 
@@ -540,6 +540,7 @@ artifactは `${repository_home}/org/apache/commons/commons-lang3/`
 [Guide to naming conventions on groupId, artifactId, and version](https://maven.apache.org/guides/mini/guide-naming-conventions.html) の機械翻訳
 
 groupId、artifactId、version の命名規則について説明します。
+
 groupId は、すべてのプロジェクトにわたって、プロジェクトを一意に識別します。
 グループIDは、Javaのパッケージ名の規則に従わなければなりません。
 つまり、あなたがコントロールする逆ドメイン名で始まるということです。
@@ -565,7 +566,8 @@ groupIdの粒度を決定する良い方法は、プロジェクト構造を使�
 - org.apache.maven.reporting
 
 artifactId は、バージョンなしの jar の名前です。
-自分で作成したものであれば、**小文字で変な記号のない好きな名前にすればよいでしょう**。
+自分で作成したものであれば、
+**小文字で変な記号のない好きな名前にすればよいでしょう**。
 サードパーティーのjarであれば、配布されているjarの名前をそのまま使う必要があります。
 
 例: maven, commons-math
