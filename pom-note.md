@@ -16,6 +16,7 @@
     - [プロジェクトモデルの変数](#プロジェクトモデルの変数)
     - [特殊な変数](#特殊な変数)
 - [プロパティ](#プロパティ)
+- [実際にやってみた](#実際にやってみた)
 
 # POMとは何ですか？
 
@@ -451,3 +452,27 @@ Mavenが推奨するプラクティスの1つは、「同じことを繰り返�
   ...
 </project>
 ```
+
+# 実際にやってみた
+
+継承で
+親POMの
+packaging typeはpomでないとダメ。
+アーティファクトがjarとかのやつは親にできない。
+
+継承で
+親POMがあるjarをインストールして、
+それに依存するプロジェクトを書くと
+元の親POMもレポジトリに必要(ローカルでもリモートでもいい)。
+
+↑package時にeffective POMにできればいいのでは。
+[java - Maven package effective pom - Stack Overflow](https://stackoverflow.com/questions/33365633/maven-package-effective-pom)
+
+集約は
+プロジェクト全部おなじゴールしか指定できない。
+mod-a/ではinstall
+mod-b/ではfatjarを作る
+みたいのはできない。
+
+↑build profilesでできるのでは?
+[java - Maven Aggregate POM with Goal? - Stack Overflow](https://stackoverflow.com/questions/4230553/maven-aggregate-pom-with-goal)
