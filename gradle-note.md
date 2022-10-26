@@ -58,7 +58,7 @@ BUILD SUCCESSFUL in 1m 29s
 gradle help --task :init
 ```
 
-
+bash版
 ```bash
 mkdir demo2 ; cd demo2
 gradle init --type java-application \
@@ -70,6 +70,7 @@ gradle init --type java-application \
 ./gradlew -q run
 ```
 
+PowerShell版
 ```powershell
 mkdir demo3 ; cd demo3
 gradle init --type java-application `
@@ -78,5 +79,81 @@ gradle init --type java-application `
 --test-framework junit `
 --project-name demo3 `
 --package com.example.demo3
+.\gradlew -q run
+```
+
+
+# おまけ kotlin
+
+```bash
+mkdir demo1 ; cd demo1
+gradle init --type kotlin-application \
+--incubating \
+--dsl kotlin \
+--test-framework kotlintest \
+--package com.example.demo1 \
+--project-name demo1 
 ./gradlew -q run
 ```
+
+.gitignoreは
+[https://www.toptal.com/developers/gitignore/api/gradle,kotlin,visualstudiocode](https://www.toptal.com/developers/gitignore/api/gradle,kotlin,visualstudiocode)
+で置き換え。
+
+とりあえず
+`app/build.gradle.kts`のdependenciesからguavaだけはずしておく。
+(便利だけどデカいからなあ)
+
+## executable Jar
+
+まず `app/build.gradle.kts` に
+```kotlin
+tasks.jar {
+  manifest {
+     attributes["Main-Class"] = "com.example.demo1.AppKt"
+  }
+}
+```
+を書き加える。
+
+```bash
+./gradlew build
+java -jar ./app/build/libs/app.jar
+```
+
+Jarの中身見ると
+```
+$ jar -tvf ./app/build/libs/app.jar
+     0 Wed Oct 26 14:21:12 JST 2022 META-INF/
+    62 Wed Oct 26 14:21:12 JST 2022 META-INF/MANIFEST.MF
+    52 Wed Oct 26 14:07:22 JST 2022 META-INF/app.kotlin_module
+     0 Wed Oct 26 14:07:22 JST 2022 com/
+     0 Wed Oct 26 14:07:22 JST 2022 com/example/
+     0 Wed Oct 26 14:07:22 JST 2022 com/example/demo1/
+   713 Wed Oct 26 14:07:22 JST 2022 com/example/demo1/App.class
+   753 Wed Oct 26 14:07:22 JST 2022 com/example/demo1/AppKt.class
+```
+
+[Maven Repository: commons-codec » commons-codec » 1.15](https://mvnrepository.com/artifact/commons-codec/commons-codec/1.15)
+いれてmd5sumを意味なく計算させてみる。
+
+`java -jar` の方は NoClassDefFoundError になるので
+
+`app/build.gradle.kts` に
+```kotlin
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes["Main-Class"] = "com.example.demo1.AppKt"
+    }
+    from(configurations.compileClasspath.get().map {if (it.isDirectory()) it else zipTree(it)})
+}
+```
+
+duplicatesStrategyはファイルをコピーする時のポリシー
+
+このへん参照。
+- [Gradle 7 requires duplicatesStrategy for "fake" duplicates · Issue #17236 · gradle/gradle](https://github.com/gradle/gradle/issues/17236)
+- [DuplicatesStrategy (Gradle API 7.5.1)](https://docs.gradle.org/current/javadoc/org/gradle/api/file/DuplicatesStrategy.html)
+
+できるJarはJavaよりも若干大きい(Kotlinの標準ライブラリのぶん)。
