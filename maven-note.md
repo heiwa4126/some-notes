@@ -107,16 +107,17 @@ mvn compile test jar:jar
 
 - ライフサイクル
   - フェーズ
-    - ゴール
+- ゴール
 
 `mvn` の後ろに指定できるのは フェーズかゴール。
 
 フェーズを指定するとき
-ライフサイクル名は指定できない
-そのライフサイクルの一連のフェーズのうち、指定フェーズより前のすべてのフェーズも実行される
- (例えば`mvn deploy`はライフサイクルdefaultのフェーズpackageの実行)
+ライフサイクル名は指定できない。
 
-ゴールは単体で実行される
+そのライフサイクルの一連のフェーズのうち、指定フェーズより前のすべてのフェーズも実行される
+ (例えば`mvn deploy`はライフサイクルdefaultのフェーズpackageの実行)。
+
+ゴールは単体で実行される。
 
 
 # デフォルトのライフサイクル
@@ -609,3 +610,29 @@ dependencyを更新してしまう場合は
 - versions:commit
 
 で元へ戻すか確定するか。
+
+
+# META-INF/mavenのpom.xml
+
+mavenでjarを作ると META-INF/maven/{groupID}/{artifactID}/pom.xml と pom.propaties があるけど、これは何?
+
+- [java \- What is the significance of the POM file that Maven places in a JAR file, is it used by anything? \- Stack Overflow](https://stackoverflow.com/questions/1677994/what-is-the-significance-of-the-pom-file-that-maven-places-in-a-jar-file-is-it)
+- [java \- Maven pom\.xml in META\-INF vs pom\.xml in Maven repository \- Stack Overflow](https://stackoverflow.com/questions/53174482/maven-pom-xml-in-meta-inf-vs-pom-xml-in-maven-repository)
+
+なくてもいいらしい。
+
+なんか jar の dependency を知るのに使うのかと思ってた。
+じゃあJarを1個もってきて、こいつのdependencyを知るにはどうすればいい?
+
+jdeps Java8からついてるらしい。
+
+たまたま ~/.m2にあったjarで試す。
+
+```bash
+$ jar tvf ~/.m2/repository/org/tukaani/xz/1.9/xz-1.9.jar | grep pom
+(空)
+$ jdeps --multi-release 9 ~/.m2/repository/org/tukaani/xz/1.9/xz-1.9.jar 
+```
+
+どうも前からうすうす思ってたんだけどJavaってclassのバージョンとか全然見てないみたい。
+goとかとは違うのか。

@@ -157,3 +157,12 @@ duplicatesStrategyはファイルをコピーする時のポリシー
 - [DuplicatesStrategy (Gradle API 7.5.1)](https://docs.gradle.org/current/javadoc/org/gradle/api/file/DuplicatesStrategy.html)
 
 できるJarはJavaよりも若干大きい(Kotlinの標準ライブラリのぶん)。
+
+
+
+
+
+# dependencies の apiとimplementation
+
+- api - mavenのcompileスコープ 実行時、コンパイル時、テスト時に必要。
+- implementation - mavenのruntimeスコープ 実行時、テスト時に必要。
