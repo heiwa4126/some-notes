@@ -30,6 +30,7 @@ Powershellが絡むとすべてがめんどくさくなる
 - [Powershellで bash の '&' みたいの](#powershellで-bash-の--みたいの)
 - [Powershellで、プロパティ全部出す](#powershellでプロパティ全部出す)
 - [Powershellの補完](#powershellの補完)
+- [ea 0](#ea-0)
 
 
 # Powershellの常識、世間の非常識
@@ -342,3 +343,7 @@ tabよりもctrl+spaceが便利。
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
 ```
 [PowerShellのTab補完をbashのようにする - minus9d's diary](https://minus9d.hatenablog.com/entry/2021/01/13/214844)
+
+# ea 0
+
+`-ErrorAction SilentlyContinue` のかわりに `-ea 0` と書ける。便利

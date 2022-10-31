@@ -166,3 +166,50 @@ duplicatesStrategyはファイルをコピーする時のポリシー
 
 - api - mavenのcompileスコープ 実行時、コンパイル時、テスト時に必要。
 - implementation - mavenのruntimeスコープ 実行時、テスト時に必要。
+
+
+# vscodeでgradleプロジェクトのimportの補完が効かない
+
+まず
+java.autobuild.enabled を false にする。
+次に
+Java Projectの…のところから clean workspace を選ぶ(時間がかかる)。
+
+これにより
+build.gradle の 右クリックで Reload Projects が効くようになるので、
+build.gradle を変更するたびに Reload Projects を選ぶ。
+
+
+(以下葛藤)
+
+いやなんか build.gradle の変更するたびに clean workspace を実行しないとダメみたい。なんだこれ。
+
+"clean workspace"は Java Projectの…のところにあります。
+
+java.autobuild.enabled を false にしたら
+build.gradle の 右クリックで Reload projectが効くようになった。
+
+(以下嘘)
+
+なぜかそういうときが時々ある(再現度が低い)。うまくいくときもあるのでよくわからない。
+
+どうも開いたディレクトリに build.gradle がないとダメみたいだけど...
+
+なので
+```bash
+mkdir hello1 ; cd hello1
+gradle init --type java-application \
+--incubating \
+--dsl groovy \
+--test-framework junit \
+--project-name hello1 \
+--package com.example.hello1
+```
+
+で作った場合、
+- appディレクトリをvscodeで開く。
+- またはhello1ディレクトリをvscodeで開き、appディレクトリを「フォルダをワークスペースに追加」する。(以下オプション)「ワークスペースを名前を付けて保存する」でhello1.code-workspaceをhello1ディレクトリ直下に保存する。
+
+という手順でなんとかする。
+
+参考: [Java project management in Visual Studio Code](https://code.visualstudio.com/docs/java/java-project)
