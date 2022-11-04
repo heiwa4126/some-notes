@@ -18,6 +18,9 @@
 - [gitの補完](#gitの補完)
 - [git-crypt](#git-crypt)
 - [Gitでファイルパーミッションの変更を無視する](#gitでファイルパーミッションの変更を無視する)
+- [Gitでtagのとりけし](#gitでtagのとりけし)
+  - [ローカル](#ローカル)
+  - [リモート](#リモート)
 
 
 # gitの設定をリスト
@@ -344,3 +347,28 @@ git config -l | select-string filemode
 ```
 
 - [Git でファイルパーミッションの変更（chmod）を無視する \- git config core\.filemode false](https://blog.t5o.me/post/20121119/git-chmod-git-config-core-filemode.html)
+
+
+# Gitでtagのとりけし
+
+## ローカル
+
+```bash
+# 現状を表示
+git tag
+# タグの削除
+git tag -d v1.0.0
+# 確認
+git tag
+```
+
+## リモート
+
+```bash
+# 現状を表示
+git ls-remote --tags
+# タグの削除
+git push origin :refs/tags/v1.0.0
+# 確認
+git ls-remote --tags
+```
