@@ -351,15 +351,17 @@ git config -l | select-string filemode
 
 # Gitでtagのとりけし
 
+`v1.0.0` というタグを取り消すとする。
+
 ## ローカル
 
 ```bash
 # 現状を表示
-git tag
+git --no-pager tag
 # タグの削除
 git tag -d v1.0.0
 # 確認
-git tag
+git --no-pager tag
 ```
 
 ## リモート
