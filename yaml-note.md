@@ -12,6 +12,7 @@ YAML関連メモ
 - [汎用YAML lint](#汎用yaml-lint)
 - [YAMLにはincludeがない](#yamlにはincludeがない)
 - [yqの出力をcolorでless](#yqの出力をcolorでless)
+- [YAMLのフォーマッタ](#yamlのフォーマッタ)
 
 # リンク
 
@@ -197,3 +198,9 @@ bat --color always -p hoge.yaml | less -R
 ```
 batはYAMLに限らず便利。詳しくはgithubのREADME参照。
 [bat/README-ja.md at master · sharkdp/bat](https://github.com/sharkdp/bat/blob/master/doc/README-ja.md)
+
+# YAMLのフォーマッタ
+
+[google/yamlfmt: An extensible command line tool or library to format yaml files.](https://github.com/google/yamlfmt)
+
+まあまあ使える。細かいところで変。

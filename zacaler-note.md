@@ -1,6 +1,7 @@
 # ZScaler
 
-ZScalerというproxyが来たので、対策
+ZScalerというproxyが来たので、対策。
+proxyというよりは「men-in-middleでSSL通信を盗聴改竄する」やべえ製品ではある。
 
 - [ZScaler](#zscaler)
 - [問題](#問題)
