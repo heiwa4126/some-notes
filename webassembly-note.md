@@ -23,3 +23,8 @@ sudo apt install emscripten -y
 ```
 
 これは簡単。こっちも `http-server .`で。
+
+Rustもすこし
+https://rustwasm.github.io/docs/book/game-of-life/setup.html
+
+けっこう規模が大きくて簡単には終わらん
