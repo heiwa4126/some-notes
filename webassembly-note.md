@@ -54,8 +54,11 @@ https://rustwasm.github.io/docs/book/game-of-life/setup.html
 # WebAssembly
 
 実行はそこそこ高速。ただJavaScriptの実行自体もかなり早い。
-DOMとか直接操作できない(おそらく永遠にできない)。
 引数と戻り値のハンドリングのオーバーヘッドが大きい。
+ので単に速度を期待するとがっかりする。
+
+DOMとか直接操作できない(永遠にできない)。
+ただしブラウザ以外ではWASIみたいのが[WebAssemblyをWebブラウザ以外の実行環境へ。システムインターフェイスへのアクセスを可能にする「WASI」の策定開始。Mozillaが呼びかけNode.jsらが賛同 － Publickey](https://www.publickey1.jp/blog/19/webassemblywebwasimozillanodejs.html)
 
 利点は既存言語のライブラリが使えること。
 あとコンパイラが強力なら最適化は期待できること。
