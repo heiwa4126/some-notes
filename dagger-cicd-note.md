@@ -89,3 +89,25 @@ dagger do build
 
 ローカルでできると楽だなあ。
 
+
+# CUEメモ
+
+JSONの上位互換で (YAMLと互換ではない)、制約とか重複排除とかあってすごい面白い。
+
+インストール
+```bash
+go install cuelang.org/go/cmd/cue@latest
+```
+
+YAMLに変換
+```bash
+cue export ex1.cue --out yaml
+```
+
+`daggaer.cue` を `cue export` すると、だいたいエラーになるのは何で?
+
+CUEのチュートリアル
+- [Cuetorials](https://cuetorials.com/)
+- [CUE Playground](https://cuelang.org/play/)
+
+CUE Playgroundがwasmのサンプルみたいになってるのがまたすごい。
