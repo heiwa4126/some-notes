@@ -16,7 +16,23 @@ goexecがインストールできない上にcloneしてbuildしても動かな�
 `http-server .` した。
 
 最初のデモはconsole.logに出るだけで、まああまり面白くない。
-やっぱDOM操作したいよね。
+やっぱDOM操作したいよね。-> [js package - syscall/js - Go Packages](https://pkg.go.dev/syscall/js)
+
+
+
+goexecのかわりにgoevalが使える。
+[dolmen-go/goeval: Run Go snippets instantly from the command-line](https://github.com/dolmen-go/goeval)
+
+```bash
+go install github.com/dolmen-go/goeval@master
+goeval 'fmt.Println("Hello, world!")'
+```
+
+今回は
+```bash
+goeval 'http.ListenAndServe(":8080", http.FileServer(http.Dir(".")))'
+```
+
 
 # C
 
@@ -52,6 +68,8 @@ https://rustwasm.github.io/docs/book/game-of-life/setup.html
 
 
 # WebAssembly
+
+まとめると
 
 実行はそこそこ高速。ただJavaScriptの実行自体もかなり早い。
 引数と戻り値のハンドリングのオーバーヘッドが大きい。

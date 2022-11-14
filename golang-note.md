@@ -967,6 +967,18 @@ Pythonだと str.startswith, str.endswith
 (古い。あとで直す)
 
 
+2022-11ごろにvscodeが自動で入れるツール
+
+- gotests
+- gomodifytags
+- impl
+- goplay
+- dlv
+- staticcheck
+- gopls
+- go-outline
+
+
 # windowsでbtime,atime,ctime,mtime
 
 サンプル:
