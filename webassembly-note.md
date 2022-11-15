@@ -75,8 +75,14 @@ https://rustwasm.github.io/docs/book/game-of-life/setup.html
 引数と戻り値のハンドリングのオーバーヘッドが大きい。
 ので単に速度を期待するとがっかりする。
 
-DOMとか直接操作できない(永遠にできない)。
-ただしブラウザ以外ではWASIみたいのが[WebAssemblyをWebブラウザ以外の実行環境へ。システムインターフェイスへのアクセスを可能にする「WASI」の策定開始。Mozillaが呼びかけNode.jsらが賛同 － Publickey](https://www.publickey1.jp/blog/19/webassemblywebwasimozillanodejs.html)
+ブラウザとのWebAssemblyのやりとりは
+「WebAssemblyの線形メモリ(Linear Memory)」領域を介して行われる。
+受け渡しされるのはメモリ上のアドレスと長さ。用は8bit配列。
+
+ブラウザで動くWebAssemblyは
+DOMとかそのほかI/Oなど直接操作できない(永遠にできない)。
+
+ブラウザ以外ではWASIみたいのが[WebAssemblyをWebブラウザ以外の実行環境へ。システムインターフェイスへのアクセスを可能にする「WASI」の策定開始。Mozillaが呼びかけNode.jsらが賛同 － Publickey](https://www.publickey1.jp/blog/19/webassemblywebwasimozillanodejs.html)
 
 利点は既存言語のライブラリが使えること。
 あとコンパイラが強力なら最適化は期待できること。
