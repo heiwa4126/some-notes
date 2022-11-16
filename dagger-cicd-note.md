@@ -67,10 +67,11 @@ sshトンネリングでlocalhost:8080 につないでみる。
 
 ```bash
 npm install -g http-server
-http-server .
+http-server ./build/
 ```
+-oオプションが使えない。
 
-で `http://127.0.0.1:8080/build/index.html`
+で `http://127.0.0.1:8080/index.html`
 おお見えた。
 
 では
@@ -104,7 +105,30 @@ YAMLに変換
 cue export ex1.cue --out yaml
 ```
 
+cueもbash completeionあった
+```bash
+cue completion bash > /tmp/cue
+sudo mv /tmp/cue /usr/share/bash-completion/completions/
+```
+
+CLIの解説: [CUE's cli commands | Overview | Cuetorials](https://cuetorials.com/overview/cli-commands/)
+
+
 `daggaer.cue` を `cue export` すると、だいたいエラーになるのは何で?
+
+いや同じところで出るな。dagger.#Plan &で client: platform: にデフォルト値がないのか。
+```json
+    client: {
+        platform: {
+            os: "linux"
+            arch: "x86"
+            }
+    }
+```
+とかを付け加えると、とりあえず通ります。値があってるかどうかは微妙。
+
+`cue eval`で。
+
 
 CUEのチュートリアル
 - [Cuetorials](https://cuetorials.com/)
