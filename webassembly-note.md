@@ -89,3 +89,38 @@ DOMとかそのほかI/Oなど直接操作できない(永遠にできない)。
 
 - [WebAssemblyハンズオン: 実際に動かして基礎を学ぶ（翻訳）｜TechRacho by BPS株式会社](https://techracho.bpsinc.jp/hachi8833/2020_11_02/97774)
 - [Hands-on WebAssembly: Try the basics—Martian Chronicles, Evil Martians’ team blog](https://evilmartians.com/chronicles/hands-on-webassembly-try-the-basics)
+
+
+# Emscripten と Binaryen と AssemblyScript
+
+> Binaryenは、WebAssemblyのためのコンパイラおよびツールチェイン基盤ライブラリで、C++で書かれています。WebAssemblyへのコンパイルを簡単、高速、かつ効果的にすることを目的としています。
+
+[Releases · WebAssembly/binaryen](https://github.com/WebAssembly/binaryen)
+
+> Emscriptenは、LLVMを使用したWebAssemblyの完全なコンパイラツールチェーンであり、特に速度、サイズ、およびWebプラットフォームに重点を置いています。
+
+[Main — Emscripten 3.1.26-git (dev) documentation](https://emscripten.org/)
+
+> AssemblyScriptは、Binaryenを使ってTypeScript（基本的には型付きJavaScript）の変種をWebAssemblyにコンパイルします。npmでインストールするだけで、無駄のないWebAssemblyモジュールが生成される。
+
+[Releases · AssemblyScript/assemblyscript](https://github.com/AssemblyScript/assemblyscript)
+
+
+# AssemblyScript
+
+- [Getting started | The AssemblyScript Book](https://www.assemblyscript.org/getting-started.html) - あんまり親切じゃないチュートリアル
+ 
+なんか「AssemblyScriptやってみた」系の記事はどれも途中が
+うにゃうにゃ
+ってなってるような気がする。
+
+結局WebAssemblyとの値の受け渡しのところがネックみたい。
+
+Goの [syscall/js](https://pkg.go.dev/syscall/js) と wasm_exec.js みたいなやつが必要だと思うんだが、
+そういうのはないの?
+
+これが参考になる:
+[TypeScriptやGoやRustでWebAssemblyウォークスルー - SMARTCAMP Engineer Blog](https://tech.smartcamp.co.jp/entry/wasm-walkthrough)
+
+これか。
+[assemblyscript/lib/loader at main · AssemblyScript/assemblyscript](https://github.com/AssemblyScript/assemblyscript/tree/main/lib/loader)
