@@ -23,6 +23,7 @@
 - [そのほか参考リンク](#そのほか参考リンク)
 - [npm install dev抜き](#npm-install-dev抜き)
 - [npm -g が --location=global になってめんどくさい](#npm--g-が---locationglobal-になってめんどくさい)
+- [npmの補完](#npmの補完)
 
 ## node.jsのインストール
 
@@ -375,3 +376,22 @@ npm i --production
 なんとかインチキできんのか。
 
 [[Solved] npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead. npm ERR! Unexpected token '.' | NamespaceIT](https://namespaceit.com/blog/npm-warn-config-global-global-local-are-deprecated-use-locationglobal-instead-npm-err-unexpected-token)
+
+
+# npmの補完
+
+[npm\-completion \| npm Docs](https://docs.npmjs.com/cli/v9/commands/npm-completion)
+には
+
+```bash
+npm completion >> ~/.bashrc
+npm completion >> ~/.zshrc
+```
+って書いてあるけど
+
+自分はUbuntuで
+```bash
+npm completion > /tmp/npm
+sudo mv /tmp/npm /usr/share/bash-completion/completions/
+```
+にしました(合ってるかは知らん)
