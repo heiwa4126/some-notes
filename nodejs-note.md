@@ -44,7 +44,13 @@ Tue Apr 21 11:38:54 JST 2020
 v12.16.2
 ```
 
-snapyのインストールなどについては
+snap版はちょっと遅いような気がする。
+
+Debian,Ubuntuでは
+- [Installing Node.js via package manager | Node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
+- [distributions/README.md at master · nodesource/distributions](https://github.com/nodesource/distributions/blob/master/README.md#deb)
+- [Ubuntuでnode.js 18.x](https://github.com/nodesource/distributions/blob/master/README.md#using-ubuntu-1)
+
 
 ## 環境設定
 
