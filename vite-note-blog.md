@@ -27,7 +27,7 @@ npm run dev
 参考: [静的サイトのデプロイ | Vite](https://ja.vitejs.dev/guide/static-deploy.html)
 
 ```powershell
-npm run buld
+npm run build
 ```
 で、./dist/の下に出力される。
 

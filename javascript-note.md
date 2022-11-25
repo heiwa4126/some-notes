@@ -24,3 +24,9 @@ TypeScript使えない状況で。
 
 で、
 [Visual Studio Codeで依存モジュールの型定義を使いたい(JavascriptのNode.jsで) - Qiita](https://qiita.com/dbgso/items/2ad42139635e45ac150d)
+
+
+
+# 分割代入(非構造化) Destructuring assignment
+
+[分割代入 - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
