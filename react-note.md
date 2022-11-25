@@ -7,7 +7,8 @@
 
 ## Reactチュートリアル
 
-* [チュートリアル：React の導入 – React](https://ja.reactjs.org/tutorial/tutorial.html) - めちゃめちゃ古い。関数コンポーネントとTypeScript使うやつを見つけないと...
+* [チュートリアル：React の導入 – React](https://ja.reactjs.org/tutorial/tutorial.html) - めちゃめちゃ古い。関数コンポーネントとTypeScriptとHooks使うやつを見つけないと...
+* [Reactをはじめる - ウェブ開発を学ぶ | MDN](https://developer.mozilla.org/ja/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started) - やや新しい
 * [Amazon.co.jp: はじめてつくるReactアプリ with TypeScript eBook : mod728: 本](https://www.amazon.co.jp/dp/B094Z1R281)
   - [ワールドウェザー with TypeScript](https://react-typescript-book-weather-app.netlify.app/links)
   - [GitHub - mod728/react-typescript-book-weather-app: Kindle本「はじめてつくるReactアプリ with TypeScript」](https://github.com/mod728/react-typescript-book-weather-app)
