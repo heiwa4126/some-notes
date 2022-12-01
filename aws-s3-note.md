@@ -167,4 +167,5 @@ curlは `curl --compressed` で取れます。
 S3を直接たたかずCloudFrontを使う場合は Compress Objects Automatically設定 があるので、
 これを設定したほうがハンドリングが楽だと思う。
 
-[AWS::CloudFront::Distribution DefaultCacheBehavior - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-distribution-defaultcachebehavior.html#cfn-cloudfront-distribution-defaultcachebehavior-compress)
+- [AWS::CloudFront::Distribution DefaultCacheBehavior - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-distribution-defaultcachebehavior.html#cfn-cloudfront-distribution-defaultcachebehavior-compress)
+- [AWS S3 Cloudfront で Webページを gzip 圧縮して配信する方法 - Useful Edge](https://usefuledge.com/aws-cloudfront-gzip.html)
