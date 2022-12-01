@@ -24,6 +24,7 @@
 - [npm install dev抜き](#npm-install-dev抜き)
 - [npm -g が --location=global になってめんどくさい](#npm--g-が---locationglobal-になってめんどくさい)
 - [npmの補完](#npmの補完)
+- [import/requireの "node:"](#importrequireの-node)
 
 ## node.jsのインストール
 
@@ -401,3 +402,26 @@ npm completion > /tmp/npm
 sudo mv /tmp/npm /usr/share/bash-completion/completions/
 ```
 にしました(合ってるかは知らん)
+
+
+# import/requireの "node:"
+
+[Node.js 18 Introduces Prefix-Only Core Modules](https://fusebit.io/blog/node-18-prefix-only-modules/?utm_source=www.reddit.com&utm_medium=referral&utm_campaign=none)
+
+こういうやつ
+
+```javascript
+import test from 'node:test';
+import assert from 'node:assert';
+
+test('synchronous passing test', (t) => {
+  // This test passes because it does not throw an exception.
+  assert.strictEqual(1, 1);
+});
+```
+
+> 最大の理由は、あるモジュールが Node.js のコアから来たものであることを明示するためです。ユーザランドのモジュールは 'node:' というプレフィックスでロードできないので、ツールやコードを読む人にとって、そのモジュールが Node.js core のものであることがすぐにわかるようになっています。
+
+> これまで、すべてのコアモジュールは 'node:' という接頭辞を使っても使わなくても同じように機能しました。言い換えれば、'fs' をインポートしても 'node:fs' をインポートしても違いはありませんでした。しかし、テストランナーモジュールの導入により、このようなことはなくなりました。
+
+> node:test' は 'node:' というプレフィックスを使ってのみインポート可能な最初のコアモジュールです。Node の新しいテストランナーを使うには、'node:test' をインポートしなければなりません。もし 'node:' というプレフィックスが含まれていなければ、 Node.js は代わりに test という名前のモジュールをユーザランドからロードしようとします。

@@ -65,3 +65,12 @@ npx create-react-app your-app \
 ## propsの型定義
 
 [【初心者】React × TypeScript 基本の型定義](https://zenn.dev/ogakuzuko/articles/react-typescript-for-beginner#3.-props%E3%81%AE%E5%9E%8B%E5%AE%9A%E7%BE%A9)
+
+
+## React 18でuseEffectが2回呼ばれる件
+
+[[React 18] useEffect が2回実行されてしまう問題の対処法](https://b.0218.jp/202207202243.html)
+
+ `<StrictMode>` をやめるのが一番手っ取り早いんだけど、もうちょっとなんとかならんのか。
+
+ 

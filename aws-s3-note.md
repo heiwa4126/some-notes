@@ -146,3 +146,25 @@ tfsecは「S3が暗号化されてない」ってよく言ってくるけど、�
 
 - [S3 オブジェクトロックの使用 - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/object-lock.html)
 - [aws\_s3\_bucket\_object\_lock\_configuration | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_object_lock_configuration#default_retention)
+
+
+# Content-Encode
+
+S3オブジェクトには1個1個メタデータがつけられるので、
+`Content-Encode: gzip` なメタデータ(そのままHTTPレスポンスヘッダに帰る)をつけた gzipされたファイルを置いて、WWWアクセス、とか出来る。
+
+React、Vue、Angular などWebpackしてデカい.jsが出る場合などに便利。
+
+ただし
+
+- 別に自動で解凍してくれるわけじゃない。gzipされたデータとメタデータが送られてくるだけ
+- コンテンツネゴシエーションしてくれない。リクエストヘッダの `Accept-Encoding` とか全く見ずに、絶対gzipで送ってくる
+
+まあ 普通のブラウザでは gzipが伸張できないことはまずないので問題にはならないだろう。
+
+curlは `curl --compressed` で取れます。
+
+S3を直接たたかずCloudFrontを使う場合は Compress Objects Automatically設定 があるので、
+これを設定したほうがハンドリングが楽だと思う。
+
+[AWS::CloudFront::Distribution DefaultCacheBehavior - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-distribution-defaultcachebehavior.html#cfn-cloudfront-distribution-defaultcachebehavior-compress)
