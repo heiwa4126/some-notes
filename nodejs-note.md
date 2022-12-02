@@ -384,6 +384,10 @@ npm i --production
 
 [[Solved] npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead. npm ERR! Unexpected token '.' | NamespaceIT](https://namespaceit.com/blog/npm-warn-config-global-global-local-are-deprecated-use-locationglobal-instead-npm-err-unexpected-token)
 
+とりあえず
+`npm -g i npm@8`
+で。npm 9だとAWS SAMでTypeScriptだと死ぬとかあるので、しばらくこれで。
+
 
 # npmの補完
 
