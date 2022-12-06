@@ -54,3 +54,14 @@ http://127.0.0.1:8080/ をブラウザで開く、とかでもOK。
 
 - [Vite+React+Amplifyの初期設定方法！](https://zenn.dev/akira_abe/articles/20221012-vite-react-amplify)
 - [ViteのプロジェクトにAmplifyの設定を適用する方法 - Qiita](https://qiita.com/maejima_f/items/0188adbcc8f2af564153)
+
+
+# DenoでVite
+
+Deno 1.28から。
+
+参考:
+- [denoland/deno-vue-example: An example of using Vue with Deno.](https://github.com/denoland/deno-vue-example)
+- [bartlomieju/vite-deno-example: Example of using Vite with Deno](https://github.com/bartlomieju/vite-deno-example)
+
+(WSLでない)Windowsだと死ぬ。Linuxだと超早い感。もっと試す。
