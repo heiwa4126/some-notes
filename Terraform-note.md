@@ -569,3 +569,28 @@ aws_lambda_permissionもない。
 > could not import from AWS: the resource type is not supported
 
 ですってさ。
+
+
+# 複数のプラットフォーム対応の.terraform.hcl.lock
+
+[[小ネタ] 複数のプラットフォームで terraform initする際の注意点 | DevelopersIO](https://dev.classmethod.jp/articles/multiplatform-terraform-init-lock/)
+
+とりあえずLinuxとWindowsなら
+```bash
+terraform providers lock \
+  -platform=windows_amd64 \
+  -platform=linux_amd64  
+```
+で。
+
+# state lock の解除方法
+
+たまにS3をstateに使ってるとロックかかるので、手動で解除する
+
+[terraform state lock の解除方法 - Qiita](https://qiita.com/tomy103rider/items/b1dec92aaa57b9af31d9)
+
+```bash
+terraform force-unlock <ID>
+```
+
+でOK
