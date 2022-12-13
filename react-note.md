@@ -73,4 +73,7 @@ npx create-react-app your-app \
 
  `<StrictMode>` をやめるのが一番手っ取り早いんだけど、もうちょっとなんとかならんのか。
 
- 
+[AbortController](https://developer.mozilla.org/ja/docs/Web/API/AbortController) を使う例。
+[React 18 useEffect Double Call for APIs: Emergency Fix | by Jack Herrington | JavaScript in Plain English](https://javascript.plainenglish.io/react-18-useeffect-double-call-for-apis-emergency-fix-724b7ee6a646)
+
+react-queryを使う。
