@@ -77,3 +77,6 @@ npx create-react-app your-app \
 [React 18 useEffect Double Call for APIs: Emergency Fix | by Jack Herrington | JavaScript in Plain English](https://javascript.plainenglish.io/react-18-useeffect-double-call-for-apis-emergency-fix-724b7ee6a646)
 
 react-queryを使う。
+
+
+React.StrictModeがなぜ2度呼ぶかだんだんわかってきた...なるほど。
