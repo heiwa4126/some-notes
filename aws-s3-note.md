@@ -173,9 +173,14 @@ S3を直接たたかずCloudFrontを使う場合は Compress Objects Automatical
 
 # Etag
 
-S3オブジェクトはEtagが自動で付与される。基本md5sumなのだけれど、
+S3オブジェクトはEtagが自動で付与する。
+基本md5sumなのだけれど以下の例外が:
 
-[Common Response Headers - Amazon Simple Storage Service](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html)
+- [Common Response Headers - Amazon Simple Storage Service](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html)
+- [オブジェクトの整合性をチェックする \- Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/checking-object-integrity.html#checking-object-integrity-etag-and-md5)
+
+
+(上の機械翻訳)
 
 エンティティタグは、オブジェクトの特定のバージョンを表します。
 ETag はオブジェクトの内容に対する変更のみを反映し、そのメタデータは反映しません。
@@ -186,3 +191,9 @@ ETag はオブジェクトデータの **MD5 ダイジェストであること�
   - SSE-S3で暗号化された、または平文のオブジェクトは、そのデータのMD5ダイジェストであるETagsを持つ。
   - SSE-CまたはSSE-KMSによって暗号化されたオブジェクトは、そのオブジェクトデータのMD5ダイジェストではないETagsを持ちます。
 - Multipart Upload または Part Copy 操作によって作成されたオブジェクトは、暗号化の方法に関係なく、MD5 ダイジェストではない ETag を持ちます。
+
+(引用終わり)
+
+外部からAWSが生成するETagを予想するのは困難なので
+[オブジェクトの整合性をチェックする - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/checking-object-integrity.html)
+にあるように、アルゴリズムを指定するとかTAGにつけるとかするしかなさそう。
