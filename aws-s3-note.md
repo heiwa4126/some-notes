@@ -169,3 +169,20 @@ S3を直接たたかずCloudFrontを使う場合は Compress Objects Automatical
 
 - [AWS::CloudFront::Distribution DefaultCacheBehavior - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-distribution-defaultcachebehavior.html#cfn-cloudfront-distribution-defaultcachebehavior-compress)
 - [AWS S3 Cloudfront で Webページを gzip 圧縮して配信する方法 - Useful Edge](https://usefuledge.com/aws-cloudfront-gzip.html)
+
+
+# Etag
+
+S3オブジェクトはEtagが自動で付与される。基本md5sumなのだけれど、
+
+[Common Response Headers - Amazon Simple Storage Service](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html)
+
+エンティティタグは、オブジェクトの特定のバージョンを表します。
+ETag はオブジェクトの内容に対する変更のみを反映し、そのメタデータは反映しません。
+ETag はオブジェクトデータの **MD5 ダイジェストであることもありますし、そうでないこともあります。**
+そうであるかどうかは、オブジェクトの作成方法と、 以下に説明する暗号化の方法に依存します。
+
+- AWS Management Console、またはPUT Object、POST Object、Copy操作で作成されたオブジェクト。
+  - SSE-S3で暗号化された、または平文のオブジェクトは、そのデータのMD5ダイジェストであるETagsを持つ。
+  - SSE-CまたはSSE-KMSによって暗号化されたオブジェクトは、そのオブジェクトデータのMD5ダイジェストではないETagsを持ちます。
+- Multipart Upload または Part Copy 操作によって作成されたオブジェクトは、暗号化の方法に関係なく、MD5 ダイジェストではない ETag を持ちます。
