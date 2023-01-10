@@ -2,7 +2,7 @@
 
 - [ssh tips](#ssh-tips)
 - [sshdのconfigtest](#sshdのconfigtest)
-- [sshd_configでまちがいやすい設定メモ](#sshd_configでまちがいやすい設定メモ)
+- [sshd\_configでまちがいやすい設定メモ](#sshd_configでまちがいやすい設定メモ)
 	- [AllowUsers](#allowusers)
 	- [Port](#port)
 - [.ssh/configでhostごとのUserがoverrideできない](#sshconfigでhostごとのuserがoverrideできない)
@@ -12,7 +12,7 @@
 - [LocalForward](#localforward)
 	- [実験](#実験)
 - [ControlPersist](#controlpersist)
-- [各ディストリのsshd_configのCiphersのデフォルト値](#各ディストリのsshd_configのciphersのデフォルト値)
+- [各ディストリのsshd\_configのCiphersのデフォルト値](#各ディストリのsshd_configのciphersのデフォルト値)
 - [sshの接続でどんなcipherが使われるか確認](#sshの接続でどんなcipherが使われるか確認)
 - [Windows 10のssh](#windows-10のssh)
 - [どうしてもパスワード認証になってしまうホスト](#どうしてもパスワード認証になってしまうホスト)
@@ -29,6 +29,7 @@
 - [sftpをscpのように使う例](#sftpをscpのように使う例)
 - [sftpのみ かつ chrootするユーザを作るときのコツ](#sftpのみ-かつ-chrootするユーザを作るときのコツ)
 - [ClientAliveInterval と ServerAliveInterval](#clientaliveinterval-と-serveraliveinterval)
+- [IdentitiesOnly](#identitiesonly)
 
 
 # sshdのconfigtest
@@ -556,3 +557,12 @@ ServerAliveCountMax 3
 ```
 
 いまのところどちらの値も根拠がないので使ってみて調整する。
+
+
+# IdentitiesOnly
+
+[[B! SSH] 新山祐介 (Yusuke Shinyama) on Twitter: "SSHは認証時に利用可能なすべての公開鍵をサーバに送っている。そのためGitHubなどでssh鍵を公開している人が知らないサーバにssh接続すると、自分の素性がバレてしまう可能性がある。これを検証するサービス: $ ssh who… https://t.co/Xjz99qR1Me"](https://b.hatena.ne.jp/entry/s/twitter.com/mootastic/status/1612413906248699906)
+
+> 「利用可能なすべての公開鍵をサーバに送っている」が気になって調べたらid_(dsa,ecdsa,ed25519,rsa).pub があれば全て送っているということか。ちなみに "IdentitiesOnly" を使えば、特定の鍵だけを使うように制限できるらしい。
+
+[IdentitiesOnly - Twitter検索 / Twitter](https://twitter.com/search?q=IdentitiesOnly&src=typed_query)
