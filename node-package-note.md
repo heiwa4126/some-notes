@@ -80,3 +80,16 @@ npm link @me/add2
 use-add2で `npm link @me/add2` の代わりに `npm i ../add2` もできる。
 node_modules/の下にコピーされるし
 package.jsonも書き変わる。
+
+
+# yarn や pnpm
+
+2022年ごろのインストール方法. corepackを使う。
+```bash
+corepack enable
+corepack prepare pnpm@latest --activate
+corepack prepare yarn@stable --activate
+```
+
+- [Corepack \| Node\.js v19\.4\.0 Documentation](https://nodejs.org/api/corepack.html)
+- [corepack を使って npm/Yarn をお仕事的に安心して使う方法を考える \| t28\.dev](https://t28.dev/blog/manage-npm-and-yarn-using-corepack-safely/)
