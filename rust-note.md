@@ -8,7 +8,7 @@ Rustって深いよね(皮肉)。
 - [Vecをもういちど整理](#vecをもういちど整理)
 - [type(var)みたいの](#typevarみたいの)
 - [attribute](#attribute)
-- [クレート & カーゴ](#クレート--カーゴ)
+- [クレート \& カーゴ](#クレート--カーゴ)
 - [Rustは何で「サビ」なの?](#rustは何でサビなの)
 - [testでprintln!](#testでprintln)
 - [Rustのエラーハンドリング](#rustのエラーハンドリング)
@@ -25,7 +25,7 @@ Rustって深いよね(皮肉)。
 - [rls (Rust Language Server)](#rls-rust-language-server)
 - [rustfmt](#rustfmt)
 - [emacsでRust](#emacsでrust)
-- [String <-> &str](#string---str)
+- [String \<-\> \&str](#string---str)
 - [RAWテキストの書き方](#rawテキストの書き方)
 - [Rustのモジュール](#rustのモジュール)
 - [RHEL7にllvm](#rhel7にllvm)
@@ -42,7 +42,7 @@ Rustって深いよね(皮肉)。
 - [「スタックは高速です」](#スタックは高速です)
 - [構造体に文字列](#構造体に文字列)
 - [derive Ordがどう実装されるか知りたい](#derive-ordがどう実装されるか知りたい)
-- [into_iter()とiter()](#into_iterとiter)
+- [into\_iter()とiter()](#into_iterとiter)
 - [concat!](#concat)
 - [cargo clean](#cargo-clean)
 - [map!がない](#mapがない)
@@ -53,11 +53,11 @@ Rustって深いよね(皮肉)。
 - [ラムダを返す](#ラムダを返す)
 - [traitいろいろ](#traitいろいろ)
 - [Cannot move out of X which is behind a shared reference](#cannot-move-out-of-x-which-is-behind-a-shared-reference)
-- [Result <-> Option](#result---option)
+- [Result \<-\> Option](#result---option)
 - [regexメモ](#regexメモ)
 - [cargoいろいろ](#cargoいろいろ)
 - [いつか役に立つかも](#いつか役に立つかも)
-- [macro_use](#macro_use)
+- [macro\_use](#macro_use)
 - [rustupメモ](#rustupメモ)
 - [cargo clippy](#cargo-clippy)
 - [rust-src](#rust-src)
@@ -79,6 +79,7 @@ Rustって深いよね(皮肉)。
 - [closure](#closure)
 - [refutable / irrefutable](#refutable--irrefutable)
 - [impl Trait](#impl-trait-1)
+- [Rustエラーライブラリのトレンドを教えてください](#rustエラーライブラリのトレンドを教えてください)
 
 
 # std::strにiter()がない
@@ -1257,3 +1258,24 @@ clousreと呼ぶらしい。
 
 The Book(日本語訳)では
 [トレイトを実装している型を返す - トレイト：共通の振る舞いを定義する - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch10-02-traits.html?highlight=impl,Trait#%E3%83%88%E3%83%AC%E3%82%A4%E3%83%88%E3%82%92%E5%AE%9F%E8%A3%85%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E5%9E%8B%E3%82%92%E8%BF%94%E3%81%99)
+
+
+# Rustエラーライブラリのトレンドを教えてください
+
+とChatGPTに聞いてみた結果(2023-01)
+
+Rustは、エラーハンドリングについて標準ライブラリが提供している機能が限られているため、多くのエラーハンドリングライブラリが存在しています。その中でも、現在トレンドとなっているライブラリについて説明します。
+
+- anyhow: anyhowは、Rustのエラーハンドリングの新しいスタイルを提供するために設計されたライブラリです。これは、エラーの原因を追跡しやすく、可読性の高いエラーメッセージを生成することができるように設計されています。
+
+- thiserror: thiserrorは、定義済みのエラー型を生成するために使用されるマクロを提供します。これにより、明確なエラー型を定義し、可読性の高いエラーメッセージを生成することができるようになります。
+
+- failure: failureは、エラーの追跡を容易にするためのライブラリです。これは、複数のエラーの原因を追跡するために使用でき、可読性の高いエラーメッセージを生成することができます。
+
+- quick-error: quick-errorは、簡単に自分自身のエラー型を定義するために使用されるマクロを提供します。これにより、明確なエラー型を定義し、可読性の高いエラーメッセージを生成することができるようになります。
+
+- snafu: snafuは、Rustでのエラーハンドリングを簡素化するためのライブラリです。これは、組み込みのエラー型を使用し、可読性の高いエラーメッセージを生成することができるように設計されています。
+
+- xerror: xerrorは、簡単にエラー型を定義するために使用されるマクロを提供します。これにより、明確なエラー型を定義し、可読性の高いエラーメッセージを生成することができるようになります。
+
+これらは、現在Rustにおいてトレンドとなっているエラーハンドリングライブラリです。実際に使用するライブラリは、開発者や開発チームによって異なりますので、どれが最適かは試行錯誤しながら見つけることができます。

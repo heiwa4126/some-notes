@@ -25,6 +25,8 @@
 - [npm -g が --location=global になってめんどくさい](#npm--g-が---locationglobal-になってめんどくさい)
 - [npmの補完](#npmの補完)
 - [import/requireの "node:"](#importrequireの-node)
+- ["node ."](#node-)
+- [pnpmやyarnにはnpxに相当するものがありますか?](#pnpmやyarnにはnpxに相当するものがありますか)
 
 ## node.jsのインストール
 
@@ -429,3 +431,30 @@ test('synchronous passing test', (t) => {
 > これまで、すべてのコアモジュールは 'node:' という接頭辞を使っても使わなくても同じように機能しました。言い換えれば、'fs' をインポートしても 'node:fs' をインポートしても違いはありませんでした。しかし、テストランナーモジュールの導入により、このようなことはなくなりました。
 
 > node:test' は 'node:' というプレフィックスを使ってのみインポート可能な最初のコアモジュールです。Node の新しいテストランナーを使うには、'node:test' をインポートしなければなりません。もし 'node:' というプレフィックスが含まれていなければ、 Node.js は代わりに test という名前のモジュールをユーザランドからロードしようとします。
+
+
+# "node ."
+
+ChatGPTに聞いてみました。
+
+"node ." は、現在のフォルダにあるJavaScriptファイルを実行するためのコマンドです。 "node" は、Node.jsと呼ばれるJavaScriptランタイムで、JavaScriptをサーバーサイドで実行するために使用されます。 "." は、現在のフォルダを指します。
+
+このコマンドが実行されると、現在のフォルダにあるJavaScriptファイルが実行されます。 その中で、package.jsonの"main"に記載されたファイルが優先的に実行されます。もしない場合は、index.jsが実行されます。
+
+このように実行することで、現在のフォルダにあるJavaScriptアプリケーションを簡単に起動することができます。
+
+# pnpmやyarnにはnpxに相当するものがありますか?
+
+ChatGPTに聞いてみました。
+
+pnpmには、npxに相当する機能の「pnpx」というものがあります。 pnpxは、pnpmのグローバルインストールではなく、ローカルインストールしたパッケージを実行するためのコマンドです。
+
+Yarnには、npxに相当する機能の「yarn npx」というものがあります。これは、npmに似た形式で、ローカルにインストールしたパッケージを実行するためのコマンドです。
+
+それで、pnpxやyarn npxは、npxに似た機能を持っており、ローカルにインストールしたパッケージを実行するために使用できます。
+
+…なんか胡乱だけど言いたいことはわかった。
+
+- [pnpx CLI | pnpm](https://pnpm.io/ja/6.x/pnpx-cli)
+- [pnpm exec | pnpm](https://pnpm.io/ja/cli/exec)
+- [pnpm dlx | pnpm](https://pnpm.io/ja/cli/dlx) - これが推奨
