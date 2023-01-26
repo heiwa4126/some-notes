@@ -13,3 +13,22 @@ ReactのTypeScriptでsetState hookの一部を書き換えたいとき：
 [interfaceとtypeの違い、そして何を使うべきかについて](https://zenn.dev/luvmini511/articles/6c6f69481c2d17)
 
 よくわからん。とりあえず interface つかう。
+
+
+# hashにタイプ
+
+
+[typescriptで連想配列の配列を宣言（型指定）したい](https://trueman-developer.blogspot.com/2017/04/typescript.html)
+
+```typescript
+let hash: { [key: string]: string } = {};
+hash["apple"] = "りんご";
+hash["banana"] = "ばなな";
+hash["orange"] = "オレンジ";
+
+const hash2: { [key: string]: string } = {
+  apple: "りんご",
+  banana: "ばなな",
+  orange: "オレンジ",
+};
+```
