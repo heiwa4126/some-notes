@@ -10,6 +10,10 @@ OpenID Connect(OIDC)とOAuth2メモ
   - [トークンエンドポイント(Token Endpoint)](#トークンエンドポイントtoken-endpoint)
   - [リダイレクションエンドポイント(Redirection Endpoint)](#リダイレクションエンドポイントredirection-endpoint)
 - [おまけ](#おまけ)
+- [AWSでApiGWとCognitoでOAuth2](#awsでapigwとcognitoでoauth2)
+  - [Amazon API GatewayでCognito認証を設定した場合、CLIでAPIを呼び出す方法を教えてください。](#amazon-api-gatewayでcognito認証を設定した場合cliでapiを呼び出す方法を教えてください)
+  - [Api IDではなくOAuth2でAPIを呼び出す方法はありませんか?](#api-idではなくoauth2でapiを呼び出す方法はありませんか)
+- [↑のやつを実際に作ってみる](#のやつを実際に作ってみる)
 
 # OpenID ConnectとOAuth2を理解する
 
@@ -140,3 +144,116 @@ OpenID と OpenID Connectは全然別物
 認可レスポンスがフラグメントのとき
 リダイレクションエンドポイントから返されてきた「なにか」は
 どうやって認可レスポンスのフラグメントにある認可コード(code)を得るのか?
+
+
+# AWSでApiGWとCognitoでOAuth2
+
+ChatGPTに聞いてみた
+
+## Amazon API GatewayでCognito認証を設定した場合、CLIでAPIを呼び出す方法を教えてください。
+
+以下の手順に従って、Amazon API GatewayでCognito認証を設定したAPIをCLIから呼び出すことができます。
+
+1. AWS CLIをインストールして、AWSアカウントにサインインする。
+
+1. Amazon API GatewayでCognito認証を設定したAPIを呼び出すために必要な情報を収集する。これには、API GatewayのエンドポイントURL、APIのレソースパス、APIのメソッド、APIキー、アクセストークンなどが含まれます。
+
+1. 以下のAWS CLIコマンドを使用してAPIを呼び出す。
+
+```bash
+aws apigateway invoke-method \
+  --rest-api-id <api-id> \
+  --resource-id <resource-id> \
+  --http-method <http-method> \
+  --headers "Authorization=<access-token>" \
+  --path-parameters "param1=value1" \
+  --query-string-parameters "param2=value2"`
+```
+
+上記のコマンドは、API GatewayのAPI ID、リソースID、HTTPメソッド、アクセストークン、パスパラメータ、クエリパラメータを指定する必要があります。正確な値は、API Gatewayの管理コンソールから入手できます。
+
+
+##  Api IDではなくOAuth2でAPIを呼び出す方法はありませんか?
+
+はい、OAuth2認証を使用してAPI GatewayのAPIを呼び出すことができます。この方法では、事前にCognitoユーザープールまたはIdentity Poolを作成し、ユーザーアクセスを認証します。その後、アクセストークンを取得して、API GatewayのAPIを呼び出すことができます。以下は一例です。
+
+1. AWS CLIをインストールして、AWSアカウントにサインインする。
+1. AWS CLIからCognitoアクセストークンを取得するために必要な情報を収集する。これには、Cognitoユーザープール名、ユーザー名、パスワード、クライアントIDなどが含まれます。
+1. 以下のAWS CLIコマンドを使用してアクセストークンを取得する。
+
+```bash
+aws cognito-idp admin-initiate-auth \
+  --user-pool-id <user-pool-id> \
+  --client-id <client-id> \
+  --auth-flow ADMIN_NO_SRP_AUTH \
+  --auth-parameters USERNAME=<username>,PASSWORD=<password>
+```
+またはJavaScriptで
+```javascript
+const AWS = require("aws-sdk");
+const cognitoIdp = new AWS.CognitoIdentityServiceProvider();
+
+const userPoolId = "<user-pool-id>";
+const clientId = "<client-id>";
+const authFlow = "ADMIN_NO_SRP_AUTH";
+const authParameters = {
+  USERNAME: "<username>",
+  PASSWORD: "<password>",
+};
+
+cognitoIdp.adminInitiateAuth({
+  UserPoolId: userPoolId,
+  ClientId: clientId,
+  AuthFlow: authFlow,
+  AuthParameters: authParameters,
+}, (err, data) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(data);
+});
+```
+またはPython3で
+```python
+import boto3
+
+client = boto3.client("cognito-idp")
+
+response = client.admin_initiate_auth(
+    UserPoolId="<user-pool-id>",
+    ClientId="<client-id>",
+    AuthFlow="ADMIN_NO_SRP_AUTH",
+    AuthParameters={
+        "USERNAME": "<username>",
+        "PASSWORD": "<password>",
+    },
+)
+
+print(response)
+```
+
+
+4.  取得したアクセストークンを使用してAPI GatewayのAPIを呼び出す。
+
+```bash
+curl -X <http-method> \
+  -H "Authorization: Bearer <access-token>" \
+  "<api-endpoint>"
+```
+
+上記のコマンドは、HTTPメソッド、API GatewayのエンドポイントURL、アクセストークンを指定する必要があります。正確な値は、API Gatewayの管理コンソールから入手できます。
+
+# ↑のやつを実際に作ってみる
+
+まず手動で作って、SAMかTerraformにする。
+1. [Amazon Cognito ユーザープールをオーソライザーとして使用して REST API へのアクセスを制御する](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html)
+1. [REST API 用の Amazon Cognito ユーザープールを作成する](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-create-cognito-user-pool.html)
+1. [REST API と Amazon Cognito ユーザープールを統合する](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-enable-cognito-user-pool.html)
+1. [Amazon Cognito ユーザープールと統合された REST API を呼び出す](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-invoke-api-integrated-with-cognito-user-pool.html)
+1. [API Gateway コンソールを使用して REST API 用のクロスアカウントの Amazon Cognito オーソライザーを設定する](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-cross-account-cognito-authorizer.html)
+
+あとこれ
+
+- [Amazon Cognito ユーザープールを API Gateway オーソライザーとしてセットアップする](https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-cognito-user-pool-authorizer/)
+- [Cognitoで認証されたユーザーだけがAPI Gatewayを呼び出せるオーソライザーを使ってみた | DevelopersIO](https://dev.classmethod.jp/articles/api-gateway-cognito-authorizer/)
