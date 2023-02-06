@@ -257,3 +257,7 @@ curl -X <http-method> \
 
 - [Amazon Cognito ユーザープールを API Gateway オーソライザーとしてセットアップする](https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-cognito-user-pool-authorizer/)
 - [Cognitoで認証されたユーザーだけがAPI Gatewayを呼び出せるオーソライザーを使ってみた | DevelopersIO](https://dev.classmethod.jp/articles/api-gateway-cognito-authorizer/)
+
+
+
+
