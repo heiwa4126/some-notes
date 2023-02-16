@@ -52,6 +52,21 @@ sudo apt-get update && sudo apt-get install terraform
 
 [第675回　apt-keyはなぜ廃止予定となったのか：Ubuntu Weekly Recipe｜gihyo.jp … 技術評論社](https://gihyo.jp/admin/serial/01/ubuntu-recipe/0675)
 
+
+### pgp鍵の更新メモ(2023-02ごろ)
+
+とりあえず
+`sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AA16FCBCA621E701`
+(apt-keyは廃止だってば)
+
+
+```bash
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list > /dev/null
+```
+
+参考: [GPG error : The following signatures couldn't be verified because the public key is not available: NO\_PUBKEY AA16FCBCA621E701 · Issue \#32622 · hashicorp/terraform](https://github.com/hashicorp/terraform/issues/32622)
+
 ## 直接落とす
 
 HashiCorpから落とす。
