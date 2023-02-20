@@ -14,6 +14,7 @@ OpenID Connect(OIDC)とOAuth2メモ
   - [Amazon API GatewayでCognito認証を設定した場合、CLIでAPIを呼び出す方法を教えてください。](#amazon-api-gatewayでcognito認証を設定した場合cliでapiを呼び出す方法を教えてください)
   - [Api IDではなくOAuth2でAPIを呼び出す方法はありませんか?](#api-idではなくoauth2でapiを呼び出す方法はありませんか)
 - [↑のやつを実際に作ってみる](#のやつを実際に作ってみる)
+- [ブラウザでPKCE](#ブラウザでpkce)
 
 # OpenID ConnectとOAuth2を理解する
 
@@ -260,4 +261,40 @@ curl -X <http-method> \
 
 
 
+# ブラウザでPKCE
 
+OAuth 2.0でのPKCE（Proof Key for Code Exchange）は、認可グラントにセキュリティを追加するための技術的手法です。PKCEを使用することで、認可コードフローを使用する際に、悪意のあるサードパーティアプリケーションによる認可コードの盗難やフィッシング攻撃から保護することができます。
+
+ブラウザでOAuthの認可グラントでPKCEを使用する場合、以下の手順に従って実装することができます。
+
+ランダムなバイト列（エントロピー）を生成します。このエントロピーは、認可リクエストごとに異なるものである必要があります。
+
+エントロピーを Base64 エンコードします。これは、エントロピーのランダムなバイト列を Web セーフな文字列に変換するために使用されます。
+
+エントロピーの SHA-256 ハッシュ値を計算し、Base64 エンコードします。この値は、認可コードリクエストの検証に使用されます。
+
+リダイレクトURIに、クエリパラメーターとして code_challenge と code_challenge_method を追加します。 code_challenge は、エントロピーの SHA-256 ハッシュ値をエンコードした値で、 code_challenge_method は、常に "S256" を指定します。
+
+認可エンドポイントにリクエストを送信する前に、クライアントの設定に code_challenge 値を保存します。
+
+認可エンドポイントにリクエストを送信するときに、code_challenge 値を使用して、クエリパラメーター code_challenge を追加します。
+
+認可サーバーは、リダイレクトURIに含まれる code_challenge 値とクライアントの設定に保存されている値を比較します。もし一致しない場合、認可リクエストは失敗します。
+
+これらの手順に従って実装することで、ブラウザでOAuthの認可グラントでPKCEを使用することができます。ただし、PKCEを実装するには、OAuthプロバイダーがPKCEをサポートしている必要があります。PKCEをサポートしていないOAuthプロバイダーの場合、この手法を使用することはできません。
+
+
+ブラウザでOAuthの認可グラントでPKCEを使う方法は、以下のようになります。
+
+1.  [クライアントは、ランダムな文字列を生成し、それを**コードチャレンジ**と呼びます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)
+2.  [クライアントは、コードチャレンジをハッシュ化し、それを**コードベリファイア**と呼びます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)
+3.  [クライアントは、認可サーバーに対して認可リクエストを送ります。このとき、コードチャレンジと**PKCEメソッド**（ハッシュ化の方法）をパラメータとして含めます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+4.  [認可サーバーは、クライアントに対して認可コードを返します。**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+5.  [クライアントは、認可サーバーに対してトークンリクエストを送ります。このとき、認可コードとコードベリファイアをパラメータとして含めます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+6.  [認可サーバーは、コードベリファイアをハッシュ化し、それがコードチャレンジと一致するかどうか検証します。一致すれば、クライアントに対してアクセストークンとリフレッシュトークンを返します。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+
+これにより、ブラウザでOAuthの認可グラントでPKCEを使って安全にトークンを取得することができます。
+
+
+
+**詳細情報:**[1\. zenn.dev](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[2\. learn.microsoft.com](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)[3\. applis.io](https://applis.io/posts/what-is-pkce)
