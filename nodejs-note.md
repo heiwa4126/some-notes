@@ -27,6 +27,7 @@
 - [import/requireの "node:"](#importrequireの-node)
 - ["node ."](#node-)
 - [pnpmやyarnにはnpxに相当するものがありますか?](#pnpmやyarnにはnpxに相当するものがありますか)
+- [Web Crypto API](#web-crypto-api)
 
 ## node.jsのインストール
 
@@ -458,3 +459,30 @@ Yarnには、npxに相当する機能の「yarn npx」というものがあり�
 - [pnpx CLI | pnpm](https://pnpm.io/ja/6.x/pnpx-cli)
 - [pnpm exec | pnpm](https://pnpm.io/ja/cli/exec)
 - [pnpm dlx | pnpm](https://pnpm.io/ja/cli/dlx) - これが推奨
+
+
+# Web Crypto API
+
+Node.js には `crypto` があるけど、ブラウザにはない。
+代わりにブラウザには [Web Crypto API](https://developer.mozilla.org/ja/docs/Web/API/Web_Crypto_API) がある。
+
+で、開発とかで Node.js で Web Crypto APIで使えるかどうかの調査。
+
+以下ChatGPT:
+
+Web Crypto APIは主にブラウザー環境で実行するために設計されたAPIです。
+Node.jsでは、Web Crypto APIは提供されていませんが、代わりにNode.jsには、暗号化操作を行うために利用できる標準のcryptoモジュールがあります。
+
+cryptoモジュールには、多くの暗号アルゴリズムが含まれており、ブラウザ環境のWeb Crypto APIと同様の機能を提供しています。
+ただし、cryptoモジュールには、Web Crypto APIには含まれているような、鍵の派生（key derivation）や鍵交換（key exchange）といった機能が提供されていません。
+
+そのため、Node.jsでWeb Crypto APIと同じ機能を使うためには、Web Crypto APIの代替として提供されているサードパーティ製のライブラリを利用することがあります。
+例えば、Node.jsでWeb Crypto API互換のAPIを提供するライブラリとしては、
+- [node-webcrypto-ossl](https://github.com/PeculiarVentures/node-webcrypto-ossl) - Nov 3, 2021. で archive
+- [@peculiar/webcrypto](https://github.com/PeculiarVentures/webcrypto) - ↑の後継
+- [node-webcrypto-p11](https://www.npmjs.com/package/node-webcrypto-p11) - ↑と作者同じ? ↑より更新されてる
+- node-crypto - Node.jsのcrypto。ChatGPTの嘘
+
+などがあります。
+
+ただし、これらのライブラリには注意点があり、特定のライブラリを使用する前に、よく確認することをお勧めします。
