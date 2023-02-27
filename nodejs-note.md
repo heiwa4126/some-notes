@@ -28,6 +28,7 @@
 - ["node ."](#node-)
 - [pnpmやyarnにはnpxに相当するものがありますか?](#pnpmやyarnにはnpxに相当するものがありますか)
 - [Web Crypto API](#web-crypto-api)
+- [local storageで暗号化](#local-storageで暗号化)
 
 ## node.jsのインストール
 
@@ -486,3 +487,23 @@ cryptoモジュールには、多くの暗号アルゴリズムが含まれて�
 などがあります。
 
 ただし、これらのライブラリには注意点があり、特定のライブラリを使用する前に、よく確認することをお勧めします。
+
+
+# local storageで暗号化
+
+生データよりはちょっとはマシかな... という程度でしょうが。
+
+- [angular - Encrypting and Decryption Local storage values - Stack Overflow](https://stackoverflow.com/questions/54039031/)
+- [How to Encrypt LocalStorage data? \- Digital Fortress](https://digitalfortress.tech/js/encrypt-localstorage-data/)
+- [encrypt-storage](https://www.npmjs.com/package/encrypt-storage)
+- [secure-web-storage](https://www.npmjs.com/package/secure-web-storage)
+- [secure-ls](https://www.npmjs.com/package/secure-ls)
+- [encrypt-storage vs localstorage-slim vs secure-ls vs secure-web-storage | npm trends](https://npmtrends.com/encrypt-storage-vs-localstorage-slim-vs-secure-ls-vs-secure-web-storage)
+
+Reactだったら
+[react-secure-storage - npm](https://www.npmjs.com/package/react-secure-storage)
+というのがある。SSRだけみたい。
+
+
+secure-lsつかってみた。
+開発ツールでコピペしたくなくなる程度にはなんとかなる。

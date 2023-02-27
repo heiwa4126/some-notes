@@ -15,6 +15,7 @@ OpenID Connect(OIDC)とOAuth2メモ
   - [Api IDではなくOAuth2でAPIを呼び出す方法はありませんか?](#api-idではなくoauth2でapiを呼び出す方法はありませんか)
 - [↑のやつを実際に作ってみる](#のやつを実際に作ってみる)
 - [ブラウザでPKCE](#ブラウザでpkce)
+  - [リフレッシュトークンの寿命って取れるの?](#リフレッシュトークンの寿命って取れるの)
 
 # OpenID ConnectとOAuth2を理解する
 
@@ -298,3 +299,27 @@ OAuth 2.0でのPKCE（Proof Key for Code Exchange）は、認可グラントに�
 
 
 **詳細情報:**[1\. zenn.dev](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[2\. learn.microsoft.com](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)[3\. applis.io](https://applis.io/posts/what-is-pkce)
+
+## リフレッシュトークンの寿命って取れるの?
+
+JWEで暗号化されてるから分からないよなあ... 
+
+ソース: Bing との会話 2023/2/21
+
+OAuth2のリフレッシュトークンの期限切れを知る方法については、ウェブ検索の結果から以下の情報が得られました。¹²³
+
+- リフレッシュトークンを取得するときに、期限切れの時間を保存する方法があります²。しかし、この方法はすべてのOAuth2プロバイダーでサポートされているわけではありません²。
+- リフレッシュトークンを使ってアクセストークンを再発行するときに、エラーレスポンスをチェックする方法があります²。エラーコードがinvalid_grantやinvalid_tokenなどの場合は、リフレッシュトークンが期限切れである可能性が高いです²。
+- リフレッシュトークンを取得するときに、access_type=offlineやprompt=consentなどのパラメータを付ける方法があります³。これにより、リフレッシュトークンが常に返されるようになります³。
+
+この回答は役に立ちましたか？
+
+
+1. OAuth 2.0 全フローの図解と動画 - Qiita. https://qiita.com/TakahikoKawasaki/items/200951e5b5929f840a1f アクセス日時 2023/2/21.
+2. How to detect when an OAuth2 refresh-token expired. https://stackoverflow.com/questions/57383523/how-to-detect-when-an-oauth2-refresh-token-expired アクセス日時 2023/2/21.
+3. google認証のrefresh_tokenの扱いでハマったポイント - Qiita. https://qiita.com/zuxt/items/10cbc7cf6c12371227f3 アクセス日時 2023/2/21.
+
+ログインする時に、
+まずトークンエンドポイントに投げてみて
+エラーになったら、認可エンドポイント
+みたいな方法しかないみたい。
