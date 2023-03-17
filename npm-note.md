@@ -136,16 +136,19 @@ exportsが解釈できるバージョンのnodeならexports優先。
 
 &gt;= 4.7
 
-あと exportsでサブモジュールを使っている場合は
-moduleResolution は node16かnodenextでないとダメ。
+あと exportsでサブパスエクスポートを使っている場合は
+moduleResolution は node16かnodenextでないと
+tscが.d.tsが見つけられず死ぬ。
 
-exportsでサブモジュールを使っていない場合は
-moduleResolution は node でOK。
+exportsでサブパスエクスポートを使っていない場合(typesが1個のとき)moduleResolution は node でOK。
+
+以上の話は当然TypeScriptの話で。
 
 ちなみに
-package.json の 直下の types を使えるのは、tscのバージョン1.6から。
+package.json の 直下の types を使えるのは、
+tscのバージョン1.6から。
 
 まあいろいろとめんどくさいので
 自分でTypeScriptでパッケージを作り、
-それが複数ファイルにまたがる場合は、
+それがサブパスにまたがる場合は、
 index.tsに全部exportをまとめてしまうのがいいと思う。
