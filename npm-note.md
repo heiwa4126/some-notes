@@ -152,3 +152,56 @@ tscのバージョン1.6から。
 自分でTypeScriptでパッケージを作り、
 それがサブパスにまたがる場合は、
 index.tsに全部exportをまとめてしまうのがいいと思う。
+
+## tsconfigのmoduleResolution
+
+tsconfig の moduleResolution とは、モジュール解決方式を指定するオプションです。
+モジュール解決方式とは、インポート文で指定されたモジュールの場所をどのように探すかという方法です。
+
+moduleResolution には、以下の値が設定できます。
+
+- 'node' : Node.js の CommonJS 実装に基づいた方法です。インポート文に相対パスや絶対パスがない場合は、node_modules フォルダを探します。
+- 'node16' & 'nodenext' : TypeScript 4.7 以降で使用できる、Node.js の ECMAScript モジュールサポートに基づいた方法です。インポート文にファイル拡張子が必要です。
+- 'classic' : TypeScript 1.6 より前に使用されていた方法です。現代のコードではほとんど使われません。
+
+moduleResolution を指定しない場合は、--module commonjs のときは node、
+それ以外のときは classic がデフォルト値になります。
+ただし、node モジュール解決方式が TypeScript コミュニティで最も一般的であり、推奨されています。
+
+以上が tsconfig の moduleResolution に関する説明です¹[ ^2 ^][ ^3 ^ ]。もっと詳しく知りたい場合は、「node モジュール解決方式の例を見せてください」や「classic モジュール解決方式と node モジュール解決方式の違いを教えてください」などとお尋ねください。
+
+- [TypeScript: TSConfig Option: moduleResolution](https://www.typescriptlang.org/tsconfig/moduleResolution.html)
+- [TypeScript: Documentation - Module Resolution](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
+- [モジュール解決 | TypeScript 日本語ハンドブック | js STUDIO](https://js.studio-kingdom.com/typescript/handbook/module_resolution)
+
+## TypeScript 5.0 で追加された moduleResorution: bundle
+
+TypeScript 5 で追加された moduleResolution の bundle とは、モジュール解決方式の一種で、
+インポート文にファイル拡張子がなくてもモジュールを探すことができる方法です。
+この方法は、webpack や rollup などのバンドラーを使用する場合に便利です。
+
+bundle モジュール解決方式では、インポート文に相対パスや絶対パスがある場合は、そのままモジュールを探します。
+
+相対パスや絶対パスがない場合は、以下の順序でモジュールを探します。
+
+- ファイル拡張子が .ts, .tsx, .d.ts の順に付けられたファイル
+- package.json の types フィールドや typings フィールドに指定されたファイル (typingsはtypesのalias)
+- index.ts, index.tsx, index.d.ts の順に付けられたファイル
+
+もっと詳しく知りたい場合は、「bundle モジュール解決方式の例を見せてください」や「bundle モジュール解決方式と node モジュール解決方式の違いを教えてください」などとお尋ねください。
+
+- [\`\-\-moduleResolution bundler\` \(formerly known as \`hybrid\`\) by andrewbranch · Pull Request \#51669 · microsoft/TypeScript](https://github.com/microsoft/TypeScript/pull/51669)
+- [最新版TypeScript\+webpack 5の環境構築まとめ\(React, Three\.jsのサンプル付き\) \- ICS MEDIA](https://ics.media/entry/16329/)
+
+## moduleResolution の nodeモジュール解決方式
+
+moduleResolution の node モジュール解決方式は、
+拡張子レスの場合、以下のようにモジュールを探します。
+
+- まず、インポート文に指定された名前に .ts, .tsx, .d.ts, .js, .jsx のいずれかの拡張子を付けてファイルが存在するかどうかを確認します。
+- もしファイルが存在しない場合は、インポート文に指定された名前がディレクトリであると仮定して、その中に package.json があるかどうかを確認します。
+- もし package.json がある場合は、その中の main プロパティに指定されたファイル名に .ts, .tsx, .d.ts, .js, .jsx のいずれかの拡張子を付けてファイルが存在するかどうかを確認します。
+- もし package.json がない場合や main プロパティに指定されたファイルが存在しない場合は、ディレクトリ内に index.ts, index.tsx, index.d.ts, index.js, index.jsx のいずれかのファイルが存在するかどうかを確認します。
+
+
+## ECMAScript Module Support と CommonJS implementation の違い
