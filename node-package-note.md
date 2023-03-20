@@ -93,3 +93,34 @@ corepack prepare yarn@stable --activate
 
 - [Corepack \| Node\.js v19\.4\.0 Documentation](https://nodejs.org/api/corepack.html)
 - [corepack を使って npm/Yarn をお仕事的に安心して使う方法を考える \| t28\.dev](https://t28.dev/blog/manage-npm-and-yarn-using-corepack-safely/)
+
+
+# モジュールとパッケージ
+
+- [Modules: CommonJS modules](https://nodejs.org/api/modules.html)
+- [Modules: ECMAScript modules](https://nodejs.org/api/esm.html)
+- [Modules: Packages](https://nodejs.org/api/packages.html)
+- [About packages and modules | npm Docs](https://docs.npmjs.com/about-packages-and-modules)
+
+パッケージとは、
+- package.jsonファイルによって記述されるファイルまたはディレクトリ
+- npmレジストリに公開するためには、パッケージにpackage.jsonファイルが必要
+- パッケージには、スコープなしと、スコープつき(`@foo/xpackage`みたいなやつ)があり、
+スコープ付きパッケージはプライベートとパブリックがある
+
+モジュールとは、
+- node_modulesディレクトリにある、Node.jsのrequire()関数で読み込むことができるファイルやディレクトリを指す
+- Node.jsのrequire()関数で読み込まれるためには、モジュールは以下の**いずれか**に該当する必要がある
+   - "main" フィールドを含むpackage.jsonファイルを持つフォルダー
+   - JavaScriptファイル
+
+なので、.jsファイルを含まない「モジュール」が存在する。
+例えば、CSSや画像などの静的ファイルのみを含むモジュールがある。
+ただし、package.jsonファイルは必要。
+- [GitHub - css-modules/css-modules: Documentation about css-modules](https://github.com/css-modules/css-modules) の examples参照
+- [css-only · GitHub Topics · GitHub](https://github.com/topics/css-only)
+
+つまりこれらの用語はかなり適当ということ。
+
+- `package.json` がなければ確実に「モジュール」
+- それ以外はあいまい
