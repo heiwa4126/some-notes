@@ -114,7 +114,7 @@ corepack prepare yarn@stable --activate
    - "main" フィールドを含むpackage.jsonファイルを持つフォルダー
    - JavaScriptファイル
 
-なので、.jsファイルを含まない「モジュール」が存在する。
+.jsファイルを含まないモジュールやパッケージが存在する。
 例えば、CSSや画像などの静的ファイルのみを含むモジュールがある。
 ただし、package.jsonファイルは必要。
 - [GitHub - css-modules/css-modules: Documentation about css-modules](https://github.com/css-modules/css-modules) の examples参照
@@ -123,4 +123,6 @@ corepack prepare yarn@stable --activate
 つまりこれらの用語はかなり適当ということ。
 
 - `package.json` がなければ確実に「モジュール」
+- スコープがついてたら確実に「パッケージ」
+- require()で読めたら「モジュール」
 - それ以外はあいまい
