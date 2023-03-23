@@ -113,3 +113,11 @@ GitHubのsshキーの操作は以下参照
 
 - [git - How to download a folder from github? - Stack Overflow](https://stackoverflow.com/questions/33066582/how-to-download-a-folder-from-github) - svnを使う方法と tarballで一部取り出す方法
 - [git - Download a single folder or directory from a GitHub repo - Stack Overflow](https://stackoverflow.com/questions/7106012/download-a-single-folder-or-directory-from-a-github-repo) - ブラウザが使えるならツールもある
+
+
+# GitHub の Branch protection rule とは
+
+GitHub の Branch protection rule は、リポジトリのブランチを保護するためのルールです。
+このルールを設定することで、特定のブランチに対して、必要なレビューが完了している場合にのみマージできるようにしたり、強制プッシュを禁止したりすることができます。
+
+[ブランチ保護ルールを管理する \- GitHub Docs](https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule)

@@ -138,3 +138,10 @@ import { b } from "moduleB"
 ## tscがpackage.jsonのexportsを見に行く仕掛け
 
 [TypeScript: Documentation - TypeScript 4.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#packagejson-exports-imports-and-self-referencing)
+
+
+# importの拡張子をめぐる混乱
+
+- [import、export、require | TypeScript入門『サバイバルTypeScript』](https://typescriptbook.jp/reference/import-export-require)
+- [デュアルパッケージ開発者のためのtsconfig (Dual Package) | TypeScript入門『サバイバルTypeScript』](https://typescriptbook.jp/reference/advanced-topics/tsconfig-for-dual-package-developers)
+
