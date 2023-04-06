@@ -32,3 +32,15 @@ pnpm dev
 - MDXつかってみる - Reactコンポーネントとか埋め込んでみたい
 - `/posts`の階層化 - 意外と簡単にできそう
 - かっこいいCSS
+
+## app dir の title
+
+metadataを使うらしい。
+head.jsやhead.tsxは削除したほうがいいらしい。
+
+- [head\.js \(deprecated\)](https://beta.nextjs.org/docs/api-reference/file-conventions/head)
+- [Metadata](https://beta.nextjs.org/docs/api-reference/metadata)
+- 静的: `export const metadata` - https://beta.nextjs.org/docs/guides/seo#static-metadata
+- 動的: `export generateMetadata()` - https://beta.nextjs.org/docs/guides/seo#dynamic-metadata
+
+参考: [Next.js 13.2で追加されたMetadata APIを使ってhead.jsを置き換える - アルパカログ](https://alpacat.com/blog/nextjs132-metadata-api/)
