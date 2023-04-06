@@ -1,3 +1,5 @@
+2023-04からNext.js 始めて見た(Next.js v13)のでメモ
+
 ## チュートリアル
 
 [Create a Next.js App | Learn Next.js](https://nextjs.org/learn/basics/create-nextjs-app)
@@ -7,3 +9,26 @@ pnpm create next-app@latest nextjs-blog --use-pnpm --example "https://github.com
 cd nexnjs-blog
 pnpm dev
 ```
+
+## Nexs.js 感想
+
+なんでもできるが
+なんにもない。
+
+- **なんでもできる** - 拡張性すごい。
+- **なんにもない** - 初期状態ではほぼ何もない。CMSとしてみればあって当然、みたいのが無い。
+
+
+## Next.js 課題
+
+チュートリアルベース(まだ非appdir)の
+`/posts` (`/pages/posts`ではなく)にmarkdownならべる例からの拡張で
+
+- codeブロックのフォーマット - prismであっさりできた。まとめる
+- TypeScript - これも https://nextjs.org/learn/excel/typescript/nextjs-types にしたがってやればOK
+- appDir化 - やる
+- markdownの画像を`next/image`にする - 不当に難しい
+- markdownの内部リンクを`next/link` にする - これも不当に難しい
+- MDXつかってみる - Reactコンポーネントとか埋め込んでみたい
+- `/posts`の階層化 - 意外と簡単にできそう
+- かっこいいCSS
