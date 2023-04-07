@@ -94,3 +94,17 @@ const Counter = () => {
 
 export default Counter;
 ```
+
+
+## Static Export for App Router
+
+Next.js 13.3にしたら、いままでどーしてもうまく動かなかったStatic Exportができるようになった。
+
+[Static Export for App Router](https://nextjs.org/blog/next-13-3#static-export-for-app-router)
+
+1. app dirで作る。
+2. nextConfig に `output: 'export'`
+3. `npm build` で プロジェクトルート直下の `out/` 以下にビルドされる。
+4. `http-server ./out` で テストしてみる。
+
+SSGがあるとどうなるかはテストしてない。
