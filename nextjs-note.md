@@ -44,3 +44,5 @@ head.jsやhead.tsxは削除したほうがいいらしい。
 - 動的: `export generateMetadata()` - https://beta.nextjs.org/docs/guides/seo#dynamic-metadata
 
 参考: [Next.js 13.2で追加されたMetadata APIを使ってhead.jsを置き換える - アルパカログ](https://alpacat.com/blog/nextjs132-metadata-api/)
+
+- [Blog - Next.js 13.3 | Next.js](https://nextjs.org/blog/next-13-3#file-based-metadata-api)
