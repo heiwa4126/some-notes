@@ -46,3 +46,51 @@ head.jsやhead.tsxは削除したほうがいいらしい。
 参考: [Next.js 13.2で追加されたMetadata APIを使ってhead.jsを置き換える - アルパカログ](https://alpacat.com/blog/nextjs132-metadata-api/)
 
 - [Blog - Next.js 13.3 | Next.js](https://nextjs.org/blog/next-13-3#file-based-metadata-api)
+
+
+## Module parse failed: Bad character escape sequence
+
+Next.js 結構複雑な処理やってるらしくて、
+`Module parse failed: Bad character escape sequence`
+が、Next.jsのバージョンに限らず再々出るみたい。
+
+自分はReactのコンポーネントでfunction使ってたら
+Next.jsのマイナーアップデートの時点でこれが急に
+出るようになったので、
+アロー関数に変換したら動くようになりました。
+
+**嘘みたいだが本当の話。**
+
+以下Next.jsでapp dirで、13.3.0に上げたときの例:
+
+元(./components/counter.tsx):
+```typescript
+"use client";
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
+    </div>
+  );
+}
+```
+
+修正後:
+```typescript
+"use client";
+import { useState } from "react";
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
+    </div>
+  );
+};
+
+export default Counter;
+```
