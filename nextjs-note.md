@@ -108,3 +108,91 @@ Next.js 13.3にしたら、いままでどーしてもうまく動かなかっ�
 4. `http-server ./out` で テストしてみる。
 
 SSGがあるとどうなるかはテストしてない。
+
+
+## getServerSideProps()とgetStaticProps()は同じモジュールには入れられない
+
+別のモジュールならいいわけだよね...
+
+
+## app dit への移行
+
+[Migrating from pages to app](https://beta.nextjs.org/docs/upgrade-guide#migrating-from-pages-to-app)
+
+getServerSideProps, getStaticProps, getStaticPaths などは
+[Data Fetching Fundamentals](https://beta.nextjs.org/docs/data-fetching/fundamentals)
+参照。
+
+
+## その戻り値の型 `Promise<Element>` は、有効な JSX 要素ではありません。
+
+```
+'UsersList' を JSX コンポーネントとして使用することはできません。
+  その戻り値の型 'Promise<Element>' は、有効な JSX 要素ではありません。
+    型 'Promise<Element>' には 型 'ReactElement<any, any>' からの次のプロパティがありません: type, props, keyts(2786)
+```
+
+みたいなやつをカッコよく回避する方法はないです。
+
+> 残念ながら、今のところこれを回避する唯一の方法は、非同期サーバーコンポーネントに :any 型定義を使用することです。
+> Next.js 13のTypescriptのドキュメントに、この方法が紹介されています。
+
+- [reactjs \- Next 13 — client and async server component combined: 'Promise<Element>' is not a valid JSX element \- Stack Overflow](https://stackoverflow.com/questions/75497449/next-13-client-and-async-server-component-combined-promiseelement-is-not)
+- [Configuring: TypeScript \| Next\.js](https://beta.nextjs.org/docs/configuring/typescript)
+- [Async Server Component TypeScript Error](https://beta.nextjs.org/docs/configuring/typescript#async-server-component-typescript-error)
+
+
+> 一時的な回避策として、コンポーネントの上に{/* @ts-expect-error Async Server Component */}を追加することで、そのコンポーネントの型チェックを無効化することができます。
+
+あと
+
+> LayoutおよびPageコンポーネントには適用されません。
+
+これはなんとなくわかる。
+
+
+## Server ComponentとClient Component
+
+[Rendering: Server and Client Components | Next.js](https://beta.nextjs.org/docs/rendering/server-and-client-components)
+
+サーバー＆クライアントコンポーネントにより、開発者はサーバーとクライアントにまたがるアプリケーションを構築することができ、クライアントサイドアプリケーションの豊かなインタラクティブ性と従来のサーバーレンダリングの改善された性能を組み合わせることができます。
+
+このページでは、Server ComponentとClient Componentの違いと、Next.jsアプリケーションでの使い方を説明します。
+
+appディレクトリ内のコンポーネントは、特殊なファイルやコロケーションされたコンポーネントも含め、
+**デフォルトですべてReact Server Components（RSC）**
+になっています。
+
+クライアントコンポーネントを使用すると、アプリケーションにクライアントサイドのインタラクティブ性を追加することができます。
+Next.jsでは、サーバーでプリレンダリングされ、クライアントでハイドレーションされます。
+
+'use client';ディレクトリを先頭に書けば、それはクライアントコンポーネント。
+
+"use client "は、すべてのファイルで定義する必要はありません。
+Clientモジュールの境界は、「エントリーポイント」で一度だけ定義すればよく、そこにインポートされたすべてのモジュールがClientコンポーネントとみなされます。
+
+
+[When to use Server vs\. Client Components?](https://beta.nextjs.org/docs/rendering/server-and-client-components#when-to-use-server-vs-client-components)
+
+## generateStaticParams
+
+Dynamic routeで設定されたページをStaticな静的なファイルとして作成したい場合
+generateStaticParamsを使うとSSGになる。
+
+[Server Component Functions: generateStaticParams | Next.js](https://beta.nextjs.org/docs/api-reference/generate-static-params)
+
+
+
+## App Router (beta) 抜き書き
+
+[File Conventions](https://beta.nextjs.org/docs/routing/fundamentals#file-conventions)
+
+layoutとtemplate、2つあるのはなんで?
+
+templateの方は「ただし、新しいコンポーネントインスタンスがナビゲーションにマウントされる」
+
+ここで列挙されてるのが「特殊なファイル」で、あとは好き勝手に何を置いてもいい([Colocation](https://beta.nextjs.org/docs/routing/fundamentals#colocation))。
+
+`route.js`がよくわからん。
+
+[Component Hierarchy](https://beta.nextjs.org/docs/routing/fundamentals#component-hierarchy)
