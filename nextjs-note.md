@@ -196,3 +196,25 @@ templateの方は「ただし、新しいコンポーネントインスタンス
 `route.js`がよくわからん。
 
 [Component Hierarchy](https://beta.nextjs.org/docs/routing/fundamentals#component-hierarchy)
+
+
+## revalidate
+
+- [Data Fetching: Revalidating | Next.js](https://beta.nextjs.org/docs/data-fetching/revalidating)
+- https://beta.nextjs.org/docs/api-reference/segment-config#revalidate
+
+```typescript
+const getUser = async (id: string) => {
+  const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+    next: {
+      revalidate: 60,
+    },
+  });
+  const user: User = await response.json();
+
+  return user;
+};
+```
+
+SWRだと [Automatic Revalidation – SWR](https://swr.vercel.app/docs/revalidation) ? (試すこと)
+[Mutation & Revalidation – SWR](https://swr.vercel.app/docs/mutation)
