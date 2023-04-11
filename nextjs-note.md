@@ -218,3 +218,13 @@ const getUser = async (id: string) => {
 
 SWRだと [Automatic Revalidation – SWR](https://swr.vercel.app/docs/revalidation) ? (試すこと)
 [Mutation & Revalidation – SWR](https://swr.vercel.app/docs/mutation)
+
+そもそもサーバでSWR使えるかよくわからん(loading.jsとかの関係で)。
+クライアントサイドではSWRとか使え、って書いてあるけど。
+https://beta.nextjs.org/docs/data-fetching/fundamentals#fetching-data-on-the-server
+
+
+## fetch()
+
+自分自身を参照するようなfetch()を使うとbuildできない(当然だけど)。
+Reactとは違う。クライアントコンポーネントにしてもダメ。build時に1回呼ぶから。
