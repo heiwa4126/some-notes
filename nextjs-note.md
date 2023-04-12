@@ -181,6 +181,24 @@ generateStaticParamsを使うとSSGになる。
 
 [Server Component Functions: generateStaticParams | Next.js](https://beta.nextjs.org/docs/api-reference/generate-static-params)
 
+## import alias
+
+```bash
+pnpm create next-app@latest appdir --ts --use-pnpm
+```
+とかやったときの
+
+> What import alias would you like configured? ... @/*
+
+とは何か?
+
+[Next.js+TypeScriptでパスのaliasを設定する - Qiita](https://qiita.com/tatane616/items/e3ee99a181662ad6824b)
+
+> Next.js + TypeScript のプロジェクトで相対パス辛いなとなったので、そのエイリアスの設定方法
+> import { SomeComponent } from '@/components/SomeComponent みたいなやつです
+
+[Advanced Features: Absolute Imports and Module Path Aliases | Next.js](https://nextjs.org/docs/advanced-features/module-path-aliases)
+
 
 
 ## App Router (beta) 抜き書き
