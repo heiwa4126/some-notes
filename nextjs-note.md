@@ -228,3 +228,10 @@ https://beta.nextjs.org/docs/data-fetching/fundamentals#fetching-data-on-the-ser
 
 自分自身を参照するようなfetch()を使うとbuildできない(当然だけど)。
 Reactとは違う。クライアントコンポーネントにしてもダメ。build時に1回呼ぶから。
+
+https://beta.nextjs.org/docs/data-fetching/caching#per-request-caching
+
+によると、
+fetch()にはすでにcache()がパッチされているので
+fetch()を使う場合には `import {cache} from "react";` は不要。
+DBのクエリにはcache()を使え、と書いてある。
