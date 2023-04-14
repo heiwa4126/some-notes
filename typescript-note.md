@@ -32,3 +32,12 @@ const hash2: { [key: string]: string } = {
   orange: "オレンジ",
 };
 ```
+
+
+# Jupyter で Node.js で TypeScript
+
+ちょっとだけ小さいコードの確認用にJupyterが使えるといいなあ、と思った。
+
+[yunabe/tslab: Interactive JavaScript and TypeScript programming with Jupyter](https://github.com/yunabe/tslab)
+
+あとで試す。
