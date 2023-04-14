@@ -274,3 +274,16 @@ https://beta.nextjs.org/docs/data-fetching/caching#per-request-caching
 fetch()にはすでにcache()がパッチされているので
 fetch()を使う場合には `import {cache} from "react";` は不要。
 DBのクエリにはcache()を使え、と書いてある。
+
+
+## Turbopack
+
+
+[Configuring: Turbopack | Next.js](https://beta.nextjs.org/docs/configuring/turbopack)
+
+1から始める場合
+```bash
+pnpm create next-app@latest your-app-name --ts --use-pnpm -e with-turbopack
+```
+
+既存のプロジェクトにTurbopackサポートを追加するには?
