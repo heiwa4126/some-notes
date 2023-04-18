@@ -30,3 +30,11 @@ Viteのvite.config.tsだと
 ```
 
 みたいな感じ。
+
+参照:
+- [リポジトリ名の取得 [GitHub Actions]](https://zenn.dev/snowcait/articles/757d0c6815227f)
+
+bashだったら
+```bash
+${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
+```

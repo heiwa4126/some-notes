@@ -99,7 +99,7 @@ Reactには認証/認可を実装するためのフレームワークは標準�
 これらのフレームワークは、認証/認可の方法や要件に応じて、使用するものを選ぶことができます。
 
 
-# Hydrate/Rehydrate
+## Hydrate/Rehydrate
 
 "Hydrate"と"Rehydrate"は、Reactアプリケーションにおいてサーバーサイドレンダリング（SSR）とクライアントサイドレンダリング（CSR）を統合するための専門用語です。
 
@@ -115,10 +115,24 @@ Reactには認証/認可を実装するためのフレームワークは標準�
 これらの用語は、SSRとCSRを統合することで、ユーザーの読み込み時間を短縮し、ページのパフォーマンスを向上させることができます。
 
 
-# ReactのuseEfectでオブジェクトの比較に使われるのはshallow compareですか? useStateではどうですか?
+## ReactのuseEfectでオブジェクトの比較に使われるのはshallow compareですか? useStateではどうですか?
 
 ReactのuseStateおよびuseEffectフックでは、デフォルトで浅い比較が使用されます。
 つまり、オブジェクトが同じ参照を持っている場合には同じであると見なされます。
 このため、オブジェクトに対して直接プロパティを変更すると、オブジェクトの参照が同じままであり、useStateおよびuseEffectフックはそれを検出できず、再レンダリングが行われません。
 
 いろいろやってみたけど、この動作がいちばん簡単で自由度が高い感じ。
+
+## JSX.Element vs ReactElement vs ReactNode
+
+- [JSX\.Element vs ReactElement vs ReactNode \- DEV Community](https://dev.to/fromaline/jsxelement-vs-reactelement-vs-reactnode-2mh2)
+- [ReactElement・ReactNode・JSX.Elementの違い](https://zenn.dev/i_sa/scraps/2db2fc0deb223e)
+
+SX.Element, ReactElement, ReactNode は、Reactの中で使用される型であり、以下のような違いがあります。
+
+- **JSX.Element**：JSX構文を使って書かれたReact要素（コンポーネント、HTML要素、テキストなど）の型を表します。ReactのコンポーネントはJSX.Elementを返す必要があります。ReactElement と同じで、props と type が any 型になっています
+- **ReactElement**：JSX.Elementと同じ意味で、Reactライブラリで定義されている型のエイリアスです。ReactElementはReactNodeの一部であり、ReactNodeが持つprops、key、refを持っています。type と props はジェネリックで指定できます
+- **ReactNode**：Reactの要素の型を表します。ReactNodeはReactの仮想DOMに描画されるすべての要素を表し、文字列、数値、ReactElementなど、すべての可能な型を含みます。ReactNodeはprops、key、refを持ちますが、型情報は失われています。React のクラスコンポーネントの render() メソッドの戻り値は ReactNode 型になります。
+
+つまり、JSX.ElementとReactElementは同じものを表しており、ReactNodeはJSX.Elementを含むすべての要素を表しています。
+Reactコンポーネントの返り値としてはJSX.Elementを使うことが一般的です。
