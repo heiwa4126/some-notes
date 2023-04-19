@@ -205,3 +205,11 @@ moduleResolution の node モジュール解決方式は、
 
 
 ## ECMAScript Module Support と CommonJS implementation の違い
+
+(省略w)
+
+## `npm -g install` でインストールされたパッケージの一覧
+
+```bash
+npm list -g --depth 0
+```
