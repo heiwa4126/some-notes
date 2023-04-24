@@ -60,3 +60,18 @@ python3 setup.py install --user
 
 で準備完了。`README.md` にサンプルコードがあるので、それをコピペして実行。
 更に改造するには `docs/DefaultApi.md` を見る。
+
+
+# Embeddings: 文書の特徴量抽出
+
+[Embeddings - OpenAI API](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings)
+
+エンベッディングは、浮動小数点数のベクトル（リスト）である。
+2つのベクトル間の距離は、それらの関連性を計測する。
+距離が小さいと関連性が高く、距離が大きいと関連性が低いことを示唆する。
+
+画像の特徴量はなんとなくわかるけど
+文書の特徴量はピンとこない。
+
+ましてやOpenAIでは日本語は単語じゃなくて文字単位で特徴量抽出してるわけで、
+ますます不思議である。
