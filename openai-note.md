@@ -85,6 +85,9 @@ AzureだとOpenAIスタジオにUIがある。
 カスタムモデルができる。
 
 AzureのOpenAIには「カスタマイズしたモデルをデプロイ」というステップがある。
+> カスタマイズしたモデルに対して許可されるデプロイは 1 つだけです。 既にデプロイされているカスタマイズしたモデルを選択すると、エラーが発生します。
+
+なんだよそれ。[カスタマイズしたモデルをデプロイする](https://learn.microsoft.com/ja-jp/azure/cognitive-services/openai/how-to/fine-tuning?pivots=programming-language-python#deploy-a-customized-model)
 
 prompt&completion、どんなものを用意したらいいの?
 
