@@ -61,6 +61,40 @@ python3 setup.py install --user
 で準備完了。`README.md` にサンプルコードがあるので、それをコピペして実行。
 更に改造するには `docs/DefaultApi.md` を見る。
 
+# Fine-tuning
+
+[Fine\-tuning \- OpenAI API](https://platform.openai.com/docs/guides/fine-tuning)
+
+Q&Aやコール&レスポンスをprompt&completionの組にしてJSONLにする。
+(csvなんかから作ると楽らしい。[OpenAI CLI データ準備ツール](https://learn.microsoft.com/ja-jp/azure/cognitive-services/openai/how-to/fine-tuning?pivots=programming-language-studio#openai-cli-data-preparation-tool)参照)
+
+JSONLは末尾の`,`なしのdictの配列。改行が`,`がわりで、
+最初と最後の`[...]`がないやつだ。
+
+おそらくprompt&completionにトークン数の制限がある。
+
+環境変数 `OPENAI_API_KEY`
+
+ベースになるモデルを選んで流し込む。
+
+AzureだとOpenAIスタジオにUIがある。
+[\[Create customized model\]\(カスタマイズしたモデルの作成\) ウィザードを使用する](https://learn.microsoft.com/ja-jp/azure/cognitive-services/openai/how-to/fine-tuning?pivots=programming-language-studio#use-the-create-customized-model-wizard)
+
+参考: [OpenAI APIのFine-tuningを試してみる | DevelopersIO](https://dev.classmethod.jp/articles/888c355f2c88e117d172ec1bd3d28a435ee438766630638e3e9f7887aef8f5ee/)
+
+カスタムモデルができる。
+
+AzureのOpenAIには「カスタマイズしたモデルをデプロイ」というステップがある。
+
+prompt&completion、どんなものを用意したらいいの?
+
+[【完全保存版】GPT を特定の目的に特化させて扱う (Fine-tuning, Prompt, Index, etc.) - Qiita](https://qiita.com/tmgauss/items/22c4e5e00282a23e569d)
+
+にいくつかサンプルが。
+
+* [ミルクボーイのネタでGPT-3をファインチューニングしてみた (1) \~入門編\~ - Qiita](https://qiita.com/wt1113/items/41196237d234dba7660f)
+* [ミルクボーイのネタでGPT-3をファインチューニングしてみた (2) \~リベンジ編\~ - Qiita](https://qiita.com/wt1113/items/ee7d558cdc5c4b7da721)
+* で、[カスタム モデル トレーニングのためにデータセットを準備する方法 - Azure OpenAI Service | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/cognitive-services/openai/how-to/prepare-dataset)
 
 # Embeddings: 文書の特徴量抽出
 
