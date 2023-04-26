@@ -99,6 +99,23 @@ prompt&completion、どんなものを用意したらいいの?
 * [ミルクボーイのネタでGPT-3をファインチューニングしてみた (2) \~リベンジ編\~ - Qiita](https://qiita.com/wt1113/items/ee7d558cdc5c4b7da721)
 * で、[カスタム モデル トレーニングのためにデータセットを準備する方法 - Azure OpenAI Service | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/cognitive-services/openai/how-to/prepare-dataset)
 
+
+https://platform.openai.com/docs/guides/fine-tuning/data-formatting
+
+**データフォーマット**
+
+モデルを微調整するには、1つの入力("prompt" 以下「プロンプト」)と
+それに関連する出力("completion" 以下「補完」)で構成される学習例セットが必要です。
+これは、1つのプロンプトに詳細な指示や複数の例を入力するようなベースモデルの使用とは大きく異なります。
+
+- 各プロンプトは、プロンプトの終了と完了の開始をモデルに知らせるため、固定したセパレータで終了する必要があります。一般的にうまく機能する簡単なセパレータは、`\n\n###\n\n` のようなものである。このセパレータは、プロンプトの他の場所に表示されないようにする。
+- ほとんどの単語がトークナイザーによって先行する空白でトークン化されるため、各補完は空白で始まるはずです。(日本語はどうなの)
+- 各補完は、補完の終了をモデルに知らせるために、決まった停止シーケンスで終了する必要があります。例えば `\n`や`###` など。
+- 推論する時には、トレーニングデータセットを作成したときと同じように、**同じセパレータを含むプロンプトでフォーマットする必要があります**。また、補完を適切に切り捨てるために、**同じ停止シーケンスを指定します**。
+
+
+
+
 # Embeddings: 文書の特徴量抽出
 
 [Embeddings - OpenAI API](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings)
