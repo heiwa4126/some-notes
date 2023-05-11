@@ -22,7 +22,6 @@
   - [ローカル](#ローカル)
   - [リモート](#リモート)
 
-
 # gitの設定をリスト
 
 ``` bash
@@ -32,6 +31,7 @@ git config --local -l # local設定だけ
 ```
 
 範囲は
+
 1. `--system`
 2. `--global`
 3. `--local`
@@ -56,7 +56,6 @@ echo '*~' >> ~/.config/git/ignore
 
 Windowsは? 調べる。
 
-
 # symlinkの扱い
 
 [Git - git-config Documentation](https://git-scm.com/docs/git-config)の
@@ -72,9 +71,11 @@ git config --global core.symlinks false
 git config --local core.symlinks false
 sudo git config --system core.symlinks false
 ```
+
 適切な範囲で設定しておけばいい。
 
 symlinkを無視したいなら、project rootで
+
 ``` bash
 find * -type l >> .gitignore
 ```
@@ -85,6 +86,7 @@ find * -type l >> .gitignore
 ``` bash
 find . -type l -printf '%P\n' >> .gitignore
 ```
+
 で
 
 # master to main
@@ -95,25 +97,27 @@ find . -type l -printf '%P\n' >> .gitignore
 - [Easily rename your Git default branch from master to main - Scott Hanselman](https://www.hanselman.com/blog/EasilyRenameYourGitDefaultBranchFromMasterToMain.aspx)
 - [Git: Correct way to change Active Branch in a bare repository? - Stack Overflow](https://stackoverflow.com/questions/3301956/git-correct-way-to-change-active-branch-in-a-bare-repository)
 
-
 すでにcloneされてるやつのあつかいが難しい。
 
 あたらしく始めるなら
+
 ```sh
 git branch -m main
 git remote add origin repositoryanysome
 git push -u origin main
 ```
+
 で
+
 ```sh
 git clone repositoryanysome -b main
 ```
+
 みたいに。
 
 次のgitからデフォルトが`main`になるらしい。
 
 - [git/git: Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. Please follow Documentation/SubmittingPatches procedure for any of your improvements.](https://github.com/git/git)
-
 
 # 登録されているリモートリポジトリの確認
 
@@ -122,7 +126,6 @@ git remote -v
 ```
 
 `.git/conf`みるよりちょっと楽。
-
 
 # ubuntuで新しめのgitを使う
 
@@ -144,13 +147,16 @@ sudo apt install git
 - [AWS Access Keyを外部に公開してしまった話 | mediba Creator × Engineer Blog](https://ceblog.mediba.jp/post/638125766874415104/aws-access-key%E3%82%92%E5%A4%96%E9%83%A8%E3%81%AB%E5%85%AC%E9%96%8B%E3%81%97%E3%81%A6%E3%81%97%E3%81%BE%E3%81%A3%E3%81%9F%E8%A9%B1)
 
 Ubuntuだと
+
 ```bash
 sudo apt install git-secrets
 ```
+
 でOK
 
 git-secretsインストールしたら
 既存または新規のgitプロジェクトで
+
 ```sh
 git secrets --install
 git secrets --register-aws
@@ -163,6 +169,7 @@ git secrets --register-aws
 にあるように全レポジトリに設定したほうがいいとおもう。
 
 ↑から引用
+
 ```sh
 git secrets --register-aws --global
 # Add hooks to all your local repositories.
@@ -176,12 +183,10 @@ git config --global init.templateDir ~/.git-templates/git-secrets
     `git secrets --scan-history`
 )
 
-
 # diffをgithubみたくする
 
 - [unix \- ターミナルの diff で、github のように、行の中で具体的に差分がある部分に色付けをしたい \- スタック・オーバーフロー](https://ja.stackoverflow.com/questions/75829/%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%81%AE-diff-%E3%81%A7-github-%E3%81%AE%E3%82%88%E3%81%86%E3%81%AB-%E8%A1%8C%E3%81%AE%E4%B8%AD%E3%81%A7%E5%85%B7%E4%BD%93%E7%9A%84%E3%81%AB%E5%B7%AE%E5%88%86%E3%81%8C%E3%81%82%E3%82%8B%E9%83%A8%E5%88%86%E3%81%AB%E8%89%B2%E4%BB%98%E3%81%91%E3%82%92%E3%81%97%E3%81%9F%E3%81%84)
 - [gitのdiff\-highlightを使い始めた \- りんごとバナナとエンジニア](https://udomomo.hatenablog.com/entry/2019/12/01/181404)
-
 
 # プロジェクトスケルトンを作るツールで、空のディレクトリに.gitkeep
 
@@ -192,7 +197,6 @@ find -type d -empty | xargs -i{} touch {}/.gitkeep
 ```
 
 TODO:「空でなくなったディレクトリにある.etckeepを消す」も。
-
 
 # gitのシェル補完
 
@@ -207,7 +211,6 @@ git: /usr/share/bash-completion/completions/git
 
 古いRHELだとどうか?
 
-
 # Git for Windows付属のmsys2 mingwはp11-kitが入ってない
 
 で、オレオレ証明書を使って運営しているGitLabにhttpsでつながらない。
@@ -216,11 +219,12 @@ git: /usr/share/bash-completion/completions/git
 pacmanも無いのでインストールできない。
 
 あきらめて
+
 ```
 git config --global http.sslVerify false
 ```
-した。敗北だ。
 
+した。敗北だ。
 
 # submoduleまで含めてgitリポジトリの内容をzipファイルにする
 
@@ -230,6 +234,7 @@ git clone hoge --recursive
 git fetch # or `git submodule foreach git pull`
 git commit -am 'hogehoge'
 ```
+
 したレポジトリからzipを作る話。
 
 ```sh
@@ -237,13 +242,13 @@ pip install git-archive-all
 git-archive-all my_repo.zip
 ```
 
-* [submoduleまで含めてgitリポジトリの内容をzipファイルにする - Qiita](https://qiita.com/yohm/items/248fcc36707d5d3b5b86)
-* [git archive export with submodules (git archive all / recursive) - Stack Overflow](https://stackoverflow.com/questions/14783127/git-archive-export-with-submodules-git-archive-all-recursive)
-* [Kentzo/git-archive-all: A python script wrapper for git-archive that archives a git superproject and its submodules, if it has any. Takes into account .gitattributes](https://github.com/Kentzo/git-archive-all)
+- [submoduleまで含めてgitリポジトリの内容をzipファイルにする - Qiita](https://qiita.com/yohm/items/248fcc36707d5d3b5b86)
+- [git archive export with submodules (git archive all / recursive) - Stack Overflow](https://stackoverflow.com/questions/14783127/git-archive-export-with-submodules-git-archive-all-recursive)
+- [Kentzo/git-archive-all: A python script wrapper for git-archive that archives a git superproject and its submodules, if it has any. Takes into account .gitattributes](https://github.com/Kentzo/git-archive-all)
 
 おまけ
-* [git submodule はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ](https://www.m3tech.blog/entry/git-submodule)
 
+- [git submodule はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ](https://www.m3tech.blog/entry/git-submodule)
 
 # gitでsymlinkを扱いたい
 
@@ -258,7 +263,6 @@ git config --unset core.symlinks
 ```
 
 参考: [シンボリックリンクの使い方](https://zenn.dev/kunosu/articles/f2a459431c3a4dfc48cb)
-
 
 ## etckeeper
 
@@ -279,8 +283,8 @@ git config --local core.symlinks true
 ```bash
 source /usr/share/bash-completion/completions/git
 ```
-で。
 
+で。
 
 # git-crypt
 
@@ -320,6 +324,7 @@ cd repo1-clone
 ```bash
 git-crypt unlock
 ```
+
 するとGPGのキーを聞いてくるので入力すると復号される。
 
 これでとりあえず当人はOK。
@@ -328,6 +333,7 @@ git-crypt unlock
 `.gitattributes` にファイルとかディレクトリまるごと追加するコマンドがほしい。
 
 ↑これはGitHubにサンプルがあった。
+
 ```
 secretfile filter=git-crypt diff=git-crypt
 *.key filter=git-crypt diff=git-crypt
@@ -337,6 +343,7 @@ secretdir/** filter=git-crypt diff=git-crypt
 # Gitでファイルパーミッションの変更を無視する
 
 LinuxとWindowsでgitで作業してるときに。Windows側で
+
 ```bash
 git config core.filemode false
 # ついでに
@@ -347,7 +354,6 @@ git config -l | select-string filemode
 ```
 
 - [Git でファイルパーミッションの変更（chmod）を無視する \- git config core\.filemode false](https://blog.t5o.me/post/20121119/git-chmod-git-config-core-filemode.html)
-
 
 # Gitでtagのとりけし
 

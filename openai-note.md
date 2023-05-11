@@ -131,3 +131,13 @@ https://platform.openai.com/docs/guides/fine-tuning/data-formatting
 ますます不思議である。
 
 リストから元の文書って取り出せるのかな?
+
+
+## `\n\n###\n\n`
+
+Q.  
+OpenAIのplaygoundの `Inject start text` と `Inject restart text` の項目に改行(\n)を入れるには?
+(Azure版だと「応答前のテキスト」「応答後のテキスト」)
+
+A.  
+「Shift+Enter」
