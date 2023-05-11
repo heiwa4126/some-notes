@@ -10,14 +10,12 @@
 - [OpenAPI 3を完全に理解できる本 - ota42y - BOOTH](https://booth.pm/ja/items/1571902)
 - [REST API のためのコード生成入門 (OpenAPI Generator)](https://wing328.gumroad.com/l/openapi_generator_ebook_jp)
 
-
 # AWS API Gatewayから エクスポート
 
 - [API Gateway から REST API をエクスポートする - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-export-api.html)
 - [get-export — AWS CLI 2.7.12 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/apigateway/get-export.html)
 
 これはなかなか便利。swaggerかOpenAPI3で出せる。
-
 
 # コンソールからAWS API Gatewayでバリデータなどをいじった後
 
@@ -29,16 +27,13 @@ CLIもあると思うが調べてない。あとstackのドリフトは再デプ
 
 ほか一覧: [再デプロイが必要な REST API の更新 - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/updating-api.html)
 
-
 # generateできるクライアントとサーバーのリスト
 
 ```bash
 docker run --rm openapitools/openapi-generator-cli list
 ```
 
-
 [python 3.x - ImportError: cannot import name 'escape' from 'jinja2' - Stack Overflow](https://stackoverflow.com/questions/71718167/importerror-cannot-import-name-escape-from-jinja2)
-
 
 # クライアントを作る話
 
@@ -52,6 +47,7 @@ docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
 ```
 
 でコードが生成されるので
+
 ```bash
 sudo chown -R ${UID} out
 cd out/python
@@ -95,12 +91,11 @@ prompt&completion、どんなものを用意したらいいの?
 
 にいくつかサンプルが。
 
-* [ミルクボーイのネタでGPT-3をファインチューニングしてみた (1) \~入門編\~ - Qiita](https://qiita.com/wt1113/items/41196237d234dba7660f)
-* [ミルクボーイのネタでGPT-3をファインチューニングしてみた (2) \~リベンジ編\~ - Qiita](https://qiita.com/wt1113/items/ee7d558cdc5c4b7da721)
-* で、[カスタム モデル トレーニングのためにデータセットを準備する方法 - Azure OpenAI Service | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/cognitive-services/openai/how-to/prepare-dataset)
+- [ミルクボーイのネタでGPT-3をファインチューニングしてみた (1) \~入門編\~ - Qiita](https://qiita.com/wt1113/items/41196237d234dba7660f)
+- [ミルクボーイのネタでGPT-3をファインチューニングしてみた (2) \~リベンジ編\~ - Qiita](https://qiita.com/wt1113/items/ee7d558cdc5c4b7da721)
+- で、[カスタム モデル トレーニングのためにデータセットを準備する方法 - Azure OpenAI Service | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/cognitive-services/openai/how-to/prepare-dataset)
 
-
-https://platform.openai.com/docs/guides/fine-tuning/data-formatting
+<https://platform.openai.com/docs/guides/fine-tuning/data-formatting>
 
 **データフォーマット**
 
@@ -112,9 +107,6 @@ https://platform.openai.com/docs/guides/fine-tuning/data-formatting
 - ほとんどの単語がトークナイザーによって先行する空白でトークン化されるため、各補完は空白で始まるはずです。(日本語はどうなの)
 - 各補完は、補完の終了をモデルに知らせるために、決まった停止シーケンスで終了する必要があります。例えば `\n`や`###` など。
 - 推論する時には、トレーニングデータセットを作成したときと同じように、**同じセパレータを含むプロンプトでフォーマットする必要があります**。また、補完を適切に切り捨てるために、**同じ停止シーケンスを指定します**。
-
-
-
 
 # Embeddings: 文書の特徴量抽出
 
@@ -131,7 +123,6 @@ https://platform.openai.com/docs/guides/fine-tuning/data-formatting
 ますます不思議である。
 
 リストから元の文書って取り出せるのかな?
-
 
 ## `\n\n###\n\n`
 
