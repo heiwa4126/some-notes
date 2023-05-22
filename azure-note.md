@@ -24,6 +24,7 @@
 - [「仮想マシンエージェントの状態の準備ができていません」](#仮想マシンエージェントの状態の準備ができていません)
 - [「セキュリティを強化するには、この VM でJust-In-Time アクセスを有効にします」](#セキュリティを強化するにはこの-vm-でjust-in-time-アクセスを有効にします)
 - [複数NIC](#複数nic)
+- [Azure VM のローカル一時ディスクを/tmpとして使う](#azure-vm-のローカル一時ディスクをtmpとして使う)
 
 # Azure CLI
 
@@ -43,7 +44,6 @@ pipでもインストールできるが、
 
 なので、pipを使うのはやめたほうがいい。
 
-
 ## Windows
 
 **pipでインストールしないこと。MSIでインストールすること。**
@@ -53,7 +53,6 @@ pipでもインストールできるが、
 PowerShell でのインストール例も出てるけど、けっこう時間がかかって不安になるので、おすすめしない。
 Azureなどでは使えるかも?(win_msiモジュールを使うと思う)
 
-
 ## Azure CLI コマンド補完
 
 aptで入れたら
@@ -61,23 +60,26 @@ aptで入れたら
 がインストールされるので
 特に追加作業はない。
 
-
 # azure-cliでアカウントの切り替え方
 
 ```
 az account show
 ```
+
 でカレントのアカウント表示
 
 ```
 az account list | less
 ```
+
 アカウントリスト表示。
 
 リストの"id"フィールドをコピペして
+
 ```
 az account set -s <ここにidをペースト>
 ```
+
 で、アカウント切り替え。
 
 参考:
@@ -93,7 +95,6 @@ az ad signed-in-user show
 
 [az ad signed-in-user | Microsoft Docs](https://docs.microsoft.com/en-us/cli/azure/ad/signed-in-user?view=azure-cli-latest#az-ad-signed-in-user-show)
 
-
 # persist
 
 便利。 [永続化されたパラメーター オプション – Azure CLI | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/param-persist-howto)
@@ -103,15 +104,13 @@ az config param-persist on
 ```
 
 カレントディレクトリで設定されてる値を見る。
+
 ```bash
 az config param-persist show
 ```
 
 設定は(いまのところ) .azure/.local_context_ユーザ名 というファイルに保存される。
 ドキュメントにある .param_persist ってのはウソ (昔はこれだった、とかはあるかも)。
-
-
-
 
 # テナントID
 
@@ -126,11 +125,9 @@ az config param-persist show
 - [Azure サブスクリプション、リソース、ロール、Azure AD の関係 その1 - Qiita](https://qiita.com/junichia/items/e8cf118314a173efcb68)
 - [Azure サブスクリプションと Azure AD の管理者 – Japan Azure Identity Support Blog](https://blogs.technet.microsoft.com/jpazureid/2017/11/04/azure-subscription-azuread-admin/)
 
-
 複数の信頼されたAD,AADのグループを「フェデレーション(federation)」という
 
 [Azure AD とのフェデレーションとは | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/hybrid/whatis-fed)
-
 
 # Azure AD Graph API
 
@@ -142,10 +139,10 @@ az config param-persist show
 違いは
 [Microsoft ID プラットフォーム (v2.0) に更新する理由 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/develop/azure-ad-endpoint-comparison)
 
-
 # Azureでの時刻同期
 
 Azureでは
+
 - [Azure での Linux VM の時刻同期 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync)
 - [Manage Hyper-V Integration Services | Microsoft Docs](https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/manage/manage-hyper-v-integration-services#start-and-stop-an-integration-service-from-a-linux-guest)
 
@@ -161,17 +158,21 @@ ps -ef | grep hv
 ls /sys/class/ptp
 cat /sys/class/ptp/ptp0/clock_name
 ```
+
 で確認。
 
 PTPソースを使えるchronyで
+
 ```
 refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
 ```
+
 のように設定。
 
 systemd-timesyncdはPTPをサポートしてない
 
 設定してしばらく後
+
 ```
 # chronyc sources
 210 Number of sources = 2
@@ -180,11 +181,8 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 #* PHC0                          0   3   377    11    -63ns[ +758ns] +/- 1711ns
 ^- 40.74.70.63                   2   6   377   111    -31ms[  -31ms] +/-  116ms
 ```
+
 (NTPサーバはtime.windows.comを指定してみた)
-
-
-
-
 
 # hv-fcopy-daemon.service が fail
 
@@ -204,14 +202,12 @@ $ systemctl status hv-fcopy-daemon
  6月 18 12:03:52 u9 systemd[1]: hv-fcopy-daemon.service: Main process exited, code=exited, status=1/FAILURE
  6月 18 12:03:52 u9 systemd[1]: hv-fcopy-daemon.service: Failed with result 'exit-code'.
 ```
-確かに/dev/vmbus/hv_fcopyは無い。(つづく)
 
+確かに/dev/vmbus/hv_fcopyは無い。(つづく)
 
 # omsagentをとめる
 
 [Disable monitoring in Azure Monitor for VMs - Azure Monitor | Microsoft Docs](https://docs.microsoft.com/en-us/azure/azure-monitor/insights/vminsights-optout)
-
-
 
 # Azureのスケーリング
 
@@ -237,7 +233,6 @@ $ systemctl status hv-fcopy-daemon
 
 公開鍵認証ができないみたい。
 
-
 # Azure AZ
 
 可用性セット(Availability Set)だけじゃなく、
@@ -247,14 +242,12 @@ $ systemctl status hv-fcopy-daemon
 - [Availability Zones をサポートする Azure サービス \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/availability-zones/az-region)
 - [Azure のリージョンと Availability Zones \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/availability-zones/az-overview)
 
-
 # MSIとは
 
 またMicrosoftが名前変えやがった。
 > Azure リソースのマネージド ID は、以前のマネージドサービス ID (MSI) の新しい名前です。
 
 [Azure リソースのマネージド ID | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/overview)
-
 
 ```
 $ az login --identity
@@ -268,11 +261,9 @@ MSI とは Managed Service Identity
 - [Azure リソースのマネージド ID | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/overview)
 - [Azure VM 上でマネージド ID を使用してサインインする \- Azure ADV \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in)
 
-
 VMに割り当てられているマネージドIDは?
 
 [チュートリアル\`:\` マネージド ID を使用して Azure Resource Manager にアクセスする \- Windows \- Azure AD \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/tutorial-windows-vm-access-arm)
-
 
 まず システム割り当てマネージドID(system-assigned managed identity)が有効になってるかを確認する方法
 
@@ -281,7 +272,6 @@ VMに割り当てられているマネージドIDは?
 ポータルから
 azureポータルのVMの左ペインから「ID」を選ぶ。
 追加できるけど削除するUIがない... (2021-07)
-
 
 - [Azure CLI を使用して、リソースにマネージド ID アクセスを割り当てる \- Azure AD \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/howto-assign-access-cli)
 
@@ -293,12 +283,12 @@ azureポータルのVMの左ペインから「ID」を選ぶ。
 # az cli よくつかうコマンド
 
 VM一覧
+
 ```sh
 az vm list -d -o table
 #
 az vm list -d --query "[].{Name:name,privateIps:privateIps}" -o table
 ```
-
 
 # azcopy
 
@@ -324,6 +314,7 @@ sudo mv azcopy_linux_amd64_10.11.0/azcopy /usr/local/bin
 ```
 
 で
+
 ```sh
 # upload
 azcopy cp test.txt "$BLOBURL"
@@ -336,7 +327,6 @@ fileだとどうか?
 
 [Azure SAS入門 \- Qiita](https://qiita.com/azaraseal/items/2eaea4cbb9e3faa57517)
 
-
 「Storage Explorer (プレビュー)」でfileのフォルダを右クリックすると
 「Shared Access Signatureの取得」がある。
 
@@ -344,18 +334,15 @@ fileだとどうか?
 [Azure Key Vault と Azure CLI を使用してストレージ アカウント キーを管理する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/key-vault/secrets/overview-storage-keys)
 [Microsoft Azure でマネージドストレージアカウントを展開する](https://blog.ipswitch.com/jp/deploy-a-managed-storage-account-in-microsoft-azure)
 
-
 # 168.63.129.16
 
 [IP アドレス 168.63.129.16 とは | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-network/what-is-ip-address-168-63-129-16)
 
 Azure VMのスペシャルIPらしい。メモ。
 
-
 # AzureのストレージアカウントでSFTP
 
 [Azure Blob Storage の SFTP のサポート (プレビュー) | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/storage/blobs/secure-file-transfer-protocol-support)
-
 
 # 「仮想マシンエージェントの状態の準備ができていません」
 
@@ -378,13 +365,11 @@ sudo python3 setup.py install --register-service
 
 [Azure VMでLinuxインスタンスを起動したら最初にやっておくべき初期設定［PR］ - Build Insider](https://www.buildinsider.net/pr/microsoft/azure/dictionary04)
 
-
 # 「セキュリティを強化するには、この VM でJust-In-Time アクセスを有効にします」
 
 お前は何を言ってるんだ。
 
 「Just-In-Time アクセスを有効にするため Security Center サブスクリプションをアップグレードする」だそうです。
-
 
 # 複数NIC
 
@@ -394,5 +379,24 @@ VMのサイズと使えるNIC枚数のリストがほしい。
 - [一歩先行く Azure Computing シリーズ（全3回） 第2回 Azure VM どれを選ぶの？ Azure VM 集中講座](https://www.slideshare.net/ssuser2602c6/azure-computing-3-2-azure-vm-azure-vm)
 
 このへん?
+
 - [Azure Cloud Services (クラシック) の仮想マシンのサイズ | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/cloud-services/cloud-services-sizes-specs)
 - [azure-content/virtual-networks-multiple-nics.md at master · toddkitta/azure-content](https://github.com/toddkitta/azure-content/blob/master/articles/virtual-network/virtual-networks-multiple-nics.md)
+
+# Azure VM のローカル一時ディスクを/tmpとして使う
+
+ローカル一時ディスクは、VMをホストしているマシン上にあり、
+マネージドディスクと比べて高速にリードライトできることが期待できます。
+
+Ubuntuだと systemd の rc-local unitで
+
+```bash
+sudo tee -a /etc/rc.local > /dev/null <<EOF
+#!/bin/sh
+mkdir --mode=1777 /mnt/local-ssd
+mount --bind /mnt/local-ssd /tmp
+EOF
+sudo chmod +x /etc/rc.local
+```
+
+で再起動。
