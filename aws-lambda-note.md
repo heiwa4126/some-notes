@@ -1,21 +1,30 @@
 # AWS Lmabdaメモ
 
 - [AWS Lmabdaメモ](#aws-lmabdaメモ)
-- [ハンドラのeventに値を渡す](#ハンドラのeventに値を渡す)
-- [AWS CodeCommitとCodePiplineでCI/CD](#aws-codecommitとcodepiplineでcicd)
-- [AWS Lambdaのデプロイツール](#aws-lambdaのデプロイツール)
-- [AWS SAM](#aws-sam)
-- [2019-11](#2019-11)
-- [AWS SAM](#aws-sam-1)
-- [API Gatewayの「リソース」と「ステージ」](#api-gatewayのリソースとステージ)
-- [API GatewayのサンプルPetStoreについて](#api-gatewayのサンプルpetstoreについて)
-- [API Gateway ステージ変数](#api-gateway-ステージ変数)
-- [コールドスタート vs ウォームスタート](#コールドスタート-vs-ウォームスタート)
-- [既存のLambdaのコードを取得する](#既存のlambdaのコードを取得する)
-- [既存のLambda layerのコードを取得する](#既存のlambda-layerのコードを取得する)
+  - [AWS Lambdaで使える言語のバージョン](#aws-lambdaで使える言語のバージョン)
+  - [ハンドラのeventに値を渡す](#ハンドラのeventに値を渡す)
+  - [AWS CodeCommitとCodePiplineでCI/CD](#aws-codecommitとcodepiplineでcicd)
+  - [AWS Lambdaのデプロイツール](#aws-lambdaのデプロイツール)
+  - [AWS SAM](#aws-sam)
+    - [2019-11](#2019-11)
+  - [AWS SAM part2](#aws-sam-part2)
+  - [API Gatewayの「リソース」と「ステージ」](#api-gatewayのリソースとステージ)
+  - [API GatewayのサンプルPetStoreについて](#api-gatewayのサンプルpetstoreについて)
+  - [API Gateway ステージ変数](#api-gateway-ステージ変数)
+  - [コールドスタート vs ウォームスタート](#コールドスタート-vs-ウォームスタート)
+  - [既存のLambdaのコードを取得する](#既存のlambdaのコードを取得する)
+  - [既存のLambda layerのコードを取得する](#既存のlambda-layerのコードを取得する)
 
+## AWS Lambdaで使える言語のバージョン
 
-# ハンドラのeventに値を渡す
+[Lambda runtimes - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html)
+
+2023-06に調べたところ、Python 3.10がサポートされてるので
+もうUbuntu 22.04LTSにpython3.9や3.8入れなくともいい。
+
+Nodeは18。LTSってことかな...
+
+## ハンドラのeventに値を渡す
 
 Cloud watch Eventのスケジュール実行で
 
@@ -27,6 +36,7 @@ Cloud watch Eventのスケジュール実行で
 それがまるごとハンドラのevent変数に入って呼ばれる。
 
 これ設定するとlambdaのdesigner画面から
+
 - イベントの削除
 - イベントの有効/無効の切り替え
 ができなくなる。バグっぽい。
@@ -34,15 +44,13 @@ Cloud watch Eventのスケジュール実行で
 ruleの画面からは有効/無効の切り替え、イベントの削除はできるので、
 そっちでやること。
 
-
-
-# AWS CodeCommitとCodePiplineでCI/CD
+## AWS CodeCommitとCodePiplineでCI/CD
 
 本当はGitHubでやりたいんだけど、まずは練習的に
 
 [AWS CodePipeline を使用して Lambda アプリケーションの継続的な配信パイプラインを構築する - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/build-pipeline.html)
 
-# AWS Lambdaのデプロイツール
+## AWS Lambdaのデプロイツール
 
 Azure functionsみたいにGitHubにpushすれば自動でデプロイ、
 のようなのがあるといいんだけれど、
@@ -60,18 +68,16 @@ AWS LambdaとAzure functionsって
   - [SAM init コマンドを使用した AWS SAM CLI によるシンプルなサーバレスアプリケーションの構築](https://aws.amazon.com/jp/about-aws/whats-new/2018/04/aws-sam-cli-releases-new-init-command/)
 - [AWS Lambda のミニマルなデプロイツール lambroll を書いた - 酒日記 はてな支店](https://sfujiwara.hatenablog.com/entry/lambroll)
 
-
-# AWS SAM
+## AWS SAM
 
 Azure Function Core Tools的なノリに思われる。
 
- - [Installing the AWS SAM CLI on Linux - AWS Serverless Application Model](https://docs.aws.amazon.com/en_pv/serverless-application-model/latest/developerguide/serverless-sam-cli-install-linux.html) - pip3 --userで入れるのが簡単そう
+- [Installing the AWS SAM CLI on Linux - AWS Serverless Application Model](https://docs.aws.amazon.com/en_pv/serverless-application-model/latest/developerguide/serverless-sam-cli-install-linux.html) - pip3 --userで入れるのが簡単そう
 - [serverless-application-model/examples/apps at master · awslabs/serverless-application-model · GitHub](https://github.com/awslabs/serverless-application-model/tree/master/examples/apps) - サンプル。どうもServerlessとそっくりに見える。
 - [Amazon.com: AWS Serverless Application Model: Developer Guide eBook: Amazon Web Services: Kindle Store](https://www.amazon.com/dp/B07P7K9VZB) - Kindle版. $0.
   - [Amazon.co.jpではこちら](https://www.amazon.co.jp/AWS-Serverless-Application-Model-Developer-ebook/dp/B07P7K9VZB/)
 
-
-# 2019-11
+### 2019-11
 
 - [新しいサーバーレスアプリ作成機能で CI/CD も作れます | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/new-serverless-app-creation-with-cicd/)
 - [AWS Lambdaのアプリケーション作成を使ってCI/CDパイプラインを一気に構築 - Qiita](https://qiita.com/shonansurvivors/items/b223fbb362aed3c1c536)
@@ -84,7 +90,7 @@ SAM環境で十分デバッグしてからでないと。
 
 あといまのところNodejsだけなのも辛い。
 
-# AWS SAM
+## AWS SAM part2
 
 [AWS SAM で Hello World する - Qiita](https://qiita.com/mokuo/items/3348f19d12cb9b17295d)
 
@@ -96,7 +102,6 @@ SAM環境で十分デバッグしてからでないと。
 [AWS Black Belt Online Seminar - AWS Serverless Application Model (AWS SAM) - サービスカットシリーズ](https://d1.awsstatic.com/webinars/jp/pdf/services/20190814_AWS-Blackbelt_SAM_rev.pdf)
 
 - templaye.ymlはCloudFormationそのものではない。
-
 
 [Telemetry in the AWS SAM CLI - AWS Serverless Application Model](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-telemetry.html)
 
@@ -117,16 +122,14 @@ hello-worldしかない...
 しょうがないのでtemplate.yaml
 [AWS SAM Template Concepts - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html)
 
-
 [serverless-application-model/2016-10-31.md at master · awslabs/serverless-application-model](https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md)
-
 
 [Python の AWS Lambda 関数ログ作成 - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/python-logging.html)
 
-
 テレメトリーがだいたいタイムアウトで失敗する
 [Telemetry in the AWS SAM CLI - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-telemetry.html)
-```
+
+```text
 SAM CLI now collects telemetry to better understand customer needs.
 
   You can OPT OUT and disable telemetry collection by setting the
@@ -134,15 +137,15 @@ SAM CLI now collects telemetry to better understand customer needs.
   Thanks for your help!
 ```
 
-```
+```text
 Telemetry endpoint configured to be https://aws-serverless-tools-telemetry.us-west-2.amazonaws.com/metrics
 ```
 
-# API Gatewayの「リソース」と「ステージ」
+## API Gatewayの「リソース」と「ステージ」
 
+(TODO)
 
-
-# API GatewayのサンプルPetStoreについて
+## API GatewayのサンプルPetStoreについて
 
 [チュートリアル: サンプルをインポートして REST API を作成する - Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/api-gateway-create-api-from-example.html)
 
@@ -161,20 +164,17 @@ OpenAPI定義ファイルについて学ばないといけないのがめんど�
 - [Swagger Editor](https://editor.swagger.io/)
 - [OpenAPI (Swagger) の基本的なあれこれ - ばうあーろぐ](https://girigiribauer.com/tech/20190318/)
 
-
 /petsのPOSTは
 `http://petstore.execute-api.ap-northeast-1.amazonaws.com/petstore/pets`
 
-
-# API Gateway ステージ変数
+## API Gateway ステージ変数
 
 こんなのあるなんて知らなかった
 
 - [REST API デプロイのステージ変数のセットアップ \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/stage-variables.html)
 - [Amazon API Gateway のステージ変数の使用 \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
 
-
-# コールドスタート vs ウォームスタート
+## コールドスタート vs ウォームスタート
 
 - [Lambdaの実行時間について | Oji-Cloud](https://oji-cloud.net/2019/07/15/post-2418/)
 - [AWS における サーバーレスの基礎からチューニングまで](https://www.slideshare.net/shimy_net/aws-79149218)
@@ -182,14 +182,14 @@ OpenAPI定義ファイルについて学ばないといけないのがめんど�
 - [New for AWS Lambda – Predictable start\-up times with Provisioned Concurrency \| AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/new-for-aws-lambda-predictable-start-up-times-with-provisioned-concurrency/)
 - [Operating Lambda: Performance optimization – Part 1 | AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/operating-lambda-performance-optimization-part-1/)
 
-
-# 既存のLambdaのコードを取得する
+## 既存のLambdaのコードを取得する
 
 引用元 [コンソールで確認できないLambda関数のコードを確認する \| DevelopersIO](https://dev.classmethod.jp/articles/confirm-lambda-code/)
 
 コンソールからexportできる。アクション -> 関数のエクスポート
 
 CLIからなら
+
 ```sh
 #!/bin/sh -ue
 LAMBDA_NAME=myPythonHello
@@ -201,7 +201,7 @@ aws lambda get-function --function-name  "$LAMBDA_NAME" \
 
 みたいな感じで。
 
-# 既存のLambda layerのコードを取得する
+## 既存のLambda layerのコードを取得する
 
 できるの?
 
