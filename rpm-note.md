@@ -7,6 +7,9 @@
   - [redhat-release-serverメモ](#redhat-release-serverメモ)
   - [rpmのGPGキー](#rpmのgpgキー)
   - [Key ID](#key-id)
+    - [実行例1](#実行例1)
+    - [実行例2](#実行例2)
+    - [メモ](#メモ)
 
 ## rpmbuild関連
 
@@ -132,7 +135,9 @@ redhat-release-server.x86_64                            7.9-3.el7               
 
 Key ID は GPGのキーID なのでキーサーバに問い合わせれば正体がわかる。
 
-実行例1: すでにインストール済みのパッケージ`curl` をGPG署名したのは誰か調べる。
+### 実行例1
+
+すでにインストール済みのパッケージ`curl` をGPG署名したのは誰か調べる。
 
 ```console
 $ rpm -qi curl | grep -Fi "key id"
@@ -145,12 +150,14 @@ gpg: data source: http://162.213.33.9:11371
 Keys 1-1 of 1 for "199e2f91fd431d51".  Enter number(s), N)ext, or Q)uit > Q
 ```
 
-実行例2: あるRPMファイルをGPG署名したのは誰か調べる。
+### 実行例2
+
+あるRPMファイルをGPG署名したのは誰か調べる。
 
 ```console
-$ rpm -Kv php-7.2.24-1.el8.remi.x86_64.rpm | grep -Fi "key id"
-    Header V4 RSA/SHA256 Signature, key ID 5f11735a: OK
-    V4 RSA/SHA256 Signature, key ID 5f11735a: OK
+$ $ rpm -Kv php-7.2.24-1.el8.remi.x86_64.rpm | grep -Fi "key id"
+    Header V4 RSA/SHA256 Signature, key ID 5f11735a: NOKEY
+    V4 RSA/SHA256 Signature, key ID 5f11735a: NOKEY
 
 $ gpg --keyserver keyserver.ubuntu.com --search-key 5f11735a
 gpg: data source: http://162.213.33.9:11371
@@ -159,6 +166,6 @@ gpg: data source: http://162.213.33.9:11371
 Keys 1-1 of 1 for "5f11735a".  Enter number(s), N)ext, or Q)uit > Q
 ```
 
+### メモ
+
 GPG(PGP)キーサーバでまともに使えるのは `keyserver.ubuntu.com` ぐらいしかない。
-
-
