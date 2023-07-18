@@ -18,7 +18,9 @@
 - [snapでdocker](#snapでdocker)
 - [コンテナのログ](#コンテナのログ)
 - [イメージを全部消す](#イメージを全部消す)
-- [docker-compose](#docker-compose)
+- [docker compose](#docker-compose)
+  - [docker-composeはいつdocker composeになりましたか?](#docker-composeはいつdocker-composeになりましたか)
+- [docker-compose (古い)](#docker-compose-古い)
   - [install](#install)
 - [CentOS7でpodman](#centos7でpodman)
 - [minikube](#minikube)
@@ -29,7 +31,6 @@
 - [いらんイメージを手早く消す](#いらんイメージを手早く消す)
 - [docker history](#docker-history)
 - [AWS ECR のライフサイクルポリシー](#aws-ecr-のライフサイクルポリシー)
-
 
 # インストール
 
@@ -42,6 +43,7 @@ Docker CE (コミュニティエディション)をインストールしてみ�
 ```sh
 sudo docker run hello-world
 ```
+
 まで実行して、動作確認できたら
 
 [Post-installation steps for Linux | Docker Documentation](https://docs.docker.com/install/linux/linux-postinstall/)
@@ -56,22 +58,21 @@ docker run --rm hello-world
 
 ここまで終わったら、
 終了したコンテナは消しておく。
+
 ```sh
 docker rm $(docker ps -aq)
 ```
-
 
 ## メモ
 
 `docker ps -aq` は終了したコンテナのIDのみ出力するコマンド、ではない。
 
-
 # 便利なコマンド
 
 [一発ですべてのDockerコンテナを停止・削除、イメージの削除をする - Qiita](https://qiita.com/shisama/items/48e2eaf1dc356568b0d7)
 
-
 終了したコンテナを削除する
+
 ```
 docker ps -f "status=exited" -q | xargs -r docker rm -v
 ```
@@ -79,6 +80,7 @@ docker ps -f "status=exited" -q | xargs -r docker rm -v
 [Dockerイメージとコンテナの削除方法 - Qiita](https://qiita.com/tifa2chan/items/e9aa408244687a63a0ae)
 
 ディスクの使用量
+
 ```
 docker system df
 ```
@@ -89,13 +91,11 @@ docker system df
 
 > ボリューム(=データを永続化できる場所) は２種類ある
 
-
 # dockerが実際にどれぐらいディスクを使っているか
 
 ```bash
 sudo du -hs /var/lib/docker/
 ```
-
 
 # JDKなしでJavaをコンパイル
 
@@ -105,13 +105,14 @@ OpenJDKを試してみたかったので
 
 Dockerで配布されてるのは、「Javaの実行環境」という位置づけであって「Javaの開発環境」ではないのだけど。
 
-
 参考:
+
 - [Dockerで色んなJDKを試す - Qiita](https://qiita.com/kikutaro/items/d140f519253f276b94e0)
 - [adoptopenjdk's Profile - Docker Hub](https://hub.docker.com/u/adoptopenjdk)
 - [docker run | Docker Documentation](https://docs.docker.com/engine/reference/commandline/run/)
 
 作業ディレクトリ作成
+
 ``` bash
 mkdir -p ~/works/java/HelloWorld
 cd !$
@@ -119,6 +120,7 @@ emacs HelloWorld.java
 ```
 
 `HelloWorld.java`
+
 ``` java
 public class HelloWorld{
     public static void main(String[] args){
@@ -141,18 +143,21 @@ AdoptOpenJDK 11
 を使った例
 
 コンパイル
+
 ``` bash
 docker run --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest \
  java HelloWorld
 ```
 
 実行
+
 ``` bash
 docker run --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest \
  java HelloWorld
 ```
 
 実行例
+
 ```
 Hello World!!
 version: 11.0.3
@@ -174,19 +179,19 @@ alias dj='docker run --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/o
 dj javac HelloWorld.java
 dj java HelloWorld
 ```
+
 でOK。 効率は悪そう。
 
 たとえば
+
 ``` bash
-$ ID=$(docker run -dt --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest)
-$ docker exec $id javac HelloWorld.java
-$ docker exec $id java HelloWorld
-$ docker stop $id
+ID=$(docker run -dt --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:latest)
+docker exec $id javac HelloWorld.java
+docker exec $id java HelloWorld
+docker stop $id
 ```
+
 のようにしたほうが少しはいいのかもしれない。 (dockerの起動が重い)
-
-
-
 
 # hello-worldのDockfile
 
@@ -195,12 +200,12 @@ $ docker stop $id
 - [docker-library/hello-world](https://github.com/docker-library/hello-world)
 
 `hello`のソースは
+
 - [hello-world/hello.c at a9a7163cb59f2ae60dc678d042055a56693fba7e · docker-library/hello-world](https://github.com/docker-library/hello-world/blob/a9a7163cb59f2ae60dc678d042055a56693fba7e/hello.c)
 - [docker-library/hello-world at a9a7163cb59f2ae60dc678d042055a56693fba7e](https://github.com/docker-library/hello-world/tree/a9a7163cb59f2ae60dc678d042055a56693fba7e)
 
 システムコールを直接呼んでいて、ライブラリ使っていない。
 helloのバイナリサイズはとてもちいさい。
-
 
 # GoLangでサーバを書いてimageにしてみる
 
@@ -210,10 +215,12 @@ go version go1.12 linux/amd64
 ```
 
 参考:
+
 - [FROM scratchから始める軽量Docker image for Go - Qiita](https://qiita.com/Saint1991/items/dcd6a92e5074bd10f75a)
 - [Building Minimal Docker Containers for Go Applications | Codeship | via @codeship](https://blog.codeship.com/building-minimal-docker-containers-for-go-applications/)
 
 clock.go ([参考リンク](https://qiita.com/Saint1991/items/dcd6a92e5074bd10f75a)そのまま)
+
 ``` go
 package main
 
@@ -241,9 +248,11 @@ func main() {
 ```
 
 clock.goのビルド
+
 ``` bash
-$ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o clock -trimpath -ldflags="-w -s" clock.go
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o clock -trimpath -ldflags="-w -s" clock.go
 ```
+
 upxも使えるので`upx --best clock`も試して
 
 メモ:
@@ -255,6 +264,7 @@ cgoとは何か? なぜ無効にするか? については
 を参照。
 
 Dockerfile
+
 ```
 FROM scratch
 
@@ -265,22 +275,25 @@ COPY clock /clock
 
 ENTRYPOINT ["/clock"]
 ```
+
 - 順番に意味がある。↑だと最初のADDでimageがキャッシュされる。
 - 上の例でADDの第2引数は「展開する場所」だが、zipは展開対象にならない。COPYにしたほうがいいかも
 
 参考: [ADD | Docker Documentation](https://docs.docker.com/engine/reference/builder/#add)
 
 docker imageの作成
+
 ``` bash
 $ docker build ./ -t go-clock
 $ docker image ls go-clock
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 go-clock            latest              cf53a2432eee        1 seconds ago      6.12MB
 ```
+
 (upxを使うと2.8MB)
 
-
 実行
+
 ``` bash
 $ GOCLOCKID=$(docker run --rm -d -p 8080:8080 go-clock)
 $ curl http://localhost:8080/time?tz=Local
@@ -298,7 +311,7 @@ LocalがUTCだ。
 動作を確認したら、タグをつけてbuildしておく。
 
 ``` bash
-$ docker build ./ -t go-clock:1
+docker build ./ -t go-clock:1
 ```
 
 timezoneのファイルとにたようなやつで
@@ -352,7 +365,6 @@ Overall Status: Unknown
 やっぱコンテナもyumするには最初に登録がいるみたい。
 Dockerfileの頭でやらないとダメだな。
 
-
 # Dockerでsyslog
 
 [ロギング・ドライバの設定 — Docker-docs-ja 17.06.Beta ドキュメント](http://docs.docker.jp/engine/admin/logging/overview.html#syslog)
@@ -365,19 +377,21 @@ Dockerfileの頭でやらないとダメだな。
 ```
 docker login
 ```
+
 で
+
 ```
 WARNING! Your password will be stored unencrypted in /home/heiwa/.docker/config.json.
 Configure a credential helper to remove this warning. See
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 ```
+
 と言われるのの対応。
 
 - [docker login | Docker Documentation](https://docs.docker.com/engine/reference/commandline/login/#credentials-store)
 - [login — Docker-docs-ja 17.06.Beta ドキュメント](http://docs.docker.jp/engine/reference/commandline/login.html#creadentials-store)
 
 (cont.)
-
 
 # AWSでDocker
 
@@ -393,17 +407,14 @@ Docker Hubに置いたやつをちょっと動かしたいだけなんだが...
 - [Amazon Elastic Container Service、Docker、および Amazon EC2 を使用してモノリシックアプリケーションをマイクロサービスに分割する方法 | AWS](https://aws.amazon.com/jp/getting-started/projects/break-monolith-app-microservices-ecs-docker-ec2/)
 - [Set Up a Continuous Delivery Pipeline for Containers Using AWS CodePipeline and Amazon ECS | AWS Compute Blog](https://aws.amazon.com/jp/blogs/compute/set-up-a-continuous-delivery-pipeline-for-containers-using-aws-codepipeline-and-amazon-ecs/)
 
-
 # AzureでDocker
 
 [Docker for AWS setup & prerequisites | Docker Documentation](https://docs.docker.com/docker-for-aws/)
-
 
 # チュートリアルズ
 
 - [Docker入門（第三回）～各種dockerコマンドとDockerイメージ作成について～ | さくらのナレッジ](https://knowledge.sakura.ad.jp/14427/)
 - [Docker入門（第四回）～Dockerfileについて～ | さくらのナレッジ](https://knowledge.sakura.ad.jp/15253/)
-
 
 # snapでdocker
 
@@ -413,11 +424,11 @@ dockeはsnapが楽。
 RHEL7とかだとDocker社がRed Hatと喧嘩して
 snapしかDockerを使う方法がないみたい。
 
-
 ```sh
 sudo groupadd -r docker
 sudo usermod -aG docker $USER
 ```
+
 で、一旦ログアウト。`id`コマンドでdockerグループがあることを確認。
 
 ```sh
@@ -425,13 +436,16 @@ sudo snap install docker
 ```
 
 あとは
+
 ```sh
 docker run --name test00 hello-world
 docker rm test00
 ```
+
 などで動作テスト。
 
 2020-11現在
+
 ```
 $ docker -v
 Docker version 19.03.11, build dd360c7
@@ -441,6 +455,7 @@ docker-compose version 1.25.5, build unknown
 ```
 
 サービス名がけっこう変
+
 ```sh
 systemctl --type=service | grep dock
 systemctl status snap.docker.dockerd.service
@@ -451,6 +466,7 @@ systemctl status snap.docker.dockerd.service
 の下。
 
 参考:
+
 - [Install Docker for Linux using the Snap Store | Snapcraft](https://snapcraft.io/docker)
 - [Post-installation steps for Linux | Docker Documentation](https://docs.docker.com/engine/install/linux-postinstall/)
 
@@ -473,19 +489,21 @@ docker-compose logs
 `--tail=100`とかも便利。
 
 ほか参考:
-- [JSON ファイル・ロギング・ドライバ — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/config/container/logging/json-file.html)
 
+- [JSON ファイル・ロギング・ドライバ — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/config/container/logging/json-file.html)
 
 # イメージを全部消す
 
 参考: [使用していない Docker オブジェクトの削除（prune） — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/config/pruning.html)
 
 本当に全部消える。Y/n聞いてくるので答える。
+
 ```sh
 docker image prune -a
 ```
 
 普通は「dangling imageのみ削除」
+
 ```sh
 docker image prune
 # or
@@ -493,17 +511,29 @@ docker system prune # たぶん一番よく使う
 ```
 
 何もかも消す
+
 ```sh
 docker system prune -a --volumes --force
 ```
+
 もあり。
 
+# docker compose
 
-# docker-compose
+## docker-composeはいつdocker composeになりましたか?
+
+調べたけどよくわからなかった。
+
+[docker/compose: Define and run multi-container applications with Docker](https://github.com/docker/compose)
+の
+[Release v2.0.0 · docker/compose](https://github.com/docker/compose/releases/tag/v2.0.0)
+が
+2021-09-28 なので、いちおうこの日。
+
+# docker-compose (古い)
 
 ここから
 [Overview of Docker Compose | Docker Documentation](https://docs.docker.com/compose/)
-
 
 このチュートリアルがわかりやすかった。
 [Docker入門（第六回）〜Docker Compose〜 | さくらのナレッジ](https://knowledge.sakura.ad.jp/16862/)
@@ -514,12 +544,12 @@ docker system prune -a --volumes --force
 - [docker-composeでNginxコンテナ内のログを見る | I am a software engineer](https://imanengineer.net/docker-compose-nginx-log/)
 - [logs — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/reference/logs.html)
 
-
 続けて以下などを。
+
 - [クィックスタート: Compose と Django — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/django.html)
 
-
 ほか参考:
+
 - [docker-compose コマンドまとめ - Qiita](https://qiita.com/wasanx25/items/d47caf37b79e855af95f) - ちょっと古いけど
 - [How to run docker-compose up -d at system start up? - Stack Overflow](https://stackoverflow.com/questions/43671482/how-to-run-docker-compose-up-d-at-system-start-up) - ホスト起動時にdocker-compose upする手法いろいろ。
 - [Compose における環境変数 — Docker-docs-ja 17.06 ドキュメント](https://docs.docker.jp/compose/environment-variables.html) - yamlの中で環境変数を参照する方法や.envについて。
@@ -532,10 +562,9 @@ docker system prune -a --volumes --force
 [Docker Compose のインストール — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/compose/install.html#linux)
 
 要は
+
 1. [githubのreleaseページ](https://github.com/docker/compose/releases)からバイナリを落とす。
 2. `/usr/local/bin/docker-compose`とかの名前で置いて、実行権限をつける。
-
-
 
 # CentOS7でpodman
 
@@ -545,6 +574,7 @@ sudo yum install podman
 
 podman-dockerパッケージをインストールすればdockerコマンドのふりができる。
 manも入ってるけどメンテされてないのかまともに動かない。
+
 ```
 $ man docker
 man: can't open /usr/share/man/man1/./docs/build/man/podman.1: No such file or directory
@@ -552,6 +582,7 @@ No manual entry for docker
 ```
 
 で
+
 ```
 $ podman run hello-world
 Trying to pull registry.access.redhat.com/hello-world...
@@ -566,11 +597,11 @@ Trying to pull registry.redhat.io/hello-world...
 
 man podman-pullに書いてあった。`/etc/containers/registries.conf`だ。
 
-
 docker-composeに相当するものは
 [containers/podman-compose: a script to run docker-compose.yml using podman](https://github.com/containers/podman-compose)。
 
 python3なので、pipでインストール。
+
 ```
 sudo yum install python3
 pip3 install --user -U pip
@@ -588,7 +619,6 @@ podman-composeにはlogsサブコマンドがない。
 podman的にはKubernetesを使え、ということらしい。
 
 参考: [Podman で Compose したかったらどうするの？ - Qiita](https://qiita.com/thirdpenguin/items/c9e58c27e96f02b0a96d)
-
 
 # minikube
 
@@ -611,8 +641,8 @@ sudo -i
 minikube start --vm-driver=none
 ```
 
-
 実行例
+
 ```
 $ minikube version
 minikube version: v1.15.1
@@ -660,9 +690,11 @@ $ sudo -i
 と言われて動かない。
 
 ステータスは
+
 ```
 sudo -i minikube status
 ```
+
 `-i`オプションがいる。
 
 [Hello Minikube | Kubernetes](https://kubernetes.io/ja/docs/tutorials/hello-minikube/)
@@ -670,8 +702,8 @@ sudo -i minikube status
 ```
 minikube dashboard --url=false
 ```
-毎回違うポートになるな... 固定できないのか。
 
+毎回違うポートになるな... 固定できないのか。
 
 # rootless mode
 
@@ -680,8 +712,8 @@ v.19で試験的導入。v.20で正規機能。
 - [Run the Docker daemon as a non-root user (Rootless mode) | Docker Documentation](https://docs.docker.com/engine/security/rootless/)
 - [root ユーザー以外による Docker デーモン起動（rootless モード） | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/engine/security/rootless/)
 
-
 Dockerそのもののインストール: [Install Docker Engine on Ubuntu | Docker Documentation](https://docs.docker.com/engine/install/ubuntu/)
+
 ```sh
 sudo apt-get update
 sudo apt-get install -y \
@@ -701,6 +733,7 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 ```
 
 いるもの
+
 ```
 sudo apt install uidmap
 ```
@@ -711,10 +744,11 @@ systemdのuserモードでdockerが上がる。ログインするとdockerが起
 ```sh
 systemctl --user status docker.service
 ```
+
 で確認。
 
-
 PATHを通すのと環境変数1個。.bashrcとかに入れる
+
 ```
 export PATH=/home/heiwa/bin:$PATH
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
@@ -727,29 +761,28 @@ docker-composeは?
 # BuildKit
 
 最近のdockerなら
+
 ```
 DOCKER_BUILDKIT=1 docker build .
 ```
+
 でOK。
 
 参考:
+
 - [BuildKit でイメージ構築 — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/develop/develop-images/build_enhancements.html)
 - [BuildKit によるイメージ構築 | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/develop/develop-images/build_enhancements/) 同じ内容
 - [BuildKitによる高速でセキュアなイメージビルド](https://www.slideshare.net/AkihiroSuda/buildkit) - 「使えない」と書いてある機能は使えるようになってる模様
 - [Docker 18.09 新機能 (イメージビルド&セキュリティ) | by Akihiro Suda | nttlabs | Medium](https://medium.com/nttlabs/docker-v18-09-%E6%96%B0%E6%A9%9F%E8%83%BD-%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%83%93%E3%83%AB%E3%83%89-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3-9534714c26e2) 同じ内容(同じ筆者?)ちょっと詳しい。よみやすい
 - [Docker の BuildKit を使ってセキュアなビルドを試す - Qiita](https://qiita.com/takasp/items/56e1399a484ed5bfaade)
 
-
-
 さらにつおいbuildx
 [Docker Buildx | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/buildx/working-with-buildx/)
-
 
 # dockerのtag
 
 1つのイメージに複数のタグをつけることができる。
 `docker images` (or `docker image ls`) で同じIDのイメージが複数あるように見える。
-
 
 # dockerでコンテナが実行されているときに、元のイメージを書き換えるとどうなる?
 
@@ -777,16 +810,15 @@ Error response from daemon: conflict: unable to delete b11fdd96e58e (cannot be f
 rmiできないし、forceオプションでもダメ。
 ある意味当然か。
 
-
 # いらんイメージを手早く消す
 
 ```sh
 docker image prune -f
 ```
+
 [使用していない Docker オブジェクトの削除（prune） — Docker-docs-ja 20.10 ドキュメント](https://docs.docker.jp/config/pruning.html)
 
 `prune`には他いろんなものが消せるオプションがあるので↑参考。
-
 
 # docker history
 
@@ -799,7 +831,6 @@ docker history --format "{{.CreatedBy}}" test0 --no-trunc  | less
 ```
 
 出力は逆順なので `|tac|less`とかする。
-
 
 # AWS ECR のライフサイクルポリシー
 
