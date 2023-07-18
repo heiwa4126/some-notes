@@ -25,6 +25,7 @@
   - [systemdで起動されるpostgresのPGDATAを変更する](#systemdで起動されるpostgresのpgdataを変更する)
   - [Docker](#docker)
   - [publicスキーマー](#publicスキーマー)
+  - [特定のロールのgrantを表示する](#特定のロールのgrantを表示する)
 
 ## PostgreSQLのサンプルデータ
 
@@ -958,3 +959,19 @@ ERROR:  permission denied for schema public
 
 [PostgreSQL 15ではpublicスキーマへの書き込みが制限されます | DevelopersIO](https://dev.classmethod.jp/articles/postgresql-15-revoke-create-on-public-schema/)
 127.0.0.1:
+
+## 特定のロールのgrantを表示する
+
+```sql
+SELECT
+  rolname AS role_name,
+  datname AS database_name,
+  HAS_DATABASE_PRIVILEGE(rolname, datname, 'CONNECT') AS has_connect_privilege,
+  HAS_DATABASE_PRIVILEGE(rolname, datname, 'CREATE') AS has_create_privilege,
+  HAS_DATABASE_PRIVILEGE(rolname, datname, 'TEMP') AS has_temp_privilege,
+  HAS_DATABASE_PRIVILEGE(rolname, datname, 'TEMPORARY') AS has_temporary_privilege
+FROM
+  pg_roles CROSS JOIN pg_database
+WHERE
+  rolname = 'heiwa';
+```
