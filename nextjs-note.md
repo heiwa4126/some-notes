@@ -1,4 +1,6 @@
-2023-04からNext.js 始めて見た(Next.js v13)のでメモ
+# Next.js メモ
+
+2023-04 から Next.js 始めて見た(Next.js v13)のでメモ
 
 ## チュートリアル
 
@@ -16,54 +18,53 @@ pnpm dev
 なんにもない。
 
 - **なんでもできる** - 拡張性すごい。
-- **なんにもない** - 初期状態ではほぼ何もない。CMSとしてみればあって当然、みたいのが無い。
-
+- **なんにもない** - 初期状態ではほぼ何もない。CMS としてみればあって当然、みたいのが無い。
 
 ## Next.js 課題
 
-チュートリアルベース(まだ非appdir)の
-`/posts` (`/pages/posts`ではなく)にmarkdownならべる例からの拡張で
+チュートリアルベース(まだ非 appdir)の
+`/posts` (`/pages/posts`ではなく)に markdown ならべる例からの拡張で
 
-- codeブロックのフォーマット - prismであっさりできた。まとめる
-- TypeScript - これも https://nextjs.org/learn/excel/typescript/nextjs-types にしたがってやればOK
-- appDir化 - やる
-- markdownの画像を`next/image`にする - 不当に難しい
-- markdownの内部リンクを`next/link` にする - これも不当に難しい
-- MDXつかってみる - Reactコンポーネントとか埋め込んでみたい
+- code ブロックのフォーマット - prism であっさりできた。まとめる
+- TypeScript - これも https://nextjs.org/learn/excel/typescript/nextjs-types にしたがってやれば OK
+- appDir 化 - やる
+- markdown の画像を`next/image`にする - 不当に難しい
+- markdown の内部リンクを`next/link` にする - これも不当に難しい
+- MDX つかってみる - React コンポーネントとか埋め込んでみたい
 - `/posts`の階層化 - 意外と簡単にできそう
-- かっこいいCSS
+- かっこいい CSS
 
 ## app dir の title
 
-metadataを使うらしい。
-head.jsやhead.tsxは削除したほうがいいらしい。
+metadata を使うらしい。
+head.js や head.tsx は削除したほうがいいらしい。
 
 - [head\.js \(deprecated\)](https://beta.nextjs.org/docs/api-reference/file-conventions/head)
 - [Metadata](https://beta.nextjs.org/docs/api-reference/metadata)
 - 静的: `export const metadata` - https://beta.nextjs.org/docs/guides/seo#static-metadata
 - 動的: `export generateMetadata()` - https://beta.nextjs.org/docs/guides/seo#dynamic-metadata
 
-参考: [Next.js 13.2で追加されたMetadata APIを使ってhead.jsを置き換える - アルパカログ](https://alpacat.com/blog/nextjs132-metadata-api/)
+参考: [Next.js 13.2 で追加された Metadata API を使って head.js を置き換える - アルパカログ](https://alpacat.com/blog/nextjs132-metadata-api/)
 
 - [Blog - Next.js 13.3 | Next.js](https://nextjs.org/blog/next-13-3#file-based-metadata-api)
-
 
 ## Module parse failed: Bad character escape sequence
 
 Next.js 結構複雑な処理やってるらしくて、
 `Module parse failed: Bad character escape sequence`
-が、Next.jsのバージョンに限らず再々出るみたい。
+が、Next.js のバージョンに限らず再々出るみたい。
 
-自分はReactのコンポーネントでfunction使ってたら
-Next.jsのマイナーアップデートの時点でこれが急に
+自分は React のコンポーネントで function 使ってたら
+Next.js のマイナーアップデートの時点でこれが急に
 出るようになったので、
 アロー関数に変換したら動くようになりました。
 
 **嘘みたいだが本当の話。**
 
-以下Next.jsでapp dirで、13.3.0に上げたときの例:
+以下 Next.js で app dir で、13.3.0 に上げたときの例:
 
 元(./components/counter.tsx):
+
 ```typescript
 "use client";
 import { useState } from "react";
@@ -79,6 +80,7 @@ export default function Counter() {
 ```
 
 修正後:
+
 ```typescript
 "use client";
 import { useState } from "react";
@@ -95,25 +97,22 @@ const Counter = () => {
 export default Counter;
 ```
 
-
 ## Static Export for App Router
 
-Next.js 13.3にしたら、いままでどーしてもうまく動かなかったStatic Exportができるようになった。
+Next.js 13.3 にしたら、いままでどーしてもうまく動かなかった Static Export ができるようになった。
 
 [Static Export for App Router](https://nextjs.org/blog/next-13-3#static-export-for-app-router)
 
-1. app dirで作る。
+1. app dir で作る。
 2. nextConfig に `output: 'export'`
 3. `npm build` で プロジェクトルート直下の `out/` 以下にビルドされる。
 4. `http-server ./out` で テストしてみる。
 
-SSGがあるとどうなるかはテストしてない。
+SSG があるとどうなるかはテストしてない。
 
-
-## getServerSideProps()とgetStaticProps()は同じモジュールには入れられない
+## getServerSideProps()と getStaticProps()は同じモジュールには入れられない
 
 別のモジュールならいいわけだよね...
-
 
 ## app dit への移行
 
@@ -122,7 +121,6 @@ SSGがあるとどうなるかはテストしてない。
 getServerSideProps, getStaticProps, getStaticPaths などは
 [Data Fetching Fundamentals](https://beta.nextjs.org/docs/data-fetching/fundamentals)
 参照。
-
 
 ## その戻り値の型 `Promise<Element>` は、有効な JSX 要素ではありません。
 
@@ -135,49 +133,46 @@ getServerSideProps, getStaticProps, getStaticPaths などは
 みたいなやつをカッコよく回避する方法はないです。
 
 > 残念ながら、今のところこれを回避する唯一の方法は、非同期サーバーコンポーネントに :any 型定義を使用することです。
-> Next.js 13のTypescriptのドキュメントに、この方法が紹介されています。
+> Next.js 13 の Typescript のドキュメントに、この方法が紹介されています。
 
 - [reactjs \- Next 13 — client and async server component combined: 'Promise<Element>' is not a valid JSX element \- Stack Overflow](https://stackoverflow.com/questions/75497449/next-13-client-and-async-server-component-combined-promiseelement-is-not)
 - [Configuring: TypeScript \| Next\.js](https://beta.nextjs.org/docs/configuring/typescript)
 - [Async Server Component TypeScript Error](https://beta.nextjs.org/docs/configuring/typescript#async-server-component-typescript-error)
 
-
-> 一時的な回避策として、コンポーネントの上に{/* @ts-expect-error Async Server Component */}を追加することで、そのコンポーネントの型チェックを無効化することができます。
+> 一時的な回避策として、コンポーネントの上に{/_ @ts-expect-error Async Server Component _/}を追加することで、そのコンポーネントの型チェックを無効化することができます。
 
 あと
 
-> LayoutおよびPageコンポーネントには適用されません。
+> Layout および Page コンポーネントには適用されません。
 
 これはなんとなくわかる。
 
-
-## Server ComponentとClient Component
+## Server Component と Client Component
 
 [Rendering: Server and Client Components | Next.js](https://beta.nextjs.org/docs/rendering/server-and-client-components)
 
 サーバー＆クライアントコンポーネントにより、開発者はサーバーとクライアントにまたがるアプリケーションを構築することができ、クライアントサイドアプリケーションの豊かなインタラクティブ性と従来のサーバーレンダリングの改善された性能を組み合わせることができます。
 
-このページでは、Server ComponentとClient Componentの違いと、Next.jsアプリケーションでの使い方を説明します。
+このページでは、Server Component と Client Component の違いと、Next.js アプリケーションでの使い方を説明します。
 
-appディレクトリ内のコンポーネントは、特殊なファイルやコロケーションされたコンポーネントも含め、
-**デフォルトですべてReact Server Components（RSC）**
+app ディレクトリ内のコンポーネントは、特殊なファイルやコロケーションされたコンポーネントも含め、
+**デフォルトですべて React Server Components（RSC）**
 になっています。
 
 クライアントコンポーネントを使用すると、アプリケーションにクライアントサイドのインタラクティブ性を追加することができます。
-Next.jsでは、サーバーでプリレンダリングされ、クライアントでハイドレーションされます。
+Next.js では、サーバーでプリレンダリングされ、クライアントでハイドレーションされます。
 
 'use client';ディレクトリを先頭に書けば、それはクライアントコンポーネント。
 
 "use client "は、すべてのファイルで定義する必要はありません。
-Clientモジュールの境界は、「エントリーポイント」で一度だけ定義すればよく、そこにインポートされたすべてのモジュールがClientコンポーネントとみなされます。
-
+Client モジュールの境界は、「エントリーポイント」で一度だけ定義すればよく、そこにインポートされたすべてのモジュールが Client コンポーネントとみなされます。
 
 [When to use Server vs\. Client Components?](https://beta.nextjs.org/docs/rendering/server-and-client-components#when-to-use-server-vs-client-components)
 
 ## generateStaticParams
 
-Dynamic routeで設定されたページをStaticな静的なファイルとして作成したい場合
-generateStaticParamsを使うとSSGになる。
+Dynamic route で設定されたページを Static な静的なファイルとして作成したい場合
+generateStaticParams を使うと SSG になる。
 
 [Server Component Functions: generateStaticParams | Next.js](https://beta.nextjs.org/docs/api-reference/generate-static-params)
 
@@ -186,21 +181,21 @@ generateStaticParamsを使うとSSGになる。
 ```bash
 pnpm create next-app@latest appdir --ts --use-pnpm
 ```
+
 とかやったときの
 
-> What import alias would you like configured? ... @/*
+> What import alias would you like configured? ... @/\*
 
 とは何か?
 
-[Next.js+TypeScriptでパスのaliasを設定する - Qiita](https://qiita.com/tatane616/items/e3ee99a181662ad6824b)
+[Next.js+TypeScript でパスの alias を設定する - Qiita](https://qiita.com/tatane616/items/e3ee99a181662ad6824b)
 
 > Next.js + TypeScript のプロジェクトで相対パス辛いなとなったので、そのエイリアスの設定方法
 > import { SomeComponent } from '@/components/SomeComponent みたいなやつです
 
 [Advanced Features: Absolute Imports and Module Path Aliases | Next.js](https://nextjs.org/docs/advanced-features/module-path-aliases)
 
-
-## Next.js 13 で カスタム404ページ
+## Next.js 13 で カスタム 404 ページ
 
 これ
 [Advanced Features: Custom Error Page | Next.js](https://nextjs.org/docs/advanced-features/custom-error-page#404-page)
@@ -208,27 +203,26 @@ pnpm create next-app@latest appdir --ts --use-pnpm
 
 いろいろ「出来る」って書いてあるページはいくつもあるんだけど
 
-- notFound()でnot-found.jsを呼ぶ 
+- notFound()で not-found.js を呼ぶ
 
-のがほとんどで、それだとステータス200になる。
-嘘でした404になりました。
+のがほとんどで、それだとステータス 200 になる。
+嘘でした 404 になりました。
 
 また上記方法だと
-dynamic segmentsにだけしか使えない。
-「ルーティングからもれたURL」に対応できない。
+dynamic segments にだけしか使えない。
+「ルーティングからもれた URL」に対応できない。
 
-app/404/page.tsxもダメだった。buildで死ぬ。
+app/404/page.tsx もダメだった。build で死ぬ。
 
-13.4以降に期待か?
-
+13.4 以降に期待か?
 
 ## App Router (beta) 抜き書き
 
 [File Conventions](https://beta.nextjs.org/docs/routing/fundamentals#file-conventions)
 
-layoutとtemplate、2つあるのはなんで?
+layout と template、2 つあるのはなんで?
 
-templateの方は「ただし、新しいコンポーネントインスタンスがナビゲーションにマウントされる」
+template の方は「ただし、新しいコンポーネントインスタンスがナビゲーションにマウントされる」
 
 ここで列挙されてるのが「特殊なファイル」で、あとは好き勝手に何を置いてもいい([Colocation](https://beta.nextjs.org/docs/routing/fundamentals#colocation))。
 
@@ -236,11 +230,10 @@ templateの方は「ただし、新しいコンポーネントインスタンス
 
 [Component Hierarchy](https://beta.nextjs.org/docs/routing/fundamentals#component-hierarchy)
 
-
 ## revalidate
 
 - [Data Fetching: Revalidating | Next.js](https://beta.nextjs.org/docs/data-fetching/revalidating)
-- https://beta.nextjs.org/docs/api-reference/segment-config#revalidate
+- <https://beta.nextjs.org/docs/api-reference/segment-config#revalidate>
 
 ```typescript
 const getUser = async (id: string) => {
@@ -255,35 +248,44 @@ const getUser = async (id: string) => {
 };
 ```
 
-SWRだと [Automatic Revalidation – SWR](https://swr.vercel.app/docs/revalidation) ? (試すこと)
+SWR だと [Automatic Revalidation – SWR](https://swr.vercel.app/docs/revalidation) ? (試すこと)
 [Mutation & Revalidation – SWR](https://swr.vercel.app/docs/mutation)
 
-そもそもサーバでSWR使えるかよくわからん(loading.jsとかの関係で)。
-クライアントサイドではSWRとか使え、って書いてあるけど。
-https://beta.nextjs.org/docs/data-fetching/fundamentals#fetching-data-on-the-server
-
+そもそもサーバで SWR 使えるかよくわからん(loading.js とかの関係で)。
+クライアントサイドでは SWR とか使え、って書いてあるけど。
+<https://beta.nextjs.org/docs/data-fetching/fundamentals#fetching-data-on-the-server>
 
 ## fetch()
 
-自分自身を参照するようなfetch()を使うとbuildできない(当然だけど)。
-Reactとは違う。クライアントコンポーネントにしてもダメ。build時に1回呼ぶから。
+自分自身を参照するような fetch()を使うと build できない(当然だけど)。
+React とは違う。クライアントコンポーネントにしてもダメ。build 時に 1 回呼ぶから。
 
-https://beta.nextjs.org/docs/data-fetching/caching#per-request-caching
+<https://beta.nextjs.org/docs/data-fetching/caching#per-request-caching>
 
 によると、
-fetch()にはすでにcache()がパッチされているので
+fetch()にはすでに cache()がパッチされているので
 fetch()を使う場合には `import {cache} from "react";` は不要。
-DBのクエリにはcache()を使え、と書いてある。
-
+DB のクエリには cache()を使え、と書いてある。
 
 ## Turbopack
 
-
 [Configuring: Turbopack | Next.js](https://beta.nextjs.org/docs/configuring/turbopack)
 
-1から始める場合
+1 から始める場合
+
 ```bash
 pnpm create next-app@latest your-app-name --ts --use-pnpm -e with-turbopack
 ```
 
-既存のプロジェクトにTurbopackサポートを追加するには?
+既存のプロジェクトに Turbopack サポートを追加するには?
+
+## Next.js の.env
+
+- [Configuring: Environment Variables | Next.js](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables)
+- [Next.js で環境変数（env）を使いこなすための記事](https://zenn.dev/aktriver/articles/2022-04-nextjs-env)
+
+上記ドキュメントから引用:
+
+**知っておくとよいこと:**
+`.env`、`.env.development`、`.env.production` ファイルはデフォルトを定義しているので、リポジトリに含めるべきです。
+`.env*.local` は `.gitignore` に追加する必要があります。`.env.local` は秘密を保存する場所です。
