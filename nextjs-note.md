@@ -12,6 +12,12 @@ cd nexnjs-blog
 pnpm dev
 ```
 
+## 普通のプロジェクトの始め方 (2023-07)
+
+```bash
+pnpx create-next-app@latest  my-app1 --no-src-dir --import-alias '@/*' --ts --tailwind --eslint --app --use-pnpm
+```
+
 ## Nexs.js 感想
 
 なんでもできるが
