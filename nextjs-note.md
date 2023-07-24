@@ -32,7 +32,7 @@ pnpx create-next-app@latest  my-app1 --no-src-dir --import-alias '@/*' --ts --ta
 `/posts` (`/pages/posts`ではなく)に markdown ならべる例からの拡張で
 
 - code ブロックのフォーマット - prism であっさりできた。まとめる
-- TypeScript - これも https://nextjs.org/learn/excel/typescript/nextjs-types にしたがってやれば OK
+- TypeScript - これも <https://nextjs.org/learn/excel/typescript/nextjs-types> にしたがってやれば OK
 - appDir 化 - やる
 - markdown の画像を`next/image`にする - 不当に難しい
 - markdown の内部リンクを`next/link` にする - これも不当に難しい
@@ -295,3 +295,14 @@ pnpm create next-app@latest your-app-name --ts --use-pnpm -e with-turbopack
 **知っておくとよいこと:**
 `.env`、`.env.development`、`.env.production` ファイルはデフォルトを定義しているので、リポジトリに含めるべきです。
 `.env*.local` は `.gitignore` に追加する必要があります。`.env.local` は秘密を保存する場所です。
+
+## UI ライブラリ
+
+Tailwind 系と MUI 系と独立系。 MUI が楽でメジャーだけど重い感じがする。
+
+Tailwind 系:
+
+- [daisyUI — Tailwind CSS コンポーネント](https://daisyui.com/)
+- [Tailwind UI - Official Tailwind CSS Components & Templates](https://tailwindui.com/) - コンポーネント集、みたい。
+
+[@material-tailwind/react vs daisyui vs flowbite vs konsta | npm trends](https://npmtrends.com/@material-tailwind/react-vs-daisyui-vs-flowbite-vs-konsta)
