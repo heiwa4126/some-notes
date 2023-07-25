@@ -26,6 +26,11 @@ pnpx create-next-app@latest  my-app1 --no-src-dir --import-alias '@/*' --ts --ta
 - **なんでもできる** - 拡張性すごい。
 - **なんにもない** - 初期状態ではほぼ何もない。CMS としてみればあって当然、みたいのが無い。
 
+## pages to app 資料
+
+- [Upgrading: App Router Migration | Next.js](https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration#migrating-from-pages-to-app)
+- [Next.js App Router (app ディレクトリ) の逆引き辞典](https://zenn.dev/yumemi_inc/articles/next-13-app-overview)
+
 ## Next.js 課題
 
 チュートリアルベース(まだ非 appdir)の
@@ -47,8 +52,8 @@ head.js や head.tsx は削除したほうがいいらしい。
 
 - [head\.js \(deprecated\)](https://beta.nextjs.org/docs/api-reference/file-conventions/head)
 - [Metadata](https://beta.nextjs.org/docs/api-reference/metadata)
-- 静的: `export const metadata` - https://beta.nextjs.org/docs/guides/seo#static-metadata
-- 動的: `export generateMetadata()` - https://beta.nextjs.org/docs/guides/seo#dynamic-metadata
+- 静的: `export const metadata` - <https://beta.nextjs.org/docs/guides/seo#static-metadata>
+- 動的: `export generateMetadata()` - <https://beta.nextjs.org/docs/guides/seo#dynamic-metadata>
 
 参考: [Next.js 13.2 で追加された Metadata API を使って head.js を置き換える - アルパカログ](https://alpacat.com/blog/nextjs132-metadata-api/)
 
@@ -130,7 +135,7 @@ getServerSideProps, getStaticProps, getStaticPaths などは
 
 ## その戻り値の型 `Promise<Element>` は、有効な JSX 要素ではありません。
 
-```
+```bash
 'UsersList' を JSX コンポーネントとして使用することはできません。
   その戻り値の型 'Promise<Element>' は、有効な JSX 要素ではありません。
     型 'Promise<Element>' には 型 'ReactElement<any, any>' からの次のプロパティがありません: type, props, keyts(2786)
@@ -141,11 +146,11 @@ getServerSideProps, getStaticProps, getStaticPaths などは
 > 残念ながら、今のところこれを回避する唯一の方法は、非同期サーバーコンポーネントに :any 型定義を使用することです。
 > Next.js 13 の Typescript のドキュメントに、この方法が紹介されています。
 
-- [reactjs \- Next 13 — client and async server component combined: 'Promise<Element>' is not a valid JSX element \- Stack Overflow](https://stackoverflow.com/questions/75497449/next-13-client-and-async-server-component-combined-promiseelement-is-not)
+- [reactjs \- Next 13 — client and async server component combined: 'Promise&lt;Element&gt;' is not a valid JSX element \- Stack Overflow](https://stackoverflow.com/questions/75497449/next-13-client-and-async-server-component-combined-promiseelement-is-not)
 - [Configuring: TypeScript \| Next\.js](https://beta.nextjs.org/docs/configuring/typescript)
 - [Async Server Component TypeScript Error](https://beta.nextjs.org/docs/configuring/typescript#async-server-component-typescript-error)
 
-> 一時的な回避策として、コンポーネントの上に{/_ @ts-expect-error Async Server Component _/}を追加することで、そのコンポーネントの型チェックを無効化することができます。
+> 一時的な回避策として、コンポーネントの上に `{/_ @ts-expect-error Async Server Component _/}` を追加することで、そのコンポーネントの型チェックを無効化することができます。
 
 あと
 
@@ -201,7 +206,7 @@ pnpm create next-app@latest appdir --ts --use-pnpm
 
 [Advanced Features: Absolute Imports and Module Path Aliases | Next.js](https://nextjs.org/docs/advanced-features/module-path-aliases)
 
-## Next.js 13 で カスタム 404 ページ
+## app dir で カスタム 404 ページ
 
 これ
 [Advanced Features: Custom Error Page | Next.js](https://nextjs.org/docs/advanced-features/custom-error-page#404-page)
@@ -221,6 +226,7 @@ dynamic segments にだけしか使えない。
 app/404/page.tsx もダメだった。build で死ぬ。
 
 13.4 以降に期待か?
+これ? [not-found.js](https://nextjs.org/docs/app/api-reference/file-conventions/not-found)
 
 ## App Router (beta) 抜き書き
 
@@ -306,3 +312,20 @@ Tailwind 系:
 - [Tailwind UI - Official Tailwind CSS Components & Templates](https://tailwindui.com/) - コンポーネント集、みたい。
 
 [@material-tailwind/react vs daisyui vs flowbite vs konsta | npm trends](https://npmtrends.com/@material-tailwind/react-vs-daisyui-vs-flowbite-vs-konsta)
+
+あと tailwindCSS、リセット CSS で始めるのは辛いので
+[@tailwindcss/typography - Tailwind CSS](https://tailwindcss.com/docs/typography-plugin)
+は要ると思う。
+
+## app dir の api
+
+[Routing: Route Handlers | Next.js](https://nextjs.org/docs/app/building-your-application/routing/router-handlers)
+
+## app router でないときメモ
+
+- [getInitialProps()](https://nextjs.org/docs/pages/api-reference/functions/get-initial-props) - 古い。以下の 2 つになった
+- [getStaticProps()](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-props)
+- [getServerSideProps()](https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props) - SSR のときだけ呼ばれる。
+
+app router では
+[generateStaticParams()](https://nextjs.org/docs/app/api-reference/functions/generate-static-params)
