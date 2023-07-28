@@ -70,6 +70,10 @@ def get_posts_post_id(post_id: int) -> Post:
 のように書くと、いい感じの OPenAPI が出力されるようになる。
 
 SimpleError と`{"detail": BPNF}`が 全然関連が無いのが問題だと思う場合には
-SimpleError クラスに JSON シリアライザーを実装するとよい (ちょっと大げさ?)
 
-他にも [Additional Responses in OpenAPI - FastAPI](https://fastapi.tiangolo.com/advanced/additional-responses/) には、複数のタイプのレスポンスがある場合の 追加のステータスコード (Additional Responses)の書き方が書かれている。
+```python
+        return JSONResponse(SimpleError(detail=BPNF).model_dump(), 404)
+```
+
+としてもいいです(ちょっと大げさ)。
+(Pydantic 1.x では .model_dump のかわりに.dict をつかうこと)
