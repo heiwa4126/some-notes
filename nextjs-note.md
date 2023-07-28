@@ -182,10 +182,10 @@ Client モジュールの境界は、「エントリーポイント」で一度�
 
 ## generateStaticParams
 
-Dynamic route で設定されたページを Static な静的なファイルとして作成したい場合
+App router の Dynamic route で設定されたページを Static な静的なファイルとして作成したい場合
 generateStaticParams を使うと SSG になる。
 
-[Server Component Functions: generateStaticParams | Next.js](https://beta.nextjs.org/docs/api-reference/generate-static-params)
+- [Functions: generateStaticParams | Next.js](https://nextjs.org/docs/app/api-reference/functions/generate-static-params)
 
 ## import alias
 
