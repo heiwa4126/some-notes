@@ -329,3 +329,18 @@ Tailwind 系:
 
 app router では
 [generateStaticParams()](https://nextjs.org/docs/app/api-reference/functions/generate-static-params)
+
+## デプロイ
+
+Vercel にデプロイするなら
+
+- [Building Your Application: Deploying | Next.js](https://nextjs.org/docs/pages/building-your-application/deploying#managed-nextjs-with-vercel)
+- [Deploying Your Next.js App | Learn Next.js](https://nextjs.org/learn/basics/deploying-nextjs-app)
+
+Vercel 以外のサービスなら
+
+- [Other Services](https://nextjs.org/docs/pages/building-your-application/deploying#other-services)
+
+セルフホスティングするなら
+
+- [Self-Hosting](https://nextjs.org/docs/pages/building-your-application/deploying#self-hosting)

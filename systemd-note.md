@@ -1,46 +1,47 @@
-# systemdのメモ
+# systemd のメモ
 
-- [systemdのメモ](#systemdのメモ)
-- [systemctl list-dependencies](#systemctl-list-dependencies)
-- [rescue.target, emergency.target](#rescuetarget-emergencytarget)
-- [-l option](#-l-option)
-- [systemd-tempfiles](#systemd-tempfiles)
-- [ドロップインディレクトリ](#ドロップインディレクトリ)
-- [systemd-tymesyncd](#systemd-tymesyncd)
-- [ユニットファイルの差分編集](#ユニットファイルの差分編集)
-- [ブート時最後に実行](#ブート時最後に実行)
-- [ブート時最初に実行](#ブート時最初に実行)
-- [シャットダウン時に実行](#シャットダウン時に実行)
-- [ブート時最後に実行して、失敗したらリトライする](#ブート時最後に実行して失敗したらリトライする)
-- [@のついたユニットファイル](#のついたユニットファイル)
-- [systemctl list-timers](#systemctl-list-timers)
-- [systemdのユーザーモード](#systemdのユーザーモード)
-- [.serviceファイルを書く](#serviceファイルを書く)
-- [override.confの自動化](#overrideconfの自動化)
-- [systemctl --failed](#systemctl---failed)
+- [systemd のメモ](#systemd-のメモ)
+  - [systemctl list-dependencies](#systemctl-list-dependencies)
+  - [rescue.target, emergency.target](#rescuetarget-emergencytarget)
+  - [-l option](#-l-option)
+  - [systemd-tempfiles](#systemd-tempfiles)
+  - [ドロップインディレクトリ](#ドロップインディレクトリ)
+  - [systemd-tymesyncd](#systemd-tymesyncd)
+  - [ユニットファイルの差分編集](#ユニットファイルの差分編集)
+  - [ブート時最後に実行](#ブート時最後に実行)
+  - [ブート時最初に実行](#ブート時最初に実行)
+  - [シャットダウン時に実行](#シャットダウン時に実行)
+  - [ブート時最後に実行して、失敗したらリトライする](#ブート時最後に実行して失敗したらリトライする)
+  - [@のついたユニットファイル](#のついたユニットファイル)
+  - [systemctl list-timers](#systemctl-list-timers)
+  - [systemd のユーザーモード](#systemd-のユーザーモード)
+  - [.service ファイルを書く](#service-ファイルを書く)
+  - [override.conf の自動化](#overrideconf-の自動化)
+  - [systemctl --failed](#systemctl---failed)
+  - [~/.config/systemd/user/](#configsystemduser)
 
-# systemctl list-dependencies
+## systemctl list-dependencies
 
 ユニットを省略すると`default.target`がデフォルト値
 
-- [【Linuxのサービス依存関係と順序関係】systemctl list-dependencies と systemd-analyze の見方 | SEの道標](https://milestone-of-se.nesuke.com/sv-basic/linux-basic/systemctl-list-dependencies/)
-- [Systemdのサービスの依存関係を調べる方法 - ククログ(2015-12-28)](https://www.clear-code.com/blog/2015/12/28.html)
+- [【Linux のサービス依存関係と順序関係】systemctl list-dependencies と systemd-analyze の見方 | SE の道標](https://milestone-of-se.nesuke.com/sv-basic/linux-basic/systemctl-list-dependencies/)
+- [Systemd のサービスの依存関係を調べる方法 - ククログ(2015-12-28)](https://www.clear-code.com/blog/2015/12/28.html)
 
 `--after`や`--before`をつけないと
 
-> 依存関係を調べてツリー表示できます。 ここでいう依存関係はRequires=やWants=といった、必要となるunitに着目した依存関係です。
+> 依存関係を調べてツリー表示できます。 ここでいう依存関係は Requires=や Wants=といった、必要となる unit に着目した依存関係です。
 
-> 他に何のUnitを起動する必要があるかを示しています。
+> 他に何の Unit を起動する必要があるかを示しています。
 > 階層の深さは起動順序とは関係がありません。
-> あくまでどのUnitの起動が必要とされているかを示しているに過ぎません
+> あくまでどの Unit の起動が必要とされているかを示しているに過ぎません
 
-> *.wants というディレクトリの下に SymbolicLink を配置することで依存関係を示すこともできます。これが依存関係を示す方法の2つ目です。(実は WantedBy= に指定すると .wants ディレクトリに SymbolicLinkを作成する動作になるのでそういう意味では同じかもしれません
+> \*.wants というディレクトリの下に SymbolicLink を配置することで依存関係を示すこともできます。これが依存関係を示す方法の 2 つ目です。(実は WantedBy= に指定すると .wants ディレクトリに SymbolicLink を作成する動作になるのでそういう意味では同じかもしれません
 
 `--after`や`--before`をつけると
 
-> --beforeを指定するとunitファイルのBefore=ディレクティブをたどって依存関係を表示します。 同様に--afterを指定するとunitファイルのAfter=ディレクティブをたどって依存関係を表示します。
+> --before を指定すると unit ファイルの Before=ディレクティブをたどって依存関係を表示します。 同様に--after を指定すると unit ファイルの After=ディレクティブをたどって依存関係を表示します。
 
->  (--after) 階層が深いものほど、先に実行されている必要があります。
+> (--after) 階層が深いものほど、先に実行されている必要があります。
 
 > (--before) 起動した後に何を起動する必要があるか
 
@@ -48,36 +49,37 @@
 
 > 全ての Unit で再帰的に依存関係を表示する場合は -a を使います
 
-
 [NetworkTarget](https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget/)
+
 ```
 systemctl list-dependencies network-online.target
 ```
 
-# rescue.target, emergency.target
+## rescue.target, emergency.target
 
-rescueモードは、昔のシングルユーザーモード。
-rescueモードはemergencyモードプラスネットワークが使える、ぐらいな感じ?
+rescue モードは、昔のシングルユーザーモード。
+rescue モードは emergency モードプラスネットワークが使える、ぐらいな感じ?
 
 - [【CentOS7】シングルユーザモード(rescue.target)への移行方法 | server-memo.net](https://www.server-memo.net/tips/server-operation/single-user.html)
 - [10.3. systemd ターゲットでの作業 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-targets)
 - [How To Boot Into Rescue Mode Or Emergency Mode In Ubuntu 18.04](https://www.ostechnix.com/how-to-boot-into-rescue-mode-or-emergency-mode-in-ubuntu-18-04/)
 
 > 現在のターゲットを変更し、現行セッションでレスキューモードに入るには、root でシェルプロンプトに以下を入力します。
+
 ```
 systemctl rescue
-# or
+## or
 systemctl --no-wall rescue
-# or
+## or
 systemctl isolate rescue.target
 ```
-emergency.targetも同様
 
-rootでしかログインできなくなるので、
-Ubuntu, Debianでは予めrootのパスワードを設定しておくこと。
+emergency.target も同様
 
+root でしかログインできなくなるので、
+Ubuntu, Debian では予め root のパスワードを設定しておくこと。
 
-GRUBからは
+GRUB からは
 
 - [CentOS / RHEL 7 : How to boot into Rescue Mode or Emergency Mode – The Geek Diary](https://www.thegeekdiary.com/centos-rhel-7-how-to-boot-into-rescue-mode-or-emergency-mode/)
 - [25.10. ブート中のターミナルメニューの編集 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-terminal_menu_editing_during_boot)
@@ -85,9 +87,9 @@ GRUBからは
 
 `e`でエディトモード。
 
-* 64ビット IBM Power シリーズの場合は linux 行
-* x86-64 BIOS ベースシステムの場合は linux16 行
-* UEFI システムの場合は linuxefi 行
+- 64 ビット IBM Power シリーズの場合は linux 行
+- x86-64 BIOS ベースシステムの場合は linux16 行
+- UEFI システムの場合は linuxefi 行
 
 の最後に以下のパラメーターを追加
 
@@ -100,29 +102,30 @@ GRUBからは
 または
  single
 ```
+
 をつけて起動。
 
+root ディスクを fsck する場合は、rescue モードか、emergency モードで
 
-rootディスクをfsckする場合は、rescueモードか、emergencyモードで
 ```
 mount -o ro,remount /
 ```
-してから行う。
 
+してから行う。
 
 [25.10.3. デバッグシェルのブート](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-terminal_menu_editing_during_boot#sec-Booting_to_the_Debug_Shell)
 も役に立つ。
 
-# -l option
+## -l option
 
 よく`systemctl status` で `-l`オプションをつけないと全部表示されませんよ、
 というメッセージが出るが、
-実は `-l (--full)`と`--no-pager`の2つをつけないと、全部表示されない。
+実は `-l (--full)`と`--no-pager`の 2 つをつけないと、全部表示されない。
 `|`すると自動で`--no-pager`は有効になるので、
 `systemctl status foobar.service -l | cat`
 でもいい。イカれてると思うがそうなんだからしょうがない。
 
-# systemd-tempfiles
+## systemd-tempfiles
 
 再起動時にファイルを作成し、
 定期的に削除する。
@@ -130,39 +133,42 @@ mount -o ro,remount /
 - [systemd-tmpfiles](https://www.freedesktop.org/software/systemd/man/systemd-tmpfiles.html)
 - [tmpfiles.d](https://www.freedesktop.org/software/systemd/man/tmpfiles.d.html#)
 
-↑最新バージョンのman. たいていのディストリではオプションや設定が少ない。
-
+↑ 最新バージョンの man. たいていのディストリではオプションや設定が少ない。
 
 例) /etc/tmpfiles.d/test.conf
+
 ```
 f /tmp/a 0755 root root - hello
 d /tmp/b 0755 root root - -
 f /tmp/b/a 0755 root root - world
 ```
-これで、/tmp/a,/tmp/b/aファイルがなければ作られる。
 
-tmpfiles.d/*.confのかける場所は異常に多い。
-特に--userが使えるバージョンだと。
+これで、/tmp/a,/tmp/b/a ファイルがなければ作られる。
+
+tmpfiles.d/\*.conf のかける場所は異常に多い。
+特に--user が使えるバージョンだと。
 
 よくあるディストリビューションに入ってるバージョンだと
-1. /etc/tmpfiles.d/*.conf
-2. /run/tmpfiles.d/*.conf
-3. /usr/lib/tmpfiles.d/*.conf
 
-同じ名前の.confファイルがあるとオーバライドされる。1.がいちばん強い。
+1. /etc/tmpfiles.d/\*.conf
+2. /run/tmpfiles.d/\*.conf
+3. /usr/lib/tmpfiles.d/\*.conf
+
+同じ名前の.conf ファイルがあるとオーバライドされる。1.がいちばん強い。
 
 妙なルールがいっぱいあるので
-(package.confとpackage-part.confとか)
-manを熟読すること。
-
+(package.conf と package-part.conf とか)
+man を熟読すること。
 
 デバッグは、
+
 ```
 SYSTEMD_LOG_LEVEL=debug /usr/bin/systemd-tmpfiles --create --remove --boot --exclude-prefix=/dev /etc/tmpfiles.d/test.conf
 ```
+
 みたいな感じで。
 
-# ドロップインディレクトリ
+## ドロップインディレクトリ
 
 ユニットファイルに手を加えることなく設定を上書きや追加できる。
 
@@ -170,36 +176,38 @@ SYSTEMD_LOG_LEVEL=debug /usr/bin/systemd-tmpfiles --create --remove --boot --exc
 
 > Along with a unit file foo.service, a "drop-in" directory foo.service.d/ may exist. All files with the suffix ".conf" from this directory will be parsed after the unit file itself is parsed. This is useful to alter or add configuration settings for a unit, without having to modify unit files. Drop-in files must contain appropriate section headers. For instantiated units, this logic will first look for the instance ".d/" subdirectory (e.g. "foo@bar.service.d/") and read its ".conf" files, followed by the template ".d/" subdirectory (e.g. "foo@.service.d/") and the ".conf" files there. Moreover for units names containing dashes ("-"), the set of directories generated by truncating the unit name after all dashes is searched too. Specifically, for a unit name foo-bar-baz.service not only the regular drop-in directory foo-bar-baz.service.d/ is searched but also both foo-bar-.service.d/ and foo-.service.d/. This is useful for defining common drop-ins for a set of related units, whose names begin with a common prefix. This scheme is particularly useful for mount, automount and slice units, whose systematic naming structure is built around dashes as component separators. Note that equally named drop-in files further down the prefix hierarchy override those further up, i.e. foo-bar-.service.d/10-override.conf overrides foo-.service.d/10-override.conf.
 
-[第598回　systemdユニットの設定を変える：Ubuntu Weekly Recipe｜gihyo.jp … 技術評論社](https://gihyo.jp/admin/serial/01/ubuntu-recipe/0598?page=2)
+[第 598 回　 systemd ユニットの設定を変える：Ubuntu Weekly Recipe ｜ gihyo.jp … 技術評論社](https://gihyo.jp/admin/serial/01/ubuntu-recipe/0598?page=2)
 
 - ドロップインディレクトリには複数"drop-in"ファイルを置ける
 - ドロップインディレクトリは複数ある
 - 評価は「ファイル名順」
 
+## systemd-tymesyncd
 
-# systemd-tymesyncd
-
-systemdのSNTPクライアント
+systemd の SNTP クライアント
 
 利点:
+
 - 小さい (サーバ部分がないから)
 - セキュア (サーバ部分がないから)
 
 欠点:
-- RTCを設定しない (RTCがないホスト、例えばRaspberry Piなどでは利点). 設定してるように見える... TODO
-- driftとか設定しない (これもRTCがないホストでは利点かも)
 
-物理サーバでは chronyやntpd、
-CloudやIoTならsystemd-tymesyncd(やsntp)
+- RTC を設定しない (RTC がないホスト、例えば Raspberry Pi などでは利点). 設定してるように見える... TODO
+- drift とか設定しない (これも RTC がないホストでは利点かも)
+
+物理サーバでは chrony や ntpd、
+Cloud や IoT なら systemd-tymesyncd(や sntp)
 がいいのではないか。
-オンプレミスのVMでは状況次第。
+オンプレミスの VM では状況次第。
 
 参考:
+
 - [systemd-timesyncd - ArchWiki](https://wiki.archlinux.jp/index.php/Systemd-timesyncd)
 - [ntpd vs. systemd-timesyncd - How to achieve reliable NTP syncing? - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/305643/ntpd-vs-systemd-timesyncd-how-to-achieve-reliable-ntp-syncing)
 
+AWS での設定
 
-AWSでの設定
 ```bash
 echo -e "[Time]\nNTP=169.254.169.123" > /etc/systemd/timesyncd.conf
 systemctl start systemd-timesyncd
@@ -209,38 +217,40 @@ systemctl enable systemd-timesyncd
 systemctl restart systemd-timesyncd
 ```
 
-169.254.169.123については
+169.254.169.123 については
 [Amazon Time Sync Service で時間を維持する | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/keeping-time-with-amazon-time-sync-service/)
 を参照。
 
-RHEL7, CentOS7, Amazon Linuxではsystemdパッケージに`systemd-timesyncd`が入ってない。
-systemdのバージョンが古いらしい。
+RHEL7, CentOS7, Amazon Linux では systemd パッケージに`systemd-timesyncd`が入ってない。
+systemd のバージョンが古いらしい。
 
-# ユニットファイルの差分編集
+## ユニットファイルの差分編集
 
 ユニットのパラメータの一部変更ができる。
 
-[systemdで既存のunitを編集する2つの方法 - Qiita](https://qiita.com/nvsofts/items/529e422bb8a326401c39)
+[systemd で既存の unit を編集する 2 つの方法 - Qiita](https://qiita.com/nvsofts/items/529e422bb8a326401c39)
 
 例)
+
 ```
 systemctl edit nginx.service
 ```
+
 こうすると
 `/etc/systemd/system/nginx.service.d`
-の下に差分の.confファイルができ、
-nginx.serviceの値を一部置き換えてくれる。
+の下に差分の.conf ファイルができ、
+nginx.service の値を一部置き換えてくれる。
 
 `systemctl daemon-reload`が不要
 
-
-# ブート時最後に実行
+## ブート時最後に実行
 
 ```sh
 sudo systemctl edit --force --full last-on-boot.service
 ```
 
 中身はこんな感じ。
+
 ```
 [Unit]
 Description=test
@@ -252,14 +262,15 @@ ExecStart=/usr/bin/logger "test!"
 [Install]
 WantedBy=multi-user.target
 ```
-`systemctl enable last-on-boot`してrebootするとsyslogに"test!"が最後に出る。
-statusはdeadになる。
 
-あとはExecStart=を弄ってください。
+`systemctl enable last-on-boot`して reboot すると syslog に"test!"が最後に出る。
+status は dead になる。
+
+あとは ExecStart=を弄ってください。
 
 `systemctl list-dependencies`ではわからない。
 
-# ブート時最初に実行
+## ブート時最初に実行
 
 「最初の方に」しか無理みたい。
 
@@ -276,11 +287,10 @@ ExecStart=/usr/bin/logger "O.K. Go!"
 WantedBy=default.target
 ```
 
-
-# シャットダウン時に実行
-
+## シャットダウン時に実行
 
 おおむねこんな感じ。
+
 ```
 [Unit]
 Description=test!
@@ -294,24 +304,21 @@ ExecStop=/usr/bin/logger "Good-bye!"
 WantedBy=multi-user.target
 ```
 
-**activeになっていると、シャットダウン時に実行される。**
+**active になっていると、シャットダウン時に実行される。**
 なので書いたら、`systemctl enable xxx.service --now`とかすること。
 
-また上の例だとsyslogが先に死んでると結果が/va/log以下に残らないので
+また上の例だと syslog が先に死んでると結果が/va/log 以下に残らないので
 `journalctl -u xxx.service`とかで確認。
-
 
 「シャットダウン時に**最初に**実行」は考え中
 
-
-# ブート時最後に実行して、失敗したらリトライする
+## ブート時最後に実行して、失敗したらリトライする
 
 (考え中)
 
+## @のついたユニットファイル
 
-# @のついたユニットファイル
-
-ubuntuでpostgresql-11をインストールしたら
+ubuntu で postgresql-11 をインストールしたら
 
 ```
 $ LANG=C ls /lib/systemd/system/postgresql* -la
@@ -330,9 +337,9 @@ $ systemctl status postgresql\*
 
 この@とはなにか?
 
-- [OpenVpnのsystemdユニットファイル - Qiita](https://qiita.com/11ohina017/items/cb30075719eab97fdaa5#%E3%82%A2%E3%83%83%E3%83%88%E3%83%9E%E3%83%BC%E3%82%AF%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+- [OpenVpn の systemd ユニットファイル - Qiita](https://qiita.com/11ohina017/items/cb30075719eab97fdaa5#%E3%82%A2%E3%83%83%E3%83%88%E3%83%9E%E3%83%BC%E3%82%AF%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 
-> @がついたユニットファイルはsystemctlの実行時に@の後ろに文字列を指定すると、ユニットファイルに定義した%iを@の後ろに設定した文字列で置換できる。
+> @がついたユニットファイルは systemctl の実行時に@の後ろに文字列を指定すると、ユニットファイルに定義した%i を@の後ろに設定した文字列で置換できる。
 
 [systemd.unit](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Description)
 
@@ -349,8 +356,8 @@ $ systemctl status postgresql\*
 [systemd.unit](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Specifiers)
 に書いてあることとちがうのがやだなあ。
 
-- "%i"	Instance name
-- "%I"	Unescaped instance name
+- "%i" Instance name
+- "%I" Unescaped instance name
 
 `escape`がなにかよくわからない。[systemd.unit](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#String%20Escaping%20for%20Inclusion%20in%20Unit%20Names)か?
 
@@ -358,28 +365,28 @@ $ systemctl status postgresql\*
 
 どっちかの説明がサカサマだ。
 
+## systemctl list-timers
 
-# systemctl list-timers
+systemd の cron みたいなやつ。\*.timer を列挙する。
 
-systemdのcronみたいなやつ。*.timerを列挙する。
-
-# systemdのユーザーモード
+## systemd のユーザーモード
 
 参考:
+
 - マニュアル - [systemd.unit](https://www.freedesktop.org/software/systemd/man/systemd.unit.html)
 - [ユーザー毎の systemd を使ってシステム全体設定と個人用設定を分ける。 - それマグで！](https://takuya-1st.hatenablog.jp/entry/2019/08/09/004829)
 
-systemdにはuserモードというのがあって(pipの--userみたいなやつ)
+systemd には user モードというのがあって(pip の--user みたいなやつ)
 
-1. `~/.config/systemd/user.control`フォルダにunitファイル書く
+1. `~/.config/systemd/user.control`フォルダに unit ファイル書く
 1. `systemctl --user daemon-reload`で読み込む
-1. あとは普通にstartやらenableやらする。(--userつけて)
+1. あとは普通に start やら enable やらする。(--user つけて)
 
 実行されるのはユーザがログインしたとき。
 
-# .serviceファイルを書く
+## .service ファイルを書く
 
-非パッケージ版のTomcat9を非rootユーザで起動する必要があったので、
+非パッケージ版の Tomcat9 を非 root ユーザで起動する必要があったので、
 そのときのメモ。
 
 ```
@@ -400,26 +407,29 @@ Environment="CATALINA_PID=/etc/tomcat9/tomcat9.pid"
 WantedBy=multi-user.target
 ```
 
-# override.confの自動化
+## override.conf の自動化
 
-`systemctl edit`の入力をstdinにする例。
+`systemctl edit`の入力を stdin にする例。
 
 ```sh
 echo -e '[Service]\n# Override location of database directory\nEnvironment=PGDATA=/data4' \
  | SYSTEMD_EDITOR=tee systemctl edit postgresql-9.5.service
 ```
 
-非rootからなら
+非 root からなら
+
 ```sh
 echo -e '[Service]\n# Override location of database directory\nEnvironment=PGDATA=/data4' \
  | sudo SYSTEMD_EDITOR=tee systemctl edit postgresql-9.5.service
 ```
 
 参考:
-- [pipe input into systemctl edit / System Administration / Arch Linux Forums](https://bbs.archlinux.org/viewtopic.php?id=195782)
-- [systemctl](https://www.freedesktop.org/software/systemd/man/systemctl.html)のEnvironのところ。
 
-overrideをつかうとDrop-In:のところに表示される。
+- [pipe input into systemctl edit / System Administration / Arch Linux Forums](https://bbs.archlinux.org/viewtopic.php?id=195782)
+- [systemctl](https://www.freedesktop.org/software/systemd/man/systemctl.html)の Environ のところ。
+
+override をつかうと Drop-In:のところに表示される。
+
 ```
 $ sudo systemctl status postgresql-9.5
 ● postgresql-9.5.service - PostgreSQL 9.5 database server
@@ -442,32 +452,38 @@ $ sudo systemctl status postgresql-9.5
 
 $ sudo cat /etc/systemd/system/postgresql-9.5.service.d/override.conf
 [Service]
-# Override location of database directory
+## Override location of database directory
 Environment=PGDATA=/var/lib/pgsql/9.5/data
 ```
 
-
-
-
-# systemctl --failed
+## systemctl --failed
 
 よく使ってたんだけど `systemctl --help` で出てこない。
 
 (`systemctl  list-unit-files --state=failed`と同じ? 出力が微妙に違うし)
 
-
 その上こんな話まで。
 [systemd \- systemctl \-\-failed not listing failed instantiated service \- Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/396075/systemctl-failed-not-listing-failed-instantiated-service)
 
 まあ
-```
+
+```console
 $ systemctl --failed
 0 loaded units listed. Pass --all to see loaded but inactive units, too.
 ```
+
 と出てくるとおりに
 
 今後は
+
 ```sh
 systemctl --failed --all
 ```
+
 とする。
+
+## ~/.config/systemd/user/
+
+[サーバー起動時に非 root ユーザーで systemd を使ってサービスを立ち上げる - Qiita](https://qiita.com/k0kubun/items/3c94473506e0e370a227)
+
+いろいろ制約があってややこしい。基本「ユーザがログインしたときに起動」

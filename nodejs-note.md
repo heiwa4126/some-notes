@@ -1,104 +1,109 @@
-# node.jsのメモ
+# node.js のメモ
 
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
-- [node.jsのメモ](#nodejsのメモ)
-  - [node.jsのインストール](#nodejsのインストール)
+- [node.js のメモ](#nodejs-のメモ)
+  - [node.js のインストール](#nodejs-のインストール)
   - [環境設定](#環境設定)
-  - [環境設定: npmのオートコンプリート(completion)](#環境設定-npmのオートコンプリートcompletion)
-  - [npmの`-g`](#npmの-g)
-  - [npmの設定一覧](#npmの設定一覧)
-  - [npmの設定を編集](#npmの設定を編集)
-  - [npmにプロキシ設定](#npmにプロキシ設定)
+  - [環境設定: npm のオートコンプリート(completion)](#環境設定-npm-のオートコンプリートcompletion)
+  - [npm の`-g`](#npm-の-g)
+  - [npm の設定一覧](#npm-の設定一覧)
+  - [npm の設定を編集](#npm-の設定を編集)
+  - [npm にプロキシ設定](#npm-にプロキシ設定)
   - [パッケージの更新](#パッケージの更新)
   - [npm -g でインストールされる先](#npm--g-でインストールされる先)
-  - [nodeがモジュールを探しに行く先を表示](#nodeがモジュールを探しに行く先を表示)
-  - [--saveと--save-dev](#--saveと--save-dev)
-  - [プロジェクトにインストールしたモジュールのbinを使う](#プロジェクトにインストールしたモジュールのbinを使う)
+  - [node がモジュールを探しに行く先を表示](#node-がモジュールを探しに行く先を表示)
+  - [--save と--save-dev](#--save-と--save-dev)
+  - [プロジェクトにインストールしたモジュールの bin を使う](#プロジェクトにインストールしたモジュールの-bin-を使う)
   - [npm link](#npm-link)
 - [cafile](#cafile)
-- [いちばん簡単なnode.jsプロジェクトの始め方](#いちばん簡単なnodejsプロジェクトの始め方)
+- [いちばん簡単な node.js プロジェクトの始め方](#いちばん簡単な-nodejs-プロジェクトの始め方)
   - [続き: git](#続き-git)
   - [続き: node-dev](#続き-node-dev)
 - [そのほか参考リンク](#そのほか参考リンク)
-- [npm install dev抜き](#npm-install-dev抜き)
+- [npm install dev 抜き](#npm-install-dev-抜き)
 - [npm -g が --location=global になってめんどくさい](#npm--g-が---locationglobal-になってめんどくさい)
-- [npmの補完](#npmの補完)
-- [import/requireの "node:"](#importrequireの-node)
-- ["node ."](#node-)
-- [pnpmやyarnにはnpxに相当するものがありますか?](#pnpmやyarnにはnpxに相当するものがありますか)
+  - [npm の補完](#npm-の補完)
+  - [import/require の "node:"](#importrequire-の-node)
+  - ["node ."](#node-)
+- [pnpm や yarn には npx に相当するものがありますか?](#pnpm-や-yarn-には-npx-に相当するものがありますか)
 - [Web Crypto API](#web-crypto-api)
-- [local storageで暗号化](#local-storageで暗号化)
+  - [local storage で暗号化](#local-storage-で暗号化)
 
-## node.jsのインストール
+## node.js のインストール
 
 [Installing Node.js via package manager | Node.js](https://nodejs.org/en/download/package-manager/)
 
-snap版があって楽。
+snap 版があって楽。
 [distributions/README.md at master · nodesource/distributions](https://github.com/nodesource/distributions/blob/master/README.md)
 
-``` sh
+```sh
 sudo snap install node --channel=12/stable --classic
 hash -r
 node -v
 ```
 
-```
+```sh
 $ LANG=C date ; node -v
 Tue Apr 21 11:38:54 JST 2020
 v12.16.2
 ```
 
-snap版はちょっと遅いような気がする。
+snap 版はちょっと遅いような気がする。
 
-Debian,Ubuntuでは
+Debian,Ubuntu では
+
 - [Installing Node.js via package manager | Node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 - [distributions/README.md at master · nodesource/distributions](https://github.com/nodesource/distributions/blob/master/README.md#deb)
-- [Ubuntuでnode.js 18.x](https://github.com/nodesource/distributions/blob/master/README.md#using-ubuntu-1)
-
+- [Ubuntu で node.js 18.x](https://github.com/nodesource/distributions/blob/master/README.md#using-ubuntu-1)
 
 ## 環境設定
 
-以下を.profileに追加(理由は後述)
-```
+以下を.profile に追加(理由は後述)
+
+```sh
 export NPM_CONFIG_PREFIX="$HOME/.npm-global"
 PATH="$NPM_CONFIG_PREFIX/bin:./node_modules/.bin:$PATH"
 export MANPATH="$NPM_CONFIG_PREFIX/man:$MANPATH"
 ```
 
-## 環境設定: npmのオートコンプリート(completion)
+## 環境設定: npm のオートコンプリート(completion)
 
-```
+```sh
 npm completion >> ~/.profile
 ```
 
-参考: 
-- [全部知ってる？ npmを使いこなすために絶対知っておきたい10のこと - WPJ](https://www.webprofessional.jp/10-npm-tips-and-tricks/)
+参考:
+
+- [全部知ってる？ npm を使いこなすために絶対知っておきたい 10 のこと - WPJ](https://www.webprofessional.jp/10-npm-tips-and-tricks/)
 - 原文: [10 Tips and Tricks That Will Make You an npm Ninja — SitePoint](https://www.sitepoint.com/10-npm-tips-and-tricks/)
 
-## npmの`-g`
+## npm の`-g`
 
-Pythonのpipだと`--user`オプションでper userだが、
-npmだと`-g`でper user。
+Python の pip だと`--user`オプションで per user だが、
+npm だと`-g`で per user。
 `-g`をつけないとプロジェクト(`package.json`)のパッケージになる。
 
+## npm の設定一覧
 
-## npmの設定一覧
-```
+```sh
 npm config list
 ```
 
-## npmの設定を編集
-```
+## npm の設定を編集
+
+```sh
 npm config edit
 ```
-またはNPM_CONFIG_xxxx環境変数でも設定できる。
 
-## npmにプロキシ設定
+または NPM_CONFIG_xxxx 環境変数でも設定できる。
 
-環境変数http_proxy, https_proxy, ftp_proxy (いつもの)
+## npm にプロキシ設定
+
+環境変数 http_proxy, https_proxy, ftp_proxy (いつもの)
 
 または
+
 ```
 npm config set proxy http://PROXY-SERVER:PROXY-PORT
 ```
@@ -106,121 +111,131 @@ npm config set proxy http://PROXY-SERVER:PROXY-PORT
 ## パッケージの更新
 
 どれが古いか知る
-```
+
+```sh
 npm outdated
 ```
 
 更新
-```
+
+```sh
 npm update <pakage name>
 ```
-pakage.jsonは書き換えてくれないみたい。
 
-ncuが便利: [npm installしたパッケージの更新確認とアップデート(npm-check-updates) - dackdive's blog](http://dackdive.hateblo.jp/entry/2016/10/10/095800)
+pakage.json は書き換えてくれないみたい。
+
+ncu が便利: [npm install したパッケージの更新確認とアップデート(npm-check-updates) - dackdive's blog](http://dackdive.hateblo.jp/entry/2016/10/10/095800)
 
 グローバルは手動になるけど。
 
 ## npm -g でインストールされる先
 
-npm config の prefixの値に/lib/node_modulesをつけたところ。
+npm config の prefix の値に/lib/node_modules をつけたところ。
 
-prefixの設定は
+prefix の設定は
+
 ```
 npm config set prefix PathYouWant
 ```
+
 または
+
 ```
 export NPM_CONFIG_PREFIX=PathYouWant
 ```
 
 確認は
-```
+
+```sh
 npm root -g
 ```
 
-`{prifixの値}/bin`をPATH環境変数に追加しておくと楽。
+`{prifixの値}/bin`を PATH 環境変数に追加しておくと楽。
 (そのパスは`npm bin -g`でも得られる)
-(Windowsのインストーラだとオプションで追加してくれる)
+(Windows のインストーラだとオプションで追加してくれる)
 
 参考:
+
 - [20 - How to prevent permissions errors | npm Documentation](https://docs.npmjs.com/getting-started/fixing-npm-permissions)
 
-## nodeがモジュールを探しに行く先を表示
+## node がモジュールを探しに行く先を表示
 
+`require('hoge')`の hoge を探しに行く先。
 
-`require('hoge')`のhogeを探しに行く先。
-
+```sh
+node -e "console.log(global.module.paths)"
 ```
-node -e "console.log(global.module.paths)" 
-```
-カレントパスから1個づつ上の/node_modulesになる。
 
-$HOMEの下の/node_modulesにper userで使うモジュールを集めておきたいなら
+カレントパスから 1 個づつ上の/node_modules になる。
+
+$HOME の下の/node_modules に per user で使うモジュールを集めておきたいなら
+
 ```sh
 mkdir -p $HOME/node_modules
 cd $HOME/node_modules
 npm install foobar
 ```
+
 で
-$HOME/node_modules/.binにパスを通せばいい。
+$HOME/node_modules/.bin にパスを通せばいい。
 
+これに加えて環境変数 NODE_PATH を対象にする。
 
-これに加えて環境変数NODE_PATHを対象にする。
-
-npm -gでインストールしたモジュールを検索するなら
+npm -g でインストールしたモジュールを検索するなら
 
 `export NODE_PATH=$(npm -g root)`
 
 のようなことをする
 (公開するモジュールを開発しているならやるべきではない)。
 
-
-Windowsのデフォルトは
+Windows のデフォルトは
 `%APPDATA%\npm\node_modules`
 
 パスは ``%APPDATA%\npm` に通しておけばいい。
 
-
 [folders | npm Docs](https://docs.npmjs.com/cli/v8/configuring-npm/folders)
 
+## --save と--save-dev
 
-
-## --saveと--save-dev
-
-開発時にいるモジュールは`--save-dev` (package.jsの"dependencies"に入る)、
-ライブラリとして使われる場合にいるモジュールは`--save-dev` (package.jsの"devDependencies"に入る)
+開発時にいるモジュールは`--save-dev` (package.js の"dependencies"に入る)、
+ライブラリとして使われる場合にいるモジュールは`--save-dev` (package.js の"devDependencies"に入る)
 
 参考:
-- [package.json | npm Documentation](https://docs.npmjs.com/files/package.json#dependencies)
-- [ちゃんと使い分けてる? dependenciesいろいろ。 - Qiita](https://qiita.com/cognitom/items/acc3ffcbca4c56cf2b95)
 
-なので、たとえばGitHubから落としたプロジェクトを使いたいだけなら
+- [package.json | npm Documentation](https://docs.npmjs.com/files/package.json#dependencies)
+- [ちゃんと使い分けてる? dependencies いろいろ。 - Qiita](https://qiita.com/cognitom/items/acc3ffcbca4c56cf2b95)
+
+なので、たとえば GitHub から落としたプロジェクトを使いたいだけなら
+
 ```
 npm i
 ```
+
 さらにこのプロジェクトを改造したりするなら
+
 ```
 npm i --dev
 ```
-↑古い。`npm install --only=dev`
+
+↑ 古い。`npm install --only=dev`
 
 参考(必読):
+
 - [install | npm Documentation](https://docs.npmjs.com/cli/install)
 
 **修正**
 
 `--save`オプションはデフォルトだった。
 `npm i PackageName`で`--save`つけたのと同等になる。
-(そもそも--saveは-P|--save-prodのエリアスらしい)
+(そもそも--save は-P|--save-prod のエリアスらしい)
 
-もし依存関係に影響をあたえず(package.jsonに変更を加えず)パッケージを入れたいなら`--no-save`オプションを。
+もし依存関係に影響をあたえず(package.json に変更を加えず)パッケージを入れたいなら`--no-save`オプションを。
 
+## プロジェクトにインストールしたモジュールの bin を使う
 
-
-## プロジェクトにインストールしたモジュールのbinを使う
-
-$HOME/.profileや$HOME/,bash_profileで./node_modules/.bin:`をPATHに追加しておく。
+$HOME/.profileや$HOME/,bash_profile で./node_modules/.bin:`を PATH に追加しておく。
 こんな感じ
+
 ```
 export PATH="./node_modules/.bin:$PATH"
 ```
@@ -229,37 +244,42 @@ export PATH="./node_modules/.bin:$PATH"
 
 便利
 
-[npm linkの基本的な使い方まとめ - Qiita](https://qiita.com/103ma2/items/284b3f00948121f23ee4)
-
+[npm link の基本的な使い方まとめ - Qiita](https://qiita.com/103ma2/items/284b3f00948121f23ee4)
 
 # cafile
 
-ZScalerというproxyが来て、npmが使えなくなってしまった。
-有名でないサイトは一旦proxyでSSLを解除して、内容を検閲し、ZScalerで再度SSL化するらしい。
+ZScaler という proxy が来て、npm が使えなくなってしまった。
+有名でないサイトは一旦 proxy で SSL を解除して、内容を検閲し、ZScaler で再度 SSL 化するらしい。
 
-ZScalerのCA証明書をPEM形式でエクスポートして、
+ZScaler の CA 証明書を PEM 形式でエクスポートして、
+
 ```
 npm config set cafile "<path to your certificate file>"
 ```
-で再び使えるようになった。.npmrcを直に編集してもOK.
+
+で再び使えるようになった。.npmrc を直に編集しても OK.
 
 参考:
 [How to fix SSL certificate error when running Npm on Windows? - Stack Overflow](https://stackoverflow.com/questions/13913941/how-to-fix-ssl-certificate-error-when-running-npm-on-windows)
 
+curl なんかも
 
-curlなんかも
 ```
 curl --cafile "<path to your certificate file>" ....
 ```
-であとりあえず使える(これも.curlrcに書ける。参考: [curlを便利に使う為の.curlrcの雛型 - Qiita](https://qiita.com/hirohiro77/items/309f5bf93083744b042e))
 
-pipも
+であとりあえず使える(これも.curlrc に書ける。参考: [curl を便利に使う為の.curlrc の雛型 - Qiita](https://qiita.com/hirohiro77/items/309f5bf93083744b042e))
+
+pip も
+
 ```
 pip --cert "<path to your certificate file>" ....
 ```
-で行ける。~/.pip/pip.confにも書ける。参考: [python - pip: cert failed, but curl works - Stack Overflow](https://stackoverflow.com/questions/19377045/pip-cert-failed-but-curl-works)
 
-「証明書をPEM形式でエクスポート」はWindowsのバージョンによって微妙に異なるのだが、
+で行ける。~/.pip/pip.conf にも書ける。参考: [python - pip: cert failed, but curl works - Stack Overflow](https://stackoverflow.com/questions/19377045/pip-cert-failed-but-curl-works)
+
+「証明書を PEM 形式でエクスポート」は Windows のバージョンによって微妙に異なるのだが、
+
 1. コントロールパネル
 1. インターネットのプロパティ
 1. コンテンツタブ
@@ -274,30 +294,31 @@ pip --cert "<path to your certificate file>" ....
 1. 次へボタン
 1. 完了ボタン
 
-の順でマウスカチカチすればだれでも簡単にできるw。
+の順でマウスカチカチすればだれでも簡単にできる w。
 
-# いちばん簡単なnode.jsプロジェクトの始め方
+# いちばん簡単な node.js プロジェクトの始め方
 
 [Express](https://expressjs.com/ja/)を使った
-Node.jsらしい
-簡単なプロジェクト(httpでアクセスするとHello worldを返す)を作ってみる。
-
+Node.js らしい
+簡単なプロジェクト(http でアクセスすると Hello world を返す)を作ってみる。
 
 ```sh
 mkdir hello
 cd hello
 npm init -f
 ```
+
 `index.js`をエディタ開いて(`vi index.js`とか`emacs index.js`)、
 以下をコピペ
 
 ```javascript
 #!/usr/bin/env node
-const express = require('express')
-const app = express()
-app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+const express = require("express");
+const app = express();
+app.get("/", (req, res) => res.send("Hello World!"));
+app.listen(3000, () => console.log("Example app listening on port 3000!"));
 ```
+
 ([Express の「Hello World」の例](https://expressjs.com/ja/starter/hello-world.html)から引用)
 
 ```sh
@@ -306,20 +327,24 @@ chmod +x ./index.js
 ```
 
 起動
+
 ```sh
-./index.js & 
+./index.js &
 ```
 
 で、テスト
+
 ```sh
 $ curl http://127.0.0.1:3000/
 Hello World!
 ```
 
 終了は
+
 ```sh
 kill %1
 ```
+
 で。
 
 (本当は`jobs`でリスト出して、`kill %{該当プロセス番号}`)が正しい。
@@ -327,6 +352,7 @@ kill %1
 ## 続き: git
 
 ここまでで、こんな感じになってるはず。
+
 ```
 .
 |-- index.js
@@ -343,16 +369,18 @@ git add --all
 git commit -am 'Initial commit'
 ```
 
-あとは頑張って開発するw。
+あとは頑張って開発する w。
 
 ## 続き: node-dev
 
-このままだと、index.jsを編集するたびにkillして./index.jsしなければならないので、[node-dev](https://www.npmjs.com/package/node-dev)を使ってみる。
+このままだと、index.js を編集するたびに kill して./index.js しなければならないので、[node-dev](https://www.npmjs.com/package/node-dev)を使ってみる。
 
 ```sh
 npm install --save-dev node-dev
 ```
+
 または
+
 ```sh
 npm install node-dev -g
 ```
@@ -362,15 +390,14 @@ npm install node-dev -g
 ```sh
 node-dev index.js &
 ```
+
 で起動する。`index.js`を編集&保存するごとにオートリロードするようになる。
 
 # そのほか参考リンク
 
-- [npm initでauthorやlicenseなどの初期値を指定する - teppeis blog](https://teppeis.hatenablog.com/entry/2015/12/configure-npm-init)
+- [npm init で author や license などの初期値を指定する - teppeis blog](https://teppeis.hatenablog.com/entry/2015/12/configure-npm-init)
 
-
-
-# npm install dev抜き
+# npm install dev 抜き
 
 ```sh
 npm i --only=prod
@@ -378,9 +405,8 @@ npm i --only=prod
 npm i --production
 ```
 
-ちょっと気に入らない。あとnpmのバージョンによっても変わるらしい。
+ちょっと気に入らない。あと npm のバージョンによっても変わるらしい。
 `--only=dev`は無い。
-
 
 # npm -g が --location=global になってめんどくさい
 
@@ -390,10 +416,9 @@ npm i --production
 
 とりあえず
 `npm -g i npm@8`
-で。npm 9だとAWS SAMでTypeScriptだと死ぬとかあるので、しばらくこれで。
+で。npm 9 だと AWS SAM で TypeScript だと死ぬとかあるので、しばらくこれで。
 
-
-# npmの補完
+## npm の補完
 
 [npm\-completion \| npm Docs](https://docs.npmjs.com/cli/v9/commands/npm-completion)
 には
@@ -402,27 +427,29 @@ npm i --production
 npm completion >> ~/.bashrc
 npm completion >> ~/.zshrc
 ```
+
 って書いてあるけど
 
-自分はUbuntuで
+自分は Ubuntu で
+
 ```bash
 npm completion > /tmp/npm
 sudo mv /tmp/npm /usr/share/bash-completion/completions/
 ```
+
 にしました(合ってるかは知らん)
 
-
-# import/requireの "node:"
+## import/require の "node:"
 
 [Node.js 18 Introduces Prefix-Only Core Modules](https://fusebit.io/blog/node-18-prefix-only-modules/?utm_source=www.reddit.com&utm_medium=referral&utm_campaign=none)
 
 こういうやつ
 
 ```javascript
-import test from 'node:test';
-import assert from 'node:assert';
+import test from "node:test";
+import assert from "node:assert";
 
-test('synchronous passing test', (t) => {
+test("synchronous passing test", (t) => {
   // This test passes because it does not throw an exception.
   assert.strictEqual(1, 1);
 });
@@ -434,26 +461,25 @@ test('synchronous passing test', (t) => {
 
 > node:test' は 'node:' というプレフィックスを使ってのみインポート可能な最初のコアモジュールです。Node の新しいテストランナーを使うには、'node:test' をインポートしなければなりません。もし 'node:' というプレフィックスが含まれていなければ、 Node.js は代わりに test という名前のモジュールをユーザランドからロードしようとします。
 
+## "node ."
 
-# "node ."
+ChatGPT に聞いてみました。
 
-ChatGPTに聞いてみました。
+"node ." は、現在のフォルダにある JavaScript ファイルを実行するためのコマンドです。 "node" は、Node.js と呼ばれる JavaScript ランタイムで、JavaScript をサーバーサイドで実行するために使用されます。 "." は、現在のフォルダを指します。
 
-"node ." は、現在のフォルダにあるJavaScriptファイルを実行するためのコマンドです。 "node" は、Node.jsと呼ばれるJavaScriptランタイムで、JavaScriptをサーバーサイドで実行するために使用されます。 "." は、現在のフォルダを指します。
+このコマンドが実行されると、現在のフォルダにある JavaScript ファイルが実行されます。 その中で、package.json の"main"に記載されたファイルが優先的に実行されます。もしない場合は、index.js が実行されます。
 
-このコマンドが実行されると、現在のフォルダにあるJavaScriptファイルが実行されます。 その中で、package.jsonの"main"に記載されたファイルが優先的に実行されます。もしない場合は、index.jsが実行されます。
+このように実行することで、現在のフォルダにある JavaScript アプリケーションを簡単に起動することができます。
 
-このように実行することで、現在のフォルダにあるJavaScriptアプリケーションを簡単に起動することができます。
+# pnpm や yarn には npx に相当するものがありますか?
 
-# pnpmやyarnにはnpxに相当するものがありますか?
+ChatGPT に聞いてみました。
 
-ChatGPTに聞いてみました。
+pnpm には、npx に相当する機能の「pnpx」というものがあります。 pnpx は、pnpm のグローバルインストールではなく、ローカルインストールしたパッケージを実行するためのコマンドです。
 
-pnpmには、npxに相当する機能の「pnpx」というものがあります。 pnpxは、pnpmのグローバルインストールではなく、ローカルインストールしたパッケージを実行するためのコマンドです。
+Yarn には、npx に相当する機能の「yarn npx」というものがあります。これは、npm に似た形式で、ローカルにインストールしたパッケージを実行するためのコマンドです。
 
-Yarnには、npxに相当する機能の「yarn npx」というものがあります。これは、npmに似た形式で、ローカルにインストールしたパッケージを実行するためのコマンドです。
-
-それで、pnpxやyarn npxは、npxに似た機能を持っており、ローカルにインストールしたパッケージを実行するために使用できます。
+それで、pnpx や yarn npx は、npx に似た機能を持っており、ローカルにインストールしたパッケージを実行するために使用できます。
 
 …なんか胡乱だけど言いたいことはわかった。
 
@@ -461,35 +487,34 @@ Yarnには、npxに相当する機能の「yarn npx」というものがあり�
 - [pnpm exec | pnpm](https://pnpm.io/ja/cli/exec)
 - [pnpm dlx | pnpm](https://pnpm.io/ja/cli/dlx) - これが推奨
 
-
 # Web Crypto API
 
 Node.js には `crypto` があるけど、ブラウザにはない。
 代わりにブラウザには [Web Crypto API](https://developer.mozilla.org/ja/docs/Web/API/Web_Crypto_API) がある。
 
-で、開発とかで Node.js で Web Crypto APIで使えるかどうかの調査。
+で、開発とかで Node.js で Web Crypto API で使えるかどうかの調査。
 
-以下ChatGPT:
+以下 ChatGPT:
 
-Web Crypto APIは主にブラウザー環境で実行するために設計されたAPIです。
-Node.jsでは、Web Crypto APIは提供されていませんが、代わりにNode.jsには、暗号化操作を行うために利用できる標準のcryptoモジュールがあります。
+Web Crypto API は主にブラウザー環境で実行するために設計された API です。
+Node.js では、Web Crypto API は提供されていませんが、代わりに Node.js には、暗号化操作を行うために利用できる標準の crypto モジュールがあります。
 
-cryptoモジュールには、多くの暗号アルゴリズムが含まれており、ブラウザ環境のWeb Crypto APIと同様の機能を提供しています。
-ただし、cryptoモジュールには、Web Crypto APIには含まれているような、鍵の派生（key derivation）や鍵交換（key exchange）といった機能が提供されていません。
+crypto モジュールには、多くの暗号アルゴリズムが含まれており、ブラウザ環境の Web Crypto API と同様の機能を提供しています。
+ただし、crypto モジュールには、Web Crypto API には含まれているような、鍵の派生（key derivation）や鍵交換（key exchange）といった機能が提供されていません。
 
-そのため、Node.jsでWeb Crypto APIと同じ機能を使うためには、Web Crypto APIの代替として提供されているサードパーティ製のライブラリを利用することがあります。
-例えば、Node.jsでWeb Crypto API互換のAPIを提供するライブラリとしては、
+そのため、Node.js で Web Crypto API と同じ機能を使うためには、Web Crypto API の代替として提供されているサードパーティ製のライブラリを利用することがあります。
+例えば、Node.js で Web Crypto API 互換の API を提供するライブラリとしては、
+
 - [node-webcrypto-ossl](https://github.com/PeculiarVentures/node-webcrypto-ossl) - Nov 3, 2021. で archive
-- [@peculiar/webcrypto](https://github.com/PeculiarVentures/webcrypto) - ↑の後継
-- [node-webcrypto-p11](https://www.npmjs.com/package/node-webcrypto-p11) - ↑と作者同じ? ↑より更新されてる
-- node-crypto - Node.jsのcrypto。ChatGPTの嘘
+- [@peculiar/webcrypto](https://github.com/PeculiarVentures/webcrypto) - ↑ の後継
+- [node-webcrypto-p11](https://www.npmjs.com/package/node-webcrypto-p11) - ↑ と作者同じ? ↑ より更新されてる
+- node-crypto - Node.js の crypto。ChatGPT の嘘
 
 などがあります。
 
 ただし、これらのライブラリには注意点があり、特定のライブラリを使用する前に、よく確認することをお勧めします。
 
-
-# local storageで暗号化
+## local storage で暗号化
 
 生データよりはちょっとはマシかな... という程度でしょうが。
 
@@ -500,10 +525,9 @@ cryptoモジュールには、多くの暗号アルゴリズムが含まれて�
 - [secure-ls](https://www.npmjs.com/package/secure-ls)
 - [encrypt-storage vs localstorage-slim vs secure-ls vs secure-web-storage | npm trends](https://npmtrends.com/encrypt-storage-vs-localstorage-slim-vs-secure-ls-vs-secure-web-storage)
 
-Reactだったら
+React だったら
 [react-secure-storage - npm](https://www.npmjs.com/package/react-secure-storage)
-というのがある。SSRだけみたい。
+というのがある。SSR だけみたい。
 
-
-secure-lsつかってみた。
+secure-ls つかってみた。
 開発ツールでコピペしたくなくなる程度にはなんとかなる。
