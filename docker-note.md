@@ -643,7 +643,7 @@ minikube start --vm-driver=none
 
 実行例
 
-```
+```sh
 $ minikube version
 minikube version: v1.15.1
 commit: 23f40a012abb52eff365ff99a709501a61ac5876
@@ -691,7 +691,7 @@ $ sudo -i
 
 ステータスは
 
-```
+```sh
 sudo -i minikube status
 ```
 
@@ -699,7 +699,7 @@ sudo -i minikube status
 
 [Hello Minikube | Kubernetes](https://kubernetes.io/ja/docs/tutorials/hello-minikube/)
 
-```
+```sh
 minikube dashboard --url=false
 ```
 
@@ -734,7 +734,7 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 いるもの
 
-```
+```sh
 sudo apt install uidmap
 ```
 
@@ -749,7 +749,7 @@ systemctl --user status docker.service
 
 PATH を通すのと環境変数 1 個。.bashrc とかに入れる
 
-```
+```sh
 export PATH=/home/heiwa/bin:$PATH
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
 ```
