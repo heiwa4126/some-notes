@@ -787,7 +787,7 @@ DOCKER_BUILDKIT=1 docker build .
 ## docker でコンテナが実行されているときに、元のイメージを書き換えるとどうなる?
 
 予想では
-「Repository=<none>になって残るので何も起きない」
+「`Repository=<none>`になって残るので何も起きない」
 「i-node を掴んでいるので何も起きない(Windows とかは知らない)」
 だと思われる。
 
@@ -798,7 +798,7 @@ DOCKER_BUILDKIT=1 docker build .
 
 じゃいま動いてるイメージを rmi するとどうなる。
 
-```
+```console
 $ docker rmi b11fdd96e58e
 Error response from daemon: conflict: unable to delete b11fdd96e58e (cannot be forced) - image is being used by running container 726262b5a406
 
