@@ -32,6 +32,7 @@
   - [docker history](#docker-history)
   - [AWS ECR のライフサイクルポリシー](#aws-ecr-のライフサイクルポリシー)
   - [デタッチモード(-d)で docker run したプロセスの出力を見る](#デタッチモード-dで-docker-run-したプロセスの出力を見る)
+  - [ssh 経由で image をよそのホストにコピー](#ssh経由で-image-をよそのホストにコピー)
 
 ## インストール
 
@@ -859,3 +860,12 @@ $ docker run --rm -d -p 3000:3000 myapp1:test1
 
 $ docker logs 74e2562e6dbb0b2b59cc4f7f072e4654113bbedef478a59bad056352d8b1c904
 ```
+
+## ssh 経由で image をよそのホストにコピー
+
+```sh
+docker save myapp1:test1 | ssh myhost1 'docker load'
+```
+
+- `ssh myhost1` で正常につながる前提
+- myhost1 には docker が入ってる前提
