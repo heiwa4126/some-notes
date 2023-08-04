@@ -31,6 +31,7 @@
   - [いらんイメージを手早く消す](#いらんイメージを手早く消す)
   - [docker history](#docker-history)
   - [AWS ECR のライフサイクルポリシー](#aws-ecr-のライフサイクルポリシー)
+  - [デタッチモード(-d)で docker run したプロセスの出力を見る](#デタッチモード-dで-docker-run-したプロセスの出力を見る)
 
 ## インストール
 
@@ -158,7 +159,7 @@ docker run --rm -v $(pwd):/tmp -u $UID:$(id -g) -w /tmp adoptopenjdk/openjdk11:l
 
 実行例
 
-```
+```console
 Hello World!!
 version: 11.0.3
 vender: AdoptOpenJDK
@@ -209,7 +210,7 @@ hello のバイナリサイズはとてもちいさい。
 
 ## GoLang でサーバを書いて image にしてみる
 
-```
+```console
 $ go version
 go version go1.12 linux/amd64
 ```
@@ -760,9 +761,11 @@ docker-compose は?
 
 ## BuildKit
 
-最近の docker なら
+最近の docker なら BuildKit はデフォルトで有効。Docker v20 あたりから?
 
-```
+(古い) 最近の docker なら
+
+```sh
 DOCKER_BUILDKIT=1 docker build .
 ```
 
@@ -818,7 +821,14 @@ docker image prune -f
 
 [使用していない Docker オブジェクトの削除（prune） — Docker-docs-ja 20.10 ドキュメント](https://docs.docker.jp/config/pruning.html)
 
-`prune`には他いろんなものが消せるオプションがあるので ↑ 参考。
+`prune`には他いろんなものが消せるオプションがある。↑ 参考。
+
+```sh
+docker image prune -f
+docker builder prune -f
+```
+
+は時々やっとくといいと思う。
 
 ## docker history
 
@@ -836,3 +846,16 @@ docker history --format "{{.CreatedBy}}" test0 --no-trunc  | less
 
 - [ライフサイクルポリシー - Amazon ECR](https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/LifecyclePolicies.html)
 - [aws_ecr_lifecycle_policy | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_lifecycle_policy)
+
+## デタッチモード(-d)で docker run したプロセスの出力を見る
+
+`docker logs`
+
+実行例
+
+```console
+$ docker run --rm -d -p 3000:3000 myapp1:test1
+74e2562e6dbb0b2b59cc4f7f072e4654113bbedef478a59bad056352d8b1c904
+
+$ docker logs 74e2562e6dbb0b2b59cc4f7f072e4654113bbedef478a59bad056352d8b1c904
+```
