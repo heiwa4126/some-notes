@@ -504,7 +504,7 @@ sam local start-api
 
 sam init で
 
-```
+```termianl
 AWS quick start application templates:
         1 - Hello World Example
         2 - EventBridge Hello World
@@ -595,7 +595,6 @@ API キーがなぜ API Gateway のオーソライザーの中にないか? ど�
 - REQUEST オーソライザー
 
 > トークンベース の Lambda オーソライザー (TOKEN オーソライザーとも呼ばれる) は、JSON ウェブトークン (JWT) や OAuth トークンなどのベアラートークンで発信者 ID を受け取ります。
-
 > リクエストパラメータベースの Lambda オーソライザー (REQUEST オーソライザーとも呼ばれます) は、ヘッダー、クエリ文字列パラメータ、stageVariables、および $context 変数の組み合わせで発信者 ID を受け取ります。
 
 WebSocket API では、リクエストパラメータベースのオーソライザーのみがサポートされています。
@@ -740,7 +739,7 @@ output の SourceBucket からバケット名を得る、みたいな感じら�
 > Running 'sam deploy' for future deployments will use the parameters saved above.
 > The above parameters can be changed by modifying samconfig.toml
 > Learn more about samconfig.toml syntax at
-> https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+> <https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html>
 
 ## sam deploy でデプロイする
 
@@ -796,7 +795,7 @@ aws-sam-cli-managed-default stack はあるか。
 ```
 
 こんなテンプレートで aws-sam-cli-managed-default stack を作る。
-https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/using-cfn-cli-creating-stack.html
+<https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/using-cfn-cli-creating-stack.html>
 
 aws-sam-cli-managed-default stack の output の SourceBucket からバケット名をとる。
 
