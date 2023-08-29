@@ -26,9 +26,10 @@
   - [npm の補完](#npm-の補完)
   - [import/require の "node:"](#importrequire-の-node)
   - ["node ."](#node-)
-- [pnpm や yarn には npx に相当するものがありますか?](#pnpm-や-yarn-には-npx-に相当するものがありますか)
+  - [pnpm や yarn には npx に相当するものがありますか?](#pnpm-や-yarn-には-npx-に相当するものがありますか)
 - [Web Crypto API](#web-crypto-api)
   - [local storage で暗号化](#local-storage-で暗号化)
+  - [Node.js の JSON](#nodejs-の-json)
 
 ## node.js のインストール
 
@@ -471,7 +472,7 @@ ChatGPT に聞いてみました。
 
 このように実行することで、現在のフォルダにある JavaScript アプリケーションを簡単に起動することができます。
 
-# pnpm や yarn には npx に相当するものがありますか?
+## pnpm や yarn には npx に相当するものがありますか?
 
 ChatGPT に聞いてみました。
 
@@ -531,3 +532,32 @@ React だったら
 
 secure-ls つかってみた。
 開発ツールでコピペしたくなくなる程度にはなんとかなる。
+
+## Node.js の JSON
+
+Node.js やブラウザ内蔵の JavaScript では JSON って import/require なしに使えるよね? これはなぜ?
+という話。
+
+まず [Global objects | Node.js v20.5.1 Documentation](https://nodejs.org/api/globals.html#global-objects)
+というものがある。これらはグローバルオブジェクトなので import/require なしにイキナリ使える (先頭に「これらはグローバルオブジェクトじゃありません」のリストがついてるので注意)。
+
+ここにリストされているのは Node.js 特有のオブジェクト (ファイルシステム関連などはブラウザ版 JavaScript には存在しないから)。
+
+で、これ以外に「JavaScript 言語自体の一部である組み込みオブジェクト」というものがあって、
+[標準組み込みオブジェクト - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects)
+その中の [JSON - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON) が
+最初に出てきた JSON のドキュメント。
+
+一方、ブラウザ内蔵 JavaScript にしかない組み込みオブジェクト、というものがあって
+(例えば [Document インターフェース](https://developer.mozilla.org/ja/docs/Web/API/Document) や [Window インターフェース](https://developer.mozilla.org/ja/docs/Web/API/Window))、そのリストは [Web API | MDN](https://developer.mozilla.org/ja/docs/Web/API#%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%82%A4%E3%82%B9) にある。
+
+これらが「インターフェース」であって「オブジェクト」でないのは、
+各ブラウザによってオブジェクトの中身には差異があるからで、
+最低これだけの仕様は絶対備えてますよ、というのが「インターフェース」な理由。
+
+また、Node.js には「標準ライブラリ」というものがあって、
+[Index | Node.js v20.5.1 Documentation](https://nodejs.org/api/)
+これは Node.js に最初から付属していて、`npm install` 不要で、import/require すれば使えるもの。
+
+逆に、ブラウザ内蔵 JavaScript には「標準ライブラリ」の標準というものは無く、
+「特定のブラウザでしか動かない固有のライブラリ」は存在する(例えば [Firefox の拡張機能ライブラリ](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions))。
