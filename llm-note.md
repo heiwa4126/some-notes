@@ -237,3 +237,38 @@ Hugging Face の Transformers ライブラリは、多くの有名な Transforme
 
 Hugging Face 社の社名の由来の絵文字 🤗、「笑いながら人を付き飛ばすサイコパス」に見えて怖い。
 [hugging face emoji - Google Search](https://www.google.com/search?q=hugging+face+emoji&tbm=isch&source=lnms&hl=en)
+
+[画像 AI を調べると必ず出てくる謎のサイト「Hugging Face」ってナニモノ？　正体は急成長中の“ユニコーン”（1/3 ページ） - ITmedia NEWS](https://www.itmedia.co.jp/news/articles/2302/23/news080.html)
+
+## テンソル
+
+### ベクトルはテンソルの一種ですか?
+
+ベクトルは、次元が 1 のテンソルです。
+
+次元が 0 のテンソルはスカラーで
+次元が 2 のテンソルは行列です。
+
+### n 次元テンソル と n 階テンソル は同じものですか
+
+同じものです。
+
+### 高次元ベクトルって何ですか?
+
+高次元ベクトルとは、単に次元数が高いベクトルのことを指します。
+
+例えば、[1, 2] は 2 次元ベクトルであり、2 次元空間内の点を表します。[1, 2, 3] は 3 次元ベクトルであり、3 次元空間内の点を表します。[1, 2, 3, 4] は 4 次元ベクトルであり、4 次元空間内の点を表します。
+
+### 「低次元ベクトル」と「高次元ベクトル」は何がちがいますか?
+
+長さ。要素数ともいう。比較的長いのが「高次元ベクトル」(笑うところじゃないです)
+
+### なぜベクトルに変換することを embedding というのですか? Word2Vec が起源ですか?
+
+[Embedding（埋め込み表現）とは、単語や文章等の自然言語の構成要素をベクトル表現に変換する処理を指します](https://di-acc2.com/programming/python/26101/)。[この変換操作は、トークンをベクトル空間に埋め込む操作であることから埋め込み（embedding）ともいわれます（一般的に自然言語処理の分野でトークンは単語であるため、単語埋め込み（word embedding）と呼ぶことが多い）](https://developers.agirobots.com/jp/word2vec-and-embeddinglayer/)。
+
+[Word2Vec は、Word を Vector に変換するという意味で分散表現そのものを指すと解釈できますが、より狭義で CBOW や Skip-gram の 2 つのモデルを指すのが一般的です](https://developers.agirobots.com/jp/word2vec-and-embeddinglayer/)。  
+Word2Vec は、Embedding の起源ではありませんが、Embedding 技術の発展に大きく貢献した技術です。実際に、Word2Vec は、自然言語処理における Embedding 技術の中でも広く使用されています。
+
+- [Word2Vec とは | 分散表現・Skip-gram 法と CBOW の仕組み・ツールや活用事例まで徹底解説 | Ledge.ai](https://ledge.ai/articles/word2vec)
+- [【自然言語処理】word2vec とは何か？CBOW と skip-gram も解説 - omathin blog](https://omathin.com/word2vec-overview/)
