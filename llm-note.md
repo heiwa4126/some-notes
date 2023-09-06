@@ -53,13 +53,18 @@ PyTorch 形式
 
 ...なんか微妙に違う。
 
-- 文書分類 - document classification
-- 感情分析 - sentiment analysis
+- 文書分類 (document classification)
+- 感情分析 (sentiment analysis)
 - 自然言語推論 (naturallanguageinference;NLI)
 - 意味的類似度計算 (semantictextualsimilarity;STS)
 - 固有表現認識 (namedentityrecognition;NER)
 - 要約生成 (summarizationgeneration)
 - 質問応答 (questionanswering)
+- 機械翻訳 (machine translation)
+- 対話システム(dialogue system)
+- 形態素解析(morphological analysis)
+- 構文解析 (parsing)
+- 共参照解析 (coreference resolution)
 
 とかそういうやつだ。修正していく。
 
@@ -78,16 +83,58 @@ or
 
 でタスクを解く。
 
+## LLM の代表的なタスク
+
+| タスク                                           | 解説                                                                                                                                                                             |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 文書分類 (document classification)               | テキストを、その内容に基づいてカテゴリに分類するタスクです。例えば、ニュース記事の種類や、商品のレビューの評価を分類することができます。                                         |
+| 感情分析 (sentiment analysis)                    | テキストの感情を、ポジティブ、ネガティブ、ニュートラルのいずれかに分類するタスクです。例えば、ソーシャルメディアの投稿の感情を分析して、世間のトレンドを把握することができます。 |
+| 自然言語推論 (natural language inference;NLI)    | テキストから、ある事実が真実であることを推論するタスクです。例えば、2 つの文章が矛盾するかどうかを判断することができます。                                                       |
+| 意味的類似度計算 (semantictextualsimilarity;STS) | 2 つのテキストの意味の類似度を計算するタスクです。例えば、2 つの文章が同じ内容を言っているかどうかを判断することができます。                                                     |
+| 固有表現認識 (namedentityrecognition;NER)        | テキストから、固有表現 (person, organization, place, etc.) を検出するタスクです。例えば、ニュース記事から、登場人物の名前や、企業の名前を抽出することができます。                |
+| 要約生成 (summarizationgeneration)               | テキストを、要点だけを残して短くまとめるタスクです。例えば、長いニュース記事を、短い記事にまとめることができます。                                                               |
+| 質問応答 (questionanswering)                     | 質問に対して、テキストから回答を探し出すタスクです。例えば、ニュース記事の内容に関する質問に答えることができます。                                                               |
+| 機械翻訳 (machine translation)                   | 言語間でテキストを翻訳するタスクです。例えば、英語のニュース記事を日本語に翻訳することができます。                                                                               |
+| 対話システム(dialogue system)                    | 人間と自然な会話をするシステムです。例えば、顧客サービスや、旅行の予約などのタスクをサポートすることができます。                                                                 |
+| 形態素解析(morphological analysis)               | テキストを、単語と品詞に分解するタスクです。例えば、文法的な間違いを検出することができます。                                                                                     |
+| 構文解析 (parsing)                               | テキストの構造を解析するタスクです。例えば、文の主語や述語を特定することができます。                                                                                             |
+| 共参照解析 (coreference resolution)              | テキストの中で、同じものを指す代名詞や指示詞を特定するタスクです。例えば、文章の意味を正しく理解するために必要です。                                                             |
+
+### タスクもっと
+
+未整理。重複アリ
+
+- 文体変換 (style transfer)
+- 創造的なコンテンツの作成 (creative content generation)
+- チャットボット (chatbot)
+- 音声認識 (speech recognition)
+- 音声合成 (speech synthesis)
+- **テキスト生成 (Text Generation)**: これは、与えられたプロンプトに基づいて新しいテキストを生成するタスクです。例えば、詩や物語、記事などを生成することができます。
+- **テキスト補完 (Text Completion)**: これは、与えられたテキストの途中から続きを予測して生成するタスクです。
+- **意図認識 (Intent Recognition)**: これは、ユーザーの発話からその意図を理解するタスクです。例えば、音声アシスタントやチャットボットがユーザーの要求を理解するために使用されます。
+- **キーワード抽出 (Keyword Extraction)**: これは、テキストから重要な単語やフレーズ（キーワード）を抽出するタスクです。
+- **トピックモデリング (Topic Modeling)**: これは、大量の文書からトピック（主題）を抽出するタスクです。
+
+1. 意図解析 (intent recognition): ユーザーが与えたテキストや発話から、その意図や要求を理解するタスクです。対話ボットや仮想アシスタントがユーザーの意図を把握するのに役立ちます。
+2. テキスト生成 (text generation): 与えられた指示やコンテキストに基づいて、自動的に文章やテキストを生成するタスクです。文章生成、文章の要約、クリエイティブな文章生成などが含まれます。
+3. 意味フレーム検出 (semantic frame detection): テキスト内の言葉やフレーズを特定の意味フレームに関連付けるタスクです。例えば、レストランのレビューから食べ物やサービスに関する情報を抽出する場合があります。
+4. テキストクラスタリング (text clustering): 似たような特性を持つテキスト文書をグループ化するタスクです。文書の類似性に基づいて文書をクラスタリングします。
+5. 対話生成 (dialogue generation): 対話型のシステムを構築し、ユーザーとの自然な対話を生成するタスクです。応答の生成だけでなく、流暢な対話の維持も含まれます。
+6. テキストのエンティティリンキング (entity linking): テキスト内のエンティティ（人物、場所、組織など）を外部の知識ベースと関連付けるタスクです。例えば、"Apple"が果物の名前か企業名かを判別します。
+7. テキストのトピックモデリング (topic modeling): テキストコレクション内の文書から共通のトピックやテーマを特定し、文書のクラスタリングや要約に使用されます。
+8. テキストの生成言語モデル (text generation language models): 大規模なテキストデータセットを用いて学習したモデルを使用して、文章やテキストの生成を行うタスクです。GPT-3 などが代表的な例です。
+
 ## Transformers のチュートリアル
 
 [イントロダクション - Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/ja/chapter0/1?fw=pt)
 
 NLP は 自然言語処理 (Natural Language Processing)。
 
-英語版のほうが充実してる感じではある。
-[Introduction - Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/en/chapter0/1?fw=pt)
-
+日本語版の経緯:
 [Hugging Face Course の紹介と日本語翻訳について | hiromu NLP BLOG](https://hiromu-nlp.com/huggingface-course-intro/)
+
+英語版:
+[Introduction - Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/en/chapter0/1?fw=pt)
 
 ## Transformers のモデルのキャッシュを消す方法
 
@@ -181,3 +228,12 @@ Hugging Face の Transformers ライブラリは、多くの有名な Transforme
 - モデルの解釈可能性
 
 などの要素も、モデルの構成要素と考えられることもある。
+
+## Hugging Face とは?
+
+"🤗" (hugging face emoji) が由来。
+
+[Hugging Face And Its Tryst With Success](https://analyticsindiamag.com/hugging-face-and-its-tryst-with-success/)
+
+Hugging Face 社の社名の由来の絵文字 🤗、「笑いながら人を付き飛ばすサイコパス」に見えて怖い。
+[hugging face emoji - Google Search](https://www.google.com/search?q=hugging+face+emoji&tbm=isch&source=lnms&hl=en)
