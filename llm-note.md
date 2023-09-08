@@ -272,3 +272,4 @@ Word2Vec は、Embedding の起源ではありませんが、Embedding 技術の
 
 - [Word2Vec とは | 分散表現・Skip-gram 法と CBOW の仕組み・ツールや活用事例まで徹底解説 | Ledge.ai](https://ledge.ai/articles/word2vec)
 - [【自然言語処理】word2vec とは何か？CBOW と skip-gram も解説 - omathin blog](https://omathin.com/word2vec-overview/)
+
