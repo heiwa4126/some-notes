@@ -229,6 +229,11 @@ Hugging Face の Transformers ライブラリは、多くの有名な Transforme
 
 などの要素も、モデルの構成要素と考えられることもある。
 
+## Hugging Face Hub にある有名モデル
+
+<https://huggingface.co/docs/transformers/main/en/model_doc/bert>
+このへんから左のペインのインデックスを見る。
+
 ## Hugging Face とは?
 
 "🤗" (hugging face emoji) が由来。
