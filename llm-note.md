@@ -1,6 +1,6 @@
-# 大規模言語モデル (Large Language Models、LLM) メモ
+# 大規模言語モデル (Large Language Models;LLM) メモ
 
-- [大規模言語モデル (Large Language Models、LLM) メモ](#大規模言語モデル-large-language-modelsllm-メモ)
+- [大規模言語モデル (Large Language Models;LLM) メモ](#大規模言語モデル-large-language-modelsllm-メモ)
   - [概要](#概要)
   - [有名な大規模言語モデル](#有名な大規模言語モデル)
   - [transformers でよく出てくる "pt" とは](#transformers-でよく出てくる-pt-とは)
@@ -20,6 +20,7 @@
     - [「低次元ベクトル」と「高次元ベクトル」は何がちがいますか?](#低次元ベクトルと高次元ベクトルは何がちがいますか)
     - [なぜベクトルに変換することを embedding というのですか? Word2Vec が起源ですか?](#なぜベクトルに変換することを-embedding-というのですか-word2vec-が起源ですか)
   - [モデルの cased と uncased](#モデルの-cased-と-uncased)
+  - [Transformers で特殊トークンのリストを得る](#transformers-で特殊トークンのリストを得る)
 
 ## 概要
 
@@ -197,6 +198,8 @@ Model laion/mscoco_finetuned_CoCa-ViT-L-14-laion2B-s13B-b90k (2.6G, used 2 days 
 
 ## Transformers で扱える有名モデルと扱えない有名モデル
 
+**TODO: この節は嘘が多いので調査**
+
 Hugging Face の Transformers ライブラリは、主に Transformer ベースのモデルをサポートしています。そのため、一部の非 Transformer ベースのモデルはサポートされていません。例えば、以下のようなモデルが該当します:
 
 **CNN (Convolutional Neural Networks)**: 画像認識や音声認識などに広く使用されています。特に画像認識では、LeNet, AlexNet, VGGNet などが有名です。
@@ -314,3 +317,46 @@ BERT のベースモデルは、大量のテキストデータで学習されて
 
 たとえば、テキスト分類のタスクでは、単語の意味を理解することが重要です。この場合、BERT-base-cased を使用すると、より高い精度を達成することができます。
 一方、テキスト要約のタスクでは、単語の意味よりも、文章の構造を理解することが重要です。この場合、BERT-base-uncased を使用すると、計算コストを削減することができます。
+
+## Transformers で特殊トークンのリストを得る
+
+`.tokenizer.special_tokens_map`
+
+```python
+generator = pipeline(
+    "text-generation", model="abeja/gpt2-large-japanese"
+)
+print(generator.tokenizer.special_tokens_map)
+```
+
+```output
+{'bos_token': '<s>',
+ 'eos_token': '</s>',
+ 'unk_token': '<unk>',
+ 'sep_token': '[SEP]',
+ 'pad_token': '[PAD]',
+ 'cls_token': '[CLS]',
+ 'mask_token': '[MASK]'}
+```
+
+```python
+generator = pipeline(
+    "text2text-generation", model="retrieva-jp/t5-large-long"
+)
+print(generator.tokenizer.special_tokens_map)
+```
+
+```output
+{'eos_token': '</s>',
+ 'unk_token': '<unk>',
+ 'pad_token': '<pad>',
+ 'additional_special_tokens': [
+  '<extra_id_0>',
+  '<extra_id_1>',
+  '<extra_id_2>',
+  '<extra_id_3>',
+  (略)
+  '<extra_id_99>']}
+```
+
+[Hugging Face のライブラリを使って Tokenize - Qiita](https://qiita.com/ishikawa-takumi/items/5fc45ddd121b23db5de9)
