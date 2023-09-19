@@ -46,10 +46,10 @@ PyTorch 形式
 
 他に
 
-- "pt"：PyTorch 形式
-- "tf"：TensorFlow 形式
-- "jax"：JAX 形式
-- "np"：NumPy 形式
+- "pt":PyTorch 形式
+- "tf":TensorFlow 形式
+- "jax":JAX 形式
+- "np":NumPy 形式
 
 `class TensorType` 参照
 
@@ -133,15 +133,15 @@ or
 - **テキスト生成 (Text Generation)**: これは、与えられたプロンプトに基づいて新しいテキストを生成するタスクです。例えば、詩や物語、記事などを生成することができます。
 - **テキスト補完 (Text Completion)**: これは、与えられたテキストの途中から続きを予測して生成するタスクです。
 - **意図認識 (Intent Recognition)**: これは、ユーザーの発話からその意図を理解するタスクです。例えば、音声アシスタントやチャットボットがユーザーの要求を理解するために使用されます。
-- **キーワード抽出 (Keyword Extraction)**: これは、テキストから重要な単語やフレーズ（キーワード）を抽出するタスクです。
-- **トピックモデリング (Topic Modeling)**: これは、大量の文書からトピック（主題）を抽出するタスクです。
+- **キーワード抽出 (Keyword Extraction)**: これは、テキストから重要な単語やフレーズ(キーワード)を抽出するタスクです。
+- **トピックモデリング (Topic Modeling)**: これは、大量の文書からトピック(主題)を抽出するタスクです。
 
 1. 意図解析 (intent recognition): ユーザーが与えたテキストや発話から、その意図や要求を理解するタスクです。対話ボットや仮想アシスタントがユーザーの意図を把握するのに役立ちます。
 2. テキスト生成 (text generation): 与えられた指示やコンテキストに基づいて、自動的に文章やテキストを生成するタスクです。文章生成、文章の要約、クリエイティブな文章生成などが含まれます。
 3. 意味フレーム検出 (semantic frame detection): テキスト内の言葉やフレーズを特定の意味フレームに関連付けるタスクです。例えば、レストランのレビューから食べ物やサービスに関する情報を抽出する場合があります。
 4. テキストクラスタリング (text clustering): 似たような特性を持つテキスト文書をグループ化するタスクです。文書の類似性に基づいて文書をクラスタリングします。
 5. 対話生成 (dialogue generation): 対話型のシステムを構築し、ユーザーとの自然な対話を生成するタスクです。応答の生成だけでなく、流暢な対話の維持も含まれます。
-6. テキストのエンティティリンキング (entity linking): テキスト内のエンティティ（人物、場所、組織など）を外部の知識ベースと関連付けるタスクです。例えば、"Apple"が果物の名前か企業名かを判別します。
+6. テキストのエンティティリンキング (entity linking): テキスト内のエンティティ(人物、場所、組織など)を外部の知識ベースと関連付けるタスクです。例えば、"Apple"が果物の名前か企業名かを判別します。
 7. テキストのトピックモデリング (topic modeling): テキストコレクション内の文書から共通のトピックやテーマを特定し、文書のクラスタリングや要約に使用されます。
 8. テキストの生成言語モデル (text generation language models): 大規模なテキストデータセットを用いて学習したモデルを使用して、文章やテキストの生成を行うタスクです。GPT-3 などが代表的な例です。
 
@@ -197,7 +197,7 @@ Model laion/mscoco_finetuned_CoCa-ViT-L-14-laion2B-s13B-b90k (2.6G, used 2 days 
 
 ## Transformers で扱える有名モデルと扱えない有名モデル
 
-Hugging Face の Transformers ライブラリは、主に Transformer ベースのモデルをサポートしています。そのため、一部の非 Transformer ベースのモデルはサポートされていません。例えば、以下のようなモデルが該当します：
+Hugging Face の Transformers ライブラリは、主に Transformer ベースのモデルをサポートしています。そのため、一部の非 Transformer ベースのモデルはサポートされていません。例えば、以下のようなモデルが該当します:
 
 **CNN (Convolutional Neural Networks)**: 画像認識や音声認識などに広く使用されています。特に画像認識では、LeNet, AlexNet, VGGNet などが有名です。
 
@@ -211,7 +211,7 @@ Hugging Face の Transformers ライブラリは、主に Transformer ベース�
 
 Hugging Face の Transformers ライブラリは、多くの有名な Transformer ベースのモデルをサポートしています。これらのモデルは、自然言語処理、コンピュータビジョン、音声認識など、さまざまなタスクに使用できます。
 
-例えば、以下のようなモデルがあります：
+例えば、以下のようなモデルがあります:
 
 **BERT (Bidirectional Encoder Representations from Transformers)**: Google によって開発された自然言語処理モデルです。文章分類、固有表現認識、質問応答などのタスクに使用されます。
 
@@ -231,13 +231,13 @@ Hugging Face の Transformers ライブラリは、多くの有名な Transforme
 
 ## AI における「モデル」とは
 
-アルゴリズム、パラメータ、ハイパーパラメータ、データセットは、人工知能（AI）における「モデル」の主要構成要素です。
+アルゴリズム、パラメータ、ハイパーパラメータ、データセットは、人工知能(AI)における「モデル」の主要構成要素です。
 
 **アルゴリズム**は、モデルの学習に使用される手法を指します。例えば、線形回帰、決定木、ニューラルネットワークなどがあります。
 
 **パラメータ**は、アルゴリズムがデータから学習する値です。これらはモデルの学習過程で最適化され、新たなデータに対する予測を行うために使用されます。
 
-**ハイパーパラメータ**は、モデルの学習過程を制御するための設定値で、通常は手動で設定されます。例えば、学習率やエポック数（訓練データを何回繰り返して学習するか）などがあります。
+**ハイパーパラメータ**は、モデルの学習過程を制御するための設定値で、通常は手動で設定されます。例えば、学習率やエポック数(訓練データを何回繰り返して学習するか)などがあります。
 
 **データセット**は、モデルの学習に使用されるデータの集合を指します。モデルは、データセットから特定のパターンを学習し、新たなデータに対する予測や分類を行うことができます。
 
@@ -264,7 +264,7 @@ Hugging Face の Transformers ライブラリは、多くの有名な Transforme
 Hugging Face 社の社名の由来の絵文字 🤗、「笑いながら人を付き飛ばすサイコパス」に見えて怖い。
 [hugging face emoji - Google Search](https://www.google.com/search?q=hugging+face+emoji&tbm=isch&source=lnms&hl=en)
 
-[画像 AI を調べると必ず出てくる謎のサイト「Hugging Face」ってナニモノ？　正体は急成長中の“ユニコーン”（1/3 ページ） - ITmedia NEWS](https://www.itmedia.co.jp/news/articles/2302/23/news080.html)
+[画像 AI を調べると必ず出てくる謎のサイト「Hugging Face」ってナニモノ? 正体は急成長中の“ユニコーン”(1/3 ページ) - ITmedia NEWS](https://www.itmedia.co.jp/news/articles/2302/23/news080.html)
 
 ## 用語
 
@@ -293,13 +293,13 @@ Hugging Face 社の社名の由来の絵文字 🤗、「笑いながら人を�
 
 ### なぜベクトルに変換することを embedding というのですか? Word2Vec が起源ですか?
 
-[Embedding（埋め込み表現）とは、単語や文章等の自然言語の構成要素をベクトル表現に変換する処理を指します](https://di-acc2.com/programming/python/26101/)。[この変換操作は、トークンをベクトル空間に埋め込む操作であることから埋め込み（embedding）ともいわれます（一般的に自然言語処理の分野でトークンは単語であるため、単語埋め込み（word embedding）と呼ぶことが多い）](https://developers.agirobots.com/jp/word2vec-and-embeddinglayer/)。
+[Embedding(埋め込み表現)とは、単語や文章等の自然言語の構成要素をベクトル表現に変換する処理を指します](https://di-acc2.com/programming/python/26101/)。[この変換操作は、トークンをベクトル空間に埋め込む操作であることから埋め込み(embedding)ともいわれます(一般的に自然言語処理の分野でトークンは単語であるため、単語埋め込み(word embedding)と呼ぶことが多い)](https://developers.agirobots.com/jp/word2vec-and-embeddinglayer/)。
 
 [Word2Vec は、Word を Vector に変換するという意味で分散表現そのものを指すと解釈できますが、より狭義で CBOW や Skip-gram の 2 つのモデルを指すのが一般的です](https://developers.agirobots.com/jp/word2vec-and-embeddinglayer/)。  
 Word2Vec は、Embedding の起源ではありませんが、Embedding 技術の発展に大きく貢献した技術です。実際に、Word2Vec は、自然言語処理における Embedding 技術の中でも広く使用されています。
 
 - [Word2Vec とは | 分散表現・Skip-gram 法と CBOW の仕組み・ツールや活用事例まで徹底解説 | Ledge.ai](https://ledge.ai/articles/word2vec)
-- [【自然言語処理】word2vec とは何か？CBOW と skip-gram も解説 - omathin blog](https://omathin.com/word2vec-overview/)
+- [【自然言語処理】word2vec とは何か?CBOW と skip-gram も解説 - omathin blog](https://omathin.com/word2vec-overview/)
 
 ## モデルの cased と uncased
 
