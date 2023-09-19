@@ -1,5 +1,25 @@
 # WSL メモ
 
+- [WSL メモ](#wsl-メモ)
+  - [WSL の再起動](#wsl-の再起動)
+  - [WSL の syslog は Windows イベントログに出る](#wsl-の-syslog-は-windows-イベントログに出る)
+  - [WSL2 で docker は使えますか?](#wsl2-で-docker-は使えますか)
+    - [WSL2 で docker は使えますか?](#wsl2-で-docker-は使えますか-1)
+    - [docker サービスは自動起動しますか?](#docker-サービスは自動起動しますか)
+    - [ChatGPT にも聞いてみた: WSL2 で docker は使えますか?](#chatgpt-にも聞いてみた-wsl2-で-docker-は使えますか)
+    - [つづき: その Microsoft の公式ドキュメントやオンラインのチュートリアルの URL を教えてください](#つづき-その-microsoft-の公式ドキュメントやオンラインのチュートリアルの-url-を教えてください)
+  - [WSL をバックアップすることはできますか?](#wsl-をバックアップすることはできますか)
+    - [リストアする方法も教えてください](#リストアする方法も教えてください)
+    - [wsl --export の出力は圧縮されないのですか?](#wsl---export-の出力は圧縮されないのですか)
+    - [エクスポートしながら圧縮する方法はありませんか?](#エクスポートしながら圧縮する方法はありませんか)
+    - [エクスポートしながら圧縮: あとで試すメモ](#エクスポートしながら圧縮-あとで試すメモ)
+
+## WSL の再起動
+
+```powershell
+wsl.exe --shutdown
+```
+
 ## WSL の syslog は Windows イベントログに出る
 
 ええっ
@@ -10,7 +30,7 @@ Bing Search に聞いてみた。
 
 注意点: リンク先読め。
 
-## WSL2 で docker は使えますか?
+### WSL2 で docker は使えますか?
 
 はい、WSL2 では docker を使えます ²³⁴⁵。
 WSL2 は Linux カーネルを実装しているので、docker のネイティブな動作が可能になります ²。
@@ -19,7 +39,7 @@ WSL2 は Linux カーネルを実装しているので、docker のネイティ�
 
 - WSL2 で Ubuntu をインストールする
 - Ubuntu で sudo apt update と sudo apt upgrade を実行する
-- Ubuntu で curl -fsSL https://get.docker.com -o get-docker.sh を実行して docker のインストールスクリプトをダウンロードする
+- Ubuntu で `curl -fsSL https://get.docker.com -o get-docker.sh` を実行して docker のインストールスクリプトをダウンロードする
 - Ubuntu で sudo sh get-docker.sh を実行して docker をインストールする
 - Ubuntu で sudo usermod -aG docker $USER を実行して自分のユーザーに docker グループを追加する
 - Ubuntu で exit して WSL2 から抜ける
@@ -30,11 +50,11 @@ WSL2 は Linux カーネルを実装しているので、docker のネイティ�
 
 ソース: Bing との会話 2023/2/16
 
-1. Docker Desktop WSL 2 バックエンド — Docker-docs-ja 20.10 .... https://docs.docker.jp/docker-for-windows/wsl.html アクセス日時 2023/2/16.
-2. Windows ＋ WSL2 で Docker 環境を用意しよう - カゴヤの .... https://www.kagoya.jp/howto/cloud/container/wsl2_docker/ アクセス日時 2023/2/16.
-3. WSL2 に docker をインストールしてみた - Qiita. https://qiita.com/hkusaba/items/5b44248d758214f99e97 アクセス日時 2023/2/16.
-4. windows に WSL2+Docker 環境を構築する手順 - Qiita. https://qiita.com/taka777n/items/ea3a1b3a2802aabf3db2 アクセス日時 2023/2/16.
-5. 知乎专栏 - 随心写作，自由表达 - 知乎. https://zhuanlan.zhihu.com/p/148511634 アクセス日時 2023/2/16.
+1. Docker Desktop WSL 2 バックエンド — Docker-docs-ja 20.10 .... <https://docs.docker.jp/docker-for-windows/wsl.html> アクセス日時 2023/2/16.
+2. Windows ＋ WSL2 で Docker 環境を用意しよう - カゴヤの .... <https://www.kagoya.jp/howto/cloud/container/wsl2_docker/> アクセス日時 2023/2/16.
+3. WSL2 に docker をインストールしてみた - Qiita. <https://qiita.com/hkusaba/items/5b44248d758214f99e97> アクセス日時 2023/2/16.
+4. windows に WSL2+Docker 環境を構築する手順 - Qiita. <https://qiita.com/taka777n/items/ea3a1b3a2802aabf3db2> アクセス日時 2023/2/16.
+5. 知乎专栏 - 随心写作，自由表达 - 知乎. <https://zhuanlan.zhihu.com/p/148511634> アクセス日時 2023/2/16.
 
 ### docker サービスは自動起動しますか?
 
@@ -54,11 +74,11 @@ WSL2 では systemd がサポートされていないため、docker サービ�
 
 ソース: Bing との会話 2023/2/16
 
-1. How to automatically start the Docker daemon on WSL2. https://bing.com/search?q=WSL2+docker+service+auto+start アクセス日時 2023/2/16.
-2. wsl2 で Docker 自動起動設定 - Qiita. https://qiita.com/ko-zi/items/949d358163bbbad5a91e アクセス日時 2023/2/16.
-3. wsl2 にインストールした Docker を自動起動する. https://zukucode.com/2021/11/wsl2-docker-startup.html アクセス日時 2023/2/16.
-4. How to automatically start the Docker daemon on WSL2. https://blog.nillsf.com/index.php/2020/06/29/how-to-automatically-start-the-docker-daemon-on-wsl2/ アクセス日時 2023/2/16.
-5. WSL2(Ubuntu18.04)上で Docker を起動する - Qiita. https://qiita.com/FugitHora812/items/bc84a176234f36bf6697 アクセス日時 2023/2/16.
+1. How to automatically start the Docker daemon on WSL2. <https://bing.com/search?q=WSL2+docker+service+auto+start> アクセス日時 2023/2/16.
+2. wsl2 で Docker 自動起動設定 - Qiita. <https://qiita.com/ko-zi/items/949d358163bbbad5a91e> アクセス日時 2023/2/16.
+3. wsl2 にインストールした Docker を自動起動する. <https://zukucode.com/2021/11/wsl2-docker-startup.html> アクセス日時 2023/2/16.
+4. How to automatically start the Docker daemon on WSL2. <https://blog.nillsf.com/index.php/2020/06/29/> how-to-automatically-start-the-docker-daemon-on-wsl2/ アクセス日時 2023/2/16.
+5. WSL2(Ubuntu18.04)上で Docker を起動する - Qiita. <https://qiita.com/FugitHora812/items/bc84a176234f36bf6697> アクセス日時 2023/2/16.
 
 ### ChatGPT にも聞いてみた: WSL2 で docker は使えますか?
 
@@ -68,16 +88,16 @@ WSL2 では systemd がサポートされていないため、docker サービ�
 
 ただし、WSL2 は Docker を実行するために非常に便利であり、多くの開発者が利用しています。WSL2 を使用して Docker を実行する方法については、Microsoft の公式ドキュメントやオンラインのチュートリアルなどが利用できます。
 
-### つづき: その Microsoft の公式ドキュメントやオンラインのチュートリアルの URL を教えてください。
+### つづき: その Microsoft の公式ドキュメントやオンラインのチュートリアルの URL を教えてください
 
 以下に、WSL2 で Docker を使用するための Microsoft 公式ドキュメントと、オンラインのチュートリアルの URL を示します。
 
 1. Microsoft 公式ドキュメント:
-   https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package
+   <https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package>
 2. Docker 公式ドキュメント:
-   https://docs.docker.com/docker-for-windows/wsl/
+   <https://docs.docker.com/docker-for-windows/wsl/>
 3. Devdojo.com によるチュートリアル:
-   https://devdojo.com/bobbyiliev/how-to-install-docker-on-wsl2-windows-10
+   <https://devdojo.com/bobbyiliev/how-to-install-docker-on-wsl2-windows-10>
 
 上記のドキュメントやチュートリアルを参照することで、WSL2 上で Docker をセットアップし、使用することができます。
 
@@ -98,9 +118,9 @@ WSL をバックアップするには、wsl --export コマンドを使って WS
 
 ソース: Bing との会話 2023/2/16
 
-1. WSL バックアップと復元方法 | SEECK.JP サポート. https://kb.seeck.jp/archives/17024 アクセス日時 2023/2/16.
-2. Windows 10 WSL2 Ubuntu のデータをバックアップするには .... https://denor.jp/windows-10-wsl2-ubuntu%e3%81%ae%e3%83%87%e3%83%bc%e3%82%bf%e3%82%92%e3%83%90%e3%83%83%e3%82%af%e3%82%a2%e3%83%83%e3%83%97%e3%81%99%e3%82%8b%e3%81%ab%e3%81%af アクセス日時 2023/2/16.
-3. WSL 上の Linux のバックアップ. https://www.aise.ics.saitama-u.ac.jp/~gotoh/HowToBackupLinuxOnWSL.html アクセス日時 2023/2/16.
+1. WSL バックアップと復元方法 | SEECK.JP サポート. <https://kb.seeck.jp/archives/17024> アクセス日時 2023/2/16.
+2. Windows 10 WSL2 Ubuntu のデータをバックアップするには .... <https://denor.jp/windows-10-wsl2-ubuntu%e3%81%ae%e3%83%87%e3%83%bc%e3%82%bf%e3%82%92%e3%83%90%e3%83%83%e3%82%af%e3%82%a2%e3%83%83%e3%83%97%e3%81%99%e3%82%8b%e3%81%ab%e3%81%af> アクセス日時 2023/2/16.
+3. WSL 上の Linux のバックアップ. <https://www.aise.ics.saitama-u.ac.jp/~gotoh/HowToBackupLinuxOnWSL.html> アクセス日時 2023/2/16.
 
 ### リストアする方法も教えてください
 
