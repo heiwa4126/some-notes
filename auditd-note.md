@@ -1,39 +1,37 @@
-
-
 [6.6. Audit ログファイルについて Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/security_guide/sec-understanding_audit_log_files)
 
 [6.3. audit サービスの設定 Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/security_guide/sec-configuring_the_audit_service)
 
 ログローテーションに関しては
+
 - max_log_file - ログファイルの最大サイズ(MB)
 - num_logs - ログファイルの個数
-
 
 # 概要
 
 [第6章 システム監査 Red Hat Enterprise Linux 7 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/security_guide/chap-system_auditing#sec-audit_system_architecture)
 
-
 インストール
+
 ```sh
 sudo yum install audit
 ```
 
 設定ファイル: [/etc/audit/auditd\.conf](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/security_guide/sec-configuring_the_audit_service)
 
-
 # auditdのテスト
 
 ```
 auditctl -m "test"
 ```
+
 `/var/log/audit/audit.log`に
 
 ```
  msg='test exe="/usr/sbin/auditctl" hostname=r7 addr=? terminal=pts/2 res=success'
 ```
-みたいのが書かれます。
 
+みたいのが書かれます。
 
 # auditdの一時停止
 
@@ -44,18 +42,22 @@ auditctl -e0
 ```
 
 eオプションの引数:
+
 - 0 - 無効
 - 1 - 有効
 - 2 - 設定ファイルのロック?
 
 参照:
+
 - [6\.5\. Audit ルールの定義 Red Hat Enterprise Linux 7 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/security_guide/sec-defining_audit_rules_and_controls)
 - [How to stop and disable auditd on RHEL 7 \-](http://kb.ictbanking.net/article.php?id=632)
 
 ずっと止めるなら
+
 ```sh
 systemctl disable auditd
 ```
+
 で。
 
 [LLinux Auditd ルールの読み方](https://runble1.com/linux-auditd-rule/)から引用
@@ -69,17 +71,16 @@ Linux Auditd のルールには3種類ある。
 # audit rules ファイルシステムルール
 
 こっちはかんたん
+
 ```
 auditctl -w /tmp
 ```
 
 `-p`省略時は`-p rwxa`と同じ。
 
-
 # audit rules システムコールルール
 
 - [auditctl\(8\) \- Linux man page](https://linux.die.net/man/8/auditctl)
-
 
 ```sh
 # ルールを追加
@@ -89,6 +90,7 @@ auditctl -D
 ```
 
 例)
+
 ```
 #-- ルールを全部削除
 $ sudo auditctl -D
@@ -120,10 +122,12 @@ No rules
 `-a`の後ろはlist,action または action,list (つまりactionとlistの順序はどっちでもいい)
 
 action:
+
 - never - 監査記録を生成しない
 - always - 監査記録を生成する(syscall終了時に)
 
 listの方はちょっとむずかしい。
+
 - task
 - exit
 - user
@@ -136,11 +140,13 @@ listの方はちょっとむずかしい。
 引用元: [RHELのAudit設定（ファイルアクセス監査） \- Qiita](https://qiita.com/ch7821/items/03bd936dd4cb070001b5)
 
 その他参照:
+
 - [Linux auditdによる監査ログ設定（CentOS 7） \| cloudpack\.media](https://cloudpack.media/52532)
 
 ## examples
 
 全部のプログラムの起動を監査。ただし/bin/idに関するものを除外
+
 ```
 auditctl -a never,exit -S all -F exe=/bin/id
 auditctl -a always,exit -F arch=b64 -S execve
@@ -148,6 +154,7 @@ auditctl -a always,exit -F arch=b32 -S execve
 ```
 
 サンプルのリンク:
+
 - [テキストマッチングを利用したAudit\.logの監視について \| セキュリティ専門企業発、ネットワーク・ログ監視の技術情報 \- KnowledgeStare（ナレッジステア）](https://www.secuavail.com/kb/tech-blog/tb-201015_01/)
 
 # システムコール
@@ -157,7 +164,6 @@ auditctl -a always,exit -F arch=b32 -S execve
 - [Man page of SYSCALLS](https://linuxjm.osdn.jp/html/LDP_man-pages/man2/syscalls.2.html)
 - `ausyscall --dump`
 - `/usr/include/asm/unistd_64.h`
-
 
 # 永続的ルールの作り方
 
@@ -170,8 +176,6 @@ auditctl -a always,exit -F arch=b32 -S execve
 RHEL7の場合
 `/usr/share/doc/audit-2.8.5/rules/`に
 サンプルルールが入ってる(バージョンは変わるかも)。
-
-
 
 # TIPS
 

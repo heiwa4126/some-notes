@@ -30,14 +30,17 @@ sudo snap install emacs --classic
 ```sh
 sudo yum install ansible -y
 ```
+
 python36要求される
 
 ```sh
 sudo update-alternatives --config python3
 ```
+
 で39選ぶ
 
 ncも-vzが使えるバージョンに
+
 ```bash
 sudo yum install netcat
 sudo update-alternatives --config netcat
@@ -50,14 +53,14 @@ update-alternatives、非対話式に選べないの? 調べる
 ただシステムワイドにpythonのバージョンを変更するのはやめとけ。
 
 日本語いるなら
+
 ```bash
 sudo yum install langpacks-ja.noarch -y
 sudo localectl set-locale LANG=ja_JP.UTF-8
 /etc/locale.conf
 ```
 
-なんか  /etc/profile.d/lang.sh 無視されるな...
-
+なんか /etc/profile.d/lang.sh 無視されるな...
 
 # AWS
 
@@ -70,7 +73,6 @@ aws ec2 describe-images --owners aws-marketplace \
 ```
 
 marketplace似た名前のがいろいろあってヤバい。
-
 
 ```
 #cloud-config
@@ -95,7 +97,6 @@ runcmd:
  - yum install emacs-nox tmux git etckeeper mlocate -y
  - reboot
 ```
-
 
 # resolver
 

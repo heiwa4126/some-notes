@@ -11,13 +11,13 @@ WinRM(WS-Man)のメモ
 - [その他参考](#%e3%81%9d%e3%81%ae%e4%bb%96%e5%8f%82%e8%80%83)
 - [pywinrmでの例](#pywinrm%e3%81%a7%e3%81%ae%e4%be%8b)
 
-
 # 非AD環境のWindows・Windows間でWinRMを使う
 
 非AD環境でWindows-Windows間でWinRMを使うのはひどく難しい。
 Linux-WindowsでWinRMを使うほうが遥かに楽。
 
 どちらかを選ぶ:
+
 - 証明書を設定する(設定面倒、メンテ面倒&安全)
 - HTTPトランスポート,BASIC認証,平文通信で使う(簡単&危ない)
 
@@ -33,6 +33,7 @@ HTTPトランスポート,BASIC認証,平文通信で使う場合の設定。
 **まあちょっとWinRM/WinRSを使ってみようかな、というときのみ使う。**
 
 まず、サーバ・クライアントともに、Ansible提供のスクリプトでWinRMの標準設定をしておくこと。Enable-PSremotingも実行されるみたい。
+
 ```
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 -OutFile ConfigureRemotingForAnsible.ps1
 powershell -ExecutionPolicy RemoteSigned .\ConfigureRemotingForAnsible.ps1
@@ -50,6 +51,7 @@ winrm set winrm/config/service @{AllowUnencrypted="true"}
 ```
 
 設定の確認
+
 ```
 C:\> winrm get winrm/config/service
 Service
@@ -73,8 +75,6 @@ Service
     AllowRemoteAccess = true
 ```
 
-
-
 ### クライアント側
 
 ```
@@ -91,10 +91,8 @@ WinRMでは，
 **接続先のホストが**
 「信頼できるホストである」ことが必要です。
 
-
-
-
 設定の確認
+
 ```
 C:\> winrm get winrm/config/client
 Client
@@ -122,6 +120,7 @@ Client
 [Setting up a Windows Host — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html)
 
 某ホストでの結果
+
 ```
 C:\Users\Administrator>winrm get winrm/config/client
 Client
@@ -167,21 +166,22 @@ Service
     AllowRemoteAccess = true
 ```
 
-
-
 ### テスト
 
 クライアントで以下のようなWinrmコマンドを実行(要アレンジ)
+
 ```
 c:\> winrm id -r:http://172.31.1.999:5985 -auth:basic -u:administrator -p:adminspassword -encoding:utf-8
 ```
 
 続いてwinrsでwhoamiを実行(要アレンジ)
+
 ```
 c:\> winrs -r:http://172.31.1.999:5985 -u:administrator -p:adminspassword  whoami
 ```
 
 さらにPSremoting
+
 ```
 ps> Enter-PSSession -ComputerName 172.31.1.999 -Credential 172.31.1.999\Administrator
 (ダイアログが開く)
@@ -191,18 +191,19 @@ ps> Enter-PSSession -ComputerName 172.31.1.999 -Credential 172.31.1.999\Administ
 ### AllowUnencrypted プロパティについて
 
 [IBM Knowledge Center - Hyper-V ホストでの WinRM の構成](https://www.ibm.com/support/knowledgecenter/ja/SS2TKN_9.0.0/com.ibm.tivoli.tem.doc_9.0/SR_9.0/com.ibm.license.mgmt.doc/admin/t_configuring_winrm.html)
->この値を「TRUE」に設定しても、ユーザー名やパスワードなどの機密データが、暗号化されていない形式でネットワークを介して渡されるわけではありません。 SOAP メッセージの内容のみがプレーン・テキストで送信されます。 セキュリティー上の理由でこれを受け入れられない場合は、HTTPS リスナーを定義してセキュア・トランスポート (HTTPS) を使用する一方で、Subcapacity Reporting サーバーで VM マネージャーを定義して、TLS プロトコルを使用してすべてのネットワーク・トラフィックが暗号化されるようにしてください。
+
+> この値を「TRUE」に設定しても、ユーザー名やパスワードなどの機密データが、暗号化されていない形式でネットワークを介して渡されるわけではありません。 SOAP メッセージの内容のみがプレーン・テキストで送信されます。 セキュリティー上の理由でこれを受け入れられない場合は、HTTPS リスナーを定義してセキュア・トランスポート (HTTPS) を使用する一方で、Subcapacity Reporting サーバーで VM マネージャーを定義して、TLS プロトコルを使用してすべてのネットワーク・トラフィックが暗号化されるようにしてください。
 
 [PowerShell リモート処理のセキュリティに関する考慮事項 | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/scripting/setup/winrmsecurity?view=powershell-6)
+
 > 使用されているトランスポート プロトコル (HTTP または HTTPS) に関係なく、PowerShell リモート処理では、常にすべての通信が、初期認証後に、セッションごとの AES 256 対称キーを使用して暗号化されます。
-
-
 
 # PSRemotingのもう少し実用的なサンプル
 
 参考: [PowerShell でリモート接続する ( Enter-PSSession ) – 行け！偏差値40プログラマー](http://hensa40.cutegirl.jp/archives/677)
 
 WMIをいくつか取ってくる
+
 ```
 $hostname = "172.31.1.999"
 $username = "172.31.1.999\administrator"
@@ -243,7 +244,7 @@ IPではSSL使えないし、
 
 ```
 $url = "https://111.222.333.444:5986/wsman"
-$username = ".\user001" # local user example 
+$username = ".\user001" # local user example
 $passwd   = "swordfish"
 
 # Credential オプションに指定するオブジェクトのインスタンス生成
@@ -273,25 +274,27 @@ $sys | fl *
 ```
 
 参考:
-* [Not able to remote connect to powershell](https://social.technet.microsoft.com/Forums/en-US/e1aac407-33a1-4d19-988f-8b954d8b5007/not-able-to-remote-connect-to-powershell?forum=Exch2016PS)
+
+- [Not able to remote connect to powershell](https://social.technet.microsoft.com/Forums/en-US/e1aac407-33a1-4d19-988f-8b954d8b5007/not-able-to-remote-connect-to-powershell?forum=Exch2016PS)
 
 # その他参考
 
-これも→ 
+これも→
 [PowerShell リモート処理での次ホップの実行 | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/scripting/setup/ps-remoting-second-hop?view=powershell-6)
 
-* [リモート コンピューターのバッチ操作(Invoke-Command)](http://www.vwnet.jp/windows/powershell/InvokeCommand.htm)
+- [リモート コンピューターのバッチ操作(Invoke-Command)](http://www.vwnet.jp/windows/powershell/InvokeCommand.htm)
 
-* winrm.cmdのman page : [Winrm -remote - Windows CMD - SS64.com](https://ss64.com/nt/winrm-remote.html)
-* [Winrs - Windows CMD - SS64.com](https://ss64.com/nt/winrs.html)
+- winrm.cmdのman page : [Winrm -remote - Windows CMD - SS64.com](https://ss64.com/nt/winrm-remote.html)
+- [Winrs - Windows CMD - SS64.com](https://ss64.com/nt/winrs.html)
 
-* [Let's Encrpytで発行した証明書をPowerShellリモート接続のHTTPS接続にも使ってみる](https://qiita.com/kazinoue/items/bdd7b783d6742770b2cc)
-* [Let's Encryptで発行した証明書をRemote Desktopの証明書にも割り当ててみる](https://qiita.com/kazinoue/items/209846d0204caad46522)
+- [Let's Encrpytで発行した証明書をPowerShellリモート接続のHTTPS接続にも使ってみる](https://qiita.com/kazinoue/items/bdd7b783d6742770b2cc)
+- [Let's Encryptで発行した証明書をRemote Desktopの証明書にも割り当ててみる](https://qiita.com/kazinoue/items/209846d0204caad46522)
 
 # pywinrmでの例
 
 [diyan/pywinrm: Python library for Windows Remote Management (WinRM)](https://github.com/diyan/pywinrm)
 の例をちょっとだけアレンジした例
+
 ```
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
@@ -314,7 +317,6 @@ p.close_shell(shell_id)
 #print(std_out)
 print(std_out.decode('sjis'))
 ```
-
 
 # WinRMのTrustedHosts
 

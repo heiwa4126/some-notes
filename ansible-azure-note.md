@@ -8,7 +8,6 @@
 - [azure.azcollection.azure_rm_networkinterface](#azureazcollectionazure_rm_networkinterface)
 - [azure.azcollection.azure_rm_virtualmachine](#azureazcollectionazure_rm_virtualmachine)
 
-
 # 参考リンク
 
 - [クイック スタート \- Ansible を使用して Azure で Linux 仮想マシンを構成する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/vm-configure?tabs=ansible)
@@ -18,10 +17,10 @@
 - [Ansible Galaxy](https://galaxy.ansible.com/azure/azcollection?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW)
 - [クイック スタート \- Azure CLI を使用して Ansible を構成する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/install-on-linux-vm?tabs=ansible)
 
-
 # Azure Cloud Shellで手っ取り早く
 
 [Azure Cloud Shell](https://portal.azure.com/#cloudshell/)にはAnsibleが入っていて、認証認可の設定も不要。
+
 ```
 a@Azure:~$ date
 Mon 10 May 2021 06:40:18 AM UTC
@@ -49,6 +48,7 @@ Azure cliは要るみたいので、
 さらに `az login` しておく。
 
 ごく普通にansibleをインストールする
+
 ```sh
 PIP3="python3 -m pip"
 $PIP3 install --user -U pip
@@ -56,6 +56,7 @@ $PIP3 install --user -U ansible 'ansible-lint[community,yamllint]' pywinrm pexpe
 ```
 
 2021-05現在ではバージョンはこんな感じ
+
 ```
 $ pip3 freeze | grep ansible
 (略)
@@ -75,19 +76,19 @@ ansible-galaxy collection install azure.azcollection
 ```
 
 参考:
+
 - [GitHub \- ansible\-collections/azure: Development area for Azure Collections](https://github.com/ansible-collections/azure))
 - [Ansible を仮想マシンにインストールする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/install-on-linux-vm?tabs=ansible#install-ansible-on-the-virtual-machine) - CentOS7用だけど参考になる。
 
-
 次に「Azure 資格情報の作成」になるわけだけど
 (参考:
+
 - [Azure 資格情報の作成 \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/install-on-linux-vm?tabs=ansible#create-azure-credentials)
 - [Sign in with the Azure CLI \| Microsoft Docs](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest)
 
 )
 `az login`
 で、使えるようになったので、このへん曖昧。あとで調査する。
-
 
 テストとして
 シンプルなplaybookを実行
@@ -106,13 +107,12 @@ ansible-galaxy collection install azure.azcollection
 
     - debug: var=rc
 ```
-既存のリソースグループを取得して表示する。
 
+既存のリソースグループを取得して表示する。
 
 # よく使いそうなモジュールへのリンク
 
 - [azure.azcollection.azure_rm_virtualmachine – Manage Azure virtual machines — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_virtualmachine_module.html#azure-rm-virtualmachine-module) - VMを開始したり停止したりディアロケートしたり。
-
 
 # サンプルとチュートリアル
 
@@ -127,21 +127,20 @@ ansible-galaxy collection install azure.azcollection
 
 スケールセットがよくわからない場合は [仮想マシン スケール セットを使用してスケーラブルなアプリケーションを構築する \- Learn \| Microsoft Docs](https://docs.microsoft.com/ja-jp/learn/modules/build-app-with-scale-sets/)
 
-
 # azure.azcollection.azure_rm_networkinterface
 
-[azure\.azcollection\.azure\_rm\_networkinterface – Manage Azure network interfaces — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_networkinterface_module.html)
+[azure\.azcollection\.azure_rm_networkinterface – Manage Azure network interfaces — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_networkinterface_module.html)
 
 同じパラメータを指定してもchangedになる。
 
 retuenでetagが変わってるぐらいで理由がわからない。
 
-
 # azure.azcollection.azure_rm_virtualmachine
 
-[azure\.azcollection\.azure\_rm\_virtualmachine – Manage Azure virtual machines — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_virtualmachine_module.html)
+[azure\.azcollection\.azure_rm_virtualmachine – Manage Azure virtual machines — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_virtualmachine_module.html)
 
 このモジュールで
+
 - VMの作成
 - VMの開始・終了・ディアロケート
 

@@ -19,20 +19,17 @@
 ここ参照
 [aws\-cli/CHANGELOG\.rst at v2 · aws/aws\-cli](https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst)
 
-
 # aws cliのプロファイルの場所
 
-* Windows: `%USERPROFILE%\.aws` - v1では%HOMEが定義されていれば `%HOME%\.aws` だった。
-* Linux & Mac: `~/.aws/credentials`
+- Windows: `%USERPROFILE%\.aws` - v1では%HOMEが定義されていれば `%HOME%\.aws` だった。
+- Linux & Mac: `~/.aws/credentials`
 
 [名前付きプロファイル - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-profiles.html)
-
 
 # コマンド補完
 
 v2では
 `/usr/local/bin/aws_completer` (symlink)
-
 
 # AWS CLIのインストール手順
 
@@ -48,7 +45,7 @@ pipを使った例しか出ておらず、
 
 [Installation — pip 19.2.1 documentation](https://pip.pypa.io/en/stable/installing/)
 
-``` bash
+```bash
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py --user -U
 ```
@@ -60,23 +57,22 @@ Ubuntu, Debianでは`~.local/bin`へのパスが、
 一旦ログアウトして、入り直す
 (詳しくは~/.profile参照。手動でパスに追加してhash -rでもOK)。
 
-``` bash
+```bash
 $ which pip
 $ pip --version
 ```
-で確認。
 
+で確認。
 
 ## Amazon Linux 2
 
 プリインストール。
 
-
 ## Debian, Ubuntu Linux系
 
 パッケージで入れるなら
 
-``` bash
+```bash
 sudo apt install awscli -y
 ```
 
@@ -84,11 +80,11 @@ sudo apt install awscli -y
 ただバージョンが若干古い(Ubutu18.04LTSで1.14.44)。
 
 2019-7の最新版 (Ubuntu 18.04LTSで)
+
 ```
 $ aws --version
 aws-cli/1.16.206 Python/3.6.8 Linux/4.15.0-55-generic botocore/1.12.196
 ```
-
 
 ## RHEL 7, CentOS 7
 
@@ -98,7 +94,8 @@ RHEL7系は未だにpython3が不自由なので、
 python2で我慢する。
 
 カレントユーザにインストールする例
-``` bash
+
+```bash
 curl -O https://bootstrap.pypa.io/get-pip.py
 python get-pip.py --user
 rm ./get-pip.py
@@ -110,15 +107,12 @@ hash -r
 
 [Windows での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-windows.html)
 
-
 クレデンシャルの場所
 [構成設定はどこに保存されていますか](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where)
 
 Windowsについて記述がない... `aws configure`で。
 
 aws cliがv2なら `aws configure list-profiles`でリストも出せる。
-
-
 
 ## Windows(古い)
 
@@ -138,20 +132,20 @@ Anaconda promptを起動して、
 pip install awscli --user -U
 ```
 
-
 # pipでawscliのインストールに失敗する
 
 [cryptography](https://pypi.org/project/cryptography/)が
 opensslのdevパッケージを要求するので、
 
 先に
-``` bash
+
+```bash
 sudo apt install libssl-dev
 # または
 sudo apt install python3-cryptography
 ```
-してから。
 
+してから。
 
 # ログインとリスト
 

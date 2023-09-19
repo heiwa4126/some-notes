@@ -25,9 +25,9 @@ fn c1(x: Option<&str>) -> Option<String> {
     }
 }
 ```
+
 こういうこと↑をやりたい。
 (intoのとこはto_stringとかto_ownedとかString::fromとか)
-
 
 ```rust
     // x.map_or(None, |s| Some(s.into()))
@@ -35,11 +35,11 @@ fn c1(x: Option<&str>) -> Option<String> {
     // x.map(|s| s.into())
     x.map(String::from)
 ```
+
 map()を使うのが一番簡単。場合によってはコメントアウトされたとこを応用。
 
 - [std::option::Option - Rust](https://doc.rust-lang.org/std/option/enum.Option.html#method.map)
 - [std::result::Result - Rust](https://doc.rust-lang.org/std/result/enum.Result.html#method.map)
-
 
 # &str -> std::fs::Read
 
@@ -50,6 +50,7 @@ map()を使うのが一番簡単。場合によってはコメントアウトさ
 > 私には割と衝撃だったのですが&[u8]や&mut [u8]、Vec<u8>は直接ReadやWriteのインスタンスになってます。
 
 なので、こういうことができる。
+
 ```rust
 use std::fs::File;
 use std::io::{BufRead, BufReader, Read};
@@ -91,7 +92,6 @@ Stringは
 
 `Cursor<Vec<u8>>`ならできる。
 
-
 ```rust
 use std::fs::File;
 use std::io::{Cursor, Write};
@@ -117,13 +117,14 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 ```
+
 ちょっとめんどくさい。
 
 参考:
+
 - [How to create an in-memory object that can be used as a Reader, Writer, or Seek in Rust? - Stack Overflow](https://stackoverflow.com/questions/41069865/how-to-create-an-in-memory-object-that-can-be-used-as-a-reader-writer-or-seek)
 - [バイトのベクトル（u8）を文字列に変換する方法](https://qastack.jp/programming/19076719/how-do-i-convert-a-vector-of-bytes-u8-to-a-string)
 - GitHub上の使用例: [Search · rust Cursor String::from_utf8 into_inner](https://github.com/search?l=Rust&q=rust+Cursor+String%3A%3Afrom_utf8+into_inner&type=Code)
-
 
 # `String <-> Vec<char>`
 
@@ -178,6 +179,7 @@ u8しか探せないけど早い(らしい)。
 超ありそうな話。
 
 参考:
+
 - [character encoding - How to read a non-UTF8 encoded csv file? - Stack Overflow](https://stackoverflow.com/questions/53826986/how-to-read-a-non-utf8-encoded-csv-file)
 - [csv - UTF8以外でエンコードされたcsvファイルを読み取る方法は？ - ITツールウェブ](https://ja.ojit.com/so/csv/2747577) - ↑の自動翻訳
 - [character encoding - UTF8でエンコードされていないcsvファイルを読み取る方法 - 初心者向けチュートリアル](https://tutorialmore.com/questions-2197244.htm) - これも↑↑の自動翻訳
@@ -220,6 +222,7 @@ encoding_rs_ioにWriterがあれば。
 違う。
 
 [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=cbbc97ccc497d662193a72d9529972ca)
+
 ```rust
 fn type_of<T>(_: T) -> &'static str {
     std::any::type_name::<T>()
@@ -240,31 +243,35 @@ fn main() {
     println!("x = {}", type_of(x));
 }
 ```
+
 primitiveの方のサンプルでmutableなsliceが作れる。
 
 実行結果
+
 ```
 x = [1, 7, 3]
 x = &mut [i32; 3]
 x = [1, 7, 3]
 x = &mut [i32]
 ```
+
 std::strの方はarrayのref
-
-
 
 # 長さを指定して&strを作る
 
 `&str`は`&[u8]`なんだから (もうこの時点で間違い)
+
 ```rust
 let buf: &mut str = &mut [0u8; BUF_SIZE];
 ```
+
 とかできそうな気がするけどコンパイルできない。
 
 ```rust
 let buf = &mut [0u8; BUF_SIZE];
 let mut buf = std::str::from_utf8_mut(buf).unwrap();
 ```
+
 みたいにしないとできない。なんだか効率が悪そう。
 
 # IBMをHALにする
@@ -287,7 +294,6 @@ println!("{:?}", s);
 
 これいきなり思いつけるひとがいたら天才。
 
-
 # Resultを返すIterator
 
 [パフォーマンス比較：ループVSイテレータ - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch13-04-performance.html)
@@ -297,11 +303,11 @@ println!("{:?}", s);
 そもそもiter()って中断できるの?
 
 参考:
+
 - [ResultやOptionが要素型の場合のiteratorの捌き方 - Qiita](https://qiita.com/knknkn1162/items/d411d6a127ece8020811) - errをハンドルしてない。panic!してるだけ
 - [Iterating over Results - Rust By Example](https://doc.rust-lang.org/stable/rust-by-example/error/iter_result.html)
 - [Rewrite help: imperative -> functional style - The Rust Programming Language Forum](https://users.rust-lang.org/t/rewrite-help-imperative-functional-style/28614)
 - [rust - How do I stop iteration and return an error when Iterator::map returns a Result::Err? - Stack Overflow](https://stackoverflow.com/questions/26368288/how-do-i-stop-iteration-and-return-an-error-when-iteratormap-returns-a-result)
-
 
 # structureの一部をcloneせずに取り出す。
 
@@ -347,7 +353,6 @@ fn main() {
 ```
 
 Stringをclone()するコストより、String::new()のほうがコストが低いだろう、という予測
-
 
 # 内部iteratorを持つiterator
 

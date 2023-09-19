@@ -22,8 +22,8 @@ OpenID Connect(OIDC)とOAuth2メモ
 まずこれを読む
 [一番分かりやすい OAuth の説明 - Qiita](https://qiita.com/TakahikoKawasaki/items/e37caf50776e00e733be)
 
-*The OAuth 2.0 Authorization Framework* の
-*Authorization* は「認可」で「認証(Authentication)」ではない。
+_The OAuth 2.0 Authorization Framework_ の
+_Authorization_ は「認可」で「認証(Authentication)」ではない。
 
 たしかにOAuth2でアクセストークンをもらえれば
 「認可サーバー」で「認証」されたことになるかもしれないけど、
@@ -49,6 +49,7 @@ OpenIDでユーザーの認証と「ID トークン」の発行を行うのが�
 IDトークンペイロードに(だいたい)emailと名前が入っている。
 
 詳細は
+
 - [RFC 6749 - The OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749)
 - [The OAuth 2.0 Authorization Framework](https://openid-foundation-japan.github.io/rfc6749.ja.html) - 日本語訳
 - [Final: OpenID Connect Core 1.0 incorporating errata set 1](https://openid.net/specs/openid-connect-core-1_0.html)
@@ -57,9 +58,7 @@ IDトークンペイロードに(だいたい)emailと名前が入っている�
 
 # プロバイダ
 
-
 [OpenID Connect、OAuthプロバイダの調査 (作成中) - Qiita](https://qiita.com/okuoku/items/7a84c516e79826b406e0)
-
 
 # クライアント側
 
@@ -83,7 +82,6 @@ app(native app, web app)やサーババックエンドの側
 - [How to Add User Authentication to Flask Apps with Okta - Full Stack Python](https://www.fullstackpython.com/blog/add-user-authentication-flask-apps-okta.html)
 - [Flask-OIDC — Flask-OIDC 1.1 documentation](https://flask-oidc.readthedocs.io/en/latest/)
 
-
 # OpenID Connect(OIDC)とOAuth2のちがい
 
 OAuth2は「認可」のプロトコル。
@@ -94,18 +92,17 @@ OpenID ConnectはIDトークンとアクセストークンを操る。
 
 OAuth2とOICDでは同じものでも呼び名が違う。
 
-| |OAuth2|OIDC|
-|:----|:----|:----|
-|人間|resource owner|End-User|
-|人間が使う端末|user agent|特になし|
-|アクセストークンを発行してもらうもの|client|Relaying Party (RP)|
-|アクセストークンを発行するもの|authorization server|OpenID provider(IdP)|
-|アクセストークンを使ってアクセスされるもの|resource server|特になし|
+|                                            | OAuth2               | OIDC                 |
+| :----------------------------------------- | :------------------- | :------------------- |
+| 人間                                       | resource owner       | End-User             |
+| 人間が使う端末                             | user agent           | 特になし             |
+| アクセストークンを発行してもらうもの       | client               | Relaying Party (RP)  |
+| アクセストークンを発行するもの             | authorization server | OpenID provider(IdP) |
+| アクセストークンを使ってアクセスされるもの | resource server      | 特になし             |
 
 > OpenID Connect 1.0 は, OAuth 2.0 プロトコルの上にシンプルなアイデンティティレイヤーを付与したものである
 
 -- [Final: OpenID Connect Core 1.0 incorporating errata set 1](http://openid-foundation-japan.github.io/openid-connect-core-1_0.ja.html)
-
 
 # OIDCのエンドポイント
 
@@ -113,26 +110,21 @@ OIDCの「フロー」によって3つ全部あったりなかったりする。
 
 ## 認可エンドポイント(Authorization Endpoint)
 
-* [Authorization Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1)
-* [認可エンドポイント \- Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/authorization-endpoint.html)
+- [Authorization Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1)
+- [認可エンドポイント \- Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/authorization-endpoint.html)
 
 `OAuth 2.0 endpoint`ともいう。OpenID provider(authorization server)上にある。
 
-
 ## トークンエンドポイント(Token Endpoint)
 
-* [Token Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2)
-* [トークンエンドポイント \- Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/token-endpoint.html)
-
-
-
+- [Token Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2)
+- [トークンエンドポイント \- Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/token-endpoint.html)
 
 ## リダイレクションエンドポイント(Redirection Endpoint)
 
 [Redirection Endpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2)
 
 `Redirect URI`などともいう。relaying party(client)上にある。
-
 
 # おまけ
 
@@ -146,7 +138,6 @@ OpenID と OpenID Connectは全然別物
 認可レスポンスがフラグメントのとき
 リダイレクションエンドポイントから返されてきた「なにか」は
 どうやって認可レスポンスのフラグメントにある認可コード(code)を得るのか?
-
 
 # AWSでApiGWとCognitoでOAuth2
 
@@ -174,8 +165,7 @@ aws apigateway invoke-method \
 
 上記のコマンドは、API GatewayのAPI ID、リソースID、HTTPメソッド、アクセストークン、パスパラメータ、クエリパラメータを指定する必要があります。正確な値は、API Gatewayの管理コンソールから入手できます。
 
-
-##  Api IDではなくOAuth2でAPIを呼び出す方法はありませんか?
+## Api IDではなくOAuth2でAPIを呼び出す方法はありませんか?
 
 はい、OAuth2認証を使用してAPI GatewayのAPIを呼び出すことができます。この方法では、事前にCognitoユーザープールまたはIdentity Poolを作成し、ユーザーアクセスを認証します。その後、アクセストークンを取得して、API GatewayのAPIを呼び出すことができます。以下は一例です。
 
@@ -190,33 +180,40 @@ aws cognito-idp admin-initiate-auth \
   --auth-flow ADMIN_NO_SRP_AUTH \
   --auth-parameters USERNAME=<username>,PASSWORD=<password>
 ```
+
 またはJavaScriptで
+
 ```javascript
-const AWS = require("aws-sdk");
+const AWS = require('aws-sdk');
 const cognitoIdp = new AWS.CognitoIdentityServiceProvider();
 
-const userPoolId = "<user-pool-id>";
-const clientId = "<client-id>";
-const authFlow = "ADMIN_NO_SRP_AUTH";
+const userPoolId = '<user-pool-id>';
+const clientId = '<client-id>';
+const authFlow = 'ADMIN_NO_SRP_AUTH';
 const authParameters = {
-  USERNAME: "<username>",
-  PASSWORD: "<password>",
+  USERNAME: '<username>',
+  PASSWORD: '<password>'
 };
 
-cognitoIdp.adminInitiateAuth({
-  UserPoolId: userPoolId,
-  ClientId: clientId,
-  AuthFlow: authFlow,
-  AuthParameters: authParameters,
-}, (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
+cognitoIdp.adminInitiateAuth(
+  {
+    UserPoolId: userPoolId,
+    ClientId: clientId,
+    AuthFlow: authFlow,
+    AuthParameters: authParameters
+  },
+  (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log(data);
   }
-  console.log(data);
-});
+);
 ```
+
 またはPython3で
+
 ```python
 import boto3
 
@@ -235,7 +232,6 @@ response = client.admin_initiate_auth(
 print(response)
 ```
 
-
 4.  取得したアクセストークンを使用してAPI GatewayのAPIを呼び出す。
 
 ```bash
@@ -249,6 +245,7 @@ curl -X <http-method> \
 # ↑のやつを実際に作ってみる
 
 まず手動で作って、SAMかTerraformにする。
+
 1. [Amazon Cognito ユーザープールをオーソライザーとして使用して REST API へのアクセスを制御する](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html)
 1. [REST API 用の Amazon Cognito ユーザープールを作成する](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-create-cognito-user-pool.html)
 1. [REST API と Amazon Cognito ユーザープールを統合する](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-enable-cognito-user-pool.html)
@@ -259,8 +256,6 @@ curl -X <http-method> \
 
 - [Amazon Cognito ユーザープールを API Gateway オーソライザーとしてセットアップする](https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-cognito-user-pool-authorizer/)
 - [Cognitoで認証されたユーザーだけがAPI Gatewayを呼び出せるオーソライザーを使ってみた | DevelopersIO](https://dev.classmethod.jp/articles/api-gateway-cognito-authorizer/)
-
-
 
 # ブラウザでPKCE
 
@@ -284,7 +279,6 @@ OAuth 2.0でのPKCE（Proof Key for Code Exchange）は、認可グラントに�
 
 これらの手順に従って実装することで、ブラウザでOAuthの認可グラントでPKCEを使用することができます。ただし、PKCEを実装するには、OAuthプロバイダーがPKCEをサポートしている必要があります。PKCEをサポートしていないOAuthプロバイダーの場合、この手法を使用することはできません。
 
-
 ブラウザでOAuthの認可グラントでPKCEを使う方法は、以下のようになります。
 
 1.  [クライアントは、ランダムな文字列を生成し、それを**コードチャレンジ**と呼びます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)
@@ -296,13 +290,11 @@ OAuth 2.0でのPKCE（Proof Key for Code Exchange）は、認可グラントに�
 
 これにより、ブラウザでOAuthの認可グラントでPKCEを使って安全にトークンを取得することができます。
 
-
-
 **詳細情報:**[1\. zenn.dev](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[2\. learn.microsoft.com](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)[3\. applis.io](https://applis.io/posts/what-is-pkce)
 
 ## リフレッシュトークンの寿命って取れるの?
 
-JWEで暗号化されてるから分からないよなあ... 
+JWEで暗号化されてるから分からないよなあ...
 
 ソース: Bing との会話 2023/2/21
 
@@ -313,7 +305,6 @@ OAuth2のリフレッシュトークンの期限切れを知る方法につい�
 - リフレッシュトークンを取得するときに、access_type=offlineやprompt=consentなどのパラメータを付ける方法があります³。これにより、リフレッシュトークンが常に返されるようになります³。
 
 この回答は役に立ちましたか？
-
 
 1. OAuth 2.0 全フローの図解と動画 - Qiita. https://qiita.com/TakahikoKawasaki/items/200951e5b5929f840a1f アクセス日時 2023/2/21.
 2. How to detect when an OAuth2 refresh-token expired. https://stackoverflow.com/questions/57383523/how-to-detect-when-an-oauth2-refresh-token-expired アクセス日時 2023/2/21.

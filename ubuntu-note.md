@@ -20,7 +20,7 @@ AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメ�
 - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
 - [auto-upgrades, unattended-upgrades](#auto-upgrades-unattended-upgrades)
 - [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
-- [no\_proxy](#no_proxy)
+- [no_proxy](#no_proxy)
 - [参考](#参考)
 - [Unattended Upgradesの有効/無効](#unattended-upgradesの有効無効)
 - [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
@@ -71,7 +71,7 @@ timedatectl
 ```
 
 参考:
-[[Ubuntu16.04] timezoneの確認と設定 - Qiita](<https://qiita.com/koara-local/items/32b004c0bf80fd70777c>)
+[[Ubuntu16.04] timezoneの確認と設定 - Qiita](https://qiita.com/koara-local/items/32b004c0bf80fd70777c)
 
 ## locale
 
@@ -131,6 +131,7 @@ AMI のデフォルトのユーザー名はだいたい`ec2-user`.
 [SSH を使用した Linux インスタンスへの接続 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html)
 
 で、**Ubuntuだけ例外**で、
+
 > Ubuntu AMI の場合、ユーザー名は ubuntu または root. です。
 
 確認は、
@@ -287,7 +288,7 @@ cron-aptパッケージとの関係があやしいので調査。
 
 最近のcurlではno_proxy環境変数でproxy例外が指定できる。
 
-> Since  7.53.0,  This  option  overrides the environment variables that disable the proxy.
+> Since 7.53.0, This option overrides the environment variables that disable the proxy.
 
 (man curlの--noproxyのところから引用)
 
@@ -311,7 +312,7 @@ no_proxy="localhost, 127.0.0.1, *.yourdomain.com"
 
 # 参考
 
-- [[AWS]RHEL7 よくある初期構築設定のコマンド詰め合わせ ｜ DevelopersIO](<https://dev.classmethod.jp/cloud/aws/ec2-rehl7-first-buildcmd/>)
+- [[AWS]RHEL7 よくある初期構築設定のコマンド詰め合わせ ｜ DevelopersIO](https://dev.classmethod.jp/cloud/aws/ec2-rehl7-first-buildcmd/)
 
 EC2のユーザーデータに関して:
 
@@ -378,7 +379,7 @@ Ubuntu18から標準になったので調べておくこと。
 
 とりあえずは:
 
-1. /etc/netplan/*.yml を修正
+1. /etc/netplan/\*.yml を修正
 1. netplan generate
 1. netplan apply
 
@@ -576,7 +577,7 @@ pwconv
 - [Git release candidates : “Ubuntu Git Maintainers” team](https://launchpad.net/~git-core/+archive/ubuntu/candidate)
 - [New Python Versions : “deadsnakes” team](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa)
 
-18.04LTSから20.04にするときに調べた
+  18.04LTSから20.04にするときに調べた
 
 ```sh
 dpkg-query --show -f '${Maintainer}\t${binary:Package}\n' \
@@ -595,7 +596,7 @@ sudo -i ln -sf $(which emacs) /etc/alternatives/editor
 他Azureだったら
 
 - [walinuxagent package : Ubuntu](https://launchpad.net/ubuntu/+source/walinuxagent)
-だったのだけど、いつのまにかUbuntu本体に取り込まれてる。
+  だったのだけど、いつのまにかUbuntu本体に取り込まれてる。
 
 # パッケージのchangelog
 

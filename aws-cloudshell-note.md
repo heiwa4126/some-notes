@@ -5,11 +5,11 @@
 
 OSはAmazon Linux2。1 CPU 3GHz メモリ 4GB
 
-
 aws cliもSAMもある(ちょっと古い)。けどPython3は3.7
 LambdaのPython3.8が動かない。
 
 3.8入れて、venvでならいけるはず。
+
 ```sh
 sudo amazon-linux-extras install -y python3.8
 python3.8 -m venv ~/.venv/38/
@@ -17,7 +17,6 @@ python3.8 -m venv ~/.venv/38/
 curl -kL https://bootstrap.pypa.io/get-pip.py -O
 python get-pip.py -U
 ```
-
 
 ブラウザから使えるのは便利だけど、
 メタキーとかが辛い。
@@ -34,14 +33,13 @@ tmuxも入ってるんだがctrl-tがブラウザに食われる。
 - **再起動すると変更は全部消えます**. ある意味便利
 - shellのhistoryが残らない。
 
-
 # だいたいのバージョン
 
 ```
 $ date
 Thu Dec 16 23:48:07 UTC 2021
 
-$ cat /etc/os-release 
+$ cat /etc/os-release
 NAME="Amazon Linux"
 VERSION="2"
 ID="amzn"
@@ -81,17 +79,15 @@ Amazon Linux 2 なので必要ならyumやamazon-linux-extrasで更新。
 
 **ただし再起動すると変更は全部消えます**
 
-
 # awsのデフォルトプロファイル
 
 ```sh
 aws sts get-caller-identity
 ```
+
 で確認。ポータルのログインユーザと同じ。リージョンもポータルといっしょ(ターミナルの左上)。
 
-
 # 自分環境
-
 
 ```sh
 sudo yum update -y

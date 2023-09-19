@@ -49,12 +49,12 @@ Red Hat系メモ
 - [NetworkManager-wait-online.service](#networkmanager-wait-onlineservice)
 - [No dialect specified on mount.](#no-dialect-specified-on-mount)
 
-
 # インストール済みパッケージ一覧
 
 複数のホストで同じパッケージにしたいときなど。
 
 yum-utilsパッケージで
+
 ```
 repoquery -a --installed
 ```
@@ -63,29 +63,29 @@ repoquery -a --installed
 
 `yum list installed`だと長いパッケージ名を勝手に折り返す。
 [yum listの出力を折り返さない - (っ´∀｀)っ ゃー | 一撃](https://nullpopopo.blogcube.info/2015/05/yumlist-sed.html)
+
 ```
 $ yum list | sed -e "s/[[:space:]]\+/\t/g" | sed -e ':loop; N; $!b loop; ;s/\n[[:space:]]/\t/g'
 ```
 
 のような方法もあるが、覚えられない。
 
-
 # パッケージ一覧
 
 現在の設定でレポジトリにある全パッケージのリスト
+
 ```
 yum --showduplicates list
 ```
-ただしこれも`yum list installed`同様長いパッケージ名が折り返される。
 
+ただしこれも`yum list installed`同様長いパッケージ名が折り返される。
 
 ```
 repoquery -a --releasever=7Server --showduplicates | sort | uniq
 ```
+
 が適切だが、repoqueryには`--disableexcludes=all`が無い。
 そのかわり`--queryformat`が使える。
-
-
 
 # RHELのパッケージをWWWで探す
 
@@ -98,6 +98,7 @@ repoquery -a --releasever=7Server --showduplicates | sort | uniq
 
 例えばOracle Javaの含まれるrhel-7-server-supplementary-rpmを検索して
 パッケージ一覧を得る例
+
 ```
 yum --disablerepo '*' --enablerepo rhel-7-server-supplementary-rpms list available
 ```
@@ -109,15 +110,16 @@ yum repolist
 ```
 
 全リストは
+
 ```
 yum repolist all
 ```
-
 
 # 全レポジトリのパッケージのリストを得る
 
 ソースパッケージ、ベータ、アーカイブ、その他は除く。
 カレントディレクトリに`{{パッケージID}}.lst`形式のファイルができる。
+
 ```
 #!/bin/sh
 LANG=C
@@ -146,7 +148,6 @@ rhel-7-server-ansible-2-rpms をenableにしたほうがいいのがわかる。
 
 リストは更新されるので、
 定期的に実行すること。
-
 
 # 例: 古いカーネルを入手してインストールする
 
@@ -182,6 +183,7 @@ kernel.x86_64                                                    3.10.0-862.11.6
 [nginx 1.14 — Software Collections](https://www.softwarecollections.org/en/scls/rhscl/rh-nginx114/)
 
 RHEL7での例
+
 ```
 subscription-manager repos --enable=rhel-server-rhscl-7-rpms
 yum install rh-nginx114 -y
@@ -190,6 +192,7 @@ systemctl enable rh-nginx114-nginx
 ```
 
 パッケージは普通じゃないところにインストールされる。
+
 ```
 $ man nginx
 nginx というマニュアルはありません
@@ -199,18 +202,19 @@ $ man nginx
 ```
 
 .profileに
+
 ```
 . scl_source enable rh-nginx114
 ```
+
 みたいに書いておく手もあり(enableにできるものは複数書ける)
 
-* [ソフトウェアコレクション(SCL：Software Collections)とは？ – StupidDog's blog](http://stupiddog.jp/note/archives/1074)
-* [4.7. Software Collections および scl-utils - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/developer_guide/scl-utils)
-* [Directory — Software Collections](https://www.softwarecollections.org/en/scls/)
-* [Red Hat Software CollectionsとSCLについて調べたメモ – 走って登る](https://blog.liclab.com/2017-10-10/rhscl/)
+- [ソフトウェアコレクション(SCL：Software Collections)とは？ – StupidDog's blog](http://stupiddog.jp/note/archives/1074)
+- [4.7. Software Collections および scl-utils - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/developer_guide/scl-utils)
+- [Directory — Software Collections](https://www.softwarecollections.org/en/scls/)
+- [Red Hat Software CollectionsとSCLについて調べたメモ – 走って登る](https://blog.liclab.com/2017-10-10/rhscl/)
 
 SCLはデメリットも多いが、野良ビルドよりはよっぽどマシだと思う (It depends)。
-
 
 # 古いカーネルを消す
 
@@ -221,11 +225,12 @@ SCLはデメリットも多いが、野良ビルドよりはよっぽどマシ�
 ```
 
 残すカーネルの数を指定することもできる
+
 ```
 # package-cleanup --oldkernels --count=3
 ```
-[yum-utilsを使って/bootの不要なカーネルを削除する方法 | OXY NOTES](https://oxynotes.com/?p=7297)
 
+[yum-utilsを使って/bootの不要なカーネルを削除する方法 | OXY NOTES](https://oxynotes.com/?p=7297)
 
 RHEL8では
 package-cleanup から oldkernelsオプションがなくなった。
@@ -245,6 +250,7 @@ installonly_limit=3
 # yumのキャッシュを消す
 
 標準のキャッシュ(`/var/cache/yum/*`)を消す
+
 ```sh
 yum clean packages
 ```
@@ -252,6 +258,7 @@ yum clean packages
 # 依存パッケージを表示する
 
 例)
+
 ```
 rpm -q --whatrequires audit-libs
 ```
@@ -259,6 +266,7 @@ rpm -q --whatrequires audit-libs
 # パッケージが最新か確認する
 
 例)
+
 ```
 # yum --disableexcludes=all --showduplicates list openssh-server
 読み込んだプラグイン:langpacks, product-id, search-disabled-repos, subscription-manager
@@ -283,16 +291,17 @@ openssh-server.x86_64                                7.4p1-16.el7               
 # コマンドが含まれているパッケージを探す
 
 digを探す例。
+
 ```
 yum provides \*bin/dig
 ```
+
 filelists_dbを引っ張ってきて探してくれる。
 
 `yum provides dig`
 や
 `yum provides \*/dig`
 だとダメ(やってみるとわかるよ)。
-
 
 # proxy設定あちこち
 
@@ -303,9 +312,9 @@ RHEL7ではグローバルのproxy設定がなくなった。
 (この2つでは書き方が異なるので注意。)
 
 他
-* `/etc/rhsm/rhsm.conf`
-* `/etc/yum.conf`
 
+- `/etc/rhsm/rhsm.conf`
+- `/etc/yum.conf`
 
 # RHELの登録
 
@@ -316,22 +325,21 @@ Xがあれば`subscription-manager-gui`かメニューから。
 [RHEL の簡易登録 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/)
 
 CLIなら
-* [3.2. コマンドラインを使用したサブスクリプションのアタッチと削除 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/sub-cli)
-* [インストールしたRHEL7をRHNに登録する | 猫の目](http://www.neko-no-me.net/2015/05/12/984/)
+
+- [3.2. コマンドラインを使用したサブスクリプションのアタッチと削除 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/sub-cli)
+- [インストールしたRHEL7をRHNに登録する | 猫の目](http://www.neko-no-me.net/2015/05/12/984/)
 
 RHELの登録については
 [Red Hat Developer | Red Hat Enterprise Linux Hello-world](https://developers.redhat.com/products/rhel/hello-world/)
 これがよくまとまっている。
-
-
 
 # 「デスクトップ」とかを英語にする
 
 ```
 LC_ALL=C xdg-user-dirs-gtk-update
 ```
-設定後、一旦ログアウトしてログイン。
 
+設定後、一旦ログアウトしてログイン。
 
 # ホストの再起動が必要かどうか知る
 
@@ -343,11 +351,11 @@ LC_ALL=C xdg-user-dirs-gtk-update
 [Linuxのパッケージをアップデートしたあとrestartが必要なプロセスを見つける方法]
 (https://qiita.com/usiusi360/items/7b47be9d0ab5b1acd608)
 
-
 # パッケージのpin
 
 例)
 /etc/yum.conf
+
 ```
 [main]
 ...
@@ -358,13 +366,14 @@ exclude=kernel-* redhat-release-*
 問題としては`kernel-*`が`kernel-headers`まで含んでしまうこと。
 
 yumコマンドのオプションでexclude無視ができるので、個別に使うとよい
+
 ```
 --disableexcludes=[all|main|repoid]
 ```
 
-* allは全ての除外項目を無効。
-* mainはmainセクションで設定した除外項目を無効。
-* repoidはリポジトリの除外項目を無効にする。
+- allは全ての除外項目を無効。
+- mainはmainセクションで設定した除外項目を無効。
+- repoidはリポジトリの除外項目を無効にする。
 
 # yum4/dnf
 
@@ -392,43 +401,44 @@ yum install nextgen-yum4 dnf-plugins-core yum-utils
 
 ## yum4 参考
 
-* [YUM is dead.  Long live YUM! (PDF)](https://people.redhat.com/mskinner/rhug/q3.2018/MSP-RHUG-YUM-is-dead-Long-live-YUM.pdf)
-* [Changes in DNF CLI compared to YUM — DNF 4.0.10-1 documentation](https://dnf.readthedocs.io/en/latest/cli_vs_yum.html)
+- [YUM is dead. Long live YUM! (PDF)](https://people.redhat.com/mskinner/rhug/q3.2018/MSP-RHUG-YUM-is-dead-Long-live-YUM.pdf)
+- [Changes in DNF CLI compared to YUM — DNF 4.0.10-1 documentation](https://dnf.readthedocs.io/en/latest/cli_vs_yum.html)
 
 # RHEL7の役立つドキュメント
 
 Red Hat Network上にあるドキュメント。公式だからそれなりに安心。英語/日本語/フランス語 x HTML.PDF/ePubがある。
 
-* [インストールガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/installation_guide/index)
-* [システム管理者のガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/index)
-* [ネットワークガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/networking_guide/index)
+- [インストールガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/installation_guide/index)
+- [システム管理者のガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/index)
+- [ネットワークガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/networking_guide/index)
 
 目次は [Product Documentation for Red Hat Enterprise Linux 7 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/)
 
-* [Red Hat サブスクリプション管理のワークフローの概要 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/introduction_to_red_hat_subscription_management_workflows/)
-* [Red Hat Network サブスクリプション管理 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_customer_portal/1/html/red_hat_network_certificate-based_subscription_management/index)
-* [RHEL の簡易登録 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/)
-* [ライフサイクルとアップデートポリシー - Red Hat Customer Portal](https://access.redhat.com/ja/support/policy/update_policies)
-* [アドバイザリーメール設定](https://www.redhat.com/wapps/ugc/protected/notif.html)
-
+- [Red Hat サブスクリプション管理のワークフローの概要 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/introduction_to_red_hat_subscription_management_workflows/)
+- [Red Hat Network サブスクリプション管理 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_customer_portal/1/html/red_hat_network_certificate-based_subscription_management/index)
+- [RHEL の簡易登録 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/)
+- [ライフサイクルとアップデートポリシー - Red Hat Customer Portal](https://access.redhat.com/ja/support/policy/update_policies)
+- [アドバイザリーメール設定](https://www.redhat.com/wapps/ugc/protected/notif.html)
 
 英語のほうがわかりやすいかも
-* [RHSM Subscription Issues Troubleshooting Do's and Don'ts](https://access.redhat.com/solutions/1522143)
-* [RHSM サブスクリプション問題のトラブルシューティングに関する注意事項](https://access.redhat.com/ja/solutions/2705411)
+
+- [RHSM Subscription Issues Troubleshooting Do's and Don'ts](https://access.redhat.com/solutions/1522143)
+- [RHSM サブスクリプション問題のトラブルシューティングに関する注意事項](https://access.redhat.com/ja/solutions/2705411)
 
 virt-who
-* [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/virtual_instances_guide/)
-* [RHEL サブスクリプション (2013 パッケージ) の使用: シナリオ 5 仮想データセンター](https://access.redhat.com/ja/articles/1435793)
-* [virt-whoとは何か](https://www.slideshare.net/moriwaka/virtwho)
-* [Red Hat Virtualization Agent (virt-who) Configuration Helper | Red Hat Customer Portal Labs](https://access.redhat.com/labs/virtwhoconfig/)
-* [暗号化されたパスワードで virt-who を設定する](https://access.redhat.com/ja/solutions/2325761)
-* [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_satellite/6.3/html/virtual_instances_guide/)
+
+- [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/virtual_instances_guide/)
+- [RHEL サブスクリプション (2013 パッケージ) の使用: シナリオ 5 仮想データセンター](https://access.redhat.com/ja/articles/1435793)
+- [virt-whoとは何か](https://www.slideshare.net/moriwaka/virtwho)
+- [Red Hat Virtualization Agent (virt-who) Configuration Helper | Red Hat Customer Portal Labs](https://access.redhat.com/labs/virtwhoconfig/)
+- [暗号化されたパスワードで virt-who を設定する](https://access.redhat.com/ja/solutions/2325761)
+- [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_satellite/6.3/html/virtual_instances_guide/)
 
 LinuxからESXi(vCenter)
-* [LinuxからコマンドラインでvCenterを構築する。 | LONE WOLF](https://loner.jp/vcenter-linux-cli-construction)
-* [vCenter Server ルート証明書をダウンロードしてインストールして、Web ブラウザ証明書の警告を防ぐ方法 (2148936)](https://kb.vmware.com/s/article/2148936?lang=ja)
-* [vSphere 6.0 の覚え書き - Web Client の SSL 証明書エラーを消す （簡易版） - 仮想化でプリセールスしてるSEの一日](http://d.hatena.ne.jp/ogawad/20160131/1454243457)
 
+- [LinuxからコマンドラインでvCenterを構築する。 | LONE WOLF](https://loner.jp/vcenter-linux-cli-construction)
+- [vCenter Server ルート証明書をダウンロードしてインストールして、Web ブラウザ証明書の警告を防ぐ方法 (2148936)](https://kb.vmware.com/s/article/2148936?lang=ja)
+- [vSphere 6.0 の覚え書き - Web Client の SSL 証明書エラーを消す （簡易版） - 仮想化でプリセールスしてるSEの一日](http://d.hatena.ne.jp/ogawad/20160131/1454243457)
 
 # タイムゾーンを日本に
 
@@ -441,20 +451,22 @@ timedatectl set-timezone Asia/Tokyo
 簡単じゃない。
 
 システムワイドでいいのなら
+
 ```
 localectl set-locale LANG=ja_JP.utf8
 ```
+
 確認は
+
 ```
 localectl status
 ```
 
 参考:
-* [RHEL7 のシステムロケールを変更する](https://access.redhat.com/ja/solutions/1562183)
-* [Red Hat EL7の基本設定（ロケールとタイムゾーン） | Skyarch Broadcasting](https://www.skyarch.net/blog/?p=247)
-* [【 localectl 】 システムのロケールやキーボードレイアウトを管理する 【 Linuxコマンドまとめ 】 | Linux Fan](https://linuxfan.info/localectl)
 
-
+- [RHEL7 のシステムロケールを変更する](https://access.redhat.com/ja/solutions/1562183)
+- [Red Hat EL7の基本設定（ロケールとタイムゾーン） | Skyarch Broadcasting](https://www.skyarch.net/blog/?p=247)
+- [【 localectl 】 システムのロケールやキーボードレイアウトを管理する 【 Linuxコマンドまとめ 】 | Linux Fan](https://linuxfan.info/localectl)
 
 # AWSでRHEL
 
@@ -464,6 +476,7 @@ AWSのAMI(ami-6b0d5f0d)でRed Hatを普通に作って、Red Hat Developer Subsc
 普通にsubscription-managerが使える。
 
 例)
+
 ```
 subscription-manager register --username fooami --password supersecret
 subscription-manager attach --auto
@@ -497,6 +510,7 @@ https://developers.redhat.com/products/rhel/help/
 ## example
 
 このシステムに割り当てられたサブスクリプションを見てみる("--consumed show the subscriptions being consumed by this system")
+
 ```
 # subscription-manager list --consumed
 +-------------------------------------------+
@@ -587,26 +601,27 @@ System Type:         Physical
 参考: [RHEL の簡易登録](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/)
 
 まず `register` して
+
 > 新規システムをサブスクリプションサービスに対し登録または特定します。
 
 つぎに `attach` することで
+
 > マシンに特定のサブスクリプションをアタッチします。
 
 更新できるようになる。(登録解除はunregister コマンドの実行のみでOK。[登録解除](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/quick_registration_for_rhel/un-registering)参照)
 
 さらに `repos` で
+
 > このシステムが使用することができるリポジトリを一覧表示する
 
 レポジトリをリスト/追加する。
-
-
 
 # 「サービスレベルの設定」とは
 
 RHNポータルのシステムのページにある「サービスレベルの設定」とは
 
-* [4. コンシューマーの管理 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_customer_portal/1/html/red_hat_network_certificate-based_subscription_management/managing-consumers#sla)
-* [製品サポートのサービスレベルアグリーメント - Red Hat Customer Portal](https://access.redhat.com/ja/support/offerings/production/sla)
+- [4. コンシューマーの管理 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_customer_portal/1/html/red_hat_network_certificate-based_subscription_management/managing-consumers#sla)
+- [製品サポートのサービスレベルアグリーメント - Red Hat Customer Portal](https://access.redhat.com/ja/support/offerings/production/sla)
 
 ...よくわからない。設定するとauto attach時のサブスクリプション決定アルゴリズムに影響がある、ということ?
 
@@ -624,7 +639,9 @@ yum install dkms -y
 yum groupinstall "Development Tools" -y
 yum install kernel-devel -y
 ```
+
 VirtualBoxGuestCDをマウントして、CDのディレクトリで
+
 ```
  ./VBoxLinuxAdditions.run
 ```
@@ -650,18 +667,16 @@ sysctl --system
 
 発音は「レル」(ライセンス管理の研修で聞いた話)
 
-
 # virbr0を消す
 
 ```
 systemctl stop libvirtd
 systemctl disable libvirtd
 ```
+
 virbr0がdownする。再起動するとvirbr0は消える。
 
-
 参考: [virbr0 インターフェイスは何に使用されますか? 無効にするにはどうしたら良いですか?](https://access.redhat.com/ja/solutions/2318431)
-
 
 # 起動に失敗したデーモンのリスト
 
@@ -673,18 +688,18 @@ systemctl list-units --failed
 
 [systemd - What are the systemctl options to "List all failed units" - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/341060/what-are-the-systemctl-options-to-list-all-failed-units)
 
-
 # AWSでホスト名を変更する
 
 ```
 [root@ip-172-31-1-155 ~]# hostname
 ip-172-31-1-155.ap-northeast-1.compute.internal
 ```
+
 みたいなIPベースのホスト名がつくので、複数ターミナルを使うと、どっちがどっちだったか間違える。
 
-* [Amazon EC2 Linux の静的ホスト名 RHEL7 Centos7](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname-rhel7-centos7/)
-* [Linux インスタンスのホスト名の変更 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/set-hostname.html)
-* [Amazon EC2 Linux 静的ホスト名](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname/)*
+- [Amazon EC2 Linux の静的ホスト名 RHEL7 Centos7](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname-rhel7-centos7/)
+- [Linux インスタンスのホスト名の変更 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/set-hostname.html)
+- [Amazon EC2 Linux 静的ホスト名](https://aws.amazon.com/jp/premiumsupport/knowledge-center/linux-static-hostname/)\*
 
 **↑これらを実行しても、その名前でDNS引いたりできるわけではないので意味がない。**
 
@@ -699,25 +714,24 @@ nmのguiとnmtuiでの設定。日本語だと「この接続には IPv4 アド�
 参照:
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-configuring_ipv4_settings
 
-
 # GRUB2の再インストール
 
-* [Red Hat Enterprise Linux 7 25.7. Reinstalling GRUB 2 - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
-* [Red Hat Enterprise Linux 7 25.7. GRUB 2 の再インストール - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
-
+- [Red Hat Enterprise Linux 7 25.7. Reinstalling GRUB 2 - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
+- [Red Hat Enterprise Linux 7 25.7. GRUB 2 の再インストール - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-reinstalling_grub_2)
 
 # RHELのバックアップ・リストア
 
 ReaR(Relax-and-Recover )は別項目に
-* [dump および restore コマンドで Red Hat Enterprise Linux 全体をバックアップおよびリストアする](https://access.redhat.com/ja/solutions/122373)
-* [パーティションテーブルをバックアップおよび復元する方法](https://access.redhat.com/ja/solutions/800283)
+
+- [dump および restore コマンドで Red Hat Enterprise Linux 全体をバックアップおよびリストアする](https://access.redhat.com/ja/solutions/122373)
+- [パーティションテーブルをバックアップおよび復元する方法](https://access.redhat.com/ja/solutions/800283)
 
 # ReaR (Relax-and-Recover)
 
-* [Relax-and-Recover - Linux Disaster Recovery](http://relax-and-recover.org/)
-* [Red Hat Enterprise Linux 7 第26章 Relax-and-Recover (ReaR) - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-relax-and-recover_rear)
-* [Relax and Recoverでのシステム回復](https://redhat.sios.jp/relax-and-recover)
-* [rear/03-configuration.adoc at master · rear/rear · GitHub](https://github.com/rear/rear/blob/master/doc/user-guide/03-configuration.adoc)  - CIFSのconfig
+- [Relax-and-Recover - Linux Disaster Recovery](http://relax-and-recover.org/)
+- [Red Hat Enterprise Linux 7 第26章 Relax-and-Recover (ReaR) - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-relax-and-recover_rear)
+- [Relax and Recoverでのシステム回復](https://redhat.sios.jp/relax-and-recover)
+- [rear/03-configuration.adoc at master · rear/rear · GitHub](https://github.com/rear/rear/blob/master/doc/user-guide/03-configuration.adoc) - CIFSのconfig
 
 # RHELを見た目ダウングレードさせる
 
@@ -735,10 +749,11 @@ redhat-release-server-7.3-7.el7.x86_64 \
 initscripts-9.49.37-1.el7_3.1.x86_64
 ```
 
-終わったら/etc/yum.confのexcludeにredhat-release-*とinitscriptsを追加しておくと、
+終わったら/etc/yum.confのexcludeにredhat-release-\*とinitscriptsを追加しておくと、
 yum updateが簡単になる。
 
 以下は例:
+
 ```
 exclude=kernel-* kmod-* perf-* python-perf-* redhat-release-* initscripts
 ```
@@ -749,7 +764,7 @@ exclude=kernel-* kmod-* perf-* python-perf-* redhat-release-* initscripts
 kernel-* kmod-* perf-* python-perf-* redhat-release-* initscripts-*
 ```
 
-``` bash
+```bash
 yum --showduplicate --disableexcludes=all list | fgrep 3.10.0-514.26.2.el7 > krpms.lst
 
 # 対象パッケージ
@@ -762,10 +777,10 @@ cut -d' ' -f1 < krpms.lst  | sort | uniq | fgrep . | sed 's/\./-3.10.0-514.26.2.
 cat prpms.lst | xargs yumdownloader --disableexcludes=all
 ```
 
-
 ```
 exclude=kernel-* perf-* python-perf-* redhat-release-* initscripts
 ```
+
 kmodなしで
 
 ```
@@ -782,72 +797,74 @@ rpm -Uvh --force (kernel以外)
 `yum localinstall`はうまくいかない。
 `--oldpackage`いるかも
 
-
 けっこう複雑なので
+
 ```
 rpm -qa kernel kernel-abi-whitelists kernel-debug kernel-debug-debuginfo kernel-debug-devel kernel-debuginfo kernel-devel kernel-doc kernel-headers kernel-tools kernel-tools-debuginfo kernel-tools-libs kernel-tools-libs-devel perf perf-debuginfo python-perf python-perf-debuginfo
 ```
-のリストで7.3,7.5,6.xの決め打ちでいくしかない。
 
+のリストで7.3,7.5,6.xの決め打ちでいくしかない。
 
 # RHELを特定のバージョンに固定する
 
 この項うそ。これでは固定できない。
+
 ```
 [main]
 exclude=kernel-* kmod-* perf-* python-perf-* redhat-release-* initscripts
 ```
+
 して、kernel群だけを手で入れるしか無い。
 
-
-
-
-
-
-
-
-
 **これ以下嘘。**
-
 
 yumの$releasever変数を指定する。
 
 例)
+
 ```
 echo 7.4 > /etc/yum/vars/releasever
 ```
 
 設定すると
+
 ```
 yum distribution-synchronization
 ```
+
 でダウングレードもできるはずだが、実際にはほとんど無理。
 
 [Red Hat Enterprise Linux 7 9.5. Yum と Yum リポジトリーの設定 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-Configuring_Yum_and_Yum_Repositories#sec-Using_Yum_Variables)によると、
+
 > yum は /etc/yum.conf 設定ファイルにある distroverpkg=value の行から $releasever の値を取得します
 
 とあるので、そちらを設定するほうがいいかもしれない(優先度不明.両方やっとけばいいのでは)
 
 デフォルトは
+
 ```
 distroverpkg=redhat-release
 ```
+
 なので「ISOなどでインストールした時点からリリースを変更したくない」ときは
 redhat-releaseをyum.confのexcludeに追加する(たぶんinitscriptsも)
 だけで同じ効果があると思われる。
 
 こんな感じか?
+
 ```
 [main]
 exclude=redhat-release-* initscripts
 ```
 
 あったりまえですが固定すると
+
 > 最新以外または古いマイナーリリースへのアップデートには、セキュリティーおよびバグのエラータが含まれないことに注意してください
 
 なので注意。
 
 登録時にリリースを設定することもできるけど、これは「固定」になるかはわからない。
+
 ```
 subscription-manager register --autosubscribe --release=6.4
 
@@ -860,19 +877,16 @@ subscription-manager release --set=6.3
 subscription-manager release --set=7Server
 ```
 
-
-
 参考:
-* [Red Hat Enterprise Linux の特定のアップデートにシステムを指定する](https://access.redhat.com/ja/solutions/743243)
-* [Red Hat Enterprise Linux 6 8.4.3. Using Yum Variables - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-using_yum_variables)
-* [Red Hat Enterprise Linux 6 5.6.3. コマンドラインで希望するオペレーティングシステムのリリースバージョンを設定する - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/deployment_guide/preferred-os)
 
+- [Red Hat Enterprise Linux の特定のアップデートにシステムを指定する](https://access.redhat.com/ja/solutions/743243)
+- [Red Hat Enterprise Linux 6 8.4.3. Using Yum Variables - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sec-using_yum_variables)
+- [Red Hat Enterprise Linux 6 5.6.3. コマンドラインで希望するオペレーティングシステムのリリースバージョンを設定する - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/deployment_guide/preferred-os)
 
 # RHELのホスト名
 
-* [Red Hat Enterprise Linux 7 第3章 ホスト名の設定 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/networking_guide/ch-configure_host_names)
-* [Red Hat Enterprise Linux 7 3.3. hostnamectl を使ったホスト名の設定 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/networking_guide/sec_configuring_host_names_using_hostnamectl)
-
+- [Red Hat Enterprise Linux 7 第3章 ホスト名の設定 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/networking_guide/ch-configure_host_names)
+- [Red Hat Enterprise Linux 7 3.3. hostnamectl を使ったホスト名の設定 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/networking_guide/sec_configuring_host_names_using_hostnamectl)
 
 # インストールされているパッケージのリストを構造のある形式で出力する
 
@@ -881,36 +895,40 @@ XML, JSON, YANL, CSVなどでパッケージリストを得る方法
 ```
 rpm -qa --xml
 ```
+
 実際に実行すると、データ量が多くて死ぬ。
 
 `--queryformat (--qf)` を使うとタグが選択できる。
 
 例)
+
 ```
 $ rpm --qf "<name>%{NAME}</name><version>%{version}</version>\n" -q systemd
 <name>systemd</name><version>219</version>
 ```
 
 使えるタグ一覧は
+
 ```
 rpm --querytags
 ```
+
 で得られる。
 
 みんな大好きCSVで出力するワンライナーの例
+
 ```
 (echo "name","version","release","arch","filename" ; rpm --qf='"%{name}","%{version}","%{release}","%{arch}","%{name}-%{version}-%{release}.%{arch}.rpm"\n' -qa | sort -f ) > rpms.csv
 ```
 
 参考:
+
 - [rpm.org - RPM Query Formats](https://rpm.org/user_doc/query_format.html)
 - [rpm(8): RPM Package Manager - Linux man page](https://linux.die.net/man/8/rpm)
-
 
 # 起動時にntpdate
 
 [18.16. ntpdate サーバーの設定 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/s1-configure_ntpdate_servers)
-
 
 1. yum install ntpdate
 1. /etc/ntp/step-tickers にntpサーバを列挙
@@ -918,8 +936,8 @@ rpm --querytags
 
 ただこれが必要なのはntpdのオプションに`-g`がないときであって、
 
->-g
- 	通常、 ntpd はオフセットが正気限界 (sanity limit) を越えている場合は終了します。 この値のデフォルトは 1000 秒です。 正気限界を 0 に設定した場合、正気限界のチェックを行なわず、 オフセットがどのような値でも受理します。 このオプションはこの制限を無視し、 どの時刻にも制限なく設定できるようにします。 しかしこれは一度のみ起り得ます。 この後は、制限を超過すると、 ntpd は終了します。 このオプションは、 -q オプションとともに使用することができます。
+> -g
+> 通常、 ntpd はオフセットが正気限界 (sanity limit) を越えている場合は終了します。 この値のデフォルトは 1000 秒です。 正気限界を 0 に設定した場合、正気限界のチェックを行なわず、 オフセットがどのような値でも受理します。 このオプションはこの制限を無視し、 どの時刻にも制限なく設定できるようにします。 しかしこれは一度のみ起り得ます。 この後は、制限を超過すると、 ntpd は終了します。 このオプションは、 -q オプションとともに使用することができます。
 
 引用元: [ntpd(8) manページ](https://nxmnpg.lemoda.net/ja/8/ntpd)
 
@@ -928,6 +946,7 @@ RHEL7のntpdの設定は`-g`つきで起動されているはずなので確認�
 
 調べた。
 CentOS7だけど
+
 ```
 # systemctl restart ntp
 (略)
@@ -936,6 +955,7 @@ CentOS7だけど
            └─4326 /usr/sbin/ntpd -u ntp:ntp -g
 (略)
 ```
+
 なので多分`-g`つき。
 
 # reposync
@@ -950,20 +970,21 @@ CentOS7だけど
 
 [How to install a graphical user interface (GUI) for Red Hat Enterprise Linux - Red Hat Customer Portal](https://access.redhat.com/solutions/5238)
 
-``` bash
+```bash
 yum groupinstall gnome-desktop x11 fonts
 ```
+
 or
-``` bash
+
+```bash
 yum groupinstall "Server with GUI"
 ```
-
 
 # RHEL7でxrdp
 
 EPELをレポジトリに追加
 
-``` bash
+```bash
 yum groupinstall "Server with GUI"
 yum install xrdp tigervnc-server xterm -y
 systemctl daemon-reload
@@ -979,9 +1000,7 @@ systemctl enable xrdp
 
 [システムのアップデートに RHN Classic と RHSM のどちらを使用しているかを確認する - Red Hat Customer Portal](https://access.redhat.com/ja/solutions/1350833)
 
-
 `/usr/bin/rhn_register`
-
 
 # NetworkManager-wait-online.service
 
@@ -992,6 +1011,7 @@ systemctl enable xrdp
 ```
 ExecStart=/usr/bin/nm-online -s -q --timeout=60        # Modify here
 ```
+
 にしたらなおった。という話(未確認)
 
 [Why 'NetworkManager-wait-online.service' fails to start with error 'code=exited, status=2/INVALIDARGUMENT' ? - Red Hat Customer Portal](https://access.redhat.com/solutions/2851711)
@@ -1009,6 +1029,7 @@ Kernel更新したら治った、という話。
 [CentOS 7のCIFSで - 身の回り4畳半近辺の日記](https://b3g.hatenablog.com/entry/20181127/p1)
 
 例)
+
 ```
 mount -t cifs -o vers=2.1,username=user,password=pass,domain=dom //srv/share /mnt
 ```
@@ -1017,44 +1038,50 @@ mount -t cifs -o vers=2.1,username=user,password=pass,domain=dom //srv/share /mn
 
 役に立つ**かもしれない**資料
 
-[(PDF)Red Hat Enterprise Linux 7 ネットワークガイド -  RHEL 7 でネットワーク、ネットワークインターフェース、およびネットワークサービスの設定および管理](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/pdf/networking_guide/Red_Hat_Enterprise_Linux-7-Networking_Guide-ja-JP.pdf)
-
+[(PDF)Red Hat Enterprise Linux 7 ネットワークガイド - RHEL 7 でネットワーク、ネットワークインターフェース、およびネットワークサービスの設定および管理](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/pdf/networking_guide/Red_Hat_Enterprise_Linux-7-Networking_Guide-ja-JP.pdf)
 
 # sosreport
 
 - [Red Hat Enterprise Linux 上での sosreport の役割と取得方法 - Red Hat Customer Portal](https://access.redhat.com/ja/solutions/78443)
 
 インストール
+
 ```sh
 sudo yum install sos -y
 ```
 
 実行
+
 ```sh
 sudo sosreport
 ```
+
 かなり長い時間と、巨大なレポートができる。
 
 途中
+
 ```
 Please enter the case id that you are generating this report for []:
 ```
+
 とか訊かれるので、かっこいい名前を考えておくこと。
 
 例) `Trinity666`
 
 名前を考えるのがめんどくさい場合は`--batch`オプションがあります。
+
 ```
 sudo sosreport --batch
 ```
+
 > ユーザーおよびアカウント情報をインタラクティブに入力しないで済むように、--batch オプションを指定してバッチモードで実行することができます。この場合、ユーザー情報はシステムの RHN 設定ファイルから取得されます。
 
 `--batch`オプションがCentOSだとどうなるかは知らない。
 
 他参考:
+
 - [Red Hat Enterprise Linux 上での sosreport の役割と取得方法 - Red Hat Customer Portal](https://access.redhat.com/ja/solutions/78443#command)
 - [[Linux] サーバトラブルへの備えと情報採取の手順 - 技術情報・詳細: 技術情報・検索一覧 | NEC](https://www.support.nec.co.jp/View.aspx?id=3140000151)
-
 
 # Red Hat 7のapache(httpd)でモジュールを無効にする時
 
@@ -1073,6 +1100,7 @@ sudo sosreport --batch
 `yum provides`が使える
 
 例:
+
 ```sh
 sudo yum provides docker-compose
 ```
@@ -1082,12 +1110,14 @@ sudo yum provides docker-compose
 ```sh
 yum install xxxx --downloadonly
 ```
+
 でキャッシュしたパッケージは`/var/cache/yum`の下に入る。
 
 ```sh
 find /var/cache/yum -type f -name \*.rpm
 find /var/cache/yum -type d
 ```
+
 で見れる。
 
 # errata
@@ -1098,7 +1128,6 @@ RHNのアカウント不要
 
 フィルタリングができるので、例えばRHEL6 ELSのやつなら
 [こんな感じ](https://access.redhat.com/errata/#/?q=&p=1&sort=portal_publication_date%20desc&rows=10&portal_product=Red%20Hat%20Enterprise%20Linux&portal_product_variant=Red%20Hat%20Enterprise%20Linux%20Server%20-%20Extended%20Life%20Cycle%20Support&portal_product_version=6&portal_architecture=x86_64)で。
-
 
 # ELSの設定
 
@@ -1111,33 +1140,34 @@ ELSをvirt-who用に大量に買う、なんてこともあるかもしれない
 - Red Hat Enterprise Linux Extended Life Cycle Support (Unlimited Guests) - SKU : RH00271
 
 ELSレポジトリは自動で有効にならないらしい(RHEL6だけ?)
+
 ```sh
 subscription-manager repos --enable=rhel-6-server-els-rpms
 ```
-とかする。
 
+とかする。
 
 # apt-cron的なもの
 
 - RHEL7 - yum-cron - [How to use yum-cron to automatically update RHEL/CentOS Linux - nixCraft](https://www.cyberciti.biz/faq/fedora-automatic-update-retrieval-installation-with-cron/)
 - RHEL8以降 - dnf-automatic - [How to enable automatic updates for RHEL/CentOS 8 - nixCraft](https://www.cyberciti.biz/faq/install-enable-automatic-updates-rhel-centos-8/)
 
-
 ## DNF Automatic
 
 [DNF Automatic — dnf latest documentation](https://dnf.readthedocs.io/en/latest/automatic.html)
-
 
 # yum-changelog plugin
 
 [yum-changelog(1) - Linux man page](https://linux.die.net/man/1/yum-changelog)
 
 インストール
+
 ```sh
 sudo yum install yum-changelog
 ```
 
 シンプルな使い方
+
 ```sh
 # さいきんの
 sudo yum changelog recent | less
@@ -1146,6 +1176,7 @@ sudo yum changelog openssl | less
 ```
 
 Debian/Ubuntuだと
+
 ```sh
 # 特定のパッケージ
 apt changelog openssl

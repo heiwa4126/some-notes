@@ -12,13 +12,13 @@ SES emailアイデンティティを作成してベリファイメールを送�
 
 参考: [E メールアドレスの検証 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/verify-email-addresses-procedure.html)
 
-
 で、バウンスは
 [Amazon SES での E メール送信のテスト \- Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-email-simulator.html)
 のアドレスのうち、
-* bounce
-* suppressionlist
-* complaint (やや特殊なメールがとどく)
+
+- bounce
+- suppressionlist
+- complaint (やや特殊なメールがとどく)
 
 がSENDERに届く(デフォルト設定の`ForwardingEnabled: true`)。
 
@@ -26,11 +26,11 @@ SES emailアイデンティティを作成してベリファイメールを送�
 
 [E メールで送信された Amazon SES 通知 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/monitor-sending-activity-using-notifications-email.html)
 
-
 デフォルト動作以外に
-* Bounce (エラーや不在)
-* Complaint (スパム扱いされた)
-* Delivery (うまく配送された)
+
+- Bounce (エラーや不在)
+- Complaint (スパム扱いされた)
+- Delivery (うまく配送された)
 
 についてSNSトピックを指定できる(Eメール以外にいろんな先に流せる)。
 
@@ -47,7 +47,6 @@ SES IDにひもづいた属性をリストする方は
 これでカスタマイズできるらしい。
 [カスタム検証 E メールテンプレートの使用 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-email-verify-address-custom.html)
 試す。
-
 
 # 調べる
 

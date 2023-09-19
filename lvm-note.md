@@ -24,6 +24,7 @@ LVMいろいろノート
 1. RHEL(or CentOSの)レスキューディスクから起動
 2. mountのオプションを選ぶ画面になったらALT+F2
 3. 以下のコマンドをアレンジして実行。
+
 ```
 loadkeys jp106
 vgscan
@@ -40,8 +41,8 @@ read-onlyマウントでもfsckできなかった。
 
 (未整理)
 
-
 vgのあるpvを広げるケース。つまり
+
 ```
 $ lsblk
 NAME                     MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
@@ -54,6 +55,7 @@ sda                        8:0    0   300G  0 disk
   └─VolGroup00-var_crash 253:2    0    16G  0 lvm  /var/crash
 sr0                       11:0    1  1024M  0 rom
 ```
+
 のような時に、
 
 1. sdaを拡張する
@@ -62,7 +64,6 @@ sr0                       11:0    1  1024M  0 rom
 というようなVMやCloudでよくあるケースを考える。
 
 何らかの方法でディスクを拡張し、OSもそれを認識した、という状態から。
-
 
 ```
 parted /dev/sda
@@ -113,7 +114,6 @@ GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力
 
 ```
 
-
 # LVMのコマンド
 
 頻繁に使わないし、
@@ -121,6 +121,7 @@ GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力
 メモ。
 
 一覧は
+
 ```sh
 rpm -ql lvm2 | grep bin/
 # or
@@ -139,19 +140,19 @@ dpkg -L lvm2 | grep bin/
 - [scripting - LVM2: Obtaining lv and vg names from path (volume group name and logical volume name) - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/34917/lvm2-obtaining-lv-and-vg-names-from-path-volume-group-name-and-logical-volume)
 - [lvdisplay command shows LV Status as NOT available - Red Hat Customer Portal](https://access.redhat.com/solutions/4497071)
 
-
 # LVM snapshotの練習
 
 参考: [論理ボリュームマネージャーの管理 Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/logical_volume_manager_administration/index)
 
-
 既存のボリュームでやるのは怖いので、新しいLVを作る。
 
 ちょっと空きのあるvgがあったので
+
 ```
 # vgdisplay --short
   "rootvg" <63.02 GiB [27.00 GiB used / <36.02 GiB free]
 ```
+
 ここに新しいLVを作る。
 
 ```sh
@@ -162,6 +163,7 @@ mount -t xfs /dev/rootvg/testlv /testv
 ```
 
 確認
+
 ```
 # df -h /testv
 Filesystem                 Size  Used Avail Use% Mounted on
@@ -169,17 +171,20 @@ Filesystem                 Size  Used Avail Use% Mounted on
 ```
 
 これになにか書く
+
 ```sh
 yes | head -100 > /testv/text1.txt
 wc -l /testv/text1.txt
 ```
 
 スナップショットを100MiB作ってみる(同じVGに空きがあることが必須)
+
 ```sh
 lvcreate -s -L 100M -n testlv-snap /dev/rootvg/testlv
 ```
 
 確認
+
 ```
 # lvs | grep testlv
   testlv      rootvg owi-aos---   1.00g
@@ -189,20 +194,23 @@ lvcreate -s -L 100M -n testlv-snap /dev/rootvg/testlv
 ```
 
 追記して、長さをしらべる
+
 ```
 yes n | head -100 >> /testv/text1.txt
 wc -l /testv/text1.txt
 ```
+
 200になるはず。
 
 dump(xfs_dump)なら、`/dev/rootvg/testlv-snap`をバックアップすればいい。
 ここはread-onlyでマウントしてみる。
 
-``` sh
+```sh
 mkdir -p /mnt/testlv-snap
 mount -t auto -o ro,nouuid /dev/rootvg/testlv-snap /mnt/testlv-snap
 wc -l /mnt/testlv-snap/text1.txt
 ```
+
 100になるはず。
 
 **注意:**
@@ -213,6 +221,7 @@ dmesgに `Filesystem has duplicate UUID`
 ## スナップショットから復元
 
 スナップショットを撮った時点に戻す。
+
 ```sh
 cd
 umount /mnt/testlv-snap /testv
@@ -221,6 +230,7 @@ lvconvert --merge /dev/rootvg/testlv-snap
 mount -t xfs /dev/rootvg/testlv /testv
 wc -l /testv/text1.txt
 ```
+
 100になるはず。
 スナップショットボリュームは自動的に削除される。
 
@@ -236,8 +246,8 @@ wc -l /testv/text1.txt
 
 参考: [4.4.7. スナップショットボリュームのマージ Red Hat Enterprise Linux 6 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/logical_volume_manager_administration/snapshot_merge)
 
-
 アンマウントしないでmergeするテスト
+
 ```
 # lvconvert --merge /dev/rootvg/testlv-snap
   Delaying merge since origin is open.
@@ -253,6 +263,7 @@ $ sudo -i
 ## スナップショットを削除
 
 もういちどスナップショットを作って、それを捨てるテスト
+
 ```sh
 mkdir -p /testv
 mount -t xfs /dev/rootvg/testlv /testv
@@ -266,6 +277,7 @@ wc -l /mnt/testlv-snap/text1.txt
 # 100になるはず
 umount /mnt/testlv-snap
 ```
+
 ここで
 
 ```
@@ -296,7 +308,6 @@ lvremove /dev/rootvg/testlv -y
   - スナップショットをエクステンドする。
   - or スナップショットをバックアップ後、マージするか捨てるか。
 
-
 # LVM snapshotの練習 part2
 
 VMでテスト
@@ -314,6 +325,7 @@ sda
 # pvdisplay | grep Free
   Free PE               0
 ```
+
 で空きがぜんぜん無い。
 
 sdaを1GB広げて
@@ -325,13 +337,15 @@ VMマネージャで広げて、
 `pvresize /dev/sda3`
 
 これで
+
 ```
 # vgdisplay VolGroup00 | grep Free
   Free  PE / Size       256 / 1.00 GiB
 ```
 
 root用にsnapshot領域を作成
-``` sh
+
+```sh
 lvcreate -s -l 100%FREE -n snap1 /dev/mapper/VolGroup00-root
 ls -lad /dev/mapper/VolGroup00-snap1
 ```
@@ -339,6 +353,7 @@ ls -lad /dev/mapper/VolGroup00-snap1
 この`/dev/mapper/VolGroup00-snap1`に対してdumpとかを行う。
 
 状態の確認は
+
 ```sh
 lvdisplay VolGroup00/snap1
 # or
@@ -346,6 +361,7 @@ lvdisplay /dev/mapper/VolGroup00-snap1
 ```
 
 特にディスク使用量は
+
 ```sh
 lvdisplay VolGroup00/snap1 | fgrep 'Allocated to snapshot'
 ```
@@ -354,11 +370,13 @@ lvdisplay VolGroup00/snap1 | fgrep 'Allocated to snapshot'
 
 バックアップが終わったら
 スナップショット領域を解放
+
 ```
 lvremove VolGroup00/snap1 -y
 ```
 
 リストアの参考:
+
 - [How to Take 'Snapshot of Logical Volume and Restore' in LVM - Part III](https://www.tecmint.com/take-snapshot-of-logical-volume-and-restore-in-lvm/)
 - [10.3. スナップショットボリュームのマージ Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/proc_merging-snapshot-volumes-snapshot-volumes)
 
@@ -384,20 +402,22 @@ Filesystem                 Size  Used Avail Use% Mounted on
 ```
 
 最初のファイルを作る
+
 ```
 cd /mnt/test
 yes test | head > test.txt
 ```
 
 スナップショット作成
+
 ```
 lvcreate -s -L 10k -n snap1 /dev/mapper/rootvg-testlv
 mkdir /mnt/snap1
 mount -t ext3 /dev/mapper/rootvg-snap1 /mnt/snap1
 ```
 
-
 で、
+
 ```
 # df -h /mnt/test /mnt/snap1
 Filesystem                 Size  Used Avail Use% Mounted on
@@ -424,6 +444,7 @@ drwx------ 2 root root 16384  2月  9 07:07 lost+found
 ```
 
 /mnt/testで、ファイルを追記してみる
+
 ```
 # yes test | head >> /mnt/test/test.txt
 # ls -la /mnt/test/test.txt /mnt/snap1/test.txt
@@ -433,9 +454,11 @@ drwx------ 2 root root 16384  2月  9 07:07 lost+found
 # lvdisplay | fgrep "Allocated to snapshot"
 Allocated to snapshot  0.88%
 ```
+
 いいようですね。
 
 では/mnt/testの方をdisk fullにしてみる。
+
 ```
 # yes test >> /mnt/test/test.txt
 # (しばらくして)
@@ -453,6 +476,7 @@ ls: /mnt/snap1/test.txt にアクセスできません: そのようなファイ
 ```
 
 syslogの出力は
+
 ```
 Feb  9 07:21:06 r7 kernel: device-mapper: snapshots: Invalidating snapshot: Unable to allocate exception.
 Feb  9 07:21:06 r7 lvm[9396]: WARNING: Snapshot rootvg-snap1 changed state to: Invalid and should be removed.
@@ -463,25 +487,22 @@ Feb  9 07:21:18 r7 dmeventd[9396]: No longer monitoring snapshot rootvg-snap1.
 ```
 
 つまり
+
 - LVMスナップショットがあふれると、スナップショットはアンマウントされる
 - LVリストからは削除されないけど、再マウントもなにも出来ない
 
 ということらしい。
 
-
-
 参考:
 [LVMでスナップショットの作成と状態の復元 - Qiita](https://qiita.com/TsutomuNakamura/items/a68377952d07397db448#%E3%82%B9%E3%83%8A%E3%83%83%E3%83%97%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%E3%81%8C%E6%BA%A2%E3%82%8C%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9)
 
-
 テストが終わったらあとしまつ
+
 ```
 umount /mnt/test
 lvremove rootvg/snap1
 lvremove rootvg/testlv
 ```
-
-
 
 # lvsコマンドのattrフィールド
 
@@ -493,7 +514,6 @@ lvremove rootvg/testlv
 
 コピペするには長すぎるので↑のリンクを参照。
 
-
 # 新しいディスクメモ
 
 メモなのでまとまってません。
@@ -502,6 +522,7 @@ lvremove rootvg/testlv
 cfdisk/cgdiskでパーティション切ってLVM(8E)にする。
 
 テスト用LV`root`を作る。
+
 ```sh
 pvcreate /dev/sdc1
 vgcreate VolGroup00 /dev/sdc1
@@ -516,6 +537,7 @@ ls /mnt/x
 ```
 
 VolGroup00に空きはない。
+
 ```
 # vgs
   VG         #PV #LV #SN Attr   VSize   VFree
@@ -526,12 +548,14 @@ VolGroup00に空きはない。
 (普通こういうことはしません。LVM的にはvgextendでVGにPVを追加するのが正しい)
 
 VolGroup00を拡張する手順。拡張分全部割り振る。
+
 ```sh
 echo -e "p\nresizepart 1 100%\np\nq\n" | parted /dev/sdc
 pvresize /dev/sdc1
 ```
 
 VolGroup00に空きが出来た。
+
 ```
 # vgs
   VG         #PV #LV #SN Attr   VSize   VFree
@@ -543,6 +567,7 @@ VolGroup00に空きが出来た。
 ホストにディスクを追加して、gvに追加、rootを増やす。
 
 初期状態
+
 ```
 # lsblk -f
 NAME                     FSTYPE      LABEL UUID                                   MOUNTPOINT

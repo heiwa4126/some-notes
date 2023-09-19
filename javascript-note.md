@@ -4,7 +4,6 @@
 
 TypeScript使えない状況に便利。
 
-
 他:
 
 > tsconfig.jsonで型チェックをデフォルト有効に
@@ -14,7 +13,7 @@ TypeScript使えない状況に便利。
 - [@ ts\-checkを付けると、VS Codeが普通のJavaScriptもTypeScript扱いで見てくれるんだって。 \| Ginpen\.com](https://ginpen.com/2018/08/17/vs-code-reads-js-as-ts/)
 - [TypeScript: Documentation \- JS Projects Utilizing TypeScript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html)
 - [もうTypeScriptの補助輪を外そう 明日は//@ts\-checkを使う](https://zenn.dev/asama/articles/0c66573e488b22)
-- 
+-
 
 # VSCodeで補完
 
@@ -24,8 +23,6 @@ TypeScript使えない状況で。
 
 で、
 [Visual Studio Codeで依存モジュールの型定義を使いたい(JavascriptのNode.jsで) - Qiita](https://qiita.com/dbgso/items/2ad42139635e45ac150d)
-
-
 
 # 分割代入(非構造化) Destructuring assignment
 

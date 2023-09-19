@@ -1,4 +1,3 @@
-
 Dissimilar Disk Restore (DDR)
 Bare Metal Restore で、元のコンピュータとはディスク構成が異なるコンピュータへ復元する機能。
 

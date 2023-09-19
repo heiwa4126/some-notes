@@ -251,8 +251,8 @@ template の方は「ただし、新しいコンポーネントインスタン�
 const getUser = async (id: string) => {
   const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
     next: {
-      revalidate: 60,
-    },
+      revalidate: 60
+    }
   });
   const user: User = await response.json();
 

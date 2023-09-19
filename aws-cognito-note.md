@@ -10,6 +10,7 @@ aws cognito-idp sign-up \
   --user-attributes '[{"Name": "email", "Value": "<email-address>"}]' \
   --user-pool-id <user-pool-id>
 ```
+
 (user-attributesは必須項目にあわせて追加)
 
 で、これだとメールが「認証済み」にならない(email_verifiedがいっぺんに設定できない)ので、
@@ -25,9 +26,8 @@ sign-up はアプリケーションクライアントIDが引数なのに、
 admin-update-user-attributes はプールIDが引数。
 変だけど本当。
 
-* [sign-up — AWS CLI 2.1.29 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/2.1.29/reference/cognito-idp/sign-up.html)
-* [admin-update-user-attributes — AWS CLI 2.9.19 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/admin-update-user-attributes.html)
-
+- [sign-up — AWS CLI 2.1.29 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/2.1.29/reference/cognito-idp/sign-up.html)
+- [admin-update-user-attributes — AWS CLI 2.9.19 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cognito-idp/admin-update-user-attributes.html)
 
 # ExplicitAuthFlows
 
@@ -49,34 +49,32 @@ ALLOW_CUSTOM_AUTH
 有効な値は以下の通り。
 
 - ALLOW_ADMIN_USER_PASSWORD_AUTH :
-管理者ベースのユーザーパスワード認証フローADMIN_USER_PASSWORD_AUTHを使用可能にします。この設定は、昔 **ADMIN_NO_SRP_AUTH** と言われていたものと同じです。
-この認証フローでは、アプリは、パスワードを安全に送信するためにセキュアリモートパスワード(SRP)プロトコルを使用する代わりに、
-リクエスト内でAmazon Cognitoにユーザー名とパスワードを渡します。
+  管理者ベースのユーザーパスワード認証フローADMIN_USER_PASSWORD_AUTHを使用可能にします。この設定は、昔 **ADMIN_NO_SRP_AUTH** と言われていたものと同じです。
+  この認証フローでは、アプリは、パスワードを安全に送信するためにセキュアリモートパスワード(SRP)プロトコルを使用する代わりに、
+  リクエスト内でAmazon Cognitoにユーザー名とパスワードを渡します。
 - ALLOW_CUSTOM_AUTH :
-Lambdaトリガーベースの認証を有効にします。
+  Lambdaトリガーベースの認証を有効にします。
 - ALLOW_USER_PASSWORD_AUTH :
-ユーザーパスワードベースの認証を有効にします。
-このフローでは、Amazon Cognitoは、SRPプロトコルを使用してパスワードを検証する代わりに、リクエストでパスワードを受信します。
+  ユーザーパスワードベースの認証を有効にします。
+  このフローでは、Amazon Cognitoは、SRPプロトコルを使用してパスワードを検証する代わりに、リクエストでパスワードを受信します。
 - ALLOW_USER_SRP_AUTH :
-SRP ベースの認証を有効にします。
+  SRP ベースの認証を有効にします。
 - ALLOW_REFRESH_TOKEN_AUTH :
-authflowがトークンをリフレッシュすることを有効にします。
+  authflowがトークンをリフレッシュすることを有効にします。
 
 環境によっては、
-ADMIN_NO_SRP_AUTH、
+ADMIN*NO_SRP_AUTH、
 CUSTOM_AUTH_FLOW_ONLY、
 またはUSER_PASSWORD_AUTH
 という値が表示されることがあります。
 これらのレガシーな ExplicitAuthFlows の値を、
-ALLOW_USER_SRP_AUTHのようにALLOW_で始まる値と同時にユーザープールクライアントに割り当てることはできません。
-
+ALLOW_USER_SRP_AUTHのようにALLOW*で始まる値と同時にユーザープールクライアントに割り当てることはできません。
 
 ## セキュアリモートパスワード(SRP)プロトコル
 
 > Secure Remote Password (SRP) プロトコルは Internet Standards Working Group Request For Comments 2945 (RFC2945) で記述された公開鍵交換のハンドシェイクの実装です。
 
 [第13章 セキュアリモートパスワードプロトコル JBoss Enterprise Application Platform 5 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/jboss_enterprise_application_platform/5/html/security_guide/chap-secure_remote_password_protocol)
-
 
 # AWS CognitoをOAuthで使うときのスコープメモ
 
@@ -88,7 +86,6 @@ ALLOW_USER_SRP_AUTHのようにALLOW_で始まる値と同時にユーザープ�
 - Googleの場合 - [OAuth 2.0 Scopes for Google APIs  |  Authorization  |  Google Developers](https://developers.google.com/identity/protocols/oauth2/scopes) たくさんあるなあ。このURLっぽいのがスコープ。
 - GitHub - [Scopes for OAuth Apps - GitHub Docs](https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps) これもたくさんある。
 - それ以外では https://oauth.net/2/scope/ からリンクが。
-
 
 認可サーバ(Cognitoのuser pool)側で許可するスコープをスペースで区切って設定。
 リソースオーナーの認可リクエストでほしいスコープをスペースで区切って要求。
@@ -105,6 +102,7 @@ ChatGPTにざっくり書いてもらったAWS SDK for Javascript v3での例。
 id tokenから、session token(とその他)を得て、S3バケットからで
 
 (実際に動かしてません。かなり間違ってる)
+
 ```javascript
 const { S3Client } = require('@aws-sdk/client-s3');
 const { StsClient } = require('@aws-sdk/client-sts');
@@ -114,8 +112,8 @@ const sts = new StsClient({
   region: '<region>',
   credentials: {
     accessKeyId: '<accessKeyId>',
-    secretAccessKey: '<secretAccessKey>',
-  },
+    secretAccessKey: '<secretAccessKey>'
+  }
 });
 
 // Assume a role with the web identity token
@@ -124,7 +122,7 @@ const assumeRoleWithWebIdentity = async () => {
     RoleArn: '<roleArn>',
     RoleSessionName: '<roleSessionName>',
     WebIdentityToken: '<webIdentityToken>',
-    DurationSeconds: 3600,
+    DurationSeconds: 3600
   };
 
   try {
@@ -139,15 +137,15 @@ const assumeRoleWithWebIdentity = async () => {
       credentials: {
         accessKeyId: accessKeyId,
         secretAccessKey: secretAccessKey,
-        sessionToken: sessionToken,
-      },
+        sessionToken: sessionToken
+      }
     });
 
     // Read an object from S3
     const result = await s3
       .getObject({
         Bucket: '<bucketName>',
-        Key: '<objectKey>',
+        Key: '<objectKey>'
       })
       .promise();
 
@@ -161,6 +159,7 @@ assumeRoleWithWebIdentity();
 ```
 
 AWS CLIだと
+
 ```bash
 aws sts assume-role-with-web-identity \
     --role-arn <ARN of the IAM Role> \

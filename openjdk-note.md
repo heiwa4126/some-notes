@@ -35,7 +35,6 @@ Wikipedia:
 - [OpenJDK - Wikipedia](https://en.wikipedia.org/wiki/OpenJDK)
 - [OpenJDK - ウィキペディア](https://ja.wikipedia.org/wiki/OpenJDK)
 
-
 # OpenJDKの概要
 
 OpenJDKはオープンソースとして配布(ソースのみ提供。
@@ -60,7 +59,6 @@ OpenJDKはオープンソース([GPLv2+CE](http://openjdk.java.net/legal/gplv2+c
 バイナリのビルド&配布は誰がやってもいいし、
 Oracleのサポート終了後、フォークしてバックポートしてもかまわない。
 
-
 ## JREの廃止
 
 Oracleは
@@ -71,7 +69,7 @@ Java Runtime Environment (JRE)の配布を廃止する。その理由は以下�
 > JavaアプリケーションはシステムにインストールされたJREを使って実行されていた。
 
 > Javaの脆弱性問題から最新版のJREに移行する必要が生じた際、ユーザー側はアプリケーション・ベンダーが最新版を推奨していないために移行できず、
-一方でアプリケーション・ベンダー側は多くのユーザーが旧バージョンを利用しており、サポートの手間を考慮すると簡単には移行できないといったジレンマが生じるケースがある。
+> 一方でアプリケーション・ベンダー側は多くのユーザーが旧バージョンを利用しており、サポートの手間を考慮すると簡単には移行できないといったジレンマが生じるケースがある。
 
 > Java SE 8までのJava仕様ではJREのサブセットを作ることはできず、アプリケーションが使わないライブラリも含めたフルセットの巨大なJREをバンドルする必要があった。
 
@@ -80,12 +78,11 @@ Java Runtime Environment (JRE)の配布を廃止する。その理由は以下�
 OracleはOracleJavaでもOracle OepnJDKでもJREを廃止するが、
 Oracle以外でOpenJDKでJRE相当のパッケージを出しているディストリビューターはある。
 
-
 ## Java8
 
 > 商用ユーザー向けの最後の無償バージョンはJava 8 Update 201(8u201)とJava 8 Update 202(8u202)です。
-このバージョンは商用ユーザーであっても無償で使用し続けることができます。
-ただし、今後脆弱性を修正したバージョンの無償提供は行われません。
+> このバージョンは商用ユーザーであっても無償で使用し続けることができます。
+> ただし、今後脆弱性を修正したバージョンの無償提供は行われません。
 
 ([Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)から引用)
 
@@ -94,10 +91,8 @@ Java8でも2019年4月16日以降のリリース(8u211,8u212以降)は、ライ�
 正確には「2019年1月が商用無償の最後(Free updates superseded / ended (by Oracle) ... Ends January 2019 for commercial use)」。
 8u201,202は1月15日リリース。
 
-
 - [JDK 8 Update Release Notes](https://www.oracle.com/technetwork/java/javase/8u-relnotes-2225394.html)
 - [Java™ SE Development Kit 8, Update 212 Release Notes](https://www.oracle.com/technetwork/java/javase/8u212-relnotes-5292913.html) 新元号対応 + セキュリティパッチ
-
 
 # Oracleの提供するOpenJDKのバイナリ
 
@@ -145,7 +140,6 @@ Oracleのアカウントが必要(free)
 - [Oracle JDK 8 の無償アップデート終了後の選択肢は何があるのか | そるでぶろぐ](https://devlog.arksystems.co.jp/2018/09/21/5953/)
 - [Oracle Java 更新版公開、ただしライセンス変更に注意。抵触する場合はOpenJDKへの移行を - 特に重要なセキュリティ欠陥・ウイルス情報](https://www.st.ryukoku.ac.jp/blog/vuln/01058)
 
-
 ## Microsoft Build of OpenJDK
 
 - [Microsoft Build of OpenJDK](https://msopenjdk.azurewebsites.net/)
@@ -157,7 +151,6 @@ Oracleのアカウントが必要(free)
 
 - [Microsoft Build of OpenJDK](https://www.microsoft.com/openjdk)
 - [「Microsoft Build of OpenJDK」が一般公開 ～無償で「Java」の長期サポートを提供 \- 窓の杜](https://forest.watch.impress.co.jp/docs/news/1326994.html)
-
 
 ## AdoptOpenJDKによる配布
 
@@ -171,7 +164,6 @@ Oracleのアカウントが必要(free)
 - [AdoptOpenJDK - Open source, prebuilt OpenJDK binaries](https://adoptopenjdk.net/)
 - [コミュニティのOpenJDKビルドファームが稼働](https://www.infoq.com/jp/news/2018/04/AdoptOpenJDKMar18)
 
-
 ## Azul Systemsによる配布 (Zulu)
 
 - JavaFX(OpenFX)の配布がある(ZuluFX)
@@ -183,7 +175,6 @@ Oracleのアカウントが必要(free)
 MicrosoftはAzure上ではZuluを推していく模様。
 
 - [Microsoft and Azul Systems bring free Java LTS support to Azure | Blog | Microsoft Azure](https://azure.microsoft.com/en-us/blog/microsoft-and-azul-systems-bring-free-java-lts-support-to-azure/)
-
 
 ## Red Hatによる配布
 
@@ -200,7 +191,6 @@ MicrosoftはAzure上ではZuluを推していく模様。
 - [Red Hat、Windows版OpenJDKの長期商用サポート提供を発表 － Publickey](https://www.publickey1.jp/blog/18/red_hatwindowsopenjdklts.html)
 - [Red HatのOpenJDKのサポート - nekop's blog](https://nekop.hatenablog.com/entry/2018/09/18/115712)
 
-
 ## Amazonによる配布 (Amazon Corretto)
 
 - OpenJDK 8,11をLTS
@@ -214,7 +204,6 @@ MicrosoftはAzure上ではZuluを推していく模様。
 - [Amazon Corretto Documentation](https://docs.aws.amazon.com/corretto/index.html)
 - [Amazon Corretto 8 とは - Amazon Corretto 8](https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-8-ug/what-is-corretto-8.html)
 - [What Is Amazon Corretto 11? - Amazon Corretto](https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-11-ug/what-is-corretto-11.html)
-
 
 ## その他の配布
 

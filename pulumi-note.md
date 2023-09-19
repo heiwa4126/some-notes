@@ -4,10 +4,9 @@
 - Terraformのbackendにあたるのが Pulumiのweb(Pulumi Cloud Console)。GitHubActionみたいなUIがついてる
   - Local Stateもある。
 - Pulumi Cloud Consoleをチームで使うなら有料 [Pricing | Pulumi](https://www.pulumi.com/pricing/)
-- ~/.aws/credentials とかは見てくれない。環境変数をexport または 
+- ~/.aws/credentials とかは見てくれない。環境変数をexport または
 - Terraform同様GoLangで書かれてる。インストールが簡単。
 - すごい「こなれてる」印象。
-
 
 # インストール
 
@@ -18,6 +17,7 @@ curl -fsSL https://get.pulumi.com | sh
 `~/.pulumi/bin`にインストールされる。
 
 ~/.profile (かそれに該当するあれに)
+
 ```bash
 # Pulumi
 if [ -d "$HOME/.pulumi/bin" ] ; then
@@ -32,9 +32,11 @@ fi
 ```bash
 ~/.pulumi/bin/pulumi gen-completion bash > ~/.pulumi/bash_completion
 ```
+
 して
 
 ~/.profile (かそれに該当するあれに)
+
 ```bash
 # Pulumi completion
 if [ -f "$HOME/.pulumi/bash_completion" ] ; then
@@ -52,19 +54,16 @@ CDKと同じく「最終的には宣言型になるのだが、その定義を�
 
 これはよい - [Terraform と Pulumiを比較する | apps-gcp.com](https://www.apps-gcp.com/terraform-pulumi-comparison/)
 
-
 # メモ
 
 - dev
 - qa (Quality Assurance) QA環境 検証環境
-- prod 
-
+- prod
 
 # ハングアップ
 
 pulumi new aws-goで作ったプロジェクトはpulumi upで死ぬ。
 というか「すさまじく重い」だけなんだろうけど。
-
 
 ```
    1817 ?        Ds     0:03 tmux
@@ -103,10 +102,10 @@ serId.go /home/heiwa/go/pkg/mod/github.com/pulumi/pulumi-aws/sdk/v5@v5.7.2/go/aw
 [Get Started with AWS | Pulumi](https://www.pulumi.com/docs/get-started/aws/)
 
 ```bash
-export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID> 
+export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
 export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 mkdir quickstart && cd quickstart
-pulumi new aws-python 
+pulumi new aws-python
 # リージョンとか聞かれる。
 # 特定のwwwページにアクセスするよう言われる。githubでログインした。
 # venvを自動で作りpipも勝手にやる。
@@ -118,6 +117,7 @@ pulumi up
 このへんまちがい
 
 gitにはvenvは入ってないのでクローン先では
+
 ```bash
 git clone xxxxx
 python3 -m venv ./venv
@@ -128,9 +128,11 @@ pip install -r requirements.txt
 しないとダメだ。このへんが「既存の言語が使える」の欠点。
 
 あと
+
 ```bash
 pulumi config
 ```
+
 でdev選ぶ。設定は `~/.pulumi/workspaces/`以下に保存される。
 
 このへんからただしい手順
@@ -151,12 +153,7 @@ pulumi up  # pip install -r requirements.txtは自動で行う(手動でもい�
 
 この手順も不要なのがあって、venvのactivateはこのあと開発するなら必要。デプロイだけなら不要
 
-
-
 [Pulumiを使用する上での実践的なTips | DevelopersIO](https://dev.classmethod.jp/articles/pulumi-tips/)
-
-
-
 
 # Pulumiのサンプル
 
@@ -175,10 +172,10 @@ pulumi stack init dev   # スタック名は自由に選んで!
 ## プロジェクト名は Pulumi.yaml に書かれたものになります
 
 # AWSのIAMアカウントを環境変数で設定
-export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID> 
+export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
 export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 ## または
-pulumi config set aws:profile default 
+pulumi config set aws:profile default
 ##↑ ~/.aws/credentials,configのdefaultプロファイルが使われる(~/.aws/*以外にもできる)。
 
 # 環境設定
@@ -192,19 +189,20 @@ curl $(pulumi stack output apigateway-rest-endpoint)/test
 ```
 
 このあと開発するなら
+
 ```bash
 . ./venv/bin/activate
 ```
+
 でpythonのvenv環境に入って `__main__.py` をいじりましょう。
 
 サンプルを消す場合は
+
 ```bash
 pulumi destroy
 ```
+
 で。
-
-
-
 
 # Pulumiのstack
 
@@ -227,27 +225,31 @@ pulumi config #list
 pulumi config set <key> <value>
 ```
 
-
 # Pulumiでマルチアカウントや異なるリージョン
 
 ```typescript
-    const eastRegion = new aws.Provider("east", {
-        profile: aws.config.profile,
-        region: "us-east-1", // Per AWS, ACM certificate must be in the us-east-1 region.
-    });
+const eastRegion = new aws.Provider('east', {
+  profile: aws.config.profile,
+  region: 'us-east-1' // Per AWS, ACM certificate must be in the us-east-1 region.
+});
 ```
+
 にして
 
 ```typescript
-    const certificateValidation = new aws.acm.CertificateValidation("certificateValidation", {
-        certificateArn: certificate.arn,
-        validationRecordFqdns: validationRecordFqdns,
-    }, { provider: eastRegion });
+const certificateValidation = new aws.acm.CertificateValidation(
+  'certificateValidation',
+  {
+    certificateArn: certificate.arn,
+    validationRecordFqdns: validationRecordFqdns
+  },
+  { provider: eastRegion }
+);
 ```
+
 みたいにいけばできるらしい。
 
 [examples/index.ts at master · pulumi/examples](https://github.com/pulumi/examples/blob/master/aws-ts-static-website/index.ts)
-
 
 # TerraformのDataやimportに近いもの
 

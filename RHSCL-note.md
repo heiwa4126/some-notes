@@ -4,7 +4,6 @@ RHSCLのPHP7.3はPHP本家がサポート終わったあとでも2024年6月ま�
 
 [Red Hat Enterprise Linux 7 の Red Hat Software Collections 製品ライフサイクル - Red Hat Customer Portal](https://access.redhat.com/ja/node/4654951)
 
-
 ただし、mod_phpじゃなくてhttp24の.soになる()。Red Hat的にはphp-fpmを使うのを勧めている。
 [How to configure Apache httpd to use PHP from RHSCL - Red Hat Customer Portal](https://access.redhat.com/solutions/2662201)
 
@@ -21,6 +20,7 @@ composerを使う場合
 [http://blog.derakkilgo.com/2019/05/29/using-php-composer-with-redhat-software-collections/ php composer with RedHat Software Collections | I sketch in code]
 
 こんなラッパーが必要
+
 ```sh
 #! /bin/bash
 

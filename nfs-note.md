@@ -14,7 +14,7 @@ RHEL7でNFSサーバを動かしたときのメモ
 
 # 準備
 
-``` bash
+```bash
 sudo yum install nfs-utils
 sudo systemctl start nfs
 ```
@@ -22,30 +22,34 @@ sudo systemctl start nfs
 RHEL7.1以降だとこれで動く。
 nfs-lockも自動で上がる(参照 : [8.6. NFS の起動と停止 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/storage_administration_guide/s1-nfs-start))。
 
-
 もちろん設定が必要なので
-``` bash
+
+```bash
 sudo systemctl status nfs
 ```
+
 して、エラーが出てないようなら
-``` bash
+
+```bash
 sudo systemctl stop nfs
 ```
+
 しておく。
 
 # 設定
 
-``` bash
+```bash
 sudo mkdir /home/nfs
 sudo echo "/home/nfs/ *(rw,async,no_root_squash)" >> /etc/exports
 ```
-接続確認用のザルな設定なので、あとで見直すこと。
 
+接続確認用のザルな設定なので、あとで見直すこと。
 
 # クライアント側
 
 RHEL7系
-``` bash
+
+```bash
 sudo yum install nfs-utils
 sudo make /mnt/nfs
 sudo mount -t nfs -o nfsvers=4.1 111.222.333.444:/home/nfs/ /mnt/nfs
@@ -73,7 +77,6 @@ NFSサーバ側
 - `nfsstat -m` - 現在マウントされているNFSのリスト
 - `showmount -e <nfs-server>` - NFSv3がサーバで動いていればexportの一覧が見れる。4なら`mount server:/ mountpoint`
 
-
 # 参考
 
 - [Stray Penguin - Linux Memo (NFSv4)](http://www.asahi-net.or.jp/~aa4t-nngk/nfsv4.html)
@@ -82,16 +85,16 @@ NFSサーバ側
 - [【iStorage HS】NFSが使用するポートについて](http://info.ace.comp.nec.co.jp/View.aspx?NoClear=on&id=3150110310)
 - [Stray Penguin - Linux Memo (NFS)](http://www.asahi-net.or.jp/~aa4t-nngk/nfs.html)
 
-
 # NFSv3でつなぐ
 
 いまどきNFSv3なんてあるのか、と思ってたら結構へんなアプラアンスがv3だったりして辛い。
 
-
 例) クライアント側で
+
 ```
 mount -t nfs -o nfsvers=3 s1:/nas /mnt/nfs/nas
 ```
+
 (`nfsvers=3`のかわりに`vers=3`でもOK。man nfs(5) 参照)
 
 systemdがちゃんとしていれば
@@ -111,6 +114,7 @@ CD boot (RHELやCentのDVDでrescueモード)などの場合はnfslockがない�
 その場合は`nolock`オプションをつける。
 
 例)
+
 ```
 mount -t nfs -o nfsvers=3,nolock 192.168.56.777:/nas /mnt/nfs
 ```
@@ -127,18 +131,17 @@ nfslockがないとNFSv3は結構遅いので、
 がいいとおもう。
 `systemctl rescue`は動いたり動かなかったりする(動く場合はこっちが楽)
 
-
-
-
 # NFSv3, v4だけの設定
 
 Ubuntuでの例:
 [Serve Either NFSv3 or NFSv4 From Ubuntu - Will Haley](https://willhaley.com/blog/ubuntu-nfs-server/)
 
 やってみたけど
+
 ```
 RPCMOUNTDOPTS="--manage-gids --no-nfs-version 4"
 ```
+
 でv3だけにはできなかった。
 
 [mount - Disable NFSv4 (server) on Debian, allow NFSv3 - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/205403/disable-nfsv4-server-on-debian-allow-nfsv3)
@@ -147,6 +150,5 @@ RPCMOUNTDOPTS="--manage-gids --no-nfs-version 4"
 RPCNFSDCOUNT="8 --no-nfs-version 4"
 RPCMOUNTDOPTS="--manage-gids"
 ```
+
 でv3だけになった。
-
-

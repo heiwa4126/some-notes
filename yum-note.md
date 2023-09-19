@@ -9,7 +9,7 @@
 
 を目標とする。
 
-``` bash
+```bash
 LANG=C
 yum --showduplicate --disableexcludes=all list \
  | sed -e "s/[[:space:]]\+/\t/g" | sed -e ':loop; N; $!b loop; ;s/\n[[:space:]]/\t/g' \
@@ -18,6 +18,7 @@ yum --showduplicate --disableexcludes=all list \
 ```
 
 この変なコードの説明:
+
 - yum3の幅は80文字でハードコーディングされていて、変な折り返しをする。
 - yum3のヘッダ出力は止められない。
 - uniqしないとinstalledと全体で2行出る。
@@ -32,6 +33,7 @@ yum --showduplicate --disableexcludes=all list \
 か
 `subscription-manager release --unset`
 で、
+
 - yum.confにexclude=がなくて
 - /etc/yum/vars/releaseverがなくて
 - redhat-releaseが固定されてない

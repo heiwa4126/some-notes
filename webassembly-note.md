@@ -1,6 +1,5 @@
 [I want to… \- WebAssembly](https://webassembly.org/getting-started/developers-guide/)
 
-
 # Golang
 
 とりあえず以下のチュートリアルやってみた
@@ -18,8 +17,6 @@ goexecがインストールできない上にcloneしてbuildしても動かな�
 最初のデモはconsole.logに出るだけで、まああまり面白くない。
 やっぱDOM操作したいよね。-> [js package - syscall/js - Go Packages](https://pkg.go.dev/syscall/js)
 
-
-
 goexecのかわりにgoevalが使える。
 [dolmen-go/goeval: Run Go snippets instantly from the command-line](https://github.com/dolmen-go/goeval)
 
@@ -29,10 +26,10 @@ goeval 'fmt.Println("Hello, world!")'
 ```
 
 今回は
+
 ```bash
 goeval 'http.ListenAndServe(":8080", http.FileServer(http.Dir(".")))'
 ```
-
 
 # C
 
@@ -47,7 +44,6 @@ sudo apt install emscripten -y
 
 日本語:
 [C/C++ から WebAssembly へのコンパイル - WebAssembly | MDN](https://developer.mozilla.org/ja/docs/WebAssembly/C_to_wasm)
-
 
 # Rust
 
@@ -65,7 +61,6 @@ https://rustwasm.github.io/docs/book/game-of-life/setup.html
 
 [vite \(react\.ts\) で wasmを動かす](https://zenn.dev/pilefort/articles/fd90d9f6a426f9)
 これやってみる。なるほど出来た。
-
 
 # WebAssembly
 
@@ -90,7 +85,6 @@ DOMとかそのほかI/Oなど直接操作できない(永遠にできない)。
 - [WebAssemblyハンズオン: 実際に動かして基礎を学ぶ（翻訳）｜TechRacho by BPS株式会社](https://techracho.bpsinc.jp/hachi8833/2020_11_02/97774)
 - [Hands-on WebAssembly: Try the basics—Martian Chronicles, Evil Martians’ team blog](https://evilmartians.com/chronicles/hands-on-webassembly-try-the-basics)
 
-
 # Emscripten と Binaryen と AssemblyScript
 
 > Binaryenは、WebAssemblyのためのコンパイラおよびツールチェイン基盤ライブラリで、C++で書かれています。WebAssemblyへのコンパイルを簡単、高速、かつ効果的にすることを目的としています。
@@ -105,11 +99,10 @@ DOMとかそのほかI/Oなど直接操作できない(永遠にできない)。
 
 [Releases · AssemblyScript/assemblyscript](https://github.com/AssemblyScript/assemblyscript)
 
-
 # AssemblyScript
 
 - [Getting started | The AssemblyScript Book](https://www.assemblyscript.org/getting-started.html) - あんまり親切じゃないチュートリアル
- 
+
 なんか「AssemblyScriptやってみた」系の記事はどれも途中が
 うにゃうにゃ
 ってなってるような気がする。

@@ -12,6 +12,7 @@ NTPサーバになるつもりがないならこれで十分。
 複数サーバは` `で区切って。
 
 設定後
+
 ```sh
 sudo systemctl restart systemd-timesyncd.service
 sudo systemctl status systemd-timesyncd.service
@@ -25,10 +26,12 @@ timedatectl については
 を参照。
 
 chronycやntpqに相当するものはないみたい。←嘘でした。
+
 ```bash
 timedatectl timesync-status
 timedatectl show-timesync
 ```
+
 がそれ。
 
 timedatectlはsystemd-timesyncdのUIも兼ねてる。違う機能が1個のコマンドに入ってるのでややこしい。
@@ -36,19 +39,22 @@ timedatectlはsystemd-timesyncdのUIも兼ねてる。違う機能が1個のコ�
 [timedatectl](https://www.freedesktop.org/software/systemd/man/timedatectl.html)
 
 例えば、systemd-timesyncdが動いていないと
+
 ```bash
 timedatectl timesync-status
 timedatectl show-timesync
 ```
+
 はエラーになる。
 
 ```bash
 timedatectl set-ntp false
 ```
+
 はntpd, chronyd, systemd-timesyncd を停止する。
 これらの.serviceがntpであるかどうかはどうやってわかる? time-set.target time-sync.target
 
-systemd-time*.service 2つあるね。これは?
+systemd-time\*.service 2つあるね。これは?
 
 - systemd-timedated.service - [systemd-timedated.service](https://www.freedesktop.org/software/systemd/man/systemd-timedated.service.html)
 - systemd-timesyncd.service - [systemd-timesyncd.service](https://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html)

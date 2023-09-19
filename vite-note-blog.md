@@ -3,6 +3,7 @@
 評判の 次世代フロントエンドツール [Vite](https://ja.vitejs.dev/) をちょっとだけ使ってみました。
 
 テストした環境:
+
 - node v18.12.1
 - Windows 11 (x86_64)
 - Windows Terminal から Powershll 7.3で
@@ -18,6 +19,7 @@ cd my-react-app
 npm install
 npm run dev
 ```
+
 で、http://127.0.0.1:5173/ をブラウザで開く。
 
 ブラウザを開いたままvscodeでコードを修正すると、自動でリロードされる(HMR)。
@@ -29,38 +31,41 @@ npm run dev
 ```powershell
 npm run build
 ```
+
 で、./dist/の下に出力される。
 
 これを
+
 ```powershell
 npm run preview
 ```
+
 http://127.0.0.1:4173/ をブラウザで開く。
 
 または [http-server](https://www.npmjs.com/package/http-server)を使って、
+
 ```powershell
 npx http-server dist
 ```
-http://127.0.0.1:8080/ をブラウザで開く、とかでもOK。
 
+http://127.0.0.1:8080/ をブラウザで開く、とかでもOK。
 
 # 感想
 
 - **異常に早い**。create-react-app より1000倍ぐらい早いような気がする。
 - WebpackやBabelやtscを入れる手間がぜんぜん要らない。そういえばReactも明示的に入れてない。
 
-
 # その他参考リンク
 
 - [Vite+React+Amplifyの初期設定方法！](https://zenn.dev/akira_abe/articles/20221012-vite-react-amplify)
 - [ViteのプロジェクトにAmplifyの設定を適用する方法 - Qiita](https://qiita.com/maejima_f/items/0188adbcc8f2af564153)
-
 
 # DenoでVite
 
 Deno 1.28から。
 
 参考:
+
 - [denoland/deno-vue-example: An example of using Vue with Deno.](https://github.com/denoland/deno-vue-example)
 - [bartlomieju/vite-deno-example: Example of using Vite with Deno](https://github.com/bartlomieju/vite-deno-example)
 

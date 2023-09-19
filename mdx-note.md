@@ -1,4 +1,4 @@
-# MDXメモ 
+# MDXメモ
 
 コンポーネント時代のためのマークダウン
 
@@ -6,13 +6,11 @@
 
 > MDXでは、マークダウンコンテンツの中でJSXを使用することができます。
 
-
 vscodeでのプレビューがめんどくさい
 
 [Markdown and MDX | Next.js](https://beta.nextjs.org/docs/guides/mdx)
 
 mdast hast esast
-
 
 ## Footnote
 

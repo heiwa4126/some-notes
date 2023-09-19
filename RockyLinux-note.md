@@ -1,4 +1,3 @@
-
 # AWSのAMI
 
 [クラウドイメージ | Rocky Linux](https://rockylinux.org/ja/cloud-images/)
@@ -10,6 +9,7 @@ AWS版はcockpit入ってた。
 [cockpit 🚀 - uninstall/remove cockpit | bleepcoder.com](https://bleepcoder.com/cockpit/477748908/uninstall-remove-cockpit)
 
 User-Data
+
 ```sh
 #!/bin/sh
 sudo yum remove cockpit-bridge cockpit-system cockpit-ws -y
@@ -21,6 +21,7 @@ sudo yum update -y
 ```
 
 cloud-config 試作
+
 ```
 #cloud-config
 repo_update: true
@@ -46,7 +47,6 @@ runcmd:
 なんだかマーケットプレイスのせいか、スクリーンショットもとれない...
 
 ログインユーザは `rocky`
-
 
 # Azure
 

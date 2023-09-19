@@ -235,7 +235,7 @@ Enter to keep the current selection[+], or type selection number:
 
 インストーラに従う。
 
-![インストーラーの画面](imgs/w1.png "インストーラ")
+![インストーラーの画面](imgs/w1.png 'インストーラ')
 
 インストール後「Path の長さ制限を解除する」ボタンが出てくるので、解除する。
 

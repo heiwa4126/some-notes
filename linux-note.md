@@ -33,6 +33,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   GPU: Vendor 1234 Device 1111
 ```
 
 インストールは
+
 ```
 sudo apt install neofetch
 ```
@@ -43,13 +44,13 @@ noautoもautoもつけなかったら、どっちになるのか?
 
 `defaults`は`rw, suid, dev, exec, auto, nouser, and async`であるとマニュアルには書いてあるけど。
 
-
 # UNIX時間を読める形式にする
 
 プログラム言語で関数呼ぶのではなくワンライナーでちょっと変換したいときに。
 dateコマンドでできる。
 
 例:
+
 ```sh
 date +'%Y-%m-%d %T' -d '1970-1-1 1604482445 sec'
 # ↑はUTC。JSTなら+0900なので↓こんな感じ
@@ -59,11 +60,13 @@ date +'%Y-%m-%d %T' -d '1970-1-1 09:00:00 1604482445 sec'
 # dateコマンドいろいろ
 
 UTCで
+
 ```
 date -u '+%Y-%m-%dT%H:%M:%SZ'
 ```
 
 UTCで1時間後
+
 ```
 date --date "1 hour" -u '+%Y-%m-%dT%H:%M:%SZ'
 ```
@@ -77,10 +80,10 @@ psでgrepして...より早い。
 ```sh
 pkill -9 -t pts/1
 ```
+
 自分以外だったらsudoで。
 
 `-u`オプションを使ってユーザ名を明示してもいい。
-
 
 # /usr/lib/firmwareがでかい
 
@@ -88,8 +91,8 @@ pkill -9 -t pts/1
 
 - [arch linux - How do I minimize disk space usage - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/2027/how-do-i-minimize-disk-space-usage)
 
-
 これとか知らなかった
+
 ```
 journalctl --disk-usage
 sudo journalctl --vacuum-size=100M
@@ -98,6 +101,7 @@ sudo journalctl --vacuum-time=7d
 ```
 
 または
+
 ```
 /etc/systemd/journald.conf
 に
@@ -107,27 +111,30 @@ systemctl restart systemd-journald.service
 ```
 
 参考:
+
 - [man journald.conf の訳 - kandamotohiro](https://sites.google.com/site/kandamotohiro/systemd/man-journald-conf-no-yi)
 
 デフォルト値はファイルシステムの15%らしい。
-
 
 # cron.dailyはいつ実行される?
 
 ディストリによって起動方法が変わるので
 
 anacronで起動されるRHEL7などでは
+
 ```sh
 grep daily /etc/anacrontab
 ```
+
 で確認。
 
 Debian、Ubuntuはデフォルトではanacronは使わないので(インストールすれば使える)
+
 ```sh
 grep daily /etc/crontab
 ```
-で。
 
+で。
 
 # lsでディレクトリ名だけ表示する
 
@@ -138,7 +145,6 @@ ls -ld */
 ```
 
 [lsでディレクトリ名のみ表示する(grepは使わない) - Qiita](https://qiita.com/github-nakasho/items/1433f6601bb3efc14474#%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E5%90%8D%E3%81%A0%E3%81%91%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%81%9F%E3%81%84)
-
 
 # visudoで/etc/sudoer以外を編集する
 
@@ -152,19 +158,16 @@ EDITOR=emacs visudo -f /etc/sudoers.d/heiwa
 
 あとファイルの最後に改行が必須(忘れやすい)。
 
-
 # Errata
 
 - Red Hat : [Red Hat Product Errata - Red Hat Customer Portal](https://access.redhat.com/errata/)
 - Ubuntu : [CVEs \| Ubuntu](https://ubuntu.com/security/cve)
-
 
 # EFIかどうか知る
 
 ```bash
 ls -lad /sys/firmware/efi
 ```
-
 
 # カラーでless
 
@@ -176,11 +179,10 @@ ls -lad /sys/firmware/efi
 sudo apt install expect
 unbuffer ls -al | less -R
 ```
+
 でもこの例だと失敗する。
 
-
 [Color output in console - ArchWiki](https://wiki.archlinux.org/title/Color_output_in_console)
-
 
 # ディストリのバージョンを知る
 
@@ -199,14 +201,14 @@ $ sudo apt-get install lsb-core
 # けっこうでかい
 ```
 
-LSB (Linux Standard Base) 
+LSB (Linux Standard Base)
 
 [Linux Standard Base (LSB) とは何か - Qiita](https://qiita.com/kaizen_nagoya/items/bdd121a9e366036cbaba)
-
 
 # 仮想端末(pty)とは何か?
 
 まずptyがない状態を体験してみる。
+
 ```bash
 ssh -T localhost
 ```
@@ -215,19 +217,15 @@ ssh -T localhost
 
 いまいちピンとこないなあ。そもそも「端末」とは何か?
 
-| 特徴 | 疑似端末 | 伝統的な端末 |
-| --- | --- | --- |
-| 実体 | ソフトウェアによってエミュレートされた仮想的な端末 | 物理的なハードウェアによって実現された端末 |
-| 接続方法 | プログラムやユーザーからのリモートアクセス | コンピューターシステムに直接接続 |
-| 機能 | ターミナルエミュレーション、リモートアクセス、複数のターミナルセッション管理 | ターミナルエミュレーション、リアルタイム表示、入出力制御 |
-| 制約 | 物理的な制約はないが、ソフトウェアによって実現されているため、システムリソースに制限がある場合がある | 物理的な制約があるため、数や配置に制限がある場合がある |
-| 例 | SSH、Telnet、コンソールなど | ディスプレイ、キーボード、マウスなど |
+| 特徴     | 疑似端末                                                                                             | 伝統的な端末                                             |
+| -------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| 実体     | ソフトウェアによってエミュレートされた仮想的な端末                                                   | 物理的なハードウェアによって実現された端末               |
+| 接続方法 | プログラムやユーザーからのリモートアクセス                                                           | コンピューターシステムに直接接続                         |
+| 機能     | ターミナルエミュレーション、リモートアクセス、複数のターミナルセッション管理                         | ターミナルエミュレーション、リアルタイム表示、入出力制御 |
+| 制約     | 物理的な制約はないが、ソフトウェアによって実現されているため、システムリソースに制限がある場合がある | 物理的な制約があるため、数や配置に制限がある場合がある   |
+| 例       | SSH、Telnet、コンソールなど                                                                          | ディスプレイ、キーボード、マウスなど                     |
 
 no-ptyだと「対話的なプログラム」が支障をきたす(実行できないわけではない)。
-
-
-
-
 
 とりあえず重要な点は
 **no-ptyだからプログラムが実行できない、とかリモート側の出力が帰ってこない、みたいなことは無い**

@@ -129,7 +129,7 @@ redhat-release-server.x86_64                            7.9-3.el7               
 ## Key ID
 
 - `rpm -qi {パッケージ名}` の Signature: にある `Key ID`
-- または `rpm -Kv {RPMファイル}` の  Signature, の `key ID`
+- または `rpm -Kv {RPMファイル}` の Signature, の `key ID`
 
 を確認する方法。
 

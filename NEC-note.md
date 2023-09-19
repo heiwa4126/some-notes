@@ -12,14 +12,12 @@
 - [[RHEL8]Red Hat Enterprise Linux 8.0 インストール方法](https://www.support.nec.co.jp/View.aspx?NoClear=on&id=3140107144)
 - [Red Hat Enterprise Linux 7 x86_64 ドライバ情報](https://www.express.nec.co.jp/linux/supported-driver/option_other-rhel77.html)
 
-
 # ぜんぜんみつからないソフトウエアのリンク
 
 - [actlog](https://www.support.nec.co.jp/View.aspx?id=3140000182)
 - [kdump-reporter](https://www.support.nec.co.jp/View.aspx?id=3150108245)
   - [download kdump-reporter](https://www.support.nec.co.jp/View.aspx?id=3140100097)
 -
-
 
 # starter pack
 
@@ -29,4 +27,3 @@ starter pack と いうものがある。
 
 https://www.support.nec.co.jp/HWSearchByNumber.aspx
 から、型番もしくはモデル名で検索すると見つけやすい。
-

@@ -18,7 +18,6 @@ RHELのVMを動かすのに、virt-whoを動かしてみたのでそのメモ。
 Virtual DatacentersサブスクリプションはESXiホスト単位で買って、
 そのホストでいくつRHELゲストを動かしてもいい、というすごいライセンス。
 
-
 # 事前にいるもの
 
 virt-whoを動かすゲストから、vCenterまで443/tcp(HTTPS)でつながること。HTTPSなのでover proxy可らしい(未検証)。
@@ -28,7 +27,6 @@ RHELゲストからRed Hat Customer PortalまたはSAM(Subscription Asset Manage
 
 ちなみに、virt-whoを動かしたり、Virtual DatacentersサブスクリプションをESXiにアタッチする前でも
 ゲストは`subscription-manager register`はできる(エンタイトルメント不要。半購読状態になる)。
-
 
 # vCenterに「読み取り専用」のユーザを作る
 
@@ -43,17 +41,15 @@ OKボタンで確定。
 
 いったんログアウトして、vCenterにvirt-whoで入れるかを確認する。
 
-
 # RHELゲストにvirt-whoをインストール
 
 前述のようにvirt-whoが動いていない状態でも、
 ゲストのregisterの後(attach不要で)、
 `yum install virt-who`できる。
 
-* [virt-who を使用して Red Hat カスタマーポータルに VMware ESXi ゲストを登録する](https://access.redhat.com/ja/solutions/3032111)
-* [virt-who を使用して Virtual Datacenter エンタイトルメントを持つ Esxi ホストを登録する](https://access.redhat.com/ja/solutions/2849291) - 機械翻訳で変だけど参考になる
-* [10.4. virt-who の手動インストール - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/manual-install-virt-who)
-
+- [virt-who を使用して Red Hat カスタマーポータルに VMware ESXi ゲストを登録する](https://access.redhat.com/ja/solutions/3032111)
+- [virt-who を使用して Virtual Datacenter エンタイトルメントを持つ Esxi ホストを登録する](https://access.redhat.com/ja/solutions/2849291) - 機械翻訳で変だけど参考になる
+- [10.4. virt-who の手動インストール - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/manual-install-virt-who)
 
 を参照。
 
@@ -61,18 +57,19 @@ DVDからは
 [How to install virt-who on disconnected RHEL 7 server?](https://access.redhat.com/solutions/1527923)
 を参照。
 
-↑のrepoではうまくいかなくて、*.repoに
+↑のrepoではうまくいかなくて、\*.repoに
+
 ```
 gpgcheck=1
 gpgkey=file:///mnt/RPM-GPG-KEY-redhat-release
 ```
+
 が必要だった。
 
 終わったらunmountしてenable=0にしておくこと。
 
 RHELインストール時にパッケージグループを選んでもよいらしいが
 未確認。
-
 
 # virt-who 設定
 
@@ -87,6 +84,7 @@ SAM(Subscription Asset Manager)があれば編集。
 コピーして編集する。
 
 例)
+
 ```
 ## Terse version of the config template:
 [myvcenter001]
@@ -99,18 +97,20 @@ owner=99999999
 env=Library
 hypervisor_id=hostname
 ```
+
 usernameは`virt-who@vsphere.local`だとうまくいかなかった。
 
 ownerは
+
 ```
 LANG=C subscription-manager identity
 ```
+
 で出てくる、`org ID`の値。
 
 または https://access.redhat.com/management/activation_keys
 
 の`組織 ID のアクティベーションキー: `の後ろの数字。
-
 
 # その後
 
@@ -123,15 +123,12 @@ ESXiが「ハイパーバイザー」として追加されるので(15分ぐら�
 
 あとは各々のRHELゲストを register & attach
 
-
 # そのほか
-
 
 正常にvert-whoが動くことを確認したら
 `virt-who-passwd`でパスワードを暗号化しておく。
 
 [暗号化されたパスワードで virt-who を設定する ](https://access.redhat.com/ja/solutions/2325761)
-
 
 virt-whoを複数立てると、冗長性が上がるのでおすすめ。
 ただし、virt-who-passwdでの暗号は流用できないので、
@@ -143,14 +140,12 @@ encrypted_passwordの含まれた.confをコピーしてもダメ。
 `VIRTWHO_SAM=1`は0にしないほうがいいと思う。
 デフォルトは1なので特にいじる必要はない。
 
-
-
 # 参考
 
-* [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/virtual_instances_guide/)
-* [RHEL サブスクリプション (2013 パッケージ) の使用: シナリオ 5 仮想データセンター](https://access.redhat.com/ja/articles/1435793)
-* [virt-whoとは何か](https://www.slideshare.net/moriwaka/virtwho)
-* [Red Hat Virtualization Agent (virt-who) Configuration Helper | Red Hat Customer Portal Labs](https://access.redhat.com/labs/virtwhoconfig/)
-* [暗号化されたパスワードで virt-who を設定する](https://access.redhat.com/ja/solutions/2325761)
-* [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_satellite/6.3/html/virtual_instances_guide/)
-* [10.5. virt-who のトラブルシューティング - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/troubleshooting-virt-who) - あんまり役に立たない
+- [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_subscription_management/1/html/virtual_instances_guide/)
+- [RHEL サブスクリプション (2013 パッケージ) の使用: シナリオ 5 仮想データセンター](https://access.redhat.com/ja/articles/1435793)
+- [virt-whoとは何か](https://www.slideshare.net/moriwaka/virtwho)
+- [Red Hat Virtualization Agent (virt-who) Configuration Helper | Red Hat Customer Portal Labs](https://access.redhat.com/labs/virtwhoconfig/)
+- [暗号化されたパスワードで virt-who を設定する](https://access.redhat.com/ja/solutions/2325761)
+- [仮想インスタンスガイド - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_satellite/6.3/html/virtual_instances_guide/)
+- [10.5. virt-who のトラブルシューティング - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/troubleshooting-virt-who) - あんまり役に立たない

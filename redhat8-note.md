@@ -10,7 +10,6 @@
 Azureで入れてみた。
 [Red Hat Enterprise Linux 8 (.latest, LVM) - Microsoft Azure](https://portal.azure.com/#create/hub)
 
-
 Pythonもperlも入ってないのがすごい。LVMだし。さすがにGPTではなかった。
 
 ```
@@ -78,6 +77,7 @@ Installed size: 466 k
 ```
 man unversioned-python
 ```
+
 を参考に
 
 ```
@@ -85,14 +85,17 @@ alternatives --set python /usr/bin/python3
 ```
 
 あとはper userで
+
 ```
 pip3 install --user -U pip
 ```
 
 sshdで
+
 ```
 PermitRootLogin yes
 ```
+
 になってる。コメントアウトする。ポート追加する。
 
 ```
@@ -100,8 +103,8 @@ semanage port -l | grep ssh
 semanage port -a -t ssh_port_t -p tcp 4126
 semanage port -l | grep ssh
 ```
-あとfirewalldも。
 
+あとfirewalldも。
 
 # dnf-makecache
 
@@ -158,17 +161,19 @@ $ sudo dnf makecache
 ```
 
 止めるときは
+
 ```bash
 sudo systemctl disable dnf-makecache.timer
 sudo systemctl stop dnf-makecache.timer
 ```
 
 あるいは
+
 ```bash
 sudo systemctl disable dnf-makecache.timer --now
 ```
 
-# yum-config-manager 
+# yum-config-manager
 
 8系ではdnfのサブコマンド(プラグイン)になった。
 
@@ -177,8 +182,8 @@ sudo systemctl disable dnf-makecache.timer --now
 あとこれも参照
 [DNF ツールを使用したソフトウェアの管理 Red Hat Enterprise Linux 9 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/9/html-single/managing_software_with_the_dnf_tool/index#proc_listing-repositories_assembly_searching-for-rhel-9-content)
 
-
 epel(あれば)をちょっと無効にして、また有効にしてみるテスト。
+
 ```bash
 dnf repolist epel  # 現状の表示
 sudo dnf config-manager --disable epel

@@ -4,9 +4,9 @@
 - https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-1.html#mapped-types
 
 ReactのTypeScriptでsetState hookの一部を書き換えたいとき：
+
 - [Troubleshooting Handbook: Types | React TypeScript Cheatsheets](https://react-typescript-cheatsheet.netlify.app/docs/basic/troubleshooting/types/#using-partial-types)
 - https://reactjs.org/docs/hooks-reference.html#functional-updates の note
-
 
 # interfaceとtype
 
@@ -14,25 +14,22 @@ ReactのTypeScriptでsetState hookの一部を書き換えたいとき：
 
 よくわからん。とりあえず interface つかう。
 
-
 # hashにタイプ
-
 
 [typescriptで連想配列の配列を宣言（型指定）したい](https://trueman-developer.blogspot.com/2017/04/typescript.html)
 
 ```typescript
 let hash: { [key: string]: string } = {};
-hash["apple"] = "りんご";
-hash["banana"] = "ばなな";
-hash["orange"] = "オレンジ";
+hash['apple'] = 'りんご';
+hash['banana'] = 'ばなな';
+hash['orange'] = 'オレンジ';
 
 const hash2: { [key: string]: string } = {
-  apple: "りんご",
-  banana: "ばなな",
-  orange: "オレンジ",
+  apple: 'りんご',
+  banana: 'ばなな',
+  orange: 'オレンジ'
 };
 ```
-
 
 # Jupyter で Node.js で TypeScript
 

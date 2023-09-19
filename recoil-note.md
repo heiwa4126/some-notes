@@ -13,7 +13,6 @@ lift-up|down はめんどくさいのでglobal stateのライブラリを試し�
 
 このへんからTypeScriptで書いてみる。
 
-
 - [useRecoilState](https://recoiljs.org/docs/api-reference/core/useRecoilState)
 - useRecoilValue
 - useSetRecoilState

@@ -14,12 +14,14 @@ POSIXのregexについては [正規表現メモ](http://www.kt.rim.or.jp/~kbk/r
 [String Constants — rsyslog v8.1910.0 documentation](https://www.rsyslog.com/doc/v8-stable/rainerscript/constant_strings.html)
 
 172.31.*.*から来るメッセージをトラップする例
+
 ```
 if re_match($fromhost-ip, '^172\\.31\\.') then {
     -/var/log/from-interal
     stop
 }
 ```
+
 ↑BSD-style Blocks式。[Filter Conditions — rsyslog v8.1910.0 documentation](https://www.rsyslog.com/doc/v8-stable/configuration/filters.html)
 
 ログ名の前の'-'は、「syncしない」。デバッグ時ははずすとtail -Fしやすい。
@@ -35,6 +37,7 @@ socket経由でもfromhost-ipは"127.0.0.1"になるみたい。
 ```
 :fromhost-ip, !isequal, "127.0.0.1", /var/log/non-local
 ```
+
 でローカルでないものを全部ログできる。
 
 ただ
@@ -53,6 +56,7 @@ ruleset(name="nonlocal"){
     stop
 }
 ```
+
 こんな感じ。
 最初から外部から受けるものを、デフォルトルールセット以外で処理する。
 
@@ -61,14 +65,12 @@ ruleset(name="nonlocal"){
 rcvbufSize=を設定するとOSによる自動チューニングが無効になるので、
 考えてから設定すること。いま不具合がなければ設定しない。
 
-
-
-
 # テスト用
 
 `logger -n r1 -d test`を毎回タイプするのも面倒なので、
 0.5秒ごとにUDPで現在時刻を送りつけるperlのコード
-``` perl
+
+```perl
 #!/usr/bin/env perl
 # -*- coding: utf-8 -*-
 use strict;

@@ -1,4 +1,3 @@
-
 [Installing Gradle](https://docs.gradle.org/current/userguide/installation.html#installing_manually)
 
 ```bash
@@ -9,16 +8,18 @@ curl -LO https://downloads.gradle-dn.com/distributions/gradle-7.5.1-bin.zip
 unzip gradle-7.5.1-bin.zip
 ln -sf gradle-7.5.1 current
 ```
+
 `/opt/gradle/current/bin` にパスかエリアス
 
 とりあえず
+
 ```bash
 PATH=$PATH:/opt/gradle/current/bin ; hash -r
 gradle -version
 ```
 
-
 Hello world的なもの
+
 ```bash
 mkdir demo1 ; cd demo1
 ```
@@ -59,6 +60,7 @@ gradle help --task :init
 ```
 
 bash版
+
 ```bash
 mkdir demo2 ; cd demo2
 gradle init --type java-application \
@@ -71,6 +73,7 @@ gradle init --type java-application \
 ```
 
 PowerShell版
+
 ```powershell
 mkdir demo3 ; cd demo3
 gradle init --type java-application `
@@ -82,7 +85,6 @@ gradle init --type java-application `
 .\gradlew -q run
 ```
 
-
 # おまけ kotlin
 
 ```bash
@@ -92,7 +94,7 @@ gradle init --type kotlin-application \
 --dsl kotlin \
 --test-framework kotlintest \
 --package com.example.demo1 \
---project-name demo1 
+--project-name demo1
 ./gradlew -q run
 ```
 
@@ -107,6 +109,7 @@ gradle init --type kotlin-application \
 ## executable Jar
 
 まず `app/build.gradle.kts` に
+
 ```kotlin
 tasks.jar {
   manifest {
@@ -114,6 +117,7 @@ tasks.jar {
   }
 }
 ```
+
 を書き加える。
 
 ```bash
@@ -122,6 +126,7 @@ java -jar ./app/build/libs/app.jar
 ```
 
 Jarの中身見ると
+
 ```
 $ jar -tvf ./app/build/libs/app.jar
      0 Wed Oct 26 14:21:12 JST 2022 META-INF/
@@ -140,6 +145,7 @@ $ jar -tvf ./app/build/libs/app.jar
 `java -jar` の方は NoClassDefFoundError になるので
 
 `app/build.gradle.kts` に
+
 ```kotlin
 tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
@@ -153,20 +159,16 @@ tasks.jar {
 duplicatesStrategyはファイルをコピーする時のポリシー
 
 このへん参照。
+
 - [Gradle 7 requires duplicatesStrategy for "fake" duplicates · Issue #17236 · gradle/gradle](https://github.com/gradle/gradle/issues/17236)
 - [DuplicatesStrategy (Gradle API 7.5.1)](https://docs.gradle.org/current/javadoc/org/gradle/api/file/DuplicatesStrategy.html)
 
 できるJarはJavaよりも若干大きい(Kotlinの標準ライブラリのぶん)。
 
-
-
-
-
 # dependencies の apiとimplementation
 
 - api - mavenのcompileスコープ 実行時、コンパイル時、テスト時に必要。
 - implementation - mavenのruntimeスコープ 実行時、テスト時に必要。
-
 
 # vscodeでgradleプロジェクトのimportの補完が効かない
 
@@ -178,7 +180,6 @@ Java Projectの…のところから clean workspace を選ぶ(時間がかか�
 これにより
 build.gradle の 右クリックで Reload Projects が効くようになるので、
 build.gradle を変更するたびに Reload Projects を選ぶ。
-
 
 (以下葛藤)
 
@@ -196,6 +197,7 @@ build.gradle の 右クリックで Reload projectが効くようになった。
 どうも開いたディレクトリに build.gradle がないとダメみたいだけど...
 
 なので
+
 ```bash
 mkdir hello1 ; cd hello1
 gradle init --type java-application \
@@ -207,6 +209,7 @@ gradle init --type java-application \
 ```
 
 で作った場合、
+
 - appディレクトリをvscodeで開く。
 - またはhello1ディレクトリをvscodeで開き、appディレクトリを「フォルダをワークスペースに追加」する。(以下オプション)「ワークスペースを名前を付けて保存する」でhello1.code-workspaceをhello1ディレクトリ直下に保存する。
 

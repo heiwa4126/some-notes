@@ -5,7 +5,7 @@ ansibleメモランダム2
 
 # 用語
 
-* [Glossary — Ansible Documentation](https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html)
+- [Glossary — Ansible Documentation](https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html)
 
 最近のGoogle翻訳はすごい…
 
@@ -31,6 +31,7 @@ ansibleメモランダム2
 # 2.9から2.10へアップグレード
 
 書いてある通りですが...
+
 ```
 pgrading directly from ansible-2.9 or less to ansible-2.10 or greater with pip is
                 known to cause problems.  Please uninstall the old version found at:

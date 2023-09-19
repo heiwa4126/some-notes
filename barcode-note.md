@@ -19,6 +19,7 @@
 両方を兼ねてる言い方もあるのがますますややこしい。
 
 例)
+
 - CODE128 表現方式
 - GS1-128 コード方式+それをCODE128のスタートコードCODE-Cで画像にしたもの
 - JAN 表現方式+コード方式
@@ -35,29 +36,29 @@
     2. 商品アイテムコード(3桁)
     3. チェックデジット(1桁)
 - 短縮タイプ(8桁)
-   1. JAN 企業コード(6桁)
-   2. 商品アイテムコード(1桁)
-   3. チェックデジット(1桁)
+  1.  JAN 企業コード(6桁)
+  2.  商品アイテムコード(1桁)
+  3.  チェックデジット(1桁)
 
 参考: [JAN | バーコード講座 | キーエンス](https://www.keyence.co.jp/ss/products/autoid/codereader/basic_jan.jsp)
 
 サンプル
-- 4912345678904 
+
+- 4912345678904
 - 4561234567890
 - 49012347
 
-![4912345678904](imgs/barcode/jan_4912345678904.png "4912345678904")
- ![4561234567890](imgs/barcode/jan_4561234567890.png "4561234567890")
-![49012347](imgs/barcode/jan_49012347.png "49012347")
+![4912345678904](imgs/barcode/jan_4912345678904.png '4912345678904')
+![4561234567890](imgs/barcode/jan_4561234567890.png '4561234567890')
+![49012347](imgs/barcode/jan_49012347.png '49012347')
 
 それをQRコードにしたもの ([QRコードの作成｜バーコードどころ](https://barcode-place.azurewebsites.net/Barcode/qr)で作成)
 
-![4912345678904](imgs/barcode/qr_4912345678904.png "4912345678904")
- ![4561234567890](imgs/barcode/qr_4561234567890.png "4561234567890")
-![49012347](imgs/barcode/qr_49012347.png "49012347")
+![4912345678904](imgs/barcode/qr_4912345678904.png '4912345678904')
+![4561234567890](imgs/barcode/qr_4561234567890.png '4561234567890')
+![49012347](imgs/barcode/qr_49012347.png '49012347')
 
 なんでQRコードなのwは秘密だ。
-
 
 ## CODE128
 
@@ -66,6 +67,7 @@
 [CODE128 | バーコード講座 | キーエンス](https://www.keyence.co.jp/ss/products/autoid/codereader/basic_code128.jsp)
 
 ASCIIコードなんでも、とはいうものの具体的な例としては
+
 - [Code 128 Barcode Examples](https://www.computalabel.com/m/c128examplesM.htm)
 
 他、参考: [Code 128 - Wikipedia](https://en.wikipedia.org/wiki/Code_128)
@@ -73,13 +75,9 @@ ASCIIコードなんでも、とはいうものの具体的な例としては
 Code128のスタートコードにCODE-Cを使った
 [GS1-128](https://www.keyence.co.jp/ss/products/autoid/codereader/basic-gs1.jsp)のサンプル:
 
-![(01)04912345123459(10)ABC123](imgs/barcode/gs1_128_(01)04912345123459(10)ABC123.png "(01)04912345123459(10)ABC123")
+![(01)04912345123459(10)ABC123](<imgs/barcode/gs1_128_(01)04912345123459(10)ABC123.png> '(01)04912345123459(10)ABC123')
 
 (01)04912345123459(10)ABC123
-
-
-
-
 
 # ブラウザでバーコード
 
@@ -92,7 +90,6 @@ Code128のスタートコードにCODE-Cを使った
 > スマフォブラウザからカメラを利用するときはsslじゃないとだめらしいです
 
 [JAN/EAN | バーコード講座 | キーエンス](https://www.keyence.co.jp/ss/products/autoid/codereader/basic-ean.jsp)
-
 
 # QRコードのスキャナ
 
@@ -107,6 +104,7 @@ Code128のスタートコードにCODE-Cを使った
 これいろいろあって、試してみる。
 
 参考:
+
 - [Javascriptのバーコードライブラリ - Qiita](https://qiita.com/k-murayama/items/eddcc974bd0dd3a214ed)
 
 ## javascript-barcode-reader
@@ -134,8 +132,8 @@ EAN-8が読めないらしいので今回はパス
 - デモページ [QuaggaJS, an advanced barcode-reader written in JavaScript](https://serratus.github.io/quaggaJS/examples/static_images.html) - ライブイメージのデモもあるけど、さっぱり読めない。
 
 他参考:
-- [QuaggaJSを使ったバーコードリーダ実装 | WatchContents](https://watchcontents.com/quaggajs-barcode-reader/)
 
+- [QuaggaJSを使ったバーコードリーダ実装 | WatchContents](https://watchcontents.com/quaggajs-barcode-reader/)
 
 ## QuaggaJS2
 

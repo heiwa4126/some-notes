@@ -8,7 +8,6 @@ AzureでRHEL7のメモ
 - [Azureのパスワード](#azureのパスワード)
 - [マシンイメージが古くてyum updateで証明書が古い、って言われるとき](#マシンイメージが古くてyum-updateで証明書が古いって言われるとき)
 
-
 # 最近の状況 - GPTでLVMでxfsで
 
 ひさしぶりにAzureでRHEL 7.8のVMを作ったら(2020-07、
@@ -19,6 +18,7 @@ PVのfreeが大きくて、
 自分で割り振れ、だった。
 
 こんな感じ
+
 ```
 # sgdisk /dev/sda -p
 Disk /dev/sda: 134217728 sectors, 64.0 GiB
@@ -77,10 +77,11 @@ Filesystem                 Size  Used Avail Use% Mounted on
 ```
 
 pvdisplayによると
-4 MiB * 9732/1000 = 38.928 GiB
+4 MiB \* 9732/1000 = 38.928 GiB
 40ギビバイト(ギガバイトじゃなくて)ぐらいFreeある。
 
 /homeを2GiB増やしてみる。
+
 ```
 lvextend -L +2G /dev/rootvg/homelv
 lvs /dev/rootvg/homelv  # 3GiBになったのを確認
@@ -88,6 +89,7 @@ xfs_growfs /dev/rootvg/homelv # 最大サイズまで増やす
 ```
 
 結果:
+
 ```
 $ df -h /home
 Filesystem                 Size  Used Avail Use% Mounted on
@@ -95,13 +97,14 @@ Filesystem                 Size  Used Avail Use% Mounted on
 ```
 
 無事3GBになりました。あとVGのサイズ確認
+
 ```sh
 sudo vgdisplay
 ```
 
 9732 -> 9220
 
-(9732-9220)*4=2024 で 2GiB減ってるのがわかる。
+(9732-9220)\*4=2024 で 2GiB減ってるのがわかる。
 
 # chronyでPTPクロックソース
 
@@ -113,6 +116,7 @@ PTP (Precision Time Protocol) クロック ソース
 - [18.6. ハードウェアのタイムスタンプを使用した Chrony Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-hw_timestamping)
 
 確認:
+
 ```
 $ lsmod | grep hv_utils
 hv_utils               25808  1
@@ -127,13 +131,16 @@ hyperv
 ```
 
 設定は`/etc/chrony.conf`に
+
 ```
 # hyperv PTP clock source
 refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
 ```
+
 追加して、他のrefclockをコメントアウト。で`systemctl restart chronyd`
 
 設定後:
+
 ```
 # chronyc sources
 210 Number of sources = 1
@@ -149,16 +156,18 @@ sshで使ってるとパスワードの設定を忘れがちなので、
 作業ユーザにだけはパスワードを設定しておくといいと思う。
 
 ちなみにrootは
+
 ```
 $ sudo grep root /etc/shadow
 root:*LOCK*:14600::::::
 ```
-lockのままにしとくべき(作業ユーザでsudo)。
 
+lockのままにしとくべき(作業ユーザでsudo)。
 
 # マシンイメージが古くてyum updateで証明書が古い、って言われるとき
 
 こんな場合
+
 ```
 # yum update
 Loaded plugins: langpacks, product-id, search-disabled-repos
@@ -175,9 +184,11 @@ Trying other mirror.
 ```
 
 こうする。
+
 ```sh
 sudo yum update -y --disablerepo='*' --enablerepo='*microsoft*'
 ```
+
 - [Azure RedHat vm yum update fails with "SSL peer rejected your certificate as expired\." \- Stack Overflow](https://stackoverflow.com/questions/53436443/azure-redhat-vm-yum-update-fails-with-ssl-peer-rejected-your-certificate-as-exp)
 - [Update expired RHUI client certificate on a VM](https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/redhat/redhat-rhui#update-expired-rhui-client-certificate-on-a-vm)
 

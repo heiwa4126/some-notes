@@ -4,10 +4,9 @@ remake/rehype (とretext) などなど
 
 ## 参照
 
-* [Use unified - unified](https://unifiedjs.com/learn/guide/using-unified/)
-* [最新 remark plugin リスト](https://github.com/remarkjs/remark/blob/HEAD/doc/plugins.md)
-* [最新 rehype plugin リスト](https://github.com/rehypejs/rehype/blob/HEAD/doc/plugins.md)
-
+- [Use unified - unified](https://unifiedjs.com/learn/guide/using-unified/)
+- [最新 remark plugin リスト](https://github.com/remarkjs/remark/blob/HEAD/doc/plugins.md)
+- [最新 rehype plugin リスト](https://github.com/rehypejs/rehype/blob/HEAD/doc/plugins.md)
 
 ## VFile
 

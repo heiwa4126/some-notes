@@ -29,16 +29,17 @@ $ aws sts get-caller-identity
 ```
 
 ひとの作った
-* スイッチ先のロール
-* スイッチ元のポリシー
+
+- スイッチ先のロール
+- スイッチ元のポリシー
 
 は再利用できるのでちょっと危ない。
 スイッチ先のロールで制限かけられれば...
 
 sts:AssumeRoleで制限できそう。
 
-
 自分が見かけたスイッチ先のロールのポリシー例
+
 ```json
 {
   "Version": "2012-10-17",
@@ -60,16 +61,17 @@ sts:AssumeRoleで制限できそう。
 ```
 
 上の例は
-* 信頼されたエンティティは アカウント666666666666で
-* MFA必須
 
+- 信頼されたエンティティは アカウント666666666666で
+- MFA必須
 
 参考:
-* [【Switch Role】特定のIAMユーザだけに権限を付与するには？信頼済アクセスを編集！│Soy Pocket](https://soypocket.com/it/switchrole-json-user-controle/)
-* [【IAM】スイッチロールの運用について考えてみた | DevelopersIO](https://dev.classmethod.jp/articles/switch-role-operation/)
+
+- [【Switch Role】特定のIAMユーザだけに権限を付与するには？信頼済アクセスを編集！│Soy Pocket](https://soypocket.com/it/switchrole-json-user-controle/)
+- [【IAM】スイッチロールの運用について考えてみた | DevelopersIO](https://dev.classmethod.jp/articles/switch-role-operation/)
 
 なぜprincipalにはグループが設定できないのだろう...
 ユーザグループを作ってグループベースで空のロール割り当てればいけるだろうか。
 
-* [AWS JSON ポリシーの要素: Principal - AWS Identity and Access Management](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_policies_elements_principal.html)
-* [IAM ユーザーグループ - AWS Identity and Access Management](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_groups.html)
+- [AWS JSON ポリシーの要素: Principal - AWS Identity and Access Management](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_policies_elements_principal.html)
+- [IAM ユーザーグループ - AWS Identity and Access Management](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_groups.html)

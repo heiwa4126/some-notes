@@ -1,5 +1,3 @@
-
-
 [99designs/aws\-vault: A vault for securely storing and accessing AWS credentials in development environments](https://github.com/99designs/aws-vault)
 
 Ubuntu 22.04LTSで (2022-06)
@@ -33,9 +31,11 @@ sudo yum install pass
 ```
 
 GPG Keyがないので作る。対話式。
+
 ```bash
 gpg --full-generate-key
 ```
+
 パスフレーズは簡単なのじゃダメ。
 
 > gpg: 鍵AAAAAAAAAAAAAAAAを究極的に信用するよう記録しました
@@ -48,8 +48,8 @@ pass init AAAAAAAAAAAAAAAA
 pass init メールアドレス
 ```
 
-
 このへんの変数を.profileに
+
 ```bash
 export AWS_VAULT_BACKEND=pass   # /usr/bin/pass ではなく
 export AWS_VAULT_PASS_PREFIX=aws-vault
@@ -58,22 +58,21 @@ export GPG_TTY=$(tty)
 ```
 
 tmuxだと.bashrcにも
+
 ```bash
 export GPG_TTY=$(tty)
 ```
+
 は要ると思う。
 
 環境変数については
 [aws-vault/USAGE.md at master · 99designs/aws-vault](https://github.com/99designs/aws-vault/blob/master/USAGE.md#environment-variables)
 
-
 aws-vault add bob
-
 
 # 参考
 
 - [aws-vaultをLinux環境でも使う方法【セキュリティ向上】 – Hacker's High](https://hackers-high.com/aws/aws-vault-on-linux/)
-
 
 # Passのストアをよそにコピーする
 

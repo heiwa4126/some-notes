@@ -1,5 +1,3 @@
-
-
 # PDFをpptxに変換
 
 [【無料】PDFをPPTに変換 - Adobe 公式 | Adobe Acrobat](https://www.adobe.com/jp/acrobat/online/pdf-to-ppt.html)

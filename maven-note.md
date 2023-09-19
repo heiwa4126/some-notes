@@ -10,10 +10,9 @@
 - [Maven – Introduction to the POM](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
 - [Maven – POM Reference](https://maven.apache.org/pom.html)
 
-
 これよくまとまってる
-- [Mavenの基本勉強メモ - Qiita](https://qiita.com/opengl-8080/items/bb32732f9aa5cb3495d2)
 
+- [Mavenの基本勉強メモ - Qiita](https://qiita.com/opengl-8080/items/bb32732f9aa5cb3495d2)
 
 # Mavenとは？
 
@@ -31,14 +30,15 @@ Mavenは一見すると様々なものであるように見えますが、一言
 
 Mavenの背景についてもっと知りたい場合は、「[Mavenの哲学](https://maven.apache.org/background/philosophy-of-maven.html)」と「[Mavenの歴史](https://maven.apache.org/background/history-of-maven.html)」をご覧ください。それでは、Mavenを使用することで、どのようなメリットがあるのかについて説明します。
 
-
 # vscodeであったほうがよさそうな拡張機能
 
 このへんは自動で入る
+
 - Debugger for Java
 - Extension Pack for Java
 
 このへんは手動もしくは「入れる?」って聞いてくるやつ
+
 - Dependency Analytics
 - Maven for Java
 - Project Manager for Java
@@ -47,6 +47,7 @@ Mavenの背景についてもっと知りたい場合は、「[Mavenの哲学](h
 # archetype:generate の archetypeArtifactId
 
 maven標準は
+
 - [Apache Maven Archetypes – Maven Archetypes](https://maven.apache.org/archetypes/index.html)
 - [Maven – Introduction to Archetypes](https://maven.apache.org/guides/introduction/introduction-to-archetypes.html#provided-archetypes)
 
@@ -58,11 +59,10 @@ maven標準は
 標準でないarchetypeも選択出来て、たとえば
 [deangerber/java11-junit5-archetype: Maven archetype to create a project configured for Java 11 and using JUnit 5.](https://github.com/deangerber/java11-junit5-archetype)
 
-
 自分でarchetypeを作るには
+
 - [Maven – Guide to Creating Archetypes](https://maven.apache.org/guides/mini/guide-creating-archetypes.html)
 - [Guide to Maven Archetype | Baeldung](https://www.baeldung.com/maven-archetype)
-
 
 # JUnit5
 
@@ -70,22 +70,25 @@ maven標準は
 - [JUnit 5 User Guide](https://junit.org/junit5/docs/current/user-guide/)
 
 あと
+
 - [JUnitのアサーションライブラリHamcrest,AssertJ比較 - Qiita](https://qiita.com/disc99/items/31fa7abb724f63602dc9)
 - [JunitでHamcrestを使用する理由](https://codechacha.com/ja/how-to-use-hamcrest-in-junit/)
 - [Java Hamcrest](http://hamcrest.org/JavaHamcrest/)
 - [Hamcrest Tutorial](http://hamcrest.org/JavaHamcrest/tutorial)
 
-
 # ライフサイクル
 
 これが参考になる
+
 - [Built\-in Lifecycle Bindings](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#built-in-lifecycle-bindings)
 - [Mavenの「よくわらない」を解消 ！ ライフサイクル、フェーズ、バインドの概念 | dawaan](https://dawaan.com/maven-life-cycle-in-depth/)
 
 デフォルトのデフォルトライフサイクルは(ややこしい)
+
 ```xml
 <packaging>jar</packaging>
 ```
+
 で、
 [Plugin bindings for jar packaging](https://maven.apache.org/ref/3.8.6/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging)
 
@@ -95,13 +98,9 @@ mvn package
 mvn compile test jar:jar
 ```
 
-
-
-
 ```xml
  <defaultGoal>clean package</defaultGoal>
 ```
-
 
 # 階層
 
@@ -115,10 +114,9 @@ mvn compile test jar:jar
 ライフサイクル名は指定できない。
 
 そのライフサイクルの一連のフェーズのうち、指定フェーズより前のすべてのフェーズも実行される
- (例えば`mvn deploy`はライフサイクルdefaultのフェーズpackageの実行)。
+(例えば`mvn deploy`はライフサイクルdefaultのフェーズpackageの実行)。
 
 ゴールは単体で実行される。
-
 
 # デフォルトのライフサイクル
 
@@ -139,8 +137,6 @@ mvn compile test jar:jar
 プロジェクトのタイプが JAR の場合、package は jar:jar を実行し、
 プロジェクトのタイプが WAR の場合、war:war を実行します。
 
-
-
 # 外部の依存関係を使用するにはどうすればよいですか?
 
 [How do I use external dependencies?](https://maven.apache.org/guides/getting-started/index.html#how-do-i-use-external-dependencies)
@@ -157,15 +153,15 @@ pom.xml の依存関係セクションには、プロジェクトがビルドす
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-app</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
- 
+
   <name>Maven Quick Start Archetype</name>
   <url>http://maven.apache.org</url>
- 
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -253,15 +249,15 @@ maven-metadata.xmlファイルの横に、log4jライブラリの各バージョ
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-app</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
- 
+
   <name>Maven Quick Start Archetype</name>
   <url>http://maven.apache.org</url>
- 
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -278,6 +274,7 @@ maven-metadata.xmlファイルの横に、log4jライブラリの各バージョ
   </dependencies>
 </project>
 ```
+
 ここで、プロジェクトをコンパイル（mvn compile）すると、Mavenがlog4jの依存関係をダウンロードしてくれるのがわかります。
 
 # プラグインはどのように使用するのですか?
@@ -315,7 +312,6 @@ Mavenのすべてのプラグインが依存関係に似ていることにお気
 
 プラグインに対してどのような設定が可能かを調べるには、プラグインリストを参照して、使用しているプラグインとゴールに移動します。
 プラグインの利用可能なパラメータの設定方法に関する一般的な情報については、[プラグインの設定ガイド](https://maven.apache.org/guides/mini/guide-configuring-plugins.html)をご覧ください。
-
 
 # Plugin Management
 
@@ -385,7 +381,6 @@ pluginManagement は、プラグインと一緒に表示される要素です。
 ということか?)
 
 おそらく自分自身でもoverrideできるのでは。
-
 
 # フェーズにゴールを追加する
 
@@ -470,15 +465,15 @@ Mavenの用語では、アーティファクトはMavenプロジェクトビル�
 例えば、jar、war、またはその他の実行可能ファイルです。
 
 また、Mavenアーティファクトには、
+
 - groupId
 - artifactId
 - バージョン (version)
 - パッケージング (packaging)
 - 分類子 (classifier)
- 
+
 の5つの主要な要素が含まれています。
 これらは、アーティファクトを識別するために使用する要素で、Maven座標(Maven coordinates)と呼ばれるものです。
-
 
 [4\. Maven Coordinates](https://www.baeldung.com/maven-artifact#maven-coordinates)の機械翻訳
 
@@ -489,6 +484,7 @@ Maven座標は、指定されたアーティファクトのgroupId、artifactId�
 パッケージング要素はオプションであり、分類子を直接定義することはできません。
 
 例えば、下記のpom.xml設定ファイルはMavenの座標の例です。
+
 ```xml
 <project>
     <modelVersion>4.0.0</modelVersion>
@@ -518,7 +514,6 @@ groupId 要素は、プロジェクトの起点となるグループの識別子
 
 例えば、 org.apache.commons という groupId は ${repository_home}/org/apache/commons に対応します。
 
-
 ## 4.2 artifactId 要素
 
 artifactId 要素は、グループ内のプロジェクトの識別子です。
@@ -534,7 +529,6 @@ artifactId が commons-lang3、
 groupId が org.apache.commons の場合、
 artifactは `${repository_home}/org/apache/commons/commons-lang3/`
 にあると判断されます。
-
 
 # どう命名するべき?
 
@@ -579,7 +573,6 @@ artifactId は、バージョンなしの jar の名前です。
 
 例: 2.0, 2.0.1, 1.3.1
 
-
 # mavenのdependencyの更新チェック
 
 ```bash
@@ -589,15 +582,15 @@ mvn versions:display-dependency-updates
 - [Versions Maven Plugin – versions:display-dependency-updates](https://www.mojohaus.org/versions-maven-plugin/display-dependency-updates-mojo.html)
 - [Versions Maven Plugin – Introduction](https://www.mojohaus.org/versions-maven-plugin/)
 
-
 もちろんpluginsのチェックもあります。
+
 ```bash
 mvn versions:display-plugin-updates
 ```
 
 そのほか:
-- [versions-maven-pluginでベータ版を除外する - Qiita](https://qiita.com/koko_u/items/1ca60b6203ae3295219b)
 
+- [versions-maven-pluginでベータ版を除外する - Qiita](https://qiita.com/koko_u/items/1ca60b6203ae3295219b)
 
 dependencyを更新してしまう場合は
 
@@ -610,7 +603,6 @@ dependencyを更新してしまう場合は
 - versions:commit
 
 で元へ戻すか確定するか。
-
 
 # META-INF/mavenのpom.xml
 
@@ -631,7 +623,7 @@ jdeps Java8からついてるらしい。
 ```bash
 $ jar tvf ~/.m2/repository/org/tukaani/xz/1.9/xz-1.9.jar | grep pom
 (空)
-$ jdeps --multi-release 9 ~/.m2/repository/org/tukaani/xz/1.9/xz-1.9.jar 
+$ jdeps --multi-release 9 ~/.m2/repository/org/tukaani/xz/1.9/xz-1.9.jar
 ```
 
 どうも前からうすうす思ってたんだけどJavaってclassのバージョンとか全然見てないみたい。

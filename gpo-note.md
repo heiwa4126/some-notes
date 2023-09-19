@@ -12,6 +12,7 @@ AnsibleでLGPOをいじる話
 Windowsのログインが遅いのはこいつのせい。
 
 優先度(上の方ほど低い):
+
 1. ローカル・コンピュータのポリシー
 1. Active Directoryのサイトのポリシー
 1. Active Directoryのドメインのポリシー
@@ -26,7 +27,6 @@ Windowsのログインが遅いのはこいつのせい。
 AD環境だったらADでやるのが基本。
 (ADでLGPOは意味がないわけではないけど、優先度が低いことを忘れない)
 
-
 # LGPO(とローカルセキュリティポリシー)
 
 - gpedit.msc - ローカルグループポリシー(LGPO)をいじるGUI
@@ -36,6 +36,7 @@ AD環境だったらADでやるのが基本。
 ローカルセキュリティポリシーはLSPとは言わないみたい。
 
 (LGPOでなく)ローカルセキュリティポリシーを適応する手順:
+
 1. secpol.mscでポリシーを設定する
 2. secpolで「ポリシーのエクスポート」をする(secedit.exeでエクスポートもできる)
 3. secedit.exe でエクスポートしたポリシーを他所に設定
@@ -43,8 +44,8 @@ AD環境だったらADでやるのが基本。
 gpedit.mscには「ポリシーのエクスポート」がない。
 secedit.exeに当たるものもない。自動化できない。
 
-
 というところで `lgpo.exe`
+
 - [Microsoft Security Compliance Toolkit 1.0 - Windows security | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows/security/threat-protection/security-compliance-toolkit-10)
 - [LGPO.exe - Local Group Policy Object Utility, v1.0 - Microsoft Tech Community](https://techcommunity.microsoft.com/t5/microsoft-security-baselines/lgpo-exe-local-group-policy-object-utility-v1-0/ba-p/701045)
 - [Download Microsoft Security Compliance Toolkit 1.0 from Official Microsoft Download Center](https://www.microsoft.com/en-us/download/details.aspx?id=55319) - lgpo.zipがダウンロードできる

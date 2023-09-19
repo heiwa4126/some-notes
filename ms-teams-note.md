@@ -6,7 +6,6 @@ Microsoft Teams メモ
 
 ↑「受信 webフック」は無いので`incoming webhook`を検索。
 
-
 # pymsteams
 
 Python

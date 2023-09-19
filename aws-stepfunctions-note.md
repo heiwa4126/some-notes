@@ -7,7 +7,6 @@
 GitHubにもある。
 [awslabs/states-language: The States Language spec](https://github.com/awslabs/states-language)
 
-
 # AWS Step Functions との協働および統合
 
 ASLの Resource: に書く
@@ -15,9 +14,10 @@ ASLの Resource: に書く
 みたいののリファレンスはどこにある?
 
 ここ
-- [Step Functions 用統合最適化 - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/connect-suppo\
+
+- [Step Functions 用統合最適化 - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/connect-suppo
 rted-services.html) - タイトルから想像できない内容...
-- DynamoDBについては [Step Functions を使用した DynamoDB API の呼び出し](https://docs.aws.amazon.com/ja_jp/step-functions/lat\
+- DynamoDBについては [Step Functions を使用した DynamoDB API の呼び出し](https://docs.aws.amazon.com/ja_jp/step-functions/lat
 est/dg/connect-ddb.html)
 
 統合最適化(optimized integrations)以外の呼び出し方は
@@ -26,7 +26,6 @@ est/dg/connect-ddb.html)
 `arn:aws:states:::aws-sdk:*` を使う
 [AWS SDK のサービスの統合 - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/supported-services-awssdk.html)
 など。
-
 
 # 標準 vs エクスプレス
 
@@ -49,8 +48,6 @@ JsonPath。ASL内では使えない関数あり(lenght()とか)
 `$$.` ってのもあります。
 [Context オブジェクト - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/input-output-contextobject.html)
 
-
-
 まず [ステートマシンデータ - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/concepts-state-machine-data.html) を読んで、
 [データフローシミュレーター](https://ap-northeast-1.console.aws.amazon.com/states/home?region=ap-northeast-1#/simulator)
 を試す。
@@ -61,7 +58,6 @@ JsonPath。ASL内では使えない関数あり(lenght()とか)
 
 > **パスを使用して値を選択するキーと値のペアの場合**、キーの名前は .$ で終わる必要があります。
 
-
 # アクティビティとは?
 
 ステートマシンの途中で
@@ -71,9 +67,9 @@ AWSの外に(中でもいいけど)
 AWSの外のやつをWorkerというらしい。
 
 WorkerのPythonでのサンプル:
+
 - [Step Function Activity with Python | by Yuvaraj Ravikumar | Medium](https://medium.com/@yuvarajmailme/step-function-activity-with-python-c007178037af)
 - [awsboto3/stepfunction_activity.py at master · yuvarajskr/awsboto3](https://github.com/yuvarajskr/awsboto3/blob/master/stepfunction_activity.py)
-
 
 # ASLでlambdaを呼ぶ
 
@@ -84,7 +80,7 @@ Resourceにlambda ARNを書く方法と "arn:aws:states:::lambda:invoke" + Param
 
 Invokeの方のFunctionNameには、名前(:alias)かARNが使える。
 
-コールバック? 
+コールバック?
 [サービス統合パターン - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/connect-to-resource.html#connect-wait-token)
 
 # stateのtype
@@ -105,17 +101,15 @@ Parallelのブランチへの入力は同じものになるみたい。
 
 別々にしたかったらMapを使う。
 
-
-
 # ASLメモ
 
 Nextがなければ、"End: true"扱いになるらしい。
 
 ↑誤り
+
 > Fail 状態は常にステートマシンを終了するため、Next フィールドはなく、End フィールドも不要です。
 
 Fail or SucceedステートではEndがいらない、ということらしい。
-
 
 ResultPathの文法がわかりにくい。
 迷ったら

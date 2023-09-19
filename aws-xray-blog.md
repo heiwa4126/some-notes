@@ -6,7 +6,6 @@ AWSの観測サービスの1つで
 
 今回は AWS X-Ray を軽く触ってみましょう。
 
-
 ## X-Rayの用語
 
 X-Rayで使われる用語は [AWS X-Ray の概念 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-concepts.html) を参照。
@@ -27,7 +26,6 @@ LambdaがDynamDBを読んで...
 一定期間のトレースをまとめて表示するのが
 [service map](https://console.aws.amazon.com/xray/home#/service-map)
 
-
 ### グループ
 
 グループという名前ですが、実質フィルタ。
@@ -37,16 +35,17 @@ LambdaがDynamDBを読んで...
 
 条件式はここ参照: [フィルタ式を使用したコンソールでのトレースの検索 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-console-filters.html)
 
-
 ## 実際にX-Rayのサンプルを動かしてみる
 
 AWS提供のサンプルには
+
 - [AWS X-Ray サンプルアプリケーション - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-scorekeep.html)
 - [aws-samples/eb-java-scorekeep at xray-gettingstarted](https://github.com/aws-samples/eb-java-scorekeep/tree/xray-gettingstarted)
 
 がありますが、ちょっと規模が大きすぎるので、かんたんな同期アプリを作ってみました。
 
 使うツールは
+
 - AWS CLI 2.7.20, AWS SAM 1.53.0 (2022-08時点での最新)
 - Python 3.9
 - [Lambda Powertools Python](https://awslabs.github.io/aws-lambda-powertools-python/latest/)
@@ -60,19 +59,23 @@ zip(ここからダウンロード)を展開したら、
 sam build
 sam deploy --guided
 ```
+
 でAWSにデプロイできます。
 
 ## テストラン
 
 テストは
+
 ```bash
 ./make_env.sh  # デプロイ直後に1回だけ
 ./remote_test.sh
 ```
+
 で行います。
 
 このアプリケーションは
 API Gateway経由でDynamoDBを読み書きするLambdaで、
+
 - GET /hello で 接続テスト。
 - GET /get で DynamoDBから k1=test を読み出し
 - GET /put で DynamoDBへ k1=test,v1=タイムスタンプ文字列 を書込(更新)
@@ -82,6 +85,7 @@ API Gateway経由でDynamoDBを読み書きするLambdaで、
 は失敗します (`template.yaml`参照)。
 
 `./remote_test.sh` は
+
 1. GET /hello
 2. GET /get
 3. GET /put (これは失敗する)
@@ -113,7 +117,6 @@ TODO:IMAGE
 (dynamodb:UpdateItemアクションが許可されていないので失敗しました)
 と表示されます。
 
-
 ## 「サービスマップ」を見る
 
 続けて左ペインの
@@ -129,7 +132,6 @@ TODO:IMAGE
 
 TODO:IMAGE
 
-
 このサンプルだとサービスマップはこんな程度ですが、
 大規模なアプリケーションで、期間を多めにすると、
 
@@ -144,20 +146,20 @@ TODO:IMAGE
 
 これでいつ起きるかわからないエラーを検出することができます。
 
-
 ## テスト環境の削除
 
 テストが終わったら
+
 ```bash
 sam destroy --no-prompts
 ```
+
 でAWS上からテスト環境を削除してください。
 
 削除するまえに
 `template.yaml`
 の該当部分を修正して(1箇所アンコメントすればいいようにしてあります)
 再デプロイしてみるのもいいですね。
-
 
 ## X-Rayの有効・無効の切替
 
@@ -173,7 +175,6 @@ Lambda Powertools Pythonを使うなら、[Disabling response auto-capture](http
 と
 [Amazon API GatewayのアクティブトレーシングサポートAWS X-Ray - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-services-apigateway.html)
 を参照
-
 
 ## TODO
 

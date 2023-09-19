@@ -11,9 +11,9 @@
 
 Chef Soloとは
 
-* ローカルで動くChef。
-* 廃止されて、Chef Zero(Chef local mode)になった。
-* Chef SoloからZeroへの以降はぜんぜん簡単じゃないらしい。
+- ローカルで動くChef。
+- 廃止されて、Chef Zero(Chef local mode)になった。
+- Chef SoloからZeroへの以降はぜんぜん簡単じゃないらしい。
 
 らしい。localなのでansibleのinventryみたいのは無い、ということらしい。
 
@@ -26,6 +26,7 @@ Chef: 12.3.0
 ```
 
 作業ディレクトリ作る
+
 ```
 $ mkdir -p ~/works/chef-solo-tutorials ; cd !$
 ```
@@ -39,6 +40,7 @@ $ emacs cookbooks/hello/recipes/default.rb
 ```
 
 cookbooks/hello/recipes/default.rb
+
 ```
 #
 # Cookbook Name:: hello
@@ -54,12 +56,14 @@ log "hello world!" <--これを追加するだけ
 ローカルなテストなので
 `/usr/share/chef/solo.rb`をコピーして
 file_cache_pathとcookbook_pathを編集する。
+
 ```
 $ cp /usr/share/chef/solo.rb .
 $ emacs solo.rb
 ```
 
 こんな感じに
+
 ```
 base = File.expand_path('..', __FILE__)
 
@@ -70,12 +74,15 @@ cookbook_path      [
   "/var/lib/chef/cookbooks"
 ]
 ```
+
 あと
+
 ```
 mkdir ./cache
 ```
 
 実行
+
 ```
 $ chef-solo -c ./solo.rb -o hello
 ...
@@ -85,25 +92,24 @@ $ chef-solo -c ./solo.rb -o hello
 
 # defaultにhashをmergeする方法
 
-attributes/*.rbでdefaultにhashをmergeしたい時
+attributes/\*.rbでdefaultにhashをmergeしたい時
 
 ```
 default.merge!(h)
 ```
-だと、defaultにhが代入されてしまう。(他の*.rbで設定された値が消える)
+
+だと、defaultにhが代入されてしまう。(他の\*.rbで設定された値が消える)
 
 ```
 h.each { |k, v| default[k].merge!(v) }
 ```
+
 とかすると「とりあえず」動く。「とりあえず」なのは下の枝がそっくり置き換えられてしまうから。
 
+参考:
 
-
-参考: 
-* [Class: Chef::Node::VividMash — Documentation for chef/chef (master)](https://www.rubydoc.info/github/chef/chef/Chef/Node/VividMash)
-* [Module: Chef::Mixin::DeepMerge — Documentation for opscode/chef (master)](https://www.rubydoc.info/github/opscode/chef/Chef/Mixin/DeepMerge)
-
-
+- [Class: Chef::Node::VividMash — Documentation for chef/chef (master)](https://www.rubydoc.info/github/chef/chef/Chef/Node/VividMash)
+- [Module: Chef::Mixin::DeepMerge — Documentation for opscode/chef (master)](https://www.rubydoc.info/github/opscode/chef/Chef/Mixin/DeepMerge)
 
 # Ubuntu 1804LTSでテスト
 
@@ -121,4 +127,3 @@ Chef: 12.14.60
 
 なんだか
 超めんどくさい。
-

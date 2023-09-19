@@ -1,13 +1,12 @@
 # インストール
 
-
-
 ## Debian, Ubuntu
 
 パッケージで
 [Install Terraform | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started)
 
 (下のほうに正しい手段が)
+
 ```bash
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
@@ -41,8 +40,8 @@ curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gp
 `curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/terraform.asc`
 `sudo apt-key list hashicorp`で再確認
 
-
 まとめると
+
 ```bash
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /etc/apt/trusted.gpg.d/hashicorp.asc > /dev/null
@@ -52,20 +51,18 @@ sudo apt-get update && sudo apt-get install terraform
 
 [第675回　apt-keyはなぜ廃止予定となったのか：Ubuntu Weekly Recipe｜gihyo.jp … 技術評論社](https://gihyo.jp/admin/serial/01/ubuntu-recipe/0675)
 
-
 ### pgp鍵の更新メモ(2023-02ごろ)
 
 とりあえず
 `sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AA16FCBCA621E701`
 (apt-keyは廃止だってば)
 
-
 ```bash
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list > /dev/null
 ```
 
-参考: [GPG error : The following signatures couldn't be verified because the public key is not available: NO\_PUBKEY AA16FCBCA621E701 · Issue \#32622 · hashicorp/terraform](https://github.com/hashicorp/terraform/issues/32622)
+参考: [GPG error : The following signatures couldn't be verified because the public key is not available: NO_PUBKEY AA16FCBCA621E701 · Issue \#32622 · hashicorp/terraform](https://github.com/hashicorp/terraform/issues/32622)
 
 ## 直接落とす
 
@@ -77,6 +74,7 @@ HashiCorpから落とす。
 GoLangだからダウンロードして展開するだけ。
 
 (2022-06-13)
+
 ```sh
 sudo yum install curl unzip
 # or
@@ -91,7 +89,7 @@ terraform -v
 
 ```bash
 terraform -install-autocomplete
-. ~/.bashrc 
+. ~/.bashrc
 ```
 
 # プラグインのキャッシュ
@@ -104,7 +102,6 @@ plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
 ```
 
 [CLI Configuration \| Terraform by HashiCorp](https://www.terraform.io/cli/config/config-file#plugin_cache_dir)
-
 
 # ドキュメント
 
@@ -120,7 +117,6 @@ plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
 
 # ログを出す
 
-
 ```bash
 export TF_LOG=WARN
 export TF_LOG_PATH=./terraform.log
@@ -130,12 +126,10 @@ TF_LOGは TRACE DEBUG INFO WARN ERROR OFF
 
 [Environment Variables | Terraform by HashiCorp](https://www.terraform.io/cli/config/environment-variables)
 
-
 # security_groups で forces replacement とか言われたら
 
 aws_instance で security_groupsを使うな。
 vpc_security_group_idsを使うこと。
-
 
 # associate_public_ip_address で forces replacement とか言われたら
 
@@ -158,7 +152,7 @@ To do so please visit https://aws.amazon.com/marketplace/pp?sku=cotnnspjrsi38lfn
 2. `Continue to Subscribe` ボタン
 3. `Accept Term` ボタン (このへんプロダクトによりけり)
 
-#  terraform import aws_key_pair. が失敗する
+# terraform import aws_key_pair. が失敗する
 
 [Terraform fails to import key pair with Amazon EC2 - Stack Overflow](https://stackoverflow.com/questions/40120065/terraform-fails-to-import-key-pair-with-amazon-ec2)
 
@@ -189,14 +183,13 @@ stateファイルを管理共有参照流用できる。
 - [Backend Overview - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends)
 - [Backend Type: local | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends/local)
 - [Backend Type: s3 | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends/s3)
-- [Backend Type: azurerm | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends/azurerm) 
+- [Backend Type: azurerm | Terraform by HashiCorp](https://www.terraform.io/language/settings/backends/azurerm)
 
 あとこれ
 [Store Remote State | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/aws-remote?in=terraform/aws-get-started)
 
 backendのkeyにvarが使えない。
 [Terraformの「ここはvariable使えないのか...」となった所 - Qiita](https://qiita.com/ymmy02/items/e7368abd8e3dafbc5c52)
-
 
 ## backendのkeyにvarが使えないのが辛い
 
@@ -206,13 +199,10 @@ backendのkeyにvarが使えない。
 
 [snowflake cloud data platform - "Variables may not be used here" during terraform init - Stack Overflow](https://stackoverflow.com/questions/65838989/variables-may-not-be-used-here-during-terraform-init)
 
-
-
 # Linter
 
 - [terraform-linters/tflint: A Pluggable Terraform Linter](https://github.com/terraform-linters/tflint)
 - [aquasecurity/tfsec: Security scanner for your Terraform code](https://github.com/aquasecurity/tfsec)
-
 
 # ランダムな名前
 
@@ -224,14 +214,12 @@ name必須のもの以外でname省略すればOKみたい。
 - [How to use unique resource names with Terraform - Advanced Web Machinery](https://advancedweb.hu/how-to-use-unique-resource-names-with-terraform/)
 - [Docs overview | hashicorp/random | Terraform Registry](https://registry.terraform.io/providers/hashicorp/random/latest/docs)
 
-
-#  .terraform.lock.hcl
+# .terraform.lock.hcl
 
 `go.sum` みたいなやつ。
 
 gitには残すべきなんだけど、ちがうプラットフォームに持ってくと死ぬ。(Goのバイナリのハッシュが違うから当然だけど)
 CI/CDとかで問題になるかも。
-
 
 # Windows用の.terraformrc
 
@@ -239,8 +227,7 @@ CI/CDとかで問題になるかも。
 
 `%APPDATA%\terraform.rc`
 
-plugin_cache_dirとかは掘ってくれない。￥は\\。 
-
+plugin_cache_dirとかは掘ってくれない。￥は\\。
 
 # terraform import
 
@@ -250,7 +237,6 @@ plugin_cache_dirとかは掘ってくれない。￥は\\。
 
 まあそうでしょう。
 
-
 # localsは
 
 マクロみたいに使える感じ。スコープがよくわからん。moduleの外へ出てこれる?
@@ -259,9 +245,7 @@ plugin_cache_dirとかは掘ってくれない。￥は\\。
 
 モジュールでもとのroleにpolicyを追加していける感じなのかな。
 
-
 # ここの名前
-
 
 ```terraform
 resource "aws_instance" "web" {
@@ -270,10 +254,9 @@ resource "aws_instance" "web" {
 }
 ```
 
-の web の名前は  local name でいいみたい。
+の web の名前は local name でいいみたい。
 
 [Resources - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language/resources/syntax)
-
 
 # terraform-docs
 
@@ -292,6 +275,7 @@ terraform.tfvarsを生成できるのは便利かも。
 ```bash
 terraform-docs tfvars hcl .
 ```
+
 stdoutに出るので terraform.tfvars にリダイレクトするなどして適当に編集する。
 
 # aws_api_gateway_deployment
@@ -301,6 +285,7 @@ deploymentに対処するには
 ```bash
 terraform taint aws_api_gateway_deployment.example
 ```
+
 みたいにするか [Serverless with AWS Lambda and API Gateway | Guides | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/2.34.0/docs/guides/serverless-with-aws-lambda-and-api-gateway)
 
 aws_api_gateway_deploymentリソースで
@@ -310,24 +295,22 @@ stage_descriptionに時間を指定するか `stage_description = "timestamp = $
 
 [aws_api_gateway_deployment | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_deployment) にあるようにtriggerをコツコツ書くか。
 
-
-# aws_api_gateway_integration 
+# aws_api_gateway_integration
 
 [aws_api_gateway_integration | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_integration)
 
-[integration\_http\_method](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_integration#integration_http_method)
+[integration_http_method](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_integration#integration_http_method)
+
 > Not all methods are compatible with all AWS integrations. e.g., Lambda function can only be invoked via POST.
 
-typeが AWS* なら **integration_http_methodは絶対POSTでないとダメ**。
+typeが AWS\* なら **integration_http_methodは絶対POSTでないとダメ**。
 
-参照:  [Lambda 統合を使用した API Gateway API の「Execution failed due to configuration」(設定エラーのため実行に失敗しました) エラーを修正する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-lambda-template-invoke-error/)
-
+参照: [Lambda 統合を使用した API Gateway API の「Execution failed due to configuration」(設定エラーのため実行に失敗しました) エラーを修正する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/api-gateway-lambda-template-invoke-error/)
 
 # aws_api_gateway_rest_api で OpenAPIを使う
 
 - [aws_api_gateway_rest_api | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_rest_api)
 - [terraform-provider-aws/examples/api-gateway-rest-api-openapi at main · hashicorp/terraform-provider-aws](https://github.com/hashicorp/terraform-provider-aws/tree/main/examples/api-gateway-rest-api-openapi)
-
 
 # terraform outputを環境変数に出す
 
@@ -336,7 +319,6 @@ typeが AWS* なら **integration_http_methodは絶対POSTでないとダメ**�
 - [Assign terraform output to environment variable - Stack Overflow](https://stackoverflow.com/questions/64834935/assign-terraform-output-to-environment-variable)
 - [bash - Can I set terraform output to env variables? - Stack Overflow](https://stackoverflow.com/questions/65315202/can-i-set-terraform-output-to-env-variables)
 - [Output Data from Terraform | Terraform - HashiCorp Learn](https://learn.hashicorp.com/tutorials/terraform/outputs)
-  
 
 # リソースのリスト
 
@@ -347,6 +329,7 @@ terraform state list
 # AWSマルチアカウント
 
 これとこれを組合せばできるはず。
+
 - [amazon web services - Deploying to multiple AWS accounts with Terraform? - Stack Overflow](https://stackoverflow.com/questions/52206436/deploying-to-multiple-aws-accounts-with-terraform)
 - [amazon web services - Terraformを使用して複数のアカウントに展開しますか？ - 初心者向けチュートリアル](https://tutorialmore.com/questions-304405.htm)
 
@@ -354,7 +337,6 @@ terraform state list
 [alias: Multiple Provider Configurations](https://www.terraform.io/language/providers/configuration#alias-multiple-provider-configurations)
 
 これはAWSとAzureみたいなことはできるのか?
-
 
 # フォルダの中身を全部s3にアップロード
 
@@ -368,7 +350,6 @@ contents_typeについては
 この "Expanding to multi-file upload"の例がいいかも。
 [Using Terraform for S3 Storage with MIME Type Association | State Farm Engineering](https://engineering.statefarm.com/blog/terraform-s3-upload-with-mime/)
 
-
 # backendの練習
 
 たとえばbackendをS3にとれば、別のホストでもOK、のはずなんだけど、ホントかどうかを試してみる。
@@ -376,21 +357,18 @@ contents_typeについては
 バックエンドは「S3バックエンドを作るTerraform」があったので、これをちょっとだけカスタマイズして使わせていただいた。
 [Backend の S3 や DynamoDB 自体を terraform で管理するセットアップ方法 - Qiita](https://qiita.com/saiya_moebius/items/a8f8aa3683c2347d607c)
 
-
 # aws_s3_bucket の website_endpoint が null になる
 
 これバグかなにか。
 2度applyするととれる。あきらめてRegionやなんかから合成するか
 aws_s3_bucket_website_configuration の website_endpointを使う。
 
-
 # override.tf
 
 - [Override Files - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language/files/override)
 - [Terraformのstate移動とrename](https://dev.thanaism.com/2021/08/dividing-terraform-state/)
 
-> Terraformでは*_override.tfあるいはoverride.tfという名称のファイルは、実行時に上書き情報として処理されるようになっています
-
+> Terraformでは\*\_override.tfあるいはoverride.tfという名称のファイルは、実行時に上書き情報として処理されるようになっています
 
 # stateの移動・分離
 
@@ -404,18 +382,16 @@ aws_s3_bucket_website_configuration の website_endpointを使う。
 1. Environment variables
 1. The terraform.tfvars file,
 1. The terraform.tfvars.json file
-1. Any *.auto.tfvars or *.auto.tfvars.json files, processed in lexical order of their filenames.
+1. Any _.auto.tfvars or _.auto.tfvars.json files, processed in lexical order of their filenames.
 1. Any -var and -var-file options on the command line, in the order they are provided. (This includes variables set by a Terraform Cloud workspace.)
 
 1から順に適応。`*.auto.tfvars`についてはファイル名順。
-
 
 # terraform.tfvarをレポジトリに含められない問題
 
 [Terraform .tfvars files: Variables Management with Examples](https://spacelift.io/blog/terraform-tfvars)
 
 うまい方法がない。gitに「シークレットチャンネル」みたいのがあるといいんだけど。
-
 
 # Terraformのドリフト検出と反映について
 
@@ -427,13 +403,11 @@ aws_s3_bucket_website_configuration の website_endpointを使う。
 上のはちょっとふるい。(-refresh-onlyオプションが無い)
 下のは [Associate Tutorial List | Terraform - HashiCorp Learn](https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials) の一部
 
-
 - `terraform refresh` - stateを現実にあわせる
 - `terraform apply --refresh` - レビュー付き
 
 基本は `terraform apply`だけでも現実との乖離をチェックする。
 `pulumi up`は`pulumi refresh`を明示しないとダメ。
-
 
 # null
 
@@ -445,9 +419,7 @@ aws_s3_bucket_website_configuration の website_endpointを使う。
 [驚き最小の原則](https://ja.wikipedia.org/wiki/%E9%A9%9A%E3%81%8D%E6%9C%80%E5%B0%8F%E3%81%AE%E5%8E%9F%E5%89%87)に反している。
 こういうところが専用言語が嫌われる理由。
 
-
 # terrafomer, terracognito
-
 
 [Releases · GoogleCloudPlatform/terraformer](https://github.com/GoogleCloudPlatform/terraformer/releases)
 
@@ -456,8 +428,8 @@ curl -L https://github.com/GoogleCloudPlatform/terraformer/releases/download/0.8
 chmod +x terraformer
 mv terraformer ~/bin   # ここは各自アレンジ
 ```
-all(全プロバイダ)だとバイナリが結構でかいので、特定のだけ落としてもいい。
 
+all(全プロバイダ)だとバイナリが結構でかいので、特定のだけ落としてもいい。
 
 ```bash
 terraformer import aws list
@@ -470,13 +442,11 @@ plugins探しに行く先がよくわからん。
 aws prviderだけのmain.tf作ってterraform applyすればOK。
 [Terraformerを使用して既存のAWS環境をエクスポートする | zoo200's MemoMemo](https://zoo200.net/export-aws-with-terraformer/)
 
-
 # terraformで条件分岐
 
 terraformに条件分岐は存在しません。三項演算子はある。
 
 [Conditional Expressions - Configuration Language | Terraform by HashiCorp](https://www.terraform.io/language/expressions/conditionals)
-
 
 # tfsec、terrascan
 
@@ -490,7 +460,6 @@ sudo mv tfsec /usr/local/bin
 
 "aws_s3_bucket_acl"とか見てくれないで文句を言う。
 
-
 [tenable/terrascan: Detect compliance and security violations across Infrastructure as Code to mitigate risk before provisioning cloud native infrastructure.](https://github.com/tenable/terrascan)
 
 ```bash
@@ -500,20 +469,20 @@ chmod +x terrascan
 sudo mv terrascan /usr/local/bin
 ```
 
-
 # TerraformでIAMユーザを作りアクセスキーを得る
 
 PGPキーがいる。なければ `gpg --gen-key`
 
 参考
+
 - [Create AWS IAM User Login Profile with PGP encrypted password in Terraform | DevCoops](https://devcoops.com/create-aws-iam-user-login-profile-pgp-ecrypted-password-terraform/)
 - [Decrypt iam_user_login_profile password in Terraform | DevCoops](https://devcoops.com/decrypt-aws-iam-user-login-profile-password-terraform/)
 - [aws_iam_access_key | Resources | hashicorp/aws | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key)
 
-
 # tfsec:ignoreはブロックの直前に書く
 
 こんな感じ
+
 ```terraform
 # tfsec:ignore:aws-s3-encryption-customer-key
 # ここになにか書いたらダメ
@@ -529,7 +498,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "default" {
 
 tfsec:ignore:が複数あるときは1行にスペースをセパレータで書く。
 
-
 # stateの現在の設定値を見る
 
 ```bash
@@ -541,9 +509,7 @@ terraform state show aws_s3_bucket.www
 
 コマンドが違うのがいやだなあ。
 
-
 # terraformerメモ
-
 
 > Support terraform 0.13 (for terraform 0.11 use v0.7.9).
 
@@ -569,7 +535,6 @@ roleでmanaged_policy_arns(CFnのManagedPolicyArns)が抜けたりするので�
 
 CFnの出力を見ながら、Terraform出力を編集する感じ。
 
-
 # terracognitaメモ
 
 進行状況が出るのがえらい。
@@ -581,21 +546,23 @@ aws_cloudwatch_log_groupが見つからない。
 aws_lambda_permissionもない。
 
 `-i aws_cloudwatch_log_group` だと
+
 > could not import from AWS: the resource type is not supported
 
 ですってさ。
-
 
 # 複数のプラットフォーム対応の.terraform.hcl.lock
 
 [[小ネタ] 複数のプラットフォームで terraform initする際の注意点 | DevelopersIO](https://dev.classmethod.jp/articles/multiplatform-terraform-init-lock/)
 
 とりあえずLinuxとWindowsなら
+
 ```bash
 terraform providers lock \
   -platform=windows_amd64 \
-  -platform=linux_amd64  
+  -platform=linux_amd64
 ```
+
 で。
 
 # state lock の解除方法

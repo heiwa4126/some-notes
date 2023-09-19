@@ -13,10 +13,9 @@
 * 無料
 * Azure Notebooks(Jupyter Notebookのオンライン版)がちゃんと機動するまで時間がかかる
 * 教材は[GitHub - MicrosoftDocs/ms-learn-ml-crash-course-python: Code samples for the ML Crash Course learning path.](https://github.com/MicrosoftDocs/ms-learn-ml-crash-course-python)にあるので、ローカルでもできるのが親切。
-  * コード部分の解説は英語。でもそんなに難しくない
+  - コード部分の解説は英語。でもそんなに難しくない
 * Jupyter Notebookの「操作方法」ではなく「使いどころ」が理解できる。
 * 「08. Neural Networks Introduction - Python」で'acc'は'accuracy'です。
-
 
 ## AWS hands-on
 
@@ -37,8 +36,3 @@
 - [統計入門（前編）](https://www.codexa.net/statistics-for-machine-learning-first/)
 - [統計入門（後編）](https://www.codexa.net/statistics-for-machine-learning-second/)
 - [線形回帰 入門](https://www.codexa.net/linear-regression-for-beginner/)
-
-
-
-
-

@@ -15,15 +15,14 @@ package.jsonで
 ```bash
 npm run build
 ```
-で、3つを全部実行できる、って話をきいたんで 要確認。
 
+で、3つを全部実行できる、って話をきいたんで 要確認。
 
 ## package.json の binフィールド
 
 binに複数フィールドがある場合の挙動
 
 [node\.js \- Is it possible to run multiple binaries from a single module via npx? \- Stack Overflow](https://stackoverflow.com/questions/53571669/is-it-possible-to-run-multiple-binaries-from-a-single-module-via-npx)
-
 
 [cowsay/package\.json](https://www.npmjs.com/package/cowsay?activeTab=explore) には binのエントリが2つある
 
@@ -35,6 +34,7 @@ binに複数フィールドがある場合の挙動
 ```
 
 `npx cowsay hi!`
+
 ```
  _____
 < hi! >
@@ -64,7 +64,7 @@ npxは単に「npmjsのパッケージをインストールせずに実行する
 npxがコマンドを探すステップは次のようになります:
 
 1. npxが引数として受け取ったコマンド名を、現在のプロジェクトのnode_modules/.binディレクトリにあるファイル名と照合します。
-もし一致するものがあれば、そのファイルを実行します。
+   もし一致するものがあれば、そのファイルを実行します。
 
 2. もし一致するものがなければ、npxはnpmレジストリにそのコマンド名に対応するパッケージがあるかどうかを検索します。もし見つかれば、そのパッケージを一時的にインストールして実行します。
 
@@ -87,8 +87,8 @@ npxのコマンドに'/'が含まれる場合は、
 ```bash
 npx Snazzah/slash-create-template init
 ```
-この場合、npxはGitHubからそのリポジトリを一時的にダウンロードして実行します。
 
+この場合、npxはGitHubからそのリポジトリを一時的にダウンロードして実行します。
 
 で、明示しない場合、package.jsonのbinのどのフィールドが実行されるか、
 については諸説あってよくわからない(特にスコープ付きパッケージ名の場合)
@@ -97,6 +97,7 @@ npx Snazzah/slash-create-template init
 - [@vue/cli-service](https://www.npmjs.com/package/@vue/cli-service?activeTab=explore) だと `vue-cli-service`
 
 まあ
+
 - **binに複数書くのはやめとけ**
 - スコープ付きなら衝突防止に vue-cli-service式にしとけ。ただしbin複数の場合npxで実行できなくなる。1個ならこれが安全。
 - binにスコープ付きパッケージ名をそのまま書くと(例えば"@vue/cli")、`npm i -g`した時に `cli`という名前になるので注意だ(なので実際の"@vue/cli"では "vue"になってる)
@@ -108,7 +109,6 @@ npx Snazzah/slash-create-template init
 できません。
 
 package.jsonのtypeにあるやつのみ
-
 
 ## package.json の files に package.json を書く必要はありますか?
 
@@ -202,7 +202,6 @@ moduleResolution の node モジュール解決方式は、
 - もしファイルが存在しない場合は、インポート文に指定された名前がディレクトリであると仮定して、その中に package.json があるかどうかを確認します。
 - もし package.json がある場合は、その中の main プロパティに指定されたファイル名に .ts, .tsx, .d.ts, .js, .jsx のいずれかの拡張子を付けてファイルが存在するかどうかを確認します。
 - もし package.json がない場合や main プロパティに指定されたファイルが存在しない場合は、ディレクトリ内に index.ts, index.tsx, index.d.ts, index.js, index.jsx のいずれかのファイルが存在するかどうかを確認します。
-
 
 ## ECMAScript Module Support と CommonJS implementation の違い
 

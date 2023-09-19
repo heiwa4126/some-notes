@@ -15,7 +15,7 @@ AWSではRHELがサブスクリプション無しでyumが使える。
 ## AWS
 
 > Red Hat Enterprise Linux (RHEL) のすべてのオンデマンド Amazon マシンイメージ (AMI) は、AWS で Red Hat Update Infrastructure (RHUI) を使用するように構成されています。
- 
+
 [Red Hat よくある質問](https://aws.amazon.com/jp/partners/redhat/faqs/)
 
 ## Azure
@@ -23,7 +23,6 @@ AWSではRHELがサブスクリプション無しでyumが使える。
 Red HatでもRHUI
 
 [Red Hat Update Infrastructure - Azure Virtual Machines | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui)
-
 
 # そうは言ってもこのメッセージが気になる場合
 
@@ -42,7 +41,6 @@ AzureやAWSのRed Hatでyum(dnf)使うと
 
 - [Solution for “This system is not registered with an entitlement server” | SahliTech, Inc](https://sahlitech.com/entitlement-server-fix/)
 - [EC2(RHEL)で dnf upgrade を実行した際に「This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.」というエラーが発生した場合の対処方法 | DevelopersIO](https://dev.classmethod.jp/articles/tsnote-ec2-dnf-upgrade-error-001/)
-
 
 # AWS上でRHEL8の例
 
@@ -111,9 +109,6 @@ Running transaction check
 (略)
 ```
 
-
-
-
 # Red Hat Developer Subscription のとりかたメモ
 
 [Red Hat アカウントの作成](https://www.redhat.com/wapps/ugc/register.html)でアカウントを作る。
@@ -126,7 +121,9 @@ Running transaction check
 [Red Hat Customer Portal](https://access.redhat.com/management/subscriptions) に、 Red Hat Developer Subscription が出現するのを確認。
 
 あとは対象ホストで
+
 ```
 # subscription-manager register
 ```
+
 RHNのIDとパスワードを入れる。

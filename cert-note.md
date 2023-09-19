@@ -20,6 +20,7 @@
 
 CA.plのパス長いので、
 aliasかPATHに追加するか、作業ディレクトリにsymlink。/usr/local/bin/CA.plとかにsymlinkでもいいね。
+
 ```sh
 ln -sf /usr/lib/ssl/misc/CA.pl .
 ```
@@ -27,6 +28,7 @@ ln -sf /usr/lib/ssl/misc/CA.pl .
 デフォルト設定: `/etc/ssl/openssl.cnf`
 
 Ubuntuでの例
+
 ```
 $ ls -la /etc/ssl/openssl.cnf /usr/lib/ssl/openssl.cnf
 -rw-r--r-- 1 root root 10998 Dec 13  2018 /etc/ssl/openssl.cnf
@@ -76,7 +78,6 @@ A challenge password []:
 An optional company name []:
 ```
 
-
 ```
 $ tree demoCA/
 demoCA/
@@ -96,11 +97,10 @@ demoCA/
 ```
 
 WindowsなんかでプライベートCAを簡単にインポートできるようにDER形式に変換したバージョンも作っておく。
+
 ```
 openssl x509 -outform der -in cacert.pem -out cacert.der
 ```
-
-
 
 ふつうにサイト証明書つくってみる.
 
@@ -114,15 +114,15 @@ cd ..
 ```
 
 で
+
 ```
 ./CA.pl -sign
 ```
+
 newcert.pemが生成される。
 
-
-
-
 serialが1個増える
+
 ```
 $ git diff demoCA/serial
 diff --git a/demoCA/serial b/demoCA/serial
@@ -136,10 +136,11 @@ index ceff5d6..791b9f4 100644
 $ openssl x509 -noout -in newcert.pem -serial
 serial=0F33CB476EB6FA690D14DAC7D00BD9D4D5ABAEE2
 ```
+
 [サーバ証明書のシリアル番号を確認したい - UPKI-FAQ - meatwiki](https://meatwiki.nii.ac.jp/confluence/pages/viewpage.action?pageId=67622450)
 
-
 で
+
 ```sh
 mv newcert.pem cert1
 rm newreq.pem
@@ -147,18 +148,18 @@ rm newreq.pem
 
 いやこれ面倒だな。カレントで作って、最後にpemを3つ移動とかがいいか?
 
-
 ## クライアント証明書
 
 [オレオレ認証局でクライアント認証 ～ ウェブの Basic 認証をリプレース \| OPTPiX Labs Blog](https://www.webtech.co.jp/blog/optpix_labs/server/1780/)
 
-
 CA.plを使うなら
+
 ```sh
 ./CA.pl -newreq
 ./CA.pl -sign
 ./CA.pl -pkcs12
 ```
+
 で`newcert.p12`ができる。
 
 [PKCS#12形式証明書に関するコマンド - Qiita](https://qiita.com/niko-pado/items/c864ca5b9b22ccaeb0ec)
@@ -166,16 +167,21 @@ CA.plを使うなら
 で、これを使ってみるnginx + curlで。
 
 curl用にpem形式のクライアント証明書`curl.pem`を作る。
+
 ```sh
 openssl pkcs12 -in newcert.p12 -out curl.pem -nodes -clcerts
 ```
+
 で、
+
 ```sh
 curl -E ./curl.pem {URL}
 ```
+
 みたいに。
 
 nginx側はいろいろあるけど、「特定のディレクトリ以下をクライアント証明が必要」にしてみる
+
 ```
 # -*- mode: nginx -*-
 
@@ -196,18 +202,13 @@ location /clientauth/ {
 [ssl_client_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_client_certificate)
 はサイトごとに1つしかもてないみたい。
 
-
 ## mutual TLS authentication
 
 mutual TLS(mTLS または 2way TLS)
 
 [【図解】mutual\-TLS \(mTLS, 2way TLS\),クライアント認証とトークンバインディング over http \| SEの道標](https://milestone-of-se.nesuke.com/nw-basic/tls/mutual-tls-token-binding/)
 
-
 ## AWS Lambdaで
-
-
-
 
 # 他
 

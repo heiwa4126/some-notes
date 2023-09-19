@@ -3,11 +3,11 @@
 UNICODEをまとめてみる.
 
 # 参考
+
 - [Unicode](https://seiai.ed.jp/sys/text/csd/cf14/c14a070.html)
 - [Glossary](http://www.unicode.org/glossary/)
 - [サロゲート](http://exlight.net/devel/unicode/surrogate.html)
 - [Unicode文字のマッピング - Wikipedia](https://ja.wikipedia.org/wiki/Unicode%E6%96%87%E5%AD%97%E3%81%AE%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0)
-
 
 # 「ユニコードスカラー値」と「コードポイント」
 
@@ -21,6 +21,7 @@ UNICODEをまとめてみる.
 21ビット(いまのところ)。
 
 で、このコードポイントから
+
 - 上位サロゲート(high-surrogates サロゲートペアの前半の2バイト)
 - 下位サロゲート(low-surrogates サロゲートペアの後半の2バイト)
 
@@ -37,13 +38,12 @@ UNICODEをまとめてみる.
 0xE000 から 10FFFF
 。
 
-
 # サロゲートペアはなんのためにあるの?
 
 - [Glossary](http://www.unicode.org/glossary/#surrogate_pair)
 - [3.8 Surrogates - The Unicode Standard, Version 13.0](http://www.unicode.org/versions/Unicode13.0.0/ch03.pdf#G2630)
 
->  Surrogate pairs are used only in UTF-16.
+> Surrogate pairs are used only in UTF-16.
 
 って書いてあるので、UTF-8には関係がない。
 
@@ -67,7 +67,6 @@ JavaScriptはUTF-16
 (と、[What every JavaScript developer should know about Unicode](https://dmitripavlutin.com/what-every-javascript-developer-should-know-about-unicode/)に書いてあった)
 だそうだけど、エンジンによって異なりそう。
 
-
 # ウムラウトなど
 
 Unicodeには
@@ -77,4 +76,3 @@ UTF-32でも1文字4byteとは限らない。
 # emoji
 
 [UnicodeのEmojiの一覧 - Wikipedia](https://ja.wikipedia.org/wiki/Unicode%E3%81%AEEmoji%E3%81%AE%E4%B8%80%E8%A6%A7)
-

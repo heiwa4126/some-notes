@@ -1,12 +1,8 @@
 # AWS Cloud Control API
 
-
 # 使い方
 
 [Getting started with Cloud Control API - Cloud Control API](https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/getting-started.html)
-
-
-
 
 # サポートしているリソースの一覧
 
@@ -22,11 +18,9 @@ aws cloudformation list-types --type RESOURCE --visibility PUBLIC --provisioning
 ```
 
 または
-[CloudFormation レジストリ: アアクティブ化済み拡張機能](https://ap-northeast-1.console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/registry/activated-extensions/resource-types) 
+[CloudFormation レジストリ: アアクティブ化済み拡張機能](https://ap-northeast-1.console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/registry/activated-extensions/resource-types)
 
 「アアクティブ化済み拡張機能」はママ。もとは "Registry: Activated extensions"
-
-
 
 # パラメータの詳細
 
@@ -37,7 +31,7 @@ aws cloudformation list-types --type RESOURCE --visibility PUBLIC --provisioning
 
 ```sh
 aws cloudformation describe-type --type RESOURCE --type-name "AWS::Logs::LogGroup" > x.json
-jq -r ."Schema" x.json | jq . 
+jq -r ."Schema" x.json | jq .
 ```
 
 CFnのドキュメントとだいたい同じものが出るけど
@@ -51,7 +45,6 @@ CFnのドキュメントとだいたい同じものが出るけど
 - リソースタイプがサポートする操作
 - 必要なパーミッション
 
-
 # 既存のリソースの状態を見て同じものが作れるかを調べてみるメモ
 
 (2021-11)
@@ -61,6 +54,6 @@ CFnのドキュメントとだいたい同じものが出るけど
 
 EC2もInstanceがサポートされてない。
 
-S3ぐらい? 
+S3ぐらい?
 
 普通リソース単体で使うことなんかない(と思う)。まだCFnのほうが楽っぽい。

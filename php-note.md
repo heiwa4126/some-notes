@@ -1,4 +1,3 @@
-
 # remi
 
 ```
@@ -13,6 +12,7 @@ Ubuntu 18.04LTSで
 ```sh
 sudo apt install nginx php-fpm -y
 ```
+
 - php-fpmの設定ファイル - `/etc/php/7.2/fpm/pool.d/www.conf`
 - php-fpmのPHP設定ファイル - `/etc/php/7.2/fpm/php.ini`と`/etc/php/7.2/fpm/conf.d/*`
 
@@ -23,6 +23,7 @@ sudo apt install nginx php-fpm -y
 
 /etc/nginx/php.confに
 nginx <-> PHP の設定ファイルを置く。
+
 ```
 location ~ \.php$ {
     try_files $uri =404;
@@ -34,19 +35,23 @@ location ~ \.php$ {
     fastcgi_pass unix:/run/php/php7.2-fpm.sock;
 }
 ```
-*.phpのファイルを全部php-fpmで処理する設定。
+
+\*.phpのファイルを全部php-fpmで処理する設定。
 
 で、これを
-/etc/nginx/sites-available/*
+/etc/nginx/sites-available/\*
 で `include php.conf;` する。
 
 HTTPとHTTPSの2つ分あるかもなのでincludeにした。
 
 できたら
+
 ```
 nginx -t
 ```
+
 でシンタックスチェック。OKならreloadかrestart
+
 ```sh
 systemctl reload nginx
 # or
@@ -55,20 +60,18 @@ systemctl restart nginx
 
 インストールしたままの設定ならdocument rootは`/var/www/html`なので
 `/var/www/html/index.php`におなじみの
+
 ```php
 <?php
 phpinfo();
 ?>
 ```
+
 を書いて、
 `curl 127.0.0.1/index.php`
 でテストする。
 
 サービス名が`php7.2-fpm.service`なのがちょっとイヤ。
-
-
-
-
 
 参考:
 [Module ngx_http_fastcgi_module](http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html)

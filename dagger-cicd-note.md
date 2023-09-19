@@ -1,4 +1,3 @@
-
 # install
 
 Ubuntu LTS
@@ -23,7 +22,6 @@ $ dagger version
 dagger 0.2.36 (ea275a3ba) linux/amd64
 ```
 
-
 # hello world
 
 まずcuelangのhello world.
@@ -33,7 +31,7 @@ Dockerは要るので
 [Install Docker Engine on Ubuntu \| Docker Documentation](https://docs.docker.com/engine/install/ubuntu/)
 
 ```bash
-mkdir -p ~/works/dagger/hello 
+mkdir -p ~/works/dagger/hello
 cd !$
 dagger project init
 dagger project update
@@ -41,11 +39,13 @@ curl "https://raw.githubusercontent.com/dagger/dagger/v0.2.7/pkg/universe.dagger
 ```
 
 で、
+
 ```bash
 dagger do hello --log-format=plain
 ```
 
 出力
+
 ```
 $ dagger do hello --log-format=plain
 3:32PM INFO  actions._alpine | computing
@@ -69,12 +69,14 @@ sshトンネリングでlocalhost:8080 につないでみる。
 npm install -g http-server
 http-server ./build/
 ```
+
 -oオプションが使えない。
 
 で `http://127.0.0.1:8080/index.html`
 おお見えた。
 
 では
+
 > In the todoapp directory, edit line 25 of src/components/Form.js and save the file.
 
 をやってみる。
@@ -82,30 +84,34 @@ http-server ./build/
 `What needs to be done?` を `What must be done today?`にしてみた。
 
 でもいちど
+
 ```
 dagger do build
 ```
+
 して、wwwブラウザをリロード。
 おお変わった。
 
 ローカルでできると楽だなあ。
-
 
 # CUEメモ
 
 JSONの上位互換で (YAMLと互換ではない)、制約とか重複排除とかあってすごい面白い。
 
 インストール
+
 ```bash
 go install cuelang.org/go/cmd/cue@latest
 ```
 
 YAMLに変換
+
 ```bash
 cue export ex1.cue --out yaml
 ```
 
 cueもbash completeionあった
+
 ```bash
 cue completion bash > /tmp/cue
 sudo mv /tmp/cue /usr/share/bash-completion/completions/
@@ -113,10 +119,10 @@ sudo mv /tmp/cue /usr/share/bash-completion/completions/
 
 CLIの解説: [CUE's cli commands | Overview | Cuetorials](https://cuetorials.com/overview/cli-commands/)
 
-
 `daggaer.cue` を `cue export` すると、だいたいエラーになるのは何で?
 
 いや同じところで出るな。dagger.#Plan &で client: platform: にデフォルト値がないのか。
+
 ```json
     client: {
         platform: {
@@ -125,12 +131,13 @@ CLIの解説: [CUE's cli commands | Overview | Cuetorials](https://cuetorials.co
             }
     }
 ```
+
 とかを付け加えると、とりあえず通ります。値があってるかどうかは微妙。
 
 `cue eval`で。
 
-
 CUEのチュートリアル
+
 - [Cuetorials](https://cuetorials.com/)
 - [CUE Playground](https://cuelang.org/play/)
 

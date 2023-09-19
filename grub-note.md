@@ -1,10 +1,9 @@
-
-
 RHEL6はGRUB2じゃなくてGRUB(0.97)だった。confは/boot/grub/grub.conf(BIOS)
 
 RHEL7はGRUB2(2.02)。confは/boot/grub/grub.conf(BIOS)
 
 EFIでは2箇所にあって
+
 - /boot/efi/EFI/redhat/grub.cfg (EFI用)
 - /boot/grub2/grub.cfg (BIOS用)
 

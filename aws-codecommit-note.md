@@ -1,8 +1,6 @@
-
 # CodeCommitで驚いたこと
 
 レポジトリにリージョンがある。
-
 
 # HTTPS (GRC)で驚いたこと
 
@@ -12,9 +10,11 @@
 ```sh
 pip3 install --user -U git-remote-codecommit
 ```
+
 でインストール。
 
 .git/configはこんな感じ
+
 ```
 (略)
 [remote "codecommit1"]
@@ -24,7 +24,9 @@ pip3 install --user -U git-remote-codecommit
 ```
 
 んで
+
 ```sh
 AWS_PROFILE=codecommit1 git push codecommit1
 ```
+
 みたいに使う。

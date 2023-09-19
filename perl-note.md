@@ -25,7 +25,6 @@ perl cpanm -L extlibpath --installdeps .
 カレントディレクトリにcpanfileを置いて、extlibpathにCAPNモジュールをインストール
 (試してない)。
 
-
 # perl formatter
 
 perltidy
@@ -34,6 +33,7 @@ perltidy
 - [perltidy - a perl script indenter and reformatter - metacpan.org](https://metacpan.org/pod/perltidy)
 
 よくある使い方
+
 ```sh
 perltidy -b -i=2 *.pl
 ```
@@ -41,6 +41,5 @@ perltidy -b -i=2 *.pl
 ~/.perltidyrcをちゃんと書くとよい。
 
 サンプル:
+
 - [.perltidyrc Perl Best Practices](https://gist.github.com/kimmel/1305940)
-
-

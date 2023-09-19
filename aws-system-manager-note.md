@@ -1,5 +1,3 @@
-
-
 [Tera TermでSSMセッションマネージャーを通してSSHアクセスしてみる | DevelopersIO](https://dev.classmethod.jp/articles/teraterm-ssm-session-manager-ssh/)
 
 LinuxからLinuxだとこんな感じ。

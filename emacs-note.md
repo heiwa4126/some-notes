@@ -26,6 +26,7 @@ M-x delete-duplicate-lines
 ```
 
 参考:
+
 - [Emacs 24.4 の新機能・重複行を削除する delete-duplicate-lines - 雑文発散(2014-08-05)](https://suzuki.tdiary.net/20140805.html)
 - [elisp - how to delete the repeat lines in emacs - Stack Overflow](https://stackoverflow.com/questions/13046791/how-to-delete-the-repeat-lines-in-emacs)
 
@@ -39,7 +40,6 @@ M-x delete-duplicate-lines
 
 - [elisp - Elispで変数を指定する際 'hoge と #'hoge の違いとは - スタック・オーバーフロー](https://ja.stackoverflow.com/questions/29185/elisp%E3%81%A7%E5%A4%89%E6%95%B0%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E9%9A%9B-hoge-%E3%81%A8-hoge-%E3%81%AE%E9%81%95%E3%81%84%E3%81%A8%E3%81%AF)
 - [elisp - When should sharp quotes be used? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/35988/when-should-sharp-quotes-be-used)
-
 
 # rainbow-delimiters
 
@@ -57,7 +57,6 @@ M-x delete-duplicate-lines
 `M-x package-refresh-contents [RET]`
 
 `M-x package-autoremove [RET]`
-
 
 - [package: パッケージ管理ツール | Emacs JP](https://emacs-jp.github.io/packages/package)
 - [Getting Started - MELPA](https://melpa.org/#/getting-started)
@@ -110,9 +109,7 @@ C-h w command RET
 指定したコマンドを実行するキーを表示します(where-is)．
 ```
 
-
 # LSPモード
-
 
 - [LSP Mode - Language Server Protocol support for Emacs - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/)
 
@@ -121,13 +118,9 @@ C-h w command RET
 から
 
 Pythonで元祖pyls使うなら
+
 - [Python (Palantir) - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/)
 - [GitHub - palantir/python-language-server: An implementation of the Language Server Protocol for Python](https://github.com/palantir/python-language-server)
-
-
-
-
-
 
 ## LSPモード TIPS
 
@@ -144,10 +137,8 @@ Pythonで元祖pyls使うなら
 
 追加/削除したら、emacsを再起動。
 
-
 フォーマットは
 `M-x lsp-format-buffer`
-
 
 # コマンドの出力を自動スクロールする
 
@@ -155,10 +146,8 @@ Pythonで元祖pyls使うなら
 (setq shell-command-dont-erase-buffer 'end-last-out)
 ```
 
-- [How to make *Shell Command Output* buffer scroll to the end? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/50299/how-to-make-shell-command-output-buffer-scroll-to-the-end)
+- [How to make _Shell Command Output_ buffer scroll to the end? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/50299/how-to-make-shell-command-output-buffer-scroll-to-the-end)
 - [https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html](https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html) - の一番下。
-
-
 
 # ELPAのPGPキー
 
@@ -168,9 +157,11 @@ Pythonで元祖pyls使うなら
 Failed to verify signature archive-contents.sig:
 No public key for 066DAFCB81E42C40 created at 2021-04-15T06:05:02+0900 using RSA
 ```
+
 になるとき。
 
 正しい手順は以下の通り(2021-04頃)
+
 ```sh
 mkdir ~/.emacs.d/elpa/gnupg -p --mode 0700
 echo "keyserver hkp://keys.gnupg.net" > ~/.emacs.d/elpa/gnupg/gpg.conf
@@ -180,9 +171,9 @@ gpg --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
 古いgpgだと`--receive-keys`オプションがないので`--recv-keys`
 
 参考:
+
 - [Cannot run melpa package refresh due to gpg errors - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/60554/cannot-run-melpa-package-refresh-due-to-gpg-errors)
 - [Emacs に yaml-mode をインストールできなかった。 - Qiita](https://qiita.com/ryo-sato/items/d42e301648175b41c522)
-
 
 # Ubuntu 1804にemacs27
 
@@ -196,11 +187,11 @@ sudo add-apt-repository ppa:kelleyk/emacs
 sudo apt update
 sudo apt install emacs27-nox
 ```
+
 25を残しといて `sudo update-alternatives --config emacs`する手もあります。
 
 LSPのバージョンが変わるので
 `rm ~/.emacs.d/.lsp-session-v1`
-
 
 # コンソールからペーストするときインデントさせない
 
@@ -209,8 +200,8 @@ LSPのバージョンが変わるので
 ```
 M-x electric-indent-mode RET
 ```
-呼ぶたびにON/OFFする。
 
+呼ぶたびにON/OFFする。
 
 # git以下でバックアップファイルができない
 
@@ -219,12 +210,14 @@ version controlあると`*~`ができない。まあ好き好きだろうけど�
 ```lisp
 (setq vc-make-backup-files t)
 ```
+
 でバックアップファイル
 
 - [emacs does not backup files in git repo](https://stackoverflow.com/questions/56915816/emacs-does-not-backup-files-in-git-repo)
 - [vc\-make\-backup\-file](https://ayatakesi.github.io/emacs/24.5/Backup.html)
 
 履歴とかも含めて、init.elにはこうしてみた(ほぼコピペ)。
+
 ```lisp
 (setq
  backup-by-copying t      ; don't clobber symlinks

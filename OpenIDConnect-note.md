@@ -22,7 +22,6 @@ Amazon Web Services (AWS)には、OpenID Connect (OIDC) プロバイダを構築
 
 選択するオプションは、アプリケーションの要件やインフラストラクチャの要件によって異なります。例えば、Amazon Cognitoは簡単に使用でき、モバイルアプリケーションやWebアプリケーションに適していますが、AWS IAMはAWSリソースにアクセスを制御するために使用することができます。 AWS Directory ServiceやAWS Managed Microsoft ADは、オンプレミスのアクティブディレクトリとの統合に適しています。EC2インスタンス上に自分で構築する場合は、自分で管理する必要があります。
 
-
 Amazon Cognitoを使用してOpenID Connect (OIDC) プロバイダを作成する手順は次のようになります。
 
 1. Amazon Cognito コンソールにサインインします。
@@ -42,7 +41,6 @@ OIDCプロバイダが作成されました。アプリケーションからCogn
 
 これらは一般的な手順ですが、詳細については、AWS Cognito のドキュメントを参照してください。
 
-
 AWS Amplify ライブラリを使用します。 Amplifyは、AWSを使用してモバイルおよびWebアプリケーションを構築するためのJavaScript ライブラリで、Cognitoの認証を簡単に使用することができます。
 
 1.  `npm install aws-amplify` コマンドを使用してAmplifyをインストールします。
@@ -56,7 +54,6 @@ AWS Amplify ライブラリを使用します。 Amplifyは、AWSを使用して
 9.  `Auth.currentSession()` を使って、現在のセッション情報を取得します。
 
 これらは一般的な手順ですが、詳細については、AWS Amplify のドキュメントや、Amplify React Components を参照してください。
-
 
 # EC2上にOpenID Connect (OIDC) プロバイダ
 
@@ -74,7 +71,6 @@ EC2インスタンス上にOpenID Connect (OIDC) プロバイダを作成する�
 
 これらは一般的な手順ですが、詳細については、各OIDCプロバイダのフレームワークのドキュメントを参照してください。また、セキュリティ面については専門知識が必要なので、適切な対策を行うようにしてください。
 
-
 [steverhoades/oauth2-openid-connect-server: An OpenID Connect Server plugin for The PHP League's OAuth2 Server](https://github.com/steverhoades/oauth2-openid-connect-server)
 
 Keycloakは、OpenID Connect (OIDC) とSAMLをベースにした認証および認可ソリューションです。KeycloakはJavaで書かれており、オープンソースソフトウェアです。
@@ -88,7 +84,6 @@ Keycloakは、EC2インスタンス上にインストールして使用するこ
 また、AWSには、Cognitoというサービスもあり、認証と認可に利用することができます。
 
 [KeycloakをAWS上に構築してセキュリティ検証してみた - Qiita](https://qiita.com/HiroyaEnd/items/8656583b31bc912eedb2)
-
 
 # Azureでは
 

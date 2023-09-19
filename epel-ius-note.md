@@ -11,7 +11,7 @@ EPELとIUSの設定をググるのに若干時間がかかったので
 
 RHEL6
 
-``` bash
+```bash
 sudo yum install -y \
  https://repo.ius.io/ius-release-el6.rpm \
  https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
@@ -19,7 +19,7 @@ sudo yum install -y \
 
 RHEL7
 
-``` bash
+```bash
 sudo yum install -y \
  https://repo.ius.io/ius-release-el7.rpm \
  https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -27,7 +27,7 @@ sudo yum install -y \
 
 よく使うものセット
 
-``` bash
+```bash
 sudo yum install tmux git222 etckeeper jq -y
 sudo etckeeper init
 sudo etckeeper commit "Initial"

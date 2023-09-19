@@ -14,20 +14,21 @@ https://msdnshared.blob.core.windows.net/media/2018/03/IESecurityZone.pdf
 
 (MSはよく消えるので、用心のため[ローカルコピー](./imgs/IESecurityZone.pdf))
 
-
 ここで出てくる
+
 - イントラネットのネットワークを自動的に検出する
   - ほかのゾーンに指定されていないローカル(イントラネット)のサイトをすべて含める
   - プロキシサーバーを使用しないサイトをすべて含める
   - すべてのネットワークパス(UNC) を含める
 
 は、これ
-![ローカルイントラネット](imgs/ie-opt-local.png "ローカルイントラネット")
+![ローカルイントラネット](imgs/ie-opt-local.png 'ローカルイントラネット')
 
 これは、
+
 1. [インターネット オプション] を開き、[セキュリティ] タブを表示します
 2. [ローカル イントラネット] アイコンをクリックし、[サイト] ボタンをクリックします。
-![インターネット オプション](imgs/ie-opt.png "インターネット オプション")
+   ![インターネット オプション](imgs/ie-opt.png 'インターネット オプション')
 
 で、表示する。
 
@@ -45,5 +46,5 @@ https://msdnshared.blob.core.windows.net/media/2018/03/IESecurityZone.pdf
 
 ## 参考
 
-* [IE のセキュリティ ゾーンについて – Japan IE Support Team Blog](https://blogs.technet.microsoft.com/jpieblog/2016/05/27/ie-securityzone/)
-* [Internet Explorer のセキュリティ ゾーン | Hebikuzure's Tech Memo](https://hebikuzure.wordpress.com/2013/12/24/internet-explorer-%E3%81%AE%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3-%E3%82%BE%E3%83%BC%E3%83%B3/)
+- [IE のセキュリティ ゾーンについて – Japan IE Support Team Blog](https://blogs.technet.microsoft.com/jpieblog/2016/05/27/ie-securityzone/)
+- [Internet Explorer のセキュリティ ゾーン | Hebikuzure's Tech Memo](https://hebikuzure.wordpress.com/2013/12/24/internet-explorer-%E3%81%AE%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3-%E3%82%BE%E3%83%BC%E3%83%B3/)

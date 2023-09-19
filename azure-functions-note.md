@@ -47,9 +47,6 @@ AWS Lambdaと全然違う。
 
 [Azure Functions での従量課金プランのコストの見積もり | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-consumption-costs)
 
-
-
-
 # 以下の記事はやや古いけど参考にはなります
 
 ^^^^^^^^^^^^^^^
@@ -57,7 +54,6 @@ AWS Lambdaと全然違う。
 # Azure Functions リファレンス
 
 - [Azure Functions のドキュメント | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/)
-
 
 # functionsの開発にいるもの
 
@@ -75,7 +71,6 @@ AWS Lambdaと全然違う。
 
 チュートリアル [Visual Studio Code を使用して Azure で初めての関数を作成する](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-first-function-vs-code)にはVScode+ExtensionやVisual Studioが必須のように書かれていますが、funcコマンドでなんとでもなる。
 
-
 # リンク
 
 ## Azure CLI
@@ -89,11 +84,9 @@ AWS Lambdaと全然違う。
 
 Azure Functions Runtime 2.0.12850が2019-10-29に出てた。
 
-
 ## 日本語ドキュメント
 
 [azure-docs.ja-jp/articles/azure-functions at master · MicrosoftDocs/azure-docs.ja-jp](https://github.com/MicrosoftDocs/azure-docs.ja-jp/tree/master/articles/azure-functions)
-
 
 # Pythonの制限(2019-7)
 
@@ -104,6 +97,7 @@ v2.7.1724
 Japan EastでもPython使えるみたい(2019-10)
 
 使えるリージョンがいまのところ
+
 - West US
 - East US
 - West Europe
@@ -121,7 +115,6 @@ App Serviceプランだけなので、
 
 [Azure Functions のスケールとホスティング | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-scale#premium-plan)
 
-
 ## 前提
 
 ここから開始→ [Azure で HTTP によってトリガーされる関数を作成する | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-first-function-python)
@@ -129,9 +122,11 @@ App Serviceプランだけなので、
 > Python 3.6 のインストール
 
 は省略。本当に必要なのかはわからないがvenvを使うので
+
 ```
 sudo apt-get install python3-venv
 ```
+
 しておく。
 
 > Azure CLI バージョン 2.x 以降をインストールします。
@@ -139,24 +134,26 @@ sudo apt-get install python3-venv
 [Azure CLI のインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli?view=azure-cli-latest)
 参照。
 
-
 > Azure Functions Core Tools バージョン 2.6.666 以降をインストールします。
 
 [Azure Functions Core Tools の操作 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-run-local#v2)参照
 
 Azure CLI入れてあるなら下の手順はスキップ
-``` bash
+
+```bash
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
 ```
 
 次に
-``` bash
+
+```bash
 sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod $(lsb_release -cs) main" > /etc/apt/sources.list.d/dotnetdev.list'
 sudo apt-get update
 ```
 
 さらに
+
 ```
 sudo apt-get install azure-functions-core-tools
 ```
@@ -164,23 +161,27 @@ sudo apt-get install azure-functions-core-tools
 ## 準備
 
 作業ディレクトリ作る & 移動
+
 ```
 mkdir works/azure
 cd !$
 ```
 
 ローカル関数プロジェクトを作成
+
 ```
 func init MyFunctionProj
 cd MyFunctionProj
 ```
 
 venv環境作成
+
 ```
 python3 -m venv .env
 ```
 
 venv環境へ移動(毎回最初に実行)
+
 ```
 ource .env/bin/activate
 ```
@@ -199,55 +200,60 @@ AzureWebJobsStorageの接続文字列を編集する。
 この設定はあとで`func azure functionapp fetch-app-settings <APP_NAME>`で上書きされる。
 先にポータルでfunction作ってからのほうが楽かもしれない。
 
-
-
 関数つくる。中身は空で。
-``` bash
+
+```bash
 func new --template "Http Trigger" --name HttpTrigger1
 func new --template "Timer Trigger" --name TimerTrigger1
 ```
 
 ホスト起動
-``` bash
+
+```bash
 func host start
 ```
 
 関数を呼ぶ。とりあえず引数無しで。
 
 HttpTrigger1の方
-``` bash
+
+```bash
 $ curl --get http://localhost:7071/api/HttpTrigger1?name=Azure%20Rocks
 Hello Azure Rocks!
 ```
 
 TimerTrigger1の方
-``` bash
+
+```bash
 curl -i http://localhost:7071/admin/functions/TimerTrigger1
 ```
+
 これでJSONがずらずら帰ってくれば、とりあえずOK。
 
 一方Storageの方に `azure-webjobs-hosts`というのができてるはず。
 
-
 venvの環境は`~/.env/lib/python3.6/site-packages`からモジュールを読むので
+
 ```
 pip install -r requirements.txt -U -t ~/.env/lib/python3.6/site-packages
 ```
-みたいなことが必要(当たってる?)。
 
+みたいなことが必要(当たってる?)。
 
 # InsightsのLog Analytics(Azure Monitor)で使えるクエリサンプル
 
 参考:
+
 - [Overview - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/kusto/query/)
 
-
 普通のlogっぽい出力を得る
+
 ```
 traces | top 100 by timestamp desc | project timestamp, message
 ```
 
 過去60分以内のerrorレベルのログを出す。
+
 ```
 union traces
 | union exceptions
@@ -255,9 +261,9 @@ union traces
 | where customDimensions.LogLevel == "Error"
 | order by timestamp desc
 ```
+
 これは実際に使った。
 count>0のとき、メール送るアクショングループを起動する、という感じで(期間60分頻度5分)
-
 
 # Azure Functions Core Toolsのインストール
 
@@ -273,7 +279,6 @@ count>0のとき、メール送るアクショングループを起動する、�
 
 の順で。
 
-
 WindowsだとChocolatey でインストールしないと`func`が動かない。
 (npmでもproxyが邪魔で入らない場合があるけど、それとは別)
 
@@ -283,14 +288,17 @@ internal/child_process.js:366
     throw errnoException(err, 'spawn');
 (略)
 ```
+
 何かがたりないんだと思うけど、何だかはわからない。
 
 管理者権限で
+
 ```
 choco install azure-functions-core-tools
 ```
 
 結果
+
 ```
 C:\>func -v
 2.7.1724
@@ -300,7 +308,6 @@ C:\>func -v
 [Chocolatey Software | Installing Chocolatey](https://chocolatey.org/install)
 参照。
 
-
 # Azure Functionsのデプロイがめんどくさすぎる問題
 
 開発をしない、デプロイだけする人のことを考えたときに(SIer的な)
@@ -308,8 +315,6 @@ AWS Lambdaみたいな「ポータルからZIPでデプロイ」が無いのは�
 
 開発者にとっては、かなり便利()
 [Azure Functions のデプロイ テクノロジ | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-deployment-technologies)
-
-
 
 ## 発端
 
@@ -341,7 +346,6 @@ AWS Lambdaみたいにzipでなんとかならないのか(なるよね?)
 
 Azure CLIでzipを発行するのが
 
-
 ポータルで、該当functionから、プラットフォーム->デプロイセンター
 様々なデプロイが選べる。
 
@@ -360,7 +364,8 @@ Azure CLIでzipを発行するのが
 下のコマンドも行継続キャラを'^'にするだけでbatになる。Linuxとかでも同様にできる。
 
 ポータルでfunctionを作り、azure powershellでazureにlogin後、
-``` powershell
+
+```powershell
 az functionapp deployment source config-zip `
  -g <functionのリソースグループ> `
  -n <function名> `
@@ -368,6 +373,7 @@ az functionapp deployment source config-zip `
 ```
 
 実際に実行すると出力はこんな感じ(Powershell版)
+
 ```
 az : WARNING: Getting scm site credentials for zip deployment
 At C:\Users\heiwa4126\Documents\Projects\func-check-url-nodejs-zip\deploy1.ps1:1 char:1
@@ -386,18 +392,19 @@ WARNING: Starting zip deployment. This operation can take a while to complete ..
   (略)
 }
 ```
+
 ログ出力代わりにwarning出すな、といいたい(Python版のAzure CLIでは警告でません)。
 
 Azure powershellのインストールがめんどくさいので、
 最初の1回とか、二度と変更しないような場合に使う。
 
 Azure Functions Core Toolsが入っていれば
-``` bash
+
+```bash
 func azure functionapp publish <app name> --build remote
 ```
+
 の方が楽。
-
-
 
 ## 結論1
 
@@ -421,9 +428,9 @@ GitHubのprivateレポジトリでもOK
 2回め以降は「同期」ボタン。
 
 これはなかなか便利なので、TODO:
+
 - AWS lambdaでも同様のことができないか試す。
 - 継続的配置のGitHubのほうも試す。
-
 
 ## 結論2
 
@@ -460,8 +467,6 @@ node_modules以下も必要で、転送サイズが大きくなりがち。
 
 Azure FunctionsでLinuxを使うとデプロイセンターが使えない。
 
-
-
 # nodejs v12 LTS
 
 (この項は古い。2020-04現在12.x使える)
@@ -480,11 +485,10 @@ v12.13.0, but the runtime requires an LTS-covered major version (ex: 8.11.1 or 1
 ```
 npm update -g azure-functions-core-tools
 ```
+
 してもダメだった。
 
 Functionsの開発環境はしばらく10.xで。
-
-
 
 # 未整理メモ
 
@@ -492,42 +496,42 @@ Functionsの開発環境はしばらく10.xで。
 
 出力はInsightsのLog Analyticsに特殊な先頭文字付きで出し、
 Kustoクエリで
+
 ```
 traces
 | where (cloud_RoleName == "hello9vaglet") and (isempty(severityLevel) != true ) and ( message matches regex "^\\*\\*\\*\\*\\ " )
 | project timestamp, message
 ```
+
 みたいな感じで。
 
 queueに出力も簡単にできるのだが、意外とリードアウトがめんどくさい。
 
-
 欠点: Log Analyticsへの出力が死ぬほど遅い。
-
 
 # ホスティング プラン
 
 [Azure Functions のスケールとホスティング | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-scale)
 
-
 # よく使うfuncコマンド
 
 ## デプロイ
 
-``` bash
+```bash
 func azure functionapp publish <APP_NAME> --build remote
 ```
+
 `--build remote`オプションをつけるとリモートビルドする(
 `pip install -r requirements.txt`や
 `npm install`をリモートでやってくれるらしい)
 
 ## 設定のダウンロード
 
-``` bash
+```bash
 func azure functionapp fetch-app-settings <APP_NAME>
 ```
-local.settings.jsonに設定をダウンロードしてくれる。
 
+local.settings.jsonに設定をダウンロードしてくれる。
 
 # HTTPトリガのauthLevel
 
@@ -549,8 +553,8 @@ AWS CLIの `aws lambda invoke` に相当するものがないらしい。
 - [Azure Functions における Azure Queue Storage のバインド | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-storage-queue)
 - [Azure Functions における Azure Service Bus のバインド | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-service-bus)
 
-
 これも使えるかも。
+
 - [Durable Functions の概要 - Azure | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/durable/durable-functions-overview)
 - [GitHub - Azure/azure-functions-durable-js: JavaScript library for using the Durable Functions bindings](https://github.com/Azure/azure-functions-durable-js)
 
@@ -564,6 +568,7 @@ The data is anonymous and doesn't include any user specific or personal informat
 
 You can opt-out of telemetry by setting the FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT environment variable to '1' or 'true' using your favorite shell.
 ```
+
 ということなので~/.profileなどに`FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT=1`とか書いておく。
 
 see: [Azure/azure-functions-core-tools: Command line tools for Azure Functions](https://github.com/Azure/azure-functions-core-tools)
@@ -573,7 +578,6 @@ see: [Azure/azure-functions-core-tools: Command line tools for Azure Functions](
 Azure Functionsでdockerを使うと、Functionを停止しても料金が発生するので、辛い。
 
 Linuxベースのfunctions(Pythonとか)はそうではなかったような気がする。
-
 
 # 時は流れて2022-09
 

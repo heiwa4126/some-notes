@@ -17,6 +17,7 @@ ansible-galaxy role init sample1
 ```
 
 カレントディレクトリにこんな感じに生成される
+
 ```
 sample1/
 |-- README.md
@@ -41,7 +42,6 @@ sample1/
 
 [What's the difference between defaults and vars in an Ansible role? - Stack Overflow](https://stackoverflow.com/questions/29127560/whats-the-difference-between-defaults-and-vars-in-an-ansible-role)
 
-
 - [Using Variables — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable)
 - [変数の使用 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/playbooks_variables.html#ansible-variable-precedence)
 
@@ -63,7 +63,7 @@ sample1/
 taskでset_factに書くか、import_roleでvarsに書く。
 
 ```yaml
- tasks:
+tasks:
   - set_fact:
       foo: foo1
   - import_role:

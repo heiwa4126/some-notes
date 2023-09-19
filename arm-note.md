@@ -10,11 +10,10 @@ DuckDuckGo で "arm Microsoft.KeyVault"が早い。
 !bangで "!msd ARM Microsoft.KeyVault" はいまいち。
 
 ブラウザの検索の設定:
+
 - 説明: ARM (by DuckDuckGo)
 - 接頭語: arm
 - クエリ: https://duckduckgo.com/?q=ARM+%s
-
-
 
 # ドキュメントとチュートリアル
 

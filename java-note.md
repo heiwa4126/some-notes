@@ -24,10 +24,9 @@ JAVAめんどくさい。
 - [PowershellからJava](#powershellからjava)
 - [mavenメモ](#mavenメモ)
 
-
 # Tomcatの新し目のやつをRHELに入れたときに参考にした記事
 
-* [CentOS 7にTomcat9/JDK8の開発環境を構築する - Qiita](https://qiita.com/mkyz08/items/97802acb6911f0173e7c)
+- [CentOS 7にTomcat9/JDK8の開発環境を構築する - Qiita](https://qiita.com/mkyz08/items/97802acb6911f0173e7c)
 
 自分は OpenJDK(RHELの配布)と、ApacheのTomcat9で設定した。
 「参考」というよりはほぼそのままコピペ(tomcat.seviceとか)。
@@ -62,8 +61,8 @@ tomcat9では自前のloggerがちゃんとしてるので
 ディレクトリごと削除 または どこかに移動する。
 
 参考:
-- [Tomcat の初期設定まとめ - Qiita](https://qiita.com/hidekatsu-izuno/items/ab604b6c764b5b5a86ed)
 
+- [Tomcat の初期設定まとめ - Qiita](https://qiita.com/hidekatsu-izuno/items/ab604b6c764b5b5a86ed)
 
 # JAVAのCLASSPATH
 
@@ -79,6 +78,7 @@ Linix serverでX11がなくても使える。
 TODO: SDKMANも考慮する
 
 サーバなら
+
 ```sh
 apt install openjdk-11-jdk-headless
 # or
@@ -86,6 +86,7 @@ apt install openjdk-8-jdk-headless
 ```
 
 例)
+
 ```
 $ sudo apt install openjdk-11-jdk-headless
 
@@ -118,24 +119,25 @@ curlでできます。
 
 demo1.zipとか作って、ホストへコピーしてunzip。
 gradle版だと
+
 ```sh
 ./gradlew init
 ./gradlew wrapper
 ```
+
 で初期化。
 
 ```sh
 ./gradlew bootRun
 ```
+
 で起動。
 
 ```sh
 ./gradlew -stop
 ```
+
 で終了
-
-
-
 
 # Gradleインストール
 
@@ -146,6 +148,7 @@ SDKMAN!入れる
 sudo apt install zip unzip -y
 curl -s "https://get.sdkman.io" | bash
 ```
+
 メッセージに従ってパスを通して、バージョンだけ確認
 
 ```
@@ -167,10 +170,12 @@ sdk install gradle 6.5.1
 ```
 
 バージョンの確認は
+
 - [Gradle | Releases](https://gradle.org/releases/)
 - [Releases · gradle/gradle](https://github.com/gradle/gradle/releases)
 
 から。インストールできたら、これもバージョン確認。
+
 ```sh
 gradle -version
 ```
@@ -180,6 +185,7 @@ gradle -version
 参考: [Building Java Applications](https://guides.gradle.org/building-java-applications/)
 
 プロジェクトフォルダ作って、移動。
+
 ```sh
 mkdir -p ~/works/gradle/demo
 cd !$
@@ -188,6 +194,7 @@ gradle init
 
 最初に `applicaion`と`Java`を選び、
 あとはデフォルト値でリターンキーを押すだけ。
+
 ```
 Select type of project to generate:
   1: basic
@@ -211,9 +218,11 @@ Enter selection (default: Java) [1..5] 3
 Unix/Windowsで作業できるようにgradle wrapperがプロジェクトルートに出来るので、以下は`gradle`コマンドの代わりに、`./gradlew`を使う。
 
 実行は
+
 ```
 ./gradlew run
 ```
+
 で `Hello world.`が表示される。
 
 ここまでが本家のドキュメント
@@ -225,25 +234,31 @@ Unix/Windowsで作業できるようにgradle wrapperがプロジェクトルー
 ```
 ./gradlew build
 ```
+
 で
 `./build/distributions/`に、
 ディストリビューションパッケージが
 tarとzipが出来てるので、
 
 例えば(これは普通でない方法)
+
 ```sh
 mkdir x
 cd x
 tar xvf ../build/distributions/demo.tar
 demo/bin/demo
 ```
+
 とかすると
+
 ```
 Hello world!
 ```
+
 が表示される。依存jarファイルもそのまま入っている。
 
 普通はこっち。
+
 ```
 ./gradlew installDist
 # 古い
@@ -251,8 +266,8 @@ build/install/demo/bin/demo
 # 7ぐらい
 ./app/build/install/app/bin/app
 ```
-でもOK.
 
+でもOK.
 
 ## 実行できるjarを作る その1
 
@@ -260,6 +275,7 @@ build/install/demo/bin/demo
 ./gradlew jar
 java -jar ./build/libs/demo.jar
 ```
+
 としても実行できない。実行例:
 
 ```
@@ -271,14 +287,17 @@ no main manifest attribute, in ./build/libs/demo.jar
 - 自動生成される`./build/tmp/jar/MANIFEST.MF`に`Main-Class`が抜けている
 
 ので`build.groove`を編集する。のまえに
+
 ```sh
 git init
 git add --all
 git commit -am 'Inital commit'
 ```
+
 しておく。
 
 以下の要領で`build.gradle`を編集。
+
 ```diff
 diff --git a/build.gradle b/build.gradle
 index a91a718..dd8997f 100644
@@ -306,28 +325,30 @@ index a91a718..dd8997f 100644
 ```
 
 で、
+
 ```sh
 ./gradlew jar
 java -jar ./build/libs/demo.jar
 ```
 
 実行例:
+
 ```
 $ java -jar ./build/libs/demo.jar
 Hello world.
 ```
-
 
 ## 実行できるjarを作る その2
 
 「その1」で「依存するjarなし」にして作ったわけだけど、
 そんなプロジェクトはあるとも思えないので、
 最初から入ってた
+
 - [Google Guava - Wikipedia](https://ja.wikipedia.org/wiki/Google_Guava)
 - [google/guava: Google core libraries for Java](https://github.com/google/guava)
-を使ったApp.javaに変えてみる。
+  を使ったApp.javaに変えてみる。
 
-[com.google.common.base.Strings#repeat](https://guava.dev/releases/19.0/api/docs/com/google/common/base/Strings.html#repeat(java.lang.String,%20int))を使って、Hello worldの上下に罫線を引く。
+[com.google.common.base.Strings#repeat](<https://guava.dev/releases/19.0/api/docs/com/google/common/base/Strings.html#repeat(java.lang.String,%20int)>)を使って、Hello worldの上下に罫線を引く。
 
 `src/main/java/demo/App.java`
 
@@ -362,10 +383,12 @@ Hello world.
 ```
 
 で、
+
 ```
 ./gradlew jar
 java -jar ./build/libs/demo.jar
 ```
+
 すると、
 「`com/google/common/base/Strings`が見つからない」
 ってエラーが出る。
@@ -374,8 +397,8 @@ java -jar ./build/libs/demo.jar
 
 - [johnrengelman/shadow: Gradle plugin to create fat/uber JARs, apply file transforms, and relocate packages for applications and libraries\. Gradle version of Maven's Shade plugin\.](https://github.com/johnrengelman/shadow)
 
-
 `bundle.gradle`を編集して
+
 ```diff
 @@ -12,6 +12,8 @@ plugins {
 
@@ -402,14 +425,17 @@ java -jar ./build/libs/demo.jar
 ```
 
 参考:
+
 - [shadow plugin - Getting Started](https://imperceptiblethoughts.com/shadow/getting-started/#default-java-groovy-tasks)
 - [Gradle: 依存ライブラリ入りのjarを作る - Qiita](https://qiita.com/suin/items/641c1c1ec9ab5447221e)
 
 `./gradlew tasks`でshadow関係が増えてるのを確認して、
+
 ```
 ./gradlew shadowJar
 java -jar ./build/libs/demo-all.jar
 ```
+
 **`demo.jar`ではなくて`demo-all.jar`なのに注意。**
 
 `shadowDistZip`と`shadowDistTar`もあるけど、
@@ -418,6 +444,7 @@ jarでなくていいなら
 minimizeができるのは大きいかも。
 
 実験:
+
 ```
 $ ./gradlew distTar shadowDistTar distZip shadowDistZip
 ## `./gradlew build`でもOK
@@ -434,12 +461,10 @@ $ ls -sh1 ./build/distributions/demo*.{tar,zip}
 implementation group: 'org\.postgresql', name: 'postgresql', version: '42\.2\.23'
 ](https://mvnrepository.com/artifact/org.postgresql/postgresql/42.2.23)
 
-
 # Gradle参考リンク
 
 - [いい感じのbuild.gradleが書きたい - Qiita](https://qiita.com/kuro46/items/1e42a54c9a52c1f0381c)
 - [GradleでのJavaのビルドとテスト - GitHub Docs](https://docs.github.com/ja/actions/language-and-framework-guides/building-and-testing-java-with-gradle)
-
 
 # Groovyチュートリアル
 
@@ -449,24 +474,30 @@ Hello worldぐらいは書いてみる。
 - [1. index - Apache Groovyチュートリアル](https://koji-k.github.io/groovy-tutorial/)
 
 インストールとGroovy shell起動
+
 ```
 sdk install groovy
 groovysh
 ```
+
 参考:
+
 - [The Apache Groovy programming language - Install Groovy](https://groovy-lang.org/install.html#SDKMAN)
 - [Available SDKs - SDKMAN! the Software Development Kit Manager](https://sdkman.io/sdks#groovy)
 
 Groovy shellで
+
 ```
 println "Hello world!"
 # cntl+dで抜ける
 ```
 
 `hello.groovy`を作る
+
 ```grooby
 println "Hello world!"
 ```
+
 で、
 
 ```sh
@@ -474,7 +505,9 @@ groovy Hello.groovy
 # or
 groovy Hello
 ```
+
 または
+
 ```sh
 groovyc Hello.groovy
 groovy Hello
@@ -483,6 +516,7 @@ groovy Hello
 ...あんまり楽しくない。
 
 出来たclassの中身見てみる。
+
 ```
 $ javap Hello.class
 Compiled from "Hello.groovy"
@@ -509,10 +543,10 @@ cd !$
 gradle init # application, groovyを選ぶ
 ./gradlew installDist
 ```
+
 で`build/install/`の下みるとantとか入ってる。groovy-allの依存が多いらしい。
 
 もっとチューニングする。
-
 
 # Kotlinチュートリアル
 
@@ -538,6 +572,7 @@ emacs hello.kt
 ```
 
 `hello.kt`
+
 ```kotlin
 fun main(args: Array<String>) {
   println("Hello, World!")
@@ -550,6 +585,7 @@ java -jar hello.jar
 ```
 
 これはわかりやすい。jarの中身を覗いてみる。
+
 ```
 $ jar -xvf hello.jar META-INF/MANIFEST.MF HelloKt.class
 
@@ -583,7 +619,6 @@ shellが`kotlinc-jvm`ってタイプしにくいぞ。
 - [Spring Web MVC サーブレットスタック - ドキュメント](https://spring.pleiades.io/spring/docs/5.2.8.RELEASE/spring-framework-reference/web.html#mvc)
 - [Tutorial: Using Thymeleaf (ja)](https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf_ja.html)
 
-
 ```sh
 sdk install springboot
 spring --version  # Spring CLI v2.3.2.RELEASE
@@ -602,13 +637,11 @@ Gradleでwarのを試してみる。まずGradleの普通の
 
 [Spring Boot 92\. 従来のデプロイ \- リファレンス](https://spring.pleiades.io/spring-boot/docs/2.1.4.RELEASE/reference/html/howto-traditional-deployment.html)
 
-
 なんとか動くwarまで出来たけど、手順がめんどうだなあ。
 
 # formatter
 
 Gradleならこれだ。[sherter/google\-java\-format\-gradle\-plugin](https://github.com/sherter/google-java-format-gradle-plugin)
-
 
 # PowershellからJava
 
@@ -617,11 +650,13 @@ Gradleならこれだ。[sherter/google\-java\-format\-gradle\-plugin](https://g
 [java - How to pass Properties to jar from Powershell? - Stack Overflow](https://stackoverflow.com/questions/1518698/how-to-pass-properties-to-jar-from-powershell)
 
 ↑からの例
+
 ```powershell
 java -jar "-Duser.language=en" any.jar
 ```
 
 なので例えばmavenだったら
+
 ```powershell
 mvn -B archetype:generate `
  "-DarchetypeArtifactId=maven-archetype-quickstart" `
@@ -630,6 +665,7 @@ mvn -B archetype:generate `
  "-DgroupId=com.example.hello" `
  "-DartifactId=hello"
 ```
+
 こんな感じ。
 
 # mavenメモ

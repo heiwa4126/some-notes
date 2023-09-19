@@ -136,23 +136,23 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: "2012-10-17"
+        Version: '2012-10-17'
         Statement:
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
-            Action: "sts:AssumeRole"
+            Action: 'sts:AssumeRole'
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Policies:
         - PolicyName: policy1
           PolicyDocument:
-            Version: "2012-10-17"
+            Version: '2012-10-17'
             Statement:
               - Effect: Allow
                 Action:
-                  - "secretsmanager:GetSecretValue"
-                Resource: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                  - 'secretsmanager:GetSecretValue'
+                Resource: 'arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
   SecretTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -185,7 +185,7 @@ Resources:
       Runtime: python3.6
       Policies:
         - AWSSecretsManagerGetSecretValuePolicy:
-            SecretArn: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            SecretArn: 'arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ```
 
 ただ、世の中には"LB のルールの順番を入れ替える lambda"みたいのもあって
@@ -325,7 +325,7 @@ Resources:
     DependsOn: HelloWorldFunction
     Properties:
       RetentionInDays: 7
-      LogGroupName: !Join ["", ["/aws/lambda/", !Ref HelloWorldFunction]]
+      LogGroupName: !Join ['', ['/aws/lambda/', !Ref HelloWorldFunction]]
 ```
 
 これ LogGroupName がデフォルトと一緒なので、
@@ -334,7 +334,7 @@ Resources:
 最初に書くか、別のパスにするか。
 
 ```yaml
-LogGroupName: !Join ["/", ["/aws/lambda", !Ref AWS::StackName, !Ref HelloWorldFunction]]
+LogGroupName: !Join ['/', ['/aws/lambda', !Ref AWS::StackName, !Ref HelloWorldFunction]]
 ```
 
 みたいにするといいとおもう。

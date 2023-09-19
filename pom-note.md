@@ -31,7 +31,6 @@ POMを読み込んで、必要な設定情報を取得し、ゴールを実行�
 POMで指定できる構成には、プロジェクトの依存関係、実行可能なプラグインまたはゴール、ビルドプロファイルなどがあります。
 その他、プロジェクトのバージョン、説明、開発者、メーリングリストなどの情報も指定することができます。
 
-
 # スーパーPOM
 
 Super POMは、MavenのデフォルトのPOMです。 (訳注:要はデフォルト値です)
@@ -40,7 +39,6 @@ Super POMは、MavenのデフォルトのPOMです。 (訳注:要はデフォル
 Super POM で指定された設定は、プロジェクト用に作成した POM に継承されることを意味します。
 
 [Maven 3.6.3 の Super POM](https://maven.apache.org/ref/3.6.3/maven-model-builder/super-pom.html) は、Maven Core リファレンス・ドキュメントで参照できます。
-
 
 # 最小限のPOM
 
@@ -57,7 +55,7 @@ POMの最小要件は以下の通りです。
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-app</artifactId>
   <version>1</version>
@@ -77,7 +75,6 @@ POMで指定されていない場合、デフォルト値の「jar」が使用�
 さらに、最小限のPOMでは、リポジトリが指定されていないことがわかります。
 最小限のPOMを使用してプロジェクトをビルドすると、Super POMのリポジトリ設定を継承することになります。
 したがって、Mavenが最小限のPOMの依存関係を見たとき、これらの依存関係はSuper POMで指定されたhttps://repo.maven.apache.org/maven2 からダウンロードされることがわかるでしょう。
-
 
 # プロジェクトの継承
 
@@ -101,7 +98,7 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-module</artifactId>
   <version>1</version>
@@ -125,16 +122,17 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 ここで、`com.mycompany.app:my-app:1` を `com.mycompany.app:my-module:1` の親アーティファクトにする場合、`com.mycompany.app:mymodule:1` の POM を以下の構成に変更しなければならないでしょう。
 
 `com.mycompany.app:my-module:1` の POM
+
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <parent>
     <groupId>com.mycompany.app</groupId>
     <artifactId>my-app</artifactId>
     <version>1</version>
   </parent>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-module</artifactId>
   <version>1</version>
@@ -151,19 +149,18 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <parent>
     <groupId>com.mycompany.app</groupId>
     <artifactId>my-app</artifactId>
     <version>1</version>
   </parent>
- 
+
   <artifactId>my-module</artifactId>
 </project>
 ```
 
 これにより、モジュールは親POMのgroupIdやバージョンを継承することができます。
-
 
 ## 例2
 
@@ -187,14 +184,14 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <parent>
     <groupId>com.mycompany.app</groupId>
     <artifactId>my-app</artifactId>
     <version>1</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
- 
+
   <artifactId>my-module</artifactId>
 </project>
 ```
@@ -215,11 +212,12 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 以前のオリジナルアーティファクトのPOMとディレクトリ構造がある場合
 (訳注:例1参照)。
 
-`com.mycompany.app:my-app:1`  の POM
+`com.mycompany.app:my-app:1` の POM
+
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-app</artifactId>
   <version>1</version>
@@ -227,10 +225,11 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 ```
 
 `com.mycompany.app:my-module:1` の POM
+
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-module</artifactId>
   <version>1</version>
@@ -238,6 +237,7 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 ```
 
 ディレクトリ構造
+
 ```
 .
  |-- my-module
@@ -251,12 +251,12 @@ Super POMはプロジェクト継承の一例ですが、以下の例で示す�
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-app</artifactId>
   <version>1</version>
   <packaging>pom</packaging>
- 
+
   <modules>
     <module>my-module</module>
   </modules>
@@ -270,7 +270,6 @@ packaging セクションと modules セクションが追加されました。
 
 これで、Maven コマンドが com.mycompany.app:my-app:1 を処理するたびに、その同じ Maven コマンドが com.mycompany.app:my-module:1 に対しても実行されるようになります。さらに、いくつかのコマンド（特にゴール）は、プロジェクト集約を異なる方法で処理します。
 
-
 ## 例4
 
 **シナリオ**
@@ -283,6 +282,7 @@ packaging セクションと modules セクションが追加されました。
  `-- parent
      `-- pom.xml
 ```
+
 親POMはどのようにモジュールを指定するのでしょうか?
 
 **解決方法**
@@ -291,12 +291,12 @@ packaging セクションと modules セクションが追加されました。
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-app</artifactId>
   <version>1</version>
   <packaging>pom</packaging>
- 
+
   <modules>
     <module>../my-module</module>
   </modules>
@@ -323,11 +323,12 @@ packaging セクションと modules セクションが追加されました。
 **シナリオ**
 以前のオリジナルアーティファクトのPOMを再度みてみましょう。
 
-`com.mycompany.app:my-app:1`  の POM
+`com.mycompany.app:my-app:1` の POM
+
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-app</artifactId>
   <version>1</version>
@@ -335,10 +336,11 @@ packaging セクションと modules セクションが追加されました。
 ```
 
 `com.mycompany.app:my-module:1` の POM
+
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-module</artifactId>
   <version>1</version>
@@ -346,6 +348,7 @@ packaging セクションと modules セクションが追加されました。
 ```
 
 ディレクトリ構造はこうです
+
 ```xml
 .
  |-- my-module
@@ -357,16 +360,17 @@ packaging セクションと modules セクションが追加されました。
 **解決方法**
 プロジェクトの継承と集約の両方を行うには、3つのルールをすべて適用すればよい。
 
-`com.mycompany.app:my-app:1`  の POM
+`com.mycompany.app:my-app:1` の POM
+
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-app</artifactId>
   <version>1</version>
   <packaging>pom</packaging>
- 
+
   <modules>
     <module>../my-module</module>
   </modules>
@@ -374,17 +378,18 @@ packaging セクションと modules セクションが追加されました。
 ```
 
 `com.mycompany.app:my-module:1` の POM
+
 ```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
- 
+
   <parent>
     <groupId>com.mycompany.app</groupId>
     <artifactId>my-app</artifactId>
     <version>1</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
- 
+
   <artifactId>my-module</artifactId>
 </project>
 ```
@@ -436,7 +441,7 @@ Mavenが推奨するプラクティスの1つは、「同じことを繰り返�
   <properties>
     <mavenVersion>3.0</mavenVersion>
   </properties>
- 
+
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>

@@ -5,7 +5,6 @@
 - [AWS CDK Workshop](#aws-cdk-workshop)
 - [AWS CloudShell](#aws-cloudshell)
 
-
 # インストール
 
 v1とv2でけっこう違うらしい。
@@ -15,8 +14,6 @@ npm install --location=global aws-cdk
 cdk bootstrap aws://123456789012/ap-northeast-1
 ```
 
-
-
 # AWS CDK Workshop
 
 素性はよくわからないけど日本語あった
@@ -24,10 +21,10 @@ cdk bootstrap aws://123456789012/ap-northeast-1
 
 オリジナル: [AWS CDK Intro Workshop :: AWS Cloud Development Kit (AWS CDK) Workshop](https://cdkworkshop.com/)
 
-
 # AWS CloudShell
 
 AWS CloudShell (2021-11-08)
+
 ```
 $ aws --version
 aws-cli/2.2.15 Python/3.8.8 Linux/4.14.243-185.433.amzn2.x86_64 exec-env/CloudShell exe/x86_64.amzn.2 prompt/off

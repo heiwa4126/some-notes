@@ -2,7 +2,6 @@
 
 Red Hat Enterprise Linuxのバージョンを固定する話。CentOSは対象外
 
-
 ```
 ## (たまに起動するホストだと証明書が変な時があるので)
 # subscription-manager repos --list-enabled
@@ -30,9 +29,11 @@ Red Hat Enterprise Linuxのバージョンを固定する話。CentOSは対象�
 # 手動でカーネルアップグレード
 
 yum.confに
+
 ```
 exclude=kernel-* kmod-* redhat-release-* perf-* python-perf-*
 ```
+
 と書いてあるような不快な環境でカーネルを更新するのに役立つ記事。
 
 [第5章 手動のカーネルアップグレード Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/kernel_administration_guide/ch-manually_upgrading_the_kernel)

@@ -43,7 +43,6 @@ Restricted Accessを選び
 Mail SendのMail Sendだけ有効なキーを作る
 (ここのUIが変なので苦労すること)。
 
-
 ## Postfix編
 
 以下のURLを参照
@@ -51,6 +50,7 @@ Mail SendのMail Sendだけ有効なキーを作る
 [Postfixでメール送信 - ドキュメント | SendGrid](https://sendgrid.kke.co.jp/docs/Integrate/Mail_Servers/postfix.html)
 
 `/etc/postfix/sasl_passwd`に設定する"ユーザ名:パスワード"は、
+
 - ユーザ名 `apikey` <- この6文字
 - パスワード さっき作ったmail sendだけ有効なAPIキー
 
@@ -61,11 +61,11 @@ Mail SendのMail Sendだけ有効なキーを作る
 [Exim 4 configuration for SendGrid | SendGrid Documentation](https://sendgrid.com/docs/for-developers/sending-email/exim/)
 
 postfix同様に
+
 - ユーザ名 `apikey` <- この6文字
 - パスワード さっき作ったmail sendだけ有効なAPIキー
 
 にすればできるはず(試してません)。
-
 
 # TIPS: 改行を有効にする。
 
@@ -76,9 +76,11 @@ HTMLメール対応のメールだと、改行が消えてしまう。
 [よくある質問 – メール改行トラブル編 | SendGridブログ](https://sendgrid.kke.co.jp/blog/?p=1521)
 に従って、
 [ポータル](https://app.sendgrid.com/login)から
+
 ```
 settings -> mail settings -> plain content -> active
 ```
+
 にしておくといいです。
 
 ただし、おそらく平文にするとビーコンによる既読管理ができなくなると思う。
@@ -89,11 +91,14 @@ settings -> mail settings -> plain content -> active
 Feb 14 04:41:32 XXXXXXXXXXXXXX postfix/smtp[22222]: warning: SASL authentication failure: No worthy mechs found
 Feb 14 04:41:32 XXXXXXXXXXXXXX postfix/smtp[22222]: 6F263169B46: SASL authentication failed; cannot authenticate to server smtp.sendgrid.net[161.202.148.179]: no mechanism available
 ```
+
 みたいなログが出るときには、
 たぶんパッケージが足りない。
+
 ```
 yum install cyrus-sasl cyrus-sasl-lib cyrus-sasl-plain cyrus-sasl-md5
 ```
+
 で、だいたい大丈夫なはず。
 
 # SendGridポータルの便利リンク

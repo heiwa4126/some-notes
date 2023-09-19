@@ -1,27 +1,20 @@
-
-
-
-
 # リンク
 
 ## 概要
 
-*   [「パスキー」って一体何だ？　パスワード不要の世界がやってくる（1/4 ページ） - ITmedia NEWS](https://www.itmedia.co.jp/news/articles/2301/23/news086.html)
-*   サンプル - [Passkeys.io – A Passkey Authentication Demo](https://www.passkeys.io/)
+- [「パスキー」って一体何だ？　パスワード不要の世界がやってくる（1/4 ページ） - ITmedia NEWS](https://www.itmedia.co.jp/news/articles/2301/23/news086.html)
+- サンプル - [Passkeys.io – A Passkey Authentication Demo](https://www.passkeys.io/)
 
 ## 自前で試す
 
-*   [パスワードレスな認証を実現する認証ミドルウェアのhanko | フューチャー技術ブログ](https://future-architect.github.io/articles/20220902a/)
-*   [Hanko - Open source authentication beyond passwords](https://www.hanko.io/)
-
+- [パスワードレスな認証を実現する認証ミドルウェアのhanko | フューチャー技術ブログ](https://future-architect.github.io/articles/20220902a/)
+- [Hanko - Open source authentication beyond passwords](https://www.hanko.io/)
 
 # ざっくり
 
 > パスキーは、パスワードを使わない認証方式を検討する業界団体「FIDO Alliance」が仕様を策定した技術。Web技術の標準化団体であるW3Cも協力していて、端的にいえば「FIDO2」「WebAuthn」「パスキー」という3つの技術を組み合わせたものだ。
 
-
 FIDO2 (Fast IDentity Online)はWebAuthn (Web Authentication)とFIDO CTAP (Client to Authenticator Protocol)の2つの仕様から構成されています。
-
 
 # 実装状況
 
@@ -42,8 +35,6 @@ WebAuthn
 - [duo-labs/webauthn: WebAuthn (FIDO2) server library written in Go](https://github.com/duo-labs/webauthn)
 
 FIDO CTAP
-
-
 
 # Javaによる実装
 
@@ -78,14 +69,10 @@ WebAuthnは、FIDOの一部として開発され、W3C (World Wide Web Consortiu
 
 FIDOとWebAuthnの違いは、FIDOは、FIDO準拠のセキュリティトークンやスマートフォンなどのFIDO認証デバイスを使用し、Webアプリケーションに統合したアプリケーションによってユーザー認証を行うことを指します。 WebAuthnは、WebブラウザーやWebアプリケーション上でのユーザー認証を安全に行うための仕様を指します。
 
-
-
-
-
 # WebAuthn
 
 - [Web Authentication: An API for accessing Public Key Credentials - Level 2](https://www.w3.org/TR/webauthn/) - 仕様
-- 
+-
 
 (ChatGPTに聞いてみた。なんだかあやしい)
 
@@ -110,11 +97,9 @@ WebAuthnの認証フローは次のようになります。
 
 このように、WebAuthnは、ブラウザーとWebサイト間で安全な認証を行うために、公開鍵暗号を使用します。この方式により、パスワードを使用しないため、パスワードのハッキングや漏洩などのセキュリティリスクを軽減します。また、二要素認証を簡単に実現するため、さらに高いセキュリティを提供します。
 
-
-- [How\_WebAuthn\_Works\_JP.pdf](https://www.okta.com/sites/default/files/2020-08/How_WebAuthn_Works_JP.pdf) の P.10あたりのフローが参考になるかも。
+- [How_WebAuthn_Works_JP.pdf](https://www.okta.com/sites/default/files/2020-08/How_WebAuthn_Works_JP.pdf) の P.10あたりのフローが参考になるかも。
 - [Guide to Web Authentication](https://webauthn.guide/)
 - [ウェブ認証 API - Web API | MDN](https://developer.mozilla.org/ja/docs/Web/API/Web_Authentication_API)
-
 
 # FIDO UAF, FIDO U2F and FIDO2 (plus FIDO CTAP)
 

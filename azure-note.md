@@ -34,7 +34,7 @@
 
 [apt を使用して Linux に Azure CLI をインストールする | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli-apt)
 
-``` bash
+```bash
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
@@ -109,7 +109,7 @@ az config param-persist on
 az config param-persist show
 ```
 
-設定は(いまのところ) .azure/.local_context_ユーザ名 というファイルに保存される。
+設定は(いまのところ) .azure/.local*context*ユーザ名 というファイルに保存される。
 ドキュメントにある .param_persist ってのはウソ (昔はこれだった、とかはあるかも)。
 
 # テナントID
@@ -245,6 +245,7 @@ $ systemctl status hv-fcopy-daemon
 # MSIとは
 
 またMicrosoftが名前変えやがった。
+
 > Azure リソースのマネージド ID は、以前のマネージドサービス ID (MSI) の新しい名前です。
 
 [Azure リソースのマネージド ID | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/overview)

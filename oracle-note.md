@@ -1,9 +1,10 @@
 Oracleのわけのわからなさは
-* 歴史的なもの
-* 環境的なもの
-* ライセンスのせい
-* すぐ変わるURL
-* アカウントがないと何も見れない
+
+- 歴史的なもの
+- 環境的なもの
+- ライセンスのせい
+- すぐ変わるURL
+- アカウントがないと何も見れない
 
 などが原因と思われる。まあ仕事でなかったら絶対に使わないよね。
 
@@ -21,14 +22,14 @@ Oracleの情報は見つけるのがしんどい。
 
 Oracleは12cの次が18c。
 
-
 # エディション
 
 Oracle12c(12.1.0.2以降)では
-* Enterprise Edition（EE）
-* Standard Edition 2（SE2）
-* Personal Edition（PE）
-(偉い順)
+
+- Enterprise Edition（EE）
+- Standard Edition 2（SE2）
+- Personal Edition（PE）
+  (偉い順)
 
 学習用なら`Personal Edition（PE）`。
 
@@ -42,15 +43,13 @@ Oracle12c(12.1.0.2以降)では
 
 PE版というものは特にない。普通にSE版を入れればOKで、あとは「使用上の制限」に従って使えばよい。
 
-
 参考:
-* [Oracle12cのエディションとは | Oracle初心者でもスッキリわかる](https://sql-oracle.com/?p=417)
-* [Oracle Database 12c エディション比較 - SE/EEの違い、Enterprise Editionでできること | Oracle オラクルエンジニア通信 - 技術資料、マニュアル、セミナー Blog](https://blogs.oracle.com/oracle4engineer/oracle-database-12c-seeeenterprise-edition)
-* [Oracle Databaseのエディション毎の違い | Oracle Technology Network Japan Blog](https://blogs.oracle.com/otnjp/oracle-database-v4)
 
+- [Oracle12cのエディションとは | Oracle初心者でもスッキリわかる](https://sql-oracle.com/?p=417)
+- [Oracle Database 12c エディション比較 - SE/EEの違い、Enterprise Editionでできること | Oracle オラクルエンジニア通信 - 技術資料、マニュアル、セミナー Blog](https://blogs.oracle.com/oracle4engineer/oracle-database-12c-seeeenterprise-edition)
+- [Oracle Databaseのエディション毎の違い | Oracle Technology Network Japan Blog](https://blogs.oracle.com/otnjp/oracle-database-v4)
 
 [Oracleの起動モード(NOMOUNT・MOUNT・OPEN)と使い方 | Oracle初心者でもスッキリわかる](https://sql-oracle.com/?p=56)
-
 
 # X
 
@@ -59,6 +58,7 @@ PE版というものは特にない。普通にSE版を入れればOKで、あ�
 Xが必要。
 
 RHEL/CentOSの場合
+
 ```
 sudo yum -y groupinstall "X Window System"
 sudo yum -y install vlgothic-* xterm xorg-x11-apps
@@ -69,15 +69,18 @@ sudo yum -y install vlgothic-* xterm xorg-x11-apps
 sshdが`X11Forwarding yes`になってるか確認。
 
 sshでログインするユーザのhomeに.Xauthorityファイルを作る。
+
 ```
 touch ~/.Xauthority
 ```
 
 X11を有効にしたputtyで接続し、DISPLAY環境変数を表示してみる。
+
 ```
 $ echo $DISPLAY
 localhost:10.0
 ```
+
 こんな感じになれば準備OK
 
 [PuTTY + Xming でX を使おう](http://www.ep.sci.hokudai.ac.jp/~epnetfan/tebiki/server-login/xming.html)
@@ -91,9 +94,6 @@ puttyから`xeyes &`してxeyesが表示されればOK(ものすごく遅いか�
 あとはputtyで`xterm &`でターミナル起動して、
 そこからLinuxを操作する。
 
-
-
-
 # sqlplusと叩いたときに何が起きているのか
 
 リスナー経由の接続と、そうでない接続。
@@ -104,27 +104,26 @@ puttyから`xeyes &`してxeyesが表示されればOK(ものすごく遅いか�
 
 リスナー経由の方法は`@<接続識別子>`以外にもいくつかある。
 
+- [「データベースへの接続の仕組み」を正しく理解する (1/2)：ゼロからのリレーショナルデータベース入門（8） - ＠IT](http://www.atmarkit.co.jp/ait/articles/0905/28/news109.html)
+- [データベースの識別とアクセス](https://docs.oracle.com/cd/E57425_01/121/NETAG/concepts.htm#CIHGGHEE)
 
-* [「データベースへの接続の仕組み」を正しく理解する (1/2)：ゼロからのリレーショナルデータベース入門（8） - ＠IT](http://www.atmarkit.co.jp/ait/articles/0905/28/news109.html)
-* [データベースの識別とアクセス](https://docs.oracle.com/cd/E57425_01/121/NETAG/concepts.htm#CIHGGHEE)
-
-* [リスナーを経由しない接続 - 解決!ORACLE!](http://www.noguopin.com/oracle/index.php?%A5%EA%A5%B9%A5%CA%A1%BC%A4%F2%B7%D0%CD%B3%A4%B7%A4%CA%A4%A4%C0%DC%C2%B3)
-* [ORACLE　クライアント接続設定(クライアント編)](http://www.doppo1.net/oracle/beginner/network_connect_2.html)
-* [「データベースへの接続の仕組み」を正しく理解する (1/2)：ゼロからのリレーショナルデータベース入門（8） - ＠IT](http://www.atmarkit.co.jp/ait/articles/0905/28/news109.html)
+- [リスナーを経由しない接続 - 解決!ORACLE!](http://www.noguopin.com/oracle/index.php?%A5%EA%A5%B9%A5%CA%A1%BC%A4%F2%B7%D0%CD%B3%A4%B7%A4%CA%A4%A4%C0%DC%C2%B3)
+- [ORACLE　クライアント接続設定(クライアント編)](http://www.doppo1.net/oracle/beginner/network_connect_2.html)
+- [「データベースへの接続の仕組み」を正しく理解する (1/2)：ゼロからのリレーショナルデータベース入門（8） - ＠IT](http://www.atmarkit.co.jp/ait/articles/0905/28/news109.html)
 
 # listener.ora
-
 
 完全なリファレンス:
 [Oracle Database Net Services管理者ガイド12cリリース1 (12.1)](https://docs.oracle.com/cd/E57425_01/121/NETAG/toc.htm)
 
 Oracle Net Servicesというのがリスナー。
 
-* [12.10.2 リスナーの設定とネットサービス名の登録（Oracleの場合）](http://software.fujitsu.com/jp/manual/manualfiles/M080163/J2X15990/05Z200/setup12/setup265.html)
-* (重要)[Oracle Net Listenerの構成と管理](http://otndnld.oracle.co.jp/document/products/oracle11g/111/doc_dvd/network.111/E05725-04/listenercfg.htm)
-* [リスナー・パラメータ（listener.ora）](http://otndnld.oracle.co.jp/document/products/oracle10g/102/doc_cd/network.102/B19209-01/listener.htm)
+- [12.10.2 リスナーの設定とネットサービス名の登録（Oracleの場合）](http://software.fujitsu.com/jp/manual/manualfiles/M080163/J2X15990/05Z200/setup12/setup265.html)
+- (重要)[Oracle Net Listenerの構成と管理](http://otndnld.oracle.co.jp/document/products/oracle11g/111/doc_dvd/network.111/E05725-04/listenercfg.htm)
+- [リスナー・パラメータ（listener.ora）](http://otndnld.oracle.co.jp/document/products/oracle10g/102/doc_cd/network.102/B19209-01/listener.htm)
 
 典型的なlistener.ora
+
 ```
 LISTENER =
   (DESCRIPTION_LIST =
@@ -142,15 +141,18 @@ SID_LIST_LISTENER=
     )
   )
 ```
+
 リスナー名`LISTNEER`を指定した例。これに`SID_LIST_<リスナー名>`でSIDの「静的登録」をする。
 外部プロシージャ・エージェント
 
 ただし、動的サービス登録すれば静的登録は不要。
+
 - (古い)PMONプロセス（PMON process）プロセス・モニター・データベース・プロセスによって
 - (12c)リスナー登録(LREG)プロセスによって
-動的登録されるらしい。
+  動的登録されるらしい。
 
 確認は
+
 ```
  lsnrctl status
 ``
@@ -170,3 +172,4 @@ listener.oraとtnsnames.ora
 
 listener.oraとtnsnames.oraのサンプル。
 * [サンプル・ファイル](http://otndnld.oracle.co.jp/document/products/oracle10g/102/doc_cd/gateways.102/B25249-01/a_smpfil.htm)
+```

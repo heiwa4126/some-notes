@@ -2,10 +2,9 @@
 
 メールを送る
 
-* [Amazon SES コンソールを使用して E メールを送信する \- Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-an-email-from-console.html)
-* [Amazon SES コンソール](https://console.aws.amazon.com/ses/)
-* [AWS Simple Email Service (新しいコンソール)](https://console.aws.amazon.com/sesv2/)
-
+- [Amazon SES コンソールを使用して E メールを送信する \- Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-an-email-from-console.html)
+- [Amazon SES コンソール](https://console.aws.amazon.com/ses/)
+- [AWS Simple Email Service (新しいコンソール)](https://console.aws.amazon.com/sesv2/)
 
 # ドメイン認証
 
@@ -55,32 +54,28 @@ Verification は `Status: verified`になった。
 - [Amazon SES SMTP 認証情報を取得 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/smtp-credentials.html)
 - [Amazon SES とPostfixの統合 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/postfix.html)
 
-
 # Amazon SES メールボックスシミュレーター
 
 バウンスのテストなどに使えるemailアドレス一覧
 
 [Amazon SES での E メール送信のテスト - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-email-simulator.html)
 
-
 # どこでも好きなアドレスにメールを送る
 
 ※ バウンスについてはあとで考える。
 
-* [Moving out of the Amazon SES sandbox - Amazon Simple Email Service](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html)
-* [(自動翻訳) Amazon SES サンドボックス外への移動 - Amazon Simple Email Service](https://docs.aws.amazon.com/ja_jp/ses/latest/dg/request-production-access.html)
-
+- [Moving out of the Amazon SES sandbox - Amazon Simple Email Service](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html)
+- [(自動翻訳) Amazon SES サンドボックス外への移動 - Amazon Simple Email Service](https://docs.aws.amazon.com/ja_jp/ses/latest/dg/request-production-access.html)
 
 サンドボックスの制限(↑から引用):
 
-* E メールの送信先は、検証済み E メールアドレスおよびドメイン、または Amazon SES メールボックスシミュレーターに制限されます。
-* 最大で 24 時間あたり 200 メッセージを送信できます。
-* 最大で 1 秒あたり 1 メッセージを送信できます。
+- E メールの送信先は、検証済み E メールアドレスおよびドメイン、または Amazon SES メールボックスシミュレーターに制限されます。
+- 最大で 24 時間あたり 200 メッセージを送信できます。
+- 最大で 1 秒あたり 1 メッセージを送信できます。
 
 これらに加えてサンドボックス内でも外でも適応される制限:
 
-* E メールは、検証済み E メールアドレスまたはドメインからのみ送信できます。
-
+- E メールは、検証済み E メールアドレスまたはドメインからのみ送信できます。
 
 サンドボックス外への移動の申請は自動化できる
 (CLIは
@@ -99,11 +94,10 @@ Verification は `Status: verified`になった。
 
 サンドボックスの中外の状態はテナントで1個しかないみたい。ドメインを複数ホストしても1個。
 
-
 # SESでメール送るのに最低でも必要なもの
 
-* 検証されたメールアドレス
-* または信頼されたドメイン
+- 検証されたメールアドレス
+- または信頼されたドメイン
 
 が必要。
 
@@ -118,8 +112,8 @@ aws sesv2 create-email-identity --email-identity foobarbaz@gmail.com
 
 # 返送率と苦情率
 
-* 返送率、バウンス率、 bounce rate
-* 苦情率、 complaint rate
+- 返送率、バウンス率、 bounce rate
+- 苦情率、 complaint rate
 
 [Amazon SES で返送率または苦情率のしきい値に関する通知を設定する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/ses-reputation-dashboard-bounce-rate/)
 

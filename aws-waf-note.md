@@ -41,7 +41,7 @@ CloudWatch Logs のリソースポリシーを aws cli で表示するには
 WAF の policyDocument 部分を YAML にしたもの。
 
 ```yaml
-Version: "2012-10-17"
+Version: '2012-10-17'
 Statement:
   - Effect: Allow
     Principal:
@@ -52,7 +52,7 @@ Statement:
     Resource: arn:aws:logs:ap-northeast-1:999999999999:log-group:aws-waf-logs-xxxxxxxxxxxx:*
     Condition:
       StringEquals:
-        aws:SourceAccount: "999999999999"
+        aws:SourceAccount: '999999999999'
       ArnLike:
         aws:SourceArn: arn:aws:logs:ap-northeast-1:999999999999:*
 ```

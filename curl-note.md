@@ -3,7 +3,6 @@ crulのメモ
 - [curl](https://curl.se/)
 - [README - Everything curl](https://everything.curl.dev/)
 
-
 # ~/.curlrc
 
 ```

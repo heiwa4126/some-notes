@@ -13,7 +13,7 @@
   - [よくあるテストユーザとテストデータの作り方](#よくあるテストユーザとテストデータの作り方)
   - [JDBC](#jdbc)
   - [WALアーカイブとは](#walアーカイブとは)
-  - [pg\_basebackup](#pg_basebackup)
+  - [pg_basebackup](#pg_basebackup)
   - [サーバからWALアーカイブを消す](#サーバからwalアーカイブを消す)
     - [.backupファイルサンプル](#backupファイルサンプル)
   - [Slony-Iでレプリケーション](#slony-iでレプリケーション)
@@ -240,7 +240,7 @@ host    all             all             ::1/128                 md5
 
 - UNIXのpostgresユーザからは`psql`コマンドだけで、パスワードなしでpostgresロールで入れる。
 - 他のUNIXユーザでも`psql -h localhost -U postgres`で、パスワード入れればpostgresロールで入れる。
-という設定。
+  という設定。
 
 でパスワードを設定する。
 
@@ -257,7 +257,7 @@ psql -c "alter role postgres with password '{password}'";
 - パスワードで入れることを確認
 - TCPで入れることを確認
 
-``` sh
+```sh
 psql -h localhost -U postgres postgres
 ```
 
@@ -323,7 +323,7 @@ select rolname, rolsuper, rolcanlogin from pg_roles;
 これをやると`heiwa`ユーザ(role)で、
 ソケット経由でつなぐことができる。
 
-``` sh
+```sh
 sudo -iu postgres psql
 ```
 
@@ -343,7 +343,7 @@ alter role heiwa with login;
 
 でheiwaユーザに戻って
 
-``` sh
+```sh
 psql test01
 ```
 
@@ -449,7 +449,7 @@ pg_basebackup -Ft -z -x -D /tmp/postgres_backup
 - Ft tar形式
 - z gzip圧縮
 - x `-X fecth`に同じ. 完全なスタンドアローンバックアップを作成
-max_wal_senders=2にして`-X s`のほうがいいかも。->ダメでした。 WAL streaming can only be used in plain modeだって
+  max_wal_senders=2にして`-X s`のほうがいいかも。->ダメでした。 WAL streaming can only be used in plain modeだって
 - D バックアップするディレクトリ。「存在していて、かつ空」でなければダメ
 
 参照: [pg_basebackup](https://www.postgresql.jp/document/9.6/html/app-pgbasebackup.html)
@@ -465,8 +465,8 @@ tar ztvf /tmp/postgres_backup/base.tar.gz
 出来たtarballは
 完全なスタンドアローンバックアップなので
 適当なところに展開するだけで(
-  既存と共用するなら`archive_command`のパスを考慮する。
-  postgresロールのパスがわからないなら`pg_hba.conf`をいじる、など。
+既存と共用するなら`archive_command`のパスを考慮する。
+postgresロールのパスがわからないなら`pg_hba.conf`をいじる、など。
 )
 
 ## サーバからWALアーカイブを消す
@@ -483,7 +483,7 @@ Postgre配布でも`postgresqlXX-contrib`のはず。XXは96とか12とか
 スクリプトにするとこんな感じ。
 `/etc/cron.daily/WALclear`
 
-``` sh
+```sh
 #!/bin/bash -e
 WALDIR=/var/lib/pgsql/data/pg_xlog
 ARCDIR=/var/archive/postgres
@@ -665,9 +665,9 @@ pg_ctl -D "$PGDATA" stop
 
 ## メタ情報
 
-pg_で始まるtableはどのdatabaseでも一緒。
+pg\_で始まるtableはどのdatabaseでも一緒。
 
-``` sql
+```sql
 -- namespace(schema)一覧
 select nspname from pg_namespace;
 -- DB一覧。template1, template0は除くべき
@@ -764,7 +764,7 @@ SELECT n.nspname||'.'||t.dictname
 テーブル名は スキーマ名.テーブル名で。スキーマ名publicは省略できる。
 例:
 
-``` sql
+```sql
 select * from information_schema.sql_languages;
 ```
 
@@ -810,7 +810,7 @@ docker rm pg
 
 ## systemdで起動されるpostgresのPGDATAを変更する
 
-postgres*.serviceファイルを直接変更しちゃダメ。
+postgres\*.serviceファイルを直接変更しちゃダメ。
 
 (以下の例はRHEL系のpostgresのレポジトリからインストールした9.5のもの。
 Debian,Ubuntuでは微妙に違うかも)
@@ -857,7 +857,6 @@ export PATH="/usr/pgsql-9.5/bin/:$PATH"
 version: '3.1'
 
 services:
-
   db:
     image: postgres
     restart: always
@@ -917,9 +916,9 @@ services:
     environment:
       POSTGRES_PASSWORD: example
     ports:
-      - "35432:5432"
+      - '35432:5432'
     volumes:
-      - "postgres_data:/var/lib/postgresql/data"
+      - 'postgres_data:/var/lib/postgresql/data'
 
 volumes:
   postgres_data:
@@ -933,8 +932,8 @@ volumes:
 別に世界に公開したくなければ
 
 ```yaml
-    ports:
-      - "127.0.0.1:35432:5432"
+ports:
+  - '127.0.0.1:35432:5432'
 ```
 
 にするなど。

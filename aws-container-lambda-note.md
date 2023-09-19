@@ -5,8 +5,6 @@
   - [Lambda コンテナイメージをローカルでテストする \- AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/images-test.html)
 - [コンテナ利用者に捧げる AWS Lambda の新しい開発方式 ! - 変化を求めるデベロッパーを応援するウェブマガジン | AWS](https://aws.amazon.com/jp/builders-flash/202103/new-lambda-container-development/?awsf.filter-name=*all)
 
-
-
 - RIC (Runtime Interface Client)
 - RIE (Lambda Runtime Interface Emulator)
 
@@ -14,14 +12,13 @@
 RICとRIE入りのやつと
 RIEだけのやつがある。
 
-
 # 2015-03-31/functions/function/invocations
 
 ```sh
 curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
 ```
-の **2015-03-31** とは何?
 
+の **2015-03-31** とは何?
 
 # SAM/CFn
 
@@ -34,13 +31,12 @@ ECRにすでにあるものをコンテナlambdaとして使うことはでき�
 デプロイしてformer2で調べてみる。
 (そもそも普通のlambdaでそれはできるか? パーミッションがあれば多分...)
 
-
 `AWS::Lambda::Function` みてみると
 
 ```yaml
 # 普通の
    Properties:
-      Code: 
+      Code:
         S3Bucket: "awslambda-ap-ne-1-tasks"
         S3Key: !Sub "/snapshots/${AWS::AccountId}/..."
         S3ObjectVersion: "..."
@@ -53,6 +49,7 @@ ECRにすでにあるものをコンテナlambdaとして使うことはでき�
 ImageUrlにECRのARN書けばいいらしい。
 
 参照:
+
 - [Lambda API の使用](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/configuration-images.html#configuration-images-api)
 - [AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/configuration-images.html#configuration-images-cloudformation)
 

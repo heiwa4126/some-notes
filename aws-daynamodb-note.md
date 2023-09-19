@@ -1,9 +1,8 @@
-
 # queryとscan
 
 [ステップ 4: データをクエリおよびスキャンする - Amazon DynamoDB](https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/GettingStarted.Python.04.html)
-> scan メソッドは、テーブル全体のすべての項目を読み込み、テーブルの全データを返します
 
+> scan メソッドは、テーブル全体のすべての項目を読み込み、テーブルの全データを返します
 
 # サンプルデータ
 
@@ -12,10 +11,8 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/movieda
 
 使い方は
 
-* [ステップ 1: Python を使用してテーブルを作成する - Amazon DynamoDB](https://docs.aws.amazon.com/ja_jp/ja_jp/amazondynamodb/latest/developerguide/GettingStarted.Python.01.html)
-* [ステップ 2: サンプルデータをロードする \- Amazon DynamoDB](https://docs.aws.amazon.com/ja_jp/ja_jp/amazondynamodb/latest/developerguide/GettingStarted.Python.02.html)
-
-
+- [ステップ 1: Python を使用してテーブルを作成する - Amazon DynamoDB](https://docs.aws.amazon.com/ja_jp/ja_jp/amazondynamodb/latest/developerguide/GettingStarted.Python.01.html)
+- [ステップ 2: サンプルデータをロードする \- Amazon DynamoDB](https://docs.aws.amazon.com/ja_jp/ja_jp/amazondynamodb/latest/developerguide/GettingStarted.Python.02.html)
 
 # Former2
 
@@ -27,12 +24,13 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/movieda
 
 [AWS::DynamoDB::Table TimeToLiveSpecification \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-dynamodb-timetolivespecification.html)
 にあるとおり
-```yaml
-  AttributeName: String
-  Enabled: Boolean
-```
-なんで、 `Enabled: false`は無理ですね。
 
+```yaml
+AttributeName: String
+Enabled: Boolean
+```
+
+なんで、 `Enabled: false`は無理ですね。
 
 # DynamoDBには予約語がある
 

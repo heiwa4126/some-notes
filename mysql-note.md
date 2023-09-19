@@ -15,6 +15,7 @@ systemctl enable mysql55-mysqld.service --now
 ```
 
 テスト
+
 ```
 # mysql
 Welcome to the MySQL monitor.  Commands end with ; or \g.

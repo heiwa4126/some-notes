@@ -13,6 +13,7 @@ GITHUB_REPOSITORY環境変数が
 これからレポジトリ名を取ることにする。
 
 Next.jsのnext.config.jsだと
+
 ```javascript
 let basePath = process.env.GITHUB_REPOSITORY?.split("/")[1];
 basePath = basePath ? `/${basePath}` : "";
@@ -23,6 +24,7 @@ basePath = basePath ? `/${basePath}` : "";
 ```
 
 Viteのvite.config.tsだと
+
 ```javascript
 {
     base: process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "./",
@@ -32,9 +34,11 @@ Viteのvite.config.tsだと
 みたいな感じ。
 
 参照:
+
 - [リポジトリ名の取得 [GitHub Actions]](https://zenn.dev/snowcait/articles/757d0c6815227f)
 
 bashだったら
+
 ```bash
 ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
 ```

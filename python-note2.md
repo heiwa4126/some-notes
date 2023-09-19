@@ -2,7 +2,6 @@
 
 長くなったので第2部
 
-
 # loggingモジュール経由でsyslog
 
 NORMALレベルのlogがでなくて苦労した。
@@ -62,19 +61,19 @@ if __name__ == r"__main__":
 もし別モジュールがあるなら、そこでは`logging.getLogger("syslog")`でロガーを得ること。`get_syslogger()`を呼んだりしないこと。(またはlgrを引数で渡すとか)
 
 参考:
+
 - [Python の logging について - Qiita](https://qiita.com/kitsuyui/items/5a7484a09eeacb564649)
 - [Logging HOWTO — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/howto/logging.html)
 - [Logging クックブック — 複数のモジュールで logging を使う](https://docs.python.org/ja/3/howto/logging-cookbook.html#using-logging-in-multiple-modules)
 
-
 # loggingモジュールでlog rotation
 
 参考:
+
 - [便利なハンドラ](https://docs.python.org/ja/3/howto/logging.html#useful-handlers)
 - [Logging クックブック — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/howto/logging-cookbook.html#logging-cookbook)
 - [RotatingFileHandler](https://docs.python.org/ja/3/library/logging.handlers.html#logging.handlers.RotatingFileHandler)
 - [TimedRotatingFileHandler](https://docs.python.org/ja/3/library/logging.handlers.html#logging.handlers.TimedRotatingFileHandler)
-
 
 # 構造化ログ
 

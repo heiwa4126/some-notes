@@ -4,15 +4,15 @@ AWS SageMaker Notebookメモ
 
 ## Jupyterだけでやる方法
 
-* 利点: GUI
-* 欠点: ファイル1個づつポチポチ
+- 利点: GUI
+- 欠点: ファイル1個づつポチポチ
 
-### download 
+### download
 
 .ipynbファイルを開いてる状態で
 File -> Download as ... -> Notebook(.ipynb)
 
-### upload 
+### upload
 
 JupyterのtreeのFilesタブで
 Uploadボタン
