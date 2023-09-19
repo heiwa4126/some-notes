@@ -20,6 +20,11 @@
 wsl.exe --shutdown
 ```
 
+このへん参照: [WSL での詳細設定の構成 | Microsoft Learn](https://learn.microsoft.com/ja-jp/windows/wsl/wsl-config)
+
+- WSL で動いてる全 Linux が再起動する
+- 「8 秒ルール」
+
 ## WSL の syslog は Windows イベントログに出る
 
 ええっ
