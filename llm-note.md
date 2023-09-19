@@ -360,3 +360,13 @@ print(generator.tokenizer.special_tokens_map)
 ```
 
 [Hugging Face のライブラリを使って Tokenize - Qiita](https://qiita.com/ishikawa-takumi/items/5fc45ddd121b23db5de9)
+
+ドキュメントはどうしても見つけられなかったので Transformers の GitHub から探す。
+
+[transformers/src/transformers/tokenization_utils_base.py at eb8489971ac1415f67b0abdd1584fde8b659ced9 · huggingface/transformers · GitHub](https://github.com/huggingface/transformers/blob/eb8489971ac1415f67b0abdd1584fde8b659ced9/src/transformers/tokenization_utils_base.py#L1306)
+
+Pydoc ちゃんと書いてあるようなので、どこかに変換されてると思うんだけど。
+
+[Utilities for Tokenizers](https://huggingface.co/docs/transformers/v4.33.2/en/internal/tokenization_utils#transformers.SpecialTokensMixin)
+ここにあるはずなんだが...
+メソッドは書いてあるんだけどプロパティが全部抜けてる感じ。まあプロパティいっぱいあるから...
