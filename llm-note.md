@@ -21,6 +21,9 @@
     - [なぜベクトルに変換することを embedding というのですか? Word2Vec が起源ですか?](#なぜベクトルに変換することを-embedding-というのですか-word2vec-が起源ですか)
   - [モデルの cased と uncased](#モデルの-cased-と-uncased)
   - [Transformers で特殊トークンのリストを得る](#transformers-で特殊トークンのリストを得る)
+  - [パラメーター数](#パラメーター数)
+  - [Unicode 正規化](#unicode-正規化)
+  - [IOB2 記法(IOB2 notation)](#iob2-記法iob2-notation)
 
 ## 概要
 
@@ -370,3 +373,51 @@ Pydoc ちゃんと書いてあるようなので、どこかに変換されて�
 [Utilities for Tokenizers](https://huggingface.co/docs/transformers/v4.33.2/en/internal/tokenization_utils#transformers.SpecialTokensMixin)
 ここにあるはずなんだが...
 メソッドは書いてあるんだけどプロパティが全部抜けてる感じ。まあプロパティいっぱいあるから...
+
+## パラメーター数
+
+「ニューラルネットワーク内の 1 つの重み (バイアス)」のこと。
+
+シンプルなニューラルネットワークの場合
+入力ニューロン × 出力ニューロン が パラメーター数
+
+Transformers で特定モデルのパラメーター数を出すには
+
+```python
+from transformers import AutoModel
+model_name = "retrieva-jp/t5-large-long"
+model = AutoModel.from_pretrained(model_name)
+print(sum(p.numel() for p in model.parameters()))
+```
+
+```output
+750251008  # 七億五千二十五万千八. 0.75Bぐらい
+```
+
+これ合ってる?
+
+- [retrieva-jp/t5-large-long · Hugging Face](https://huggingface.co/retrieva-jp/t5-large-long)
+- [日本語 T5 モデルの公開|株式会社レトリバ](https://note.com/retrieva/n/n7b4186dc5ada)
+
+TODO: これみたいにパラメータの数が出てるやつで試す。
+[ku-nlp/deberta-v2-base-japanese · Hugging Face](https://huggingface.co/ku-nlp/deberta-v2-base-japanese)
+
+## Unicode 正規化
+
+[Unicode 正規化 - Qiita](https://qiita.com/fury00812/items/b98a7f9428d1395fc230)
+
+```python
+from unicodedata import normalize
+normalized_text = normalize("NFKC", text)
+```
+
+[unicodedata --- Unicode データベース — Python 3.11.5 ドキュメント](https://docs.python.org/ja/3/library/unicodedata.html#unicodedata.normalize)
+
+JavaScript だと
+[String\.prototype\.normalize\(\) \- JavaScript \| MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/normalize)
+Node.js ではバージョン 14.17.0 以降、すべてのプラットフォームでサポート。
+
+VSCode の拡張にもあった。
+[Unicode Normalizer - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=espresso3389.unicode-normalizer)
+
+## IOB2 記法(IOB2 notation)
