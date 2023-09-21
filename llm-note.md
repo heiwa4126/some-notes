@@ -1,5 +1,7 @@
 # 大規模言語モデル (Large Language Models;LLM) メモ
 
+というかほぼ NLP
+
 - [大規模言語モデル (Large Language Models;LLM) メモ](#大規模言語モデル-large-language-modelsllm-メモ)
   - [概要](#概要)
   - [有名な大規模言語モデル](#有名な大規模言語モデル)
@@ -23,7 +25,8 @@
   - [Transformers で特殊トークンのリストを得る](#transformers-で特殊トークンのリストを得る)
   - [パラメーター数](#パラメーター数)
   - [Unicode 正規化](#unicode-正規化)
-  - [IOB2 記法(IOB2 notation)](#iob2-記法iob2-notation)
+  - [IOB2 記法 (IOB2 notation)](#iob2-記法-iob2-notation)
+  - [pipeline()](#pipeline)
 
 ## 概要
 
@@ -420,4 +423,32 @@ Node.js ではバージョン 14.17.0 以降、すべてのプラットフォー
 VSCode の拡張にもあった。
 [Unicode Normalizer - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=espresso3389.unicode-normalizer)
 
-## IOB2 記法(IOB2 notation)
+## IOB2 記法 (IOB2 notation)
+
+[Inside–outside–beginning (tagging) - Wikipedia](https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_%28tagging%29)
+
+固有表現抽出の際に用いられるタグ付け記法のひとつ。
+
+固有表現の先頭トークンに B タグ、それ以降のトークンに I タグ。
+固有表現以外のトークンに O タグを付与します。
+
+`東京の銀座にあるデパートで買い物をする。`
+を IOB2 記法でタグ付けすると:
+
+- 東京 B-LOCATION
+- の I-LOCATION
+- 銀座 I-LOCATION
+- にある I-LOCATION
+- デパート I-LOCATION
+- で O
+- 買い物 O
+- する O
+- 。 O
+
+※「東京の銀座にあるデパート」を固有表現と見なす立場で。
+
+## pipeline()
+
+Hugging Face の Transformers の pipeline() についてのメモ。
+
+- [pipeline の裏側 - Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/ja/chapter2/2)
