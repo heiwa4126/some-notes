@@ -1,60 +1,61 @@
-# python のメモ
+# Python のメモ
 
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
-- [python のメモ](#pythonのメモ)
-- [python をインストールする(2019-12)](#pythonをインストールする2019-12)
-  - [Amazon Linux 2](#amazon-linux-2)
-  - [Ubuntu 18.04 TLS](#ubuntu-1804-tls)
-  - [RHEL7, CentOS7](#rhel7-centos7)
-  - [RHEL8, CentOS8](#rhel8-centos8)
-  - [Windows python 本家の配布](#windows-python本家の配布)
-  - [Anaconda, miniconda](#anaconda-miniconda)
-  - [Windows msys2](#windows-msys2)
-  - [Windows Store](#windows-store)
-- [Jupyter notebook](#jupyter-notebook)
-- [pip をユーザーローカルに入れる](#pipをユーザーローカルに入れる)
-- [pip --user のパス](#pip---user-のパス)
-- [古いパッケージを見つける](#古いパッケージを見つける)
-- [pip で更新可能なものをすべて更新するスクリプト](#pipで更新可能なものをすべて更新するスクリプト)
-- [vscode と pipenv](#vscodeとpipenv)
-- [RHEL7 に pip](#rhel7にpip)
-- [RHEL6 に pip](#rhel6にpip)
-- [pip10 問題](#pip10問題)
-- [magic](#magic)
-- [Ubuntu 18.04 LTS で python3.7](#ubuntu-1804-ltsでpython37)
-- [Ubuntu 18.04 LTS で python3.9](#ubuntu-1804-ltsでpython39)
-- [Ubuntu 20.04](#ubuntu-2004)
-- [venv](#venv)
-- [python の EOL](#pythonのeol)
-- [モジュールとパッケージ](#モジュールとパッケージ)
-- [Windows10 上での Python](#windows10上でのpython)
-- [Jupyter Notebook の tips](#jupyter-notebookのtips)
-- [2020-resolver](#2020-resolver)
-- [WARNING: pip is being invoked by an old script wrapper.](#warning-pip-is-being-invoked-by-an-old-script-wrapper)
-- [ubuntu20.04LTS 以降で python を python3 にする](#ubuntu2004lts以降でpythonをpython3にする)
-- [Python Static Analysis Tools](#python-static-analysis-tools)
-- [emacs で LSP で python](#emacsでlspでpython)
-- [vscode で pylance 使うときに](#vscodeでpylance使うときに)
-- [python の regex に PCRE の\\Q...\\E 的なもの](#pythonのregexにpcreのqe的なもの)
-- [black](#black)
-- [black + flake8](#black--flake8)
-- [nose](#nose)
-- [ローカルタイムゾーンを得る](#ローカルタイムゾーンを得る)
-- [~/.config/flake8 サンプル](#configflake8サンプル)
-- [PyFlakes](#pyflakes)
-- [fleak8](#fleak8)
-- [コードレビューもどき](#コードレビューもどき)
-- [python にタイプヒント](#pythonにタイプヒント)
-- [1 個上のフォルダから import](#1個上のフォルダからimport)
+- [Python のメモ](#python-のメモ)
+  - [python をインストールする(2019-12)](#python-をインストールする2019-12)
+    - [Amazon Linux 2](#amazon-linux-2)
+    - [Ubuntu 18.04 TLS](#ubuntu-1804-tls)
+    - [RHEL7, CentOS7](#rhel7-centos7)
+    - [RHEL8, CentOS8](#rhel8-centos8)
+    - [Windows python 本家の配布](#windows-python-本家の配布)
+    - [Anaconda, miniconda](#anaconda-miniconda)
+    - [Windows msys2](#windows-msys2)
+    - [Windows Store](#windows-store)
+  - [Jupyter notebook](#jupyter-notebook)
+  - [pip をユーザーローカルに入れる](#pip-をユーザーローカルに入れる)
+  - [pip --user のパス](#pip---user-のパス)
+  - [古いパッケージを見つける](#古いパッケージを見つける)
+  - [pip で更新可能なものをすべて更新するスクリプト](#pip-で更新可能なものをすべて更新するスクリプト)
+  - [vscode と pipenv](#vscode-と-pipenv)
+  - [RHEL7 に pip](#rhel7-に-pip)
+  - [RHEL6 に pip](#rhel6-に-pip)
+  - [pip10 問題](#pip10-問題)
+  - [magic](#magic)
+  - [Ubuntu 18.04 LTS で python3.7](#ubuntu-1804-lts-で-python37)
+  - [Ubuntu 18.04 LTS で python3.9](#ubuntu-1804-lts-で-python39)
+  - [Ubuntu 20.04](#ubuntu-2004)
+  - [venv](#venv)
+  - [python の EOL](#python-の-eol)
+  - [モジュールとパッケージ](#モジュールとパッケージ)
+  - [Windows10 上での Python](#windows10-上での-python)
+  - [Jupyter Notebook の tips](#jupyter-notebook-の-tips)
+  - [2020-resolver](#2020-resolver)
+  - [WARNING: pip is being invoked by an old script wrapper.](#warning-pip-is-being-invoked-by-an-old-script-wrapper)
+  - [ubuntu20.04LTS 以降で python を python3 にする](#ubuntu2004lts-以降で-python-を-python3-にする)
+  - [Python Static Analysis Tools](#python-static-analysis-tools)
+  - [emacs で LSP で python](#emacs-で-lsp-で-python)
+  - [vscode で pylance 使うときに](#vscode-で-pylance-使うときに)
+  - [python の regex に PCRE の\\Q...\\E 的なもの](#python-の-regex-に-pcre-のqe-的なもの)
+  - [black](#black)
+  - [black + flake8](#black--flake8)
+  - [nose](#nose)
+  - [ローカルタイムゾーンを得る](#ローカルタイムゾーンを得る)
+  - [~/.config/flake8 サンプル](#configflake8-サンプル)
+  - [PyFlakes](#pyflakes)
+  - [fleak8](#fleak8)
+  - [コードレビューもどき](#コードレビューもどき)
+  - [python にタイプヒント](#python-にタイプヒント)
+  - [1 個上のフォルダから import](#1-個上のフォルダから-import)
+  - [オブジェクトのクラスを表示する](#オブジェクトのクラスを表示する)
 
-# python をインストールする(2019-12)
+## python をインストールする(2019-12)
 
 システムワイドに python3 と、
 新し目の pip3 を user install directory に
 インストールする手順。
 
-## Amazon Linux 2
+### Amazon Linux 2
 
 RHEL7 同様 python3 が公式に配布されるようになった。いまのところ python3.7。
 
@@ -93,7 +94,7 @@ $ pip3 --version
 pip 19.3.1 from /home/xxxxx/.local/lib/python3.7/site-packages/pip (python 3.7)
 ```
 
-## Ubuntu 18.04 TLS
+### Ubuntu 18.04 TLS
 
 最初から python3 (3.6)が入っているはず。もしなければ
 
@@ -114,7 +115,7 @@ pip3 intsall -U --user pip
 追加例
 
 ```
-# set PATH so it includes user's private bin if it exists
+## set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
   PATH="$HOME/.local/bin:$PATH"
 fi
@@ -136,9 +137,9 @@ Ubuntu 20.04 LTS からは Python3 が標準の python になる予定
 
 ほか参考:
 
-- [（備忘録）Ubuntu 18.04 LTS で Jupyter Notebook 環境構築 - Qiita](https://qiita.com/zono_0/items/49eb8605ef4d841b2c26)
+- [(備忘録)Ubuntu 18.04 LTS で Jupyter Notebook 環境構築 - Qiita](https://qiita.com/zono_0/items/49eb8605ef4d841b2c26)
 
-## RHEL7, CentOS7
+### RHEL7, CentOS7
 
 python3 が公式に配布されるようになった。いまのところ python3.6。
 
@@ -177,7 +178,7 @@ $ pip3 --version
 pip 19.3.1 from /home/xxxxx/.local/lib/python3.6/site-packages/pip (python 3.6)
 ```
 
-## RHEL8, CentOS8
+### RHEL8, CentOS8
 
 python はデフォルトでは入らない。
 python で書かれたシステムパッケージは、ユーザが`python`と叩いて使う python とは別パッケージになっていてる。
@@ -185,9 +186,9 @@ python で書かれたシステムパッケージは、ユーザが`python`と�
 システムが使う Python は
 
 ```
-# /usr/libexec/platform-python --version
+## /usr/libexec/platform-python --version
 Python 3.6.8
-# rpm -qf /usr/libexec/platform-python
+## rpm -qf /usr/libexec/platform-python
 platform-python-3.6.8-15.1.el8.x86_64
 ```
 
@@ -227,7 +228,7 @@ Enter to keep the current selection[+], or type selection number:
 
 で`/usr/bin/python3`を選ぶ。
 
-## Windows python 本家の配布
+### Windows python 本家の配布
 
 [Download Python | Python.org](https://www.python.org/downloads/)
 
@@ -242,7 +243,7 @@ Enter to keep the current selection[+], or type selection number:
 pip3 の最新版のインストールは、管理者権限でないコマンドプロンプトから
 
 ```
-pip3 install -U --user　pip
+pip3 install -U --user pip
 ```
 
 これは`C:\Users\ユーザ名\AppData\Roaming\Python\Python38\Scripts`にインストールされるので、
@@ -258,7 +259,7 @@ C:>pip3 --version
 pip 19.3.1 from C:\Users\xxxxx\AppData\Roaming\Python\Python38\site-packages\pip (python 3.8)
 ```
 
-## Anaconda, miniconda
+### Anaconda, miniconda
 
 - [Anaconda Python/R Distribution - Free Download](https://www.anaconda.com/distribution/)
 - [Miniconda — Conda documentation](https://docs.conda.io/en/latest/miniconda.html)
@@ -279,18 +280,18 @@ conda update --all
 pip でインストールすると、すぐ不具合が起きるので、
 conda は「`Jupyter Notebook`環境をすぐ作りたい」というときなどに使うこと。
 
-## Windows msys2
+### Windows msys2
 
 [MSYS2 homepage](http://www.msys2.org/)参照。たぶん使うことは少ないと思うので TODO。
 
-## Windows Store
+### Windows Store
 
 Windows Store で`python`で検索して、Python 3.8 をインストール。
 
 `C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.8_3.8.496.0_x64__xxxxxxxx`
 のような名前でインストールされて、とてもまともに使えない。
 
-# Jupyter notebook
+## Jupyter notebook
 
 Windows 版では Python3.7 以下(2019-12 現在。たぶんすぐ直る。[windows - Jupyter Notebook with Python 3.8 - NotImplementedError - Stack Overflow](https://stackoverflow.com/questions/58422817/jupyter-notebook-with-python-3-8-notimplementederror)参照)
 
@@ -310,7 +311,7 @@ jupyper notebook
 表示される URL(`http://localhost:8888/token=xxxx`)に web ブラウザでつないで、
 あとは UI に従う。
 
-# pip をユーザーローカルに入れる
+## pip をユーザーローカルに入れる
 
 python2 と python3 があって、
 ディストリのパッケージでは古い pip しか入らなくて、
@@ -342,14 +343,14 @@ hash -r
 RHEL7/CentOS7 では ~/.bash_profile で
 
 ```bash
-# User specific environment and startup programs
-# PATH=$PATH:$HOME/.local/bin:$HOME/bin
+## User specific environment and startup programs
+## PATH=$PATH:$HOME/.local/bin:$HOME/bin
 PATH=$HOME/.local/bin:$PATH:$HOME/bin
 ```
 
 `.local/bin`が先になるように修正しておく。
 
-# pip --user のパス
+## pip --user のパス
 
 ```
 python -c "import site; print(site.USER_BASE)"
@@ -372,7 +373,7 @@ python3 -m site
 
 [site --- サイト固有の設定フック — Python 3.10.4 ドキュメント](https://docs.python.org/ja/3/library/site.html)
 
-# 古いパッケージを見つける
+## 古いパッケージを見つける
 
 グローバルは
 
@@ -396,12 +397,12 @@ pip install -U packageName
 
 - [pip で更新可能なパッケージを一覧表示 - Qiita](https://qiita.com/Klein/items/a3110d20532ba9f9057b)
 
-# pip で更新可能なものをすべて更新するスクリプト
+## pip で更新可能なものをすべて更新するスクリプト
 
 依存関係で問題があるかもしれない。
 
 ```
-#!/bin/bash
+##!/bin/bash
 pip3 list --user --outdated --format=freeze | \
   grep -v '^\-e' | \
   cut -d = -f 1  | \
@@ -422,7 +423,7 @@ OS ディストリのパッケージを消す時があるから。(certbot で�
 apt-get install --reinstall certbot python-certbot-nginx python3-certbot python3-certbot-nginx
 ```
 
-# vscode と pipenv
+## vscode と pipenv
 
 pipenv または virtualenv で作業すると、グローバルやユーザにインストールした
 pylint や autopep8 を vscode が見つけてくれない。
@@ -448,7 +449,7 @@ virtualenv 下に pylint や autopep8 をインストールすればいいのだ
 
 もっと楽な方法がありそうだがなあ。
 
-# RHEL7 に pip
+## RHEL7 に pip
 
 最近の(2019-11)RHEL7 では公式レポジトリに Python3.6 が入っていて、ちょっと古めの pip3 も入る。
 
@@ -465,10 +466,10 @@ RHEL はチャネル(レポジトリ)が細分化されててめんどくさい�
 引用元: [How to install pip on Red Hat Enterprise Linux?](https://access.redhat.com/solutions/1519803)
 
 ```
-# subscription-manager repos --enable rhel-server-rhscl-7-rpms
-# yum install python27-python-pip -y
-# scl enable python27 bash
-# pip install --upgrade pip
+## subscription-manager repos --enable rhel-server-rhscl-7-rpms
+## yum install python27-python-pip -y
+## scl enable python27 bash
+## pip install --upgrade pip
 ```
 
 こうすると` /opt/rh/python27/root/usr/lib/python2.7/site-packages/pip`に pip が...
@@ -477,7 +478,7 @@ RHEL はチャネル(レポジトリ)が細分化されててめんどくさい�
 `get-pip.py`のほうが全然まともだと思う。
 
 ※ SCL については
-[ソフトウェアコレクション(SCL：Software Collections)とは？ – StupidDog's blog](http://stupiddog.jp/note/archives/1074)
+[ソフトウェアコレクション(SCL:Software Collections)とは? – StupidDog's blog](http://stupiddog.jp/note/archives/1074)
 等を参照。そもそもコンセプトが違う。
 
 ```
@@ -487,7 +488,7 @@ $ python get-pip.py --user
 
 あとは`$(HOME)/.local/bin`に PATH を通して`hash -r`
 
-# RHEL6 に pip
+## RHEL6 に pip
 
 RHEL6 の python は 2.6 で
 
@@ -504,7 +505,7 @@ $ python get-pip.py --user
 
 あとは`$(HOME)/.local/bin`に PATH を通して`hash -r`
 
-# pip10 問題
+## pip10 問題
 
 (pip version 19 以降では問題なくなりました)
 
@@ -535,7 +536,7 @@ alias pip3='python3 -m pip'
 ただ AWS や Azure で立てた Ubuntu では何もしないでもエラーにならなくて
 よくわからない。
 
-# magic
+## magic
 
 `magic`という名前のモジュールが何種類もあるらしい。
 
@@ -546,7 +547,7 @@ alias pip3='python3 -m pip'
 [Develop @ ImageMagick](http://www.imagemagick.org/script/develop.php#python)
 ますますわけがわからない。
 
-# Ubuntu 18.04 LTS で python3.7
+## Ubuntu 18.04 LTS で python3.7
 
 3.8 もあるけど Azure Functions が 3.7.x 対応なので一応。
 
@@ -572,7 +573,7 @@ venv とか使うしかない。
 
 Ubuntu 20.04 LTS では Python 3.8 が標準で Python2 は入らないらしい。
 
-# Ubuntu 18.04 LTS で python3.9
+## Ubuntu 18.04 LTS で python3.9
 
 いちおうこんな感じで(おすすめしない)
 
@@ -591,14 +592,14 @@ python3.9 -m venv ~/.venv/39
 .  ~/.venv/39/bin/activate
 ```
 
-# Ubuntu 20.04
+## Ubuntu 20.04
 
 `python-is-python3`という名前のパッケージがあって、
 これをインストールすると`python`が`python3`になる。
 
 (実態は symlink)
 
-# venv
+## venv
 
 [venv --- 仮想環境の作成 — Python 3.7.5 ドキュメント](https://docs.python.org/ja/3.7/library/venv.html)
 
@@ -632,7 +633,7 @@ python3.7 -m venv ~/.venv/37 --clear
 
 この環境で`pip --user`するとどうなるのか?
 
-# python の EOL
+## python の EOL
 
 - [PEP 494 -- Python 3.6 Release Schedule | Python.org](https://www.python.org/dev/peps/pep-0494/#lifespan)
 - [PEP 537 -- Python 3.7 Release Schedule | Python.org](https://www.python.org/dev/peps/pep-0537/#lifespan)
@@ -647,9 +648,9 @@ python3.7 -m venv ~/.venv/37 --clear
 今後は AWS Lambda は 3.8 で書く
 
 - [AWS Lambda now supports Python 3.8](https://aws.amazon.com/jp/about-aws/whats-new/2019/11/aws-lambda-now-supports-python-3-8/)
-- [AWS Lambda で Python 3.8 ランタイム がサポートされました ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/aws_lambda_support_python38/)
+- [AWS Lambda で Python 3.8 ランタイム がサポートされました | Developers.IO](https://dev.classmethod.jp/cloud/aws/aws_lambda_support_python38/)
 
-# モジュールとパッケージ
+## モジュールとパッケージ
 
 [6. モジュール — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/tutorial/modules.html)
 に書いてあるとおりなので必ず読むこと。
@@ -667,9 +668,9 @@ python3.7 -m venv ~/.venv/37 --clear
 
 「名前空間パッケージ(Namespace Packages)」
 
-[Python にまつわるアイデア： Python のパッケージとモジュールの違い - Life with Python](https://www.lifewithpython.com/2018/05/python-difference-between-package-and-module.html)
+[Python にまつわるアイデア: Python のパッケージとモジュールの違い - Life with Python](https://www.lifewithpython.com/2018/05/python-difference-between-package-and-module.html)
 
-# Windows10 上での Python
+## Windows10 上での Python
 
 Anaconda より、本家 Python の配布が良い感じ(2020-01 現在)。
 
@@ -681,11 +682,11 @@ Jupyter のバグ回避で 3.7 を使ってる。
   - Anaconda だとめちゃめちゃ苦労した
 - Mathplot も pip ですんなり入る。
 
-# Jupyter Notebook の tips
+## Jupyter Notebook の tips
 
 - [Jupyter Notebook で Prompt の番号をリセットするたったひとつの冴えたやりかた - Qiita](https://qiita.com/iktakahiro/items/32d65ebee6b7d784eed1)
 
-# 2020-resolver
+## 2020-resolver
 
 ```sh
 mkdir -p ~/.config/pip
@@ -701,7 +702,7 @@ use-feature=2020-resolver
 
 とか言い出したので `~/.config/pip/pip.conf`の該当行をコメントアウトした。
 
-# WARNING: pip is being invoked by an old script wrapper.
+## WARNING: pip is being invoked by an old script wrapper.
 
 [ImportError in system pip wrappers after an upgrade · Issue #5599 · pypa/pip · GitHub](https://github.com/pypa/pip/issues/5599)
 
@@ -710,14 +711,14 @@ use-feature=2020-resolver
 alias にするとか
 
 ```sh
-#!/bin/sh -xe
+##!/bin/sh -xe
 PIP="python3 -m pip"
 $PIP install --user -U pip
 ```
 
 こんな感じで。
 
-# ubuntu20.04LTS 以降で python を python3 にする
+## ubuntu20.04LTS 以降で python を python3 にする
 
 ```sh
 sudo apt install python-is-python3
@@ -755,14 +756,14 @@ pip install --user 'python-language-server[all]'
 pip install --user black pyls-black
 ```
 
-# Python Static Analysis Tools
+## Python Static Analysis Tools
 
 pyflakes
 pycheckers
 pyre
 (TODO) pyre おもしろそう。
 
-# emacs で LSP で python
+## emacs で LSP で python
 
 2021-04 ぐらい。Python2 は考えない。
 emacs >= 26.1 で。
@@ -854,7 +855,7 @@ emacsたちあげて
 `M-x package-install[ret] flycheck-pyflakes[ret]`
 
 
-# bytesとbytearray
+## bytesとbytearray
 
 - [bytes - 組み込み型 — Python 3.9.4 ドキュメント](https://docs.python.org/ja/3/library/stdtypes.html#bytes)
 - [bytearray - 組み込み型 — Python 3.9.4 ドキュメント](https://docs.python.org/ja/3/library/stdtypes.html#bytearray)
@@ -877,7 +878,7 @@ b1[1] = 0x11  # raise TypeError: 'bytes' object does not support item assignment
 print(b1)
 ````
 
-# vscode で pylance 使うときに
+## vscode で pylance 使うときに
 
 settings.json に
 
@@ -891,7 +892,7 @@ settings.json に
 表示されるルール一覧はここに
 [pylance-release/DIAGNOSTIC_SEVERITY_RULES.md at main · microsoft/pylance-release · GitHub](https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md)
 
-# python の regex に PCRE の\Q...\E 的なもの
+## python の regex に PCRE の\Q...\E 的なもの
 
 PCRE には\Q...\E ではさむとメタ文字が意味を失う、というのがあって
 
@@ -900,7 +901,7 @@ PCRE には\Q...\E ではさむとメタ文字が意味を失う、というの�
 
 `re.escape(pattern)`で。
 
-# black
+## black
 
 [psf/black: The uncompromising Python code formatter](https://github.com/psf/black)
 
@@ -909,11 +910,11 @@ PCRE には\Q...\E ではさむとメタ文字が意味を失う、というの�
 たぶん行の最大長だけは変えたほうがいい(88)。
 [The Black code style — Black 21.7b0 documentation](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#line-length)
 
-# black + flake8
+## black + flake8
 
 [Using Black with other tools — Black 21.7b0 documentation](https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html?highlight=E203#flake8)
 
-# nose
+## nose
 
 `nosetests`がテストファイルを見つけてくれないとき。
 
@@ -929,7 +930,7 @@ nosetests -vv --collect-only
 
 が便利
 
-# ローカルタイムゾーンを得る
+## ローカルタイムゾーンを得る
 
 python スクリプトの動いているホストのローカルタイムゾーンを得る。
 
@@ -940,21 +941,21 @@ from datetime import datetime,timezone
 LOCAL_TIMEZONE = datetime.now(timezone.utc).astimezone().tzinfo
 ```
 
-# ~/.config/flake8 サンプル
+## ~/.config/flake8 サンプル
 
 ```
 [flake8]
 max-line-length = 166
-# ignore = E203, E266, E501, W503, F403, F401, E999
+## ignore = E203, E266, E501, W503, F403, F401, E999
 ignore = E203, E266, E501, W503, F403, F401
 select = B,C,E,F,W,T4,B9
 ```
 
-# PyFlakes
+## PyFlakes
 
 [PyCQA/pyflakes: A simple program which checks Python source files for errors](https://github.com/PyCQA/pyflakes)
 
-# fleak8
+## fleak8
 
 [PyCQA/flake8: flake8 is a python tool that glues together pycodestyle, pyflakes, mccabe, and third-party plugins to check the style and quality of some python code.](https://github.com/PyCQA/flake8)
 
@@ -973,7 +974,7 @@ McCabe? 循環的複雑度?
 
 よくわからないけどネストが深いと警告してくれる、ってことかな...
 
-# コードレビューもどき
+## コードレビューもどき
 
 オートフォーマッタを使いましょう。
 おすすめ: black (psf/black)
@@ -1000,7 +1001,7 @@ pyflakes などで未使用の import を検出しましょう。
 例)
 
 ```
-gencacert/app/crypt.py ->　gencacert/app/lib/crypt.py
+gencacert/app/crypt.py -> gencacert/app/lib/crypt.py
 んで
 from crypt import AESCipher -> from lib.crypt import AESCipher
 とする
@@ -1018,7 +1019,7 @@ docstring はなるべく書きましょう。
 
 モジュールでない CLI から実行するコードには、shebang 書いて、実行権限もつけましょう。
 
-# python にタイプヒント
+## python にタイプヒント
 
 [typing --- 型ヒントのサポート — Python 3.10.0b2 ドキュメント](https://docs.python.org/ja/3/library/typing.html)
 
@@ -1033,7 +1034,7 @@ docstring はなるべく書きましょう。
 
 でも全然効かない...
 
-# 1 個上のフォルダから import
+## 1 個上のフォルダから import
 
 プロジェクトルートにある python モジュールを
 サブディレクトリから読む。
@@ -1068,7 +1069,7 @@ python3 -m site
 
 で。
 
-```
+```console
 $ python3 -m site
 sys.path = [
     '/home/heiwa',
@@ -1081,4 +1082,19 @@ sys.path = [
 USER_BASE: '/home/hoge/.local' (doesn't exist)
 USER_SITE: '/home/hoge/.local/lib/python3.10/site-packages' (doesn't exist)
 ENABLE_USER_SITE: True
+```
+
+## オブジェクトのクラスを表示する
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+person = Person("Alice", 20)
+
+print(type(person).__name__)
+# or
+print(person.__class__.__name__)
 ```
