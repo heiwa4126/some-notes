@@ -27,6 +27,7 @@
   - [Unicode 正規化](#unicode-正規化)
   - [IOB2 記法 (IOB2 notation)](#iob2-記法-iob2-notation)
   - [pipeline()](#pipeline)
+  - [torch の関数の dim=-1](#torch-の関数の-dim-1)
 
 ## 概要
 
@@ -451,4 +452,22 @@ VSCode の拡張にもあった。
 
 Hugging Face の Transformers の pipeline() についてのメモ。
 
-- [pipeline の裏側 - Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/ja/chapter2/2)
+[pipeline の裏側 - Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/ja/chapter2/2) の Colab(PyTorch 版)を動かしながら。
+
+```python
+print(classifier.__class__.__name__)   # -> TextClassificationPipeline
+#
+print(tokenizer.__class__.__name__) # -> DistilBertTokenizerFast
+```
+
+トークナイザーの戻り値は IDs (ボキャブラリ&スペシャルトークンの ID の tensor)
+
+[AutoModelForSequenceClassification - Auto Classes](https://huggingface.co/docs/transformers/model_doc/auto#transformers.AutoModelForSequenceClassification)
+
+logits を softmax 関数で確率分布に変換する。
+
+## torch の関数の dim=-1
+
+が便利。
+
+> dim=-1 と指定すると、最後の次元(最内側の次元)に対して適用されます

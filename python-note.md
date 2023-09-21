@@ -75,19 +75,19 @@ pip3 intsall -U --user pip
 
 オリジナル
 
-```
+```sh
 PATH=$PATH:$HOME/.local/bin:$HOME/bin
 ```
 
 修正後
 
-```
+```sh
 PATH=$HOME/.local/bin:$HOME/bin:$PATH
 ```
 
 テスト
 
-```
+```console
 $ python3 --version
 Python 3.7.4
 $ pip3 --version
@@ -114,7 +114,7 @@ pip3 intsall -U --user pip
 
 追加例
 
-```
+```sh
 ## set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
   PATH="$HOME/.local/bin:$PATH"
@@ -123,10 +123,13 @@ fi
 
 テスト
 
-```
+```console
 $ python3 --version
+
 Python 3.6.9
+
 $ pip3 --version
+
 pip 19.3.1 from /home/xxxxx/.local/lib/python3.6/site-packages/pip (python 3.6)
 ```
 
@@ -159,19 +162,19 @@ pip3 intsall -U --user pip
 
 オリジナル
 
-```
+```sh
 PATH=$PATH:$HOME/.local/bin:$HOME/bin
 ```
 
 修正後
 
-```
+```sh
 PATH=$HOME/.local/bin:$HOME/bin:$PATH
 ```
 
 テスト
 
-```
+```console
 $ python3 --version
 Python 3.6.8
 $ pip3 --version
@@ -204,7 +207,7 @@ hash -r
 
 テスト
 
-```
+```console
 $ python3 --version
 Python 3.6.8
 $ pip3 --version
@@ -213,7 +216,7 @@ pip 19.3.1 from /home/xxxxx/.local/lib/python3.6/site-packages/pip (python 3.6)
 
 `python`で python3 を使うようにしたい場合は
 
-```
+```console
 $ sudo update-alternatives --config python
 
 There are 2 programs which provide 'python'.
@@ -251,7 +254,7 @@ pip3 install -U --user pip
 
 テスト
 
-```
+```console
 C:>python --version
 Python 3.8.1
 
@@ -271,7 +274,7 @@ conda のパッケージ管理は、conda コマンドを使う。
 たとえば、インストールされているパッケージや python 自体の更新は
 インストール後、スタートメニュー->Anaconda 3->Anaconda Prompt (Anaconda 3)->右クリックで「管理者として起動」
 
-```
+```powershell
 conda update --all
 ```
 
@@ -1094,7 +1097,15 @@ class Person:
 
 person = Person("Alice", 20)
 
+# クラスを表示する
 print(type(person).__name__)
 # or
 print(person.__class__.__name__)
+
+# おまけ: クラスに属しているかを判定
+print(isinstance(person, Person))  # -> True
 ```
+
+どちらでも `Person` が表示される。
+
+[How to Get Class Name in Python? | FavTutor](https://favtutor.com/blogs/class-name-python)
