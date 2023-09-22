@@ -250,7 +250,7 @@ git-archive-all my_repo.zip
 
 おまけ
 
-- [git submodule はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ](https://www.m3tech.blog/entry/git-submodule)
+- [git submodule はトモダチ!怖くないよ! (チートシート付き) - エムスリーテックブログ](https://www.m3tech.blog/entry/git-submodule)
 
 ## git で symlink を扱いたい
 
@@ -355,7 +355,7 @@ git config -l | select-string filemode
 # select-stringはpowershellのgrep
 ```
 
-- [Git でファイルパーミッションの変更（chmod）を無視する \- git config core\.filemode false](https://blog.t5o.me/post/20121119/git-chmod-git-config-core-filemode.html)
+- [Git でファイルパーミッションの変更(chmod)を無視する \- git config core\.filemode false](https://blog.t5o.me/post/20121119/git-chmod-git-config-core-filemode.html)
 
 ## Git で tag のとりけし
 
@@ -395,7 +395,7 @@ git rebase -i --root -x 'git commit --amend --author="新しい作者名 <新し
 
 ## コミットの接頭語
 
-[WIP とは何か？（ウィップ、プログラミング用語）｜ Github の便利なログ管理方法](https://prograshi.com/general/git/wip/) からコピペ
+[WIP とは何か?(ウィップ、プログラミング用語)| Github の便利なログ管理方法](https://prograshi.com/general/git/wip/) からコピペ
 
 | 接頭語 | 意味                                                                                   |
 | :----: | :------------------------------------------------------------------------------------- |
