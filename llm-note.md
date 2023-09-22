@@ -497,3 +497,5 @@ inputs_s = slow_t(text, padding=True, truncation=True, return_tensors="pt")
 TODO: 例がつまんない。
 text が 1 個の文字列だったら padding 意味ない。
 truncation も BERT のトークンの最大数しらないと。
+
+[return_offsets_mapping](https://huggingface.co/docs/transformers/v4.33.2/en/main_classes/tokenizer#transformers.PreTrainedTokenizer.__call__.return_offsets_mapping) によると return_offsets_mapping は fast tokenizer にしか実装されてないそうです。
