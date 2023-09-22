@@ -1,6 +1,6 @@
 # 大規模言語モデル (Large Language Models;LLM) メモ
 
-というかほぼ NLP
+というかほぼ NLP で ほぼ Hugging Face Transformers で PyTorch
 
 - [大規模言語モデル (Large Language Models;LLM) メモ](#大規模言語モデル-large-language-modelsllm-メモ)
   - [概要](#概要)
@@ -28,6 +28,7 @@
   - [IOB2 記法 (IOB2 notation)](#iob2-記法-iob2-notation)
   - [pipeline()](#pipeline)
   - [torch の関数の dim=-1](#torch-の関数の-dim-1)
+  - [BertJapaneseTokenizer](#bertjapanesetokenizer)
 
 ## 概要
 
@@ -471,3 +472,28 @@ logits を softmax 関数で確率分布に変換する。
 が便利。
 
 > dim=-1 と指定すると、最後の次元(最内側の次元)に対して適用されます
+
+## BertJapaneseTokenizer
+
+たとえば
+
+```python
+model_name="llm-book/bert-base-japanese-v3-ner-wikipedia-dataset"
+slow_t = AutoTokenizer.from_pretrained(model_name)
+inputs_s = slow_t(text, padding=True, truncation=True, return_tensors="pt")
+```
+
+で、`padding` の意味は? という場合どこを見たらいいか。
+
+[BertJapaneseTokenizer](https://huggingface.co/docs/transformers/v4.33.2/en/model_doc/bert-japanese#transformers.BertJapaneseTokenizer)
+の 1 個親の
+[PreTrainedTokenizer](https://huggingface.co/docs/transformers/v4.33.2/en/main_classes/tokenizer#transformers.PreTrainedTokenizer)
+の
+[\_\_call\_\_](https://huggingface.co/docs/transformers/v4.33.2/en/main_classes/tokenizer#transformers.PreTrainedTokenizer.__call__)
+に載ってる。(
+[padding](https://huggingface.co/docs/transformers/v4.33.2/en/main_classes/tokenizer#transformers.PreTrainedTokenizer.__call__.padding)
+はここ)
+
+TODO: 例がつまんない。
+text が 1 個の文字列だったら padding 意味ない。
+truncation も BERT のトークンの最大数しらないと。
