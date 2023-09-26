@@ -22,6 +22,7 @@
     - [「低次元ベクトル」と「高次元ベクトル」は何がちがいますか?](#低次元ベクトルと高次元ベクトルは何がちがいますか)
     - [なぜベクトルに変換することを embedding というのですか? Word2Vec が起源ですか?](#なぜベクトルに変換することを-embedding-というのですか-word2vec-が起源ですか)
   - [モデルの cased と uncased](#モデルの-cased-と-uncased)
+  - [モデルのファイルサイズ](#モデルのファイルサイズ)
   - [Transformers で特殊トークンのリストを得る](#transformers-で特殊トークンのリストを得る)
   - [パラメーター数](#パラメーター数)
   - [Unicode 正規化](#unicode-正規化)
@@ -325,6 +326,31 @@ BERT のベースモデルは、大量のテキストデータで学習されて
 
 たとえば、テキスト分類のタスクでは、単語の意味を理解することが重要です。この場合、BERT-base-cased を使用すると、より高い精度を達成することができます。
 一方、テキスト要約のタスクでは、単語の意味よりも、文章の構造を理解することが重要です。この場合、BERT-base-uncased を使用すると、計算コストを削減することができます。
+
+## モデルのファイルサイズ
+
+Hugging Face Hub でモデルのファイルサイズを事前に知る。
+
+例えば tsmatz/xlm-roberta-ner-japanese だったら
+[tsmatz/xlm-roberta-ner-japanese at main](https://huggingface.co/tsmatz/xlm-roberta-ner-japanese/tree/main)
+の `pytorch_model.bin` のサイズがおおむねの答え。
+
+キャッシュ後だったら
+[huggingface\-hub · PyPI](https://pypi.org/project/huggingface-hub/)
+を
+
+```bash
+pip install huggingface-hub[cli]
+```
+
+して
+
+```console
+$ huggingface-cli scan-cache | grep -Fi roberta-ner
+tsmatz/xlm-roberta-ner-japanese                        model             1.1G        (以下略)
+```
+
+みたいにする。
 
 ## Transformers で特殊トークンのリストを得る
 

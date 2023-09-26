@@ -222,7 +222,7 @@ pacman も無いのでインストールできない。
 
 あきらめて
 
-```
+```bash
 git config --global http.sslVerify false
 ```
 
@@ -336,7 +336,7 @@ git-crypt unlock
 
 ↑ これは GitHub にサンプルがあった。
 
-```
+```config
 secretfile filter=git-crypt diff=git-crypt
 *.key filter=git-crypt diff=git-crypt
 secretdir/** filter=git-crypt diff=git-crypt
