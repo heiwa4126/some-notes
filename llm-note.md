@@ -30,6 +30,7 @@
   - [pipeline()](#pipeline)
   - [torch の関数の dim=-1](#torch-の関数の-dim-1)
   - [BertJapaneseTokenizer](#bertjapanesetokenizer)
+  - [Diffusers](#diffusers)
 
 ## 概要
 
@@ -525,3 +526,17 @@ text が 1 個の文字列だったら padding 意味ない。
 truncation も BERT のトークンの最大数しらないと。
 
 [return_offsets_mapping](https://huggingface.co/docs/transformers/v4.33.2/en/main_classes/tokenizer#transformers.PreTrainedTokenizer.__call__.return_offsets_mapping) によると return_offsets_mapping は fast tokenizer にしか実装されてないそうです。
+
+## Diffusers
+
+LLM じゃない?
+
+Bing に聞いてみました:
+
+Hugging Face Diffusers は、画像や音声の生成において最先端の拡散モデルを提供するライブラリです。拡散モデルとは、ノイズの多い画像や音声から徐々にノイズを除去していくことで、高品質な画像や音声を生成する確率的なモデルです。Hugging Face Diffusers は、PyTorch と Flax の両方で動作し、様々な拡散モデルのパイプラインをサポートしています。また、Hugging Face Hub には 4000 以上の事前学習済みの拡散モデルが公開されており、簡単に利用することができます。Hugging Face Diffusers は、自分自身の拡散モデルをゼロから学習したり、既存の拡散モデルを新しいデータセットにファインチューニングしたりすることも可能です。さらに、条件付き生成やガイダンスといった高度な機能も提供しています。Hugging Face Diffusers の詳細については、[公式ドキュメント](^1^)や[GitHub リポジトリ](^2^)をご覧ください。また、[Hugging Face Diffusion Models Course](^3^)という無料のコースもありますので、興味があればぜひ参加してみてください。
+
+ソース: Bing との会話 2023/9/28
+(1) Diffusers - Hugging Face. https://huggingface.co/docs/diffusers/index.
+(2) GitHub - huggingface/diffusers: Diffusers: State-of-the-art .... https://github.com/huggingface/diffusers.
+(3) Hugging Face Diffusion Models Course - GitHub. https://github.com/huggingface/diffusion-models-class.
+(4) undefined. https://huggingface.co/docs/diffusers/v0.20.0/en/_app/pages/index.mdx-hf-doc-builder.js.
