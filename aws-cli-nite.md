@@ -1,47 +1,48 @@
-# AWS CLIのメモ
+# AWS CLI のメモ
 
-- [AWS CLIのメモ](#aws-cliのメモ)
-- [aws cliの最新バージョンは?](#aws-cliの最新バージョンは)
-- [aws cliのプロファイルの場所](#aws-cliのプロファイルの場所)
-- [コマンド補完](#コマンド補完)
-- [AWS CLIのインストール手順](#aws-cliのインストール手順)
-  - [pipの最新版をユーザーローカルにインストールする](#pipの最新版をユーザーローカルにインストールする)
-  - [Amazon Linux 2](#amazon-linux-2)
-  - [Debian, Ubuntu Linux系](#debian-ubuntu-linux系)
-  - [RHEL 7, CentOS 7](#rhel-7-centos-7)
-  - [Windows](#windows)
-  - [Windows(古い)](#windows古い)
-- [pipでawscliのインストールに失敗する](#pipでawscliのインストールに失敗する)
-- [ログインとリスト](#ログインとリスト)
+- [AWS CLI のメモ](#aws-cli-のメモ)
+  - [aws cli の最新バージョンは?](#aws-cli-の最新バージョンは)
+  - [aws cli のプロファイルの場所](#aws-cli-のプロファイルの場所)
+  - [コマンド補完](#コマンド補完)
+  - [AWS CLI のインストール手順](#aws-cli-のインストール手順)
+    - [pip の最新版をユーザーローカルにインストールする](#pip-の最新版をユーザーローカルにインストールする)
+    - [Amazon Linux 2](#amazon-linux-2)
+    - [Debian, Ubuntu Linux 系](#debian-ubuntu-linux-系)
+    - [RHEL 7, CentOS 7](#rhel-7-centos-7)
+    - [Windows](#windows)
+    - [Windows(古い)](#windows古い)
+  - [pip で awscli のインストールに失敗する](#pip-で-awscli-のインストールに失敗する)
+  - [ログインとリスト](#ログインとリスト)
+  - [AMI のイメージ ID から名前を得る](#ami-のイメージ-id-から名前を得る)
 
-# aws cliの最新バージョンは?
+## aws cli の最新バージョンは?
 
 ここ参照
 [aws\-cli/CHANGELOG\.rst at v2 · aws/aws\-cli](https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst)
 
-# aws cliのプロファイルの場所
+## aws cli のプロファイルの場所
 
-- Windows: `%USERPROFILE%\.aws` - v1では%HOMEが定義されていれば `%HOME%\.aws` だった。
+- Windows: `%USERPROFILE%\.aws` - v1 では%HOME が定義されていれば `%HOME%\.aws` だった。
 - Linux & Mac: `~/.aws/credentials`
 
 [名前付きプロファイル - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-profiles.html)
 
-# コマンド補完
+## コマンド補完
 
-v2では
+v2 では
 `/usr/local/bin/aws_completer` (symlink)
 
-# AWS CLIのインストール手順
+## AWS CLI のインストール手順
 
-**以下v1の場合。v2はPython 3ごと配布されてる**
+**以下 v1 の場合。v2 は Python 3 ごと配布されてる**
 
 [AWS CLI のインストール](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-chap-install.html)
 に書かれているとおりなのだが、
-pipを使った例しか出ておらず、
-そのpipが意外と面倒(Python2と3の混乱のせいで)だったりして、
+pip を使った例しか出ておらず、
+その pip が意外と面倒(Python2 と 3 の混乱のせいで)だったりして、
 実際にやってみるとかなり面倒。
 
-## pipの最新版をユーザーローカルにインストールする
+### pip の最新版をユーザーローカルにインストールする
 
 [Installation — pip 19.2.1 documentation](https://pip.pypa.io/en/stable/installing/)
 
@@ -50,25 +51,25 @@ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py --user -U
 ```
 
-RHEL7, CentOS7ではpython3が面倒なので、pythonで。
+RHEL7, CentOS7 では python3 が面倒なので、python で。
 
-Ubuntu, Debianでは`~.local/bin`へのパスが、
+Ubuntu, Debian では `~.local/bin` へのパスが、
 「パスが存在しない場合は追加しない」ようになってるので、
 一旦ログアウトして、入り直す
-(詳しくは~/.profile参照。手動でパスに追加してhash -rでもOK)。
+(詳しくは~/.profile 参照。手動でパスに追加して hash -r でも OK)。
 
 ```bash
-$ which pip
-$ pip --version
+which pip
+pip --version
 ```
 
 で確認。
 
-## Amazon Linux 2
+### Amazon Linux 2
 
 プリインストール。
 
-## Debian, Ubuntu Linux系
+### Debian, Ubuntu Linux 系
 
 パッケージで入れるなら
 
@@ -76,22 +77,23 @@ $ pip --version
 sudo apt install awscli -y
 ```
 
-で、Python3ベースのaws cliがインストールされる。
-ただバージョンが若干古い(Ubutu18.04LTSで1.14.44)。
+で、Python3 ベースの aws cli がインストールされる。
+ただバージョンが若干古い(Ubutu18.04LTS で 1.14.44)。
 
-2019-7の最新版 (Ubuntu 18.04LTSで)
+2019-7 の最新版 (Ubuntu 18.04LTS で)
 
-```
+```console
 $ aws --version
+
 aws-cli/1.16.206 Python/3.6.8 Linux/4.15.0-55-generic botocore/1.12.196
 ```
 
-## RHEL 7, CentOS 7
+### RHEL 7, CentOS 7
 
 [Linux に AWS CLI をインストールする - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-linux.html)
 
-RHEL7系は未だにpython3が不自由なので、
-python2で我慢する。
+RHEL7 系は未だに python3 が不自由なので、
+python2 で我慢する。
 
 カレントユーザにインストールする例
 
@@ -103,53 +105,69 @@ pip install awscli --upgrade --user
 hash -r
 ```
 
-## Windows
+### Windows
 
 [Windows での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-windows.html)
 
 クレデンシャルの場所
 [構成設定はどこに保存されていますか](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where)
 
-Windowsについて記述がない... `aws configure`で。
+Windows について記述がない... `aws configure`で。
 
-aws cliがv2なら `aws configure list-profiles`でリストも出せる。
+aws cli が v2 なら `aws configure list-profiles`でリストも出せる。
 
-## Windows(古い)
+### Windows(古い)
 
-まずAnacondaを更新する。
-Anaconda promptを管理者権限で起動して
+まず Anaconda を更新する。
+Anaconda prompt を管理者権限で起動して
 
-```
+```powershell
 conda update --all -y
 ```
 
-Anaconda promptを閉じる。
+Anaconda prompt を閉じる。
 
-awscliをインストール。
-Anaconda promptを起動して、
+awscli をインストール。
+Anaconda prompt を起動して、
 
-```
+```bash
 pip install awscli --user -U
 ```
 
-# pipでawscliのインストールに失敗する
+## pip で awscli のインストールに失敗する
 
 [cryptography](https://pypi.org/project/cryptography/)が
-opensslのdevパッケージを要求するので、
+openssl の dev パッケージを要求するので、
 
 先に
 
 ```bash
 sudo apt install libssl-dev
-# または
+## または
 sudo apt install python3-cryptography
 ```
 
 してから。
 
-# ログインとリスト
+## ログインとリスト
 
 ```bash
 az login
 az account list -o table
 ```
+
+## AMI のイメージ ID から名前を得る
+
+ポータルからだと名前が取れない。
+
+以下例:
+
+```bash
+aws ec2 describe-images --region ap-northeast-1 --image-ids ami-0d52744d6551d851e --query "Images[].{Name:Name,Description:Description}"
+```
+
+ami はリージョンごとに ID が違うみたい。
+でも名前はだいたい同じはずなので
+Terraform なんかでは filter で ID を見つける。
+
+これ参照: [aws_instance | Resources | hashicorp/aws | Terraform | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#basic-example-using-ami-lookup)
