@@ -32,6 +32,7 @@
   - [BertJapaneseTokenizer](#bertjapanesetokenizer)
   - [Diffusers](#diffusers)
   - [「エンベッディング」とは](#エンベッディングとは)
+  - [いきなり fine-tuning するな (GTP-3.5, 4)](#いきなり-fine-tuning-するな-gtp-35-4)
 
 ## 概要
 
@@ -547,5 +548,14 @@ Hugging Face Diffusers は、画像や音声の生成において最先端の拡
 "in-context", "context", "embedding" or "grounding" と呼び方はいろいろあるけれど同じ。
 
 モデルに与えるコンテキストのこと。
+モデルのパラメータを変更しない(「モデルそのものを変更しない」と言うこと。そこが fine-tuning とは違う)
 
 [qa-japanese1.ipynb - Colaboratory の ここ](https://colab.research.google.com/gist/ohtam1/f50477059958dd3af27a902c6aaf019a/qa-japanese1.ipynb#scrollTo=xlIFtJZdljh0&line=4&uniqifier=1) のことだ
+
+## いきなり fine-tuning するな (GTP-3.5, 4)
+
+[Start with zero\-shot, then few\-shot \(example\), neither of them worked, then fine\-tune](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-openai-api#h_eae065300d)
+
+ゼロショットで始めて
+次はフューショット、
+それでだめならファインチューニング。

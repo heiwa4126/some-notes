@@ -14,6 +14,7 @@
     - [wsl --export の出力は圧縮されないのですか?](#wsl---export-の出力は圧縮されないのですか)
     - [エクスポートしながら圧縮する方法はありませんか?](#エクスポートしながら圧縮する方法はありませんか)
     - [エクスポートしながら圧縮: あとで試すメモ](#エクスポートしながら圧縮-あとで試すメモ)
+  - [WSL で Windows のやりとり](#wslでwindowsのやりとり)
 
 ## WSL の再起動
 
@@ -213,3 +214,7 @@ wsl --export distro - | wsl gzip > distro.tar.gz
 とかになる。
 
 あと import は tar.gz のまま行けるらしい。
+
+## WSL で Windows のやりとり
+
+[wsl2 でよく使う、windows と linux 間のファイル移動やコマンド実行。 - Qiita](https://qiita.com/Uchitaso/items/6e0a7859e87bb8bdb527)
