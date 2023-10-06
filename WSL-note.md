@@ -3,8 +3,9 @@
 - [WSL メモ](#wsl-メモ)
   - [WSL の再起動](#wsl-の再起動)
   - [WSL の syslog は Windows イベントログに出る](#wsl-の-syslog-は-windows-イベントログに出る)
+  - [WSL2 で w コマンドを叩いても他の pts が表示されないのはなぜ?](#wsl2-で-w-コマンドを叩いても他の-pts-が表示されないのはなぜ)
   - [WSL2 で docker は使えますか?](#wsl2-で-docker-は使えますか)
-    - [WSL2 で docker は使えますか?](#wsl2-で-docker-は使えますか-1)
+    - [WSL2 で docker は使えますか? - Bing の答え](#wsl2-で-docker-は使えますか---bing-の答え)
     - [docker サービスは自動起動しますか?](#docker-サービスは自動起動しますか)
     - [ChatGPT にも聞いてみた: WSL2 で docker は使えますか?](#chatgpt-にも聞いてみた-wsl2-で-docker-は使えますか)
     - [つづき: その Microsoft の公式ドキュメントやオンラインのチュートリアルの URL を教えてください](#つづき-その-microsoft-の公式ドキュメントやオンラインのチュートリアルの-url-を教えてください)
@@ -29,13 +30,38 @@ wsl.exe --shutdown
 
 ええっ
 
+## WSL2 で w コマンドを叩いても他の pts が表示されないのはなぜ?
+
+```terminal
+$ ps f
+  PID TTY      STAT   TIME COMMAND
+   95 pts/3    Ss     0:00 -bash
+  108 pts/3    R+     0:00  \_ ps f
+   84 pts/2    Ss     0:00 -bash
+   94 pts/2    S+     0:01  \_ ssh server4
+   74 pts/1    Ss+    0:00 -bash
+   10 pts/0    Ss     0:00 -bash
+   71 pts/0    S+     0:00  \_ tmux
+
+$ w
+ 10:38:32 up 35 min,  0 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+$
+```
+
+「WSL が各ターミナルセッションを別々の環境として扱うためです。
+これは、WSL が Linux のカーネルを完全にエミュレートしないために起こります。
+その結果、一部の Linux コマンドが期待通りに動作しないことがあります。」
+だそうですけど。よくわかりません。
+
 ## WSL2 で docker は使えますか?
 
 Bing Search に聞いてみた。
 
 注意点: リンク先読め。
 
-### WSL2 で docker は使えますか?
+### WSL2 で docker は使えますか? - Bing の答え
 
 はい、WSL2 では docker を使えます ²³⁴⁵。
 WSL2 は Linux カーネルを実装しているので、docker のネイティブな動作が可能になります ²。

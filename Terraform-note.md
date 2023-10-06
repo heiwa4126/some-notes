@@ -631,3 +631,32 @@ output "subnet_cidr" {
 
 - [The Terraform Playground を作ろうとしている話](https://zenn.dev/yukin01/articles/ccc0b765c1edbf5649b1)
 - [The Terraform Playground](https://yukin01-terraform-playground.web.app/)
+
+## variable に map() を使うときの環境変数
+
+```hcl
+variable "my_map" {
+  type    = "map"
+  default = {
+    key1 = "default_value1"
+    key2 = "default_value2"
+  }
+}
+```
+
+があったとき(bash)
+
+```bash
+TF_VAR_my_map='{"key1":"value1","key2":"value2"}'
+```
+
+のように与える。
+
+```bash
+TF_VAR_my_map='{
+  "key1": "'$other_environment_value1'",
+  "key2": "value2"
+}'
+```
+
+とかでも OK
