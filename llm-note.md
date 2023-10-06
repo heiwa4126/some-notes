@@ -31,6 +31,7 @@
   - [torch の関数の dim=-1](#torch-の関数の-dim-1)
   - [BertJapaneseTokenizer](#bertjapanesetokenizer)
   - [Diffusers](#diffusers)
+  - [「エンベッディング」とは](#エンベッディングとは)
 
 ## 概要
 
@@ -540,3 +541,11 @@ Hugging Face Diffusers は、画像や音声の生成において最先端の拡
 (2) GitHub - huggingface/diffusers: Diffusers: State-of-the-art .... https://github.com/huggingface/diffusers.
 (3) Hugging Face Diffusion Models Course - GitHub. https://github.com/huggingface/diffusion-models-class.
 (4) undefined. https://huggingface.co/docs/diffusers/v0.20.0/en/_app/pages/index.mdx-hf-doc-builder.js.
+
+## 「エンベッディング」とは
+
+"in-context", "context", "embedding" or "grounding" と呼び方はいろいろあるけれど同じ。
+
+モデルに与えるコンテキストのこと。
+
+[qa-japanese1.ipynb - Colaboratory の ここ](https://colab.research.google.com/gist/ohtam1/f50477059958dd3af27a902c6aaf019a/qa-japanese1.ipynb#scrollTo=xlIFtJZdljh0&line=4&uniqifier=1) のことだ
