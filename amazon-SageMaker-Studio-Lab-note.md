@@ -3,10 +3,13 @@
 ## 特徴 & 感想
 
 - AWS の普通のアカウントとは別管理
-- いちおう無料。メールアドレスと電話番号(本登録後にきかれる)が必要
+- いちおう無料。メールアドレスと電話番号(最初に start runtime を押すときにきかれる)が必要
 - アカウントの申し込み → メールアドレスの確認 → ウエイティングリストに登録 → (約一日) → 本登録(メールアドレス、パスワード、ユーザ名)
 - CAPTCHA がけっこうウザい。なんか無茶な使い方をした奴がいたんだろう
-- ブラウザでポップアップの解除と `*.awswaf.com` をトラスティッドドメインに追加する必要あり(AWS WAF)
+- ブラウザで
+  ポップアップの解除と
+  ターミナルでコピペの許可と
+  `*.awswaf.com`(AWS WAF) をトラスティッドドメインに追加する必要あり
 - Jupyter が Colab と比べると使いにくい。右クリックでプルダウンメニューが多い感じ
 - `%conda` は死ぬほど遅い(たぶんバグ) ので、Linux の lib パッケージが必要なやつ(`matplotlib`など)以外は `%pip`
 
@@ -56,3 +59,18 @@ Python パッケージをインストールするには、次のようにしま�
 
 を使うことができます。**必ず '!pip' や '!conda' ではなく、この形式（'%'付き）を使ってください。**
 '%'を使うことで、パッケージを正しいパスにインストールすることができます。
+
+## トラスティッドドメインへの追加
+
+Firefox だと `network.negotiate-auth.trusted-uris` で検索すると手順が出てくる。
+
+ほかのブラウザは OS で設定らしいが試してない(TODO)
+
+## Open in Studio Lab ボタンの設置方法
+
+[Open in Studio Lab ボタンの設置方法](https://github.com/aws-sagemaker-jp/awesome-studio-lab-jp/blob/main/README_button.md)
+
+## 参考リンク
+
+- [GitHub - aws/studio-lab-examples: Example notebooks for working with SageMaker Studio Lab. Sign up for an account at the link below!](https://github.com/aws/studio-lab-examples)
+- [GitHub - aws-sagemaker-jp/awesome-studio-lab-jp: SageMaker Studio Lab の教材を紹介するリポジトリ。](https://github.com/aws-sagemaker-jp/awesome-studio-lab-jp)
