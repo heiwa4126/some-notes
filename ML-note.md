@@ -83,7 +83,10 @@ $$\tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}$$
 
 $$\text{ReLU}(x) = \max(0, x)$$
 
-`np.maximum(0, x)`
+numpy では `np.maximum(0, x)`
+
+「ランプ関数」というらしい。
+なんで「ランプ」? → [ランプ関数 - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%A9%E3%83%B3%E3%83%97%E9%96%A2%E6%95%B0)
 
 ## バックプロパゲーション
 
