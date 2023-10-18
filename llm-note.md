@@ -559,15 +559,3 @@ Hugging Face Diffusers は、画像や音声の生成において最先端の拡
 ゼロショットで始めて
 次はフューショット、
 それでだめならファインチューニング。
-
-## PEFT
-
-[PEFT](https://huggingface.co/docs/peft/index)
-
-> PEFT(Parameter-Efficient Fine-Tuning)は、モデルの全パラメータを微調整することなく、訓練済みの言語モデル(PLM)を様々な下流アプリケーションに効率的に適応させるためのライブラリです。大規模な PLM のファインチューニングは法外なコストがかかるため、PEFT メソッドは少数の(余分な)モデルパラメータのみをファインチューニングし、計算コストとストレージコストを大幅に削減します。最近の最新の PEFT 手法は、完全なファインチューニングに匹敵する性能を達成しています。
->
-> PEFT は、DeepSpeed とビッグモデル推論を活用した大規模モデル用の Transformers Accelerate とシームレスに統合されています。
-
-[Load adapters with 🤗 PEFT](https://huggingface.co/docs/transformers/peft)
-
-> PEFT(Parameter-Efficient Fine Tuning)法は、fine-tuning の際に事前に学習したモデルのパラメータを凍結し、その上に少数の学習可能なパラメータ(アダプター)を追加する。アダプターはタスク固有の情報を学習するように訓練される。このアプローチは、完全にファインチューニングされたモデルに匹敵する結果を出しながら、メモリ効率が非常に高く、計算量が少ないことが示されている。
