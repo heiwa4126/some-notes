@@ -188,3 +188,69 @@ OR、AND、NAND は単純パーセプトロンで作れる。
 ## ワンホットエンコーディング
 
 ラベルをワンホットエンコーディングするのは出力層の値と一緒に損失関数に食わせるためなのか。
+
+## ニューラルネットワークの出力層のニューロンの数を表す記号
+
+いろいろあるみたい
+
+- $n_{out}$ (n_out)
+- C
+- K (まれ。もしくは特定分野)
+
+## fill mask タスクなどでは出力層のニューロンの数はトークナイザーのボキャブラリの数と同一ですか?
+
+同一らしい。すげえ。
+
+QA や要約でも話は一緒。
+
+翻訳は微妙:
+
+- 出力言語のトークナイザーの数と同一
+- マルチリンガルの翻訳タスクの場合、全言語の和になるかも。
+
+「実際に Hugging Face Transformers で model から出力層のニューロンの数を得ることはできますか?」という質問には、結局 config 周りで得るしかないみたい。
+
+それなら直接 config.json みても一緒なんだけど、それは本末転倒
+
+いちおう例:
+
+- [config.json · bert-base-uncased at main](https://huggingface.co/bert-base-uncased/blob/main/config.json) - vocab_size: 30522
+- [config.json · RinInori/bert-base-uncased_finetuned_sentiments at main](https://huggingface.co/RinInori/bert-base-uncased_finetuned_sentiments/blob/main/config.json) - 感情分析のモデル。ラベルが 6 つだから出力層も 6 個 だろう...
+
+fill-mask の `outout=model(**input)` で tensor のサイズを見ればわかるはず。あとでやってみる。
+
+## 下流タスク
+
+生成系 AI チャットいろいろに聞いたもののまとめ。
+
+Q. NLP の「下流タスク」とは何ですか? 「下流(downstream)」にはどんな意味がこめられていますか? 上流タスクもあるんですか?
+
+- 上流タスクとは、事前学習のために行われる教師なし学習のタスクです。
+- 下流タスク(downstream task)」とは、ある事前学習済みモデルをベースに、新しいタスクを解くためにファインチューニングするタスクのことを指します。
+
+具体的には、BERT や GPT などの事前学習済み言語モデルをベースモデルとして、その上に分類や質問応答などのタスク特化層を追加し、新しいデータセットでファインチューニングすることで、タスクを解くモデルを効率的に構築できます。
+
+Q.
+例えば fill-mask の bert-base-cased モデルを
+Yelp Reviews データセット使って、
+sequence classification タスク用 として fine-tuning したモデルを作った場合
+どれが上流タスクでどれが下流タスクですか?
+
+(答え省略)
+
+Q.
+この場合 bert-base-cased の出力層の後ろに
+sequence classification タスク用の
+ニューラルネットワークが構築されるのですか?
+
+bert-base-cased の事前学習モデルを下流の sequence classification タスクで fine-tuning する場合、以下のようにモデルを構成します:
+
+1. bert-base-cased のモデル(埋め込み層、encoder 層など)をロード
+2. 出力層(上流タスクの fill-mask)の後ろに、新しい出力層を追加。
+   この出力層は sequence classification のクラス数だけのニューロンを持つ。
+3. 追加した出力層以外は固定し、出力層のみを新しいデータで fine-tuning
+4. fine-tuning 後は、入力テキストから特徴量を抽出する bert-base-cased と、それを入力として分類を行う出力層を組み合わせて推論
+
+このように、事前学習済みモデルの出力を入力として、タスク特化の層を追加するのが一般的な下流タスクの構成です。上流の特徴抽出能力を活用しつつ、下流のタスクに特化したネットワークを追加することで両立できています。
+
+## TODO: Conversational タスクをあとで pipeline()を使わずにやってみる。
