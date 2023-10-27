@@ -62,7 +62,11 @@ $a = f(z)$
 
 #### シグモイド関数
 
-$$\sigma(x) = \frac{1}{1 + e^{-x}}$$
+$$
+\sigma(x)
+= \frac{1}{1 + e^{-x}}
+= \frac{e^x}{1 + e^x}
+$$
 
 -∞ ~ +∞ の数値を、0.0~1.0 の範囲の数値に変換する関数。「ロジスティクス関数」と同じもの。
 
@@ -98,6 +102,15 @@ $\text{ReLU}'(x) = \begin{cases}
 \end{cases}$
 
 と定義されてるそうです。
+
+## ロジット(logit)
+
+$
+\operatorname{logit}(p) = \log\left(\frac{p}{1-p}\right)
+= \log(p) - \log(1-p)
+$
+
+シグモイド関数の逆関数。"**log**istic un**it**"の略。
 
 ## バックプロパゲーション
 
@@ -258,3 +271,21 @@ bert-base-cased の事前学習モデルを下流の sequence classification タ
 これは「はい」と言い切れない。
 
 ## TODO: Conversational タスクをあとで pipeline()を使わずにやってみる。
+
+## 横ベクトル・縦ベクトル
+
+一応メモ書いとく。行ベクトル・列ベクトルより間違いにくい??ような気がする。
+
+100 次元のサンプル。
+
+横ベクトル(row vector):
+
+$$
+(x_1, x_2, \ldots, x_{100})
+$$
+
+縦ベクトル(column vector):
+
+$$
+\begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_{100} \end{pmatrix}
+$$
