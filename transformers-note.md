@@ -74,3 +74,65 @@ task_type:
 - "TOKEN_CLS" - トークンごとのクラス分類(Token Classification)タスク。例えば、固有表現抽出(NER)
 - "QUESTION_ANS" - 質問応答(Question Answering)タスク
 - "FEATURE_EXTRACTION" - フィーチャーの抽出(Feature Extraction)タスク
+
+## Trainer の compute_metrics
+
+[Trainer](https://huggingface.co/docs/transformers/main_classes/trainer)
+
+compute_metrics()関数は、Trainer の 1 エポック終了後に呼び出されます
+(ストラテジによって変わる。後述)。
+
+具体的には以下のタイミングで呼ばれます:
+
+- 訓練時の各エポック終了後に、訓練データで evaluate()が呼ばれ、そこで compute_metrics()が呼び出される
+- 評価用データで evaluate()が呼ばれたときに、compute_metrics()が呼び出される
+
+訓練途中で評価したい場合は、Trainer の args に evaluation_strategy='steps'などを指定することで、
+所定のステップごとに evaluate()し、compute_metrics()を呼び出すこともできます。
+
+**compute_metrics()の戻り値はあくまで中間評価のためで、fine-tuning 自体には影響しない。**
+
+- [compute_metrics](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Trainer.compute_metrics)
+- [huggingface/transformers の Trainer の使い方と挙動 #bert - Qiita](https://qiita.com/nipo/items/44ce3aaf6acd4e2649d1#compute_metrics)
+
+## accuracy
+
+`accuracy = (予測が正解だったサンプル数) / (全サンプル数)`
+
+例えば、100 個のサンプルに対してモデルが 80 個正解で 20 個不正解だった場合、accuracy は 80/100=0.8=80%となります。
+
+accuracy は 0 から 1 の間の値をとり、1 に近いほどモデルの性能が高いことを示します。
+
+分類タスクでは、accuracy がもっとも基本的で重要な評価指標の 1 つとして、広く使用されています。
+
+[Accuracy - a Hugging Face Space by evaluate-metric](https://huggingface.co/spaces/evaluate-metric/accuracy)
+
+## F1 スコア (F 値, F-measure)
+
+accuracy はクラス不均衡データに対して脆弱なため、F1 スコア等の指標と合わせて使用することが多いです。
+
+クラス不均衡データとは:
+あるクラスのデータ数が他のクラスに比べて極端に少ないデータセットのことです。
+例えば、100 個のデータの内、90 個が「クラス A」、10 個が「クラス B」であるようなデータセットは、クラス不均衡が発生しています。
+
+この場合、単純に accuracy を計算すると、
+全てのサンプルを「クラス A」と予測するモデルでも 90%の高い accuracy が出てしまいます。
+
+F1 スコアは、
+適合率(Precision, Positive predict value,PPV) と
+再現率(Recall)(=感度(Sensitivity)) の
+調和平均です。
+
+- [F 値 (評価指標) - Wikipedia](<https://ja.wikipedia.org/wiki/F%E5%80%A4_(%E8%A9%95%E4%BE%A1%E6%8C%87%E6%A8%99)>)
+- [感度とか特異度とか | Tech Blog | CRESCO Tech Blog](https://www.cresco.co.jp/blog/entry/5987.html)
+- [F1 - a Hugging Face Space by evaluate-metric](https://huggingface.co/spaces/evaluate-metric/f1)
+
+## Trainer の 損失関数(loss function)
+
+compute_loss で指定するんだけど、デフォルトは None.
+
+None だと、モデルの設定に基づいて自動的に設定されます。
+分類タスクの場合、BertForSequenceClassification を使用すると、
+クロスエントロピー損失(交差エントロピー)がデフォルトで設定されます。
+
+[損失関数とは？ニューラルネットワークの学習理論【機械学習】 – 株式会社ライトコード](https://rightcode.co.jp/blog/information-technology/loss-function-neural-network-learning-theory)
