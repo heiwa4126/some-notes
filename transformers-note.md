@@ -137,7 +137,7 @@ None だと、モデルの設定に基づいて自動的に設定されます。
 
 [損失関数とは?ニューラルネットワークの学習理論【機械学習】 – 株式会社ライトコード](https://rightcode.co.jp/blog/information-technology/loss-function-neural-network-learning-theory)
 
-# fine-tuning がうまくいかないときメモ
+## fine-tuning がうまくいかないときメモ
 
 trainer.train()のログで、loss がどんどん増えて 1 より大きくなる現象。
 当然まともなモデルにならない。
@@ -204,3 +204,12 @@ ChatGTP に聞いたらわりと親切な答えが来たのでメモしておく
 ```
 
 順調に学習しはじめた。よかったよかった。
+
+## TensorBoard の薄いグラフ
+
+train のグラフなどで
+
+- 薄い線: 実際の値
+- 濃い線: TensorBoard がスムージングかけた値
+
+だそうです。
