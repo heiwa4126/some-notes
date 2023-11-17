@@ -174,7 +174,7 @@ ChatGTP に聞いたらわりと親切な答えが来たのでメモしておく
 
 交差エントロピー損失(cross entropy loss)の結果が 1 を超えることは原理的にありません。
 
-…だよねえ。
+...だよねえ。
 
 > train 中に loss がどんどん増えて 1 を超えてしまいました。これは何が原因でしょう?
 
@@ -213,3 +213,22 @@ train のグラフなどで
 - 濃い線: TensorBoard がスムージングかけた値
 
 だそうです。
+
+## タスク
+
+Huggung Face Hub の model の Natural Language Processing(NLP) のタスクをざっくり解説
+
+- Text Classification: テキストをカテゴリに分類するタスク。例えば、感情分析やスパム検出など。
+- Token Classification: 文中のトークン(単語)にラベルを付けるタスク。例えば、固有表現抽出や構文解析など。
+- Table Question Answering: テーブル形式のデータから質問に答えるタスク。
+- Question Answering: 自然言語の質問に対して適切に回答するタスク。
+- Zero-Shot Classification: 学習データがない新しいカテゴリの分類。転移学習が用いられる。
+- Translation: 一言語から別の言語への翻訳タスク。
+- Summarization: 長文のテキストを要約するタスク。
+- Conversational: 会話的なやり取りができる対話システムの構築。
+- Text Generation: 条件に基づき文章を自動生成するタスク。
+- Text2Text Generation: テキスト入力からテキスト出力を生成するタスク。
+- Fill-Mask: マスクされた単語を予測して埋めるタスク。BERT のプリトレーニングなどに用いられる。
+- Sentence Similarity: 2 つの文の意味的な類似度を計算するタスク。
+
+意味がよくわからんものが...
