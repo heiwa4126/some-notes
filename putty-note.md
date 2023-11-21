@@ -1,6 +1,10 @@
-# Putty メモ
+# PuTTY メモ
 
-パティ [PuTTY: a free SSH and Telnet client](https://www.chiark.greenend.org.uk/~sgtatham/putty/)
+パティ
+
+- [PuTTY: a free SSH and Telnet client](https://www.chiark.greenend.org.uk/~sgtatham/putty/)
+- [git://git.tartarus.org/simon/putty.git](git://git.tartarus.org/simon/putty.git)
+- [github/putty: mirror of git://git.tartarus.org/simon/putty.git, used for client testing](https://github.com/github/putty) - けっこう古い
 
 ## 環境変数 GIT_SSH
 

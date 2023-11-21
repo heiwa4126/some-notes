@@ -1,45 +1,46 @@
 # Ubuntu,Debain おぼえがき
 
-AWSやAzureでVM作る時に、毎回やって、毎回忘れるなにかをメモしておく。
+AWS や Azure で VM 作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
 - [Ubuntu,Debain おぼえがき](#ubuntudebain-おぼえがき)
   - [ホスト名の設定](#ホスト名の設定)
   - [タイムゾーン](#タイムゾーン)
   - [locale](#locale)
-  - [EDITORを変更](#editorを変更)
-- [デフォルトユーザ](#デフォルトユーザ)
-  - [AWS](#aws)
-  - [Azure](#azure)
-  - [cloud-init](#cloud-init)
-  - [userを追加](#userを追加)
-    - [ubuntu on AWS編](#ubuntu-on-aws編)
-  - [sudoでパスワードがいらないのを無効(有効)にする](#sudoでパスワードがいらないのを無効有効にする)
-- [絶対いれとくパッケージ](#絶対いれとくパッケージ)
-  - [bash-completion](#bash-completion)
-- [サービスの再起動が必要かどうか知る (古い)](#サービスの再起動が必要かどうか知る-古い)
-- [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
-- [auto-upgrades, unattended-upgrades](#auto-upgrades-unattended-upgrades)
-- [Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数](#ubuntudebianでapt-autoremoveでキープされるkernelパッケージの数)
-- [no_proxy](#no_proxy)
-- [参考](#参考)
-- [Unattended Upgradesの有効/無効](#unattended-upgradesの有効無効)
-- [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
-- [yum history みたいのを Debian/Ubuntu で](#yum-history-みたいのを-debianubuntu-で)
-- [netplan.io](#netplanio)
-- [Let's Encryptで証明書が更新されたか知る](#lets-encryptで証明書が更新されたか知る)
-- [import debian.deb822](#import-debiandeb822)
-- [ubuntuでIPAfont](#ubuntuでipafont)
-- [netplanでDHCPをrenewする](#netplanでdhcpをrenewする)
-- [friendly-recovery](#friendly-recovery)
-- [インストールされているパッケージの一覧](#インストールされているパッケージの一覧)
-- [パッケージの更新履歴](#パッケージの更新履歴)
-- [/etc/groupの編集](#etcgroupの編集)
-- [xzのzgrep](#xzのzgrep)
-- [ppa](#ppa)
-- [パッケージのchangelog](#パッケージのchangelog)
-- [Ubuntu 22.04で python3.8, 3.9がいるとき](#ubuntu-2204で-python38-39がいるとき)
-- [dmesg: read kernel buffer failed: Operation not permitted](#dmesg-read-kernel-buffer-failed-operation-not-permitted)
-- [crypto-policies](#crypto-policies)
+  - [EDITOR を変更](#editor-を変更)
+  - [デフォルトユーザ](#デフォルトユーザ)
+    - [AWS](#aws)
+    - [Azure](#azure)
+    - [cloud-init](#cloud-init)
+    - [user を追加](#user-を追加)
+      - [ubuntu on AWS 編](#ubuntu-on-aws-編)
+    - [sudo でパスワードがいらないのを無効(有効)にする](#sudo-でパスワードがいらないのを無効有効にする)
+  - [絶対いれとくパッケージ](#絶対いれとくパッケージ)
+    - [bash-completion](#bash-completion)
+  - [サービスの再起動が必要かどうか知る (古い)](#サービスの再起動が必要かどうか知る-古い)
+  - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
+  - [auto-upgrades, unattended-upgrades](#auto-upgrades-unattended-upgrades)
+  - [Ubuntu/Debian で apt autoremove でキープされる kernel パッケージの数](#ubuntudebian-で-apt-autoremove-でキープされる-kernel-パッケージの数)
+  - [no\_proxy](#no_proxy)
+  - [参考](#参考)
+  - [Unattended Upgrades の有効/無効](#unattended-upgrades-の有効無効)
+  - [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
+  - [yum history みたいのを Debian/Ubuntu で](#yum-history-みたいのを-debianubuntu-で)
+  - [netplan.io](#netplanio)
+  - [Let's Encrypt で証明書が更新されたか知る](#lets-encrypt-で証明書が更新されたか知る)
+  - [import debian.deb822](#import-debiandeb822)
+  - [ubuntu で IPAfont](#ubuntu-で-ipafont)
+  - [netplan で DHCP を renew する](#netplan-で-dhcp-を-renew-する)
+  - [friendly-recovery](#friendly-recovery)
+  - [インストールされているパッケージの一覧](#インストールされているパッケージの一覧)
+  - [パッケージの更新履歴](#パッケージの更新履歴)
+  - [/etc/group の編集](#etcgroup-の編集)
+  - [xz の zgrep](#xz-の-zgrep)
+  - [ppa](#ppa)
+  - [パッケージの changelog](#パッケージの-changelog)
+  - [Ubuntu 22.04 で python3.8, 3.9 がいるとき](#ubuntu-2204-で-python38-39-がいるとき)
+  - [dmesg: read kernel buffer failed: Operation not permitted](#dmesg-read-kernel-buffer-failed-operation-not-permitted)
+  - [crypto-policies](#crypto-policies)
+  - [needrestart](#needrestart)
 
 ## ホスト名の設定
 
@@ -48,7 +49,7 @@ sudo hostnamectl set-hostname foo
 sudo echo "127.0.0.1 foo.example.com foo" >> /etc/hosts
 ```
 
-Debian/Ubuntu系ではホスト名はFQDNじゃない。
+Debian/Ubuntu 系ではホスト名は FQDN じゃない。
 
 このあと
 
@@ -62,7 +63,7 @@ hostname -d
 
 ## タイムゾーン
 
-timezoneを東京にする。
+timezone を東京にする。
 
 ```bash
 timedatectl
@@ -71,11 +72,11 @@ timedatectl
 ```
 
 参考:
-[[Ubuntu16.04] timezoneの確認と設定 - Qiita](https://qiita.com/koara-local/items/32b004c0bf80fd70777c)
+[[Ubuntu16.04] timezone の確認と設定 - Qiita](https://qiita.com/koara-local/items/32b004c0bf80fd70777c)
 
 ## locale
 
-よそからつなぐこともあるので、ja_JP.UTF-8は一応作っておく。
+よそからつなぐこともあるので、ja_JP.UTF-8 は一応作っておく。
 
 ```bash
 sudo apt-get install language-pack-ja
@@ -95,9 +96,9 @@ sudo localectl set-locale LANG=ja_JP.UTF-8
 
 のように。
 
-## EDITORを変更
+## EDITOR を変更
 
-デフォルトのエディタをnanoから変える。環境変数EDITORを設定する以外の方法。
+デフォルトのエディタを nano から変える。環境変数 EDITOR を設定する以外の方法。
 
 ```bash
 update-alternatives --config editor
@@ -118,24 +119,24 @@ echo 'SELECTED_EDITOR="/usr/bin/emacs"' > ~/.selected_editor
 chmod og= ~/.selected_editor
 ```
 
-みたいな方法でもOK。
+みたいな方法でも OK。
 
-# デフォルトユーザ
+## デフォルトユーザ
 
 毎回忘れて困惑する。
 
-## AWS
+### AWS
 
 AMI のデフォルトのユーザー名はだいたい`ec2-user`.
 
 [SSH を使用した Linux インスタンスへの接続 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html)
 
-で、**Ubuntuだけ例外**で、
+で、**Ubuntu だけ例外**で、
 
 > Ubuntu AMI の場合、ユーザー名は ubuntu または root. です。
 
 確認は、
-EC2のマネージメントコンソールで「接続」ボタンを押し
+EC2 のマネージメントコンソールで「接続」ボタンを押し
 「例:」の@マークの前がそれ。
 
 ```
@@ -146,51 +147,51 @@ ssh -i "xxx.pem" ubuntu@xxxxxxxxx.ap-xxxxxxx-1.compute.amazonaws.com
 ほとんどの場合、上のユーザー名は正確ですが、AMI の使用方法を読んで AMI 所有者がデフォルト AMI ユーザー名を変更していないことを確認してください。
 ```
 
-## Azure
+### Azure
 
-Azureは初期ユーザが指定できるので楽。
-ただssh公開鍵だと、ユーザのパスワードが未設定になるので、
+Azure は初期ユーザが指定できるので楽。
+ただ ssh 公開鍵だと、ユーザのパスワードが未設定になるので、
 シリアルコンソールがあるのにログインできない、みたいな事態に遭遇する。
 
 パスワードは設定しておいたほうがいいのではないかと思う。
 `sudo passwd <initial user>`
 
-## cloud-init
+### cloud-init
 
 TODO:
-AzureもAWSもcloud-initで初期設定ができるんだから、
+Azure も AWS も cloud-init で初期設定ができるんだから、
 なんとかする。
 
-## userを追加
+### user を追加
 
 デフォルトユーザで作業しない方がいいと思うので。
 
-### ubuntu on AWS編
+#### ubuntu on AWS 編
 
 ```
 adduser yourAccount
 ```
 
-いくつか質問に答える。さらにsudoできるように
+いくつか質問に答える。さらに sudo できるように
 
 ```
 usermod -G sudo yourAccount
 passwd yourAccount
 ```
 
-RHEL AMIだとsudoグループのかわりにwheelで
+RHEL AMI だと sudo グループのかわりに wheel で
 
-sudoでrootになれるかテスト
+sudo で root になれるかテスト
 
 ```
 su - yourAccount
 sudo -i
 ```
 
-さらに yourAccountの公開鍵を用意して、
+さらに yourAccount の公開鍵を用意して、
 `~yourAccount/.ssh/authorized_keys` を設定。
 
-yourAccountの状態で
+yourAccount の状態で
 
 ```
 mkdir ~/.ssh
@@ -198,15 +199,15 @@ sensible-editor ~/.ssh/authorized_keys
 chmod -R og= ~/.ssh
 ```
 
-別セッションからsshで接続テスト。
+別セッションから ssh で接続テスト。
 
 (TODO:公開鍵を簡単に引っ張ってくる素敵な方法を探す。
-S3に置いて`curl xxxx >> ~/.ssh/authorized_keys`とかが思いつくけど
-URL忘れそう。)
+S3 に置いて`curl xxxx >> ~/.ssh/authorized_keys`とかが思いつくけど
+URL 忘れそう。)
 
-## sudoでパスワードがいらないのを無効(有効)にする
+### sudo でパスワードがいらないのを無効(有効)にする
 
-↓こういう話ももっともだと思うのだが
+↓ こういう話ももっともだと思うのだが
 
 - [su|sudo|polkit を使うべきでないただ一つの理由(とりあえずの対策を追記)](https://qiita.com/ureorownramogpzq/items/7387ddb5aa414e5607bb)
 
@@ -218,7 +219,7 @@ URL忘れそう。)
 grep <target-user> /etc/shadow
 ```
 
-第2フィールドを見て確認。`chage -l <target-user>` も。
+第 2 フィールドを見て確認。`chage -l <target-user>` も。
 
 パスワードが設定されてなければ `passwd <target-user>`。
 
@@ -226,17 +227,17 @@ grep <target-user> /etc/shadow
 
 `visudo -f そのファイル`で`NOPASSWD:`を削除する。
 
-# 絶対いれとくパッケージ
+## 絶対いれとくパッケージ
 
-## bash-completion
+### bash-completion
 
-systemctlのサブコマンドとか覚えきれないので。あと「こんなサブコマンド/オプションがあったのか!」というのがあるので。
+systemctl のサブコマンドとか覚えきれないので。あと「こんなサブコマンド/オプションがあったのか!」というのがあるので。
 
-RHELやCentでもEPELにあるので、絶対入れるべき。
+RHEL や Cent でも EPEL にあるので、絶対入れるべき。
 
-# サービスの再起動が必要かどうか知る (古い)
+## サービスの再起動が必要かどうか知る (古い)
 
-sysetmdだとダメみたい。
+sysetmd だとダメみたい。
 
 ```sh
 sudo apt install debian-goods
@@ -244,14 +245,14 @@ sudo checkrestart -a
 ```
 
 参考:
-[Linuxのパッケージをアップデートしたあとrestartが必要なプロセスを見つける方法](https://qiita.com/usiusi360/items/7b47be9d0ab5b1acd608)
+[Linux のパッケージをアップデートしたあと restart が必要なプロセスを見つける方法](https://qiita.com/usiusi360/items/7b47be9d0ab5b1acd608)
 
-# ホストの再起動が必要かどうか知る
+## ホストの再起動が必要かどうか知る
 
 `/var/run/reboot-required`または`/var/run/reboot-required.pkg`の存在をチェック
 
 これは update-notifier-common パッケージが生成する。
-まれにこれが入ってないUbuntuがあったりするので、
+まれにこれが入ってない Ubuntu があったりするので、
 
 ```sh
 sudo apt install update-notifier-common
@@ -259,23 +260,23 @@ sudo apt install update-notifier-common
 
 する。
 
-# auto-upgrades, unattended-upgrades
+## auto-upgrades, unattended-upgrades
 
 いろいろ考えたんだけど、
 
 - 自動更新はする
 - 再起動しない
 
-がいいのではないか。(20.04LTSではデフォルトみたい)
+がいいのではないか。(20.04LTS ではデフォルトみたい)
 
 `/etc/apt/apt.conf.d/20auto-upgrades`
 をさわる。
 
 ログは `/var/log/unattended-upgrades/*`
 
-cron-aptパッケージとの関係があやしいので調査。
+cron-apt パッケージとの関係があやしいので調査。
 
-# Ubuntu/Debianでapt autoremoveでキープされるkernelパッケージの数
+## Ubuntu/Debian で apt autoremove でキープされる kernel パッケージの数
 
 なんと、数じゃないらしい。
 
@@ -284,20 +285,20 @@ cron-aptパッケージとの関係があやしいので調査。
 `/etc/kernel/postinst.d/apt-auto-removal`で自動生成される
 `/etc/apt/apt.conf.d/01autoremove-kernels`が消されるカーネル。
 
-# no_proxy
+## no_proxy
 
-最近のcurlではno_proxy環境変数でproxy例外が指定できる。
+最近の curl では no_proxy 環境変数で proxy 例外が指定できる。
 
 > Since 7.53.0, This option overrides the environment variables that disable the proxy.
 
-(man curlの--noproxyのところから引用)
+(man curl の--noproxy のところから引用)
 
 ```
-# 1604LTS
+## 1604LTS
 $ curl --version
 curl 7.47.0
 
-# 1804LTS
+## 1804LTS
 $ curl --version
 curl 7.58.0
 ```
@@ -310,17 +311,17 @@ no_proxy="localhost, 127.0.0.1, *.yourdomain.com"
 
 ぐらいでも結構生活が楽になる。
 
-# 参考
+## 参考
 
-- [[AWS]RHEL7 よくある初期構築設定のコマンド詰め合わせ ｜ DevelopersIO](https://dev.classmethod.jp/cloud/aws/ec2-rehl7-first-buildcmd/)
+- [[AWS]RHEL7 よくある初期構築設定のコマンド詰め合わせ | DevelopersIO](https://dev.classmethod.jp/cloud/aws/ec2-rehl7-first-buildcmd/)
 
-EC2のユーザーデータに関して:
+EC2 のユーザーデータに関して:
 
-- [AWS勉強会(補足1) / ユーザーデータでEC2作成時の初期設定を行う - Qiita](https://qiita.com/zaki-lknr/items/197ea366bd4243b78e69)
+- [AWS 勉強会(補足 1) / ユーザーデータで EC2 作成時の初期設定を行う - Qiita](https://qiita.com/zaki-lknr/items/197ea366bd4243b78e69)
 - [EC2 インスタンスの初回起動後にユーザーデータを実行する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/execute-user-data-ec2/)
 - [Linux インスタンスでの起動時のコマンドの実行 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/user-data.html)
 
-# Unattended Upgradesの有効/無効
+## Unattended Upgrades の有効/無効
 
 Unattended Upgrades(無人更新)を有効にすると、
 アップグレードを自動実行する。
@@ -332,18 +333,18 @@ Unattended Upgrades(無人更新)を有効にすると、
 - [How to Enable / Disable Unattended Upgrades in Ubuntu 16.04](https://linoxide.com/ubuntu-how-to/enable-disable-unattended-upgrades-ubuntu-16-04/)
 - [Disable Automatic Updates on Ubuntu 18.04 Bionic Beaver Linux - LinuxConfig.org](https://linuxconfig.org/disable-automatic-updates-on-ubuntu-18-04-bionic-beaver-linux)
 - [6.7. システムを最新の状態に保つ](https://debian-handbook.info/browse/ja-JP/stable/sect.regular-upgrades.html)
-- [unattended-upgradesはインストールしただけでは動かない - orangain flavor](https://orangain.hatenablog.com/entry/unattended-upgrades)
+- [unattended-upgrades はインストールしただけでは動かない - orangain flavor](https://orangain.hatenablog.com/entry/unattended-upgrades)
 
 `/etc/apt/apt.conf.d/20auto-upgrades` を編集して `APT::Periodic::Unattended-Upgrade` の値を `"0"` に変更すると無効。
 
 ```
-# APT::Periodic::Update-Package-Lists "1";
-# APT::Periodic::Unattended-Upgrade "1";
+## APT::Periodic::Update-Package-Lists "1";
+## APT::Periodic::Unattended-Upgrade "1";
 APT::Periodic::Update-Package-Lists "0";
 APT::Periodic::Unattended-Upgrade "0";
 ```
 
-# `A start job is running for wait for network to be configured` で起動が遅い
+## `A start job is running for wait for network to be configured` で起動が遅い
 
 ```
 systemctl disable systemd-networkd-wait-online.service
@@ -352,16 +353,16 @@ systemctl mask systemd-networkd-wait-online.service
 
 引用: [ubuntu がネットワーク待ちで起動が遅い・・・](http://takuya-1st.hatenablog.jp/entry/2017/12/19/211216)
 
-> Systemdではmaskという操作を実行できる。mask操作を行う事で、サービスの起動自体不可能になる(手動実行も不可)。disableの強化版
+> Systemd では mask という操作を実行できる。mask 操作を行う事で、サービスの起動自体不可能になる(手動実行も不可)。disable の強化版
 
 '/lib/systemd/systemd-networkd-wait-online'が、何を待つのかはよくわからない。
 'networkctl'の出力が参考になると思う。
 
-確かにsystemd-networkd-wait-onlineで止まるホストではSETUPがconfiguringになるインタフェースがあるなあ。
+確かに systemd-networkd-wait-online で止まるホストでは SETUP が configuring になるインタフェースがあるなあ。
 
-# yum history みたいのを Debian/Ubuntu で
+## yum history みたいのを Debian/Ubuntu で
 
-yumの`yum history info nn`みたいなやつが羨ましくてしらべた。
+yum の`yum history info nn`みたいなやつが羨ましくてしらべた。
 
 ```
 cat /var/log/apt/history.log
@@ -373,9 +374,9 @@ and
 cat /var/log/dpkg.log
 ```
 
-# netplan.io
+## netplan.io
 
-Ubuntu18から標準になったので調べておくこと。
+Ubuntu18 から標準になったので調べておくこと。
 
 とりあえずは:
 
@@ -386,18 +387,18 @@ Ubuntu18から標準になったので調べておくこと。
 で
 
 - [Examples | netplan.io](https://netplan.io/examples)
-- [Netplanの使い方 - komeの備忘録](https://www.komee.org/entry/2018/06/12/181400)
-- [Ubuntu 18.04 LTS のネットワーク設定がnetplanというものになっているのでその確認とか – Webを汚すWeblog](https://blog.dshimizu.jp/article/1196)
+- [Netplan の使い方 - kome の備忘録](https://www.komee.org/entry/2018/06/12/181400)
+- [Ubuntu 18.04 LTS のネットワーク設定が netplan というものになっているのでその確認とか – Web を汚す Weblog](https://blog.dshimizu.jp/article/1196)
 
-# Let's Encryptで証明書が更新されたか知る
+## Let's Encrypt で証明書が更新されたか知る
 
 ```
 zgrep "Cert is due for renewal" /var/log/letsencrypt/letsencrypt.log*
 ```
 
-# import debian.deb822
+## import debian.deb822
 
-update-notifier-commonでエラーが出る
+update-notifier-common でエラーが出る
 
 ```
 update-notifier-common (3.192.1.7) を設定しています ...
@@ -407,15 +408,15 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'debian'
 ```
 
-エラーが出ないubuntuでチェックすると
+エラーが出ない ubuntu でチェックすると
 
 ```
-# python3
+## python3
 >>> import debian.deb822
 >>> debian.deb822.__file__
 '/usr/lib/python3/dist-packages/debian/deb822.py'
 
-# dlocate /usr/lib/python3/dist-packages/debian/deb822.py
+## dlocate /usr/lib/python3/dist-packages/debian/deb822.py
 python3-debian: /usr/lib/python3/dist-packages/debian/deb822.py
 ```
 
@@ -435,9 +436,9 @@ apt-get --reinstall install python3-debian python-debian python3-six update-noti
 代表:
 [package management - apt-get broken: No module named debian.deb822 - Ask Ubuntu](https://askubuntu.com/questions/246970/apt-get-broken-no-module-named-debian-deb822)
 
-早くpython3が標準になるといい。
+早く python3 が標準になるといい。
 
-# ubuntuでIPAfont
+## ubuntu で IPAfont
 
 [amueller/word_cloud: A little word cloud generator in Python](https://github.com/amueller/word_cloud)
 を使うときにちょっと調べたのでメモ。
@@ -458,15 +459,15 @@ $ dlocate fonts-ipafont | fgrep .ttf | cut -d' ' -f2
 /usr/share/fonts/opentype/ipafont-mincho/ipamp.ttf
 ```
 
-# netplanでDHCPをrenewする
+## netplan で DHCP を renew する
 
-netplan以外では
+netplan 以外では
 [Linux Force DHCP Client (dhclient) to Renew IP Address - nixCraft](https://www.cyberciti.biz/faq/howto-linux-renew-dhcp-client-ip-address/)
 が参考になる。
 
-netplanで `dhclient -r; dhclient`するとdhcpでIPとってるnicにエリアスが生える。
+netplan で `dhclient -r; dhclient`すると dhcp で IP とってる nic にエリアスが生える。
 
-# friendly-recovery
+## friendly-recovery
 
 メモ
 
@@ -482,12 +483,12 @@ Make recovery boot mode more user-friendly Make the recovery boot mode more user
 - [Ubuntu – パッケージのファイル一覧: friendly-recovery/xenial/all](https://packages.ubuntu.com/ja/xenial/all/friendly-recovery/filelist)
 - [FriendlyRecoverySpec - Ubuntu Wiki](https://wiki.ubuntu.com/FriendlyRecoverySpec)
 
-# インストールされているパッケージの一覧
+## インストールされているパッケージの一覧
 
-- `dpkg-query --list` or `dpkg -l` - フォーマットされてるのでスクリプトで扱いにくい(COLUMNS=999とかする)。早い。
+- `dpkg-query --list` or `dpkg -l` - フォーマットされてるのでスクリプトで扱いにくい(COLUMNS=999 とかする)。早い。
 - `apt list` - 普通こっちか。
 
-# パッケージの更新履歴
+## パッケージの更新履歴
 
 まず
 
@@ -537,10 +538,10 @@ glibc (2.27-3ubuntu1.5) bionic-security; urgency=medium
 
 まあコマンドのほうが全然楽。
 
-# /etc/groupの編集
+## /etc/group の編集
 
 サーバ以降のときに、
-単に vigrで/etc/groupを編集すると
+単に vigr で/etc/group を編集すると
 /etc/group- と統合がとれなくなるので
 
 ```sh
@@ -551,7 +552,7 @@ grpconv
 
 という手順で修正する。たまにやると忘れる。
 
-もちろんpasswdのほうも
+もちろん passwd のほうも
 
 ```sh
 pwunconv
@@ -559,16 +560,16 @@ vipw
 pwconv
 ```
 
-# xzのzgrep
+## xz の zgrep
 
 `xzgrep` gz,bzip2,xz,lzop,lzma 対応
 
-ただ `lzgrep`がlzoと無関係にaltanativeになってるので、こっちを使うといいと思われる。
+ただ `lzgrep`が lzo と無関係に altanative になってるので、こっちを使うといいと思われる。
 
 あるいは
 [BurntSushi/ripgrep: ripgrep recursively searches directories for a regex pattern while respecting your gitignore](https://github.com/BurntSushi/ripgrep)
 
-# ppa
+## ppa
 
 使ってるもの
 
@@ -577,7 +578,7 @@ pwconv
 - [Git release candidates : “Ubuntu Git Maintainers” team](https://launchpad.net/~git-core/+archive/ubuntu/candidate)
 - [New Python Versions : “deadsnakes” team](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa)
 
-  18.04LTSから20.04にするときに調べた
+  18.04LTS から 20.04 にするときに調べた
 
 ```sh
 dpkg-query --show -f '${Maintainer}\t${binary:Package}\n' \
@@ -588,19 +589,19 @@ dpkg-query --show -f '${Maintainer}\t${binary:Package}\n' \
 ```
 sudo add-apt-repository ppa:kelleyk/emacs
 sudo add-apt-repository ppa:git-core/ppa
-#
+##
 sudo apt install git emacs28-nox
 sudo -i ln -sf $(which emacs) /etc/alternatives/editor
 ```
 
-他Azureだったら
+他 Azure だったら
 
 - [walinuxagent package : Ubuntu](https://launchpad.net/ubuntu/+source/walinuxagent)
-  だったのだけど、いつのまにかUbuntu本体に取り込まれてる。
+  だったのだけど、いつのまにか Ubuntu 本体に取り込まれてる。
 
-# パッケージのchangelog
+## パッケージの changelog
 
-例えばapache2だったら
+例えば apache2 だったら
 
 ```sh
 apt-get changelog apache2
@@ -608,17 +609,17 @@ apt-get changelog apache2
 apt changelog apache2
 ```
 
-おまけ：RedHat系だったら
+おまけ:RedHat 系だったら
 
 ```sh
 rpm -q --changelog httpd
 ```
 
-# Ubuntu 22.04で python3.8, 3.9がいるとき
+## Ubuntu 22.04 で python3.8, 3.9 がいるとき
 
-AWSのlambdaとか用。dockerでもいいけど遅いような気がする。
+AWS の lambda とか用。docker でもいいけど遅いような気がする。
 
-3.8はsnapがあるけど古すぎる。
+3.8 は snap があるけど古すぎる。
 
 ```sh
 sudo add-apt-repository ppa:deadsnakes/ppa
@@ -626,8 +627,8 @@ sudo apt install python3.8 python3.8-venv python3.8-dev -y
 sudo apt install python3.9 python3.9-venv python3.9-dev -y
 ```
 
-pip3.8,3.9はパッケージがないので慎重になんとかする。
-pip, pip3がシステムワイドのpython3.10を置き換えないように。
+pip3.8,3.9 はパッケージがないので慎重になんとかする。
+pip, pip3 がシステムワイドの python3.10 を置き換えないように。
 
 とりあえずローカルユーザーでいいなら
 
@@ -648,7 +649,7 @@ pip3.8 -V
 rm get-pip.py
 ```
 
-venvもテスト
+venv もテスト
 
 ```sh
 python3.9 -m venv ~/.venv/39/
@@ -657,9 +658,9 @@ pip -V
 deactivate
 ```
 
-# dmesg: read kernel buffer failed: Operation not permitted
+## dmesg: read kernel buffer failed: Operation not permitted
 
-```
+```console
 $ LANG=C dmesg
 dmesg: read kernel buffer failed: Operation not permitted
 
@@ -679,35 +680,56 @@ sudo sysctl kernel.dmesg_restrict=0
 必要なら永続化
 
 - [linux - dmesg: read kernel buffer failed: Permission denied - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/390184/dmesg-read-kernel-buffer-failed-permission-denied)
-- [dmesg のアクセス制限を外す方法 - pyopyopyo - Linuxとかプログラミングの覚え書き -](https://pyopyopyo.hatenablog.com/entry/2019/02/15/023159)
+- [dmesg のアクセス制限を外す方法 - pyopyopyo - Linux とかプログラミングの覚え書き -](https://pyopyopyo.hatenablog.com/entry/2019/02/15/023159)
 
-# crypto-policies
+## crypto-policies
 
-[第4章 システム全体の暗号化ポリシーの使用 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/security_hardening/using-the-system-wide-cryptographic-policies_security-hardening)
+[第 4 章 システム全体の暗号化ポリシーの使用 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/security_hardening/using-the-system-wide-cryptographic-policies_security-hardening)
 
-ubuntuにもあった。
+ubuntu にもあった。
 
 ```bash
 sudo apt install crypto-policies
 ```
 
-```
+```console
 $ update-crypto-policies --show
 DEFAULT
 ```
 
-で、FUTUREにしてみる。
+で、FUTURE にしてみる。
 
-```
+```console
 $ sudo update-crypto-policies --set FUTURE
 Setting system policy to FUTURE
 Note: System-wide crypto policies are applied on application start-up.
 It is recommended to restart the system for the change of policies
 to fully take place.
 
-# /etc/crypto-policiesができる。他はかわらん。rebootしろ、とのことなのでrebootする。
+## /etc/crypto-policiesができる。他はかわらん。rebootしろ、とのことなのでrebootする。
 
 $ sudo reboot
 ```
 
 よくわからん。とりあえず何か変わったようには見えないんだけど。
+
+## needrestart
+
+入れておくと `apt update` した時に、
+
+- 再起動するべきサービスを示した上で対話的に処理したり
+- それを自動でやったり
+- 何もしない
+
+をやってくれる。
+
+参考:
+
+- [linux - How to stop ubuntu pop-up "Daemons using outdated libraries" when using apt to install or update packages? - Stack Overflow](https://stackoverflow.com/questions/73397110/how-to-stop-ubuntu-pop-up-daemons-using-outdated-libraries-when-using-apt-to-i)
+- [Azure で Ubuntu 22.04 を起動すると Daemons using outdated libraries が表示される - 技術的な何か。](https://level69.net/archives/33020)
+- [【2022 年版】 Ubuntu 22.04 で apt install すると、Which services should be restarted? ときかれる #Ubuntu22.04 - Qiita](https://qiita.com/nouernet/items/ffe0615c14147863de7a)
+
+設定は
+
+- `/etc/needrestart/needrestart.conf`
+- `/etc/needrestart/conf.d/*.conf` - こちらがお勧め
