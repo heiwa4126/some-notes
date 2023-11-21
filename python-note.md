@@ -48,6 +48,7 @@
   - [python にタイプヒント](#python-にタイプヒント)
   - [1 個上のフォルダから import](#1-個上のフォルダから-import)
   - [オブジェクトのクラスを表示する](#オブジェクトのクラスを表示する)
+  - [たまには読もう Python の新しい機能](#たまには読もう-python-の新しい機能)
 
 ## python をインストールする(2019-12)
 
@@ -1109,3 +1110,18 @@ print(isinstance(person, Person))  # -> True
 どちらでも `Person` が表示される。
 
 [How to Get Class Name in Python? | FavTutor](https://favtutor.com/blogs/class-name-python)
+
+## たまには読もう Python の新しい機能
+
+君は「セイウチ演算子(:=)」を知っているか。
+
+- [What's New In Python 3.11](https://docs.python.org/ja/3/whatsnew/3.11.html)
+- [What's New In Python 3.10](https://docs.python.org/ja/3/whatsnew/3.10.html)
+- [What's New In Python 3.9](https://docs.python.org/ja/3/whatsnew/3.9.html)
+- [What's New In Python 3.8](https://docs.python.org/ja/3/whatsnew/3.8.html)
+
+どうでもいいけど `(:=)` がバカボンのパパに見える。
+
+おまけ:
+
+- [[アップデート] AWS Lambda のサポートランタイムに Python 3.11 が追加されました | DevelopersIO](https://dev.classmethod.jp/articles/update-aws-lambda-support-runtime-python311/)
