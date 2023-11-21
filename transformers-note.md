@@ -214,6 +214,32 @@ train のグラフなどで
 
 だそうです。
 
+## Terraformres で使う TensorBoard メモ
+
+- `pip install tensorboard` してある
+- かつ TrainingArguments で `logging_dir=` が指定されてる
+
+と、`logging_dir=` で指定したディレクトリにログが保存される。
+
+VSCode だと学習中に自動で上がる。
+または コマンドパレットで `Launch TensorBorad`
+
+手動では
+
+```sh
+tensorboard --logdir ./logs
+```
+
+どっちも VSCode からだとポート転送してくれるので、リモートホストでも手元で見れる。
+
+複数のグラフが同時に表示できるのだけれど、
+logdir で指定したディレクトリ以下のディレクトリ単位で、
+そのディレクトリで一番新しいログが表示される仕掛けになっている
+(うまく説明できない)。
+
+自動では更新されないみたい。右上の reload アイコンをクリック。
+30 秒ごとに自動更新される、という話もあるけど、更新されなかった(何か条件がある?)
+
 ## タスク
 
 Huggung Face Hub の model の Natural Language Processing(NLP) のタスクをざっくり解説
