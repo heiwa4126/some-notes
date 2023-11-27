@@ -15,3 +15,32 @@ Build Tools for Visual Studio 2022 も要るかもしれない。
 https://visualstudio.microsoft.com/ja/downloads/ の
 `Tools for Visual Studio` を広げると
 `Build Tools for Visual Studio 2022` が出てくる。
+
+## 公式チュートリアルが 2021.3
+
+最新版の Unity Editor(2022.3LTS)をインストールすると
+Microgames が出てこない。
+
+1. Visual Studio インストーラーで
+2. Visual Studio 2022 comunity edition を Unity サポート付き でインストール
+3. Unity Hub から 2021.3 エディタをインストール(Visual Studio 2019 のインストールを外して)
+
+がいいと思う
+
+## チュートリアルメモ
+
+- Get started with Unity
+- Welcome to Unity Essentials
+-
+
+## 選択したオブジェクトにフォーカス
+
+- Shift+F
+- 階層でダブルクリック
+- 階層で F キー
+
+## Flythrough mode
+
+マウス右ボタンを押しっぱなし。
+
+Digital Content Creation（DCC）ツール
