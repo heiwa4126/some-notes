@@ -49,3 +49,46 @@ targetSdk やっぱりわからん。
 [compileSdk・minSdk・targetSdk の違い(Android) #Android - Qiita](https://qiita.com/uhooi/items/0f2ad61d83b96d9166c8)
 
 > compileSdk と同じく基本的には現時点での最新を指定すればいいですが、例えば Android 12(API レベル 31) 対応が完了していない場合、 targetSdk を 30 に指定すれば Android 12 でも 11 のように振る舞う、ということです。
+
+## SDK と Android
+
+Android SDK バージョン(SDK level)と
+Android のバージョン
+対応表
+
+| Android SDK バージョン | Android のバージョン   |
+| ---------------------- | ---------------------- |
+| 1                      | 1.0                    |
+| 2                      | 1.1                    |
+| 3                      | 1.5 Cupcake            |
+| 4                      | 1.6 Donut              |
+| 5                      | 1.1                    |
+| 6                      | 2.0 Eclair             |
+| 7                      | 2.1 Eclair             |
+| 8                      | 2.2 Froyo              |
+| 9                      | 2.3 Gingerbread        |
+| 10                     | 3.0 Honeycomb          |
+| 11                     | 3.1 Honeycomb          |
+| 12                     | 3.2 Honeycomb          |
+| 13                     | 4.0 Ice Cream Sandwich |
+| 14                     | 4.1 Jelly Bean         |
+| 15                     | 4.2 Jelly Bean         |
+| 16                     | 4.3 Jelly Bean         |
+| 17                     | 4.4 KitKat             |
+| 18                     | 5.0 Lollipop           |
+| 19                     | 5.1 Lollipop           |
+| 20                     | 5.2 Lollipop           |
+| 21                     | 6.0 Marshmallow        |
+| 22                     | 6.0.1 Marshmallow      |
+| 23                     | 7.0 Nougat             |
+| 24                     | 7.1 Nougat             |
+| 25                     | 7.1.1 Nougat           |
+| 26                     | 8.0 Oreo               |
+| 27                     | 8.1 Oreo               |
+| 28                     | 9.0 Pie                |
+| 29                     | 10                     |
+| 30                     | 11                     |
+| 31                     | 12                     |
+| 32                     | 13                     |
+| 33                     | 14                     |
+| 34                     | 15                     |
