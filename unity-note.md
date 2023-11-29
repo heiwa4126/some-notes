@@ -36,7 +36,12 @@ Unity Editor は複数入れられるので 2021.3LTS を入れる。
 その他
 
 Build Tools for Visual Studio 2022 も要るかもしれない。
-https://visualstudio.microsoft.com/ja/downloads/ の
+
+コンソールから `dotnet --info` とタイプして、エラーにならなければ不要。
+
+もし Build Tools for Visual Studio 2022 が要る場合は
+https://visualstudio.microsoft.com/ja/downloads/
+の下のほうの
 `Tools for Visual Studio` を広げると
 `Build Tools for Visual Studio 2022` が出てくる。
 
@@ -67,4 +72,4 @@ Microgames が出てこない。
 
 マウス右ボタンを押しっぱなし。
 
-Digital Content Creation（DCC）ツール
+Digital Content Creation(DCC)ツール
