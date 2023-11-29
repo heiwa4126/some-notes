@@ -1,15 +1,39 @@
 # Unity メモ
 
-## 開発環境
+## 学習環境を作る
 
-まず Unity Hub ではなく Visual Studio 2022 comunity edition をインストールする。
+まず Unity Hub ではなく Visual Studio 2022 community edition をインストールする。
 
 - [Visual Studio Tools のダウンロード - Windows、Mac、Linux 用の無料インストール](https://visualstudio.microsoft.com/ja/downloads/)
 - [Visual Studio 製品の比較 | Visual Studio](https://visualstudio.microsoft.com/ja/vs/compare/)
 
-Visual Studio のインストーラーに Unity の項目があるのでそれをチェック。
+Visual Studio インストーラーに Unity の項目があるのでそれをチェック。
 
-これ参照: [クイックスタート: Visual Studio Tools for Unity のインストールと構成 | Microsoft Learn](https://learn.microsoft.com/ja-jp/visualstudio/gamedev/unity/get-started/getting-started-with-visual-studio-tools-for-unity?pivots=windows)
+参照: [クイックスタート: Visual Studio Tools for Unity のインストールと構成 | Microsoft Learn](https://learn.microsoft.com/ja-jp/visualstudio/gamedev/unity/get-started/getting-started-with-visual-studio-tools-for-unity?pivots=windows)
+
+で、上記の手順で Unity Hub もインストールされるので、
+そこから Unity Editor をインストールする。
+
+その前に Unity ID つくること。 [Unity ID](https://id.unity.com/ja/)
+
+最新版の Unity Editor (2022.3LTS)をインストールすると、チュートリアルで使う Microgames が出てこない。
+Unity Editor は複数入れられるので 2021.3LTS を入れる。
+
+あとライセンスはとりあえず Personal で。
+
+入れたモジュールは
+
+- Microsoft Visual Studio Community 2019 は入れない 2022 で OK
+- Windows Build Support (lL2CPP)
+- 日本語言語パック (あんまり役に立たない)
+
+で [Unity Learn](https://learn.unity.com/)から
+`Unity Essentials` を始める。
+
+横に「Unity バージョンを選択してください」のプルダウンがあるので
+これを Editor に合わせること。
+
+その他
 
 Build Tools for Visual Studio 2022 も要るかもしれない。
 https://visualstudio.microsoft.com/ja/downloads/ の
