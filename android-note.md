@@ -42,14 +42,10 @@ build.gradle.kts (Module:app) を開いて
 
 - compileSdk: このアプリをビルドするために使用する Android SDK のバージョン。最新バージョンを使用すれば問題なし。
 - minSdk: このアプリをサポートする最低限の Android バージョン。指定したバージョン以上でデバイスにインストール可能。できるだけ低いバージョンを指定する。
-- targetSdk: このアプリが対象としている Android バージョンを指定。 主に後方互換性などの制御に使用。原則 compileSdk と同じか、それよりも一つ低いバージョンを指定。
+- targetSdk: このアプリが対象としている Android バージョンを指定。 主に後方互換性などの制御に使用。原則 compileSdk と同じか、それよりも 1 つ低いバージョンを指定。
 
 targetSdk やっぱりわからん。
 
-例を書いてもらった。
+[compileSdk・minSdk・targetSdk の違い(Android) #Android - Qiita](https://qiita.com/uhooi/items/0f2ad61d83b96d9166c8)
 
-targetSdk 未満の場合、
-後方互換のための特別な対応が無効化されます。
-たとえば targetSdk が 28 未満で、ユーザーの端末が Android 9.0(API レベル 28)の場合、
-透明なバックグラウンドなどの Android 9 新機能が有効になります。
-
+> compileSdk と同じく基本的には現時点での最新を指定すればいいですが、例えば Android 12(API レベル 31) 対応が完了していない場合、 targetSdk を 30 に指定すれば Android 12 でも 11 のように振る舞う、ということです。
