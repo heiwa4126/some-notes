@@ -14,12 +14,12 @@ Visual Studio インストーラーに Unity の項目があるのでそれを�
 で、上記の手順で Unity Hub もインストールされるので、
 そこから Unity Editor をインストールする。
 
-その前に Unity ID つくること。 [Unity ID](https://id.unity.com/ja/)
+1. Unity ID つくる。 [Unity ID](https://id.unity.com/ja/)
+1. Unity Hub の右上のユーザアイコンからいま作った Unity ID でサインイン
+1. Unity Hub の左の「ライセンス」を選び、「新規ライセンス」で Unity Personal (とりあえず) を選ぶ。
 
 最新版の Unity Editor (2022.3LTS)をインストールすると、チュートリアルで使う Microgames が出てこない。
 Unity Editor は複数入れられるので 2021.3LTS を入れる。
-
-あとライセンスはとりあえず Personal で。
 
 入れたモジュールは
 
