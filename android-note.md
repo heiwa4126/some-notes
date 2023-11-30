@@ -19,10 +19,18 @@ HAXM は WHPX(Windows Hypervisor Platform) が無効な時に使われるらし�
 
 ### チュートリアルやってみる
 
+[「Compose を用いた Android アプリ開発の基礎」コース](https://developer.android.com/courses/android-basics-compose/course?hl=ja)
+の
+Android Studio をセットアップする
+の
 [初めての Android アプリを作成する](https://developer.android.com/codelabs/basic-android-kotlin-compose-first-app?hl=ja#0)
+
+"empty compose activity" は "empty activity" になったらしい。
 
 つどつど ダウンロード & インストール が始まるのは結構つらい。
 Gradle だからしょうがないけど、最初が長い。
+
+ここでテンプレートの
 
 ビルドするとエラーが出る (2023-11-29)。
 
@@ -38,6 +46,9 @@ androidx.activity:activity:1.8.1 は android sdk 33 ではダメで
 build.gradle.kts (Module:app) を開いて
 `compileSdk=34` にする
 
+"Project Structure dialog" (Ctrl+AIt+Shift+S) の modules
+からでも OK。
+
 ## compileSdk と minSdk と targetSdk がよくわからん
 
 - compileSdk: このアプリをビルドするために使用する Android SDK のバージョン。最新バージョンを使用すれば問題なし。
@@ -49,6 +60,29 @@ targetSdk やっぱりわからん。
 [compileSdk・minSdk・targetSdk の違い(Android) #Android - Qiita](https://qiita.com/uhooi/items/0f2ad61d83b96d9166c8)
 
 > compileSdk と同じく基本的には現時点での最新を指定すればいいですが、例えば Android 12(API レベル 31) 対応が完了していない場合、 targetSdk を 30 に指定すれば Android 12 でも 11 のように振る舞う、ということです。
+
+### SDK を追加
+
+Android Studio に別のバージョンの Android SDK を追加するには、以下の手順で行います。
+
+1. Android Studio を起動します。
+1. 画面上部のメニューバーの「Tools」\>「SDK Manager」を選択します。
+1. \[SDK Platforms\] タブで、追加する Android SDK のバージョンを選択します。
+1. \[OK\] をクリックします。
+
+### Android Studio で使っている JDK のバージョン
+
+昔は
+File -\> Project Structure -\> SDK Location
+
+いまは Gradle setting の下にある。
+
+- File -\> Setting から Gradle を探す
+- または右端の Gradle tab -\> 上のスパナ
+
+新しい JDK のダウンロードと設定もここからできる。
+
+### design の live update が早すぎる
 
 ## SDK と Android
 
@@ -92,3 +126,20 @@ Android のバージョン
 | 32                     | 13                     |
 | 33                     | 14                     |
 | 34                     | 15                     |
+
+[Android SDK API Level 一覧 \#Android \- Qiita](https://qiita.com/irgaly/items/bd2ffe3725424690b856)
+
+## Kotlin の var, val
+
+TypeScript の let, const は
+Kotlin では var, val ですか?
+
+おおむねその通り。
+
+ただし
+let はブロックスコープ、var は関数スコープ。
+
+const と val はブロックスコープ。
+
+さらに Kotlin には lateinit var というのがある。
+変数の初期化を後回しにできる定数。
