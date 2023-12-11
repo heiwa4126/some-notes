@@ -24,7 +24,7 @@ Unity Editor は複数入れられるので 2021.3LTS を入れる。
 入れたモジュールは
 
 - Microsoft Visual Studio Community 2019 は入れない 2022 で OK
-- Windows Build Support (lL2CPP)
+- Windows Build Support (IL2CPP)
 - 日本語言語パック (あんまり役に立たない)
 
 で [Unity Learn](https://learn.unity.com/)から
@@ -130,3 +130,50 @@ File \> Publishing Settings \> Quarity のところで
 下の ▼ ▼ ▼ の一番右をクリックするとプルダウンが出る。
 
 Ultra でなく Very High でも影は出る。
+
+## Unity Editor のマイナーバージョンが 1 個あがっても全部ダウンロードするのはなんとかなりませんか?
+
+けっこうサイズ大きいし。
+
+## 用語など
+
+### Unity Cloud
+
+クラウドベースの CI (continuous integration)ツール。
+
+Unity Cloud は、Unity のクラウドベースのサービスです。
+Unity でゲームやアプリケーションを開発するクリエイターが、ビルドの自動化、クラウドベースのビルド、マルチプラットフォームビルド、ビルドのテストとデバッグ、ビルドの管理などの機能を利用できるようにします。
+
+- [Unity Cloud Build - Unity マニュアル](https://docs.unity3d.com/ja/2022.1/Manual/UnityCloudBuild.html)
+
+### IL2CPP (Intermediate Language To C++)
+
+[IL2CPP の概要 \- Unity マニュアル](https://docs.unity3d.com/ja/2023.2/Manual/IL2CPP.html)
+
+> IL2CPP (Intermediate Language To C++) スクリプティングバックエンドは、Mono バックエンドの代替品です。
+> IL2CPP は、広範なプラットフォームのアプリケーションに対し、優れたサポートを提供します。
+> IL2CPP バックエンドは、MSIL (Microsoft Intermediate Language) コード (スクリプト内の C# コードなど) を C++ コードに変換し、その C++ コードを使って選択したプラットフォーム用のネイティブのバイナリファイル (.exe、.apk、.xap など) を作成します。
+
+- [IL2CPP - Unity マニュアル](https://docs.unity3d.com/ja/2021.1/Manual/IL2CPP.html)
+- [IL2CPP のしくみ - Unity マニュアル](https://docs.unity3d.com/ja/2021.1/Manual/IL2CPP-HowItWorks.html)
+- [スクリプティングバックエンド - Unity マニュアル](https://docs.unity3d.com/ja/2023.2/Manual/scripting-backends.html)
+
+Unity には、Mono と IL2CPP (Intermediate Language To C++) という 2 つのスクリプティングバックエンドがあり、それぞれ異なるコンパイル技術を使用しています。
+
+- Mono はジャストインタイム (JIT) コンパイルを採用しており、実行時に必要に応じてコードをコンパイルします。
+- IL2CPP は AOT (Ahead-of-Time) コンパイルを採用しており、アプリケーション全体を実行前にコンパイルします。
+
+### URP (Unity Universal Render Pipeline)
+
+- [ユニバーサルレンダーパイプラインの概要 | Universal RP | 14.0.2](https://docs.unity3d.com/ja/Packages/com.unity.render-pipelines.universal@14.0/manual/index.html)
+- [Universal Render Pipeline overview | Universal RP | 17.0.1](https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@17.0/manual/index.html)
+
+レンダリングパイプラインとは、3D シーンを 2D 画像に変換する一連のステップです。
+レンダリングパイプラインは、基本的に、3D モデルのポリゴンデータ、テクスチャデータ、ライトデータなどの入力を受け取り、それを最終的な画像として出力します。
+
+URP は、Unity の最新のレンダリングパイプラインであり、さまざまなプラットフォームで動作するように設計されています。
+
+Unity には、URP 以外にも、次の 2 つのレンダリングパイプラインが用意されています。
+
+- **High Definition Render Pipeline (HDRP)** - HDRP は、URP よりも高品質なグラフィックスを作成できるレンダリングパイプラインです。HDRP は、アーティストが細かい設定を調整できるため、より高度なグラフィックスを作成できます。
+- **Legacy Render Pipeline (LP)** - LP は、Unity の古いレンダリングパイプラインです。LP は、URP や HDRP よりもパフォーマンスが向上しています。LP は、モバイル ゲームや低スペックなデバイス向けのアプリケーションに適しています。別名 **BRP(Built-in Render Pipeline)**
