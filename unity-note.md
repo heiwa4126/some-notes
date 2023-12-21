@@ -219,3 +219,58 @@ Unity の Update()と LateUpdate()は、どちらもフレームごとに呼び�
 
 - Update()でオブジェクトの位置を更新し、LateUpdate()でカメラの追跡を行う
 - Update()で物理演算を実行し、LateUpdate()で物理演算の補正を行う
+
+## SerializeField
+
+以下の場合に使う。
+
+- C# 側で触らせたくない (public にしたくない)
+- かつ、Unity Editor の inspector からは触れるようにしたい
+
+- [Unity の[SerializeField]について色々な疑問に答えてみる #C# - Qiita](https://qiita.com/makopo/items/8ef280b00f1cc18aec91)
+- [Lesson 6.1 - Project Optimization - Unity Learn](https://learn.unity.com/tutorial/lesson-6-1-project-optimization?uv=2021.3&pathwayId=5f7e17e1edbc2a5ec21a20af&missionId=5f7648a4edbc2a5578eb67df&projectId=5d092adcedbc2a0e5c02d26f#5d1bba43edbc2a001f8c0131)
+
+## const と readonly と static readonly
+
+[const と readonly と static readonly、それぞれの特徴と使い分け方 #C# - Qiita](https://qiita.com/4_mio_11/items/203c88eb5299e4a45f31)
+
+## Update() と FixedUpdate() と LateUpdate()
+
+**Update()**は、1 フレームごとに 1 回実行される関数です。フレームレートの影響を受けるため、フレームレートが低いと処理が遅くなる可能性があります。入力処理、カメラの追従、物体の動きなど、フレームレートに影響される処理に使用します。
+
+**FixedUpdate()**は、指定したフレームレートごとに 1 回実行される関数です。フレームレートの影響を受けないため、フレームレートが低くても安定した処理を行うことができます。物理演算、回転処理、オーディオ処理など、フレームレートに影響されない処理に使用します。
+
+**LateUpdate()**は、Update()の後に 1 回実行される関数です。フレームレートの影響を受けるため、フレームレートが低いと処理が遅くなる可能性があります。カメラの揺れ、エフェクトの追加など、Update()の処理に影響を与えないようにしたい処理に使用します。
+
+LateUpdate() は、**すべての** Update() が呼ばれた後に実行されるため、他のスクリプトによる変更を考慮した上でオブジェクトの状態を調整するのに便利です。
+
+- [イベント関数の実行順序 - Unity マニュアル(2018.4)](https://docs.unity3d.com/ja/2018.4/Manual/ExecutionOrder.html)
+- [イベント関数の実行順序 - Unity マニュアル(2023.2)](https://docs.unity3d.com/ja/2023.2/Manual/ExecutionOrder.html)
+
+## Awake() と Start()
+
+**Awake()** は、ゲームオブジェクトがアクティブになったら、1 回だけ実行される関数です。Awake()は、ゲームオブジェクトのインスタンス化直後に実行されるため、ゲームオブジェクトの初期化処理に使用されます。
+
+**Start()** は、ゲームオブジェクトがアクティブになったら、1 回だけ実行される関数です。Start()は、Awake()の後に実行されるため、Awake()で初期化したオブジェクトを参照する処理など、Awake()で初期化したオブジェクトと関連する処理に使用されます。
+
+具体的な使い分けとしては、以下のようなものが挙げられます。
+
+Awake()
+
+- 変数の初期化
+- コンポーネントの初期化
+- 他のゲームオブジェクトへの**参照**の取得
+
+Start()
+
+- ゲームの初期化
+- 入力の取得
+- カメラの配置
+
+## ECS (Entity Component System)
+
+[ECS Survival Guide - Unity Learn](https://learn.unity.com/tutorial/ecs-survival-guide?uv=2021.3&pathwayId=5f7e17e1edbc2a5ec21a20af&missionId=5f7648a4edbc2a5578eb67df&projectId=5d092adcedbc2a0e5c02d26f#)
+
+Data-Oriented Technology Stack (DOTS)
+
+[【Unity】DOTS(ECS)が正式リリースされたので試してみた](https://zenn.dev/k41531/articles/5168cc291b4dfa)
