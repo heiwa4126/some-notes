@@ -274,3 +274,12 @@ Start()
 Data-Oriented Technology Stack (DOTS)
 
 [【Unity】DOTS(ECS)が正式リリースされたので試してみた](https://zenn.dev/k41531/articles/5168cc291b4dfa)
+
+## 壁のすり抜け
+
+- [Unity ボールが壁をすり抜ける - Google 検索](https://www.google.co.jp/search?hl=ja&q=Unity+%E3%83%9C%E3%83%BC%E3%83%AB%E3%81%8C%E5%A3%81%E3%82%92%E3%81%99%E3%82%8A%E6%8A%9C%E3%81%91%E3%82%8B&lr=lang_ja)
+- [unity avoid a ball pass through wall - Google Search](https://www.google.com/search?q=unity+avoid+a+ball+pass+through+wall&hl=en)
+- [衝突の基本 - Unity マニュアル](https://docs.unity3d.com/ja/current/Manual/CollidersOverview.html)
+- [CCD (連続的衝突判定) - Unity マニュアル](https://docs.unity3d.com/ja/current/Manual/ContinuousCollisionDetection.html)
+
+Rigidbody で Collision Detection を Discrete 以外にしなければならないような場合は、そもそもゲームデザインを考えなおしたほうがいいみたい。
