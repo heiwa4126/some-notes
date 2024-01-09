@@ -283,3 +283,81 @@ Data-Oriented Technology Stack (DOTS)
 - [CCD (連続的衝突判定) - Unity マニュアル](https://docs.unity3d.com/ja/current/Manual/ContinuousCollisionDetection.html)
 
 Rigidbody で Collision Detection を Discrete 以外にしなければならないような場合は、そもそもゲームデザインを考えなおしたほうがいいみたい。
+
+## "Input Manager" から "Input System" へ切り替える
+
+古いコードを　"Input Manager" から "Input System"　へ切り替える手順は以下の通り。
+
+パッケージマネージャーで Input System をインポート。
+
+Project Settings の Player \> Other Settings \> Active Input Handling で
+`BOTH` になってるのを確認。
+
+"Input Manager" から "Input System" へコードを書き換える。
+
+例:
+
+"Input Manager" から
+
+```C#
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			SceneManager.LoadScene(1);
+		}
+	}
+```
+
+"Input System" へ
+
+```C#
+using UnityEngine.InputSystem;  // たぶん自動で補完される
+
+    void Update()
+    {
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene(1);
+        }
+    }
+```
+
+全部の EventSystem で
+"Replace with InputSystemUIInputModule"
+ボタンを押す。
+
+参考:
+
+- [Unity: Conflict between new InputSystem and old EventSystem - Stack Overflow](https://stackoverflow.com/questions/65027247/unity-conflict-between-new-inputsystem-and-old-eventsystem)
+- [Unity の新入力システム・Input System を使おう – Unity for Pro](https://forpro.unity3d.jp/unity_pro_tips/2021/05/20/1957/)
+
+Project Settings の Player \> Other Settings \> Active Input Handling
+を `Input System Package (New)` にする。
+
+これで Play して問題ないか確認する。
+
+## URP にする
+
+URP の利点がよくわからないけど URP にしてみる。
+
+[既存のプロジェクトへのユニバーサルレンダーパイプラインのインストール | Universal RP | 14.0.2](https://docs.unity3d.com/ja/Packages/com.unity.render-pipelines.universal@14.0/manual/InstallURPIntoAProject.html)
+
+パッケージマネージャーで "Universal RP" をインポート (時間かかる)。
+
+Assets > Create > Rendering > Universal Render Pipeline > Pipeline Asset
+
+最近は`Pipeline Asset`がなくて、
+`URP Asset (with Universal Renderer)`選ぶ。
+パイプラインとアセットの両方を作ってくれる(昔は別々に作る必要があったみたい)。
+Asset の直下に Renderer フォルダ作って、そこで create するといいと思う。
+
+マテリアルが全部ピンク色になるので、
+Edit > Rendering > Materials > Convert All Built-In Materials to URP
+
+エディタが古いと
+`Convert All Built-In Materials to URP`
+がないかもしれない。
+
+かわりにマテリアルを選択ののち(複数選べる)
+Edit > Rendering > Materials > Convert Selected Built-In Materials to URP
