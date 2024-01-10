@@ -361,3 +361,10 @@ Edit > Rendering > Materials > Convert All Built-In Materials to URP
 
 かわりにマテリアルを選択ののち(複数選べる)
 Edit > Rendering > Materials > Convert Selected Built-In Materials to URP
+
+## VR
+
+- [Create with VR - Unity Learn](https://learn.unity.com/course/create-with-vr?uv=2021.3) - プログラミングレスなコース。次の "VR Development Pathway" の一部でもある。
+- [VR Development Pathway - Unity Learn](https://learn.unity.com/pathway/vr-development) - がっつりコース。きっちり更新されている
+
+- [Create a VR Starter Project from Scratch - Unity Learn](https://learn.unity.com/tutorial/create-a-vr-starter-project-from-scratch) - VR シーンを 1 から作りたいとき
