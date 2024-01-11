@@ -368,3 +368,8 @@ Edit > Rendering > Materials > Convert Selected Built-In Materials to URP
 - [VR Development Pathway - Unity Learn](https://learn.unity.com/pathway/vr-development) - がっつりコース。きっちり更新されている
 
 - [Create a VR Starter Project from Scratch - Unity Learn](https://learn.unity.com/tutorial/create-a-vr-starter-project-from-scratch) - VR シーンを 1 から作りたいとき
+
+## AR Default Face からマスクを消す
+
+"AR Face Mesh Visualizer (Script)"を無効にすれば
+マスクは描画されなくなるけど、これが正しいかどうかはわからない。
