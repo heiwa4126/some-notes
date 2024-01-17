@@ -35,6 +35,10 @@ Oculus Rift のは[PC SDK | Oculus 開発者](https://developer.oculus.com/docum
 - Quest Link - USB ケーブルを使用して Meta Quest を PC に接続する機能。[Set up Meta Quest Link | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/headsets-and-accessories/oculus-link/set-up-link/)。有線なので安定しているが、ケーブルが邪魔。
 - Air Link - Wi-Fi を使用して Meta Quest を PC に接続する機能。[Connect Meta Quest to your PC over Wi-Fi with Air Link | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/headsets-and-accessories/oculus-link/connect-with-air-link/)
 
+
+[Meta Storeヘルプセンター | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/headsets-and-accessories/oculus-link/)
+
+
 ## コントローラーにニッケル水素電池は使えない?
 
 Touch Plus コントローラーのバッテリーカバーには
