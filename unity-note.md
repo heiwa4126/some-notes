@@ -373,3 +373,10 @@ Edit > Rendering > Materials > Convert Selected Built-In Materials to URP
 
 "AR Face Mesh Visualizer (Script)"を無効にすれば
 マスクは描画されなくなるけど、これが正しいかどうかはわからない。
+
+## Script Graph
+
+マウスのミドルボタン(ホィールボタン)のドラッグで
+移動ができる。
+
+Scene でも Game でもミドルボタン便利。
