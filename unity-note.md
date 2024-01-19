@@ -386,3 +386,109 @@ Script Graph 特有のホイールまわり操作:
 - ホイール - 縦スクロール
 - Shift+ホイール - 横スクロール
 - Ctrl+ホイール - zoom in/out
+
+## State Machine
+
+Visual Scripting はめんどうだけど、
+state machines は C#で書くのがちょとめんどう。以下例:
+
+```csharp
+[CreateAssetMenu(menuName = "StateMachine/State")]
+public class State : ScriptableObject
+{
+    public string stateName;
+    // 他にも状態に関するプロパティやメソッドを追加
+}
+
+[CreateAssetMenu(menuName = "StateMachine/Transition")]
+public class Transition : ScriptableObject
+{
+    public State fromState;
+    public State toState;
+    public string transitionName;
+    // 他にも遷移に関するプロパティやメソッドを追加
+}
+```
+
+こう書いて、
+
+```csharp
+public class StateMachine : MonoBehaviour
+{
+    // staticにすることでクラス全体で共有される
+    public static List<State> states;
+    public static List<Transition> transitions;
+
+    public State currentState;
+
+    [RuntimeInitializeOnLoadMethod]
+    static void InitializeStateMachine()
+    {
+        // 初期化時にstatesとtransitionsを作成・初期化
+        states = new List<State>();
+        transitions = new List<Transition>();
+
+        // 例としていくつかの状態と遷移を作成
+        State idleState = ScriptableObject.CreateInstance<State>();
+        idleState.stateName = "Idle";
+        states.Add(idleState);
+
+        State walkState = ScriptableObject.CreateInstance<State>();
+        walkState.stateName = "Walk";
+        states.Add(walkState);
+
+        State runState = ScriptableObject.CreateInstance<State>();
+        runState.stateName = "Run";
+        states.Add(runState);
+
+        Transition idleToWalk = ScriptableObject.CreateInstance<Transition>();
+        idleToWalk.fromState = idleState;
+        idleToWalk.toState = walkState;
+        idleToWalk.transitionName = "Idle to Walk";
+        transitions.Add(idleToWalk);
+
+        Transition walkToRun = ScriptableObject.CreateInstance<Transition>();
+        walkToRun.fromState = walkState;
+        walkToRun.toState = runState;
+        walkToRun.transitionName = "Walk to Run";
+        transitions.Add(walkToRun);
+
+        // 他にも必要な状態や遷移を作成
+
+        // ここで必要に応じて初期状態を設定
+        // 例: currentState = states[0];
+    }
+
+    void Start()
+    {
+        // 初期状態を設定
+        if (states.Count > 0)
+        {
+            currentState = states[0];
+        }
+    }
+
+    void Update()
+    {
+        // 現在の状態に基づいて処理を行う
+
+        // 遷移条件をチェックして、遷移が必要ならば次の状態に遷移する
+        foreach (Transition transition in transitions)
+        {
+            if (transition.fromState == currentState && /* ここで遷移条件をチェック */)
+            {
+                currentState = transition.toState;
+                break;
+            }
+        }
+    }
+}
+```
+
+## Unity の vector3.MoveTowards()の移動量は maxDistanceDelta ですが、なぜ"max"がついているのですか?
+
+[Unity - Scripting API: Vector3.MoveTowards](https://docs.unity3d.com/ScriptReference/Vector3.MoveTowards.html)
+
+current が target に着いたら、それより大きくならないから。
+
+あと maxDistanceDelta は speed \* Time.deltaTime みたいのを設定する。
