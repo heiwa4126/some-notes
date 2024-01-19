@@ -286,7 +286,7 @@ Rigidbody で Collision Detection を Discrete 以外にしなければならな
 
 ## "Input Manager" から "Input System" へ切り替える
 
-古いコードを　"Input Manager" から "Input System"　へ切り替える手順は以下の通り。
+古いコードを "Input Manager" から "Input System" へ切り替える手順は以下の通り。
 
 パッケージマネージャーで Input System をインポート。
 
@@ -376,7 +376,13 @@ Edit > Rendering > Materials > Convert Selected Built-In Materials to URP
 
 ## Script Graph
 
-マウスのミドルボタン(ホィールボタン)のドラッグで
+マウスのホイールボタンのドラッグで
 移動ができる。
 
-Scene でも Game でもミドルボタン便利。
+Scene でも Game でも Animator でもホイールボタンドラッグ便利。
+
+Script Graph 特有のホイールまわり操作:
+
+- ホイール - 縦スクロール
+- Shift+ホイール - 横スクロール
+- Ctrl+ホイール - zoom in/out
