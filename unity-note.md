@@ -492,3 +492,9 @@ public class StateMachine : MonoBehaviour
 current が target に着いたら、それより大きくならないから。
 
 あと maxDistanceDelta は speed \* Time.deltaTime みたいのを設定する。
+
+## State Machine でエッジを作るには
+
+ctrl+クリックしてドラッグ。
+
+[ステート間に遷移を作成する | Visual Scripting | 1.8.0-pre.1](https://docs.unity3d.com/ja/Packages/com.unity.visualscripting%401.8/manual/vs-creating-transition.html)
