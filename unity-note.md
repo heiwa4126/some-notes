@@ -607,3 +607,30 @@ Specular ワークフローは、現実世界の反射率の原理に基づい�
 光沢(gloss)や艶(glossiness)とも呼ばれる。
 
 滑らかな表面からは、光が均一に反射するので、反射の中に光源の形が見える。
+
+### バンプマッピング
+
+法線(Normal)マップ
+
+[法線マップ (バンプマップ) - Unity マニュアル](https://docs.unity3d.com/ja/current/Manual/StandardShaderMaterialParameterNormalMap.html)
+
+### オクルージョンマップ
+
+[2. Intensify shadows with occlusion maps](https://learn.unity.com/tutorial/refine-surfaces-with-more-texture-maps?pathwayId=61a65568edbc2a00206076dd&missionId=619f9b6cedbc2a39aabd7b1e#64d0b1c7edbc2a18ec54e3fc)
+
+閉塞(occlusion)マップ
+
+> 3D グラフィックスにおけるオクルージョンとは、物体によって光が遮られること。
+> 歩道のひび割れや、閉じた拳の指の間の細く暗い影の線は、オクルージョンの例です。
+
+### microsurface maps
+
+マテリアルの Detail Inputs のところ。
+
+2 重にある理由がよくわからない。
+
+## emission maps
+
+[4. Light up surfaces with emission maps](https://learn.unity.com/tutorial/refine-surfaces-with-more-texture-maps?pathwayId=61a65568edbc2a00206076dd&missionId=619f9b6cedbc2a39aabd7b1e#64d0b1c7edbc2a18ec54e3fe)
+
+(いちばん左端のほぼ真っ黒なマップがそれ)
