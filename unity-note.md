@@ -504,6 +504,14 @@ ctrl+クリックしてドラッグ。
 
 [ステート間に遷移を作成する | Visual Scripting | 1.8.0-pre.1](https://docs.unity3d.com/ja/Packages/com.unity.visualscripting%401.8/manual/vs-creating-transition.html)
 
+## Unity Editor の scene での表示で perspective の画角を変えるには?
+
+エディタ上での表示を変える話。画角(Angle of view)ではなく 視野角(FoV; Field of View)を変えられる。
+
+scene ビューの右上にある Scene(ムービーカメラのアイコン)をプルダウンすると FoV があるので、それを調整。
+
+[シーンビューのビューオプションツールバー - Unity マニュアル](https://docs.unity3d.com/ja/2022.3/Manual/ViewModes.html)
+
 ## OnCollisionEnter()
 
 OnCollisionEnter() と OnCollisionStay() と OnCollisionExit() は collider の Is Trigger を true にしなくても使える。
@@ -519,7 +527,10 @@ OnCollision()は 両方に rigidbody がないと生じない? → いや片方�
 
 それは light probes というもの。
 
-Gizmos のプルダウンで LightProbesGroup のチェックボタンで On/Off できる。
+Gizmos のプルダウン(scene ビューの右上のオプションツールバーの一番右のやつ)
+で LightProbesGroup のチェックボックス(かなり下)で On/Off できる。
+
+参考:[シーンビューのビューオプションツールバー - Unity マニュアル](https://docs.unity3d.com/ja/2022.3/Manual/ViewModes.html)
 
 ## メッシュ、シェーダー、マテリアル
 
