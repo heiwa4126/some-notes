@@ -555,3 +555,55 @@ Mesh Renderer は名前通り。
 
 - フラグメントシェーディング(Fragment shading): ピクセルシェーディングとしても知られ、2D 画像の各ピクセルの色を生成するためにメッシュ表面を表現するシェーディングです。
 - 頂点シェーディング(Vertex shading): メッシュの頂点に作用し、通常、サーフェスを移動または変形させるためにその位置を変更します。
+
+## マテリアル
+
+- [Simulate solid surfaces](https://learn.unity.com/tutorial/simulate-solid-surfaces?uv=2022.3&pathwayId=61a65568edbc2a00206076dd&missionId=619f9b6cedbc2a39aabd7b1e)
+- [Material charts](https://docs.unity3d.com/Manual/StandardShaderMaterialCharts.html)
+
+### 反射
+
+- 鏡面反射(specular reflections) - 光源の直接反射
+- 拡散反射(diffuse reflections) - 物体の乱反射。「目に見える色」が決まる
+
+この 2 つの組み合わせ。
+
+### base map
+
+拡散反射(diffuse reflections)のパラメータの 1 つ。オブジェクトの目に見える色。
+
+ほかの環境ではアルベド(Albedo)またはディフューズマップ(Diffuse Map)と呼ぶ.
+(正確には意味は異なる)。
+
+- アルベドは、拡散反射の測定値。通常 RGB 値で表され、HSV でも指定できる
+
+### Metallic workflow
+
+- [6.Metals in the Metallic workflow](https://learn.unity.com/tutorial/simulate-solid-surfaces?uv=2022.3&pathwayId=61a65568edbc2a00206076dd&missionId=619f9b6cedbc2a39aabd7b1e#64d0b0e3edbc2a1a5164bf92)
+- [Metallic と Specular のワークフロー - Unity マニュアル](https://docs.unity3d.com/ja/2023.2/Manual/StandardShaderMetallicVsSpecular.html) - 更新されてない。英語版も古いまま。Standard のほうが Metalic
+
+| Description                     | Specular workflow                                                                             | Metallic workflow                             |
+| ------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| To make shiny metal:            | high Specularity, high Smoothness                                                             | high Metallic, high Smoothness                |
+| To make shiny non-metal:        | low or medium (but not zero) Specularity and high Smoothness                                  | zero or very low Metallic and high Smoothness |
+| To control specular reflection: | increase Smoothness to focus, and adjust Specular map for amount and color of reflected light | increase Smoothness to focus                  |
+| Format of map:                  | RGB (3 channels)                                                                              | Grayscale (1 channel)                         |
+
+| 説明                    | スペキュラワークフロー                                                             | メタリックワークフロー                           |
+| ----------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------ |
+| 輝く金属を作るために:   | 高いスペキュラリティ、高いスムーズネス                                             | 高いメタリック、高いスムーズネス                 |
+| 輝く非金属を作るために: | 低いまたは中程度（ゼロでない）のスペキュラリティと高いスムーズネス                 | ゼロまたは非常に低いメタリックと高いスムーズネス |
+| スペキュラ反射の制御:   | スムーズネスを増やして焦点を合わせ、スペキュラマップを調整して反射光の量と色を調整 | スムーズネスを増やして焦点を合わせる             |
+| マップのフォーマット:   | RGB（3 チャンネル）                                                                | グレースケール（1 チャンネル）                   |
+
+Metallic ワークフローはよりシンプルですが、光学のルールに厳密には従いません。
+
+Specular ワークフローは、現実世界の反射率の原理に基づいていますが、カラースペキュラマップがあるため、難易度が高くなります。
+
+### 滑らかさ(Smoothness)
+
+鏡面反射(specular reflections)のパラメータ。
+
+光沢(gloss)や艶(glossiness)とも呼ばれる。
+
+滑らかな表面からは、光が均一に反射するので、反射の中に光源の形が見える。
