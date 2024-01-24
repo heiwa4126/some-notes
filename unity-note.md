@@ -299,7 +299,7 @@ Project Settings の Player \> Other Settings \> Active Input Handling で
 
 "Input Manager" から
 
-```C#
+```Csharp
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
@@ -352,7 +352,7 @@ Assets > Create > Rendering > Universal Render Pipeline > Pipeline Asset
 パイプラインとアセットの両方を作ってくれる(昔は別々に作る必要があったみたい)。
 Asset の直下に Renderer フォルダ作って、そこで create するといいと思う。
 
-マテリアルが全部ピンク色になるので、
+マテリアルが全部ピンク色(magenta)になるので、
 Edit > Rendering > Materials > Convert All Built-In Materials to URP
 
 エディタが古いと
@@ -361,6 +361,11 @@ Edit > Rendering > Materials > Convert All Built-In Materials to URP
 
 かわりにマテリアルを選択ののち(複数選べる)
 Edit > Rendering > Materials > Convert Selected Built-In Materials to URP
+
+見えていないマテリアルが壊れている(間違ったシェーダーがついてる)ときは
+Window > Rendering > Render Pipeline Converter で変換
+
+[3. Fix magenta materials](https://learn.unity.com/tutorial/manage-materials-in-a-project?uv=2022.3&pathwayId=61a65568edbc2a00206076dd&missionId=619f9b6cedbc2a39aabd7b1e#64d0b04fedbc2a112766ce76)
 
 ## VR
 
@@ -498,3 +503,44 @@ current が target に着いたら、それより大きくならないから。
 ctrl+クリックしてドラッグ。
 
 [ステート間に遷移を作成する | Visual Scripting | 1.8.0-pre.1](https://docs.unity3d.com/ja/Packages/com.unity.visualscripting%401.8/manual/vs-creating-transition.html)
+
+## OnCollisionEnter()
+
+OnCollisionEnter() と OnCollisionStay() と OnCollisionExit() は collider の Is Trigger を true にしなくても使える。
+
+OnCollision()は 両方に rigidbody がないと生じない? → いや片方あれば OK なのは確認した。
+
+なぜ OnTrigger...()と 2 系統あるのか?
+
+- OnTrigger...() は重なりを検知する
+- OnCollision...() は、物理エンジンが衝突を検知する
+
+## Unity で game object を選択すると灰色の球体が表示されます
+
+それは light probes というもの。
+
+Gizmos のプルダウンで LightProbesGroup のチェックボタンで On/Off できる。
+
+## メッシュ、シェーダー、マテリアル
+
+[3. What exactly is a mesh?](https://learn.unity.com/tutorial/explore-meshes-and-rendering?uv=2022.3&pathwayId=61a65568edbc2a00206076dd&missionId=619f9b6cedbc2a39aabd7b1e#64d0b03bedbc2a1533d46c62)
+
+> もし 3D オブジェクトが 2D ポリゴンのみで作られているとしたら、それはダイヤモンドや他の宝石のようにファセットされるだろう。3D メッシュは、滑らかに見せたり、ところどころカーブさせたりするために、追加情報が必要になる。
+
+> メッシュデータには法線(normals)も含まれます。法線はサーフェスが向いている方向を定義する追加の値です。すべての法線がエッジに対して垂直である場合、上の画像のように、形状は平らでファセット(面状)に見える。
+
+> 法線はポリゴンの形状を示します。たとえば、平坦でなく湾曲していることや、どのように湾曲しているかを正確に示します。シェーダは、実際にメッシュを変更することなく、法線に従ってメッシュを湾曲してレンダリングします。球は実際には多くの平らな面でできているメッシュですが、その法線は表面を滑らかに見せます。
+
+> メッシュサーフェスを正確に表現するために、頂点と法線のデータをすべて考慮するのが**シェーダー**の仕事だ。
+
+> リンゴや、空でない GameObject を選択して、Inspector でコンポーネントを見ると、メッシュは Mesh Filter コンポーネントと Mesh Renderer コンポーネントで表現されています。
+
+Mesh Filter はメッシュのデータ本体。置き換えが簡単にできる。単純な図形で
+マテリアルやアニメーションを調整して、最後に入れ替える、などが出来て便利。
+
+Mesh Renderer は名前通り。
+
+## フラグメントシェーディング と 頂点シェーディング
+
+- フラグメントシェーディング(Fragment shading): ピクセルシェーディングとしても知られ、2D 画像の各ピクセルの色を生成するためにメッシュ表面を表現するシェーディングです。
+- 頂点シェーディング(Vertex shading): メッシュの頂点に作用し、通常、サーフェスを移動または変形させるためにその位置を変更します。
