@@ -7,7 +7,8 @@ Meta Quest 3 はここ ↓ から。2, pro は左ペインから選ぶ
 - [Meta Quest 3 のセット内容](https://www.meta.com/ja-jp/help/quest/articles/getting-started/getting-started-with-quest-3/quest-3-in-the-box/)
 - [Meta Quest 3 を設定する](https://www.meta.com/ja-jp/help/quest/articles/getting-started/getting-started-with-quest-3/set-up-quest-3/) - この動画は先に見といたほうがいいです。
 
-まず最初にモバイルデバイス(**必須**。iOS か Android)を用意して app をインストー
+まず最初にモバイルデバイス(**必須**。iOS か Android)
+を用意して app をインストール
 
 - [「Meta Quest」を App Store で](https://apps.apple.com/jp/app/meta-quest/id1366478176)
 - [Meta Quest - Google Play のアプリ](https://play.google.com/store/apps/details?id=com.oculus.twilight&hl=ja&gl=US)
@@ -28,7 +29,7 @@ Mata account を作る必要がある。これは Facebook アカウントや In
 「ペアリング」は Bluetooth じゃない。
 同一 LAN 内にあるデバイスを探してる?
 もしくはロケーションの near by?
-ルータの設定によってはまる可能性はありそう。
+ルータの設定によってハマる可能性はありそう。
 
 あとは App のガイド
 およびヘッドセットのガイドに従えば
@@ -57,6 +58,29 @@ Mata account を作る必要がある。これは Facebook アカウントや In
 
 他 MR の SDK のショーケース
 [Meta Quest の「Discover 」| Quest VR ゲーム | Meta Store](https://www.meta.com/ja-jp/experiences/7041851792509764/)
+
+## 買ったコンテンツの一覧
+
+[マイ Quest コンテンツ](https://secure.oculus.com/my/quest/)
+
+デバイスにダウンロード済みかどうかもわかるといいんだけど。
+
+## ストレージの空き容量
+
+(未確認)
+
+クイック設定 \> 設定(歯車アイコン) \> ストレージ
+
+[Meta Quest 3 の使いかたに関する Tips | XR メモランダム](https://orecen.com/x-reality/meta-quest3-settings-tips/)
+
+## 買ったばかりのデバイスが未保障になる
+
+https://www.meta.com/my/devices/ で
+「あなたのデバイスは有効な保証の対象外であるか、保証の期限が切れています。」
+と表示される場合。
+
+デバイスのアクティベート後 7 日後に表示が反映されるそうです。
+すごいぞ Meta の技術力。
 
 ## SDK
 
