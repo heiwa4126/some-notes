@@ -490,6 +490,10 @@ public class StateMachine : MonoBehaviour
 }
 ```
 
+## TIPS
+
+Editor のビューのタブをダブルクリックすると、そのビューをフルスクリーンにできる。
+
 ## Unity の vector3.MoveTowards()の移動量は maxDistanceDelta ですが、なぜ"max"がついているのですか?
 
 [Unity - Scripting API: Vector3.MoveTowards](https://docs.unity3d.com/ScriptReference/Vector3.MoveTowards.html)
@@ -592,9 +596,9 @@ Mesh Renderer は名前通り。
 | 説明                    | スペキュラワークフロー                                                             | メタリックワークフロー                           |
 | ----------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------ |
 | 輝く金属を作るために:   | 高いスペキュラリティ、高いスムーズネス                                             | 高いメタリック、高いスムーズネス                 |
-| 輝く非金属を作るために: | 低いまたは中程度（ゼロでない）のスペキュラリティと高いスムーズネス                 | ゼロまたは非常に低いメタリックと高いスムーズネス |
+| 輝く非金属を作るために: | 低いまたは中程度(ゼロでない)のスペキュラリティと高いスムーズネス                   | ゼロまたは非常に低いメタリックと高いスムーズネス |
 | スペキュラ反射の制御:   | スムーズネスを増やして焦点を合わせ、スペキュラマップを調整して反射光の量と色を調整 | スムーズネスを増やして焦点を合わせる             |
-| マップのフォーマット:   | RGB（3 チャンネル）                                                                | グレースケール（1 チャンネル）                   |
+| マップのフォーマット:   | RGB(3 チャンネル)                                                                  | グレースケール(1 チャンネル)                     |
 
 Metallic ワークフローはよりシンプルですが、光学のルールに厳密には従いません。
 
@@ -614,6 +618,11 @@ Specular ワークフローは、現実世界の反射率の原理に基づい�
 
 [法線マップ (バンプマップ) - Unity マニュアル](https://docs.unity3d.com/ja/current/Manual/StandardShaderMaterialParameterNormalMap.html)
 
+> 法線マップは、与えられた点で表面が向いている方向を指定し、ハイトマップはメッシュ表面からレンダリングされる表面の高さを指定します。
+
+> 法線マップは、表面がどのような方向を向いているかを示し、光の反射や影の計算に使用されます。
+> 一方、ハイトマップは、メッシュの表面から表面がどれだけ離れているかを示し、テクスチャを使用して表面の凹凸を作成するのに役立ちます。
+
 ### オクルージョンマップ
 
 [2. Intensify shadows with occlusion maps](https://learn.unity.com/tutorial/refine-surfaces-with-more-texture-maps?pathwayId=61a65568edbc2a00206076dd&missionId=619f9b6cedbc2a39aabd7b1e#64d0b1c7edbc2a18ec54e3fc)
@@ -629,8 +638,31 @@ Specular ワークフローは、現実世界の反射率の原理に基づい�
 
 2 重にある理由がよくわからない。
 
-## emission maps
+### emission maps
 
 [4. Light up surfaces with emission maps](https://learn.unity.com/tutorial/refine-surfaces-with-more-texture-maps?pathwayId=61a65568edbc2a00206076dd&missionId=619f9b6cedbc2a39aabd7b1e#64d0b1c7edbc2a18ec54e3fe)
 
 (いちばん左端のほぼ真っ黒なマップがそれ)
+
+### シェーダーグラフ (Shader Graph)
+
+- [Get started with Shader Graph](https://learn.unity.com/tutorial/get-started-with-shader-graph?uv=2022.3&pathwayId=61a65568edbc2a00206076dd&missionId=619f9b6cedbc2a39aabd7b1e)
+- [シェーダーグラフを 2D/3D ゲームに適用する方法 | Unity](https://unity.com/ja/features/shader-graph)
+- [初めての Shader Graph | Shader Graph | 10.0.0-preview.27](https://docs.unity3d.com/ja/Packages/com.unity.shadergraph@10.0/manual/First-Shader-Graph.html)
+
+* [Shader Graph Window | Shader Graph | 10.7.0](https://docs.unity3d.com/Packages/com.unity.shadergraph@10.7/manual/Shader-Graph-Window.html)
+* [About Shader Graph | Shader Graph | 10.7.0](https://docs.unity3d.com/Packages/com.unity.shadergraph@10.7/manual/index.html)
+* [Make a Flag Wave with Shadergraph - Unity Learn](https://learn.unity.com/project/make-a-flag-move-with-shadergraph)
+* [shader graph - Asset Store](https://assetstore.unity.com/ja?free=true&q=shader%20graph)
+
+シェーダーを自作する Visual Scripting editor.
+
+- パン: 中クリックしてドラッグするか、Alt(Windows)または Option(macOS)を押しながらクリックしてドラッグ
+- ズーム: ホイールを回転させるか、トラックパッドでズーム。
+- フォーカスしてズームイン: 要素を選択し、F キーを押します
+- ウィンドウに合わせる:A キーを押す
+- スペースバー: create node
+
+詳細: [Shader Graph Window | Shader Graph | 10.7.0](https://docs.unity3d.com/Packages/com.unity.shadergraph@10.7/manual/Shader-Graph-Window.html)
+
+shimmer (煌めき)
