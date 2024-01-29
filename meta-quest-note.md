@@ -14,7 +14,7 @@ Meta Quest 3 はここ ↓ から。2, pro は左ペインから選ぶ
 - [Meta Quest - Google Play のアプリ](https://play.google.com/store/apps/details?id=com.oculus.twilight&hl=ja&gl=US)
 
 App 起動すると
-Mata account を作る必要がある。これは Facebook アカウントや Instagram アカウントとは別管理。だけど、Facebook や Instagram で OAuth はできる。
+Mata account を作る必要がある。これは Facebook アカウントや Instagram アカウントとは別管理。だけど、Facebook や Instagram で OAuth(OpenID connect?) はできる。
 
 次に
 
@@ -50,8 +50,8 @@ Mata account を作る必要がある。これは Facebook アカウントや In
 
 これが最初から付いてるので練習する:
 
-- [Meta Quest の「First Hand 」| Quest VR ゲーム | Meta Store](https://www.meta.com/ja-jp/experiences/5030224183773255/)
-- [Meta Quest の「First Encounters 」| Quest VR ゲーム | Meta Store](https://www.meta.com/ja-jp/experiences/6236169136472090/)
+- [Meta Quest の「First Hand 」| Quest VR ゲーム | Meta Store](https://www.meta.com/experiences/5030224183773255/)
+- [Meta Quest の「First Encounters 」| Quest VR ゲーム | Meta Store](https://www.meta.com/experiences/6236169136472090/)
 - [Meta Quest の「はじめての Quest 2 」| Quest VR ゲーム | Meta Store](https://www.meta.com/ja-jp/experiences/3675568169182204/)
 
 (2024 年初頭まで "Asgard's Wrath 2" も付いてた)
@@ -59,7 +59,11 @@ Mata account を作る必要がある。これは Facebook アカウントや In
 他 MR の SDK のショーケース
 [Meta Quest の「Discover 」| Quest VR ゲーム | Meta Store](https://www.meta.com/ja-jp/experiences/7041851792509764/)
 
-## 買ったコンテンツの一覧
+また Web ベースの VR ゲームもけっこうある
+
+(TODO)
+
+## 買ったコンテンツの一覧を見る
 
 [マイ Quest コンテンツ](https://secure.oculus.com/my/quest/)
 
@@ -67,51 +71,26 @@ Mata account を作る必要がある。これは Facebook アカウントや In
 
 ## ストレージの空き容量
 
-(未確認)
-
 クイック設定 \> 設定(歯車アイコン) \> ストレージ
 
 [Meta Quest 3 の使いかたに関する Tips | XR メモランダム](https://orecen.com/x-reality/meta-quest3-settings-tips/)
 
 ## 買ったばかりのデバイスが未保障になる
 
-https://www.meta.com/my/devices/ で
+[デバイス | Meta Store](https://www.meta.com/my/devices/) で
 「あなたのデバイスは有効な保証の対象外であるか、保証の期限が切れています。」
-と表示される場合。
+と表示される。
 
 デバイスのアクティベート後 7 日後に表示が反映されるそうです。
 すごいぞ Meta の技術力。
 
 → その後無事に更新されました。「7 日」ではなく土日にバッチ処理とからしい(真偽不明)。
 
-## SDK
+## Meta Quest Link と Air Link
 
-(Oculus Rift を除外した場合。
-Oculus Rift のは[PC SDK | Oculus 開発者](https://developer.oculus.com/documentation/native/pc/pcsdk-intro/)
-)
+要は「有線」と「無線」。両方とも PC につなぐ話 (モバイルではない)。
 
-3 種類あるらしい。
-
-- Unity SDK
-- Unreal Engine SDK
-- Android SDK (「ネィティブ」) - OpenXR 必須。昔は「モバイル SDK」というのがあったらしい。
-
-このへんから参照
-
-- [Oculus Quest プラットフォーム向け開発のスタートガイド | Oculus 開発者](https://developer.oculus.com/quest/) - 古い。英語版参照
-- [Device Setup \| Oculus Developers](https://developer.oculus.com/documentation/native/android/mobile-device-setup/)
-- [VR Development Pathway - Unity Learn](https://learn.unity.com/pathway/vr-development)
-
-で MR 用には
-
-- [Meta XR Utilities SDK | 機能統合 | Unity Asset Store](https://assetstore.unity.com/packages/tools/integration/meta-xr-utilities-sdk-261898?locale=ja-JP)
--
-
-## Quest Link と Air Link
-
-要は「有線」と「無線」。両方とも PC にしかつながらない。モバイル機器は
-
-- Quest Link - USB ケーブルを使用して Meta Quest を PC に接続する機能。[Set up Meta Quest Link | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/headsets-and-accessories/oculus-link/set-up-link/)。有線なので安定しているが、ケーブルが邪魔。
+- Meta Quest Link - USB ケーブルを使用して Meta Quest を PC に接続する機能。[Set up Meta Quest Link | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/headsets-and-accessories/oculus-link/set-up-link/)。有線なので安定しているが、ケーブルが邪魔。Oculus Link の改称らしい。
 - Air Link - Wi-Fi を使用して Meta Quest を PC に接続する機能。[Connect Meta Quest to your PC over Wi-Fi with Air Link | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/headsets-and-accessories/oculus-link/connect-with-air-link/)
 
 [Meta Store ヘルプセンター | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/headsets-and-accessories/oculus-link/)
@@ -144,11 +123,14 @@ Touch Plus コントローラーのバッテリーカバーには
 「両コントローラーの側面を同時にダブルタップ」でも切り替わる。
 コントローラーのいずれかのボタンを押せばコントローラーに戻る。
 
-## ダブルタップでパススルー
+## 「ダブルタップでパススルー」
 
-まず機能を有効にする必要がある。クイック設定 \> 物理的空間 \>パススルー \> ダブルタップでパススルーの横の切り替えボタン
+まず機能を有効にする必要がある。
+クイック設定 \> 物理的空間 \>パススルー \> ダブルタップでパススルーの横の切り替えボタン
 
-タップする場所と間隔がわかりにくい。コツがいる。本体のガイドに動画があるので 100 回見る。
+タップする場所と間隔がわかりにくい。コツがいる。
+本体のガイドに動画があるので 100 回見る。
+→ 3 回ぐらいであっさり慣れた。
 
 - [\[ダブルタップでパススルー\]をオンにする](https://www.meta.com/ja-jp/help/quest/articles/getting-started/getting-started-with-quest-pro/full-color-passthrough/)
 - [【Quest】超便利!! パススルー(外との画面切り替え)のやり方&ショートカット](https://ichioshi-life.com/2020/11/26/passthrough/)
@@ -156,8 +138,99 @@ Touch Plus コントローラーのバッテリーカバーには
 
 ## Meta Quest 3 の音量ボタンはどちらが音を大きくする方?
 
-調べる
+ヘッドセットの下、鼻の穴の向かって右側にボリュームがある。
+
+右が音量 UP。
+
+ヘッドセットをかぶっていれば UI が見えるので間違えないが、
+他人のかぶったヘッドセットを調整する時ちょっとめんどう。
 
 ## TIPS のリンク
 
 [【50 項目以上】メタクエストの機能・設定・小ネタまとめ](https://orentame.com/metaquest-knowledge/)
+
+視点リセット - Meta/Oculus ボタンを長押し
+
+## SDK
+
+(Oculus Rift を除外した場合。
+Oculus Rift のは[PC SDK | Oculus 開発者](https://developer.oculus.com/documentation/native/pc/pcsdk-intro/)
+)
+
+3 種類あるらしい。
+
+- Unity SDK
+- Unreal Engine SDK
+- Android SDK (「ネィティブ」) - OpenXR 必須。昔は「モバイル SDK」というのがあったらしい。
+
+このへんから参照
+
+- [Oculus Quest プラットフォーム向け開発のスタートガイド | Oculus 開発者](https://developer.oculus.com/quest/) - 古い。英語版参照
+- [Device Setup \| Oculus Developers](https://developer.oculus.com/documentation/native/android/mobile-device-setup/)
+- [VR Development Pathway - Unity Learn](https://learn.unity.com/pathway/vr-development)
+
+で MR 用には
+
+- [Meta XR Utilities SDK | 機能統合 | Unity Asset Store](https://assetstore.unity.com/packages/tools/integration/meta-xr-utilities-sdk-261898?locale=ja-JP)
+
+## コントローラのパワーオフ
+
+「コントローラを平らなところに置く」とパワーが切れる。
+つまり動かさないとパワーオフらしい。
+
+ボタンを押すとパワーオン。持ち上げるだけでもいいみたい。
+
+では乗り物などで運搬だとどうなる?
+たぶん本体が sleep か off または非リンク状態だと
+コントローラはオンにならないんだと思うけど。
+
+## センサー
+
+Meta Quest には
+
+- ヘッドセットの位置と向き (6DoF)
+- 左右コントローラーの位置と向き (光学式モーショントラッキング 6DoF)
+
+の 3 種類のセンサーがあり、
+それに加えてハンドトラッキング・ボディトラッキングが補助的に使える感じ。
+
+コントローラに関しては「コントローラ周囲から IR を発して、それをヘッドセットのカメラで処理」しているらしい。でも内部にモーションセンサーがあるような気がする。
+
+とりあえず Meta Quest 3 では
+頭の位置と回転、
+左右の拳の位置と回転
+しかセンスできてない。
+
+もちろん[モーションキャプチャスーツ](https://www.google.com/search?q=motion+capture+suits&tbm=isch&source=lnms)や、足首にセンサーつければデータはとれるんだろうけど、
+
+- コンシューマ製品として価格が問題
+- コンシューマ製品として「装着が困難なもの」はどうなの?
+
+なのでこのインプットからどんなゲームをデザインするかが問題となる。
+
+フィットネスアプリの
+[LES MILLS BODYCOMBAT](https://www.meta.com/experiences/4015163475201433/)だと腿上げのトレーニングがあって、
+これをうまいこと左右の手のセンサーだけで処理してる。
+
+ボタンと併用する方法もありうるけど
+
+- ヘッドセットつけてるとボタンが見えない。A/B ボタンよく押し間違える
+- なにより直感的でない。せいぜいトリガーボタンとグリップボタン
+
+Meta Quest 3 に付いてた
+[Asgard's Wrath 2](https://www.meta.com/ja-jp/experiences/2603836099654226/)
+がそういった意味で操作が難しくて。ボタン操作多すぎ。あと 3D 酔。
+慣れたらまたやる。
+
+## 3D 酔い (VR motion sickness)
+
+[Asgard's Wrath 2](https://www.meta.com/ja-jp/experiences/2603836099654226/)
+
+- 平面を移動するのはどの方向でも平気
+- スムースでない回転で少し酔う(たぶんスムースな回転だともっと酔う)
+- 階段。登りでも下りでもめちゃめちゃ酔う。例えばローラーコースタのビデオと同種。
+
+傾向がわかりやすいなあ。原因も予想がつく。
+
+[First Hand](https://www.meta.com/experiences/5030224183773255/)
+に出てくるテレポートだと高低差があっても酔わない。
