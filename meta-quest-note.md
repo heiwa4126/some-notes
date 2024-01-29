@@ -196,7 +196,11 @@ Meta Quest には
 
 コントローラに関しては「コントローラ周囲から IR を発して、それをヘッドセットのカメラで処理」しているらしい。でも内部にモーションセンサーがあるような気がする。
 
-とりあえず Meta Quest 3 では
+オリジナルの Oculus Touch コントローラーは「トラッキングリング」がついていて、上記の通りの動作。Meta Quest 3 のコントローラはリングがなく IR の一部が手で隠れる。CV で手のモデルトラッキングさせることでそれを補っている。
+
+引用元: [Beat Saber founder on Quest 3 controller tracking: "It's good, don't worry"](https://mixed-news.com/en/quest-3-controller-tracking-quality/)
+
+とりあえず Meta Quest では
 頭の位置と回転、
 左右の拳の位置と回転
 しかセンスできてない。
