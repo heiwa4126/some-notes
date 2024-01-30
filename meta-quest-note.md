@@ -162,13 +162,22 @@ Touch Plus コントローラーのバッテリーカバーには
 以下の FAQ は翻訳まちがい。英語の方はあってる。
 [Meta Quest ヘッドセットでスクリーンショットを撮影する](https://www.meta.com/ja-jp/help/quest/articles/in-vr-experiences/social-features-and-sharing/take-a-screenshot-oculus/)
 
-画像・ビデオはヘッドセット内に保存される。USBケーブルなどでPCに持ってこれる。
+画像・ビデオはヘッドセット内に保存される。USB ケーブルなどで PC に持ってこれる。
 
 ## TIPS のリンク
 
-[【50 項目以上】メタクエストの機能・設定・小ネタまとめ](https://orentame.com/metaquest-knowledge/)
+- [【50 項目以上】メタクエストの機能・設定・小ネタまとめ](https://orentame.com/metaquest-knowledge/)
+- [Pocket - 13 Tips & Tricks for New Quest 3 Owners](https://getpocket.com/read/3951602015)
 
 視点リセット - Meta/Oculus ボタンを長押し
+
+## アプリのレビューに 25%引きの紹介コードが
+
+ある時がある。星 5 つでフィルタして、下のページャーで最後のレビューへ行くと見つかることが多い。
+
+なぜか
+`https://www.oculus.com/appreferrals/...`
+の形式が多い。あやしい。
 
 ## SDK
 
