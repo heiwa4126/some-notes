@@ -162,7 +162,8 @@ Touch Plus コントローラーのバッテリーカバーには
 以下の FAQ は翻訳まちがい。英語の方はあってる。
 [Meta Quest ヘッドセットでスクリーンショットを撮影する](https://www.meta.com/ja-jp/help/quest/articles/in-vr-experiences/social-features-and-sharing/take-a-screenshot-oculus/)
 
-画像・ビデオはヘッドセット内に保存される。USB ケーブルなどで PC に持ってこれる。
+画像・ビデオはヘッドセット内に保存される。USB ケーブルなどで PC に持ってこれる(未確認)。
+[写真や動画を Meta Quest ヘッドセットからコンピューターに転送する](https://www.meta.com/ja-jp/help/quest/articles/headsets-and-accessories/using-your-headset/transfer-files-from-computer-to-headset/)
 
 ## TIPS のリンク
 
@@ -173,7 +174,8 @@ Touch Plus コントローラーのバッテリーカバーには
 
 ## アプリのレビューに 25%引きの紹介コードが
 
-ある時がある。星 5 つでフィルタして、下のページャーで最後のレビューへ行くと見つかることが多い。
+ある時がある。
+星 5 つでフィルタして、下のページャーで最後のレビューへ行くと見つかることが多い。
 
 なぜか
 `https://www.oculus.com/appreferrals/...`
@@ -183,7 +185,7 @@ Touch Plus コントローラーのバッテリーカバーには
 
 [Meta Quest/Rift コンテンツ購入代金返金ポリシー | Meta Quest | Meta Store](https://www.meta.com/jp/ja/legal/quest/quest-rift-content-refund-policy/)
 
-14 日以内に購入したコンテンツで、2 時間未満プレイした場合に返金。
+14 日以内に購入したコンテンツで、**2 時間未満**プレイした場合に返金。
 
 自動返金の対象外となるコンテンツは:
 
