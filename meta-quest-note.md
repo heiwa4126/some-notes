@@ -179,6 +179,18 @@ Touch Plus コントローラーのバッテリーカバーには
 `https://www.oculus.com/appreferrals/...`
 の形式が多い。あやしい。
 
+## アプリの返金ポリシー
+
+[Meta Quest/Rift コンテンツ購入代金返金ポリシー | Meta Quest | Meta Store](https://www.meta.com/jp/ja/legal/quest/quest-rift-content-refund-policy/)
+
+14 日以内に購入したコンテンツで、2 時間未満プレイした場合に返金。
+
+自動返金の対象外となるコンテンツは:
+
+- 映画
+- バンドル
+- アプリ内購入
+
 ## SDK
 
 (Oculus Rift を除外した場合。
