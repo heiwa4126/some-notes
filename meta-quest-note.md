@@ -280,3 +280,19 @@ Meta Quest 3 に付いてた
 
 [First Hand](https://www.meta.com/experiences/5030224183773255/)
 に出てくるテレポートだと高低差があっても酔わない。
+
+## クラウドバックアップ
+
+- [クラウドバックアップについて](https://www.meta.com/ja-jp/help/quest/articles/in-vr-experiences/oculus-features/cloud-sync/)
+- [クラウドバックアップ](https://secure.oculus.com/my/cloud-backup/)
+
+> クラウドバックアップを有効にすると、デバイスのアプリデータ(アプリの進行状況やアプリ設定など)がクラウドにバックアップされます。
+
+## VR を人に伝えるのは難しい
+
+LES MILLS XR DANCE に関する下の動画 2 つ
+
+- https://twitter.com/LuismiLorente/status/1735298605911814341
+- https://twitter.com/Laser_Cowboy11/status/1735670437936275757
+
+下のは酔う。でもヘッドセットかぶってる人自体は楽しいわけで。
