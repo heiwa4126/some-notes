@@ -296,3 +296,24 @@ LES MILLS XR DANCE に関する下の動画 2 つ
 - https://twitter.com/Laser_Cowboy11/status/1735670437936275757
 
 下のは酔う。でもヘッドセットかぶってる人自体は楽しいわけで。
+
+## 複数アカウント
+
+- 1 つの Meta Quest ヘッドセットに 3 つの追加アカウントを設定できる
+- 管理アカウントは追加アカウントに対してアプリのシェアを許可できる
+
+家族で使うような用途を想定してるんだと思う。
+
+ビデオ:
+
+- [(37) Add Multiple Accounts on the Meta Quest 3 - YouTube](https://www.youtube.com/watch?v=WSuYWXpyGw0)
+- そのほか - [meta quest how to switch accounts - Google Search](https://www.google.com/search?hl=en&q=meta+quest+how+to+switch+accounts&tbm=vid)
+
+参考リンク:
+
+- [Multiple Meta accounts on Meta Quest | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/accounts/multiple-accounts-and-app-sharing/multiple-accounts-on-meta-quest-2/)
+- [Meta Store ヘルプセンター | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/accounts/multiple-accounts-and-app-sharing/)
+- [Learn about App Sharing on Meta Quest headsets | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/accounts/multiple-accounts-and-app-sharing/learn-about-app-sharing-on-oculus-quest-2/)
+- [Turn on App Sharing on Meta Quest headsets | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/accounts/multiple-accounts-and-app-sharing/turn-on-app-sharing-on-oculus-quest-2-or-quest/)
+
+ただアカウントの切り替えは難しそう。
