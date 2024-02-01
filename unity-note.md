@@ -728,3 +728,14 @@ Creative Core の Lighting のメモ
 
 - テクスチャ: マテリアルのテクスチャを使用してスカイボックスを生成するシェーダのグループ。
 - プロシージャル: マテリアルのプロパティを使用してスカイボックスを生成するシェーダー。
+
+### シャドウ
+
+[Configure shadows in your scene - Unity Learn](https://learn.unity.com/tutorial/configure-shadows-in-your-scene?uv=2022.3&pathwayId=61a65568edbc2a00206076dd&missionId=61a106efedbc2a5554f0dcba#)
+
+> 光がオブジェクトを通過できないとき、そのオブジェクトは影を作ります。シーンに複数の光源がある今、これらを設定することができます。
+> Unity では、影はシャドウマップと呼ばれるテクスチャに保存されます。シャドウマップは、シーン内のすべてを 1 つのテクスチャ（画像）にフラット化し、その上に影を印刷します。テクスチャの解像度が高ければ高いほど、シーンの影の質も高くなります。
+> まず、Universal Render Pipeline アセット設定の Shadows セクションを確認することから始めます。
+
+URP ではそうなってる、ということかな。
+

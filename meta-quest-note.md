@@ -317,3 +317,10 @@ LES MILLS XR DANCE に関する下の動画 2 つ
 - [Turn on App Sharing on Meta Quest headsets | Meta Store](https://www.meta.com/ja-jp/help/quest/articles/accounts/multiple-accounts-and-app-sharing/turn-on-app-sharing-on-oculus-quest-2-or-quest/)
 
 ただアカウントの切り替えは難しそう。
+
+あと、1 つのアプリを複数のヘッドセットにインストールできるか? は曖昧なので調査する。今のところ
+
+- おおむね出来るはずだが、アプリによる
+- 同時接続で問題があるアプリはありそう
+
+といたっところか。
