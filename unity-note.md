@@ -283,6 +283,10 @@ Edit > Preferences > External Tools の JDK
 - `C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Data\PlaybackEngines\AndroidPlayer\NDK` - Android NDK
 - `C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK`- Android SDK
 
+## Android Studio 等と SDK や JDK を共有する
+
+いろいろいじってみたけど無理があるのでやめたほうがいい。
+
 ## Adaptive Performance
 
 以下のエラーが出て Android 用のビルドが失敗するとき
