@@ -267,6 +267,45 @@ Start()
 - 入力の取得
 - カメラの配置
 
+## Unity の Android ビルドで使用している JDK のパスは?
+
+デフォルトはこんな感じ
+
+`C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK`
+
+Edit > Preferences > External Tools の JDK
+
+これは Java 8 だった。
+
+同様に
+
+- `C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Data\PlaybackEngines\AndroidPlayer\Tools\gradle` - Gradle
+- `C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Data\PlaybackEngines\AndroidPlayer\NDK` - Android NDK
+- `C:\Program Files\Unity\Hub\Editor\2021.3.33f1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK`- Android SDK
+
+## Adaptive Performance
+
+以下のエラーが出て Android 用のビルドが失敗するとき
+
+`No Adaptive Performance provider package installed. Adaptive Performance requires a provider to get information during runtime. Please install a provider such as Adaptive Performance Samsung (Android) from the Adaptive Performance Settings.`
+
+Edit > Preferences を Adaptive Performance で検索すると(右上の虫眼鏡)
+
+Settings for Android:
+
+- Initialize Adaptive Performance on Startup
+
+Providers:
+
+- Android Provider
+- Samsung Android Provider
+
+が出てくるのて全部チェックをつける。(たぶん overkill)
+
+Android の Logcat が出るようになる。
+
+参考: [About Adaptive Performance | Adaptive Performance | 5.0.2](https://docs.unity3d.com/Packages/com.unity.adaptiveperformance@5.0/manual/index.html)
+
 ## ECS (Entity Component System)
 
 [ECS Survival Guide - Unity Learn](https://learn.unity.com/tutorial/ecs-survival-guide?uv=2021.3&pathwayId=5f7e17e1edbc2a5ec21a20af&missionId=5f7648a4edbc2a5578eb67df&projectId=5d092adcedbc2a0e5c02d26f#)
@@ -274,6 +313,27 @@ Start()
 Data-Oriented Technology Stack (DOTS)
 
 [【Unity】DOTS(ECS)が正式リリースされたので試してみた](https://zenn.dev/k41531/articles/5168cc291b4dfa)
+
+## なぜかオブジェクトがだんだん高くバウンスするか
+
+[game physics - Unity bouncing ball miraculously gains height - Stack Overflow](https://stackoverflow.com/questions/68696658/unity-bouncing-ball-miraculously-gains-height)
+
+バウンスするオブジェクトが、床になるオブジェクトに、ちょっとめりこんでバウンスするから。
+
+上記から引用:
+
+あなたがすべきことは、コリジョンの不具合を修正することです。
+その方法はいくつかありますが、最も適切な方法はそれぞれのゲームによって異なります:
+
+- 物理フレームレートを上げる(固定デルタタイム fixed delta time を下げる)。これはオーバーラップを減らし、物理フレームを "より滑らかに" します。ただし、ファントムエネルギーを本当に解決するわけではなく、その原因と影響を小さくするだけです(たぶん、気づかないほど小さくなり、必要なのはそれだけです)。
+- 球体の衝突検出方法を Continuous Dynamic に設定し、地面を static に設定してください。球体が他のものと衝突する必要がある場合、それらの他のものも同様の問題があり、静的でない必要がある場合は、それらの剛体の衝突検出方法を Continuous に設定します。(これは私が最もよく使う方法ですが、様々な理由で他の方法の方が良いプロジェクトもありました)。
+- デフォルトのソルバーの速度反復を増やします。ソルバーのタイプを Temporal Gauss Seidel に変更する。
+
+fixed delta time の場所:
+
+Edit > Project Settings > Time の Fixed Timestep フィールド
+
+C#だったら `Time.fixedDeltaTime = x.xxxf;`
 
 ## 壁のすり抜け
 

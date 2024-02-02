@@ -143,3 +143,11 @@ const と val はブロックスコープ。
 
 さらに Kotlin には lateinit var というのがある。
 変数の初期化を後回しにできる定数。
+
+## Android Studio の JDK のパス
+
+File \> Settings \> Build, Execution, Deployment \> Build Tools \> Gradle
+
+## Android Studio の Layout Editor の Design ビューをもっと実機の表示に近づけるには?
+
+(TODO)
