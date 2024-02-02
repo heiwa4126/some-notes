@@ -82,7 +82,9 @@ File -\> Project Structure -\> SDK Location
 
 新しい JDK のダウンロードと設定もここからできる。
 
-### design の live update が早すぎる
+### design の live update の頻度が早すぎる
+
+(TODO)
 
 ## SDK と Android
 
@@ -143,3 +145,73 @@ const と val はブロックスコープ。
 
 さらに Kotlin には lateinit var というのがある。
 変数の初期化を後回しにできる定数。
+
+## WSL2 で Android Studio
+
+Windows のファイル I/O が異様に遅いので試してみたい。
+
+以下は Copilot による出力そのまま
+
+**Android Studio**を**WSL2**で使う方法を紹介します。以下の手順に従って設定してみてください。
+
+1. **usbipd-win**のインストール:
+
+   - 予め**winget**をインストールしておきます。次に、以下のコマンドを実行して、PowerShell 等で**usbipd-win**をインストールします:
+     ```PowerShell
+     PS C:\Users\horie-t> winget install usbipd
+     ```
+   - WSL 上の Ubuntu で以下のコマンドを実行して、ツールをインストールします:
+     ```bash
+     sudo apt install linux-tools-virtual hwdata
+     sudo update-alternatives --install /usr/local/bin/usbip usbip `ls /usr/lib/linux-tools/*/usbip | tail -n1` 20
+     ```
+   - OS 起動後に毎回必要なコマンドも実行しておきましょう:
+     ```bash
+     sudo update-alternatives --install /usr/local/bin/usbip usbip `ls /usr/lib/linux-tools/*/usbip | tail -n1` 20
+     ```
+
+2. **Android Studio**のインストール・セットアップ:
+
+   - [ダウンロードサイト](http://developer.android.com/studio)から**Android Studio**をダウンロードし、インストール先ディレクトリで展開します:
+     ```
+     tar xvf ~/Downloads/android-studio-2022.3.1.19-linux.tar.gz
+     ```
+   - Android デバイスに対応する**udev ルール**がシステムにインストールされている必要があります。以下のコマンドを実行して、インストール・セットアップします:
+     ```
+     sudo apt-get install -y android-sdk-platform-tools-common && sudo cp /lib/udev/rules.d/51-android.rules /etc/udev/rules.d/
+     ```
+   - **adb**を使用するユーザーは、**plugdev**グループに属している必要があります。以下のコマンドでグループに追加します:
+     ```
+     sudo usermod -aG plugdev $LOGNAME
+     ```
+   - セットアップ完了後に一度 WSL を停止して再起動します:
+     ```
+     PS C:\Users\horie-t> wsl --shutdown
+     ```
+
+3. Android デバイスをアタッチして、**Android Studio**からアプリケーションを起動:
+   - Android デバイスを PC に USB で接続します（開発者向けオプションを有効にしておいてください）。
+   - 接続後、以下のコマンドで USB デバイスをリストアップします:
+     ```
+     PS C:\Users\horie-t> usbipd.exe wsl list
+     ```
+   - デバイスの**BUSID**を確認したら、以下のコマンドでデバイスを WSL にアタッチします:
+     ```
+     usbipd.exe wsl attach --busid=<BUSID>  # 例: usbipd.exe wsl attach --busid=1-3
+     ```
+   - WSL 上で**Android Studio**のインストール先ディレクトリに移動して、**Android Studio**を起動します:
+     ```
+     $ android-studio/bin/studio.sh
+     ```
+   - 起動後、**Android Studio**の Device Manager に Android デバイスが認識されていることを確認できます。
+
+これで、**Android Studio**を WSL2 で快適に使えるようになります。¹²
+
+ソース: Bing との会話 2024/2/2
+(1) WSL2 上で Android Studio で Android アプリケーションを、usbipd .... https://zenn.dev/thorie/articles/548mbl-android-studio-on-wsl2.
+(2) Can I run android studio on windows 10 Subsystem Linux. https://askubuntu.com/questions/1189343/can-i-run-android-studio-on-windows-10-subsystem-linux.
+(3) WSL2 と Android エミュレータの共存 #Android - Qiita. https://qiita.com/tsukushibito/items/9201201356ac36c52a32.
+(4) undefined. http://amazon.co.jp/dp/4802098057/.
+(5) undefined. http://amazon.co.jp/dp/B09C3Y8SHY/.
+(6) undefined. https://developer.android.com/studio/run/emulator-acceleration?hl=ja.
+(7) undefined. https://developer.android.com/studio/run/emulator.
