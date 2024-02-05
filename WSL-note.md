@@ -1,6 +1,7 @@
 # WSL メモ
 
 - [WSL メモ](#wsl-メモ)
+  - [WSL の時間がずれる](#wsl-の時間がずれる)
   - [WSL の再起動](#wsl-の再起動)
   - [WSL の syslog は Windows イベントログに出る](#wsl-の-syslog-は-windows-イベントログに出る)
   - [WSL2 で w コマンドを叩いても他の pts が表示されないのはなぜ?](#wsl2-で-w-コマンドを叩いても他の-pts-が表示されないのはなぜ)
@@ -14,7 +15,17 @@
     - [wsl --export の出力は圧縮されないのですか?](#wsl---export-の出力は圧縮されないのですか)
     - [エクスポートしながら圧縮する方法はありませんか?](#エクスポートしながら圧縮する方法はありませんか)
     - [エクスポートしながら圧縮: あとで試すメモ](#エクスポートしながら圧縮-あとで試すメモ)
-  - [WSL で Windows のやりとり](#wslでwindowsのやりとり)
+  - [WSL で Windows のやりとり](#wsl-で-windows-のやりとり)
+
+## WSL の時間がずれる
+
+本体のスリープモードがヤバいらしい。
+
+手動であわせるのは
+`sudo hwclock --systohc`
+
+aws cli が エラー出して気が付いた。
+[aws-cli がいきなり"AuthFailure"となった件 #Linux - Qiita](https://qiita.com/iam_nk/items/7acdd5e67d4a5c9ce6e2)
 
 ## WSL の再起動
 
