@@ -1,6 +1,7 @@
 # git メモ
 
 - [git メモ](#git-メモ)
+  - [特定のファイルを最後の commit 時に戻す](#特定のファイルを最後の-commit-時に戻す)
   - [git の設定をリスト](#git-の設定をリスト)
   - [gitignore のデフォルト](#gitignore-のデフォルト)
   - [symlink の扱い](#symlink-の扱い)
@@ -23,6 +24,10 @@
     - [リモート](#リモート)
   - [Git の過去コミットのすべての author を書き換える](#git-の過去コミットのすべての-author-を書き換える)
   - [コミットの接頭語](#コミットの接頭語)
+
+## 特定のファイルを最後の commit 時に戻す
+
+'git checkout HEAD^ -- <file_path>`
 
 ## git の設定をリスト
 
