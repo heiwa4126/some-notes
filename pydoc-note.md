@@ -44,6 +44,7 @@ def my_function(param1, param2):
 ## Google スタイル
 
 - [styleguide | Style guides for Google-originated open-source projects](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings)
+- [styleguide/pyguide.md at gh-pages · google/styleguide](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings) - GitHub 上の同一ページ
 - [Example Google Style Python Docstrings — napoleon documentation](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
 
 ```python
@@ -66,9 +67,9 @@ def my_function(param1, param2):
 [型ヒント](https://docs.python.org/ja/3/library/typing.html)
 に任せて docstring には記述しないほうがいいかも。
 
-## reStructuredText スタイル
+## reStructuredText(reST) スタイル
 
-reStructuredText で docstring を書くスタイル
+[reStructuredText](https://www.sphinx-doc.org/ja/master/usage/restructuredtext/basics.html) ([Sphinx](https://www.sphinx-doc.org/ja/master/) の軽量マークアップ言語) で docstring を書くスタイル
 
 ```python
 def my_function(param1, param2):
