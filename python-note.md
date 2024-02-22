@@ -49,6 +49,8 @@
   - [1 個上のフォルダから import](#1-個上のフォルダから-import)
   - [オブジェクトのクラスを表示する](#オブジェクトのクラスを表示する)
   - [たまには読もう Python の新しい機能](#たまには読もう-python-の新しい機能)
+  - [Windows の Python は "py" で起動できる](#windows-の-python-は-py-で起動できる)
+  - [pip で PyPi 以外から](#pipでpypi以外から)
 
 ## python をインストールする(2019-12)
 
@@ -1125,3 +1127,16 @@ print(isinstance(person, Person))  # -> True
 おまけ:
 
 - [[アップデート] AWS Lambda のサポートランタイムに Python 3.11 が追加されました | DevelopersIO](https://dev.classmethod.jp/articles/update-aws-lambda-support-runtime-python311/)
+
+## Windows の Python は "py" で起動できる
+
+[Installing Packages - Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/installing-packages/#ensure-you-can-run-python-from-the-command-line)
+
+```bat
+rem Windows
+py --version
+```
+
+## pip で PyPi 以外から
+
+[Installing Packages - Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/installing-packages/#ensure-you-can-run-python-from-the-command-line)
