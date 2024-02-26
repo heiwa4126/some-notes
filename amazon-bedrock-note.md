@@ -2,7 +2,7 @@
 
 > Amazon Bedrock は、基礎モデル(foundation models; FMs)でジェネレーティブ AI アプリケーションを構築し、拡張する最も簡単な方法です。Amazon Bedrock を使用して、ユースケースのビジネスソリューションを作成する方法を学びましょう。
 
-[Amazon Bedrock Demo](https://aistylist.awsplayer.com/)
+[Amazon Bedrock Demo](https://aistylist.awsplayer.com/) の冒頭から引用
 
 ## bedrock の意味・使い方・読み方
 
@@ -16,12 +16,19 @@
 
 ## 学習のとっかかり
 
-- [AI Stylist - Amazon Bedrock Demo](https://aistylist.awsplayer.com/) - おすすめ
+- [AI Stylist - Amazon Bedrock Demo](https://aistylist.awsplayer.com/) - デモ。おすすめ
 - [examples (AWS ポータル上の例)](https://us-east-1.console.aws.amazon.com/bedrock/home?region=us-east-1#/examples) - いい感じ。金はすごくかかりそう...
-- [Hands-on lab](https://github.com/aws-samples/amazon-bedrock-aistylist-lab) - 上記 AI Stylist のソースを使ったハンズオン。Jupyter Notebook 使用
-- [Free course (AWS Skill Builder)](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/17508/amazon-bedrock-getting-started)
+- [Hands-on lab](https://github.com/aws-samples/amazon-bedrock-aistylist-lab) - 上記 AI Stylist のソースを使ったハンズオン。 Jupyter Notebook 使用
+- [AWS Skill Builder - Amazon Bedrock Getting Started (Japanese) (Sub) 日本語字幕版](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/18290/amazon-bedrock-getting-started-japanese-sub-ri-ben-yu-zi-mu-ban) - 簡単なコース。無料で 30 分以下で終わる。
+- [Amazon Bedrock の料金表](https://aws.amazon.com/jp/bedrock/pricing/)
+- [Amazon Bedrock の使えるリージョン](https://docs.aws.amazon.com/bedrock/latest/userguide/bedrock-regions.html)
 - [Amazon Bedrock Documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)
-  - [Supported AWS Regions - Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/bedrock-regions.html)
+- [Amazon Bedrock をすぐに触れる Playground を試してみる:Chat 編 #AdventCalendar2023 - Qiita](https://qiita.com/akiraokusawa/items/9e586ee8990017f6040c)
+
+### playground
+
+まずモデルを使えるようにする。Bedrock ポータルの変なところにリンクがある。
+[Amazon Bedrock - Model access | us-east-1](https://us-east-1.console.aws.amazon.com/bedrock/home?region=us-east-1#/modelaccess)
 
 ## AI Stylist の冒頭部分翻訳
 
