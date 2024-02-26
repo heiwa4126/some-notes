@@ -100,6 +100,8 @@ def my_function(param1, param2):
 
 みたいなことしか言えないようです。
 
+とりあえずプロジェクトのキックオフで「Docstring のスタイルはどれにしましょうか?」と発言してウザがられるのもいいかもしれません(よくない)。
+
 ## GitHub Copilot のプロンプトでスタイルを制御できる?
 
 いろいろやってみたけど無理っぽい。
@@ -109,3 +111,4 @@ def my_function(param1, param2):
 - [[Python] docstring のスタイルと書き方 #Python - Qiita](https://qiita.com/flcn-x/items/393c6f1f1e1e5abec906)
 - [docstring の style3 種の例 #Python - Qiita](https://qiita.com/yokoc1322/items/ebf25c9cb779ff5ebc9c)
 - [autoDocstring/docs at master · NilsJPWerner/autoDocstring · GitHub](https://github.com/NilsJPWerner/autoDocstring/tree/master/docs)
+- [[Python]可読性を上げるための、docstring の書き方を学ぶ(NumPy スタイル) #Python - Qiita](https://qiita.com/simonritchie/items/49e0813508cad4876b5a)
