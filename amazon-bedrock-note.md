@@ -59,3 +59,12 @@ AI スタイリスト: こんにちは、あなたのパーソナル・スタイ
 AI スタイリストは、エージェントを使って顧客と対話します。顧客からのプロンプト、ファッショントレンドと商品カタログの知識ベースをミックスして、商品カタログエージェントは、服装を生成するための基礎モデルのプロンプトを作成します。商品カタログエージェントは、ファッショントレンド知識ベースから情報を抽出し、この情報を画像生成エージェントに送信して、関連する衣装の画像を生成します。
 
 この次と次の図がいいかんじ
+
+## 「統一のインターフェス」とはいうけれど
+
+API のパラメータがモデルごとにまるで違う。
+
+例:
+
+- [Amazon Titan text models - Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-titan-text.html#inference-titan-code)
+- [AI21 Labs Jurassic-2 models - Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-jurassic2.html#api-inference-examples-a2i-jurassic)
