@@ -1,45 +1,45 @@
-# AWS忘備録
+## AWS 忘備録
 
-AWSのメモ
+AWS のメモ
 
-- [AWS忘備録](#aws忘備録)
+- [AWS 忘備録](#aws-忘備録)
 - [メタデータ](#メタデータ)
-- [AWS CLIのインストール手順](#aws-cliのインストール手順)
+- [AWS CLI のインストール手順](#aws-cli-のインストール手順)
   - [Amazon Linux](#amazon-linux)
-  - [Debian, Ubuntu Linux系](#debian-ubuntu-linux系)
+  - [Debian, Ubuntu Linux 系](#debian-ubuntu-linux-系)
   - [RHEL 7, CentOS 7](#rhel-7-centos-7)
 - [AWS CLI コマンド補完](#aws-cli-コマンド補完)
-- [EC2ってntpは要るの?](#ec2ってntpは要るの)
-- [ElasticIPなしのEC2で外部IPをroute53でFQDNをふる](#elasticipなしのec2で外部ipをroute53でfqdnをふる)
+- [EC2 って ntp は要るの?](#ec2-って-ntp-は要るの)
+  - [ElasticIP なしの EC2 で外部 IP を route53 で FQDN をふる](#elasticip-なしの-ec2-で外部-ip-を-route53-で-fqdn-をふる)
   - [欠点](#欠点)
-- [ElasticIPなしのEC2で外部IPをnoipでFQDNをふる](#elasticipなしのec2で外部ipをnoipでfqdnをふる)
+- [ElasticIP なしの EC2 で外部 IP を noip で FQDN をふる](#elasticip-なしの-ec2-で外部-ip-を-noip-で-fqdn-をふる)
 - [127.0.0.53](#1270053)
 - [「インスタンスの開始」と「インスタンスの起動」](#インスタンスの開始とインスタンスの起動)
-- [EC2インスタンスを停止するとどうなるか](#ec2インスタンスを停止するとどうなるか)
+- [EC2 インスタンスを停止するとどうなるか](#ec2-インスタンスを停止するとどうなるか)
 - [EC2Launch v2](#ec2launch-v2)
   - [EC2Launch TIPS](#ec2launch-tips)
-  - [EC2Launch v2の便利なコマンド](#ec2launch-v2の便利なコマンド)
-- [cloudformationの更新と進行の表示](#cloudformationの更新と進行の表示)
-- [S3でWWW](#s3でwww)
-  - [cloudformationで](#cloudformationで)
+  - [EC2Launch v2 の便利なコマンド](#ec2launch-v2-の便利なコマンド)
+- [cloudformation の更新と進行の表示](#cloudformation-の更新と進行の表示)
+- [S3 で WWW](#s3-で-www)
+  - [cloudformation で](#cloudformation-で)
 - [DNS](#dns)
 - [AWS アカウントのエイリアス](#aws-アカウントのエイリアス)
 - [EC2 Instance Connect](#ec2-instance-connect)
   - [接続の条件](#接続の条件)
 
-# メタデータ
+## メタデータ
 
-自分のパブリックFQNDやパブリックIPなんかが取れる。
+自分のパブリック FQND やパブリック IP なんかが取れる。
 
-IMDSv1の場合
+IMDSv1 の場合
 
 ```bash
 curl http://169.254.169.254/latest/meta-data/
 ```
 
-↑の結果(2020-09)
+↑ の結果(2020-09)
 
-```
+```text
 ami-id
 ami-launch-index
 ami-manifest-path
@@ -77,17 +77,17 @@ export PUBLIC_HOSTNAME=`curl http://169.254.169.254/latest/meta-data/public-host
 
 参考:
 
-- [インスタンスメタデータの取得 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) - IMDSv2の例が
+- [インスタンスメタデータの取得 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) - IMDSv2 の例が
 - [インスタンスメタデータとユーザーデータ - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
 - [Instance Metadata and User Data - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
-- [AWS | AWS の169.254.169.254とは何か](https://awsjp.com/AWS/Faq/c/AWS-169.254.169.254-towa-4135.html)
+- [AWS | AWS の 169.254.169.254 とは何か](https://awsjp.com/AWS/Faq/c/AWS-169.254.169.254-towa-4135.html)
 
-GCPやAzureにも(おなじアドレスで)存在する。
+GCP や Azure にも(おなじアドレスで)存在する。
 
 - [Windows 用の Azure Instance Metadata Service - Azure Virtual Machines | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/windows/instance-metadata-service?tabs=linux)
 - [仮想マシン上でマネージド ID を使用してアクセス トークンを取得する \- Azure AD \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token)
 
-# AWS CLIのインストール手順
+## AWS CLI のインストール手順
 
 [Linux での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html)
 
@@ -110,23 +110,23 @@ rm -rf aws awscliv2.zip
 pip3 install awscli --upgrade --user
 ```
 
-## Amazon Linux
+### Amazon Linux
 
 プリインストール
 
-## Debian, Ubuntu Linux系
+### Debian, Ubuntu Linux 系
 
 ```bash
 sudo apt install awscli -y
 ```
 
-## RHEL 7, CentOS 7
+### RHEL 7, CentOS 7
 
 [Linux に AWS CLI をインストールする - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-linux.html)
 
 カレントユーザにインストールする例
 
-```
+```sh
 curl -O https://bootstrap.pypa.io/get-pip.py
 python get-pip.py --user
 rm ./get-pip.py
@@ -134,39 +134,39 @@ pip install awscli --upgrade --user
 hash -r
 ```
 
-# AWS CLI コマンド補完
+## AWS CLI コマンド補完
 
 [コマンド補完 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-completion.html)
 
-bashだったら~/.bashrcの最後の方に
+bash だったら~/.bashrc の最後の方に
 
-```
-# AWS CLI aws_completer
+```sh
+## AWS CLI aws_completer
 complete -C "$HOME/.local/bin/aws_completer" aws
 ```
 
-(pipで入れた場合)
+(pip で入れた場合)
 
-Azure CLIにも同じようなやつがある。
-aptで入れたら
+Azure CLI にも同じようなやつがある。
+apt で入れたら
 `/etc/bash_completion.d/azure-cli`
 がインストールされるので
 特に追加作業はない。
 
-# EC2ってntpは要るの?
+## EC2 って ntp は要るの?
 
 [Linux インスタンスの時刻の設定 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/set-time.html)
 というのがあるので、たぶん要る。
 
-Azureでは
+Azure では
 [Azure での Linux VM の時刻同期 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync)
 によると
-「Hyper-VなのでVMICTimeSyncあるけど、ntp併用のほうが多いね。でもAzure内にNTPサーバはないよ」
+「Hyper-V なので VMICTimeSync あるけど、ntp 併用のほうが多いね。でも Azure 内に NTP サーバはないよ」
 みたいな感じ。
 このページの[ツールとリソース](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync#tools-and-resources)
-の項目が、Linuxでhvが動いてるかのチェックになってて面白い。
+の項目が、Linux で hv が動いてるかのチェックになってて面白い。
 
-NTPサーバは
+NTP サーバは
 
 - 169.254.169.123 (リンクローカル)
 - 0.amazon.pool.ntp.org
@@ -176,9 +176,9 @@ NTPサーバは
 
 が使える。
 
-ntpdだったら景気よく
+ntpd だったら景気よく
 
-```
+```config
 server 169.254.169.123 iburst
 server 0.amazon.pool.ntp.org iburst
 server 1.amazon.pool.ntp.org iburst
@@ -188,49 +188,49 @@ server 3.amazon.pool.ntp.org iburst
 
 しとけばいいのではないか。
 
-ntpdやchronyのようなNTPサーバの機能を持つものではなく
-sntpやsystemd-timesyncdのようなSNTPクライアントだけのものが軽いのではないか。試してみる。
+ntpd や chrony のような NTP サーバの機能を持つものではなく
+sntp や systemd-timesyncd のような SNTP クライアントだけのものが軽いのではないか。試してみる。
 
-systemd-timesyncdはVMだと動かない? [ゆきろぐ: systemd-timesyncdによる時刻同期](http://yukithm.blogspot.com/2014/09/systemd-timesyncd.html)
+systemd-timesyncd は VM だと動かない? [ゆきろぐ: systemd-timesyncd による時刻同期](http://yukithm.blogspot.com/2014/09/systemd-timesyncd.html)
 試してみたが動くみたい。
 
 (2022-07)
-AWS EC2のUbuntu2204LTSのデフォルトではchronyで169.254.169.123が動いてた。
+AWS EC2 の Ubuntu2204LTS のデフォルトでは chrony で 169.254.169.123 が動いてた。
 
 [Amazon Time Sync Service で時間を維持する | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/keeping-time-with-amazon-time-sync-service/)
 
-# ElasticIPなしのEC2で外部IPをroute53でFQDNをふる
+### ElasticIP なしの EC2 で外部 IP を route53 で FQDN をふる
 
-予算がなくてElasticIPのないEC2(動的に外部IPは割り振られる)を
-Route53でFQDNを振る方法。
+予算がなくて ElasticIP のない EC2(動的に外部 IP は割り振られる)を
+Route53 で FQDN を振る方法。
 
-- [Elastic IP を利用せずに、Amazon EC2と Route 53 のドメイン名を紐付ける](https://www.kiminonahaseichi.link/memo/2017/08/elastic-ip-amazon-ec2-route-53.html)
-- [【AWS】EC2サーバに固定IPなしで独自ドメインでアクセスする方法 - Movable Type技術ブログ](http://www.mtcms.jp/movabletype-blog/aws/201401302220.html)
+- [Elastic IP を利用せずに、Amazon EC2 と Route 53 のドメイン名を紐付ける](https://www.kiminonahaseichi.link/memo/2017/08/elastic-ip-amazon-ec2-route-53.html)
+- [【AWS】EC2 サーバに固定 IP なしで独自ドメインでアクセスする方法 - Movable Type 技術ブログ](http://www.mtcms.jp/movabletype-blog/aws/201401302220.html)
 - [Amazon Route 53: How to automatically update IP addresses without using Elastic IPs - DEV](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)
 
 この最後のやつをためしてみる。
 
-FQDNを決める。もうホストゾーンが1つ以上あるものと仮定している(なければ作る)。
+FQDN を決める。もうホストゾーンが 1 つ以上あるものと仮定している(なければ作る)。
 
-EC2インスタンスを起動して
+EC2 インスタンスを起動して
 現在の「パブリック IPv4 アドレス」を得る。
 (別に適当でもいいのだがテストにつかえる)
 
-(もうホストゾーンが1つ以上あるものとして)
+(もうホストゾーンが 1 つ以上あるものとして)
 [Route 53 Console Hosted Zones](https://console.aws.amazon.com/route53/v2/hostedzones#)
 で、該当ドメインの「ホストゾーン ID」を得る。
 
-きめたFQDNと現在の「パブリック IPv4 アドレス」で、
+きめた FQDN と現在の「パブリック IPv4 アドレス」で、
 そこのホストゾーンに
-Aレコードを登録する。
-TTLは300(5分)で。
+A レコードを登録する。
+TTL は 300(5 分)で。
 
-EC2のインスタンスにタグをつける
+EC2 のインスタンスにタグをつける
 
-- AUTO_DNS_NAME - 上で決めたFQDN
+- AUTO_DNS_NAME - 上で決めた FQDN
 - AUTO_DNS_ZONE - 上で得た「ホストゾーン ID」
 
-さらにこのEC2インスタンスに以下のIAMポリシーをもったロールを作る(すでにロールが付いてるなら混ぜる)。
+さらにこの EC2 インスタンスに以下の IAM ポリシーをもったロールを作る(すでにロールが付いてるなら混ぜる)。
 
 ```json
 {
@@ -252,9 +252,9 @@ EC2のインスタンスにタグをつける
 
 ↑[元サイト](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)からコピペ。`HOSTED-ZONE-ID`のとこは「上で得たホストゾーン ID」に書き換えて。
 
-ポータルのアクション-セキュリティ-IAMロールを変更
+ポータルのアクション-セキュリティ-IAM ロールを変更
 
-rootでawsコマンドを使うのでawsコマンドを用意。
+root で aws コマンドを使うので aws コマンドを用意。
 [Linux での AWS CLI バージョン 2 のインストール、更新、アンインストール - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-linux.html)
 
 ```sh
@@ -270,20 +270,20 @@ aws --version
 で、/var/lib/cloud/scripts/per-boot/の下に好きな名前でシェルスクリプトおく。
 
 ```sh
-#!/bin/bash
-# see [Amazon Route 53: How to automatically update IP addresses without using Elastic IPs - DEV](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)
+##!/bin/bash
+## see [Amazon Route 53: How to automatically update IP addresses without using Elastic IPs - DEV](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)
 AWS=/usr/local/bin/aws
 
-# Extract information about the Instance
+## Extract information about the Instance
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id/)
 AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone/)
 MY_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4/)
 
-# Extract tags associated with instance
+## Extract tags associated with instance
 ZONE_TAG=$($AWS ec2 describe-tags --region ${AZ::-1} --filters "Name=resource-id,Values=${INSTANCE_ID}" --query 'Tags[?Key==`AUTO_DNS_ZONE`].Value' --output text)
 NAME_TAG=$($AWS ec2 describe-tags --region ${AZ::-1} --filters "Name=resource-id,Values=${INSTANCE_ID}" --query 'Tags[?Key==`AUTO_DNS_NAME`].Value' --output text)
 
-# DEBUG
+## DEBUG
 cat <<EOF
 INSTANCE_ID = $INSTANCE_ID
 AZ = $AZ
@@ -292,15 +292,15 @@ ZONE_TAG = $ZONE_TAG
 NAME_TAG = $NAME_TAG
 EOF
 
-# Update Route 53 Record Set based on the Name tag to the current Public IP address of the Instance
+## Update Route 53 Record Set based on the Name tag to the current Public IP address of the Instance
 $AWS route53 change-resource-record-sets --hosted-zone-id $ZONE_TAG --change-batch '{"Changes":[{"Action":"UPSERT","ResourceRecordSet":{"Name":"'$NAME_TAG'","Type":"A","TTL":300,"ResourceRecords":[{"Value":"'$MY_IP'"}]}}]}'
 ```
 
 ↑[元サイト](https://dev.to/aws/amazon-route-53-how-to-automatically-update-ip-addresses-without-using-elastic-ips-h7o)からコピペ。ちょっとだけアレンジ。
 
-いちおう手動で実行して、変なtypoとかないかを確認しておく。
+いちおう手動で実行して、変な typo とかないかを確認しておく。
 
-↑は[gistに置いたので](https://gist.githubusercontent.com/heiwa4126/57831f4a3607de798a116eea5ac49298/raw/4a0d84d96eaf7c8abf0759f4072b246fba727c52/r53register.sh)、←のURLをwgetかcurl -Oして、
+↑ は[gist に置いたので](https://gist.githubusercontent.com/heiwa4126/57831f4a3607de798a116eea5ac49298/raw/4a0d84d96eaf7c8abf0759f4072b246fba727c52/r53register.sh)、← の URL を wget か curl -O して、
 `chmod +x` して
 `/var/lib/cloud/scripts/per-boot`においてください。
 
@@ -318,46 +318,46 @@ sudo mv r53register.sh /var/lib/cloud/scripts/per-boot
 /var/lib/cloud/scripts/per-boot/r53register.sh
 ```
 
-EC2をpoweroffして、もういちど電源を入れる。
-IPが更新されていたらOK。
+EC2 を poweroff して、もういちど電源を入れる。
+IP が更新されていたら OK。
 
-## 欠点
+### 欠点
 
-- EC2を停止してもAレコードが消えない。FQDNで死活監視とかすると混乱が起きる。
-- TTLが300秒はいかにも短いがどうしようもない。
+- EC2 を停止しても A レコードが消えない。FQDN で死活監視とかすると混乱が起きる。
+- TTL が 300 秒はいかにも短いがどうしようもない。
 
-# ElasticIPなしのEC2で外部IPをnoipでFQDNをふる
+## ElasticIP なしの EC2 で外部 IP を noip で FQDN をふる
 
 自分の保持するドメインでなくていいなら
 [Amazon Linux インスタンスでの動的な DNS のセットアップ - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/dynamic-dns.html)
 で `xxxx.xxxxxxxx.ddns.com` みたいに使える。
 
-[No-IPの登録とDDNSクライアントの設定 | tarufulog](https://tarufu.info/domain_acquisition_no-ip/)
+[No-IP の登録と DDNS クライアントの設定 | tarufulog](https://tarufu.info/domain_acquisition_no-ip/)
 
-ほかにもfreeipとかのサービスがあるのでそれも参照。
+ほかにも freeip とかのサービスがあるのでそれも参照。
 
 登録とか広告とか制限とかめんどくさそうなので、あんまり使いたくない...
 
-# 127.0.0.53
+## 127.0.0.53
 
-AWSで
+AWS で
 
 ```
-# grep nameserver /etc/resolv.conf
+## grep nameserver /etc/resolv.conf
 nameserver 127.0.0.53
 
-# fuser -v 53/udp
+## fuser -v 53/udp
                      USER        PID ACCESS COMMAND
 53/udp:              systemd-resolve    707 F.... systemd-resolve
 ```
 
-systemd-resolveとは何か?
+systemd-resolve とは何か?
 
 [AWS EC2 (Ubuntu) で DNS のスタブリゾルバ 127.0.0.53 と Amazon Provided DNS の関連を確認する - Qiita](https://qiita.com/nasuvitz/items/b67100028f7245ebe9b9)
 
-# 「インスタンスの開始」と「インスタンスの起動」
+## 「インスタンスの開始」と「インスタンスの起動」
 
-EC2でよく間違えるやつ。「停止」と「終了」もよく間違える。
+EC2 でよく間違えるやつ。「停止」と「終了」もよく間違える。
 
 インスタンスの:
 
@@ -368,15 +368,15 @@ EC2でよく間違えるやつ。「停止」と「終了」もよく間違え�
 
 参考: [Amazon EC2 インスタンスの起動、一覧表示、および終了 - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-services-ec2-instances.html)
 
-# EC2インスタンスを停止するとどうなるか
+## EC2 インスタンスを停止するとどうなるか
 
 - [インスタンスの停止と起動 - Windows - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/Stop_Start.html#what-happens-stop)
 - [インスタンスの停止と起動 - Linux - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/Stop_Start.html#what-happens-stop)
-- [「EC2: インスタンスを停止」アクションによる停止はOSからシャットダウンしたときの動作と同じですか？ – 株式会社サーバーワークス サポートページ](https://support.serverworks.co.jp/hc/ja/articles/900004772883--EC2-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%92%E5%81%9C%E6%AD%A2-%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AB%E3%82%88%E3%82%8B%E5%81%9C%E6%AD%A2%E3%81%AFOS%E3%81%8B%E3%82%89%E3%82%B7%E3%83%A3%E3%83%83%E3%83%88%E3%83%80%E3%82%A6%E3%83%B3%E3%81%97%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AE%E5%8B%95%E4%BD%9C%E3%81%A8%E5%90%8C%E3%81%98%E3%81%A7%E3%81%99%E3%81%8B-)
+- [「EC2: インスタンスを停止」アクションによる停止は OS からシャットダウンしたときの動作と同じですか? – 株式会社サーバーワークス サポートページ](https://support.serverworks.co.jp/hc/ja/articles/900004772883--EC2-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%92%E5%81%9C%E6%AD%A2-%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AB%E3%82%88%E3%82%8B%E5%81%9C%E6%AD%A2%E3%81%AFOS%E3%81%8B%E3%82%89%E3%82%B7%E3%83%A3%E3%83%83%E3%83%88%E3%83%80%E3%82%A6%E3%83%B3%E3%81%97%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AE%E5%8B%95%E4%BD%9C%E3%81%A8%E5%90%8C%E3%81%98%E3%81%A7%E3%81%99%E3%81%8B-)
 
-# EC2Launch v2
+## EC2Launch v2
 
-Windows用cloud-init的ななにか。
+Windows 用 cloud-init 的ななにか。
 
 - [EC2Launch v2](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2.html)
 - [EC2Launch v2 (Ver.2.0.651) のインストール・移行に失敗する件について | DevelopersIO](https://dev.classmethod.jp/articles/how-to-fix-ec2launch-v2-0-651-migration-error/)
@@ -384,8 +384,8 @@ Windows用cloud-init的ななにか。
 * 設定ファイルの場所: `C:\ProgramData\Amazon\EC2Launch\config`
 * 設定ファイル: `agent-config.yml`
 * ログフォルダ: `C:\ProgramData\Amazon\EC2Launch\log`
-* v2の本体: `C:\Program Files\Amazon\EC2Launch\EC2Launch.exe`
-* v2の設定ツールの場所: `C:\Program Files\Amazon\EC2Launch\settings\EC2LaunchSettings.exe`
+* v2 の本体: `C:\Program Files\Amazon\EC2Launch\EC2Launch.exe`
+* v2 の設定ツールの場所: `C:\Program Files\Amazon\EC2Launch\settings\EC2LaunchSettings.exe`
 
 設定ファイルの例:
 
@@ -429,12 +429,12 @@ config:
 
 [EC2Launch v2 の設定 \- Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2-settings.html)
 
-実際のGUIと↑のGUI画面がぜんぜん違う... v1のだ。
+実際の GUI と ↑ の GUI 画面がぜんぜん違う... v1 のだ。
 
 なんか様子がおかしかったら移行ツールを使う。
 [EC2Launch v2 に移行する \- Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/WindowsGuide/ec2launch-v2-migrate.html)
 
-Goで書いてあるらしい。サブコマンド式。パスは通っていない。
+Go で書いてあるらしい。サブコマンド式。パスは通っていない。
 
 ```
 C:\Users\Administrator>"C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" help
@@ -518,11 +518,11 @@ config:
               Set-Content 'C:\PowerShellTest.txt' "hello world"
 ```
 
-## EC2Launch TIPS
+### EC2Launch TIPS
 
-PowerShell使うとログファイル出力がUTF-8とUTF-16まじりになって死ねる。
+PowerShell 使うとログファイル出力が UTF-8 と UTF-16 まじりになって死ねる。
 
-Powershellを実行すると
+Powershell を実行すると
 `C:\ProgramData\Amazon\EC2Launch\log\agent.log`
 に、
 
@@ -536,27 +536,27 @@ Powershellを実行すると
 エラーがおきた場合、これらが消えないで残るので、
 これらを参照すること。これはよい設計。真似る。
 
-## EC2Launch v2の便利なコマンド
+### EC2Launch v2 の便利なコマンド
 
 - "C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" version
 - "C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" validate
 - "C:\Program Files\Amazon\EC2Launch\EC2Launch.exe" run
 
-powershellからだったら頭に&つけて。
+powershell からだったら頭に&つけて。
 
-[EC2Launch v2の機能一覧 | DevelopersIO](https://dev.classmethod.jp/articles/ec2launch-v2-all-features-202007/)
+[EC2Launch v2 の機能一覧 | DevelopersIO](https://dev.classmethod.jp/articles/ec2launch-v2-all-features-202007/)
 
-# cloudformationの更新と進行の表示
+## cloudformation の更新と進行の表示
 
 ここから:
 [AWS CloudFormation スタックの更新 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks.html)
 
-えっ、そんなんできるんですか(©内場勝則)
+えっ、そんなんできるんですか(© 内場勝則)
 
-# S3でWWW
+## S3 で WWW
 
 基本は:
-[S3でウェブサイトを公開する - Qiita](https://qiita.com/SSMU3/items/94d60998038e9af80cf9)
+[S3 でウェブサイトを公開する - Qiita](https://qiita.com/SSMU3/items/94d60998038e9af80cf9)
 
 で
 [Amazon S3 のウェブサイトエンドポイントを使用している CloudFront ディストリビューションからの Access Denied エラーを解決する](https://aws.amazon.com/jp/premiumsupport/knowledge-center/s3-website-cloudfront-error-403/)
@@ -567,31 +567,31 @@ powershellからだったら頭に&つけて。
 - Amazon S3 コンソールを使用してオブジェクトに対するパブリック読み取りアクセスを許可します。[ACL の設定 - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/managing-acls.html)
 
 さらに
-[Route 53 に登録されたカスタムドメインを使用した静的ウェブサイトの設定 - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html)
+[Route 53 に登録されたカスタムドメインを使用した静的ウェブサイトの設定 - Amazon Simple Storage Service](https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html)
 
-S3のWWWってhttpsにはならない?
-[AWS S3でのhttps対応含む静的ウェブサイト公開 - Qiita](https://qiita.com/THacker/items/11eadffe6b3ce3491e3b)
+S3 の WWW って https にはならない?
+[AWS S3 での https 対応含む静的ウェブサイト公開 - Qiita](https://qiita.com/THacker/items/11eadffe6b3ce3491e3b)
 CloudFront(と独自ドメイン)がいるらしい。
 
-## cloudformationで
+### cloudformation で
 
 [AWS::S3::Bucket WebsiteConfiguration \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-s3-websiteconfiguration.html)
 
-# DNS
+## DNS
 
 169.254.169.253
-または VPCのCIDR(ネットワーク範囲)に2をプラスした値
+または VPC の CIDR(ネットワーク範囲)に 2 をプラスした値
 
-> 「10.0.0.0/16」のCIDRのVPCなら「10.0.0.2」、「172.31.0.0/16」なら「172.31.0.2」という具合
-> [VPCデフォルトのDNSサーバへの通信はSecurity GroupのOutboundルールで制御できないことを確認してみた | DevelopersIO](https://dev.classmethod.jp/articles/security-group-outbound-rule-cannot-filter-traffic-to-amazon-dns-server/)
+> 「10.0.0.0/16」の CIDR の VPC なら「10.0.0.2」、「172.31.0.0/16」なら「172.31.0.2」という具合
+> [VPC デフォルトの DNS サーバへの通信は Security Group の Outbound ルールで制御できないことを確認してみた | DevelopersIO](https://dev.classmethod.jp/articles/security-group-outbound-rule-cannot-filter-traffic-to-amazon-dns-server/)
 
-# AWS アカウントのエイリアス
+## AWS アカウントのエイリアス
 
 [AWS アカウント ID とそのエイリアス - AWS Identity and Access Management](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/console_account-alias.html#CreateAccountAlias)
 
-# EC2 Instance Connect
+## EC2 Instance Connect
 
-EC2起動したらsshdがこんな感じで起動していた。(適当に改行してあります)
+EC2 起動したら sshd がこんな感じで起動していた。(適当に改行してあります)
 
 ```bash
 /usr/sbin/sshd -D \
@@ -601,14 +601,14 @@ EC2起動したらsshdがこんな感じで起動していた。(適当に改行
 
 [EC2 Instance Connect を使用して接続 - Amazon Elastic Compute Cloud](https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ec2-instance-connect-methods.html)
 
-AWSコンソールからWEBベースでLinuxに接続できる機能。
+AWS コンソールから WEB ベースで Linux に接続できる機能。
 
-## 接続の条件
+### 接続の条件
 
-- EC2 Instance ConnectをサポートするOS(Amazon LinuxとUbuntu)
+- EC2 Instance Connect をサポートする OS(Amazon Linux と Ubuntu)
 - 特定のリージョン(大阪とかはダメらしい)
-- IPv4の22/tcpでsshdが待ってること
-- セキュリティグループで↓のアドレスが許可されてること
+- IPv4 の 22/tcp で sshd が待ってること
+- セキュリティグループで ↓ のアドレスが許可されてること
 
 [EC2 Instance Connect を使用した接続のトラブルシューティング](https://aws.amazon.com/jp/premiumsupport/knowledge-center/ec2-instance-connect-troubleshooting/)
 
