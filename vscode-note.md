@@ -29,7 +29,7 @@ Git bash を起動して、.ssh/config を修正 & id_rsa を適当に配置 etc
 
 .ssh/confi の example
 
-```config
+```conf
 Protocol 2
 ForwardAgent yes
 

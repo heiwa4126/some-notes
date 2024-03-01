@@ -16,7 +16,7 @@
 
 Linux だったら~/.ssh/config で
 
-```config
+```conf
 Host github.com
      # Hostname github.com
      # Port 22

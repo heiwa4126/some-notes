@@ -178,7 +178,7 @@ NTP サーバは
 
 ntpd だったら景気よく
 
-```config
+```conf
 server 169.254.169.123 iburst
 server 0.amazon.pool.ntp.org iburst
 server 1.amazon.pool.ntp.org iburst

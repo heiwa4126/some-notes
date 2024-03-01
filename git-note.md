@@ -341,7 +341,7 @@ git-crypt unlock
 
 ↑ これは GitHub にサンプルがあった。
 
-```config
+```conf
 secretfile filter=git-crypt diff=git-crypt
 *.key filter=git-crypt diff=git-crypt
 secretdir/** filter=git-crypt diff=git-crypt

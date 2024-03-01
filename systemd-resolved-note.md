@@ -37,7 +37,7 @@ forwarder は
 `/etc/systemd/resolved.conf.d/cascade.conf` (例)
 に
 
-```config
+```conf
 [Resolve]
 DNS=x.x.x.x x.x.x.y
 Domains=~sub1.example.net ~sub2.example.com

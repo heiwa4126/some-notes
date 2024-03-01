@@ -1,16 +1,19 @@
-- [ICMP type=13 のブロック](#icmp-type13-のブロック)
-  - [確認方法](#確認方法)
-  - [テスト](#テスト)
-  - [firewalldがある場合](#firewalldがある場合)
-  - [参考](#参考)
-  - [RHEL7系でiptablesルール永続化](#rhel7系でiptablesルール永続化)
-  - [TODO](#todo)
+# ping のメモ
 
-# ICMP type=13 のブロック
+- [ping のメモ](#ping-のメモ)
+  - [ICMP type=13 のブロック](#icmp-type13-のブロック)
+    - [確認方法](#確認方法)
+    - [テスト](#テスト)
+    - [firewalld がある場合](#firewalld-がある場合)
+    - [参考](#参考)
+    - [RHEL7 系で iptables ルール永続化](#rhel7-系で-iptables-ルール永続化)
+    - [TODO](#todo)
+
+## ICMP type=13 のブロック
 
 脆弱性診断で CVE-1999-0524
 
-> リモートホストが任意の ICMP タイムスタンプリクエストに応答しています。ICMP タイムスタンプ (タイプ 13) リクエストを送信する事で、攻撃者はターゲット上で設定された日付を確認する事が可能となり、時間ベースの認証プロトコルへの攻撃を実行する恐れがあります。複数の Microsoft Windows ホストは意図的に正しくないタイムスタンプを返しますが、通常、実際のシステム時間の1000秒以内の値である事に注意して下さい。
+> リモートホストが任意の ICMP タイムスタンプリクエストに応答しています。ICMP タイムスタンプ (タイプ 13) リクエストを送信する事で、攻撃者はターゲット上で設定された日付を確認する事が可能となり、時間ベースの認証プロトコルへの攻撃を実行する恐れがあります。複数の Microsoft Windows ホストは意図的に正しくないタイムスタンプを返しますが、通常、実際のシステム時間の 1000 秒以内の値である事に注意して下さい。
 
 が出るので対応する。
 
@@ -19,24 +22,24 @@
 
 普通はホスト単位でブロックするものではないらしいが、客が気にするとか、上司が気にするとか、いろいろあるので。
 
-## 確認方法
+### 確認方法
 
-```
+```terminal
 # nping -c1 --icmp-type 13 -v <hostname or IP address>
 ```
 
 出典: [How to extend the list of ICMP types for FirewallD](https://access.redhat.com/solutions/2441531)
 
-npingはnmapパッケージに入っている。
+nping は nmap パッケージに入っている。
 
-```
+```bash
 yum install nmap
 ```
 
 実行例:
 
-```
-# nping -c1 --icmp-type 13 -v ip-172-31-1-110
+```terminal
+## nping -c1 --icmp-type 13 -v ip-172-31-1-110
 
 Starting Nping 0.6.40 ( http://nmap.org/nping ) at 2018-12-17 05:39 UTC
 SENT (0.0066s) ICMP [172.31.1.155 > 172.31.1.110 Timestamp request (type=13/code=0) id=39337 seq=1 orig=0 recv=0 trans=0] IP [ttl=64 id=34556 proto=1 csum=0x9891 iplen=40 ]
@@ -51,29 +54,29 @@ Nping done: 1 IP address pinged in 1.01 seconds
 
 返事があったのがわかる。
 
-## テスト
+### テスト
 
-AWSで試す。のRHEL/Cent7のEC2インスタンスではfirewalldが入ってない。
-うかつにfirewalldを有効にして、つながらなくなるのも怖いので、iptablesでまず試す。
+AWS で試す。の RHEL/Cent7 の EC2 インスタンスでは firewalld が入ってない。
+うかつに firewalld を有効にして、つながらなくなるのも怖いので、iptables でまず試す。
 
 現状のルールを確認
 
-```
+```bash
 iptables -nvL
 ```
 
 ルール追加
 
-```
+```bash
 iptables -A INPUT -p icmp --icmp-type 13 -j DROP
 ```
 
 必要ならソースやディスティネーションを追加。
-REJECTも試してみたけど、DROPのほうがいいと思う(個人の感想です)。
+REJECT も試してみたけど、DROP のほうがいいと思う(個人の感想です)。
 
 テスト再実行
 
-```
+```terminal
 # nping -c1 --icmp-type 13 -v ip-172-31-1-110
 
 Starting Nping 0.6.40 ( http://nmap.org/nping ) at 2018-12-17 05:47 UTC
@@ -86,35 +89,35 @@ Rx time: 1.00132s | Rx bytes/s: 0.00 | Rx pkts/s: 0.00
 Nping done: 1 IP address pinged in 1.01 seconds
 ```
 
-dropされるのが確認できた。
+drop されるのが確認できた。
 
-## firewalldがある場合
+### firewalld がある場合
 
 けっこうめんどくさい.
 
 [centos - Block ICMP timestamp & timestamp reply with firewalld - Server Fault](https://serverfault.com/questions/677084/block-icmp-timestamp-timestamp-reply-with-firewalld)
 
-1. ICMPのルールを追加する
+1. ICMP のルールを追加する
 2. 有効にする
 
-の2ステップ。
+の 2 ステップ。
 
-## 参考
+### 参考
 
 - [How to block ICMP packets using iptables?](https://access.redhat.com/solutions/32547)
-  古いので7系ではそのままでは使えない
+  古いので 7 系ではそのままでは使えない
 - [How to extend the list of ICMP types for FirewallD](https://access.redhat.com/solutions/2441531)
-  Firewalldを使ってる場合はこれを読むこと
+  Firewalld を使ってる場合はこれを読むこと
 
-## RHEL7系でiptablesルール永続化
+### RHEL7 系で iptables ルール永続化
 
 このルールをどうやって永続化させるか...環境によってかなり違いそう。
 
-とりあえずAWSの場合。firewalldを動かさない環境での設定。
+とりあえず AWS の場合。firewalld を動かさない環境での設定。
 
-標準ではiptablesがサービスになっていない。
+標準では iptables がサービスになっていない。
 
-```
+```bash
 yum install iptables-services
 ```
 
@@ -122,38 +125,38 @@ yum install iptables-services
 
 - /etc/sysconfig/iptables
 
-が有効になってしまうので、etckeeperなどを使っていない場合は、適宜バックアップをとって
+が有効になってしまうので、etckeeper などを使っていない場合は、適宜バックアップをとって
 
-```
+```bash
 /usr/libexec/iptables/iptables.init save
 ```
 
 を実行してルールを保存。
 
-安全のためにipv4、ipv6のとも無効にしておく(こうしておけば再起動すればルールは消えるから)。
+安全のために ipv4、ipv6 のとも無効にしておく(こうしておけば再起動すればルールは消えるから)。
 
-```
+```bash
 systemctl disable iptables
 systemctl disable ip6tables
 ```
 
 で、
 
-```
+```bash
 systemctl start iptables
 ```
 
 を実行して、変なことがおきないことを確認。
 
-最後にipv4の方だけ有効にしておく。
+最後に ipv4 の方だけ有効にしておく。
 
-```
+```bash
 systemctl enable iptables
 ```
 
 再起動して確認。
 
-## TODO
+### TODO
 
-- firewalldとiptablesが両方共有効になっているとどうなるかを確認する。
-- Debian/Ubuntuは?
+- firewalld と iptables が両方共有効になっているとどうなるかを確認する。
+- Debian/Ubuntu は?
