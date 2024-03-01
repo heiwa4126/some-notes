@@ -57,3 +57,26 @@ OpenSSH 7.8 以降では、デフォルトで OpenSSH 形式が使用されま�
 それ以前のバージョンの OpenSSH では、PKCS#8 形式がデフォルトで使用されていました。
 
 実際はさらにややこしい。参考: [RSA 鍵のフォーマットについて](https://zenn.dev/htlsne/articles/rsa-key-format)
+
+## AWS のセキュリティグループのルールで、「マイ IP」とは?
+
+(セキュリティグループは EC2 だけど...)
+
+いまポータルにつないでる IP らしい。
+よほどのことがないと役に立たないのでは?
+
+## AWS のセキュリティグループのルールで IGW 経由のソースアドレスは、サブネットの GW アドレスですか、それともインタネット上のアドレスですか?
+
+AWS のセキュリティグループのルールで、IGW 経由のソースアドレスは、サブネットの GW アドレスではなく、インターネット上のアドレスになります。
+
+## AWS のセキュリティグループのルールで 「拒否するルール」は書けますか?
+
+無理っぽい。許可のみ。
+
+参考: [AWS::EC2::SecurityGroup Ingress - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-securitygroup-ingress.html)
+
+## AWS の「新しいセキュリティグループにコピー」で VPC はコピーされない
+
+コピー元の VPC が引き継がれない。「[驚き最小の原則](https://ja.wikipedia.org/wiki/%E9%A9%9A%E3%81%8D%E6%9C%80%E5%B0%8F%E3%81%AE%E5%8E%9F%E5%89%87)」に反する UI。
+
+タグと description もコピーされない...
