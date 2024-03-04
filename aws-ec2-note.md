@@ -80,3 +80,29 @@ AWS のセキュリティグループのルールで、IGW 経由のソースア
 コピー元の VPC が引き継がれない。「[驚き最小の原則](https://ja.wikipedia.org/wiki/%E9%A9%9A%E3%81%8D%E6%9C%80%E5%B0%8F%E3%81%AE%E5%8E%9F%E5%89%87)」に反する UI。
 
 タグと description もコピーされない...
+
+## 「パブリック IP の自動割り当て」の設定はどこにあるのか
+
+[AWS::EC2::Instance - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-instance.html#aws-resource-ec2-instance--examples) に `AssociatePublicIpAddress` の設定がある。
+
+たどって
+[AssociatePublicIpAddress](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-instance-networkinterface.html#cfn-ec2-instance-networkinterface-associatepublicipaddress)
+
+> インスタンスにパブリック IPv4 アドレスを割り当てるかどうかを示します。インスタンスの起動時にネットワーク・インターフェイスを作成する場合にのみ適用されます。ネットワーク・インターフェイスはプライマリ・ネットワーク・インターフェイスでなければなりません。デフォルトのサブネットに起動する場合、デフォルト値は true です。
+
+> AWS は、実行中のインスタンスと Elastic IP アドレスに関連付けられたパブリック IPv4 アドレスを含む、すべてのパブリック IPv4 アドレスに対して課金します。詳細については、VPC 価格ページの「パブリック IPv4 アドレス」タブを参照してください。
+
+2024 年 2 月から
+
+- 使用中のパブリック IPv4 アドレスの 1 時間あたりの料金は 0.005 USD です
+- アイドル状態のパブリック IPv4 アドレスの 1 時間あたりの料金は 0.005 USD です
+
+のように使用中とアイドル状態の IPv4 の価格がおんなじになるので注意。[料金 - Amazon VPC | AWS](https://aws.amazon.com/jp/vpc/pricing/)
+
+この価格は EIP と同じ。
+
+IPv6 やってみるかな...
+
+- [AWS EC2 を IPv6 で構築する方法 #AWS - Qiita](https://qiita.com/koji4104/items/4a2b4554ae01061334e4)
+- [AWS EC2 を IPv6 のみ(パブリック IPv4 アドレスなし)で作って ssh 接続する #AWS - Qiita](https://qiita.com/ran/items/7ae62f7dba2bba49e330)
+- [Egress-Only インターネットゲートウェイを使用してアウトバウンド IPv6 トラフィックを有効にする - Amazon Virtual Private Cloud](https://docs.aws.amazon.com/ja_jp/vpc/latest/userguide/egress-only-internet-gateway.html)
