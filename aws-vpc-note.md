@@ -33,6 +33,11 @@ EC2 インスタンスから S3 へ頻繁にアクセスがあるなら設定す
 
 安全らしい。
 
+### s3 ゲートウェイエンドポイントをつなぐルーティングテーブルを変更するには?
+
+ルーティングテーブルを編集するのではなく
+s3 ゲートウェイエンドポイント側で変更する。
+
 ## NAT ゲートウェイとは
 
 [NAT ゲートウェイ - Amazon Virtual Private Cloud](https://docs.aws.amazon.com/ja_jp/vpc/latest/userguide/vpc-nat-gateway.html)
