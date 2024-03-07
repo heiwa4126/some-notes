@@ -41,7 +41,13 @@ curl: (7) Couldn't connect to server
 
 3. WSL2 再起動 ( `wsl --shutdown` 後、WSL を開く)
 
-参考: [ミラー モードのネットワーク](https://learn.microsoft.com/ja-jp/windows/wsl/networking#mirrored-mode-networking)
+参考:
+
+- [ミラー モードのネットワーク](https://learn.microsoft.com/ja-jp/windows/wsl/networking#mirrored-mode-networking)
+- [WSL 2.0.0 で導入されたミラーモードは万能薬なのか？ #Network - Qiita](https://qiita.com/shigeokamoto/items/bad3ce237f0b19aea147)
+
+ミラーモードのネットワークけっこうおもしろい。
+WSL 上と Windows 上のポートがいっぺんに見える。
 
 ## WSL の時間がずれる
 
