@@ -27,7 +27,21 @@ curl: (7) Couldn't connect to server
 
 なるほどつながらない。
 ちょっと検索すると「ミラーモード」にすればいいらしい。
-しかし弊害もいろいろあるらしいのであとで試す。
+しかし弊害もいろいろあるらしい(Docker Desktop の不具合)のであとで試す。
+
+手順は
+
+1. `%UserProfile%\.wslconfig` を作る。
+2. 以下の内容を追加
+
+   ```toml
+   [wsl2]
+   networkingMode=mirrored
+   ```
+
+3. WSL2 再起動 ( `wsl --shutdown` 後、WSL を開く)
+
+参考: [ミラー モードのネットワーク](https://learn.microsoft.com/ja-jp/windows/wsl/networking#mirrored-mode-networking)
 
 ## WSL の時間がずれる
 
