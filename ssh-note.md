@@ -1,37 +1,38 @@
 # ssh tips
 
 - [ssh tips](#ssh-tips)
-- [sshdのconfigtest](#sshdのconfigtest)
-- [sshd_configでまちがいやすい設定メモ](#sshd_configでまちがいやすい設定メモ)
-  - [AllowUsers](#allowusers)
-  - [Port](#port)
-- [.ssh/configでhostごとのUserがoverrideできない](#sshconfigでhostごとのuserがoverrideできない)
-- [SELinux](#selinux)
-- [ProxyJump](#proxyjump)
-- [DynamicForward](#dynamicforward)
-- [LocalForward](#localforward)
-  - [実験](#実験)
-- [ControlPersist](#controlpersist)
-- [各ディストリのsshd_configのCiphersのデフォルト値](#各ディストリのsshd_configのciphersのデフォルト値)
-- [sshの接続でどんなcipherが使われるか確認](#sshの接続でどんなcipherが使われるか確認)
-- [Windows 10のssh](#windows-10のssh)
-- [どうしてもパスワード認証になってしまうホスト](#どうしてもパスワード認証になってしまうホスト)
-- [sshdのホストキーを作り直す](#sshdのホストキーを作り直す)
-- [private keyからpublic key](#private-keyからpublic-key)
-- [Putty Alternatives](#putty-alternatives)
-- [Windows の OpenSSH](#windows-の-openssh)
-  - [やりなおし](#やりなおし)
-  - [おどろいたこと](#おどろいたこと)
-  - [欠点](#欠点)
-- [Simple SSH Security](#simple-ssh-security)
-  - [弱い素数を削除](#弱い素数を削除)
-  - [強力な暗号のみ使う](#強力な暗号のみ使う)
-- [sftpをscpのように使う例](#sftpをscpのように使う例)
-- [sftpのみ かつ chrootするユーザを作るときのコツ](#sftpのみ-かつ-chrootするユーザを作るときのコツ)
-- [ClientAliveInterval と ServerAliveInterval](#clientaliveinterval-と-serveraliveinterval)
-- [IdentitiesOnly](#identitiesonly)
+  - [sshd の configtest](#sshd-の-configtest)
+  - [sshd_config でまちがいやすい設定メモ](#sshd_config-でまちがいやすい設定メモ)
+    - [global 設定的なものがない](#global-設定的なものがない)
+    - [AllowUsers](#allowusers)
+    - [Port](#port)
+  - [.ssh/config で host ごとの User が override できない](#sshconfig-で-host-ごとの-user-が-override-できない)
+  - [SELinux](#selinux)
+  - [ProxyJump](#proxyjump)
+  - [DynamicForward](#dynamicforward)
+  - [LocalForward](#localforward)
+    - [実験](#実験)
+  - [ControlPersist](#controlpersist)
+  - [各ディストリの sshd_config の Ciphers のデフォルト値](#各ディストリの-sshd_config-の-ciphers-のデフォルト値)
+  - [ssh の接続でどんな cipher が使われるか確認](#ssh-の接続でどんな-cipher-が使われるか確認)
+  - [Windows 10 の ssh](#windows-10-の-ssh)
+  - [どうしてもパスワード認証になってしまうホスト](#どうしてもパスワード認証になってしまうホスト)
+  - [sshd のホストキーを作り直す](#sshd-のホストキーを作り直す)
+  - [private key から public key](#private-key-から-public-key)
+  - [Putty Alternatives](#putty-alternatives)
+  - [Windows の OpenSSH](#windows-の-openssh)
+    - [やりなおし](#やりなおし)
+    - [おどろいたこと](#おどろいたこと)
+    - [欠点](#欠点)
+  - [Simple SSH Security](#simple-ssh-security)
+    - [弱い素数を削除](#弱い素数を削除)
+    - [強力な暗号のみ使う](#強力な暗号のみ使う)
+  - [sftp を scp のように使う例](#sftp-を-scp-のように使う例)
+  - [sftp のみ かつ chroot するユーザを作るときのコツ](#sftp-のみ-かつ-chroot-するユーザを作るときのコツ)
+  - [ClientAliveInterval と ServerAliveInterval](#clientaliveinterval-と-serveraliveinterval)
+  - [IdentitiesOnly](#identitiesonly)
 
-# sshdのconfigtest
+## sshd の configtest
 
 ```sh
 sshd -t
@@ -45,48 +46,48 @@ sshd -T
 
 で、シンタックスチェックと `/etc/ssh/sshd_config.d/*`を含めたリストを出してくれるので、これも便利。
 
-# sshd_configでまちがいやすい設定メモ
+## sshd_config でまちがいやすい設定メモ
 
-## global設定的なものがない
+### global 設定的なものがない
 
 上から出てきた順に処理されて、
 あとから同じ設定が出てきても上書きされない。
 
-Hostのマッチなんかも、最初に出てきたらマッチする。
+Host のマッチなんかも、最初に出てきたらマッチする。
 
-で、マッチするHostがあったら、そこで終わりか、というとそうでもなく
+で、マッチする Host があったら、そこで終わりか、というとそうでもなく
 
-## AllowUsers
+### AllowUsers
 
 複数ユーザは` `(whitespace)で区切る
 
-## Port
+### Port
 
 複数ポートは書けない。コンマで区切る、とか無い。
 
-```
+```config
 Port 22
 Port 2222
 ```
 
 みたいに複数行にする。
 
-# .ssh/configでhostごとのUserがoverrideできない
+## .ssh/config で host ごとの User が override できない
 
 だめな例
 
-```
+```config
 User foo
 ...
 Host h1
   User bar
 ```
 
-`ssh h1` するとユーザfooでつなぎに行く。
+`ssh h1` するとユーザ foo でつなぎに行く。
 
 正しい例
 
-```
+```config
 Host h1
   User bar
 
@@ -96,19 +97,19 @@ Host *
 
 - [linux - OpenSSH ~/.ssh/config host-specific overrides not working - Super User](https://superuser.com/questions/718346/openssh-ssh-config-host-specific-overrides-not-working)
 
-# SELinux
+## SELinux
 
-↑みたいに複数ポートにしたとき、selinuxが有効だと動きません。
-SELinuxを無効にするのは簡単だけど。
+↑ みたいに複数ポートにしたとき、selinux が有効だと動きません。
+SELinux を無効にするのは簡単だけど。
 
-参考: [「SELinuxのせいで動かない」撲滅ガイド - Qiita](https://qiita.com/yunano/items/857ab36faa0d695573dd)
+参考: [「SELinux のせいで動かない」撲滅ガイド - Qiita](https://qiita.com/yunano/items/857ab36faa0d695573dd)
 
 ```sh
 sudo semanage port -a -t ssh_port_t -p tcp 2222
 ```
 
-オプションの`-a`はappend、`-m`はmodify。
-tcp/2222がすでに別で使ってたら`-a`じゃなくて`-m`にする。
+オプションの`-a`は append、`-m`は modify。
+tcp/2222 がすでに別で使ってたら`-a`じゃなくて`-m`にする。
 
 確認は
 
@@ -116,36 +117,36 @@ tcp/2222がすでに別で使ってたら`-a`じゃなくて`-m`にする。
 sudo semanage port -l | grep 2222
 ```
 
-# ProxyJump
+## ProxyJump
 
 (TODO)
 
 - [OpenSSH 7.3 の ProxyJump 機能の使い方 - TIM Labs](http://labs.timedia.co.jp/2016/08/openssh-73-proxyjump.html)
 - [OpenSSH/Cookbook/Proxies and Jump Hosts - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Proxies_and_Jump_Hosts)
 
-PuttyにはProxyJumpはないのでProxyCommandで実現する
-(OpenSSHでも昔はProxyCommandで実現していた)
+Putty には ProxyJump はないので ProxyCommand で実現する
+(OpenSSH でも昔は ProxyCommand で実現していた)
 
-- [SSH/多段接続/PuTTYのRemoteCommandを使う - yanor.net/wiki](http://yanor.net/wiki/?SSH/%E5%A4%9A%E6%AE%B5%E6%8E%A5%E7%B6%9A/PuTTY%E3%81%AERemoteCommand%E3%82%92%E4%BD%BF%E3%81%86)
+- [SSH/多段接続/PuTTY の RemoteCommand を使う - yanor.net/wiki](http://yanor.net/wiki/?SSH/%E5%A4%9A%E6%AE%B5%E6%8E%A5%E7%B6%9A/PuTTY%E3%81%AERemoteCommand%E3%82%92%E4%BD%BF%E3%81%86)
 - [SSH/多段接続 - yanor.net/wiki](http://yanor.net/wiki/?SSH/%E5%A4%9A%E6%AE%B5%E6%8E%A5%E7%B6%9A)
 - [windows \- How to setup proxy jump with PuTTY \- Super User](https://superuser.com/questions/1448180/how-to-setup-proxy-jump-with-putty)
 - [ssh \- PuTTY configuration equivalent to OpenSSH ProxyCommand \- Stack Overflow](https://stackoverflow.com/questions/28926612/putty-configuration-equivalent-to-openssh-proxycommand)
 
-# DynamicForward
+## DynamicForward
 
 (TODO)
 
-- [SSHのDynamic ForwardでSOCKS Proxyしてみる - ぱせらんメモ](https://pasela.hatenablog.com/entry/20090217/dynamic_forward)
+- [SSH の Dynamic Forward で SOCKS Proxy してみる - ぱせらんメモ](https://pasela.hatenablog.com/entry/20090217/dynamic_forward)
 
-Puttyもsocks proxyになれる。
+Putty も socks proxy になれる。
 
-- [SSHをSOCKS Proxyにする](https://blog.cles.jp/item/2839)
+- [SSH を SOCKS Proxy にする](https://blog.cles.jp/item/2839)
 
-ただDNSは引けるようになっていないと実用にならない。
+ただ DNS は引けるようになっていないと実用にならない。
 
-# LocalForward
+## LocalForward
 
--Lでトンネリング
+-L でトンネリング
 
 (TODO)
 
@@ -153,57 +154,57 @@ Puttyもsocks proxyになれる。
 ssh xxx.example.com -L 8080:127.0.0.1:8080 -g -N -f
 ```
 
-みたいの。-Lは複数使えることなど。
-ssh_configにはどう書くのか. RemoteForward など
+みたいの。-L は複数使えることなど。
+ssh_config にはどう書くのか. RemoteForward など
 
 > ssh (SSH サーバのアドレス) -L (ローカルで使用するポート):(目的サーバのアドレス):(目的サーバで待ち受けてるポート番号)
 > ssh (SSH サーバのアドレス) -R (ローカルで待ち受けてるポート):(SSH サーバのアドレス):(SSH サーバで待ち受けるポート番号)
 
 - [楽しいトンネルの掘り方(オプション: -L, -R, -f, -N -g) — 京大マイコンクラブ (KMC)](https://www.kmc.gr.jp/advent-calendar/ssh/2013/12/09/tunnel2.html)
-- [.ssh/config ファイルによるSSHオプション - HEPtech](https://heptech.wpblog.jp/2017/08/10/ssh-options-in-config-file/)
+- [.ssh/config ファイルによる SSH オプション - HEPtech](https://heptech.wpblog.jp/2017/08/10/ssh-options-in-config-file/)
 
-## 実験
+### 実験
 
 前提:
 
-- sa1とsa2というサーバ。どちらもssh(22/tcp), httpd(80/tcp)が動いている。
+- sa1 と sa2 というサーバ。どちらも ssh(22/tcp), httpd(80/tcp)が動いている。
 
-sa2からsa1へssh接続して、
-sa2の28080/tcpをsa1の80/tcpにする。
-(正ssh tunneling)
+sa2 から sa1 へ ssh 接続して、
+sa2 の 28080/tcp を sa1 の 80/tcp にする。
+(正 ssh tunneling)
 
 ```sh
-# sa2で実行
+## sa2で実行
 ssh sa1 -L 28080:127.0.0.1:80 -g -N -f
 ss -tapn | grep 28080
 curl http://127.0.0.1:28080/
 pkill -f 'ssh sa1 -L'
 ```
 
-sa2からsa1へssh接続して、
-sa1の28080/tcpをsa2の80/tcpにする。
-(逆ssh tunneling)
+sa2 から sa1 へ ssh 接続して、
+sa1 の 28080/tcp を sa2 の 80/tcp にする。
+(逆 ssh tunneling)
 
 ```sh
-# sa2で実行
+## sa2で実行
 ssh sa1 -R 28080:127.0.0.1:80 -g -N -f
-# sa1で実行
+## sa1で実行
 ss -tapn | grep 28080
 curl http://127.0.0.1:28080/
-# sa2で実行
+## sa2で実行
 pkill -f 'ssh sa1 -R'
 ```
 
 > ssh (SSH サーバのアドレス) -R (ローカルで待ち受けてるポート):(SSH サーバのアドレス):(SSH サーバで待ち受けるポート番号)
 
-# ControlPersist
+## ControlPersist
 
 (TODO)
 
-- [OpenSSHのセッションを束ねるControlMasterの使いにくい部分はControlPersistで解決できる - Gマイナー志向](https://matsuu.hatenablog.com/entry/20120707/1341677472)
+- [OpenSSH のセッションを束ねる ControlMaster の使いにくい部分は ControlPersist で解決できる - G マイナー志向](https://matsuu.hatenablog.com/entry/20120707/1341677472)
 - [Speed Up SSH by Reusing Connections | Puppet](https://puppet.com/blog/speed-up-ssh-by-reusing-connections)
 
-# 各ディストリのsshd_configのCiphersのデフォルト値
+## 各ディストリの sshd_config の Ciphers のデフォルト値
 
 RHEL7 default Ciphers
 
@@ -211,7 +212,7 @@ RHEL7 default Ciphers
 Ciphers chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,blowfish-cbc,cast128-cbc,3des-cbc
 ```
 
-(man sshd_config参照)
+(man sshd_config 参照)
 
 Ubunts 18.04LTS
 
@@ -219,22 +220,22 @@ Ubunts 18.04LTS
 Cipers  chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
 ```
 
-RHEL7のは流石にまずいので、弱いのは外すべき。
+RHEL7 のは流石にまずいので、弱いのは外すべき。
 
-**ssh_configの設定だけど**
-[ssh config最強設定 - Qiita](https://qiita.com/keiya/items/dec9a1142ac701b19bd9)
+**ssh_config の設定だけど**
+[ssh config 最強設定 - Qiita](https://qiita.com/keiya/items/dec9a1142ac701b19bd9)
 にあるのが参考になると思う。
 
 以下引用:
 
 ```
-##### セキュリティ系！重要！！ #####
-# 以下は、OpenSSH 6.8を参考にしたもの。
-# NSAフリーなChacha20を優先的に、そのあとは暗号強度の順。aes-cbcはダメらしい
+###### セキュリティ系!重要!! #####
+## 以下は、OpenSSH 6.8を参考にしたもの。
+## NSAフリーなChacha20を優先的に、そのあとは暗号強度の順。aes-cbcはダメらしい
 Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
 ```
 
-# sshの接続でどんなcipherが使われるか確認
+## ssh の接続でどんな cipher が使われるか確認
 
 ```
 $ ssh -vvv <host>
@@ -248,28 +249,28 @@ debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit
 debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: zlib@openssh.com
 ```
 
-aesにするとハードウエアアクセラレーションが効く、という話を聞いたので
-/etc/sshdのCiphersで並びを変えてみる(man sshd_config)。
+aes にするとハードウエアアクセラレーションが効く、という話を聞いたので
+/etc/sshd の Ciphers で並びを変えてみる(man sshd_config)。
 
 ```
-#Ciphers  chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+##Ciphers  chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
 Ciphers  aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr
 ```
 
 ...微塵も変わらない... 単に並びを変えただけじゃダメみたい(続く)
 
-# Windows 10のssh
+## Windows 10 の ssh
 
-Windows 10ではMicrosoft 提供のsshクライアントが簡単に使える。
+Windows 10 では Microsoft 提供の ssh クライアントが簡単に使える。
 
 - [Windows Server 用 OpenSSH のインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_install_firstuse)
-- [【図解・Mac・Windows】VSCodeでRemote Developmentを使うときのSSHの設定いろいろ【多段・HTTPプロキシ(認証あり・なし)・Socks5プロキシ・Port指定】 - Qiita](https://qiita.com/ko-he-8/items/06ae39f77dd5189df59b)
+- [【図解・Mac・Windows】VSCode で Remote Development を使うときの SSH の設定いろいろ【多段・HTTP プロキシ(認証あり・なし)・Socks5 プロキシ・Port 指定】 - Qiita](https://qiita.com/ko-he-8/items/06ae39f77dd5189df59b)
 
 管理者として PowerShell を起動して
 
 ```powershell
 Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
-# ↑で表示されるバージョンに↓をあわせる。(アップデートは?)
+## ↑で表示されるバージョンに↓をあわせる。(アップデートは?)
 Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
 ```
 
@@ -295,19 +296,19 @@ C:\> dir "C:\Windows\System32\OpenSSH\"
 2018/09/16  01:55           882,688 ssh.exe
 ```
 
-ssh-agentもついてるんだ...
+ssh-agent もついてるんだ...
 
 [connect.c](https://gist.github.com/rurban/360940),
 [connect-proxy](https://github.com/larryhou/connect-proxy)
-は Git for Windows shellについてるやつを使う。
+は Git for Windows shell についてるやつを使う。
 パスは微妙だが `C:\Program Files\Git\mingw64\bin\connect.exe`など。
-(Git Bush起動してwhere connectで調べる)
+(Git Bush 起動して where connect で調べる)
 
-.ssh/configのデフォルトは `%USERPROFILE%`の下。
+.ssh/config のデフォルトは `%USERPROFILE%`の下。
 %HOME%とか設定しても見てくれない。
 あきらめて`C:\User\ユーザ名\.ssh`に置く。
 
-.ssh/configの例:
+.ssh/config の例:
 
 ```
 Protocol 2
@@ -324,20 +325,20 @@ Host s1
 
 ダブルクオートが不要なのがコツ。
 
-`id_rsa`のパーミッションはAdministratorsとSystemと自分だけ。
+`id_rsa`のパーミッションは Administrators と System と自分だけ。
 
 ```
 C:\> ssh-agent
 unable to start ssh-agent service, error :1058
 ```
 
-とか言われるとき。どうもssh-serverが要るらしい(なんで)。
-WSUSの環境だとインストールできないので諦めてくらはい。
+とか言われるとき。どうも ssh-server が要るらしい(なんで)。
+WSUS の環境だとインストールできないので諦めてくらはい。
 
 - [unable to start ssh-agent service, error :1058 - Qiita](https://qiita.com/tmak_tsukamoto/items/c72399a4a6d7ff55fcdb)
 - [Windows 10 に OpenSSH サーバをインストールする - Qiita](https://qiita.com/iShinkai/items/a12c9d26f8f4264897f9)
 
-# どうしてもパスワード認証になってしまうホスト
+## どうしてもパスワード認証になってしまうホスト
 
 ```sh
 chmod og= ~
@@ -345,16 +346,16 @@ chmod og= ~
 
 で治るかもしれない。雑で申し訳ない。
 
-ただgroupに権限ないと困るときがあるよなあ。なんか設定で変更できると思うんだけど。
+ただ group に権限ないと困るときがあるよなあ。なんか設定で変更できると思うんだけど。
 
-# sshdのホストキーを作り直す
+## sshd のホストキーを作り直す
 
-仮想マシンをクローンしたときなど。クラウドだとCloud-Initに書くやつ。
+仮想マシンをクローンしたときなど。クラウドだと Cloud-Init に書くやつ。
 
-もちろん/etc/sshの下のキーを全部消して作り直せばいいのだけど
+もちろん/etc/ssh の下のキーを全部消して作り直せばいいのだけど
 専用のコマンドがあると楽。
 
-Ubuntuの場合 (たぶんDebianも):
+Ubuntu の場合 (たぶん Debian も):
 [How To: Ubuntu / Debian Linux Regenerate OpenSSH Host Keys - nixCraft](https://www.cyberciti.biz/faq/howto-regenerate-openssh-host-keys/)
 
 ```sh
@@ -362,9 +363,9 @@ sudo rm /etc/ssh/ssh_host_*key*
 sudo dpkg-reconfigure openssh-server
 ```
 
-Red Hat系には残念ながらそういう便利コマンドがない模様。
+Red Hat 系には残念ながらそういう便利コマンドがない模様。
 
-rootで
+root で
 
 ```sh
 cd /etc/ssh
@@ -382,11 +383,11 @@ chmod 0644 ssh_host_*key.pub
 systemctl restart sshd
 ```
 
-でOK。
+で OK。
 
-# private keyからpublic key
+## private key から public key
 
-RSAだと
+RSA だと
 
 ```sh
 ssh-keygen -y -f ~/.ssh/id_rsa
@@ -394,18 +395,18 @@ ssh-keygen -y -f ~/.ssh/id_rsa
 
 が出来る。他のアルゴリズムでは?
 
-# Putty Alternatives
+## Putty Alternatives
 
 [Putty Alternatives for SSH/Telnet/HTTPS Client Transfers & Connections](https://www.ittsystems.com/putty-alternatives/)
 
-# Windows の OpenSSH
+## Windows の OpenSSH
 
-Windows 10 1803+ / Server 2016/2019 1803+ならMicrosoftがビルドしたOpenSSHが使える。らしい。
+Windows 10 1803+ / Server 2016/2019 1803+なら Microsoft がビルドした OpenSSH が使える。らしい。
 
 - [OpenSSH をインストールする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_install_firstuse)
 - [Windows 用 OpenSSH キーの管理 \| Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_keymanagement)
 
-ssh-agentがサービスなのがちょっとイヤ。
+ssh-agent がサービスなのがちょっとイヤ。
 
 [Windows 用 OpenSSH キーの管理](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_keymanagement)
 に書いてある手順だと、いきなり
@@ -422,7 +423,7 @@ Install-Module -Force OpenSSHUtils -Scope AllUsers
 > The owner has unlisted this package. This could mean that the module is deprecated or shouldn't be used anymore.
 > とか書いてある。だめじゃん。
 
-- [混沌を極めるWindowsのssh-agent事情 - Qiita](https://qiita.com/slotport/items/e1d5a5dbd3aa7c6a2a24)
+- [混沌を極める Windows の ssh-agent 事情 - Qiita](https://qiita.com/slotport/items/e1d5a5dbd3aa7c6a2a24)
 - [Windows10 で ssh\-agent のサービスを登録する \- Qiita](https://qiita.com/mizutoki79/items/074d11cf9bc82b87385f)
 
 どうも公式のドキュメントに従うとうまくいかないようだ。
@@ -432,25 +433,25 @@ c:> sc query | findstr "OpenSSH"
 DISPLAY_NAME: OpenSSH Authentication Agent
 ```
 
-## やりなおし
+### やりなおし
 
 - [OpenSSH をインストールする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/windows-server/administration/openssh/openssh_install_firstuse)
 
-でsshをインストールする。ssh-agentのサービスも同時にインストールされるみたい。
+で ssh をインストールする。ssh-agent のサービスも同時にインストールされるみたい。
 
-scコマンドでチェック。
+sc コマンドでチェック。
 
 ```
 c:\> sc query state= all | findstr "OpenSSH"
 DISPLAY_NAME: OpenSSH Authentication Agent
 ```
 
-(allの前に空白が必要)
+(all の前に空白が必要)
 
-services.mscかなにかで
+services.msc かなにかで
 `OpenSSH Authentication Agent`が起動していることを確認する。
 
-`%USERPROFILE%\.ssh`に .sshの内容を置く。
+`%USERPROFILE%\.ssh`に .ssh の内容を置く。
 ここ以外に置くとパーミッションがすごくややこしい。
 
 で `ssh-add %USERPROFILE%\.ssh\id_rsa` してパスフレーズいれる。
@@ -458,49 +459,49 @@ services.mscかなにかで
 
 エージェントにはいったキーは`ssh-add -l`で確認できる。
 
-であとはsshで接続。.ssh/configも書くと完璧。
-ちゃんとForwardAgentも動く。
+であとは ssh で接続。.ssh/config も書くと完璧。
+ちゃんと ForwardAgent も動く。
 
-## おどろいたこと
+### おどろいたこと
 
 ssh-agent、再起動してもキーを覚えてる。
 
 削除するには `ssh-add -k {file}`。
 削除できない場合はいっぺん同じキーを追加してから削除(なんでや)。
 
-## 欠点
+### 欠点
 
-cmd.exeでもpowershell.exeでもWindows Terminalでも
-xtermみたいには使えない。
+cmd.exe でも powershell.exe でも Windows Terminal でも
+xterm みたいには使えない。
 
-- middle clickでペーストができない
-- C-SPCもC-@も手前で喰われてemacsが使えない
+- middle click でペーストができない
+- C-SPC も C-@も手前で喰われて emacs が使えない
 
-あとProxyJumpは使えない。 ProxyCommandではいけるらしい。
+あと ProxyJump は使えない。 ProxyCommand ではいけるらしい。
 `posix_spawn: no such file or directory proxyjump` で検索。
 
-# Simple SSH Security
+## Simple SSH Security
 
 - [Simple SSH Security \| Disk Notifier](https://disknotifier.com/blog/simple-ssh-security/)
-- ↑のGoogle翻訳 [シンプルなSSHセキュリティ| ディスク通知機能](https://disknotifier-com.translate.goog/blog/simple-ssh-security/?_x_tr_sl=en&_x_tr_tl=ja&_x_tr_hl=ja&_x_tr_pto=nui)
+- ↑ の Google 翻訳 [シンプルな SSH セキュリティ| ディスク通知機能](https://disknotifier-com.translate.goog/blog/simple-ssh-security/?_x_tr_sl=en&_x_tr_tl=ja&_x_tr_hl=ja&_x_tr_pto=nui)
 
-/etc/ssh/sshd_configで
+/etc/ssh/sshd_config で
 
-KbdInteractiveAuthenticationをnoに設定。
+KbdInteractiveAuthentication を no に設定。
 ChallengeResponseAuthentication はこれの別名だけど、この名前で設定しないこと(わかりにくいから)。
 
-PasswordAuthenticationをnoに設定。
+PasswordAuthentication を no に設定。
 
 ここで `systemctl reload sshd.service`
 
-## 弱い素数を削除
+### 弱い素数を削除
 
 ```sh
 awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
 mv /etc/ssh/moduli.safe /etc/ssh/moduli
 ```
 
-## 強力な暗号のみ使う
+### 強力な暗号のみ使う
 
 `/etc/ssh/sshd_config.d/ssh_hardening.conf`
 という名前で以下を作成
@@ -521,7 +522,7 @@ HostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@op
 `ssh -c aes128-cbc localhost`
 で、接続に失敗するはず。
 
-# sftpをscpのように使う例
+## sftp を scp のように使う例
 
 - [linux \- Using sftp like scp \- Super User](https://superuser.com/questions/1434225/using-sftp-like-scp)
 - [15 Examples of SFTP command in Linux](https://geekflare.com/sftp-command-examples/)
@@ -530,9 +531,9 @@ HostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@op
 
 ```sh
 scp {local-path} {user}@{remote-host}:{remote-path}
-# ↑は↓と同じ
+## ↑は↓と同じ
 sftp {user}@{host}:{remote-path} <<< $'put {local-path}'
-# or
+## or
 echo 'put {local-path}' | sftp {user}@{host}:{remote-path}
 ```
 
@@ -542,7 +543,7 @@ echo 'put {local-path}' | sftp {user}@{host}:{remote-path}
 sftp {user}@{remote-host}:{remote-file-name} {local-file-name}
 ```
 
-# sftpのみ かつ chrootするユーザを作るときのコツ
+## sftp のみ かつ chroot するユーザを作るときのコツ
 
 参考:
 
@@ -555,9 +556,9 @@ ChrootDirectory で指定するディレクトリは
 
 これにハマることが多いので注意。
 
-# ClientAliveInterval と ServerAliveInterval
+## ClientAliveInterval と ServerAliveInterval
 
-WiMAXでSSHがぶちぶち切れるので、設定してみる。
+WiMAX で SSH がぶちぶち切れるので、設定してみる。
 
 - sshd_config に ClientAliveInterval
 - ssh_config(~/.ssh/config) に ServerAliveInterval
@@ -565,18 +566,18 @@ WiMAXでSSHがぶちぶち切れるので、設定してみる。
 - [sshd_config(5): OpenSSH SSH daemon config file - Linux man page](https://linux.die.net/man/5/sshd_config)
 - [ssh_config(5): OpenSSH SSH client config files - Linux man page](https://linux.die.net/man/5/ssh_config)
 
-sshd_configのチェックには`sshd -t`があるけど、クライアント側には同等のものが無い?
+sshd_config のチェックには`sshd -t`があるけど、クライアント側には同等のものが無い?
 
 とりあえず
 
-/etc/ssh/sshd_configに
+/etc/ssh/sshd_config に
 
 ```
 ClientAliveInterval 60
 ClientAliveCountMax 3
 ```
 
-~/.ssh/configに
+~/.ssh/config に
 
 ```
 ServerAliveInterval 42
@@ -585,10 +586,10 @@ ServerAliveCountMax 3
 
 いまのところどちらの値も根拠がないので使ってみて調整する。
 
-# IdentitiesOnly
+## IdentitiesOnly
 
-[[B! SSH] 新山祐介 (Yusuke Shinyama) on Twitter: "SSHは認証時に利用可能なすべての公開鍵をサーバに送っている。そのためGitHubなどでssh鍵を公開している人が知らないサーバにssh接続すると、自分の素性がバレてしまう可能性がある。これを検証するサービス: $ ssh who… https://t.co/Xjz99qR1Me"](https://b.hatena.ne.jp/entry/s/twitter.com/mootastic/status/1612413906248699906)
+[[B! SSH] 新山祐介 (Yusuke Shinyama) on Twitter: "SSH は認証時に利用可能なすべての公開鍵をサーバに送っている。そのため GitHub などで ssh 鍵を公開している人が知らないサーバに ssh 接続すると、自分の素性がバレてしまう可能性がある。これを検証するサービス: $ ssh who... https://t.co/Xjz99qR1Me"](https://b.hatena.ne.jp/entry/s/twitter.com/mootastic/status/1612413906248699906)
 
-> 「利用可能なすべての公開鍵をサーバに送っている」が気になって調べたらid\_(dsa,ecdsa,ed25519,rsa).pub があれば全て送っているということか。ちなみに "IdentitiesOnly" を使えば、特定の鍵だけを使うように制限できるらしい。
+> 「利用可能なすべての公開鍵をサーバに送っている」が気になって調べたら id\_(dsa,ecdsa,ed25519,rsa).pub があれば全て送っているということか。ちなみに "IdentitiesOnly" を使えば、特定の鍵だけを使うように制限できるらしい。
 
-[IdentitiesOnly - Twitter検索 / Twitter](https://twitter.com/search?q=IdentitiesOnly&src=typed_query)
+[IdentitiesOnly - Twitter 検索 / Twitter](https://twitter.com/search?q=IdentitiesOnly&src=typed_query)
