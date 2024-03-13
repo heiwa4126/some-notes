@@ -38,7 +38,10 @@ Domain Admins グループにしてしまうのが一番簡単なんだけど、
 - DC 自体でも上記 1.2.3.の設定は必要
 - これがベストプラクティスかどうかは不明。グループポリシーつかえばもう少しなんとか
 
-参考: [Remote Desktop clients FAQ | Microsoft Learn](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-client-faq)
+参考:
+
+- [Remote Desktop clients FAQ | Microsoft Learn](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/remote-desktop-client-faq)
+- [一般的なリモート デスクトップ接続のトラブルシューティング - Windows Server | Microsoft Learn](https://learn.microsoft.com/ja-jp/troubleshoot/windows-server/remote/rdp-error-general-troubleshooting)
 
 以下は上記手順を実行する Powershell によるコード。
 **Claude に作ってもらった。テストしてません。**
@@ -92,3 +95,11 @@ Invoke-Command -ComputerName $targetHost -Credential $credential -ScriptBlock {
     }
 }
 ```
+
+## 「このリモート接続の発行元を識別できません。接続しますか?」 を無視オプション以外で解決する
+
+これ接続するサーバが本物であるか確認するためで、サーバなりすましやメンインミドルとか避けるものですよね?
+「このコンピューターへの接続について今後確認しない」は拙いと思うんですけど。
+
+- [Windows でリモートデスクトップ接続のサーバに「正しい」証明書を割り当てる：Tech TIPS - ＠IT](https://atmarkit.itmedia.co.jp/ait/articles/1309/20/news036.html)
+- [リモートデスクトップで利用される証明書はどこにあるのか？ – ラボラジアン](https://laboradian.com/where-is-remote-desktop-certificate/)

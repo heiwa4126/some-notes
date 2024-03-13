@@ -1,13 +1,16 @@
-Windowsのメモ
+# Windows のメモ
 
-- [Windows serverでRC4とtriple-DESを無効にする](#windows-serverでrc4とtriple-desを無効にする)
-- [参考](#参考)
-- [Windowsのサポート期限検索](#windowsのサポート期限検索)
-- [Windows updateのproxy設定](#windows-updateのproxy設定)
-- [Windowsのしつこいアニメーションを無くする](#windowsのしつこいアニメーションを無くする)
-- [ms-settings:](#ms-settings)
+- [Windows のメモ](#windows-のメモ)
+  - [Windows server で RC4 と triple-DES を無効にする](#windows-server-で-rc4-と-triple-des-を無効にする)
+  - [参考](#参考)
+  - [Windows のサポート期限検索](#windows-のサポート期限検索)
+  - [Windows update の proxy 設定](#windows-update-の-proxy-設定)
+  - [Windows のしつこいアニメーションを無くする](#windows-のしつこいアニメーションを無くする)
+  - [ms-settings:](#ms-settings)
+  - [Windows で権限の設定を間違えて削除できなくなったフォルダを削除するには](#windows-で権限の設定を間違えて削除できなくなったフォルダを削除するには)
+  - [永続化された共有ドライブの設定は](#永続化された共有ドライブの設定は)
 
-# Windows serverでRC4とtriple-DESを無効にする
+## Windows server で RC4 と triple-DES を無効にする
 
 参考:
 
@@ -19,9 +22,9 @@ Windowsのメモ
 - [FREAK 対策を行う](https://www.agilegroup.co.jp/technote/freak-check.html)
 - [マイクロソフト セキュリティ アドバイザリ 3009008 - SSL 3.0 の脆弱性により、情報漏えいが起こる](https://docs.microsoft.com/ja-jp/security-updates/securityadvisories/2015/3009008)
 
-regeditを使って、以下の値を設定する。
+regedit を使って、以下の値を設定する。
 
-```
+```reg
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Ciphers\RC4 128/128]
     "Enabled"=dword:00000000
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Ciphers\RC4 40/128]
@@ -34,9 +37,9 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\C
 
 設定したらエクスポートして、他のホストで再利用する。
 
-Powershellだとこんな感じ
+Powershell だとこんな感じ
 
-```
+```powershell
 $key = 'HKLM:\'
 $sub = 'SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Ciphers'
 @('RC4 128/128','RC4 40/128','RC4 56/128','Triple DES 168/168')|%{
@@ -50,41 +53,41 @@ $sub = 'SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Ciphers'
 }
 ```
 
-↑キーの作成に
+↑ キーの作成に
 
-```
+```powershell
 ([Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine,$env:COMPUTERNAME)).CreateSubKey('SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Ciphers\RC4 128/128')
 ```
 
 とする手もある。
 
-# 参考
+## 参考
 
-- [Windowsのdirコマンドでファイル名の一覧を取得する](https://www.atmarkit.co.jp/ait/articles/0412/04/news014.html) - 意外と知らないことが書いてあってびっくり。clipとかdir /a-dとか
+- [Windows の dir コマンドでファイル名の一覧を取得する](https://www.atmarkit.co.jp/ait/articles/0412/04/news014.html) - 意外と知らないことが書いてあってびっくり。clip とか dir /a-d とか
 
-# Windowsのサポート期限検索
+## Windows のサポート期限検索
 
 これは便利。
 [製品およびサービスのライフサイクル情報の検索 (プレビュー) | Microsoft Docs](https://docs.microsoft.com/ja-jp/lifecycle/products/)
 
-# Windows updateのproxy設定
+## Windows update の proxy 設定
 
-Windows 10 より前のOSではProxyの設定が必要だった。
+Windows 10 より前の OS では Proxy の設定が必要だった。
 
-管理者権限でcmd.exeひらいて
+管理者権限で cmd.exe ひらいて
 
-```
+```bat
 netsh winhttp show proxy
 netsh winhttp import proxy source=ie
 netsh winhttp set proxy proxy-server="192.168.1.2:10080" bypass-list="*.local"
 netsh winhttp reset proxy
 ```
 
-# Windowsのしつこいアニメーションを無くする
+## Windows のしつこいアニメーションを無くする
 
 管理者権限で
 
-```
+```bat
 REG ADD "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics" /v MinAnimate /t REG_SZ /d 0 /f
 ```
 
@@ -92,15 +95,30 @@ REG ADD "HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics" /v MinAnimate /t
 
 参考:
 
-- [Windows10のアニメーション無効化、レジストリ操作まで | GWT Center](https://www.gwtcenter.com/stop-win10-animation)
+- [Windows10 のアニメーション無効化、レジストリ操作まで | GWT Center](https://www.gwtcenter.com/stop-win10-animation)
 - [Windows 10 Disable Animations via regedit/script - Super User](https://superuser.com/questions/1052763/windows-10-disable-animations-via-regedit-script)
 - [Windows animations (maximize, minimize) are gone.](https://social.technet.microsoft.com/Forums/en-US/4aa71ed5-3500-4d11-a461-7d80c0847f91/windows-animations-maximize-minimize-are-gone?forum=itprovistadesktopui)
 
-# ms-settings:
+## ms-settings:
 
 便利。「設定開いて...」よりは全然楽
 
-- [Windows 10のショートカット「ms-settings:URI」は使い始めると止められない：山市良のうぃんどうず日記（99）（2/2 ページ） - ＠IT](https://www.atmarkit.co.jp/ait/articles/1707/11/news009_2.html)
+- [Windows 10 のショートカット「ms-settings:URI」は使い始めると止められない:山市良のうぃんどうず日記(99)(2/2 ページ) - @IT](https://www.atmarkit.co.jp/ait/articles/1707/11/news009_2.html)
 - [Launch the Windows Settings app - UWP applications | Microsoft Docs](https://docs.microsoft.com/en-us/windows/uwp/launch-resume/launch-settings-app#ms-settings-uri-scheme-reference)
 
 `ms-windows-store:`とかもある。上記参照。
+
+## Windows で権限の設定を間違えて削除できなくなったフォルダを削除するには
+
+「cmd」と検索し、右クリックして「管理者として実行」を選択。
+path_to_folder は削除したいフォルダのパスに置き換えて実行。
+
+```bat
+takeown /f path_to_folder /r /d y
+icacls path_to_folder /grant administrators:F /t
+rd /s /q path_to_folder
+```
+
+## 永続化された共有ドライブの設定は
+
+ホスト&ユーザ単位で保存される。
