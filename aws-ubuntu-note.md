@@ -35,3 +35,10 @@ mount -t cifs -o vers=3.0,sec=ntlmsspi,user=UPN形式のユーザ名 //10.0.0.11
 - /etc/fstab に書くと、FSx が死んでる時やネットが死んでるときに起動に失敗してホストごと死ぬので systemd のオートマウントにする
 
 などを考慮すること。
+
+### おまけ
+
+`linux-modules-extra-aws` は
+`linux-modules-extra-$(uname -r)` のメタパッケージで、
+現在のカーネルリビジョンに対応したパッケージがインストールされるのと同時に
+古いリビジョンのパッケージが消えるしかけ。
