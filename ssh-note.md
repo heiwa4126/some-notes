@@ -31,6 +31,8 @@
   - [sftp のみ かつ chroot するユーザを作るときのコツ](#sftp-のみ-かつ-chroot-するユーザを作るときのコツ)
   - [ClientAliveInterval と ServerAliveInterval](#clientaliveinterval-と-serveraliveinterval)
   - [IdentitiesOnly](#identitiesonly)
+  - [ssh サーバーのフィンガープリントを表示する](#ssh-サーバーのフィンガープリントを表示する)
+  - [~/.ssh/known_hosts ファイルの形式](#sshknown_hosts-ファイルの形式)
 
 ## sshd の configtest
 
@@ -441,7 +443,7 @@ DISPLAY_NAME: OpenSSH Authentication Agent
 
 sc コマンドでチェック。
 
-```
+```console
 c:\> sc query state= all | findstr "OpenSSH"
 DISPLAY_NAME: OpenSSH Authentication Agent
 ```
@@ -506,7 +508,7 @@ mv /etc/ssh/moduli.safe /etc/ssh/moduli
 `/etc/ssh/sshd_config.d/ssh_hardening.conf`
 という名前で以下を作成
 
-```
+```config
 KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
 
 Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
@@ -572,14 +574,14 @@ sshd_config のチェックには`sshd -t`があるけど、クライアント�
 
 /etc/ssh/sshd_config に
 
-```
+```config
 ClientAliveInterval 60
 ClientAliveCountMax 3
 ```
 
 ~/.ssh/config に
 
-```
+```config
 ServerAliveInterval 42
 ServerAliveCountMax 3
 ```
@@ -593,3 +595,68 @@ ServerAliveCountMax 3
 > 「利用可能なすべての公開鍵をサーバに送っている」が気になって調べたら id\_(dsa,ecdsa,ed25519,rsa).pub があれば全て送っているということか。ちなみに "IdentitiesOnly" を使えば、特定の鍵だけを使うように制限できるらしい。
 
 [IdentitiesOnly - Twitter 検索 / Twitter](https://twitter.com/search?q=IdentitiesOnly&src=typed_query)
+
+## ssh サーバーのフィンガープリントを表示する
+
+そのサーバ上で
+
+```bash
+sudo sh -c 'ls /etc/ssh/ssh_host_*.pub | xargs -n1 ssh-keygen -l -f'
+```
+
+キモは
+`ssh-keygen -l -f /etc/ssh/xxxxxx.pub`
+のところ。
+
+出力のサンプル
+
+```console
+256 SHA256:Mq10j+gZlLaHx2VkuD6k/P4AKcCzx007yFrT2gWoYsg root@tk2-407-44826 (ECDSA)
+256 SHA256:etCA/aRjjwzRo6gHHCWGyVv0NfZr+9SDsLRNuhP+/7M root@tk2-407-44826 (ED25519)
+3072 SHA256:9PE+42ziCQuwGpU9IcSwmRxIw8Kc29L1WX1zLkdOxSE root@tk2-407-44826 (RSA)
+```
+
+各カラムの意味
+
+1. **ビット長**
+
+   - 最初のカラムは、鍵の長さ(ビット数)を表しています。
+   - 出力例では 256 ビットと 3072 ビットの鍵が存在します。
+
+2. **ハッシュアルゴリズムとフィンガープリント**
+
+   - 2 番目のカラムは、使用されているハッシュアルゴリズム(SHA256)と、そのアルゴリズムで計算された公開鍵のフィンガープリントを表示しています。
+   - フィンガープリントは鍵を一意に識別するための短い 16 進数列です。
+
+3. **コメント**
+
+   - 3 番目のカラムは、鍵のコメント部分です。
+   - 通常は鍵の所有者やホスト名が含まれます。この例では `root@tk2-407-44826` となっています。
+
+4. **鍵の種類**
+   - 最後のカラムは、鍵の種類(アルゴリズム)を示しています。
+   - 出力例には ECDSA、ED25519、RSA の 3 種類の鍵が含まれています。
+
+## ~/.ssh/known_hosts ファイルの形式
+
+```text
+|1|<salt>|<hash>|<key-type> <key>
+```
+
+1. `|1|` - これはファイル形式のバージョンを示しています。現在は常に `|1|` となります。
+
+2. `<salt>` - ランダムな文字列で、ハッシュ関数の入力にソルトとして使用されます。これは既知の平文攻撃から守るためです。
+
+3. `|` - フィールドの区切り文字です。
+
+4. `<hash>` - `<salt>` と公開鍵からハッシュ化された値です。この値を使ってサーバーの公開鍵が known_hosts に登録済みかどうかを確認します。
+
+5. `|` - フィールドの区切り文字です。
+
+6. `<key-type>` - 使用される公開鍵の種類 (ssh-ed25519、ssh-rsa など) を示します。
+
+7. `<key>` - サーバーの実際の公開鍵です。
+
+あなたの例では、3 つの SSH ED25519 公開鍵が登録されています。ソルトとハッシュ値は異なりますが、3 番目の公開鍵は 2 番目の公開鍵と同じものを指しているようです。
+
+このフォーマットを使うことで、known_hosts ファイルには平文の公開鍵が含まれず、代わりにハッシュ化された値が格納されるので、セキュリティが強化されています。

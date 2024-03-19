@@ -2,6 +2,7 @@
 
 - [WSL メモ](#wsl-メモ)
   - [WSL2 で IPv6 がつながらない](#wsl2-で-ipv6-がつながらない)
+  - [WSL 上の Ubuntu にはなぜ linux-image\* パッケージがインストールされていないのか](#wsl-上の-ubuntu-にはなぜ-linux-image-パッケージがインストールされていないのか)
   - [WSL の時間がずれる](#wsl-の時間がずれる)
   - [WSL の再起動](#wsl-の再起動)
   - [WSL の syslog は Windows イベントログに出る](#wsl-の-syslog-は-windows-イベントログに出る)
@@ -48,6 +49,19 @@ curl: (7) Couldn't connect to server
 
 ミラーモードのネットワークけっこうおもしろい。
 WSL 上と Windows 上のポートがいっぺんに見える。
+
+## WSL 上の Ubuntu にはなぜ linux-image\* パッケージがインストールされていないのか
+
+```console
+$ uname -r
+5.15.146.1-microsoft-standard-WSL2
+
+$ dpkg -l linux-image\*
+dpkg-query: no packages found matching linux-image*
+```
+
+WSL2 の Ubuntu には linux-image\*パッケージがインストールされていない理由は、WSL2 が Windows 上で Linux カーネルを実行するための特別な実装を使用しているからです。
+具体的には、WSL2 は Microsoft が開発した専用の Linux カーネルを使用しており、このカーネルは Windows の更新プロセスを通じて提供されます。
 
 ## WSL の時間がずれる
 
