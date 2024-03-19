@@ -8,31 +8,36 @@
 FSx に cifs で mount しようとすると
 `mount error(19): No such device` になる。
 
+調べてみると CIFS ドライバである cifs.ko が存在しない。
+
 ```sh
-ls "/usr/lib/modules/`uname -r`/kernel/fs/smb/client/cifs.ko"
+ls \
+/lib/modules/`uname -r`/kernel/fs/cifs/cifs.ko \
+/lib/modules/`uname -r`/kernel/fs/smb/client/cifs.ko
 ```
 
 が存在しない。どうする?
 
 ### 答
 
+AWS の場合は
+
 ```sh
 sudo apt install -y linux-modules-extra-aws
 ```
 
-これで
-FSx の"Attach" のところに出て来るサンプル
+これで FSx の"Attach" のところに出て来るコード
 
 ```sh
-mount -t cifs -o vers=3.0,sec=ntlmsspi,user=UPN形式のユーザ名 //10.0.0.111/share /mnt/fsx
+mount -t cifs -o vers=3.0,sec=ntlmsspi,user=UPN形式のユーザ名 //10.0.0.999/share /mnt/fsx
 ```
 
 を実行するとマウントできる(パスワード聞かれる)
 
-自動マウントにするには:
+実際に運用する場合は
 
 - user と password のところをクレデンシャルファイルにする
-- /etc/fstab に書くと、FSx が死んでる時やネットが死んでるときに起動に失敗してホストごと死ぬので systemd のオートマウントにする
+- /etc/fstab に書くと、FSx が死んでる時やネットが死んでるときに起動に失敗してホストごと死ぬのでオートマウントにする
 
 などを考慮すること。
 
