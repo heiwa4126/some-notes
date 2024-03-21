@@ -98,7 +98,7 @@ terraform -install-autocomplete
 
 プラグイン、GoLang なのででかい。キャッシュするべき。
 
-```
+```console
 $ cat ~/.terraformrc
 plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
 ```
@@ -135,7 +135,7 @@ vpc_security_group_ids を使うこと。
 
 ## associate_public_ip_address で forces replacement とか言われたら
 
-```
+```hcl
   lifecycle {
     ignore_changes = [associate_public_ip_address]
   }
