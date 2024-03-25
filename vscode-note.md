@@ -10,6 +10,10 @@
   - [Widnows11 で"Open with Code"が出ない件](#widnows11-でopen-with-codeが出ない件)
   - [ゼロ幅スペース (Zero Width Space: U+200B)](#ゼロ幅スペース-zero-width-space-u200b)
   - [bash のキーアサイン](#bash-のキーアサイン)
+  - [VSCode server](#vscode-server)
+  - [VScode server が CPU 100%](#vscode-server-が-cpu-100)
+  - [現在 VScode にインストールされている拡張機能の ID を得るには?](#現在-vscode-にインストールされている拡張機能の-id-を得るには)
+  - [VScode で Javascript/Typescript の import を並び変える](#vscode-で-javascripttypescript-の-import-を並び変える)
 
 ## Remote Development
 
@@ -148,3 +152,45 @@ WSL や ssh remote で vscode を使うと、
 ctrl+E は "-workbench.action.quickOpen" だった。これは困る。
 
 なんか「一部のキーを vscode に渡す」設定にしてほしい...
+
+## VSCode server
+
+`~/.vscode-server` の下に、**拡張機能も含めて**インストールされている。
+
+たまに VSCode server が高負荷で固まる時があるので、`rm -rf ~/.vscode-server` して
+[Manually install vscode on server side](https://gist.github.com/bindiego/b6d9a7ef876e6418eda31d62a5a37c7e)
+に従って再インストールする。
+
+コミットコードを渡すのがちょっとめんどう。これ自動化できないかなあ。
+
+現在インストールされている拡張機能は
+
+```sh
+ls ~/.vscode-server/extensions
+```
+
+にある。
+
+## VScode server が CPU 100%
+
+VSCode の設定で
+
+```json
+"search.follow.symlink": false
+```
+
+- [rg process taking up all my CPU · Issue #98594 · microsoft/vscode](https://github.com/microsoft/vscode/issues/98594)
+- [Fix 100% CPU | VSCODE-Server | Simple Remote SSH Guide - YouTube](https://www.youtube.com/watch?v=36Hm1DEl82M)
+
+## 現在 VScode にインストールされている拡張機能の ID を得るには?
+
+```sh
+code --list-extensions
+
+# バージョン付き
+code --list-extensions --show-versions
+```
+
+## VScode で Javascript/Typescript の import を並び変える
+
+Organize imports (Shift + Alt/Option + O)

@@ -660,3 +660,13 @@ TF_VAR_my_map='{
 ```
 
 とかでも OK
+
+## Terraform Cloud
+
+Pulumi みたいなもん。Free 版があるので、それから始めてみる。
+
+- [Terraform Cloud アカウントの作成](https://app.terraform.io/public/signup/account)
+- [Terraform Cloud サインイン](https://app.terraform.io/session)
+- [Terraform Cloud 入門](https://zenn.dev/isosa/articles/ca44f2efbfe36b)
+- [[アップデート]Terraform Cloud の料金プランが変わりました Free プランでもセキュリティ系機能が利用可能に | DevelopersIO](https://dev.classmethod.jp/articles/update-terraform-cloud-pricing-plan/)
+- [Terraform Cloud updates plans with an enhanced Free tier and more flexibility](https://www.hashicorp.com/blog/terraform-cloud-updates-plans-with-an-enhanced-free-tier-and-more-flexibility)
