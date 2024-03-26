@@ -676,3 +676,30 @@ free アカウントあるので作る。 https://app.terraform.io/signup/accoun
 [What is Terraform Cloud - intro and sign up | Terraform | HashiCorp Developer](https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-sign-up)
 
 `terraform login` で トークン作って設定するしかけ。
+
+## import
+
+あんまりカッコよくはいかない。
+
+- チュートリアル: [Import Terraform configuration | Terraform | HashiCorp Developer](https://developer.hashicorp.com/terraform/tutorials/state/state-import)
+- ドキュメント: [Import - Configuration Language | Terraform | HashiCorp Developer](https://developer.hashicorp.com/terraform/language/import)
+
+Terraform は既存のインフラを管理下に置くことをサポートします。
+リソースを Terraform にインポートすることで、共通のワークフローを使ってインフラを一貫して管理することができます。
+
+Terraform 1.5 では、既存のリソースを plan-and-apply ワークフローでステートファイルにインポートするために configuration を使うことができます。
+terraform import コマンドを使うこともできますが、コンフィギュレーションによるインポートはより安全で、CI/CD パイプラインと連携し、ステートを変更する前にインポート操作をプレビューすることができます。
+
+オプションで Terraform を使ってインポートするリソースの初期設定を生成することもできます。
+
+ためしに既存の VPC と Subnet を configuration つかって import してみる。
+...結構手直しが必要。
+
+### terraform import を使う場合
+
+### terraform plan --generate-config-out=path を使う場合
+
+## cdktf
+
+いろいろな言語で書けるんだけど、結局おおもとが node.js なので
+TypeScript で書くのがいいらしい。
