@@ -660,3 +660,11 @@ TF_VAR_my_map='{
 ```
 
 とかでも OK
+
+## Terraform Cloud
+
+free アカウントあるので作る。 https://app.terraform.io/signup/account
+
+[What is Terraform Cloud - intro and sign up | Terraform | HashiCorp Developer](https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-sign-up)
+
+`terraform login` で トークン作って設定するしかけ。
