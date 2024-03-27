@@ -632,6 +632,18 @@ output "subnet_cidr" {
 - [The Terraform Playground を作ろうとしている話](https://zenn.dev/yukin01/articles/ccc0b765c1edbf5649b1)
 - [The Terraform Playground](https://yukin01-terraform-playground.web.app/)
 
+## リソースに乱数より気の利いた可読なものを使いたいとき
+
+random_pet や random_string を使う
+
+- [How to generate random strings in Terraform — Roel Peters](https://www.roelpeters.be/generate-terraform-random-string/)
+- [random_string | Resources | hashicorp/random | Terraform | Terraform Registry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string)
+- [random_pet | Resources | hashicorp/random | Terraform | Terraform Registry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet)
+
+keepers がちょっとわかりにくい。
+
+> keepers を使うと、指定した値が変更された際にリソースが再作成されるようになります。
+
 ## variable に map() を使うときの環境変数
 
 ```hcl
@@ -702,4 +714,10 @@ terraform import コマンドを使うこともできますが、コンフィギ
 ## cdktf
 
 いろいろな言語で書けるんだけど、結局おおもとが node.js なので
-TypeScript で書くのがいいらしい。
+TypeScript で書くのがいいと思う。
+
+チュートリアルがちゃんと出来てる。
+[Install CDK for Terraform and run a quick start demo | Terraform | HashiCorp Developer](https://developer.hashicorp.com/terraform/tutorials/cdktf/cdktf-install)
+
+ドキュメントは
+[CDKTF Architecture - CDK for Terraform | Terraform | HashiCorp Developer](https://developer.hashicorp.com/terraform/cdktf/concepts/cdktf-architecture) から。
