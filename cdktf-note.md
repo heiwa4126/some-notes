@@ -59,27 +59,54 @@ cdktf でリソースの依存関係(dependency)を解決するための主な�
 
 ## マルチスタックの cdktf で複数のスタックをデプロイする方法
 
+[CLI Commands - CDK for Terraform | Terraform | HashiCorp Developer](https://developer.hashicorp.com/terraform/cdktf/cli-reference/commands#deploy)
+に
+
+```sh
+cdktf deploy '*'
+```
+
+みたいなサンプルが載ってるので参照。
+
+(**以下嘘**)
+
 いまのところ無い。1 個のスタックにまとめるぐらいしかなさそう。
 
 [Deploy all stack in project...or not? · Issue #1587 · hashicorp/terraform-cdk](https://github.com/hashicorp/terraform-cdk/issues/1587)
 
-cdktf チームからのコメントによると、マルチスタックのデプロイは将来的な機能拡張として検討されているものの、現在の開発の優先順位は低いようです。理由として以下の点が挙げられています。
+## cdktf deploy の最後の選択肢
 
-1. **Terraform CLI でのマルチスタックサポート**
-   Terraform CLI そのものがマルチスタックのデプロイをネイティブにサポートしていないため、cdktf でその機能を提供するのは難しい。
+(依存するスタックのサンプルを作って試さないと...)
 
-2. **スタック間の依存関係管理の複雑さ**
-   スタック間の依存関係を適切に管理することが難しく、Terraform のステートファイル管理とも密接に関係する。
+### Q
 
-3. **cdktf のスコープ**
-   cdktf は Terraform プロバイダーの上でデプロイされるリソースを表すのが主な目的であり、マルチスタックはその範疇を逸脱する。
+`cdktf deploy` を実行すると、最後に 3 つの選択肢が出てきます。
 
-代わりに、以下のような回避策が提案されています。
+- **Approve** - Applies the changes outlined in the plan.
+- **Dismiss** - Does not apply the changes outlined in the plan. This will also prevent depending stacks from planning.
+- **Stop** - Does not apply the changes. Currently running stacks will be finished, but no new ones will be started.
 
-- 単一の cdktf スタックで環境ごとにリソースをグループ化し、必要に応じてデプロイする
-- cdktf の外部から別の IaC ツール(Terragrunt、環境変数など)を使ってマルチスタックを管理する
-- Terraform ネイティブの機能であるモジュールや Workspace 機能を利用する
+これらを解説してください。
 
-マルチスタックのユースケースが非常に重要な場合は、上記の代替手段を検討する必要があるでしょう。
-cdktf チームは機能拡張のリクエストを歓迎していますが、現時点ではマルチスタックのサポートは限定的であることがわかります。
-将来のアップデートで対応が改善される可能性もあるため、状況は注視する必要がありそうです。
+### A
+
+これらの選択肢は、cdktf deploy コマンドによって生成された実行計画(plan)に対する操作を指定するためのものです。
+
+1. **Approve**
+
+   - この選択肢を選ぶと、実行計画で示された変更をクラウドリソースに適用(Apply)します。
+   - つまり、実際にクラウド上にリソースが作成、更新、削除されます。
+
+2. **Dismiss**
+
+   - この選択肢を選ぶと、実行計画で示された変更はクラウドリソースに適用されません。
+   - さらに、この実行計画に依存する他のスタックの計画も実行されなくなります。
+   - 変更を加えずに、そのまま終了します。
+
+3. **Stop**
+   - この選択肢を選ぶと、現在実行中のスタックは完了しますが、新しいスタックの実行は開始されません。
+   - つまり、既に実行中のスタックについては変更が適用されますが、まだ実行されていないスタックについては変更が適用されません。
+
+一般的には、実行計画を確認し、問題がなければ**Approve**を選択して変更を適用します。変更を適用したくない場合は**Dismiss**を選択します。実行中のスタックについてのみ変更を適用したい場合は**Stop**を選択します。
+
+これらの選択肢により、cdktf を使ったクラウドリソースの管理において、実行計画を確認し、意図した変更のみを適用できるようになっています。

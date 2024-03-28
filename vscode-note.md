@@ -173,6 +173,8 @@ ls ~/.vscode-server/extensions
 
 ## VScode server が CPU 100%
 
+SSH-Remote などで接続しているとき VScode server が CPU を食い尽くすことがある。
+
 VSCode の設定で
 
 ```json
@@ -181,6 +183,35 @@ VSCode の設定で
 
 - [rg process taking up all my CPU · Issue #98594 · microsoft/vscode](https://github.com/microsoft/vscode/issues/98594)
 - [Fix 100% CPU | VSCODE-Server | Simple Remote SSH Guide - YouTube](https://www.youtube.com/watch?v=36Hm1DEl82M)
+
+もう 1 つ
+
+```json
+  "files.watcherExclude": {
+    "**/.*/**": true,
+    "**/cdktf.out/**": true,
+    "**/node_modules/**": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/__pycache__/**": true,
+    "**/.git/objects/**": false,
+    "**/.git/subtree-cache/**": false,
+    "**/.hg/store/**": false,
+    "**/node_modules/*/**": false
+  }
+```
+
+上記は自分の設定。
+全部除外してる人もいる。
+[Visual Studio Code での SSH 接続により、EC2 サーバーが高負荷になり動かなくなった - エキサイト TechBlog.](https://tech.excite.co.jp/entry/2022/09/27/153341)
+
+設定したら VSCode Server を 1 回終わらせる。サーバ側で
+
+```sh
+pkill -f /.vscode-server/code
+```
+
+VSCode 側で VSCode Server を止めることもできるけど (F1+"kill serve"で出てくる)
 
 ## 現在 VScode にインストールされている拡張機能の ID を得るには?
 
