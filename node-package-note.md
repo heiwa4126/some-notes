@@ -1,11 +1,11 @@
-# node.jsでパッケージを作ったり使ったりするメモ
+# node.js でパッケージを作ったり使ったりするメモ
 
-.mjs, .cjs, requireとimport
+.mjs, .cjs, require と import
 [node.js の require と import について調べなおす - Qiita](https://qiita.com/TakeshiNickOsanai/items/7899a60044d71aa8d899)
 
-# そもそも
+## そもそも
 
-sha256sumを出してみる。
+sha256sum を出してみる。
 
 ```bash
 mkdir hello1 ; cd hello1
@@ -32,7 +32,7 @@ echo -n hello world | sha256sum
 
 `~/.npm-global/lib/node_modules`
 
-# 自分のローカルなパッケージテスト
+## 自分のローカルなパッケージテスト
 
 ```bash
 mkdir package1 ; cd package1
@@ -45,7 +45,7 @@ cd ../add2
 npm install --save-dev mocha
 ```
 
-add2のpackage.jsonをMocha用に書き換える
+add2 の package.json を Mocha 用に書き換える
 
 ```json
   "scripts": {
@@ -79,16 +79,16 @@ npm link @me/add2
 
 あとはコードを一生懸命書く。
 
-use-add2で `npm link @me/add2` の代わりに `npm i ../add2` もできる。
+use-add2 で `npm link @me/add2` の代わりに `npm i ../add2` もできる。
 node_modules/の下にコピーされるし
-package.jsonも書き変わる。
+package.json も書き変わる。
 
-# yarn や pnpm
+## yarn や pnpm
 
-2022年ごろのインストール方法. corepackを使う。
+2022 年ごろのインストール方法. corepack を使う。
 
 ```bash
-corepack enable
+sudo corepack enable
 corepack prepare pnpm@latest --activate
 corepack prepare yarn@stable --activate
 ```
@@ -96,7 +96,7 @@ corepack prepare yarn@stable --activate
 - [Corepack \| Node\.js v19\.4\.0 Documentation](https://nodejs.org/api/corepack.html)
 - [corepack を使って npm/Yarn をお仕事的に安心して使う方法を考える \| t28\.dev](https://t28.dev/blog/manage-npm-and-yarn-using-corepack-safely/)
 
-# モジュールとパッケージ
+## モジュールとパッケージ
 
 - [Modules: CommonJS modules](https://nodejs.org/api/modules.html)
 - [Modules: ECMAScript modules](https://nodejs.org/api/esm.html)
@@ -105,23 +105,23 @@ corepack prepare yarn@stable --activate
 
 パッケージとは、
 
-- package.jsonファイルによって記述されるファイルまたはディレクトリ
-- npmレジストリに公開するためには、パッケージにpackage.jsonファイルが必要
+- package.json ファイルによって記述されるファイルまたはディレクトリ
+- npm レジストリに公開するためには、パッケージに package.json ファイルが必要
 - パッケージには、スコープなしと、スコープつき(`@foo/xpackage`みたいなやつ)があり、
   スコープ付きパッケージはプライベートとパブリックがある
 
 モジュールとは、
 
-- node_modulesディレクトリにある、Node.jsのrequire()関数で読み込むことができるファイルやディレクトリを指す
-- Node.jsのrequire()関数で読み込まれるためには、モジュールは以下の**いずれか**に該当する必要がある
-  - "main" フィールドを含むpackage.jsonファイルを持つフォルダー
-  - JavaScriptファイル
+- node_modules ディレクトリにある、Node.js の require()関数で読み込むことができるファイルやディレクトリを指す
+- Node.js の require()関数で読み込まれるためには、モジュールは以下の**いずれか**に該当する必要がある
+  - "main" フィールドを含む package.json ファイルを持つフォルダー
+  - JavaScript ファイル
 
-.jsファイルを含まないモジュールやパッケージが存在する。
-例えば、CSSや画像などの静的ファイルのみを含むモジュールがある。
-ただし、package.jsonファイルは必要。
+.js ファイルを含まないモジュールやパッケージが存在する。
+例えば、CSS や画像などの静的ファイルのみを含むモジュールがある。
+ただし、package.json ファイルは必要。
 
-- [GitHub - css-modules/css-modules: Documentation about css-modules](https://github.com/css-modules/css-modules) の examples参照
+- [GitHub - css-modules/css-modules: Documentation about css-modules](https://github.com/css-modules/css-modules) の examples 参照
 - [css-only · GitHub Topics · GitHub](https://github.com/topics/css-only)
 
 つまりこれらの用語はかなり適当ということ。

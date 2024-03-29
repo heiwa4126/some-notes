@@ -18,6 +18,7 @@
     - [エクスポートしながら圧縮する方法はありませんか?](#エクスポートしながら圧縮する方法はありませんか)
     - [エクスポートしながら圧縮: あとで試すメモ](#エクスポートしながら圧縮-あとで試すメモ)
   - [WSL で Windows のやりとり](#wsl-で-windows-のやりとり)
+  - [WSL で ls するとディレクトリの色が暗くて見づらい](#wsl-で-ls-するとディレクトリの色が暗くて見づらい)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -275,3 +276,50 @@ wsl --export distro - | wsl gzip > distro.tar.gz
 ## WSL で Windows のやりとり
 
 [wsl2 でよく使う、windows と linux 間のファイル移動やコマンド実行。 - Qiita](https://qiita.com/Uchitaso/items/6e0a7859e87bb8bdb527)
+
+## WSL で ls するとディレクトリの色が暗くて見づらい
+
+Windows Terminal の WSL の Ubuntu で `ls` するとディレクトリの色が暗くて見づらい。
+
+特に WSL じゃなくてもこんな感じで
+
+```sh
+dircolors -p > ~/.dircolors
+```
+
+で `~/.dircolors` を編集する。今回は'DIR ' で検索して、
+
+```config
+#DIR 01;34 # directory
+DIR 01;36
+```
+
+みたいにする。
+
+カラーコードについては [man dir_colors](https://manpages.ubuntu.com/manpages/noble/en/man5/dir_colors.5.html) の
+"ISO 6429 (ANSI) color sequences" を 参照。
+
+一般的なコード番号は
+
+- 01: 太字
+- 04: 下線
+- 00: リセット(デフォルトに戻す)
+- 30-37: 文字色 (黒、赤、緑、黄、青、マゼンタ、シアン、白)
+- 40-47: 背景色 (黒、赤、緑、黄、青、マゼンタ、シアン、白)
+
+上の例では 太字青 から 太字シアン に変更。
+
+即時反映させるには
+
+```bash
+eval "$(dircolors -b ~/.dircolors)"
+```
+
+で。
+
+ディストリによっては起動時に ~/.dircolors を自動で読む設定になっていないので、
+その場合は ~/.profile に前述の eval 行を追加する等してください。
+
+`dircolors -b ~/.dircolors` を実行するとわかるけど、
+これは環境変数 LS_COLORS を設定してるので、
+そちらを設定してもいい。

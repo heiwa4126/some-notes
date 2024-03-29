@@ -68,6 +68,11 @@ PATH="$NPM_CONFIG_PREFIX/bin:./node_modules/.bin:$PATH"
 export MANPATH="$NPM_CONFIG_PREFIX/man:$MANPATH"
 ```
 
+最近では
+[npmrc | npm Docs](https://docs.npmjs.com/cli/v10/configuring-npm/npmrc#files)
+にあるように
+~/.npmrc の prefix= に書くのがいいらしい。あと MANPATH は最早不要かもしれん。
+
 ## 環境設定: npm のオートコンプリート(completion)
 
 ```sh
