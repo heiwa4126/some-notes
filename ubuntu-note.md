@@ -20,7 +20,7 @@ AWS や Azure で VM 作る時に、毎回やって、毎回忘れるなにか�
   - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
   - [auto-upgrades, unattended-upgrades](#auto-upgrades-unattended-upgrades)
   - [Ubuntu/Debian で apt autoremove でキープされる kernel パッケージの数](#ubuntudebian-で-apt-autoremove-でキープされる-kernel-パッケージの数)
-  - [no\_proxy](#no_proxy)
+  - [no_proxy](#no_proxy)
   - [参考](#参考)
   - [Unattended Upgrades の有効/無効](#unattended-upgrades-の有効無効)
   - [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
@@ -106,7 +106,7 @@ update-alternatives --config editor
 
 他に
 
-```
+```sh
 select-editor
 ```
 
@@ -139,7 +139,7 @@ AMI のデフォルトのユーザー名はだいたい`ec2-user`.
 EC2 のマネージメントコンソールで「接続」ボタンを押し
 「例:」の@マークの前がそれ。
 
-```
+```text
 例:
 
 ssh -i "xxx.pem" ubuntu@xxxxxxxxx.ap-xxxxxxx-1.compute.amazonaws.com
@@ -168,7 +168,7 @@ Azure も AWS も cloud-init で初期設定ができるんだから、
 
 #### ubuntu on AWS 編
 
-```
+```sh
 adduser yourAccount
 ```
 
@@ -215,7 +215,7 @@ URL 忘れそう。)
 
 まず対象のユーザにパスワードが設定されてるかを確認する。
 
-```
+```sh
 grep <target-user> /etc/shadow
 ```
 
@@ -293,7 +293,7 @@ cron-apt パッケージとの関係があやしいので調査。
 
 (man curl の--noproxy のところから引用)
 
-```
+```console
 ## 1604LTS
 $ curl --version
 curl 7.47.0
@@ -305,7 +305,7 @@ curl 7.58.0
 
 とりあえず、
 
-```
+```sh
 no_proxy="localhost, 127.0.0.1, *.yourdomain.com"
 ```
 

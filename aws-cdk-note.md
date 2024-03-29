@@ -1,6 +1,6 @@
-# AWS CDK
+# AWS CDK (Cloud Development Kit)
 
-- [AWS CDK](#aws-cdk)
+- [AWS CDK (Cloud Development Kit)](#aws-cdk-cloud-development-kit)
   - [インストール](#インストール)
   - [チュートリアル](#チュートリアル)
   - [AWS CDK Workshop](#aws-cdk-workshop)
