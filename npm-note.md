@@ -1,6 +1,8 @@
-## scriptsのコロン
+# npm メモ
 
-package.jsonで
+## scripts のコロン
+
+package.json で
 
 ```json
 "scripts": {
@@ -16,15 +18,15 @@ package.jsonで
 npm run build
 ```
 
-で、3つを全部実行できる、って話をきいたんで 要確認。
+で、3 つを全部実行できる、って話をきいたんで 要確認。
 
-## package.json の binフィールド
+## package.json の bin フィールド
 
-binに複数フィールドがある場合の挙動
+bin に複数フィールドがある場合の挙動
 
 [node\.js \- Is it possible to run multiple binaries from a single module via npx? \- Stack Overflow](https://stackoverflow.com/questions/53571669/is-it-possible-to-run-multiple-binaries-from-a-single-module-via-npx)
 
-[cowsay/package\.json](https://www.npmjs.com/package/cowsay?activeTab=explore) には binのエントリが2つある
+[cowsay/package\.json](https://www.npmjs.com/package/cowsay?activeTab=explore) には bin のエントリが 2 つある
 
 ```json
  "bin": {
@@ -35,7 +37,7 @@ binに複数フィールドがある場合の挙動
 
 `npx cowsay hi!`
 
-```
+```output
  _____
 < hi! >
  -----
@@ -48,7 +50,7 @@ binに複数フィールドがある場合の挙動
 
 `npx -p cowsay cowthink hi!`
 
-```
+```output
  _____
 ( hi! )
  -----
@@ -59,38 +61,38 @@ binに複数フィールドがある場合の挙動
                 ||     ||
 ```
 
-npxは単に「npmjsのパッケージをインストールせずに実行するコマンド」ではない。
+npx は単に「npmjs のパッケージをインストールせずに実行するコマンド」ではない。
 
-npxがコマンドを探すステップは次のようになります:
+npx がコマンドを探すステップは次のようになります:
 
-1. npxが引数として受け取ったコマンド名を、現在のプロジェクトのnode_modules/.binディレクトリにあるファイル名と照合します。
+1. npx が引数として受け取ったコマンド名を、現在のプロジェクトの node_modules/.bin ディレクトリにあるファイル名と照合します。
    もし一致するものがあれば、そのファイルを実行します。
 
-2. もし一致するものがなければ、npxはnpmレジストリにそのコマンド名に対応するパッケージがあるかどうかを検索します。もし見つかれば、そのパッケージを一時的にインストールして実行します。
+2. もし一致するものがなければ、npx は npm レジストリにそのコマンド名に対応するパッケージがあるかどうかを検索します。もし見つかれば、そのパッケージを一時的にインストールして実行します。
 
-3. もし見つからなければ、npxはPATH環境変数に含まれるディレクトリにそのコマンド名のファイルがあるかどうかを探します。もし見つかれば、そのファイルを実行します。
+3. もし見つからなければ、npx は PATH 環境変数に含まれるディレクトリにそのコマンド名のファイルがあるかどうかを探します。もし見つかれば、そのファイルを実行します。
 
-4. もし見つからなければ、npxはエラーを出力して終了します。
+4. もし見つからなければ、npx はエラーを出力して終了します。
 
-npxのコマンドが `@foo/command` のような場合は、そのコマンドがスコープ付きパッケージを指していると解釈されます。スコープ付きパッケージとは、@で始まる名前空間を持つパッケージのことで、npmレジストリに公開する際に他のパッケージと名前が衝突しないようにするために使われます。例えば、次のようなコマンドを使って、@vue/cliというスコープ付きパッケージからvueコマンドを実行することができます。
+npx のコマンドが `@foo/command` のような場合は、そのコマンドがスコープ付きパッケージを指していると解釈されます。スコープ付きパッケージとは、@で始まる名前空間を持つパッケージのことで、npm レジストリに公開する際に他のパッケージと名前が衝突しないようにするために使われます。例えば、次のようなコマンドを使って、@vue/cli というスコープ付きパッケージから vue コマンドを実行することができます。
 
 ```bash
 npx @vue/cli create my-app
 ```
 
-この場合、npxはnpmレジストリから@vue/cliパッケージを一時的にインストールして実行します。
+この場合、npx は npm レジストリから@vue/cli パッケージを一時的にインストールして実行します。
 
-npxのコマンドに'/'が含まれる場合は、
-そのコマンドがGitHub上のリポジトリを指していると解釈されます。
-例えば、次のようなコマンドを使って、GitHub上のslash-create-templateというリポジトリからスラッシュコマンドを作成することができます。
+npx のコマンドに'/'が含まれる場合は、
+そのコマンドが GitHub 上のリポジトリを指していると解釈されます。
+例えば、次のようなコマンドを使って、GitHub 上の slash-create-template というリポジトリからスラッシュコマンドを作成することができます。
 
 ```bash
 npx Snazzah/slash-create-template init
 ```
 
-この場合、npxはGitHubからそのリポジトリを一時的にダウンロードして実行します。
+この場合、npx は GitHub からそのリポジトリを一時的にダウンロードして実行します。
 
-で、明示しない場合、package.jsonのbinのどのフィールドが実行されるか、
+で、明示しない場合、package.json の bin のどのフィールドが実行されるか、
 については諸説あってよくわからない(特にスコープ付きパッケージ名の場合)
 
 - [@vue/cli](https://www.npmjs.com/package/@vue/cli?activeTab=explore) だと `vue`
@@ -98,17 +100,17 @@ npx Snazzah/slash-create-template init
 
 まあ
 
-- **binに複数書くのはやめとけ**
-- スコープ付きなら衝突防止に vue-cli-service式にしとけ。ただしbin複数の場合npxで実行できなくなる。1個ならこれが安全。
-- binにスコープ付きパッケージ名をそのまま書くと(例えば"@vue/cli")、`npm i -g`した時に `cli`という名前になるので注意だ(なので実際の"@vue/cli"では "vue"になってる)
+- **bin に複数書くのはやめとけ**
+- スコープ付きなら衝突防止に vue-cli-service 式にしとけ。ただし bin 複数の場合 npx で実行できなくなる。1 個ならこれが安全。
+- bin にスコープ付きパッケージ名をそのまま書くと(例えば"@vue/cli")、`npm i -g`した時に `cli`という名前になるので注意だ(なので実際の"@vue/cli"では "vue"になってる)
 
 みたいな感じ。
 
-## package.json の binで複数書いてCommonJSとECMAScriptを混在させる
+## package.json の bin で複数書いて CommonJS と ECMAScript を混在させる
 
 できません。
 
-package.jsonのtypeにあるやつのみ
+package.json の type にあるやつのみ
 
 ## package.json の files に package.json を書く必要はありますか?
 
@@ -118,7 +120,7 @@ package.json は常にインクルードされるからです。
 
 参考: https://docs.npmjs.com/cli/v9/configuring-npm/package-json#files
 
-常にexcludeされるのもあるので上記確認。`.gitignore` も見るのが変。
+常に exclude されるのもあるので上記確認。`.gitignore` も見るのが変。
 
 ## package.json の exports の node
 
@@ -129,31 +131,31 @@ package.json は常にインクルードされるからです。
 
 ## package.json の exports vs main
 
-exportsが解釈できるバージョンのnodeならexports優先。
+exports が解釈できるバージョンの node なら exports 優先。
 (実験版 >=12.7.0, 安定版 >=14.13.0)
 
-## package.json の exports 内の types を使えるのはどのバージョンのtscからですか?
+## package.json の exports 内の types を使えるのはどのバージョンの tsc からですか?
 
 &gt;= 4.7
 
-あと exportsでサブパスエクスポートを使っている場合は
-moduleResolution は node16かnodenextでないと
-tscが.d.tsが見つけられず死ぬ。
+あと exports でサブパスエクスポートを使っている場合は
+moduleResolution は node16 か nodenext でないと
+tsc が.d.ts が見つけられず死ぬ。
 
-exportsでサブパスエクスポートを使っていない場合(typesが1個のとき)moduleResolution は node でOK。
+exports でサブパスエクスポートを使っていない場合(types が 1 個のとき)moduleResolution は node で OK。
 
-以上の話は当然TypeScriptの話で。
+以上の話は当然 TypeScript の話で。
 
 ちなみに
 package.json の 直下の types を使えるのは、
-tscのバージョン1.6から。
+tsc のバージョン 1.6 から。
 
 まあいろいろとめんどくさいので
-自分でTypeScriptでパッケージを作り、
+自分で TypeScript でパッケージを作り、
 それがサブパスにまたがる場合は、
-index.tsに全部exportをまとめてしまうのがいいと思う。
+index.ts に全部 export をまとめてしまうのがいいと思う。
 
-## tsconfigのmoduleResolution
+## tsconfig の moduleResolution
 
 tsconfig の moduleResolution とは、モジュール解決方式を指定するオプションです。
 モジュール解決方式とは、インポート文で指定されたモジュールの場所をどのように探すかという方法です。
@@ -168,7 +170,7 @@ moduleResolution を指定しない場合は、--module commonjs のときは no
 それ以外のときは classic がデフォルト値になります。
 ただし、node モジュール解決方式が TypeScript コミュニティで最も一般的であり、推奨されています。
 
-以上が tsconfig の moduleResolution に関する説明です¹[ ^2 ^][ ^3 ^ ]。もっと詳しく知りたい場合は、「node モジュール解決方式の例を見せてください」や「classic モジュール解決方式と node モジュール解決方式の違いを教えてください」などとお尋ねください。
+以上が tsconfig の moduleResolution に関する説明です 1[ ^2 ^][ ^3 ^ ]。もっと詳しく知りたい場合は、「node モジュール解決方式の例を見せてください」や「classic モジュール解決方式と node モジュール解決方式の違いを教えてください」などとお尋ねください。
 
 - [TypeScript: TSConfig Option: moduleResolution](https://www.typescriptlang.org/tsconfig/moduleResolution.html)
 - [TypeScript: Documentation - Module Resolution](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
@@ -185,15 +187,15 @@ bundle モジュール解決方式では、インポート文に相対パスや�
 相対パスや絶対パスがない場合は、以下の順序でモジュールを探します。
 
 - ファイル拡張子が .ts, .tsx, .d.ts の順に付けられたファイル
-- package.json の types フィールドや typings フィールドに指定されたファイル (typingsはtypesのalias)
+- package.json の types フィールドや typings フィールドに指定されたファイル (typings は types の alias)
 - index.ts, index.tsx, index.d.ts の順に付けられたファイル
 
 もっと詳しく知りたい場合は、「bundle モジュール解決方式の例を見せてください」や「bundle モジュール解決方式と node モジュール解決方式の違いを教えてください」などとお尋ねください。
 
 - [\`\-\-moduleResolution bundler\` \(formerly known as \`hybrid\`\) by andrewbranch · Pull Request \#51669 · microsoft/TypeScript](https://github.com/microsoft/TypeScript/pull/51669)
-- [最新版TypeScript\+webpack 5の環境構築まとめ\(React, Three\.jsのサンプル付き\) \- ICS MEDIA](https://ics.media/entry/16329/)
+- [最新版 TypeScript\+webpack 5 の環境構築まとめ\(React, Three\.js のサンプル付き\) \- ICS MEDIA](https://ics.media/entry/16329/)
 
-## moduleResolution の nodeモジュール解決方式
+## moduleResolution の node モジュール解決方式
 
 moduleResolution の node モジュール解決方式は、
 拡張子レスの場合、以下のようにモジュールを探します。
@@ -205,10 +207,26 @@ moduleResolution の node モジュール解決方式は、
 
 ## ECMAScript Module Support と CommonJS implementation の違い
 
-(省略w)
+(省略 w)
 
-## `npm -g install` でインストールされたパッケージの一覧
+## `npm install -g` でインストールされたパッケージの一覧
 
 ```bash
-npm list -g --depth 0
+npm ls -g --depth 1
 ```
+
+最近は`--depth 1` はデフォルトなので `npm ls -g` でも同じ。ツリーを全部展開したければ `--all` オプション
+
+参考: [npm-ls | npm Docs](https://docs.npmjs.com/cli/v10/commands/npm-ls)
+
+## `npm install -g` のインストール先を per user にする
+
+なにが普通かは微妙だけど、普通は per user にするよね...
+
+npmjs.com 上の公式のドキュメントはおそらくこれ:
+[Resolving EACCES permissions errors when installing packages globally | npm Docs](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
+.npmrc と環境変数 NPM_CONFIG_PREFIX の両方の記述あり。
+
+あとは
+[npm config set prefix - Google 検索](https://www.google.co.jp/search?hl=ja&q=npm+config+set+prefix&lr=lang_ja)
+で、初心者向けの記事がいっぱい
