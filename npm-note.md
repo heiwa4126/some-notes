@@ -1,5 +1,21 @@
 # npm メモ
 
+- [npm メモ](#npm-メモ)
+  - [scripts のコロン](#scripts-のコロン)
+  - [package.json の bin フィールド](#packagejson-の-bin-フィールド)
+  - [package.json の bin で複数書いて CommonJS と ECMAScript を混在させる](#packagejson-の-bin-で複数書いて-commonjs-と-ecmascript-を混在させる)
+  - [package.json の files に package.json を書く必要はありますか?](#packagejson-の-files-に-packagejson-を書く必要はありますか)
+  - [package.json の exports の node](#packagejson-の-exports-の-node)
+  - [package.json の exports vs main](#packagejson-の-exports-vs-main)
+  - [package.json の exports 内の types を使えるのはどのバージョンの tsc からですか?](#packagejson-の-exports-内の-types-を使えるのはどのバージョンの-tsc-からですか)
+  - [tsconfig の moduleResolution](#tsconfig-の-moduleresolution)
+  - [TypeScript 5.0 で追加された moduleResorution: bundle](#typescript-50-で追加された-moduleresorution-bundle)
+  - [moduleResolution の node モジュール解決方式](#moduleresolution-の-node-モジュール解決方式)
+  - [ECMAScript Module Support と CommonJS implementation の違い](#ecmascript-module-support-と-commonjs-implementation-の違い)
+  - [`npm install -g` でインストールされたパッケージの一覧](#npm-install--g-でインストールされたパッケージの一覧)
+  - [`npm install -g` のインストール先を per user にする](#npm-install--g-のインストール先を-per-user-にする)
+  - [モジュールとパッケージの違い](#モジュールとパッケージの違い)
+
 ## scripts のコロン
 
 package.json で
@@ -230,3 +246,16 @@ npmjs.com 上の公式のドキュメントはおそらくこれ:
 あとは
 [npm config set prefix - Google 検索](https://www.google.co.jp/search?hl=ja&q=npm+config+set+prefix&lr=lang_ja)
 で、初心者向けの記事がいっぱい
+
+## モジュールとパッケージの違い
+
+[About packages and modules | npm Docs](https://docs.npmjs.com/about-packages-and-modules)
+
+> パッケージとは、package.json ファイルで記述されたファイルやディレクトリのことです。パッケージを npm レジストリに公開するには、package.json ファイルが必要です。package.json ファイルの作成についての詳細は、「package.json ファイルの作成」を参照してください。
+
+> モジュールとは、Node.js の require()関数でロードできる、node_modules ディレクトリにあるファイルやディレクトリのことです。
+
+- package.json があるのがパッケージ(npm init してるのは全部パッケージ)
+- パッケージを npm i するとモジュールになる
+
+ってことだよな。
