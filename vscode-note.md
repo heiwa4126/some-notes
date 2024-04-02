@@ -14,6 +14,8 @@
   - [VScode server が CPU 100%](#vscode-server-が-cpu-100)
   - [現在 VScode にインストールされている拡張機能の ID を得るには?](#現在-vscode-にインストールされている拡張機能の-id-を得るには)
   - [VScode で Javascript/Typescript の import を並び変える](#vscode-で-javascripttypescript-の-import-を並び変える)
+  - [VSCode で WSL 上の Typescript をデバッグしようとすると異常に時間がかかる](#vscode-で-wsl-上の-typescript-をデバッグしようとすると異常に時間がかかる)
+    - [いちおう解決](#いちおう解決)
 
 ## Remote Development
 
@@ -225,3 +227,23 @@ code --list-extensions --show-versions
 ## VScode で Javascript/Typescript の import を並び変える
 
 Organize imports (Shift + Alt/Option + O)
+
+## VSCode で WSL 上の Typescript をデバッグしようとすると異常に時間がかかる
+
+```console
+$ ps f
+ 7088 pts/3    Ssl+   0:00 /home/heiwa/.vscode-server/bin/863d2581ecda6849923a2118d93a088b0745d9d6/node -e c
+ (略)
+ 7563 pts/1    Sl+    0:00              |   \_ /usr/bin/node ./build/index.js
+ 7570 pts/1    S+     0:00              |       \_ nc -z 127.0.0.1 53782
+```
+
+謎の nc でポートスキャンが走ってるのが見える。これがなんだかわからない
+
+Windows 上や Remote-SSH では起きない。
+
+### いちおう解決
+
+WSL2 が mirror モードだった(IPv6 を使いたかった)のを、元の NAT に戻したら治った。
+
+でも IPv6 も使いたいので
