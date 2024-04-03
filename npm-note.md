@@ -18,6 +18,8 @@
   - [`npm install -g` のインストール先を per user にする](#npm-install--g-のインストール先を-per-user-にする)
   - [モジュールとパッケージの違い](#モジュールとパッケージの違い)
   - [GitHub を`npm i` する](#github-をnpm-i-する)
+  - [.npmrc は HOME 以外の場所にできませんか?](#npmrc-は-home-以外の場所にできませんか)
+  - [`npm version`サブコマンド](#npm-versionサブコマンド)
   - [npm パッケージを GitHub の releases として公開](#npm-パッケージを-github-の-releases-として公開)
 
 ## scripts のコロン
@@ -349,6 +351,85 @@ npm i https://github.com/heiwa4126/npm-hello1.git
 ```
 
 になる。ちょっと不思議。
+
+## .npmrc は HOME 以外の場所にできませんか?
+
+(デフォルトでは `~/.npmrc` ですけどね...)
+
+.npmrc の設置場所を HOME ディレクトリ以外に指定することができます。
+
+npmrc の場所は以下の順で検索されます。
+
+1. プロジェクトの `.npmrc` ファイル
+2. `$PREFIX/etc/npmrc`
+3. `$PREFIX/npmrc`
+4. グローバル `~/.npmrc`
+5. NPM の内部の`npmrc`ファイル
+
+ここで、`$PREFIX` は npm のプレフィックスパスを指しています。デフォルトでは `/usr/local` がこのパスになりますが、独自にプレフィックスパスを設定することができます。
+
+プレフィックスパスを変更する例:
+
+```sh
+# Windowsの場合
+npm config set prefix D:\npm
+
+# Unix/Macの場合
+npm config set prefix /opt/npm
+```
+
+この設定を行うと、npmrc ファイルは以下の場所で読み込まれます。
+
+- Windows: `D:\npm\etc\npmrc`
+- Unix/Mac: `/opt/npm/etc/npmrc`
+
+つまり、`$PREFIX/etc/npmrc` にカスタムの npmrc ファイルを配置できます。この npmrc は、プロジェクトレベルの npmrc よりも優先されます。
+
+このようにプレフィックスパスを変更することで、npmrc の場所をホームディレクトリ以外に設定可能です。企業内の npm 設定を一元管理したい場合などに役立ちます。
+
+ただし、この設定はグローバル設定になるため、ユーザー単位で異なる設定を行いたい場合は `.npmrc` をホームディレクトリに置く必要があります。
+
+プロジェクト単位で npmrc を設定したい場合は、プロジェクトルートに `.npmrc` ファイルを作成すれば良いでしょう。
+
+## `npm version`サブコマンド
+
+[npm-version | npm Docs](https://docs.npmjs.com/cli/v10/commands/npm-version)
+
+`npm version` コマンドは、package.json の `version` フィールドを更新し、そのバージョンにタグを付けるためのコマンドです。使い方は以下の通りです。
+
+```man
+npm version [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]
+```
+
+- `<newversion>`: 新しいバージョン番号を直接指定できます。
+- `major`: メジャーバージョンを増やします (例: 1.0.0 -> 2.0.0)。
+- `minor`: マイナーバージョンを増やします (例: 1.0.0 -> 1.1.0)。
+- `patch`: パッチバージョンを増やします (例: 1.0.0 -> 1.0.1)。
+- `premajor`: プレメジャーリリースを作成します (例: 1.0.0 -> 2.0.0-0)。
+- `preminor`: プレマイナーリリースを作成します (例: 1.0.0 -> 1.1.0-0)。
+- `prepatch`: プレパッチリリースを作成します (例: 1.0.0 -> 1.0.1-0)。
+- `prerelease`: プレリリースを作成します (例: 1.0.0 -> 1.0.1-0)。`--preid` オプションで識別子を指定できます。
+- `from-git`: リポジトリの最新コミットハッシュからバージョンを決定します。
+
+また、以下のオプションも利用できます。
+
+- `-m, --message="<message>"`: タグに設定するメッセージを指定します。
+- `-w, --workspace=<workspace-name>`: ワークスペースのプロジェクトに対してコマンドを実行します。
+- `-ws, --workspaces`: すべてのワークスペースのプロジェクトに対してコマンドを実行します。
+
+使用例:
+
+- `npm version patch`: パッチバージョンを上げる (1.0.0 -> 1.0.1)
+- `npm version minor`: マイナーバージョンを上げる (1.0.0 -> 1.1.0)
+- `npm version premajor --preid=beta`: ベータ版のメジャーバージョンを作成 (1.0.0 -> 2.0.0-beta.0)
+- `npm version from-git`: Git のコミットハッシュからバージョンを決定
+
+`version` コマンドを実行すると、package.json の version が更新され、そのバージョンで Git タグが作成されます。リリース管理にとても便利なコマンドです。
+
+一般的なフローとしては、機能追加時には `npm version minor` 、
+バグ修正時には `npm version patch` を実行し、新しいリリースを作成します。
+
+Semver 的にメジャーアップデートが必要な場合は `npm version major` を使います。
 
 ## npm パッケージを GitHub の releases として公開
 
