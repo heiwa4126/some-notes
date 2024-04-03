@@ -18,6 +18,7 @@
   - [`npm install -g` のインストール先を per user にする](#npm-install--g-のインストール先を-per-user-にする)
   - [モジュールとパッケージの違い](#モジュールとパッケージの違い)
   - [GitHub を`npm i` する](#github-をnpm-i-する)
+  - [npm パッケージを GitHub の releases として公開](#npm-パッケージを-github-の-releases-として公開)
 
 ## scripts のコロン
 
@@ -91,14 +92,18 @@ semver の規格 には `~`(Tilde Ranges) も `^`(Caret Ranges) も無い。node
 グローバルにインストールする例:
 
 ```sh
+# グローバルにインストール
 npm i npm-package-json-lint -g
+
 # つぎに https://npmpackagejsonlint.org/docs/rcfile-example/ の ~/.npmpackagejsonlintrc.json をコピペする
-# "valid-values-author" のフィールドは自分の名前に書き換えよう
+# とりあえず "valid-values-author" のフィールドは自分の名前に書き換えよう。
+# 参照: https://npmpackagejsonlint.org/docs/rules/valid-values/valid-values-author
 
 # 開発中のプロジェクトに移動して...
 npmPkgJsonLint .  # カレント以下の全部のpackage.jsonを対象にしてlintする
 npmPkgJsonLint ./package.json  # カレントのpackage.jsonを対象にしてlintする
-# 他は https://npmpackagejsonlint.org/docs/cli とヘルプ見て
+
+# 他の使い方は https://npmpackagejsonlint.org/docs/cli 見てね
 ```
 
 ## package.json の bin フィールド
@@ -344,3 +349,15 @@ npm i https://github.com/heiwa4126/npm-hello1.git
 ```
 
 になる。ちょっと不思議。
+
+## npm パッケージを GitHub の releases として公開
+
+`npm pack`で tarball を releases にすればいいのだから GitHub Actions として書けるはず。
+
+このへん?
+
+- [GitHub Packages を使用して private な npm パッケージとして公開する](https://zenn.dev/052hide/articles/github-packages-npm-052hide)
+- [GitHub Packages で npm パッケージを公開してみた - あしたのチーム Tech Blog](https://engineer.ashita-team.com/entry/test-github-packages)
+- [Node.js パッケージの公開 - GitHub Docs](https://docs.github.com/ja/actions/publishing-packages/publishing-nodejs-packages)
+
+GitHub Packages とは? (つづく)
