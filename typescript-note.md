@@ -7,14 +7,14 @@
   - [Jupyter で Node.js で TypeScript](#jupyter-で-nodejs-で-typescript)
   - [tsconfig.json の outDir でポピュラーなものは?](#tsconfigjson-の-outdir-でポピュラーなものは)
   - [`npm i typescript -D` しないで Typescript の開発はできますか? 例えば deno や bun を使えば出来る?](#npm-i-typescript--d-しないで-typescript-の開発はできますか-例えば-deno-や-bun-を使えば出来る)
-  - [GitHub を`npm i` する](#github-をnpm-i-する)
+  - [tsc でトランスパイルするときに、インデントをタブにできますか?](#tsc-でトランスパイルするときにインデントをタブにできますか)
 
 ## Partial&lt;T&gt;
 
 - [Partial&lt;T&gt; | TypeScript 入門『サバイバル TypeScript』](https://typescriptbook.jp/reference/type-reuse/utility-types/partial)
 - https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-1.html#mapped-types
 
-React の TypeScript で setState hook の一部を書き換えたいとき：
+React の TypeScript で setState hook の一部を書き換えたいとき:
 
 - [Troubleshooting Handbook: Types | React TypeScript Cheatsheets](https://react-typescript-cheatsheet.netlify.app/docs/basic/troubleshooting/types/#using-partial-types)
 - https://reactjs.org/docs/hooks-reference.html#functional-updates の note
@@ -27,7 +27,7 @@ React の TypeScript で setState hook の一部を書き換えたいとき：
 
 ## hash にタイプ
 
-[typescript で連想配列の配列を宣言（型指定）したい](https://trueman-developer.blogspot.com/2017/04/typescript.html)
+[typescript で連想配列の配列を宣言(型指定)したい](https://trueman-developer.blogspot.com/2017/04/typescript.html)
 
 ```typescript
 let hash: { [key: string]: string } = {};
@@ -52,7 +52,7 @@ const hash2: { [key: string]: string } = {
 
 ## tsconfig.json の outDir でポピュラーなものは?
 
-outDir オプションは TypeScript のコンパイラが生成する JavaScript ファイルを出力するディレクトリを指定します。一般的によく使われる設定は以下の通りです：
+outDir オプションは TypeScript のコンパイラが生成する JavaScript ファイルを出力するディレクトリを指定します。一般的によく使われる設定は以下の通りです:
 
 - `./dist`: これは非常に一般的な設定で、コンパイルされた JavaScript ファイルをプロジェクトのルートにある dist ディレクトリに出力します。
 - `./build`: これも一般的な設定で、dist の代わりに build ディレクトリを使用します。
@@ -64,22 +64,9 @@ outDir オプションは TypeScript のコンパイラが生成する JavaScrip
 
 できるらしい。よくわからん。試す。
 
-## GitHub を`npm i` する
+## tsc でトランスパイルするときに、インデントをタブにできますか?
 
-こんな感じで
+TypeScript コンパイラ tsc は、生成される JavaScript ファイルのインデントスタイルを直接制御するオプションを提供していません。
+tsc はデフォルトでスペースを使用してインデントします。
 
-```sh
-npm i github:heiwa4126/npm-hello1
-# 上に同じ
-npm i https://github.com/heiwa4126/npm-hello1.git
-```
-
-どっちでやっても package.json は
-
-```json
-  "dependencies": {
-    "@heiwa4126/hello1": "github:heiwa4126/npm-hello1"
-  }
-```
-
-になる。ちょっと不思議。
+後処理で Prettier 使うとかしかない。

@@ -2,6 +2,7 @@
 
 - [npm メモ](#npm-メモ)
   - [scripts のコロン](#scripts-のコロン)
+  - [package.json の dependencies のバージョン](#packagejson-の-dependencies-のバージョン)
   - [package.json の bin フィールド](#packagejson-の-bin-フィールド)
   - [package.json の bin で複数書いて CommonJS と ECMAScript を混在させる](#packagejson-の-bin-で複数書いて-commonjs-と-ecmascript-を混在させる)
   - [package.json の files に package.json を書く必要はありますか?](#packagejson-の-files-に-packagejson-を書く必要はありますか)
@@ -15,6 +16,7 @@
   - [`npm install -g` でインストールされたパッケージの一覧](#npm-install--g-でインストールされたパッケージの一覧)
   - [`npm install -g` のインストール先を per user にする](#npm-install--g-のインストール先を-per-user-にする)
   - [モジュールとパッケージの違い](#モジュールとパッケージの違い)
+  - [GitHub を`npm i` する](#github-をnpm-i-する)
 
 ## scripts のコロン
 
@@ -35,6 +37,47 @@ npm run build
 ```
 
 で、3 つを全部実行できる、って話をきいたんで 要確認。
+
+**嘘でした**。コロンあってもそれはただのラベル
+
+## package.json の dependencies のバージョン
+
+(pip と混じってすぐわからなくなるのでちゃんと調べる)
+
+公式の記述:
+
+- [dependencies - package.json | npm Docs](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#dependencies)
+- [node-semver](https://github.com/npm/node-semver#readme)
+- [セマンティック バージョニング 2.0.0 | Semantic Versioning](https://semver.org/lang/ja/) 日本語版
+- [X ユーザーの中東いくべぇさん: 「Semantic Versioning とか言ってる人は初学者で、rpm, deb, apk, pip, gem, maven, NuGet などなどは全て semver に従ってません(独自の規則を持っている)。npm も caret とか tilde とか独自の constraint 持ってるし gem と npm に至っては caret の指すものが違います。」 / X](https://twitter.com/knqyf263/status/1323237581946048513)
+
+semver の規格 には `~`(Tilde Ranges) も `^`(Caret Ranges) も無い。node-semver にはある。
+
+```json
+"dependencies": {
+  "foo": "1.0.0",
+  "bar": "^1.0.0",
+  "baz": "^1.0.0-x",
+  "boo": "2.x",
+  "qux": "1.0.0 || 2.3.4",
+  "asd": "latest",
+  "git-dependency": "https://github.com/you/awesome-thing",
+  "file-dependency": "file:./awesome-thing"
+}
+```
+
+それぞれの意味は以下の通りです。
+
+- `"foo": "1.0.0"`: foo パッケージの `1.0.0` 版を依存関係として指定しています。
+- `"bar": "^1.0.0"`: bar パッケージの `1.0.0` 以上 `2.0.0` 未満の最新版を依存関係として指定しています。
+- `"baz": "^1.0.0-x"`: bazz パッケージの `1.0.0` リリース後の最新プレリリース版を依存関係として指定しています。
+- `"boo": "2.x"`: boo パッケージの `2.0.0` 以上 `3.0.0` 未満の最新版を依存関係として指定しています。
+- `"qux": "1.0.0 || 2.3.4"`: qux パッケージの `1.0.0` 版または `2.3.4` 版のいずれかを依存関係として指定しています。
+- `"asd": "latest"`: asd パッケージの最新版を依存関係として指定しています。
+- `"git-dependency": "https://github.com/you/awesome-thing"`: GitHub リポジトリからパッケージをインストールすることを指定しています。
+- `"file-dependency": "file:./awesome-thing"`: ローカルファイルからパッケージをインストールすることを指定しています。
+
+このように、`dependencies` フィールドでは、パッケージごとに適切なバージョン指定を行うことができます。より詳細なバージョン指定の方法は ドキュメントを参照してください。
 
 ## package.json の bin フィールド
 
@@ -259,3 +302,23 @@ npmjs.com 上の公式のドキュメントはおそらくこれ:
 - パッケージを npm i するとモジュールになる
 
 ってことだよな。
+
+## GitHub を`npm i` する
+
+こんな感じで
+
+```sh
+npm i github:heiwa4126/npm-hello1
+# 上に同じ
+npm i https://github.com/heiwa4126/npm-hello1.git
+```
+
+どっちでやっても package.json は
+
+```json
+  "dependencies": {
+    "@heiwa4126/hello1": "github:heiwa4126/npm-hello1"
+  }
+```
+
+になる。ちょっと不思議。
