@@ -3,6 +3,7 @@
 - [npm メモ](#npm-メモ)
   - [scripts のコロン](#scripts-のコロン)
   - [package.json の dependencies のバージョン](#packagejson-の-dependencies-のバージョン)
+  - [package.json の linter はありますか?](#packagejson-の-linter-はありますか)
   - [package.json の bin フィールド](#packagejson-の-bin-フィールド)
   - [package.json の bin で複数書いて CommonJS と ECMAScript を混在させる](#packagejson-の-bin-で複数書いて-commonjs-と-ecmascript-を混在させる)
   - [package.json の files に package.json を書く必要はありますか?](#packagejson-の-files-に-packagejson-を書く必要はありますか)
@@ -78,6 +79,27 @@ semver の規格 には `~`(Tilde Ranges) も `^`(Caret Ranges) も無い。node
 - `"file-dependency": "file:./awesome-thing"`: ローカルファイルからパッケージをインストールすることを指定しています。
 
 このように、`dependencies` フィールドでは、パッケージごとに適切なバージョン指定を行うことができます。より詳細なバージョン指定の方法は ドキュメントを参照してください。
+
+## package.json の linter はありますか?
+
+あるんだねこれが。
+これやると nodejs にパブリッシュした時の手戻りを減らせる。
+
+- [tclindner/npm-package-json-lint: Configurable linter for package.json files](https://github.com/tclindner/npm-package-json-lint)
+- [npm-package-json-lint | npm-package-json-lint](https://npmpackagejsonlint.org/)
+
+グローバルにインストールする例:
+
+```sh
+npm i npm-package-json-lint -g
+# つぎに https://npmpackagejsonlint.org/docs/rcfile-example/ の ~/.npmpackagejsonlintrc.json をコピペする
+# "valid-values-author" のフィールドは自分の名前に書き換えよう
+
+# 開発中のプロジェクトに移動して...
+npmPkgJsonLint .  # カレント以下の全部のpackage.jsonを対象にしてlintする
+npmPkgJsonLint ./package.json  # カレントのpackage.jsonを対象にしてlintする
+# 他は https://npmpackagejsonlint.org/docs/cli とヘルプ見て
+```
 
 ## package.json の bin フィールド
 
