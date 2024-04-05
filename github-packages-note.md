@@ -56,7 +56,7 @@ Personal Access Token (classic) のトークンが表示されたところで(�
 プロジェクトのルートの.npmrc に
 
 ```config
-@NAMESPACE:registry=https://npm.pkg.github.com
+@SCOPE:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=例のトークン
 ```
 
@@ -68,8 +68,8 @@ Personal Access Token (classic) のトークンが表示されたところで(�
 - .gitignore に .npmrc を書く
 - `chmod og= .npmrc` する
 
-`@NAMESPACE:registry` のところは
-`@NAMESPACE/package-name:registry` のようにパッケージまで指定もできる。
+`@SCOPE:registry` のところは
+`@SCOPE/package-name:registry` のようにパッケージまで指定もできる。
 
 ### npmrc の場所について
 
