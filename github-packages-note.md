@@ -1,17 +1,22 @@
 # GitHub Packages
 
+似たサービスには
+
+- Azure Artifacts
+  - [Publish and download npm packages - Azure Artifacts | Microsoft Learn](https://learn.microsoft.com/en-us/azure/devops/artifacts/get-started-npm?view=azure-devops&tabs=Windows)
+- GitLab Package Registry
+  - [GitLab Package Registry administration | GitLab](https://docs.gitlab.co.jp/ee/administration/packages/)
+- NPM private packages
+  - [Creating and publishing private packages | npm Docs](https://docs.npmjs.com/creating-and-publishing-private-packages)
+  - [About private packages | npm Docs](https://docs.npmjs.com/about-private-packages)
+
+などがある。
+
 ## 重要
 
 GitHub Packages で作ったパッケージを使うには、
 元のレポジトリがパブリックでもプライベートでも、
 personal access token (classic) の認証が必要。
-
-似たサービスには
-
-- Azure Artifacts
-- GitLab Package Registry
-
-などがある。
 
 ## チュートリアルやってみる
 
