@@ -21,6 +21,7 @@
   - [.npmrc は HOME 以外の場所にできませんか?](#npmrc-は-home-以外の場所にできませんか)
   - [`npm version`サブコマンド](#npm-versionサブコマンド)
   - [npm パッケージを GitHub の releases として公開](#npm-パッケージを-github-の-releases-として公開)
+  - [`npm run` でなくて実行できるもの](#npm-run-でなくて実行できるもの)
 
 ## scripts のコロン
 
@@ -354,8 +355,6 @@ npm i https://github.com/heiwa4126/npm-hello1.git
 
 ## .npmrc は HOME 以外の場所にできませんか?
 
-(デフォルトでは `~/.npmrc` ですけどね...)
-
 .npmrc の設置場所を HOME ディレクトリ以外に指定することができます。
 
 npmrc の場所は以下の順で検索されます。
@@ -364,7 +363,8 @@ npmrc の場所は以下の順で検索されます。
 2. `$PREFIX/etc/npmrc`
 3. `$PREFIX/npmrc`
 4. グローバル `~/.npmrc`
-5. NPM の内部の`npmrc`ファイル
+
+参照: [npmrc | npm Docs](https://docs.npmjs.com/cli/v10/configuring-npm/npmrc)
 
 ここで、`$PREFIX` は npm のプレフィックスパスを指しています。デフォルトでは `/usr/local` がこのパスになりますが、独自にプレフィックスパスを設定することができます。
 
@@ -441,4 +441,22 @@ Semver 的にメジャーアップデートが必要な場合は `npm version ma
 - [GitHub Packages で npm パッケージを公開してみた - あしたのチーム Tech Blog](https://engineer.ashita-team.com/entry/test-github-packages)
 - [Node.js パッケージの公開 - GitHub Docs](https://docs.github.com/ja/actions/publishing-packages/publishing-nodejs-packages)
 
-GitHub Packages とは? (つづく)
+GitHub Packages とは? ([github-packages-note.md](github-packages-note.md)につづく)
+
+## `npm run` でなくて実行できるもの
+
+- `npm test` は `npm run test` の省略形
+- `npm start` は `npm run start` の省略形
+- `npm stop` は `npm run stop` の省略形
+- `npm restart` は `npm run stop && npm run restart && npm run start` の省略形
+- そもそも `npm run` は `npm run-script` の省略形
+
+[npm-run-script | npm Docs](https://docs.npmjs.com/cli/v10/commands/npm-run-script)
+
+「省略形」というのも微妙に違う感じで、例えば `npm start` だと
+[npm-start | npm Docs](https://docs.npmjs.com/cli/v10/commands/npm-start)
+
+> これは、パッケージの "scripts "オブジェクトの "start "プロパティで指定された定義済みのコマンドを実行する。
+> scripts "オブジェクトに "start "プロパティが定義されていない場合、npm は node server.js を実行します。
+
+なので概ね間違いではないけど、ちょっとドキュメント読んでから使った方がいいと思う。
