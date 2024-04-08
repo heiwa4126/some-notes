@@ -9,6 +9,7 @@
   - [GitHub から ssh 公開鍵をインポート](#github-から-ssh-公開鍵をインポート)
   - [GitHub から特定のディレクトリだけダウンロード](#github-から特定のディレクトリだけダウンロード)
   - [GitHub の Branch protection rule とは](#github-の-branch-protection-rule-とは)
+  - [PAT(Personal Access Tokens) について](#patpersonal-access-tokens-について)
 
 ## 80,443/tcp しかつながらない proxy を超えて、github に ssh でつなぐ
 
@@ -125,3 +126,27 @@ GitHub の Branch protection rule は、リポジトリのブランチを保護�
 このルールを設定することで、特定のブランチに対して、必要なレビューが完了している場合にのみマージできるようにしたり、強制プッシュを禁止したりすることができます。
 
 [ブランチ保護ルールを管理する \- GitHub Docs](https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule)
+
+## PAT(Personal Access Tokens) について
+
+今のところ 2 種類ある。
+
+- [Personal Access Tokens (Classic)](https://github.com/settings/tokens)
+- [Fine-grained Personal Access Tokens](https://github.com/settings/tokens?type=beta)
+
+Fine-grained Personal Access Tokens (「きめ細かい個人用アクセストークン」) の方はベータ(2024-04 現在)
+
+[personal access token の種類](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-token-%E3%81%AE%E7%A8%AE%E9%A1%9E) 参照。
+
+"Repository access" が追加されて
+
+- **All repositories** - すべてのリポジトリに対する権限が付与されます。
+- **Only select repositories** - 特定のリポジトリのみに権限を与えることができます。リポジトリを個別に選択する必要があります。
+- **No repositories** - リポジトリに対する権限はありません。
+
+の 3 種類が選べる。
+
+Personal Access Tokens (Classic) の
+スコープは [OAuth アプリのスコープ - GitHub Docs](https://docs.github.com/ja/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes)
+
+こっちのほうがわかりやすくない?
