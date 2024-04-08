@@ -11,8 +11,14 @@
 - NPM private packages
   - [Creating and publishing private packages | npm Docs](https://docs.npmjs.com/creating-and-publishing-private-packages)
   - [About private packages | npm Docs](https://docs.npmjs.com/about-private-packages)
+- Artifact Registry (Google)
+- JFrog Artifactory
 
 などがある。
+
+## ドキュメント
+
+[GitHub Packages のドキュメント - GitHub Docs](https://docs.github.com/ja/packages)
 
 ## 重要
 

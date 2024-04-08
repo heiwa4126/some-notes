@@ -2,6 +2,7 @@
 
 - [git メモ](#git-メモ)
   - [特定のファイルを最後の commit 時に戻す](#特定のファイルを最後の-commit-時に戻す)
+  - [全部のファイルを最後の commit 時に戻す](#全部のファイルを最後の-commit-時に戻す)
   - [git の設定をリスト](#git-の設定をリスト)
   - [gitignore のデフォルト](#gitignore-のデフォルト)
   - [symlink の扱い](#symlink-の扱い)
@@ -27,7 +28,15 @@
 
 ## 特定のファイルを最後の commit 時に戻す
 
-'git checkout HEAD^ -- <file_path>`
+```sh
+git checkout HEAD^ -- <file_path>
+```
+
+## 全部のファイルを最後の commit 時に戻す
+
+```sh
+git reset --hard
+```
 
 ## git の設定をリスト
 
