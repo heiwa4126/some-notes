@@ -10,6 +10,7 @@
   - [GitHub から特定のディレクトリだけダウンロード](#github-から特定のディレクトリだけダウンロード)
   - [GitHub の Branch protection rule とは](#github-の-branch-protection-rule-とは)
   - [PAT(Personal Access Tokens) について](#patpersonal-access-tokens-について)
+  - [GitHub のレポジトリで、ブランチ名を master にしているのを main に変えるには?](#github-のレポジトリでブランチ名を-master-にしているのを-main-に変えるには)
 
 ## 80,443/tcp しかつながらない proxy を超えて、github に ssh でつなぐ
 
@@ -150,3 +151,21 @@ Personal Access Tokens (Classic) の
 スコープは [OAuth アプリのスコープ - GitHub Docs](https://docs.github.com/ja/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes)
 
 こっちのほうがわかりやすくない?
+
+## GitHub のレポジトリで、ブランチ名を master にしているのを main に変えるには?
+
+```sh
+# ローカルリポジトリで作業ブランチを切り替える
+git checkout -b main
+# リモートにmainブランチを作成する
+git push -u origin main
+```
+
+次に、GitHub のリポジトリページで、Settings の Default branch で値を main に変更し、更新ボタンを押す。詳しくは [デフォルトブランチを変更する](https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch#changing-the-default-branch) 参照
+
+```sh
+# ローカルのmasterブランチを削除する(オプション)
+git branch -d master
+```
+
+あとは他の developers に通知しておしまい。
