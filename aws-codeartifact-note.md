@@ -13,6 +13,11 @@
 - [デフォルトの npm レジストリに戻す](https://docs.aws.amazon.com/ja_jp/codeartifact/latest/ug/npm-auth.html#revert-default-npm-registry)
 - [npm 8\.x 以降でのインストールが遅い場合のトラブルシューティング](https://docs.aws.amazon.com/ja_jp/codeartifact/latest/ug/npm-auth.html#troubleshooting-slow-npm-install)
 
+## scope(namespace)とレポジトリ名
+
+は合わせる必要はないみたい。
+レポジトリにパッケージが無ければ upstraem を探しに行くノリらしい。
+
 ## aws codeartifact login で作った token の有効期限は?
 
 [login — AWS CLI 2.15.36 Command Reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/codeartifact/login.html)
