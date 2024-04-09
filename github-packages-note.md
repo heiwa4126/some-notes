@@ -1,11 +1,14 @@
 # GitHub Packages
 
+「パッケージリポジトリ」または「アーティファクトリポジトリ」。
+
 似たサービスには
 
 - Azure Artifacts
   - [Publish and download npm packages - Azure Artifacts | Microsoft Learn](https://learn.microsoft.com/en-us/azure/devops/artifacts/get-started-npm?view=azure-devops&tabs=Windows)
 - AWS CodeArtifact
   - [Getting started with CodeArtifact - CodeArtifact](https://docs.aws.amazon.com/jp_ja/codeartifact/latest/ug/getting-started.html)
+  - [CodeArtifact を npm で使用する - CodeArtifact](https://docs.aws.amazon.com/ja_jp/codeartifact/latest/ug/using-npm.html)
 - GitLab Package Registry
   - [GitLab Package Registry administration | GitLab](https://docs.gitlab.co.jp/ee/administration/packages/)
 - NPM private packages
