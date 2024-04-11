@@ -22,6 +22,11 @@
   - [`npm version`サブコマンド](#npm-versionサブコマンド)
   - [npm パッケージを GitHub の releases として公開](#npm-パッケージを-github-の-releases-として公開)
   - [`npm run` でなくて実行できるもの](#npm-run-でなくて実行できるもの)
+  - [新しめの linter や formatter など (2024-04)](#新しめの-linter-や-formatter-など-2024-04)
+  - [package.json に作者名とメールアドレスを書く](#packagejson-に作者名とメールアドレスを書く)
+  - [npm unlink は存在しない](#npm-unlink-は存在しない)
+  - [npm でグローバルでインストールしたパッケージを require() で呼ぶ](#npm-でグローバルでインストールしたパッケージを-require-で呼ぶ)
+    - [まとめ](#まとめ)
 
 ## scripts のコロン
 
@@ -460,3 +465,118 @@ GitHub Packages とは? ([github-packages-note.md](github-packages-note.md)に�
 > scripts "オブジェクトに "start "プロパティが定義されていない場合、npm は node server.js を実行します。
 
 なので概ね間違いではないけど、ちょっとドキュメント読んでから使った方がいいと思う。
+
+## 新しめの linter や formatter など (2024-04)
+
+- [Rust 製の Linter「Oxlint」が速すぎる](https://zenn.dev/ako/articles/d4d92a43c9e34d)
+- [【2024/01 最新】husky + lint-staged でコミット前に lint を強制する方法](https://zenn.dev/risu729/articles/latest-husky-lint-staged)
+- [新しい TypeScript のリンター Biome を触ってみる](https://zenn.dev/collabostyle/articles/86477d39be3a2e)
+- [Biome、Web のためのツールチェーン](https://biomejs.dev/ja/)
+
+## package.json に作者名とメールアドレスを書く
+
+```json
+  "author":  "Foo Bar",
+```
+
+から
+
+```json
+  "author": {
+    "name": "Foo Bar",
+    "email": "bfoo@example.com"
+  },
+  // もし共著者がいれば以下のように書く
+  "contributors": [
+    {
+      "name": "Second Author",
+      "email": "second-author@example.com"
+    },
+    {
+      "name": "Third Author",
+      "email": "third-author@example.com"
+    }
+  ],
+```
+
+## npm unlink は存在しない
+
+`npm link` は `npm uninstall パッケージ名 -g` でアンインストール
+
+## npm でグローバルでインストールしたパッケージを require() で呼ぶ
+
+のはけっこう難しい。結局フルパスで呼ぶしかない。
+
+```sh
+export NODE_PATH=$(npm root -g)
+```
+
+でもいけるけど、この環境変数が設定されてることをアテにはできない。
+(`NODE_PATH=$(npm root -g) node ...` でいいのか)
+
+たぶん `import` も同じ。
+
+
+
+require.resolve() の疑似コードは
+[https://nodejs.org/api/modules.html#all-together](https://nodejs.org/api/modules.html#all-together)
+にある。
+
+[Node.js の require の検索パス #Node.js - Qiita](https://qiita.com/aosho235/items/684cccc64e72b9d714e1)
+
+[Loading from the global folders](https://nodejs.org/api/modules.html#loading-from-the-global-folders) には
+
+---
+
+さらに、Node.js は以下の GLOBAL_FOLDERS のリストを検索する：
+
+1. `$HOME/.node_modules`
+2. `$HOME/.node_libraries`
+3. `$PREFIX/lib/node`
+
+ここで、`$HOME`はユーザーのホーム・ディレクトリ、
+`$PREFIX` は Node.js で設定された node_prefix です。
+
+これらは主に歴史的な理由によるものです。
+
+---
+
+って書いてあるなあ... あれ、これ node_prefix で npm_prefix じゃないや...
+
+```sh
+ln -s "$(npm root -g)"  "$HOME/.node_modules"
+```
+
+とかでいけそう。
+
+### まとめ
+
+Node.js の公式ドキュメントに基づいて`require.resolve()`の動作を解説します。
+
+`require.resolve()`は、指定されたモジュールの完全な絶対パスを解決する関数です。解決の過程は以下の通りです:
+
+1. **Node.js コアモジュールのチェック**
+
+   - 指定されたモジュール名が Node.js の組み込みモジュール(fs、http 等)の場合、そのモジュールのパスを返します。
+
+2. **絶対パス/相対パスのチェック**
+
+   - 与えられたモジュール識別子が絶対パスまたは相対パスの場合、そのパスを解決し、そのパスが存在すれば返します。
+
+3. **ファイルモジュールのチェック**
+
+   - モジュール識別子が`.`、`..`、`/`で始まる場合、ファイルモジュールとみなされます。
+   - カレントディレクトリと`node_modules`フォルダを探索し、一致するファイルを見つけたらそのパスを返します。
+
+4. **ノードモジュールのロード**
+
+   - `node_modules`フォルダ内のモジュールを解決しようと試みます。
+   - まずカレントディレクトリの`node_modules`を探し、見つからなければ親ディレクトリを順に探索します。
+   - `NODE_PATH`環境変数で指定されたディレクトリも探索対象になります。
+
+5. **npm のグローバルモジュールは探索対象外**
+   - npm でグローバルにインストールされたモジュールは探索対象外です。
+
+つまり、`require.resolve()`はローカルと NODE_PATH のみを解決対象とし、npm のグローバルモジュールは解決できない点に注意が必要です。
+
+グローバルモジュールを参照するには、npm 提供のユーティリティコマンド`npm root -g`で絶対パスを取得し、その絶対パスを指定する必要があります。
