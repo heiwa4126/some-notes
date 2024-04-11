@@ -1,6 +1,7 @@
 # npm メモ
 
 - [npm メモ](#npm-メモ)
+  - [多分最初にこれよんだほうがよさそう](#多分最初にこれよんだほうがよさそう)
   - [scripts のコロン](#scripts-のコロン)
   - [package.json の dependencies のバージョン](#packagejson-の-dependencies-のバージョン)
   - [package.json の linter はありますか?](#packagejson-の-linter-はありますか)
@@ -27,6 +28,10 @@
   - [npm unlink は存在しない](#npm-unlink-は存在しない)
   - [npm でグローバルでインストールしたパッケージを require() で呼ぶ](#npm-でグローバルでインストールしたパッケージを-require-で呼ぶ)
     - [まとめ](#まとめ)
+
+## 多分最初にこれよんだほうがよさそう
+
+[developers | npm Docs](https://docs.npmjs.com/cli/v10/using-npm/developers)
 
 ## scripts のコロン
 
@@ -515,8 +520,6 @@ export NODE_PATH=$(npm root -g)
 (`NODE_PATH=$(npm root -g) node ...` でいいのか)
 
 たぶん `import` も同じ。
-
-
 
 require.resolve() の疑似コードは
 [https://nodejs.org/api/modules.html#all-together](https://nodejs.org/api/modules.html#all-together)
