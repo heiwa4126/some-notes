@@ -3,6 +3,7 @@
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
 - [Python のメモ](#python-のメモ)
+  - [pip3 が --user 不要で per-user にインストールされるようになったのはいつからですか?](#pip3-が---user-不要で-per-user-にインストールされるようになったのはいつからですか)
   - [python をインストールする(2019-12)](#python-をインストールする2019-12)
     - [Amazon Linux 2](#amazon-linux-2)
     - [Ubuntu 18.04 TLS](#ubuntu-1804-tls)
@@ -50,7 +51,11 @@
   - [オブジェクトのクラスを表示する](#オブジェクトのクラスを表示する)
   - [たまには読もう Python の新しい機能](#たまには読もう-python-の新しい機能)
   - [Windows の Python は "py" で起動できる](#windows-の-python-は-py-で起動できる)
-  - [pip で PyPi 以外から](#pipでpypi以外から)
+  - [pip で PyPi 以外から](#pip-で-pypi-以外から)
+
+## pip3 が --user 不要で per-user にインストールされるようになったのはいつからですか?
+
+所説あるけど、Python 3.4 かららしい。
 
 ## python をインストールする(2019-12)
 
