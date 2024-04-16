@@ -11,6 +11,7 @@
   - [GitHub の Branch protection rule とは](#github-の-branch-protection-rule-とは)
   - [PAT(Personal Access Tokens) について](#patpersonal-access-tokens-について)
   - [GitHub のレポジトリで、ブランチ名を master にしているのを main に変えるには?](#github-のレポジトリでブランチ名を-master-にしているのを-main-に変えるには)
+  - [GitHub のプライベートレポジトリから トークンを使って git clone する手順を教えてください](#github-のプライベートレポジトリから-トークンを使って-git-clone-する手順を教えてください)
 
 ## 80,443/tcp しかつながらない proxy を超えて、github に ssh でつなぐ
 
@@ -169,3 +170,33 @@ git branch -d master
 ```
 
 あとは他の developers に通知しておしまい。
+
+## GitHub のプライベートレポジトリから トークンを使って git clone する手順を教えてください
+
+(未チェック。あとで試す)
+
+GitHub のプライベートリポジトリからクローンするには、以下の手順を実行します。
+
+1. **パーソナルアクセストークンの作成**
+
+   - GitHub にログインし、設定 > Developer settings > Personal access tokens に移動します。
+   - "Tokens (classic)" セクションで "Generate new token" をクリックします。
+   - トークンの名前を入力し、必要なスコープ (repo の場合は repo にチェックを入れる) を選択して "Generate token" をクリックします。
+
+2. **リポジトリのクローン**
+
+   - コマンドラインで作業ディレクトリに移動します。
+   - 以下のコマンドを実行してリポジトリをクローンします。
+
+   ```sh
+   git clone https://github.com/ユーザー名/リポジトリ名.git
+   ```
+
+   - ユーザー名とリポジトリ名は、実際のユーザー名とリポジトリ名に置き換えてください。
+   - プロンプトでユーザー名を求められたら、ユーザー名の代わりにトークンを入力します。
+   - トークンは表示されないので、コピー&ペーストして Enter キーを押します。
+
+3. **クローンの確認**
+   - リポジトリがクローンされたことを確認するには、作業ディレクトリに移動し中身を確認します。
+
+これで GitHub のプライベートリポジトリのクローンが完了します。トークンは大切に扱い、第三者に共有しないよう注意してください。

@@ -52,6 +52,11 @@
   - [たまには読もう Python の新しい機能](#たまには読もう-python-の新しい機能)
   - [Windows の Python は "py" で起動できる](#windows-の-python-は-py-で起動できる)
   - [pip で PyPi 以外から](#pip-で-pypi-以外から)
+  - [pyproject.toml の project.dependencies を pip に読ませることはできますか?](#pyprojecttoml-の-projectdependencies-を-pip-に読ませることはできますか)
+  - [pyproject.toml に requirements-dev.txt に相当するフィールドはありますか?](#pyprojecttoml-に-requirements-devtxt-に相当するフィールドはありますか)
+  - [pyproject.toml に project.dependencies と project.optional-dependencies の dev を書いたとして、その両方を`pip install --use-pep517` するにはどうしたらいいですか?](#pyprojecttoml-に-projectdependencies-と-projectoptional-dependencies-の-dev-を書いたとしてその両方をpip-install---use-pep517-するにはどうしたらいいですか)
+  - [Python は pyproject.toml を読んで動作を変えますか? (node が package.json を読むように)](#python-は-pyprojecttoml-を読んで動作を変えますか-node-が-packagejson-を読むように)
+  - [pip が npm じゃないのはよくわかったので、何かパッケージマネージャを使うことにする](#pip-が-npm-じゃないのはよくわかったので何かパッケージマネージャを使うことにする)
 
 ## pip3 が --user 不要で per-user にインストールされるようになったのはいつからですか?
 
@@ -1145,3 +1150,96 @@ py --version
 ## pip で PyPi 以外から
 
 [Installing Packages - Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/installing-packages/#ensure-you-can-run-python-from-the-command-line)
+
+## pyproject.toml の project.dependencies を pip に読ませることはできますか?
+
+「project.dependencies と requirements.txt の二重管理はいやだ」という話
+
+```sh
+pip install --use-pep517 -e .
+```
+
+ここで:
+
+- `--use-pep517` が `pyproject.toml` の使用を指示します
+- `-e .` は現在のディレクトリ(`.`)をインストールするよう指示し、editable mode でインストールします
+
+この方法で、`pyproject.toml` の `project.dependencies` セクションで指定された依存関係がインストールされます。
+
+**editable mode** とは、Python パッケージをソースコードからインストールする方法の一種で、以下の特徴があります。
+(`npm link` みたいなやつだ)
+
+- パッケージはインストールされますが、ソースコードはプロジェクトディレクトリ内に残されます
+- プロジェクトディレクトリ内のソースコードを編集すると、その変更がインストール済みのパッケージに反映されます
+- パッケージをアンインストール/再インストールする必要がありません
+
+通常の `pip install` はソースコードからビルドした後にパッケージをサイトパッケージにコピーしますが、editable mode ではソフトリンクが作成されるだけです。
+
+editable mode は開発中のパッケージを試したり、アプリケーションの依存パッケージをカスタマイズしたい場合に便利です。一方で、本番環境では editable mode は適していません。
+
+editable mode でインストールするには `pip install -e .` または `python setup.py develop` コマンドを使用します。 `.` はカレントディレクトリを指します。
+
+## pyproject.toml に requirements-dev.txt に相当するフィールドはありますか?
+
+`pyproject.toml` には `project.optional-dependencies` というフィールドがあり、
+これが開発時の依存関係を記述するのに適しています。
+
+使い方は以下のようになります:
+
+```toml
+[project]
+name = "my-package"
+version = "0.1.0"
+dependencies = [
+    "requests",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pylint",
+]
+```
+
+上記の例では、`pytest`と`pylint`が開発時の依存関係としてリストアップされています。これらの依存関係は以下のようにインストールできます:
+
+```sh
+pip install .[dev]
+```
+
+`.[dev]`は`project.optional-dependencies.dev`セクションを指しています。
+
+このように、単一の`pyproject.toml`ファイルに本体の依存関係と開発時の依存関係を分けて記述できるので、別の`requirements-dev.txt`のようなファイルを用意する必要がありません。
+
+オプションの依存関係の複数のグループを定義することもできます:
+
+```toml
+[project.optional-dependencies]
+dev = [...]
+test = [...]
+docs = [...]
+```
+
+この場合は`pip install .[dev,test]`のようにしてグループを指定します。
+
+開発環境とリリース環境で依存関係を明確に分けられるため、
+`pyproject.toml`の optional-dependencies は requirements.txt の良い代替手段となります。
+
+## pyproject.toml に project.dependencies と project.optional-dependencies の dev を書いたとして、その両方を`pip install --use-pep517` するにはどうしたらいいですか?
+
+```sh
+pip install --use-pep517 -e .[dev]
+```
+
+## Python は pyproject.toml を読んで動作を変えますか? (node が package.json を読むように)
+
+いいえ。Python 自体は pyproject.toml を読みません。
+
+ツール類は pyproject.toml を読んで動作を変えるものが沢山あります。
+
+## pip が npm じゃないのはよくわかったので、何かパッケージマネージャを使うことにする
+
+条件:
+
+- タスクランナーっぽいのがついてるやつ。invoke は良かった(まあ併用すればいいのだけど)。
+- GitHub の dependabot.yml に対応してるやつ: [dependabot.yml ファイルの構成オプション - GitHub Docs](https://docs.github.com/ja/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem)
