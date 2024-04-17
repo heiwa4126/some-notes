@@ -12,7 +12,7 @@ python には ./node_modules が無くて npm も無い。
 - [pyproject.toml - pip documentation v24.0](https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/)
 - [Package Discovery and Namespace Packages - setuptools 69.2.0.post20240313 documentation](https://setuptools.pypa.io/en/latest/userguide/package_discovery.html#)
 
-## python 用タスクランナー invoke
+## Python 用タスクランナー invoke
 
 - `python3 -m unittest`
 - `python3 -m build`
@@ -24,7 +24,7 @@ python には ./node_modules が無くて npm も無い。
 
 のようにすることはできますか?
 
-また Windows だと`python3`じゃなくて`python` なのを吸収できますか?
+また Windows だと`python3`じゃなくて`py` なのを吸収できますか?
 
 ---
 
@@ -82,7 +82,7 @@ npm だったら
 
 ## pyproject.toml の例
 
-[Writing your pyproject.toml - Python Packaging User Guide](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#a-full-example)
+[a-full-example - Writing your pyproject.toml - Python Packaging User Guide](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#a-full-example)
 
 ## pyproject.toml の project.classifiers に書けるものの一覧
 
