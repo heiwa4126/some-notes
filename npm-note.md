@@ -29,6 +29,7 @@
   - [npm でグローバルでインストールしたパッケージを require() で呼ぶ](#npm-でグローバルでインストールしたパッケージを-require-で呼ぶ)
     - [まとめ](#まとめ)
   - [npx foo で実行されるのは何?](#npx-foo-で実行されるのは何)
+  - [npm link を ローカルの node_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
 
 ## 多分最初にこれよんだほうがよさそう
 
@@ -579,7 +580,7 @@ Node.js の公式ドキュメントに基づいて`require.resolve()`の動作�
    - `NODE_PATH`環境変数で指定されたディレクトリも探索対象になります。
 
 5. **npm のグローバルモジュールは探索対象外**
-   - npm でグローバルにインストールされたモジュールは探索対象外です。
+   - **npm でグローバルにインストールされたモジュールは探索対象外です。**
 
 つまり、`require.resolve()`はローカルと NODE_PATH のみを解決対象とし、npm のグローバルモジュールは解決できない点に注意が必要です。
 
@@ -588,3 +589,35 @@ Node.js の公式ドキュメントに基づいて`require.resolve()`の動作�
 ## npx foo で実行されるのは何?
 
 package.json の bin の最初のエントリーらしい。
+
+## npm link を ローカルの node_modules に入れる方法はありますか?
+
+プロジェクトに examples/ を置くときに自分のモジュール名で require 出来ないのは不便で、
+
+ところが
+
+- npm でグローバルにインストールされたモジュールは探索対象外
+- `npm link` は グローバルにインストール(というか symlink)される
+
+ではどうすればいいかというと、
+
+```sh
+npm link
+npm link $MY_PACKAGE_NAME
+npm uninstall -g $MY_PACKAGE_NAME
+```
+
+で出来る。どうかしてる。欠点も上のコード見ればわかるよね。
+
+namespaced でないパッケージなら、node_modules の下にその名前で symlink するだけでもいい。
+
+npm のグローバルの場所を一時的に変更すればいい。
+以下のようなスクリプトを書いて実行する(またはサブシェルで実行)。
+
+```sh
+MY_PACKAGE_NAME="@foo/bar"
+NPM_CONFIG_PREFIX="$PWD/.npm-local"
+npm link
+npm link "$MY_PACKAGE_NAME"
+rm -rf "$NPM_CONFIG_PREFIX"
+```
