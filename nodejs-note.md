@@ -20,14 +20,14 @@
 - [いちばん簡単な node.js プロジェクトの始め方](#いちばん簡単な-nodejs-プロジェクトの始め方)
   - [続き: git](#続き-git)
   - [続き: node-dev](#続き-node-dev)
-- [そのほか参考リンク](#そのほか参考リンク)
-- [npm install dev 抜き](#npm-install-dev-抜き)
-- [npm -g が --location=global になってめんどくさい](#npm--g-が---locationglobal-になってめんどくさい)
+    - [そのほか参考リンク](#そのほか参考リンク)
+  - [npm install dev 抜き](#npm-install-dev-抜き)
+  - [npm -g が --location=global になってめんどくさい](#npm--g-が---locationglobal-になってめんどくさい)
   - [npm の補完](#npm-の補完)
   - [import/require の "node:"](#importrequire-の-node)
   - ["node ."](#node-)
   - [pnpm や yarn には npx に相当するものがありますか?](#pnpm-や-yarn-には-npx-に相当するものがありますか)
-- [Web Crypto API](#web-crypto-api)
+  - [Web Crypto API](#web-crypto-api)
   - [local storage で暗号化](#local-storage-で暗号化)
   - [Node.js の JSON](#nodejs-の-json)
 
@@ -81,7 +81,7 @@ npm completion >> ~/.profile
 
 参考:
 
-- [全部知ってる？ npm を使いこなすために絶対知っておきたい 10 のこと - WPJ](https://www.webprofessional.jp/10-npm-tips-and-tricks/)
+- [全部知ってる? npm を使いこなすために絶対知っておきたい 10 のこと - WPJ](https://www.webprofessional.jp/10-npm-tips-and-tricks/)
 - 原文: [10 Tips and Tricks That Will Make You an npm Ninja — SitePoint](https://www.sitepoint.com/10-npm-tips-and-tricks/)
 
 ## npm の`-g`
@@ -166,15 +166,15 @@ npm root -g
 
 ## node がモジュールを探しに行く先を表示
 
-`require('hoge')`の hoge を探しに行く先。
+`require('hoge')` の hoge を探しに行く先。
 
-```sh
+```bash
 node -e "console.log(global.module.paths)"
 ```
 
-カレントパスから 1 個づつ上の/node_modules になる。
+カレントパスから 1 個づつ上の node_modules/ になる。
 
-$HOME の下の/node_modules に per user で使うモジュールを集めておきたいなら
+$HOME の下の node_modules/ に per user で使うモジュールを集めておきたいなら
 
 ```sh
 mkdir -p $HOME/node_modules
@@ -359,7 +359,7 @@ kill %1
 
 ここまでで、こんな感じになってるはず。
 
-```
+```text
 .
 |-- index.js
 |-- node_modules
@@ -399,11 +399,11 @@ node-dev index.js &
 
 で起動する。`index.js`を編集&保存するごとにオートリロードするようになる。
 
-# そのほか参考リンク
+### そのほか参考リンク
 
 - [npm init で author や license などの初期値を指定する - teppeis blog](https://teppeis.hatenablog.com/entry/2015/12/configure-npm-init)
 
-# npm install dev 抜き
+## npm install dev 抜き
 
 ```sh
 npm i --only=prod
@@ -414,7 +414,7 @@ npm i --production
 ちょっと気に入らない。あと npm のバージョンによっても変わるらしい。
 `--only=dev`は無い。
 
-# npm -g が --location=global になってめんどくさい
+## npm -g が --location=global になってめんどくさい
 
 なんとかインチキできんのか。
 
@@ -487,13 +487,13 @@ Yarn には、npx に相当する機能の「yarn npx」というものがあり
 
 それで、pnpx や yarn npx は、npx に似た機能を持っており、ローカルにインストールしたパッケージを実行するために使用できます。
 
-…なんか胡乱だけど言いたいことはわかった。
+...なんか胡乱だけど言いたいことはわかった。
 
 - [pnpx CLI | pnpm](https://pnpm.io/ja/6.x/pnpx-cli)
 - [pnpm exec | pnpm](https://pnpm.io/ja/cli/exec)
 - [pnpm dlx | pnpm](https://pnpm.io/ja/cli/dlx) - これが推奨
 
-# Web Crypto API
+## Web Crypto API
 
 Node.js には `crypto` があるけど、ブラウザにはない。
 代わりにブラウザには [Web Crypto API](https://developer.mozilla.org/ja/docs/Web/API/Web_Crypto_API) がある。
@@ -506,7 +506,7 @@ Web Crypto API は主にブラウザー環境で実行するために設計さ�
 Node.js では、Web Crypto API は提供されていませんが、代わりに Node.js には、暗号化操作を行うために利用できる標準の crypto モジュールがあります。
 
 crypto モジュールには、多くの暗号アルゴリズムが含まれており、ブラウザ環境の Web Crypto API と同様の機能を提供しています。
-ただし、crypto モジュールには、Web Crypto API には含まれているような、鍵の派生（key derivation）や鍵交換（key exchange）といった機能が提供されていません。
+ただし、crypto モジュールには、Web Crypto API には含まれているような、鍵の派生(key derivation)や鍵交換(key exchange)といった機能が提供されていません。
 
 そのため、Node.js で Web Crypto API と同じ機能を使うためには、Web Crypto API の代替として提供されているサードパーティ製のライブラリを利用することがあります。
 例えば、Node.js で Web Crypto API 互換の API を提供するライブラリとしては、

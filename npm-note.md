@@ -27,9 +27,10 @@
   - [package.json に作者名とメールアドレスを書く](#packagejson-に作者名とメールアドレスを書く)
   - [npm unlink は存在しない](#npm-unlink-は存在しない)
   - [npm でグローバルでインストールしたパッケージを require() で呼ぶ](#npm-でグローバルでインストールしたパッケージを-require-で呼ぶ)
+    - [モジュールを探しに行くパスをリストするなら](#モジュールを探しに行くパスをリストするなら)
     - [まとめ](#まとめ)
   - [npx foo で実行されるのは何?](#npx-foo-で実行されるのは何)
-  - [npm link を ローカルの node\_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
+  - [npm link を ローカルの node_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
     - [注意](#注意)
 
 ## 多分最初にこれよんだほうがよさそう
@@ -554,6 +555,14 @@ ln -s "$(npm root -g)"  "$HOME/.node_modules"
 ```
 
 とかでいけそう。
+
+### モジュールを探しに行くパスをリストするなら
+
+```sh
+node -e "console.log(global.module.paths)"
+```
+
+で。あまり面白くない出力が得られる。
 
 ### まとめ
 
