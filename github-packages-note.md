@@ -19,6 +19,17 @@
 
 などがある。
 
+## 認証
+
+- パブリックにできる。 `npm i github:foo/bar` で他の設定不要で @foo/bar パッケージが入れられる。
+  - ` npm i https://github.com/foo/bar` でも OK だけど、package.json には全部 `git+ssh:` になる。
+- プライベートのままでも ssh 経由でつながるなら `npm i github:foo/bar` で行ける。
+- .npmrc と token つかえば、プライベートでだろうがなんだろうが OK
+
+`github:` スキーマは `git+ssh://git@github.com/` と同値らしい。
+
+参照: [npm-install | npm Docs](https://docs.npmjs.com/cli/v9/commands/npm-install)
+
 ## ドキュメント
 
 [GitHub Packages のドキュメント - GitHub Docs](https://docs.github.com/ja/packages)
@@ -80,7 +91,7 @@ Personal Access Token (classic) のトークンが表示されたところで(�
 - `chmod og= .npmrc` する
 
 `@SCOPE:registry` のところは
-`@SCOPE/package-name:registry` のようにパッケージまで指定もできる。
+`@SCOPE/package-name:registry` のようにパッケージまで指定もできる。嘘かも
 
 ### npmrc の場所について
 
