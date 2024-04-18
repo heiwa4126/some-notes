@@ -19,6 +19,7 @@
   - [.vscode/ はレポジトリに含めるべき?](#vscode-はレポジトリに含めるべき)
   - [.vscode/tasks.json に書いたタスクはどうやって動かす?](#vscodetasksjson-に書いたタスクはどうやって動かす)
   - [.vscode/tasks.json と launch.json はどう使い分ける?](#vscodetasksjson-と-launchjson-はどう使い分ける)
+  - [VScode のターミナルでどんなコマンドを叩いても "Argument list too long" と言われるとき](#vscode-のターミナルでどんなコマンドを叩いても-argument-list-too-long-と言われるとき)
 
 ## Remote Development
 
@@ -297,3 +298,9 @@ WSL2 が mirror モードだった(IPv6 を使いたかった)のを、元の NA
 5. コード変更後、保存して自動でコンパイルタスクが実行され、最新の JS コードが生成される
 
 このように tasks.json と launch.json を使い分けて開発を行うことで、コーディング、ビルド、デバッグの作業フローを効率化できます。
+
+## VScode のターミナルでどんなコマンドを叩いても "Argument list too long" と言われるとき
+
+環境変数 PATH が変。たぶん長すぎ。.profile か.bashrc かそれ的なやつをチェックして直す。
+
+[linux - Argument list too long - No command is working in VS Code - Stack Overflow](https://stackoverflow.com/questions/74341831/argument-list-too-long-no-command-is-working-in-vs-code)

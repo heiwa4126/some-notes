@@ -29,7 +29,8 @@
   - [npm でグローバルでインストールしたパッケージを require() で呼ぶ](#npm-でグローバルでインストールしたパッケージを-require-で呼ぶ)
     - [まとめ](#まとめ)
   - [npx foo で実行されるのは何?](#npx-foo-で実行されるのは何)
-  - [npm link を ローカルの node_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
+  - [npm link を ローカルの node\_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
+    - [注意](#注意)
 
 ## 多分最初にこれよんだほうがよさそう
 
@@ -592,6 +593,8 @@ package.json の bin の最初のエントリーらしい。
 
 ## npm link を ローカルの node_modules に入れる方法はありますか?
 
+(pip の editable mode `pip install -e .` に相当するやつ)
+
 プロジェクトに examples/ を置くときに自分のモジュール名で require 出来ないのは不便で、
 
 ところが
@@ -616,8 +619,13 @@ npm のグローバルの場所を一時的に変更すればいい。
 
 ```sh
 MY_PACKAGE_NAME="@foo/bar"
-NPM_CONFIG_PREFIX="$PWD/.npm-local"
+NPM_CONFIG_PREFIX="$PWD/.npm-local" # これでnpmグロバールを汚さない
 npm link
 npm link "$MY_PACKAGE_NAME"
-rm -rf "$NPM_CONFIG_PREFIX"
+rm -rf "$NPM_CONFIG_PREFIX" # 別に消さなくてもいい
 ```
+
+### 注意
+
+- パッケージで `npm i` や `npm up` するとリンクは消えます (package.json の依存に書いてないから)。貼りなおしましょう
+- `package.json`を変えてもメタデータが微妙に更新されません。貼りなおしましょう
