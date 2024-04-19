@@ -22,7 +22,7 @@
 ## 認証
 
 - パブリックにできる。 `npm i github:foo/bar` で他の設定不要で @foo/bar パッケージが入れられる。
-  - ` npm i https://github.com/foo/bar` でも OK だけど、package.json には全部 `git+ssh:` になる。
+  - `npm i https://github.com/foo/bar` でも OK だけど、package.json には全部 `git+ssh:` になる。
 - プライベートのままでも ssh 経由でつながるなら `npm i github:foo/bar` で行ける。
 - .npmrc と token つかえば、プライベートでだろうがなんだろうが OK
 
