@@ -13,6 +13,7 @@ pip は npm じゃない。
 
 ## 有名どころ
 
+- [pipenv](https://pipenv.pypa.io/)
 - [Poetry](https://python-poetry.org/)
 - [PDM](https://pdm-project.org/latest/)
 - [Rye](https://rye-up.com/)
@@ -23,6 +24,8 @@ pip は npm じゃない。
 
 - [Python Package Manager Comparison 📦 - DEV Community](https://dev.to/adamghill/python-package-manager-comparison-1g98)
 - [Environment Tools: PDM, Poetry and Rye](https://www.playfulpython.com/environment-tools-pdm-poetry-rye/) -[プロジェクト概要 - Python Packaging User Guide](https://packaging.python.org/ja/latest/key_projects/)
+
+Hatch 関係は移動する
 
 ## PyPA とは?
 
@@ -37,6 +40,9 @@ PyPA は、Python パッケージ作者(Python Package Authors)のことを指�
 PyPA は Python の発展に大きく貢献しており、Python コミュニティにとって重要な存在です。彼らによってさまざまな優れたサードパーティ製パッケージが公開され、Python の機能が大幅に強化されています。
 
 [PyPA には公式サイト](https://www.pypa.io/)があり、パッケージ作成の手引きや最新情報が掲載されています。また、メーリングリストやフォーラムなどを通じて、パッケージ作者同士の情報交換やサポートも行われています。
+
+pip や pipx, pipenv 作ってるところ。
+[Python Packaging User Guide](https://packaging.python.org/ja/latest/) は読んだことがあるでしょう。
 
 ## hatch の環境はどこに?
 
