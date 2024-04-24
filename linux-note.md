@@ -1,14 +1,14 @@
-# Linux雑多メモ
+# Linux 雑多メモ
 
 便利なツールなんだけど使用頻度が低いと思い出せないやつなんかをメモ
 
-# neofetch
+## neofetch
 
 [GitHub - dylanaraps/neofetch: 🖼️ A command-line system information tool written in bash 3.2+](https://github.com/dylanaraps/neofetch)
 
 ロゴ出すやつ(「情報だすやつ」ですね)。
 
-```
+```console
 $ neofetch
             .-/+oossssoo+/-.               heiwa4126@sever1
         `:+ssssssssssssssssss+:`           ---------
@@ -34,20 +34,20 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   GPU: Vendor 1234 Device 1111
 
 インストールは
 
-```
+```sh
 sudo apt install neofetch
 ```
 
-# fstabの第4フィールドで
+## fstab の第 4 フィールドで
 
-noautoもautoもつけなかったら、どっちになるのか?
+noauto も auto もつけなかったら、どっちになるのか?
 
 `defaults`は`rw, suid, dev, exec, auto, nouser, and async`であるとマニュアルには書いてあるけど。
 
-# UNIX時間を読める形式にする
+## UNIX 時間を読める形式にする
 
 プログラム言語で関数呼ぶのではなくワンライナーでちょっと変換したいときに。
-dateコマンドでできる。
+date コマンドでできる。
 
 例:
 
@@ -57,35 +57,35 @@ date +'%Y-%m-%d %T' -d '1970-1-1 1604482445 sec'
 date +'%Y-%m-%d %T' -d '1970-1-1 09:00:00 1604482445 sec'
 ```
 
-# dateコマンドいろいろ
+## date コマンドいろいろ
 
-UTCで
+UTC で
 
-```
+```sh
 date -u '+%Y-%m-%dT%H:%M:%SZ'
 ```
 
-UTCで1時間後
+UTC で 1 時間後
 
-```
+```sh
 date --date "1 hour" -u '+%Y-%m-%dT%H:%M:%SZ'
 ```
 
-[[Shell Script] dateコマンドで日時(日付、時刻)計算をする方法 - Life with IT](https://l-w-i.net/t/shell/date_001.txt)
+[[Shell Script] date コマンドで日時(日付、時刻)計算をする方法 - Life with IT](https://l-w-i.net/t/shell/date_001.txt)
 
-# wで出てくるtty名のユーザを強制ログアウトさせる
+## w で出てくる tty 名のユーザを強制ログアウトさせる
 
-psでgrepして...より早い。
+ps で grep して...より早い。
 
 ```sh
 pkill -9 -t pts/1
 ```
 
-自分以外だったらsudoで。
+自分以外だったら sudo で。
 
 `-u`オプションを使ってユーザ名を明示してもいい。
 
-# /usr/lib/firmwareがでかい
+## /usr/lib/firmware がでかい
 
 から始まるディスク容量を増やす作戦
 
@@ -93,7 +93,7 @@ pkill -9 -t pts/1
 
 これとか知らなかった
 
-```
+```sh
 journalctl --disk-usage
 sudo journalctl --vacuum-size=100M
 # or
@@ -102,7 +102,7 @@ sudo journalctl --vacuum-time=7d
 
 または
 
-```
+```text
 /etc/systemd/journald.conf
 に
 SystemMaxUse=100M
@@ -114,13 +114,13 @@ systemctl restart systemd-journald.service
 
 - [man journald.conf の訳 - kandamotohiro](https://sites.google.com/site/kandamotohiro/systemd/man-journald-conf-no-yi)
 
-デフォルト値はファイルシステムの15%らしい。
+デフォルト値はファイルシステムの 15%らしい。
 
-# cron.dailyはいつ実行される?
+## cron.daily はいつ実行される?
 
 ディストリによって起動方法が変わるので
 
-anacronで起動されるRHEL7などでは
+anacron で起動される RHEL7 などでは
 
 ```sh
 grep daily /etc/anacrontab
@@ -128,7 +128,7 @@ grep daily /etc/anacrontab
 
 で確認。
 
-Debian、Ubuntuはデフォルトではanacronは使わないので(インストールすれば使える)
+Debian、Ubuntu はデフォルトでは anacron は使わないので(インストールすれば使える)
 
 ```sh
 grep daily /etc/crontab
@@ -136,7 +136,7 @@ grep daily /etc/crontab
 
 で。
 
-# lsでディレクトリ名だけ表示する
+## ls でディレクトリ名だけ表示する
 
 ```sh
 ls -d */
@@ -144,9 +144,9 @@ ls -d */
 ls -ld */
 ```
 
-[lsでディレクトリ名のみ表示する(grepは使わない) - Qiita](https://qiita.com/github-nakasho/items/1433f6601bb3efc14474#%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E5%90%8D%E3%81%A0%E3%81%91%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%81%9F%E3%81%84)
+[ls でディレクトリ名のみ表示する(grep は使わない) - Qiita](https://qiita.com/github-nakasho/items/1433f6601bb3efc14474#%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E5%90%8D%E3%81%A0%E3%81%91%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%81%9F%E3%81%84)
 
-# visudoで/etc/sudoer以外を編集する
+## visudo で/etc/sudoer 以外を編集する
 
 `-f`オプション。こんな感じ
 
@@ -158,18 +158,18 @@ EDITOR=emacs visudo -f /etc/sudoers.d/heiwa
 
 あとファイルの最後に改行が必須(忘れやすい)。
 
-# Errata
+## Errata
 
 - Red Hat : [Red Hat Product Errata - Red Hat Customer Portal](https://access.redhat.com/errata/)
 - Ubuntu : [CVEs \| Ubuntu](https://ubuntu.com/security/cve)
 
-# EFIかどうか知る
+## EFI かどうか知る
 
 ```bash
 ls -lad /sys/firmware/efi
 ```
 
-# カラーでless
+## カラーで less
 
 `unbuffer` と `less -R` を組み合わせるのが汎用っぽい。
 
@@ -184,7 +184,7 @@ unbuffer ls -al | less -R
 
 [Color output in console - ArchWiki](https://wiki.archlinux.org/title/Color_output_in_console)
 
-# ディストリのバージョンを知る
+## ディストリのバージョンを知る
 
 ```
 $ lsb_release -ds
@@ -205,9 +205,9 @@ LSB (Linux Standard Base)
 
 [Linux Standard Base (LSB) とは何か - Qiita](https://qiita.com/kaizen_nagoya/items/bdd121a9e366036cbaba)
 
-# 仮想端末(pty)とは何か?
+## 仮想端末(pty)とは何か?
 
-まずptyがない状態を体験してみる。
+まず pty がない状態を体験してみる。
 
 ```bash
 ssh -T localhost
@@ -225,9 +225,16 @@ ssh -T localhost
 | 制約     | 物理的な制約はないが、ソフトウェアによって実現されているため、システムリソースに制限がある場合がある | 物理的な制約があるため、数や配置に制限がある場合がある   |
 | 例       | SSH、Telnet、コンソールなど                                                                          | ディスプレイ、キーボード、マウスなど                     |
 
-no-ptyだと「対話的なプログラム」が支障をきたす(実行できないわけではない)。
+no-pty だと「対話的なプログラム」が支障をきたす(実行できないわけではない)。
 
 とりあえず重要な点は
-**no-ptyだからプログラムが実行できない、とかリモート側の出力が帰ってこない、みたいなことは無い**
+**no-pty だからプログラムが実行できない、とかリモート側の出力が帰ってこない、みたいなことは無い**
 のでセキュリティを高める意味はあんまりない
 ということですかね。
+
+## ファイルの種類を知る
+
+`file` コマンドが有名だけど、さらにかしこいのがある。
+
+- [Magika](https://google.github.io/magika/)
+  - [google/magika: Detect file content types with deep learning](https://github.com/google/magika)
