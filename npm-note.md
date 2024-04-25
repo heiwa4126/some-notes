@@ -634,6 +634,11 @@ npm link "$MY_PACKAGE_NAME"
 rm -rf "$NPM_CONFIG_PREFIX" # 別に消さなくてもいい
 ```
 
+利点は
+
+- npm グロバールを汚さない
+- npm prefix を root のままにしている環境でも動く
+
 ### 注意
 
 - パッケージで `npm i` や `npm up` するとリンクは消えます (package.json の依存に書いてないから)。貼りなおしましょう
