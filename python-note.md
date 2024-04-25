@@ -57,6 +57,8 @@
   - [pyproject.toml に project.dependencies と project.optional-dependencies の dev を書いたとして、その両方を`pip install --use-pep517` するにはどうしたらいいですか?](#pyprojecttoml-に-projectdependencies-と-projectoptional-dependencies-の-dev-を書いたとしてその両方をpip-install---use-pep517-するにはどうしたらいいですか)
   - [Python は pyproject.toml を読んで動作を変えますか? (node が package.json を読むように)](#python-は-pyprojecttoml-を読んで動作を変えますか-node-が-packagejson-を読むように)
   - [pip が npm じゃないのはよくわかったので、何かパッケージマネージャを使うことにする](#pip-が-npm-じゃないのはよくわかったので何かパッケージマネージャを使うことにする)
+  - [パッケージの区切り文字](#パッケージの区切り文字)
+  - [サブパッケージ (subpackages)](#サブパッケージ-subpackages)
 
 ## pip3 が --user 不要で per-user にインストールされるようになったのはいつからですか?
 
@@ -1244,3 +1246,47 @@ pip install --use-pep517 -e .[dev]
 
 - タスクランナーっぽいのがついてるやつ。invoke は良かった(まあ併用すればいいのだけど)。
 - GitHub の dependabot.yml に対応してるやつ: [dependabot.yml ファイルの構成オプション - GitHub Docs](https://docs.github.com/ja/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#package-ecosystem)
+
+## パッケージの区切り文字
+
+pip と pypi では
+
+```sh
+pip install foo-bar
+pip install foo_bar
+pip install foo.bar
+pip install "foo bar"
+```
+
+は全部同じパッケージをインストールする。
+
+[PEP 508: Python Package Naming Convention](https://www.python.org/dev/peps/pep-0508/)
+
+ただし `.` だけは サブパッケージや名前空間パッケージを表すことがある。
+
+## サブパッケージ (subpackages)
+
+Python の「サブパッケージ」の概念は、Python の公式ドキュメントの以下の場所で定義されています。
+
+[package-relative-imports - 5. The import system — Python 3.12.3 documentation](https://docs.python.org/3/reference/import.html#package-relative-imports)
+
+このドキュメントの「Packages」という節で、サブパッケージについて以下のように説明されています:
+
+```text
+Packages are a way of structuring Python's module namespace by using "dotted module names".
+A package is simply a directory with an __init__.py file in it, that groups together a bunch of module files.
+
+For example, the foo package might contain modules foo.bar and foo.utils. When you import the foo package, the __init__.py code is executed, and the sys.path gets populated for the foo directory.
+
+The __init__.py file can just be an empty file, but can also execute initialization code for the package or set the __all__ variable.
+
+Subpackages are packages contained within packages. For example, the modules foo.bar.baz and foo.bar.qux would belong to the foo.bar subpackage.
+```
+
+要約すると:
+
+- パッケージとは、ドットで区切られたモジュール名を使って Python の名前空間を構造化する方法
+- サブパッケージとは、パッケージの中に含まれる別のパッケージのこと
+- foo.bar.baz や foo.bar.qux のように、ドット付きの名前でサブパッケージを参照する
+
+ですので、サブパッケージの概念は Python の Import システムの仕組みの一部として、公式ドキュメントで定義されています。

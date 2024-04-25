@@ -20,6 +20,7 @@
   - [.vscode/tasks.json に書いたタスクはどうやって動かす?](#vscodetasksjson-に書いたタスクはどうやって動かす)
   - [.vscode/tasks.json と launch.json はどう使い分ける?](#vscodetasksjson-と-launchjson-はどう使い分ける)
   - [VScode のターミナルでどんなコマンドを叩いても "Argument list too long" と言われるとき](#vscode-のターミナルでどんなコマンドを叩いても-argument-list-too-long-と言われるとき)
+  - [拡張機能のフィルタ](#拡張機能のフィルタ)
 
 ## Remote Development
 
@@ -304,3 +305,7 @@ WSL2 が mirror モードだった(IPv6 を使いたかった)のを、元の NA
 環境変数 PATH が変。たぶん長すぎ。.profile か.bashrc かそれ的なやつをチェックして直す。
 
 [linux - Argument list too long - No command is working in VS Code - Stack Overflow](https://stackoverflow.com/questions/74341831/argument-list-too-long-no-command-is-working-in-vs-code)
+
+## 拡張機能のフィルタ
+
+[Extensions view filters](https://code.visualstudio.com/docs/editor/extension-marketplace#_extensions-view-filters)
