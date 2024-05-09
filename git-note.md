@@ -30,6 +30,7 @@
     - [すでにローカルブランチが存在する場合](#すでにローカルブランチが存在する場合)
   - [Git で過去の特定のコミットに移動する方法いろいろ](#git-で過去の特定のコミットに移動する方法いろいろ)
   - [Git で過去の特定のコミットに移動すると、必ず detached HEAD 状態になりますか?](#git-で過去の特定のコミットに移動すると必ず-detached-head-状態になりますか)
+  - [Windows 標準の ssh-agent を使って GitHub に ssh 接続する](#windows-標準の-ssh-agent-を使って-github-に-ssh-接続する)
 
 ## 特定のファイルを最後の commit 時に戻す
 
@@ -530,3 +531,49 @@ git switch -c 新しいブランチ名
 ```
 
 もちろん時と場合によっては既存のブランチにチェックアウトしてもいい。
+
+## Windows 標準の ssh-agent を使って GitHub に ssh 接続する
+
+GitHub の ssh 秘密鍵が
+`C:\Users\foobar\.ssh\github\github`
+にあるとして
+
+管理者権限の Powershell で
+
+```powershell
+Set-Service ssh-agent -StartupType Automatic
+Start-Service ssh-agent
+Get-Service ssh-agent
+
+ssh-add C:\Users\foobar\.ssh\github\github
+ssh-add -l
+
+notepad $ENV:Userprofile/.ssh/config
+```
+
+ssh_config にこんな記述を追加
+
+```config
+Host github.com
+    User git
+    HostName github.com
+    Port 22
+    IdentityFile C:\Users\foobar\.ssh\github\github
+```
+
+接続確認
+
+```console
+PS C:> ssh github.com -T
+Hi foobar! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+(-T は仮想端末なしオプション)
+
+最後に Git の設定
+
+```powershell
+git config --global core.sshCommand "'C:/Windows/System32/OpenSSH/ssh.exe'"
+```
+
+これで毎回パスフレーズを入れずに GitHub につながる。
