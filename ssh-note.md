@@ -312,7 +312,7 @@ ssh-agent もついてるんだ...
 
 .ssh/config の例:
 
-```
+```config
 Protocol 2
 ForwardAgent yes
 
