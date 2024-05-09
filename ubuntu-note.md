@@ -1,8 +1,8 @@
-# Ubuntu,Debain おぼえがき
+# Ubuntu, Debain おぼえがき
 
 AWS や Azure で VM 作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
-- [Ubuntu,Debain おぼえがき](#ubuntudebain-おぼえがき)
+- [Ubuntu, Debain おぼえがき](#ubuntu-debain-おぼえがき)
   - [ホスト名の設定](#ホスト名の設定)
   - [タイムゾーン](#タイムゾーン)
   - [locale](#locale)
@@ -337,7 +337,7 @@ Unattended Upgrades(無人更新)を有効にすると、
 
 `/etc/apt/apt.conf.d/20auto-upgrades` を編集して `APT::Periodic::Unattended-Upgrade` の値を `"0"` に変更すると無効。
 
-```
+```config
 ## APT::Periodic::Update-Package-Lists "1";
 ## APT::Periodic::Unattended-Upgrade "1";
 APT::Periodic::Update-Package-Lists "0";
@@ -346,7 +346,7 @@ APT::Periodic::Unattended-Upgrade "0";
 
 ## `A start job is running for wait for network to be configured` で起動が遅い
 
-```
+```sh
 systemctl disable systemd-networkd-wait-online.service
 systemctl mask systemd-networkd-wait-online.service
 ```
@@ -471,7 +471,7 @@ netplan で `dhclient -r; dhclient`すると dhcp で IP とってる nic にエ
 
 メモ
 
-```
+```console
 $ apt-cache show friendly-recovery
 
 Description-en:
@@ -487,6 +487,15 @@ Make recovery boot mode more user-friendly Make the recovery boot mode more user
 
 - `dpkg-query --list` or `dpkg -l` - フォーマットされてるのでスクリプトで扱いにくい(COLUMNS=999 とかする)。早い。
 - `apt list` - 普通こっちか。
+
+例:
+
+```sh
+COLUMNS=9999 dpkg -l | awk '/^ii/{print $2;}'
+```
+
+環境変数 COLUMNS の設定は
+dpkg に「stdout が tty だ」とバレると無効になる。
 
 ## パッケージの更新履歴
 
