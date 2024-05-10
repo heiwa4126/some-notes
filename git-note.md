@@ -548,7 +548,7 @@ Get-Service ssh-agent
 ssh-add C:\Users\foobar\.ssh\github\github
 ssh-add -l
 
-notepad $ENV:Userprofile/.ssh/config
+notepad $ENV:UserProfile/.ssh/config
 ```
 
 ssh_config にこんな記述を追加
@@ -565,6 +565,7 @@ Host github.com
 
 ```console
 PS C:> ssh github.com -T
+
 Hi foobar! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 

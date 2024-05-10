@@ -19,6 +19,7 @@
     - [エクスポートしながら圧縮: あとで試すメモ](#エクスポートしながら圧縮-あとで試すメモ)
   - [WSL で Windows のやりとり](#wsl-で-windows-のやりとり)
   - [WSL で ls するとディレクトリの色が暗くて見づらいのを直す](#wsl-で-ls-するとディレクトリの色が暗くて見づらいのを直す)
+  - [WSL から CSV を Excel で開く](#wsl-から-csv-を-excel-で開く)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -347,3 +348,15 @@ LINK 01;35 # symbolic link. (If you set this to 'target' instead of a
 にするといいと思う。
 
 DOOR も同色になるけど、これは Solaris にしか出てこないらしいので無視してかまわないはず。
+
+## WSL から CSV を Excel で開く
+
+こんなエリアスか同等の symlink を定義しておいて
+
+```sh
+alias excel='"/mnt/c/Program Files (x86)/Microsoft Office/root/Office16/EXCEL.EXE"'
+# or
+ln -s  "/mnt/c/Program Files (x86)/Microsoft Office/root/Office16/EXCEL.EXE" ~/bin/excel
+```
+
+`excel foo.csv &` で開くよ。
