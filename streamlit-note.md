@@ -61,3 +61,11 @@ streamlit config show
 ## 絵文字
 
 [Streamlit](https://streamlit-emoji-shortcodes-streamlit-app-gwckff.streamlit.app/)
+
+## プロ向けサービスはこっちらしい
+
+[Streamlit in Snowflake](https://www.snowflake.com/en/data-cloud/overview/streamlit-in-snowflake/)
+
+Streamlit Community Cloud も Snowflake ではあるらしい?
+
+[Deploy - Streamlit Docs](https://docs.streamlit.io/deploy) これ読む
