@@ -69,3 +69,12 @@ streamlit config show
 Streamlit Community Cloud も Snowflake ではあるらしい?
 
 [Deploy - Streamlit Docs](https://docs.streamlit.io/deploy) これ読む
+
+## Streamlit Community Cloud に発行するとき 依存パッケージに streamlit は必要?
+
+必要らしい。
+
+[Streamlit Community Cloud で Web アプリを公開する際の準備事項](https://scr.marketing-wizard.biz/dev/streamlit-community-cloud-publish)
+
+> requirements.txt には、外部ライブラリ「のみ」を requirements.txt に記載します。
+> Streamlit 自体も外部ライブラリとなるので、記載が必要となります。
