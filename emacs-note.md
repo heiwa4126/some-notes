@@ -1,22 +1,23 @@
-# emacsメモ
+# emacs メモ
 
-- [emacsメモ](#emacsメモ)
-- [sort & uniq](#sort--uniq)
-- [init.elを分割](#initelを分割)
-- [sharp qoute](#sharp-qoute)
-- [rainbow-delimiters](#rainbow-delimiters)
-- [use-package](#use-package)
-- [packageまわりtips](#packageまわりtips)
-- [help](#help)
-- [LSPモード](#lspモード)
-  - [LSPモード TIPS](#lspモード-tips)
-- [コマンドの出力を自動スクロールする](#コマンドの出力を自動スクロールする)
-- [ELPAのPGPキー](#elpaのpgpキー)
-- [Ubuntu 1804にemacs27](#ubuntu-1804にemacs27)
-- [コンソールからペーストするときインデントさせない](#コンソールからペーストするときインデントさせない)
-- [git以下でバックアップファイルができない](#git以下でバックアップファイルができない)
+- [emacs メモ](#emacs-メモ)
+  - [sort \& uniq](#sort--uniq)
+  - [init.el を分割](#initel-を分割)
+  - [sharp qoute](#sharp-qoute)
+  - [rainbow-delimiters](#rainbow-delimiters)
+  - [use-package](#use-package)
+  - [package まわり tips](#package-まわり-tips)
+  - [help](#help)
+  - [LSP モード](#lsp-モード)
+    - [LSP モード TIPS](#lsp-モード-tips)
+  - [コマンドの出力を自動スクロールする](#コマンドの出力を自動スクロールする)
+  - [ELPA の PGP キー](#elpa-の-pgp-キー)
+  - [Ubuntu 1804 に emacs27](#ubuntu-1804-に-emacs27)
+  - [コンソールからペーストするときインデントさせない](#コンソールからペーストするときインデントさせない)
+  - [git 以下でバックアップファイルができない](#git-以下でバックアップファイルができない)
+  - [melpa の GPG キー](#melpaのgpgキー)
 
-# sort & uniq
+## sort & uniq
 
 よく使うのに忘れるのでメモ。なんかキーバインドしたほうがいいかも。
 ソートしてなくても使える。
@@ -30,29 +31,29 @@ M-x delete-duplicate-lines
 - [Emacs 24.4 の新機能・重複行を削除する delete-duplicate-lines - 雑文発散(2014-08-05)](https://suzuki.tdiary.net/20140805.html)
 - [elisp - how to delete the repeat lines in emacs - Stack Overflow](https://stackoverflow.com/questions/13046791/how-to-delete-the-repeat-lines-in-emacs)
 
-# init.elを分割
+## init.el を分割
 
 [設定ファイルを複数ファイルに分割して管理する構文のまとめ - Qiita](https://qiita.com/skkzsh/items/20af9affd5cc1e9678f8)
 
-# sharp qoute
+## sharp qoute
 
 ``# `ってやつ。
 
-- [elisp - Elispで変数を指定する際 'hoge と #'hoge の違いとは - スタック・オーバーフロー](https://ja.stackoverflow.com/questions/29185/elisp%E3%81%A7%E5%A4%89%E6%95%B0%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E9%9A%9B-hoge-%E3%81%A8-hoge-%E3%81%AE%E9%81%95%E3%81%84%E3%81%A8%E3%81%AF)
+- [elisp - Elisp で変数を指定する際 'hoge と #'hoge の違いとは - スタック・オーバーフロー](https://ja.stackoverflow.com/questions/29185/elisp%E3%81%A7%E5%A4%89%E6%95%B0%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E9%9A%9B-hoge-%E3%81%A8-hoge-%E3%81%AE%E9%81%95%E3%81%84%E3%81%A8%E3%81%AF)
 - [elisp - When should sharp quotes be used? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/35988/when-should-sharp-quotes-be-used)
 
-# rainbow-delimiters
+## rainbow-delimiters
 
 - [Small rainbow-delimiters tutorial | Yoo Box](https://yoo2080.wordpress.com/2013/12/21/small-rainbow-delimiters-tutorial/)
-- [rainbow-delimiters.elの括弧色付けをデフォルトより強調する方法 - 会者定離で(ダイアリーから)以降](https://murase-syuka.hatenablog.com/entry/20140815/1408061850)
+- [rainbow-delimiters.el の括弧色付けをデフォルトより強調する方法 - 会者定離で(ダイアリーから)以降](https://murase-syuka.hatenablog.com/entry/20140815/1408061850)
 
-# use-package
+## use-package
 
 はやりすたりはあるけど
 
 - [jwiegley/use-package: A use-package declaration for simplifying your .emacs](https://github.com/jwiegley/use-package)
 
-# packageまわりtips
+## package まわり tips
 
 `M-x package-refresh-contents [RET]`
 
@@ -61,7 +62,7 @@ M-x delete-duplicate-lines
 - [package: パッケージ管理ツール | Emacs JP](https://emacs-jp.github.io/packages/package)
 - [Getting Started - MELPA](https://melpa.org/#/getting-started)
 
-# help
+## help
 
 よく忘れるので引用しとく。
 元: [GNU Emacs Manual - Help](https://flex.phys.tohoku.ac.jp/texi/emacs-jp/emacs-jp_26.html)
@@ -109,7 +110,7 @@ C-h w command RET
 指定したコマンドを実行するキーを表示します(where-is)．
 ```
 
-# LSPモード
+## LSP モード
 
 - [LSP Mode - Language Server Protocol support for Emacs - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/)
 
@@ -117,12 +118,12 @@ C-h w command RET
 [Languages - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/page/languages/)
 から
 
-Pythonで元祖pyls使うなら
+Python で元祖 pyls 使うなら
 
 - [Python (Palantir) - LSP Mode - LSP support for Emacs](https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/)
 - [GitHub - palantir/python-language-server: An implementation of the Language Server Protocol for Python](https://github.com/palantir/python-language-server)
 
-## LSPモード TIPS
+### LSP モード TIPS
 
 "main.go not in project or it is blacklisted"
 とか言われたら、
@@ -135,12 +136,12 @@ Pythonで元祖pyls使うなら
 
 どちらも`~/.emacs.d/.lsp-session-v1`に反映される。
 
-追加/削除したら、emacsを再起動。
+追加/削除したら、emacs を再起動。
 
 フォーマットは
 `M-x lsp-format-buffer`
 
-# コマンドの出力を自動スクロールする
+## コマンドの出力を自動スクロールする
 
 ```
 (setq shell-command-dont-erase-buffer 'end-last-out)
@@ -149,7 +150,7 @@ Pythonで元祖pyls使うなら
 - [How to make _Shell Command Output_ buffer scroll to the end? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/50299/how-to-make-shell-command-output-buffer-scroll-to-the-end)
 - [https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html](https://www.gnu.org/software/emacs/manual/html_node/emacs/Single-Shell.html) - の一番下。
 
-# ELPAのPGPキー
+## ELPA の PGP キー
 
 `M-x package-list-package`で
 
@@ -160,7 +161,7 @@ No public key for 066DAFCB81E42C40 created at 2021-04-15T06:05:02+0900 using RSA
 
 になるとき。
 
-正しい手順は以下の通り(2021-04頃)
+正しい手順は以下の通り(2021-04 頃)
 
 ```sh
 mkdir ~/.emacs.d/elpa/gnupg -p --mode 0700
@@ -168,16 +169,16 @@ echo "keyserver hkp://keys.gnupg.net" > ~/.emacs.d/elpa/gnupg/gpg.conf
 gpg --homedir ~/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
 ```
 
-古いgpgだと`--receive-keys`オプションがないので`--recv-keys`
+古い gpg だと`--receive-keys`オプションがないので`--recv-keys`
 
 参考:
 
 - [Cannot run melpa package refresh due to gpg errors - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/60554/cannot-run-melpa-package-refresh-due-to-gpg-errors)
 - [Emacs に yaml-mode をインストールできなかった。 - Qiita](https://qiita.com/ryo-sato/items/d42e301648175b41c522)
 
-# Ubuntu 1804にemacs27
+## Ubuntu 1804 に emacs27
 
-snapが簡単だが(`sudo snap install emacs`)
+snap が簡単だが(`sudo snap install emacs`)
 そこそこデカいし、パス設定も面倒なので(/snap/bin)
 それ以外の方法。
 
@@ -188,12 +189,12 @@ sudo apt update
 sudo apt install emacs27-nox
 ```
 
-25を残しといて `sudo update-alternatives --config emacs`する手もあります。
+25 を残しといて `sudo update-alternatives --config emacs`する手もあります。
 
-LSPのバージョンが変わるので
+LSP のバージョンが変わるので
 `rm ~/.emacs.d/.lsp-session-v1`
 
-# コンソールからペーストするときインデントさせない
+## コンソールからペーストするときインデントさせない
 
 [Any Emacs command like paste\-mode in vim? \- Stack Overflow](https://stackoverflow.com/questions/986592/any-emacs-command-like-paste-mode-in-vim)
 
@@ -201,11 +202,11 @@ LSPのバージョンが変わるので
 M-x electric-indent-mode RET
 ```
 
-呼ぶたびにON/OFFする。
+呼ぶたびに ON/OFF する。
 
-# git以下でバックアップファイルができない
+## git 以下でバックアップファイルができない
 
-version controlあると`*~`ができない。まあ好き好きだろうけど。
+version control あると`*~`ができない。まあ好き好きだろうけど。
 
 ```lisp
 (setq vc-make-backup-files t)
@@ -216,7 +217,7 @@ version controlあると`*~`ができない。まあ好き好きだろうけど�
 - [emacs does not backup files in git repo](https://stackoverflow.com/questions/56915816/emacs-does-not-backup-files-in-git-repo)
 - [vc\-make\-backup\-file](https://ayatakesi.github.io/emacs/24.5/Backup.html)
 
-履歴とかも含めて、init.elにはこうしてみた(ほぼコピペ)。
+履歴とかも含めて、init.el にはこうしてみた(ほぼコピペ)。
 
 ```lisp
 (setq
@@ -230,3 +231,11 @@ version controlあると`*~`ができない。まあ好き好きだろうけど�
  vc-make-backup-files t                 ; we need backup files under version control
 )
 ```
+
+## melpa の GPG キー
+
+```sh
+gpg --keyserver keyserver.ubuntu.com --homedir ~/.emacs.d/elpa/gnupg --receive-keys 645357D2883A0966
+```
+
+もうキーサーバーが keyserver.ubuntu.com ぐらいしかまともに動いてない感じ。
