@@ -258,3 +258,59 @@ Huggung Face Hub の model の Natural Language Processing(NLP) のタスクを�
 - Sentence Similarity: 2 つの文の意味的な類似度を計算するタスク。
 
 意味がよくわからんものが...
+
+## 認証が必要なモデル
+
+[stabilityai/japanese-stablelm-2-base-1_6b · Hugging Face](https://huggingface.co/stabilityai/japanese-stablelm-2-base-1_6b)
+が
+
+"You need to agree to share your contact information to access this model."
+というやつだったので、
+
+1. ログインする
+2. 上記に従ってコンタクト情報入れる
+3. [Hugging Face – The AI community building the future.](https://huggingface.co/settings/tokens) で token 1 つ作る。権限は Read で十分。
+4. トークンをコードに渡すにはいろんな方法があるけど、JSON に書くことにした。
+
+`huggingface_token.json`
+
+```json
+{
+  "HUGGINGFACE_TOKEN": "your_huggingface_api_token"
+}
+```
+
+で、こんな感じに使う。
+
+```python
+import json
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+# JSONファイルからトークンを読み込む
+with open("huggingface_token.json") as f:
+    token_data = json.load(f)
+
+token = token_data["HUGGINGFACE_TOKEN"]
+
+# アクセストークンを使ってモデルを読み込む
+model_name = "stabilityai/japanese-stablelm-2-base-1_6b"
+tokenizer = AutoTokenizer.from_pretrained(
+    model_name, token=token, trust_remote_code=True
+)
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    torch_dtype=torch.float16,
+    low_cpu_mem_usage=True,
+    device_map="auto",
+    trust_remote_code=True,
+    token=token,
+)
+## あとは https://huggingface.co/stabilityai/japanese-stablelm-2-base-1_6b を参照
+```
+
+`trust_remote_code`については以下参照
+
+- [AutoTokenizer で chiTra トークナイザを読み込む #transformers - Qiita](https://qiita.com/mh-northlander/items/0b543edfec2e341bd4a0)
+- [Using a model with custom code](https://huggingface.co/docs/transformers/main/en/custom_models#using-a-model-with-custom-code)
