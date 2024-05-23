@@ -41,6 +41,8 @@ AWS や Azure で VM 作る時に、毎回やって、毎回忘れるなにか�
   - [dmesg: read kernel buffer failed: Operation not permitted](#dmesg-read-kernel-buffer-failed-operation-not-permitted)
   - [crypto-policies](#crypto-policies)
   - [needrestart](#needrestart)
+  - [Debian/Ubuntu でシステムワイドに PATH を追加したいとき](#debianubuntu-でシステムワイドに-path-を追加したいとき)
+  - [Debian/Ubuntu でシステムワイドに ライブラリパス を追加したいとき](#debianubuntu-でシステムワイドに-ライブラリパス-を追加したいとき)
 
 ## ホスト名の設定
 
@@ -174,7 +176,7 @@ adduser yourAccount
 
 いくつか質問に答える。さらに sudo できるように
 
-```
+```sh
 usermod -G sudo yourAccount
 passwd yourAccount
 ```
@@ -183,7 +185,7 @@ RHEL AMI だと sudo グループのかわりに wheel で
 
 sudo で root になれるかテスト
 
-```
+```sh
 su - yourAccount
 sudo -i
 ```
@@ -193,7 +195,7 @@ sudo -i
 
 yourAccount の状態で
 
-```
+```sh
 mkdir ~/.ssh
 sensible-editor ~/.ssh/authorized_keys
 chmod -R og= ~/.ssh
@@ -742,3 +744,39 @@ $ sudo reboot
 
 - `/etc/needrestart/needrestart.conf`
 - `/etc/needrestart/conf.d/*.conf` - こちらがお勧め
+
+## Debian/Ubuntu でシステムワイドに PATH を追加したいとき
+
+[CUDA Toolkit 12.5 Downloads | NVIDIA Developer](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_local) を入れた時の話。
+
+nvcc 等が /usr/local/cuda/bin (実態は symlink の symlink) に入るので、ここをシステムワイドに PATH に追加したい。
+
+- 方法 1: `/etc/environment` を編集する
+- 方法 2: `/etc/profile.d/` にスクリプトを追加する
+- 方法 3: `/etc/profile` を編集する
+
+`/etc/profile.d/cuda-toolkit.sh` を書くことにした。
+
+## Debian/Ubuntu でシステムワイドに ライブラリパス を追加したいとき
+
+(上の続き)
+
+- 方法 1: `/etc/ld.so.conf.d/` に設定ファイルを追加する
+- 方法 2: `/etc/environment` を編集する
+- 方法 3: `/etc/profile` または `/etc/profile.d/` にスクリプトを追加する
+
+方法 1 に従って
+
+`/etc/ld.so.conf.d/cuda-toolkit.conf` に
+
+```text
+/usr/local/cuda/lib64
+```
+
+と書いて、 `ldconfig -vv` しました.
+
+すでに
+`/etc/ld.so.conf.d/000_cuda.conf` があって、
+パッケージで管理されてた...
+
+上記の作業は不要。

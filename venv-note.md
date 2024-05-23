@@ -10,7 +10,7 @@
 python3 -m venv .venv --symlinks
 ```
 
-こんな感じになる。元の Python にセキュリティ更新があった時でも安心。
+こんな感じ ↓ になる。元の Python にセキュリティ更新があった時でも安心。
 
 ```console
 $ LANG=C find .venv -type l -ls
