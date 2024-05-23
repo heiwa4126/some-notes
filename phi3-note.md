@@ -62,7 +62,7 @@ python3 -c 'from transformers.utils import is_flash_attn_2_available; print(is_f
 
 ### "You are not running the flash-attention implementation, expect numerical differences." って言われるんですけど?
 
-Flash annotation は
+Flash attention は
 float16 か bfloat16 でしか動かないらしい。
 
 こんな感じで使う? とりあえず警告は出ずに動くけど、あまり早くなったような気がしない。
