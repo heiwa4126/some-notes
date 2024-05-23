@@ -3,14 +3,14 @@
 けっこういい感じ。
 
 - 量子化モデルはもちろん、
-  CUDA メモリが 8GB あれば非量子化モデルが動く (一番小さいやつ →
+  GPU メモリが 8GB あれば非量子化モデルが動く (一番小さいやつ →
   [microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
   )。
 - 量子化モデルも Microsoft 自身が配布してる
-  (例: [microsoft/Phi-3-mini-4k-instruct-gguf](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf))。
-- 一番小さいモデルでも結構まともに日本語で predict する。
+  (例: [microsoft/Phi-3-mini-4k-instruct-gguf](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf))。たぶんチューニングも適切にしてあると期待できる。
+- で、この一番小さいモデルでも結構まともに日本語で predict する。
 - system プロンプトに「あなたは親切な AI アシスタントです。日本語で答えて」等書かなくても日本語で答える。
-- LM Studio で使う時でもプリセットのプロファイル Phi3 が自動で選択されて、十分動く
+- LM Studio で使う時でもプリセットのプロファイル Phi3 が自動で選択されて、そのままで十分動く
 - トークンサイズがでかい (4k と 128k)
 - **必読** [Microsoft Phi\-3 Cookbook](https://github.com/microsoft/Phi-3CookBook/) が親切。こんなモデルはじめて見た。
 
