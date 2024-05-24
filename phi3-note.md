@@ -18,12 +18,13 @@
 
 ## Web 上ですぐさま試す
 
-認証等不要でいきなり試せる。
+認証等不要でいきなり試せる → [Model catalog - Azure AI Studio](https://ai.azure.com/explore/models?tid=e67df547-9d0d-4f4d-9161-51c6ed1f7d11&selectedCollection=phi&selectedTask=chat-completion&selectedLicense=mit)
 
-[Model catalog - Azure AI Studio](https://ai.azure.com/explore/models?tid=e67df547-9d0d-4f4d-9161-51c6ed1f7d11&selectedCollection=phi&selectedTask=chat-completion&selectedLicense=mit)
 で、モデルを選択してください。
+迷ったら、一番小さい
+[Phi-3-mini-4k-instruct](https://ai.azure.com/explore/models/Phi-3-mini-4k-instruct/version/7/registry/azureml?tid=e67df547-9d0d-4f4d-9161-51c6ed1f7d11) を試してみて。
 
-「チャットの完了」と表示されてるのは "Chat complition" タスクのことらしい...
+忘れないでほしいのは、このモデルがそこらのノート PC で動くようなサイズのものであること。GTP-4o 等と比較しないでください。
 
 ## モデルのレポジトリ
 
