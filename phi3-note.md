@@ -11,7 +11,7 @@
 - で、この一番小さいモデルでも結構まともに日本語で predict する。
 - system プロンプトに「あなたは親切な AI アシスタントです。日本語で答えて」等書かなくても日本語で答える。
 - LM Studio で使う時でもプリセットのプロファイル Phi3 が自動で選択されて、そのままで十分動く
-- 入力トークンサイズがでかい (mini は 4k と 128k。medium と small は 8k と 128k)
+- 入力トークンサイズがでかい (mini と medium は 4k と 128k。 small は 8k と 128k)
 - 日本語まわりは 1 文字 1 トークンらしい。英語は単語 (あとで確認)
 - ライセンスが MIT
 - **必読** [Microsoft Phi\-3 Cookbook](https://github.com/microsoft/Phi-3CookBook/) が親切。こんなモデルはじめて見た。
@@ -30,6 +30,14 @@
 
 [Phi-3-mini-4k-instruct - HuggingChat](https://huggingface.co/chat/models/microsoft/Phi-3-mini-4k-instruct) は HuggingFace アカウントが必要
 (そのかわりセッションを保持してくれる)
+
+## Phi-3 ファミリー
+
+- Phi-3-mini - 3.8B パラメータ。コンテキスト長 128K と 4K。
+- Phi-3-small - 7B パラメータ。コンテキスト長 128K と 8K。
+- Phi-3-medium - 14B パラメータ。コンテキスト長 128K と 4K。
+- Phi-3-vision - 言語と視覚機能を備えた 4.2B パラメータのマルチモーダルモデル。言語部分は Phi-3-mini ベース。
+- Phi Silica - Copilot+ PC に載るやつ。NPU 専用
 
 ## モデルのレポジトリ
 
