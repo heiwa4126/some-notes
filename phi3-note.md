@@ -26,6 +26,9 @@
 
 忘れないでほしいのは、このモデルがそこらのノート PC で動くようなサイズのものであること。GTP-4o 等と比較しないでください。
 
+[Phi-3-mini-4k-instruct - HuggingChat](https://huggingface.co/chat/models/microsoft/Phi-3-mini-4k-instruct) は HuggingFace アカウントが必要
+(そのかわりセッションを保持してくれる)
+
 ## モデルのレポジトリ
 
 - [Phi-3 - a microsoft Collection - Hugging face](https://huggingface.co/collections/microsoft/phi-3-6626e15e9585a200d2d761e3)
