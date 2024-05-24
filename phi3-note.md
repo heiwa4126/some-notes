@@ -11,8 +11,19 @@
 - で、この一番小さいモデルでも結構まともに日本語で predict する。
 - system プロンプトに「あなたは親切な AI アシスタントです。日本語で答えて」等書かなくても日本語で答える。
 - LM Studio で使う時でもプリセットのプロファイル Phi3 が自動で選択されて、そのままで十分動く
-- トークンサイズがでかい (4k と 128k)
+- 入力トークンサイズがでかい (4k と 128k)
+- 日本語まわりは 1 文字 1 トークンらしい。英語は単語 (あとで確認)
+- ライセンスが MIT
 - **必読** [Microsoft Phi\-3 Cookbook](https://github.com/microsoft/Phi-3CookBook/) が親切。こんなモデルはじめて見た。
+
+## Web 上ですぐさま試す
+
+認証等不要でいきなり試せる。
+
+[Model catalog - Azure AI Studio](https://ai.azure.com/explore/models?tid=e67df547-9d0d-4f4d-9161-51c6ed1f7d11&selectedCollection=phi&selectedTask=chat-completion&selectedLicense=mit)
+で、モデルを選択してください。
+
+「チャットの完了」と表示されてるのは "Chat complition" タスクのことらしい...
 
 ## モデルのレポジトリ
 
