@@ -76,3 +76,7 @@ model = AutoModelForCausalLM.from_pretrained(
 ```
 
 参考: [ValueError: Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes. You passed torch.float32, this might lead to unexpected behaviour. · Issue #28052 · huggingface/transformers](https://github.com/huggingface/transformers/issues/28052)
+
+### fine-tuning はともかく推論ではあまり早くならないらしい
+
+[【続】Flash Attention を使って LLM の推論を高速・軽量化できるか？ #Python - Qiita](https://qiita.com/jovyan/items/5716cd83e246df4a158e)
