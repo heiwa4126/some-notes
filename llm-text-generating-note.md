@@ -103,3 +103,46 @@ for response in responses:
 - **AWS Bedrock API**: 具体的なバッチ生成サポートは API 仕様に依存するが、ループを使用してバッチ処理を実装可能。
 
 それぞれの API の詳細な使用方法やオプションについては、公式ドキュメントを参照すると良いでしょう。
+
+Azure OpenAI Service で使用可能なモデルのリストは、Azure の公式ドキュメントや Azure ポータルで確認することができます。以下に、その方法を示します。
+
+### 方法 1: Azure ポータルで確認
+
+1. **Azure ポータルにログイン**します。
+2. **OpenAI リソース**を選択します。
+3. **[モデル] セクション**を開きます。ここに利用可能なモデルの一覧が表示されます。
+
+### 方法 2: Azure OpenAI Service のドキュメント
+
+Azure OpenAI Service の公式ドキュメントには、利用可能なモデルに関する情報が記載されています。以下のリンクからドキュメントにアクセスできます：
+
+- [Azure OpenAI Service Documentation](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/)
+
+### 方法 3: Azure CLI を使用して確認
+
+Azure CLI を使用して、利用可能なモデルをプログラム的に取得することもできます。以下にその方法を示します。
+
+1. **Azure CLI にログイン**:
+
+   ```sh
+   az login
+   ```
+
+2. **利用可能なモデルのリストを取得**:
+
+   ```sh
+   az cognitiveservices account list-skus --name <your-openai-resource-name> --resource-group <your-resource-group> --query "value[].name"
+   ```
+
+   これにより、指定された OpenAI リソースで利用可能なモデルのリストが表示されます。
+
+### サンプルコードに使用するモデルの指定
+
+Azure OpenAI Service で使用するモデルの名前を知っている場合、先ほどのサンプルコードにそのモデル名を指定します。一般的なモデル名の例としては、以下のようなものがあります：
+
+- `text-davinci-003`
+- `text-curie-001`
+- `text-babbage-001`
+- `text-ada-001`
+
+具体的なモデル名は、上記の方法で確認して適宜置き換えてください。

@@ -118,4 +118,12 @@ model = AutoModelForCausalLM.from_pretrained(
 
 > デプロイ ウィザードの [価格と使用条件] タブに表示される
 
-らしい。Phi-3 open models 自体の料金はタダっぽいなあ... 嘘かも
+らしい。[コストとクォーター](https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-deploy-models-phi-3?view=azureml-api-2&tabs=phi-3-mini#cost-and-quotas)参照。
+
+Phi-3 open models 自体の料金はタダっぽいなあ... 嘘かも
+
+[Azure OpenAI Service - 価格 | Microsoft Azure](https://azure.microsoft.com/ja-jp/pricing/details/cognitive-services/openai-service/)
+に掲載がない。
+
+そもそも Azure OpenAI Service API で Phi-3 が使えるのか?
+Azure Machine Learning API らしい。
