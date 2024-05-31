@@ -127,3 +127,6 @@ Phi-3 open models 自体の料金はタダっぽいなあ... 嘘かも
 
 そもそも Azure OpenAI Service API で Phi-3 が使えるのか?
 Azure Machine Learning API らしい。
+
+で、[価格 - Azure Machine Learning | Microsoft Azure](https://azure.microsoft.com/ja-jp/pricing/details/machine-learning/)
+を見ると、マシンのコストしか出てこない。なるほど、理解できた。
