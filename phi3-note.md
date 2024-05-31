@@ -1,4 +1,4 @@
-# Phi-3 メモ
+# Microsoft Phi-3 メモ
 
 けっこういい感じ。
 
@@ -17,6 +17,8 @@
 - **必読** [Microsoft Phi\-3 Cookbook](https://github.com/microsoft/Phi-3CookBook/) が親切。こんなモデルはじめて見た。
 
 欠点は、モデルサイズが小さいので「事実を保持する能力が低い」。そのため、事実知識ベンチマーク(TriviaQA など)ではあまり良い結果を示さない。
+
+こういうエッジで動くことを想定した小さいモデルを「小規模言語モデル(SLM; Small Language Model)」というらしい(小さいのはサイズだけのような気もするが...)
 
 ## Web 上ですぐさま試す
 
@@ -105,3 +107,15 @@ model = AutoModelForCausalLM.from_pretrained(
 ### fine-tuning はともかく推論ではあまり早くならないらしい
 
 [【続】Flash Attention を使って LLM の推論を高速・軽量化できるか？ #Python - Qiita](https://qiita.com/jovyan/items/5716cd83e246df4a158e)
+
+## Azure 上の Phi-3 の価格
+
+調査する。すごい安かったらコード書いてる時のテスト用はこれにする。
+
+[Azure AI Studio を使用して Phi-3 ファミリの小さな言語モデルをデプロイする方法 - Azure AI Studio | Microsoft Learn](https://learn.microsoft.com/ja-jp/azure/ai-studio/how-to/deploy-models-phi-3?tabs=phi-3-mini)
+
+↑ の
+
+> デプロイ ウィザードの [価格と使用条件] タブに表示される
+
+らしい。Phi-3 open models 自体の料金はタダっぽいなあ... 嘘かも
