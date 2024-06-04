@@ -10,6 +10,8 @@
   - [登録されているリモートリポジトリの確認](#登録されているリモートリポジトリの確認)
   - [ubuntu で新しめの git を使う](#ubuntu-で新しめの-git-を使う)
   - [git-secrets](#git-secrets)
+    - [git-secrets の仲間](#git-secrets-の仲間)
+    - [GitHub 側での対策](#github-側での対策)
   - [diff を github みたくする](#diff-を-github-みたくする)
   - [プロジェクトスケルトンを作るツールで、空のディレクトリに.gitkeep](#プロジェクトスケルトンを作るツールで空のディレクトリにgitkeep)
   - [git のシェル補完](#git-のシェル補完)
@@ -204,6 +206,46 @@ git config --global init.templateDir ~/.git-templates/git-secrets
 プロジェクトに移動して、
 `git secrets --scan-history`
 )
+
+### git-secrets の仲間
+
+- [thoughtworks/talisman: Using a pre-commit hook, Talisman validates the outgoing changeset for things that look suspicious — such as tokens, passwords, and private keys.](https://github.com/thoughtworks/talisman)
+
+Git のセキュア流出防止ツールには、awslabs/git-secrets や thoughtworks/talisman 以外にもいくつかの選択肢があります。以下にいくつかの例を挙げます。
+
+1. **Gitleaks**
+
+   - **URL**: [https://github.com/gitleaks/gitleaks](https://github.com/gitleaks/gitleaks)
+   - **概要**: Gitleaks は、秘密情報（API キーやパスワードなど）の Git リポジトリへの漏洩を防ぐためのツールです。簡単に使えるコマンドラインツールであり、CI/CD パイプラインに組み込むことができます。
+
+2. **TruffleHog**
+
+   - **URL**: [https://github.com/trufflesecurity/trufflehog](https://github.com/trufflesecurity/trufflehog)
+   - **概要**: TruffleHog は、Git リポジトリ内の秘密情報を検出するためのツールです。特定の正規表現やエンコーディング、バイナリデータに基づいてスキャンを行います。
+
+3. **Repo-Supervisor**
+
+   - **URL**: [https://github.com/auth0/repo-supervisor](https://github.com/auth0/repo-supervisor)
+   - **概要**: Repo-Supervisor は、GitHub リポジトリ内の秘密情報の漏洩を監視するためのツールです。スキャン結果をダッシュボードで確認でき、漏洩のリスクを可視化します。
+
+4. **detect-secrets**
+
+   - **URL**: [https://github.com/Yelp/detect-secrets](https://github.com/Yelp/detect-secrets)
+   - **概要**: detect-secrets は、静的解析を使用して Git リポジトリ内の秘密情報を検出するためのツールです。プラグインベースであり、カスタマイズが容易です。
+
+5. **git-secrets**（Microsoft の Fork 版）
+   - **URL**: [https://github.com/microsoft/git-secrets](https://github.com/microsoft/git-secrets)
+   - **概要**: awslabs/git-secrets をベースにした Microsoft のフォーク版です。追加の機能や修正が加えられています。
+
+これらのツールは、それぞれ異なる特長や強みを持っていますので、プロジェクトや使用ケースに応じて最適なツールを選択すると良いでしょう。
+
+### GitHub 側での対策
+
+Git ではなく GitHub での対策
+
+- [データ漏洩を防止する](https://docs.github.com/ja/code-security/getting-started/best-practices-for-preventing-data-leaks-in-your-organization#prevent-data-leaks)
+- [データ漏洩を検出する](https://docs.github.com/ja/code-security/getting-started/best-practices-for-preventing-data-leaks-in-your-organization#detect-data-leaks)
+- [データ漏洩を軽減する](https://docs.github.com/ja/code-security/getting-started/best-practices-for-preventing-data-leaks-in-your-organization#mitigate-data-leaks)
 
 ## diff を github みたくする
 
