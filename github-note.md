@@ -1,6 +1,7 @@
 # github.com のメモ
 
 - [github.com のメモ](#githubcom-のメモ)
+  - [GitHub のチュートリアル](#github-のチュートリアル)
   - [80,443/tcp しかつながらない proxy を超えて、github に ssh でつなぐ](#80443tcp-しかつながらない-proxy-を超えてgithub-に-ssh-でつなぐ)
   - [Firefox の markdown 拡張](#firefox-の-markdown-拡張)
   - [release の練習](#release-の練習)
@@ -12,6 +13,11 @@
   - [PAT(Personal Access Tokens) について](#patpersonal-access-tokens-について)
   - [GitHub のレポジトリで、ブランチ名を master にしているのを main に変えるには?](#github-のレポジトリでブランチ名を-master-にしているのを-main-に変えるには)
   - [GitHub のプライベートレポジトリから トークンを使って git clone する手順を教えてください](#github-のプライベートレポジトリから-トークンを使って-git-clone-する手順を教えてください)
+  - [GitHub CLI を使ってシークレットスキャン(secret scanning)を構築する](#github-cli-を使ってシークレットスキャンsecret-scanningを構築する)
+
+## GitHub のチュートリアル
+
+[GitHub - Microsoft Learn | Microsoft Learn](https://learn.microsoft.com/ja-jp/training/github/)
 
 ## 80,443/tcp しかつながらない proxy を超えて、github に ssh でつなぐ
 
@@ -200,3 +206,38 @@ GitHub のプライベートリポジトリからクローンするには、以�
    - リポジトリがクローンされたことを確認するには、作業ディレクトリに移動し中身を確認します。
 
 これで GitHub のプライベートリポジトリのクローンが完了します。トークンは大切に扱い、第三者に共有しないよう注意してください。
+
+## GitHub CLI を使ってシークレットスキャン(secret scanning)を構築する
+
+以下大嘘
+
+1. **シークレットスキャンの有効化**:
+
+   - GitHub CLI を使用して、リポジトリでシークレットスキャンを有効にします:
+
+     ```bash
+     gh secret scanning enable <repository-name>
+     ```
+
+   - `<repository-name>` を実際のリポジトリ名に置き換えてください。
+
+2. **シークレットスキャンのルールの設定** (オプション):
+
+   - 特定のファイルやディレクトリをシークレットスキャンから除外する場合は、次のようにルールを追加できます:
+
+     ```bash
+     gh secret scanning rules add <repository-name> --pattern "path/to/ignore/*"
+     ```
+
+   - `<repository-name>` を実際のリポジトリ名に置き換えてください。
+
+3. **通知の管理** (オプション):
+
+   - シークレットスキャンアラートの通知受信者をカスタマイズするには、次のようにチームやユーザーを追加できます:
+
+     ```bash
+     gh secret scanning recipients add <repository-name> --team "team-name"
+     gh secret scanning recipients add <repository-name> --user "username"
+     ```
+
+   - `<repository-name>` を実際のリポジトリ名に置き換えてください。

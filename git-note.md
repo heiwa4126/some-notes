@@ -246,6 +246,9 @@ Git ではなく GitHub での対策
 - [データ漏洩を防止する](https://docs.github.com/ja/code-security/getting-started/best-practices-for-preventing-data-leaks-in-your-organization#prevent-data-leaks)
 - [データ漏洩を検出する](https://docs.github.com/ja/code-security/getting-started/best-practices-for-preventing-data-leaks-in-your-organization#detect-data-leaks)
 - [データ漏洩を軽減する](https://docs.github.com/ja/code-security/getting-started/best-practices-for-preventing-data-leaks-in-your-organization#mitigate-data-leaks)
+- [シークレット スキャンについて - GitHub Docs](https://docs.github.com/ja/code-security/secret-scanning/about-secret-scanning)
+- [GitHub リポジトリでシークレット スキャンを構成して使用する - Training | Microsoft Learn](https://learn.microsoft.com/ja-jp/training/modules/configure-use-secret-scanning-github-repository/)
+-
 
 ## diff を github みたくする
 
