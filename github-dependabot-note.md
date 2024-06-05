@@ -107,3 +107,14 @@ GitHub の Dependabot アラートは、リポジトリのセキュリティ設�
 これらの設定は、リポジトリのセキュリティや通知設定によってカスタマイズ可能です。設定を確認したり変更したりするには、リポジトリの「Settings」タブにアクセスし、「Security & analysis」セクションを確認してください。
 
 無設定の場合でも、GitHub はデフォルトでリポジトリの管理者やメンテナに対して Dependabot アラートを通知するようになっています。
+
+## 自分のすべてのレポジトリに Depandabot を設定する
+
+1. 右上にあるプロファイルの写真を選択します。
+2. `settings` を選択し、左側のメニューの `Code security and analysis`を選択。(ここまでは <https://github.com/settings/security_analysis> で直リン)
+3. 有効にする機能の右にある `Enable all` (すべて有効にする) を選択します。
+   これらの設定をすべての新しいリポジトリに適用する場合は、`Automatically enable for new repositories`(新しいリポジトリに対して自動的に有効にする) チェック ボックスをオンにします。
+   最低でも `Dependabot alerts` だけは `Enable all` にするべき。
+
+組織の所有者やエンタープライズでも組織内のすべてのリポジトリに対して依存関係グラフと Dependabot アラートを一度に有効にすることができるので、
+設定しといてほしいです。
