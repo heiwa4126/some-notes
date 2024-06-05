@@ -19,7 +19,7 @@ Setting up TALISMAN_HOME in path
 PLEASE CHOOSE WHERE YOU WISH TO SET TALISMAN_HOME VARIABLE AND talisman binary PATH (Enter option number):
 1) Set TALISMAN_HOME in ~/.bashrc        3) Set TALISMAN_HOME in ~/.profile
 2) Set TALISMAN_HOME in ~/.bash_profile  4) I will set it later
-#? 3
+#? 1
 
 
 Setting up interaction mode
@@ -31,7 +31,7 @@ After the installation is complete, you will need to manually restart the termin
 Press any key to continue ...
 ```
 
-~/.profile に追加されたのはこんな感じ
+~/.bashrc に追加されたのはこんな感じ
 
 ```bash
 # >>> talisman >>>
