@@ -14,6 +14,8 @@
   - [GitHub のレポジトリで、ブランチ名を master にしているのを main に変えるには?](#github-のレポジトリでブランチ名を-master-にしているのを-main-に変えるには)
   - [GitHub のプライベートレポジトリから トークンを使って git clone する手順を教えてください](#github-のプライベートレポジトリから-トークンを使って-git-clone-する手順を教えてください)
   - [GitHub CLI を使ってシークレットスキャン(secret scanning)を構築する](#github-cli-を使ってシークレットスキャンsecret-scanningを構築する)
+  - [GitHub のプラン](#github-のプラン)
+  - [自分が invite された Organizations が、GitHub のどのプランか知るには?](#自分が-invite-された-organizations-がgithub-のどのプランか知るには)
 
 ## GitHub のチュートリアル
 
@@ -241,3 +243,39 @@ GitHub のプライベートリポジトリからクローンするには、以�
      ```
 
    - `<repository-name>` を実際のリポジトリ名に置き換えてください。
+
+## GitHub のプラン
+
+GitHub にはさまざまなプランが用意されています。それぞれのプランは、機能や価格によって異なります。2024 年 6 月現在の情報に基づくと、以下のようなプランがあります:
+
+1. **Free Plan**:
+
+   - 無料。
+   - パブリックおよびプライベートリポジトリの利用が可能。
+   - コミュニティサポート。
+   - GitHub Actions(CI/CD)には無料の分(2,000 分/月)が含まれる。
+   - GitHub Packages には無料のストレージと帯域幅(500MB ストレージ、1GB の帯域幅)が含まれる。
+
+2. **Pro Plan**:
+
+   - 月額$4。
+   - Free Plan のすべての機能に加え、より多くの GitHub Actions 分(3,000 分/月)と GitHub Packages のストレージ(2GB ストレージ、10GB の帯域幅)。
+   - 高度なシークレットスキャンとコードスペースが利用可能。
+
+3. **Team Plan**:
+
+   - 月額$4/ユーザー。
+   - Pro Plan のすべての機能に加え、チーム機能(プロジェクト管理ツール、レビューワーの自動割り当てなど)。
+   - 無制限のリポジトリと 5,000 分/月の GitHub Actions。
+   - ロールベースのアクセスコントロール。
+
+4. **Enterprise Plan**:
+   - 月額$21/ユーザー。
+   - Team Plan のすべての機能に加え、企業向けの高度なセキュリティ機能とコンプライアンス。
+   - 無制限の GitHub Actions と GitHub Packages。
+   - SAML シングルサインオン (SSO)、監査ログ、IP ホワイトリストなどの追加機能。
+   - 専用サポートと SLA(サービスレベルアグリーメント)。
+
+## 自分が invite された Organizations が、GitHub のどのプランか知るには?
+
+Organization の設定にアクセスできる管理者権限が必要。(終了)
