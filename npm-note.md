@@ -123,6 +123,17 @@ npmPkgJsonLint ./package.json  # カレントのpackage.jsonを対象にしてli
 # 他の使い方は https://npmpackagejsonlint.org/docs/cli 見てね
 ```
 
+自分は package.json に
+
+```json
+  "scripts": {
+    "lint:package": "npmPkgJsonLint ./package.json",
+  },
+```
+
+とか追加してます。あと pre-commit
+[【2024/01 最新】husky + lint-staged でコミット前に lint を強制する方法](https://zenn.dev/risu729/articles/latest-husky-lint-staged)
+
 ## package.json の bin フィールド
 
 bin に複数フィールドがある場合の挙動
