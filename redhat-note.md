@@ -110,6 +110,9 @@ repoquery -a --releasever=7Server --showduplicates | sort | uniq
 ただこれは rhel-7-server-rpms レポジトリしかリストされないようで、
 例えば rhel-7-server-extras-rpms などは検索されない。
 
+8, 9 はこっち
+[Red Hat Enterprise Linux for x86_64 9 - Red Hat Customer Portal](https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.4/x86_64/packages)
+
 ## 特定のレポジトリに含まれるパッケージのリストを得る
 
 例えば Oracle Java の含まれる rhel-7-server-supplementary-rpm を検索して
