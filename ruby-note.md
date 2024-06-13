@@ -69,3 +69,7 @@ bundle install
 
 書きました。
 [heiwa4126/hello-ruby: Ruby ぜんぜんわからん](https://github.com/heiwa4126/hello-ruby)
+
+## bundler と bundle
+
+bundler の UI が bundle
