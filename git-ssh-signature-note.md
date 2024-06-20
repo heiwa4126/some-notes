@@ -25,10 +25,11 @@ git のコミット署名では
 
 ```sh
 git init
-# git configは `-g`オプション付きでグローバルにやってもいい
+# git config は `-g`オプション付きでグローバルにやってもいい
 git config user.email "foo@example.com"
 git config user.name "Foo Bar"
-git config commit.gpgsign true　　# これ設定せずに `git commit -S` -Sオプション付きコミットしてもいいけどたぶん忘れるので
+git config commit.gpgsign true  # これ設定せずに `git commit -S` -Sオプション付きコミットしてもいいけど絶対忘れるので
+git config tag.gpgsign true     # これ設定せずに `git tag -s` -sオプション付きでタグしてもいいけど絶対忘れるので
 git config gpg.format ssh
 git config user.signingkey {Foo BarさんのGitHubの**公開鍵ファイル**のパス}
 ```
@@ -43,7 +44,7 @@ chmod og= ~/.ssh/allowed_signers
 git config gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
 ```
 
-`~/.ssh/allowed_signers`　の書式は 1 行づつ
+`~/.ssh/allowed_signers` の書式は 1 行づつ
 
 ```text
 {GitHub_ID} {←そのひとの公開鍵}
@@ -117,6 +118,9 @@ index 0000000..e69de29
 
 これで GitHub 上のレポジトリのコミットに
 緑色の"Verified"マークがつくようになります。
+
+あと
+[警戒モードの有効化 - すべてのコミットの検証ステータスを表示する - GitHub Docs](https://docs.github.com/ja/authentication/managing-commit-signature-verification/displaying-verification-statuses-for-all-of-your-commits#enabling-vigilant-mode)
 
 ## おまけ: Depandabot は GPG 署名なので
 
