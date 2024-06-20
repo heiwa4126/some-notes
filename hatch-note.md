@@ -56,7 +56,7 @@ fi
 pip-compile(pip-tools)ベースで、パッケージのロックファイル(デフォルト requrements.txt)を作ってくれる
 hatch のプラグイン。
 
-設定簡単。uv も使える。
+設定簡単。uv も使える。(uv は hatch 内部でも使ってるので使わない手はない)
 
 pyproject.toml に追加するだけ
 
