@@ -70,3 +70,9 @@ requires = [
 type = "pip-compile"
 pip-compile-resolver = "uv"
 ```
+
+## uv
+
+[How to select the installer - Hatch](https://hatch.pypa.io/1.12/how-to/environment/select-installer/)
+
+なんかやりたいほうだいな感じ
