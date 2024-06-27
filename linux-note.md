@@ -238,3 +238,8 @@ no-pty だと「対話的なプログラム」が支障をきたす(実行でき
 
 - [Magika](https://google.github.io/magika/)
   - [google/magika: Detect file content types with deep learning](https://github.com/google/magika)
+
+## dmidecode
+
+- [「Linux」でシステムの情報を収集したいときに使用すべきコマンド 5 選 - ZDNET Japan](https://japan.zdnet.com/article/35220602/)
+- [【 dmidecode 】コマンド――ハードウェアの情報を表示する:Linux 基本コマンド Tips(294) - @IT](https://atmarkit.itmedia.co.jp/ait/articles/1904/04/news018.html)
