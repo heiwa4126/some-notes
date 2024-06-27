@@ -82,3 +82,11 @@ source $HOME/.keychain/$(hostname)-sh
 ## WSL で Windows 側の ssh-agent を使う
 
 できるらしい。
+
+- npiperelay
+- wsl2-ssh-agent
+
+wsl2-ssh-agent が簡単でいいな。
+
+- [wsl2-ssh-agent: WSL2 から ssh-agent.exe サービスへのブリッジ](https://zenn.dev/mametter/articles/49a2b505ec0275)
+- [mame/wsl2-ssh-agent: A bridge from WSL2 ssh client to Windows ssh-agent.exe service](https://github.com/mame/wsl2-ssh-agent)
