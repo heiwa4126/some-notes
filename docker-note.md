@@ -37,6 +37,7 @@
   - [配布されている Docker イメージのタグのリスト](#配布されている-docker-イメージのタグのリスト)
     - [Google の distroless のタグ一覧](#google-の-distroless-のタグ一覧)
   - [Google の distroless に入っている Python や Node.js のバージョンはどうやって調べられますか?](#google-の-distroless-に入っている-python-や-nodejs-のバージョンはどうやって調べられますか)
+  - [Docker Content Trust (DCT)](#docker-content-trust-dct)
 
 ## インストール
 
@@ -936,3 +937,123 @@ gcloud container images list-tags gcr.io/distroless/<イメージ名>
 開発イメージと distroless の Python や Node.js のマイナーバージョンまでをそろえたい。
 
 のだが、結構難しい。
+
+## Docker Content Trust (DCT)
+
+```sh
+export DOCKER_CONTENT_TRUST=1
+```
+
+にすると署名してないイメージが `docker run` できなくなる。
+自分で作ったイメージも実行できなくなる。
+
+```sh
+docker trust key generate heiwa4126
+```
+
+カレントディレクトリに `heiwa4126.pub` ができる。
+秘密鍵はどこ?
+
+```sh
+ls ~/.docker/trust/private
+```
+
+はい、`docker trust key generate`で作成した鍵を Docker Hub に登録することができます。以下に手順を説明します：
+
+1. 鍵の生成:
+   まず、`docker trust key generate`コマンドを使用して鍵を生成します[1][2][3]。
+
+```sh
+docker trust key generate your-name
+```
+
+このコマンドは秘密鍵を生成し、対応する公開鍵ファイル（your-name.pub）を現在のディレクトリに出力します[3]。
+
+2. 公開鍵の Docker Hub への追加:
+   生成した公開鍵を Docker Hub のリポジトリに追加します。これには`docker trust signer add`コマンドを使用します[2]。
+
+```sh
+docker trust signer add --key your-name.pub your-name your-dockerhub-username/your-repository:tag
+```
+
+このコマンドは、指定した Docker Hub リポジトリに対して、生成した公開鍵を信頼された署名者として追加します。
+
+3. イメージの署名とプッシュ:
+   鍵を登録した後、イメージを署名してプッシュすることができます。これには`docker trust sign`コマンドを使用するか、`DOCKER_CONTENT_TRUST=1`環境変数を設定してから`docker push`を実行します[2][4]。
+
+```sh
+docker trust sign your-dockerhub-username/your-repository:tag
+```
+
+または
+
+```sh
+export DOCKER_CONTENT_TRUST=1
+docker push your-dockerhub-username/your-repository:tag
+```
+
+これらの手順を実行することで、`docker trust key generate`で作成した鍵を Docker Hub に登録し、その鍵を使用してイメージに署名することができます。
+署名されたイメージは Docker Content Trust (DCT)が有効な環境でも実行可能になります[4]。
+
+注意点として、鍵の管理は非常に重要です。特にルート鍵（root key）の紛失は回復不可能なので、安全な場所にバックアップを取ることをお勧めします[5]。
+
+Citations:
+[1] https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/trust_key_generate/
+[2] https://matsuand.github.io/docs.docker.jp.onthefly/engine/security/trust/
+[3] https://docs.docker.com/reference/cli/docker/trust/key/generate/
+[4] https://yuya-hirooka.hatenablog.com/entry/2021/08/14/164518
+[5] https://docs.docker.com/engine/security/trust/trust_key_mng/
+
+**ローカルイメージに直接署名することはできません。イメージはまずリモートリポジトリにプッシュする必要があります**
+
+Docker Content Trust (DCT) は、Docker イメージに対する信頼性を確保するための仕組みで、イメージのパブリックレジストリ（例えば Docker Hub）に対して署名を行うことを主に目的としています。しかし、ローカルイメージにも署名を行いたい場合、以下の手順で対応することが可能です。
+
+1. **Notary サーバーのセットアップ**:
+   Docker Content Trust は Notary サーバーを使用してイメージのメタデータを管理します。ローカルで Notary サーバーをセットアップする必要があります。以下のコマンドを使用して Docker Compose で Notary サーバーをセットアップできます。
+
+   ```bash
+   git clone https://github.com/theupdateframework/notary
+   cd notary
+   docker-compose up -d
+   ```
+
+2. **Docker デーモンの設定**:
+   ローカルで署名されたイメージをプッシュするために、Docker デーモンが Notary サーバーを使用するように設定します。`/etc/docker/daemon.json` ファイルに以下の内容を追加します。
+
+   ```json
+   {
+     "content-trust": {
+       "notary-server": "http://localhost:4443"
+     }
+   }
+   ```
+
+   設定を反映するために Docker デーモンを再起動します。
+
+   ```bash
+   sudo systemctl restart docker
+   ```
+
+3. **イメージのタグ付け**:
+   署名するイメージに適切なタグを付けます。タグには Notary サーバーのリポジトリ名を含めます。
+
+   ```bash
+   docker tag <your-image>:<tag> localhost:5000/<your-repo>:<tag>
+   ```
+
+4. **署名とプッシュ**:
+   DCT を有効にしてイメージをプッシュします。以下のコマンドを実行して署名とプッシュを行います。
+
+   ```bash
+   export DOCKER_CONTENT_TRUST=1
+   docker push localhost:5000/<your-repo>:<tag>
+   ```
+
+5. **イメージの検証**:
+   署名されたイメージを検証するために、以下のコマンドを実行します。
+
+   ```bash
+   docker pull localhost:5000/<your-repo>:<tag>
+   ```
+
+これらの手順を踏むことで、ローカルイメージに対して Docker Content Trust を使用して署名することができます。
