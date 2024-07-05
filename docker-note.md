@@ -38,6 +38,7 @@
     - [Google の distroless のタグ一覧](#google-の-distroless-のタグ一覧)
   - [Google の distroless に入っている Python や Node.js のバージョンはどうやって調べられますか?](#google-の-distroless-に入っている-python-や-nodejs-のバージョンはどうやって調べられますか)
   - [Docker Content Trust (DCT)](#docker-content-trust-dct)
+  - [Alpine の musl は 2024 年でもまだ不安定だったり遅かったりしますか?](#alpine-の-musl-は-2024-年でもまだ不安定だったり遅かったりしますか)
 
 ## インストール
 
@@ -1057,3 +1058,19 @@ Docker Content Trust (DCT) は、Docker イメージに対する信頼性を確�
    ```
 
 これらの手順を踏むことで、ローカルイメージに対して Docker Content Trust を使用して署名することができます。
+
+## Alpine の musl は 2024 年でもまだ不安定だったり遅かったりしますか?
+
+2021 年の記事:
+[軽量 Docker イメージに安易に Alpine を使うのはやめたほうがいいという話 - inductor's blog](https://blog.inductor.me/entry/alpine-not-recommended)
+
+2024-07 の GTP-4o の答え
+
+2024 年においても、Alpine Linux の musl には、glibc ベースのシステムと比較した場合にパフォーマンスや安定性に関するいくつかの懸念が残っています。musl はその軽量性とセキュリティ機能で高く評価されていますが、すべての使用ケースで glibc のパフォーマンスに完全には追いついていません。
+
+1. **パフォーマンスの違い**: musl を使用すると、特定のシナリオで著しいパフォーマンス低下が発生することがあります。たとえば、musl を使用するアプリケーションは、システムコールの処理やライブラリの実装の違いにより、CPU 使用率が高くなり、応答時間が遅くなる可能性があります ​ ([Elixir Programming Language Forum](https://elixirforum.com/t/using-alpine-and-musl-instead-of-gnu-libc-affect-performance/57670))​​ ([GitHub](https://github.com/haproxytech/kubernetes-ingress/issues/541))​。HAProxy や Erlang などの特定のアプリケーションは、このようなパフォーマンスの欠点に気付きましたが、これらの違いを緩和するための作業とアップデートが進行中です ​ ([Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/729342/performance-issue-with-alpine-musl-library))​​ ([Alpine Linux Wiki](https://wiki.alpinelinux.org/wiki/Musl))​。
+2. **安定性の懸念**: musl の特定の機能、例えばロケールサポートの実装は、glibc と比較して制限されています。このため、これらの機能に大きく依存するアプリケーションでは、機能が制限されたり追加の設定が必要となることがあります ​ ([Alpine Linux Wiki](https://wiki.alpinelinux.org/wiki/Musl))​。
+
+リソース効率とセキュリティが最優先される環境では、musl は依然として有力な選択肢です。しかし、パフォーマンスが重要なアプリケーションに対しては、必要なパフォーマンスと安定性基準を満たしていることを確認するために、慎重な評価とテストが推奨されます。
+
+[musl-locales - Alpine Linux packages](https://pkgs.alpinelinux.org/contents?name=musl-locales)
