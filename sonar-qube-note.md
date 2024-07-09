@@ -139,6 +139,8 @@ SonarQube Community Edition で検出可能な基本的な脆弱性の例を ECM
 
 ```sh
 docker pull sonarqube
+docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube
+
 docker pull sonarsource/sonar-scanner-cli
 ```
 
