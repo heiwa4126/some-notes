@@ -712,3 +712,5 @@ rm -rf "$NPM_CONFIG_PREFIX" # 別に消さなくてもいい
    結果: 1.0.1-1
 4. 2 回目の `npm version prerelease`:
    結果: 1.0.1-2
+5. で `npm version patch`:
+   結果: 1.0.1
