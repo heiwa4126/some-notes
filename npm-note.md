@@ -33,6 +33,7 @@
   - [npm link を ローカルの node_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
     - [注意](#注意)
   - [`npm i`, `npm ci`, `npm up` の違い](#npm-i-npm-ci-npm-up-の違い)
+  - [npm-version のサブコマンドでわかりにくいやつ](#npm-version-のサブコマンドでわかりにくいやつ)
 
 ## 多分最初にこれよんだほうがよさそう
 
@@ -672,3 +673,42 @@ rm -rf "$NPM_CONFIG_PREFIX" # 別に消さなくてもいい
 | エラーの扱い                  | 依存関係の競合や不整合が発生する可能性がある                      | `package-lock.json`と`package.json`が一致しない場合にエラーを投げる         | 依存関係の競合や不整合が発生する可能性がある     |
 
 これにより、`npm i`、`npm ci`、および`npm up`の用途や挙動の違いが明確に理解できます。
+
+## npm-version のサブコマンドでわかりにくいやつ
+
+[npm-version | npm Docs](https://docs.npmjs.com/cli/v8/commands/npm-version)
+
+| サブコマンド | 説明                                                           | 実例                                                                                                            |
+| ------------ | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| premajor     | メジャーバージョンをインクリメントし、プレリリース版とする     | 現在のバージョン: 1.2.3<br>実行: `npm version premajor`<br>結果: 2.0.0-0                                        |
+| preminor     | マイナーバージョンをインクリメントし、プレリリース版とする     | 現在のバージョン: 1.2.3<br>実行: `npm version preminor`<br>結果: 1.3.0-0                                        |
+| prepatch     | パッチバージョンをインクリメントし、プレリリース版とする       | 現在のバージョン: 1.2.3<br>実行: `npm version prepatch`<br>結果: 1.2.4-0                                        |
+| prerelease   | 現在のバージョンのプレリリース番号をインクリメントする         | 現在のバージョン: 1.2.3-0<br>実行: `npm version prerelease`<br>結果: 1.2.3-1                                    |
+| from-git     | 最新の Git タグを読み取り、それを npm バージョンとして使用する | 最新の Git タグ: v1.2.3<br>実行: `npm version from-git`<br>結果: package.json のバージョンが 1.2.3 に設定される |
+
+これらのサブコマンドを使用する際、`npm version`コマンドは`package.json`ファイルのバージョンを更新し、対応する Git コミットとタグを作成します。
+
+また、`preid`オプションを使用してプレリリース識別子を指定することもできます。例えば、`npm version prerelease --preid=alpha`を実行すると、バージョンが`1.2.3-alpha.0`のようになります。
+
+`npm version prepatch` コマンドを 2 回以上繰り返すと、
+バージョンは以下のように変化します:
+
+1. 初期バージョンが 1.0.0 だと仮定します。
+2. 1 回目の `npm version prepatch`:
+   結果: 1.0.1-0
+3. 2 回目の `npm version prepatch`:
+   結果: 1.0.2-0
+4. 3 回目の `npm version prepatch`:
+   結果: 1.0.3-0
+
+これはおそらく「やりたいこと」ではない。
+
+やりたいことはおそらくこっち:
+
+1. 初期バージョンが 1.0.0 だと仮定。
+2. 1 回目の `npm version prepatch`:
+   結果: 1.0.1-0
+3. 1 回目の `npm version prerelease`:
+   結果: 1.0.1-1
+4. 2 回目の `npm version prerelease`:
+   結果: 1.0.1-2
