@@ -32,3 +32,31 @@ run-scripts にこんな感じで書く
 
 `npm run test:e2e` を実行。
 & VSCode の拡張からテスト
+
+.gitignore も整える
+
+```text
+# Playwright specific
+/test-results/
+/playwright-report/
+/playwright/.cache/
+```
+
+### vite の場合
+
+`npm run dev` で起動してると、`/playwright-report/` が書き換わるごとにリロードされてしまう。
+
+vite.config.ts を、こんなふうに設定
+
+```typescript
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    watch: {
+      ignored: ['**/playwright-report/**']
+    }
+  }
+});
+```
+
+つづく
