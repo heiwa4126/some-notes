@@ -354,3 +354,5 @@ Set-PSReadLineKeyHandler -Key Tab -Function Complete
 - [Stop-Job (Microsoft.PowerShell.Core) - PowerShell | Microsoft Learn](https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/stop-job?view=powershell-7.4)
 - [Start-Job (Microsoft.PowerShell.Core) - PowerShell | Microsoft Learn](https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/start-job?view=powershell-7.4)
 - [Receive-Job (Microsoft.PowerShell.Core) - PowerShell | Microsoft Learn](https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/receive-job?view=powershell-7.4)
+
+[PowerShell で処理をバックグラウンドで実行する | 晴耕雨読](https://tex2e.github.io/blog/powershell/background-job)
