@@ -39,6 +39,7 @@
   - [Google の distroless に入っている Python や Node.js のバージョンはどうやって調べられますか?](#google-の-distroless-に入っている-python-や-nodejs-のバージョンはどうやって調べられますか)
   - [Docker Content Trust (DCT)](#docker-content-trust-dct)
   - [Alpine の musl は 2024 年でもまだ不安定だったり遅かったりしますか?](#alpine-の-musl-は-2024-年でもまだ不安定だったり遅かったりしますか)
+  - [すごい参考になる (`RUN --mount=type=`)](#すごい参考になる-run---mounttype)
 
 ## インストール
 
@@ -959,7 +960,7 @@ docker trust key generate heiwa4126
 ls ~/.docker/trust/private
 ```
 
-はい、`docker trust key generate`で作成した鍵を Docker Hub に登録することができます。以下に手順を説明します：
+はい、`docker trust key generate`で作成した鍵を Docker Hub に登録することができます。以下に手順を説明します:
 
 1. 鍵の生成:
    まず、`docker trust key generate`コマンドを使用して鍵を生成します[1][2][3]。
@@ -968,7 +969,7 @@ ls ~/.docker/trust/private
 docker trust key generate your-name
 ```
 
-このコマンドは秘密鍵を生成し、対応する公開鍵ファイル（your-name.pub）を現在のディレクトリに出力します[3]。
+このコマンドは秘密鍵を生成し、対応する公開鍵ファイル(your-name.pub)を現在のディレクトリに出力します[3]。
 
 2. 公開鍵の Docker Hub への追加:
    生成した公開鍵を Docker Hub のリポジトリに追加します。これには`docker trust signer add`コマンドを使用します[2]。
@@ -996,7 +997,7 @@ docker push your-dockerhub-username/your-repository:tag
 これらの手順を実行することで、`docker trust key generate`で作成した鍵を Docker Hub に登録し、その鍵を使用してイメージに署名することができます。
 署名されたイメージは Docker Content Trust (DCT)が有効な環境でも実行可能になります[4]。
 
-注意点として、鍵の管理は非常に重要です。特にルート鍵（root key）の紛失は回復不可能なので、安全な場所にバックアップを取ることをお勧めします[5]。
+注意点として、鍵の管理は非常に重要です。特にルート鍵(root key)の紛失は回復不可能なので、安全な場所にバックアップを取ることをお勧めします[5]。
 
 Citations:
 [1] https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/trust_key_generate/
@@ -1007,7 +1008,7 @@ Citations:
 
 **ローカルイメージに直接署名することはできません。イメージはまずリモートリポジトリにプッシュする必要があります**
 
-Docker Content Trust (DCT) は、Docker イメージに対する信頼性を確保するための仕組みで、イメージのパブリックレジストリ（例えば Docker Hub）に対して署名を行うことを主に目的としています。しかし、ローカルイメージにも署名を行いたい場合、以下の手順で対応することが可能です。
+Docker Content Trust (DCT) は、Docker イメージに対する信頼性を確保するための仕組みで、イメージのパブリックレジストリ(例えば Docker Hub)に対して署名を行うことを主に目的としています。しかし、ローカルイメージにも署名を行いたい場合、以下の手順で対応することが可能です。
 
 1. **Notary サーバーのセットアップ**:
    Docker Content Trust は Notary サーバーを使用してイメージのメタデータを管理します。ローカルで Notary サーバーをセットアップする必要があります。以下のコマンドを使用して Docker Compose で Notary サーバーをセットアップできます。
@@ -1074,3 +1075,9 @@ Docker Content Trust (DCT) は、Docker イメージに対する信頼性を確�
 リソース効率とセキュリティが最優先される環境では、musl は依然として有力な選択肢です。しかし、パフォーマンスが重要なアプリケーションに対しては、必要なパフォーマンスと安定性基準を満たしていることを確認するために、慎重な評価とテストが推奨されます。
 
 [musl-locales - Alpine Linux packages](https://pkgs.alpinelinux.org/contents?name=musl-locales)
+
+## すごい参考になる (`RUN --mount=type=`)
+
+[2024 年版の Dockerfile の考え方&書き方 | フューチャー技術ブログ](https://future-architect.github.io/articles/20240726a/)
+
+<https://docs.docker.com/reference/dockerfile/#example-cache-apt-packages> とか。
