@@ -41,3 +41,38 @@ fi
 ```
 
 と書いといた。
+
+## hatch で lock ファイル
+
+なんだかんだ言っても
+`package-lock.json`
+とか
+`Gemfile.lock`
+が無いと、
+「7 年前のコードを動かしたい」みたいなときに困るので。
+
+[juftin/hatch-pip-compile: hatch plugin to use pip-compile (or uv) to manage project dependencies and lockfiles](https://github.com/juftin/hatch-pip-compile#readme)
+
+pip-compile(pip-tools)ベースで、パッケージのロックファイル(デフォルト requrements.txt)を作ってくれる
+hatch のプラグイン。
+
+設定簡単。uv も使える。(uv は hatch 内部でも使ってるので使わない手はない)
+
+pyproject.toml に追加するだけ
+
+```toml
+[tool.hatch.env]
+requires = [
+  "hatch-pip-compile",
+]
+
+[tool.hatch.envs.default]
+type = "pip-compile"
+pip-compile-resolver = "uv"
+```
+
+## uv
+
+[How to select the installer - Hatch](https://hatch.pypa.io/1.12/how-to/environment/select-installer/)
+
+なんかやりたいほうだいな感じ
