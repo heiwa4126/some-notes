@@ -32,7 +32,14 @@
   - [docker history](#docker-history)
   - [AWS ECR のライフサイクルポリシー](#aws-ecr-のライフサイクルポリシー)
   - [デタッチモード(-d)で docker run したプロセスの出力を見る](#デタッチモード-dで-docker-run-したプロセスの出力を見る)
-  - [ssh 経由で image をよそのホストにコピー](#ssh経由で-image-をよそのホストにコピー)
+  - [ssh 経由で image をよそのホストにコピー](#ssh-経由で-image-をよそのホストにコピー)
+  - [Docker のイメージからそれを作った Dockerfile は見れる?](#docker-のイメージからそれを作った-dockerfile-は見れる)
+  - [配布されている Docker イメージのタグのリスト](#配布されている-docker-イメージのタグのリスト)
+    - [Google の distroless のタグ一覧](#google-の-distroless-のタグ一覧)
+  - [Google の distroless に入っている Python や Node.js のバージョンはどうやって調べられますか?](#google-の-distroless-に入っている-python-や-nodejs-のバージョンはどうやって調べられますか)
+  - [Docker Content Trust (DCT)](#docker-content-trust-dct)
+  - [Alpine の musl は 2024 年でもまだ不安定だったり遅かったりしますか?](#alpine-の-musl-は-2024-年でもまだ不安定だったり遅かったりしますか)
+  - [すごい参考になる (`RUN --mount=type=`)](#すごい参考になる-run---mounttype)
 
 ## インストール
 
@@ -91,7 +98,7 @@ docker system df
 
 [Docker、ボリューム(Volume)について真面目に調べた - Qiita](https://qiita.com/gounx2/items/23b0dc8b8b95cc629f32)
 
-> ボリューム(=データを永続化できる場所) は２種類ある
+> ボリューム(=データを永続化できる場所) は 2 種類ある
 
 ## docker が実際にどれぐらいディスクを使っているか
 
@@ -328,7 +335,7 @@ GitHub では[go/root_linux.go at f2e51f00158c2dcdff37c573c24f798d1e63db31 · go
 
 Red Hat Universal Base Image を試す。
 
-- [自由に再配布可能な Red Hat Enterprise Linux 8 ベースのコンテナ用 OS イメージ「Red Hat Universal Base Image」が公開 － Publickey](https://www.publickey1.jp/blog/19/red_hat_enterprise_linux_8osred_hat_universal_base_image.html)
+- [自由に再配布可能な Red Hat Enterprise Linux 8 ベースのコンテナ用 OS イメージ「Red Hat Universal Base Image」が公開 - Publickey](https://www.publickey1.jp/blog/19/red_hat_enterprise_linux_8osred_hat_universal_base_image.html)
 -
 
 ```
@@ -415,8 +422,8 @@ Docker Hub に置いたやつをちょっと動かしたいだけなんだが...
 
 ## チュートリアルズ
 
-- [Docker 入門（第三回）～各種 docker コマンドと Docker イメージ作成について～ | さくらのナレッジ](https://knowledge.sakura.ad.jp/14427/)
-- [Docker 入門（第四回）～ Dockerfile について～ | さくらのナレッジ](https://knowledge.sakura.ad.jp/15253/)
+- [Docker 入門(第三回)~各種 docker コマンドと Docker イメージ作成について~ | さくらのナレッジ](https://knowledge.sakura.ad.jp/14427/)
+- [Docker 入門(第四回)~ Dockerfile について~ | さくらのナレッジ](https://knowledge.sakura.ad.jp/15253/)
 
 ## snap で docker
 
@@ -496,7 +503,7 @@ docker-compose logs
 
 ## イメージを全部消す
 
-参考: [使用していない Docker オブジェクトの削除（prune） — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/config/pruning.html)
+参考: [使用していない Docker オブジェクトの削除(prune) — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/config/pruning.html)
 
 本当に全部消える。Y/n 聞いてくるので答える。
 
@@ -538,7 +545,7 @@ docker system prune -a --volumes --force
 [Overview of Docker Compose | Docker Documentation](https://docs.docker.com/compose/)
 
 このチュートリアルがわかりやすかった。
-[Docker 入門（第六回）〜Docker Compose〜 | さくらのナレッジ](https://knowledge.sakura.ad.jp/16862/)
+[Docker 入門(第六回)〜Docker Compose〜 | さくらのナレッジ](https://knowledge.sakura.ad.jp/16862/)
 
 これを第 1 回からやると docker,docker-compose がだいたいわかる。
 これに加えて`docker-compose logs`を。
@@ -620,7 +627,7 @@ podman-compose には logs サブコマンドがない。
 
 podman 的には Kubernetes を使え、ということらしい。
 
-参考: [Podman で Compose したかったらどうするの？ - Qiita](https://qiita.com/thirdpenguin/items/c9e58c27e96f02b0a96d)
+参考: [Podman で Compose したかったらどうするの? - Qiita](https://qiita.com/thirdpenguin/items/c9e58c27e96f02b0a96d)
 
 ## minikube
 
@@ -712,7 +719,7 @@ minikube dashboard --url=false
 v.19 で試験的導入。v.20 で正規機能。
 
 - [Run the Docker daemon as a non-root user (Rootless mode) | Docker Documentation](https://docs.docker.com/engine/security/rootless/)
-- [root ユーザー以外による Docker デーモン起動（rootless モード） | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/engine/security/rootless/)
+- [root ユーザー以外による Docker デーモン起動(rootless モード) | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/engine/security/rootless/)
 
 Docker そのもののインストール: [Install Docker Engine on Ubuntu | Docker Documentation](https://docs.docker.com/engine/install/ubuntu/)
 
@@ -758,7 +765,7 @@ export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
 docker-compose は?
 
-[Docker に Rootless モードが入ったぞ！という話 - Qiita](https://qiita.com/inductor/items/75db0c1c0d49646dd68a)
+[Docker に Rootless モードが入ったぞ!という話 - Qiita](https://qiita.com/inductor/items/75db0c1c0d49646dd68a)
 
 ## BuildKit
 
@@ -820,7 +827,7 @@ rmi できないし、force オプションでもダメ。
 docker image prune -f
 ```
 
-[使用していない Docker オブジェクトの削除（prune） — Docker-docs-ja 20.10 ドキュメント](https://docs.docker.jp/config/pruning.html)
+[使用していない Docker オブジェクトの削除(prune) — Docker-docs-ja 20.10 ドキュメント](https://docs.docker.jp/config/pruning.html)
 
 `prune`には他いろんなものが消せるオプションがある。↑ 参考。
 
@@ -869,3 +876,208 @@ docker save myapp1:test1 | ssh myhost1 'docker load'
 
 - `ssh myhost1` で正常につながる前提
 - myhost1 には docker が入ってる前提
+
+## Docker のイメージからそれを作った Dockerfile は見れる?
+
+完全に再現はできないけど
+
+```sh
+docker history <image_name>
+docker inspect <image_name>
+```
+
+で、そこそこわかる。
+
+## 配布されている Docker イメージのタグのリスト
+
+配布されている Docker イメージのタグのリストを取得するには、以下の方法があります:
+
+1. Docker Hub のウェブサイトを利用する:
+   Docker Hub の該当イメージのページにアクセスし、「Tags」タブを確認します。ここで利用可能なタグの一覧を見ることができます。
+
+2. Docker Hub API を使用する:
+   curl コマンドなどを使って Docker Hub の API にアクセスし、タグ情報を取得できます。
+
+   ```sh
+   curl -L -s 'https://registry.hub.docker.com/v2/repositories/library/<イメージ名>/tags?page_size=1000' | jq '."results"[]["name"]'
+   ```
+
+   この方法では、jq コマンドを使って JSON 形式の応答からタグ名を抽出しています。
+
+3. docker search コマンドを使用する:
+   `docker search` コマンドでイメージを検索できますが、これはタグの一覧を提供しません。イメージの基本情報のみを表示します.
+
+4. サードパーティのツールを使用する:
+   `docker-tags` のようなサードパーティのシェルスクリプトを使用すると、指定したイメージのタグ一覧を取得できます.
+
+   ```sh
+   docker-tags <イメージ名>
+   ```
+
+   このスクリプトは Docker Hub の API を利用してタグ情報を取得し、表示します。
+
+   [docker イメージのタグ一覧を表示するコマンドを作る #Docker - Qiita](https://qiita.com/UKIUKI_ENGINEER/items/9fa237cd937c9d329595)
+
+5. docker pull コマンドを使用する:
+   特定のタグを指定せずに `docker pull` コマンドを実行すると、利用可能なタグの一部が表示されることがあります。ただし、これは全てのタグを網羅するものではありません[1].
+
+これらの方法を組み合わせることで、配布されている Docker イメージのタグのリストを効率的に取得できます。
+特に Docker Hub の API を利用する方法(2 番目の方法)が最も包括的な情報を提供しますが、API の利用制限に注意が必要です。
+
+### Google の distroless のタグ一覧
+
+リストはここにある
+<https://github.com/GoogleContainerTools/distroless?tab=readme-ov-file#what-images-are-available>
+
+```sh
+gcloud container images list-tags gcr.io/distroless/<イメージ名>
+```
+
+## Google の distroless に入っている Python や Node.js のバージョンはどうやって調べられますか?
+
+マルチステートビルドで runner(production)イメージに Google の distroless を使おうと考えています。
+開発イメージと distroless の Python や Node.js のマイナーバージョンまでをそろえたい。
+
+のだが、結構難しい。
+
+## Docker Content Trust (DCT)
+
+```sh
+export DOCKER_CONTENT_TRUST=1
+```
+
+にすると署名してないイメージが `docker run` できなくなる。
+自分で作ったイメージも実行できなくなる。
+
+```sh
+docker trust key generate heiwa4126
+```
+
+カレントディレクトリに `heiwa4126.pub` ができる。
+秘密鍵はどこ?
+
+```sh
+ls ~/.docker/trust/private
+```
+
+はい、`docker trust key generate`で作成した鍵を Docker Hub に登録することができます。以下に手順を説明します:
+
+1. 鍵の生成:
+   まず、`docker trust key generate`コマンドを使用して鍵を生成します[1][2][3]。
+
+```sh
+docker trust key generate your-name
+```
+
+このコマンドは秘密鍵を生成し、対応する公開鍵ファイル(your-name.pub)を現在のディレクトリに出力します[3]。
+
+2. 公開鍵の Docker Hub への追加:
+   生成した公開鍵を Docker Hub のリポジトリに追加します。これには`docker trust signer add`コマンドを使用します[2]。
+
+```sh
+docker trust signer add --key your-name.pub your-name your-dockerhub-username/your-repository:tag
+```
+
+このコマンドは、指定した Docker Hub リポジトリに対して、生成した公開鍵を信頼された署名者として追加します。
+
+3. イメージの署名とプッシュ:
+   鍵を登録した後、イメージを署名してプッシュすることができます。これには`docker trust sign`コマンドを使用するか、`DOCKER_CONTENT_TRUST=1`環境変数を設定してから`docker push`を実行します[2][4]。
+
+```sh
+docker trust sign your-dockerhub-username/your-repository:tag
+```
+
+または
+
+```sh
+export DOCKER_CONTENT_TRUST=1
+docker push your-dockerhub-username/your-repository:tag
+```
+
+これらの手順を実行することで、`docker trust key generate`で作成した鍵を Docker Hub に登録し、その鍵を使用してイメージに署名することができます。
+署名されたイメージは Docker Content Trust (DCT)が有効な環境でも実行可能になります[4]。
+
+注意点として、鍵の管理は非常に重要です。特にルート鍵(root key)の紛失は回復不可能なので、安全な場所にバックアップを取ることをお勧めします[5]。
+
+Citations:
+[1] https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/trust_key_generate/
+[2] https://matsuand.github.io/docs.docker.jp.onthefly/engine/security/trust/
+[3] https://docs.docker.com/reference/cli/docker/trust/key/generate/
+[4] https://yuya-hirooka.hatenablog.com/entry/2021/08/14/164518
+[5] https://docs.docker.com/engine/security/trust/trust_key_mng/
+
+**ローカルイメージに直接署名することはできません。イメージはまずリモートリポジトリにプッシュする必要があります**
+
+Docker Content Trust (DCT) は、Docker イメージに対する信頼性を確保するための仕組みで、イメージのパブリックレジストリ(例えば Docker Hub)に対して署名を行うことを主に目的としています。しかし、ローカルイメージにも署名を行いたい場合、以下の手順で対応することが可能です。
+
+1. **Notary サーバーのセットアップ**:
+   Docker Content Trust は Notary サーバーを使用してイメージのメタデータを管理します。ローカルで Notary サーバーをセットアップする必要があります。以下のコマンドを使用して Docker Compose で Notary サーバーをセットアップできます。
+
+   ```bash
+   git clone https://github.com/theupdateframework/notary
+   cd notary
+   docker-compose up -d
+   ```
+
+2. **Docker デーモンの設定**:
+   ローカルで署名されたイメージをプッシュするために、Docker デーモンが Notary サーバーを使用するように設定します。`/etc/docker/daemon.json` ファイルに以下の内容を追加します。
+
+   ```json
+   {
+     "content-trust": {
+       "notary-server": "http://localhost:4443"
+     }
+   }
+   ```
+
+   設定を反映するために Docker デーモンを再起動します。
+
+   ```bash
+   sudo systemctl restart docker
+   ```
+
+3. **イメージのタグ付け**:
+   署名するイメージに適切なタグを付けます。タグには Notary サーバーのリポジトリ名を含めます。
+
+   ```bash
+   docker tag <your-image>:<tag> localhost:5000/<your-repo>:<tag>
+   ```
+
+4. **署名とプッシュ**:
+   DCT を有効にしてイメージをプッシュします。以下のコマンドを実行して署名とプッシュを行います。
+
+   ```bash
+   export DOCKER_CONTENT_TRUST=1
+   docker push localhost:5000/<your-repo>:<tag>
+   ```
+
+5. **イメージの検証**:
+   署名されたイメージを検証するために、以下のコマンドを実行します。
+
+   ```bash
+   docker pull localhost:5000/<your-repo>:<tag>
+   ```
+
+これらの手順を踏むことで、ローカルイメージに対して Docker Content Trust を使用して署名することができます。
+
+## Alpine の musl は 2024 年でもまだ不安定だったり遅かったりしますか?
+
+2021 年の記事:
+[軽量 Docker イメージに安易に Alpine を使うのはやめたほうがいいという話 - inductor's blog](https://blog.inductor.me/entry/alpine-not-recommended)
+
+2024-07 の GTP-4o の答え
+
+2024 年においても、Alpine Linux の musl には、glibc ベースのシステムと比較した場合にパフォーマンスや安定性に関するいくつかの懸念が残っています。musl はその軽量性とセキュリティ機能で高く評価されていますが、すべての使用ケースで glibc のパフォーマンスに完全には追いついていません。
+
+1. **パフォーマンスの違い**: musl を使用すると、特定のシナリオで著しいパフォーマンス低下が発生することがあります。たとえば、musl を使用するアプリケーションは、システムコールの処理やライブラリの実装の違いにより、CPU 使用率が高くなり、応答時間が遅くなる可能性があります ​ ([Elixir Programming Language Forum](https://elixirforum.com/t/using-alpine-and-musl-instead-of-gnu-libc-affect-performance/57670))​​ ([GitHub](https://github.com/haproxytech/kubernetes-ingress/issues/541))​。HAProxy や Erlang などの特定のアプリケーションは、このようなパフォーマンスの欠点に気付きましたが、これらの違いを緩和するための作業とアップデートが進行中です ​ ([Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/729342/performance-issue-with-alpine-musl-library))​​ ([Alpine Linux Wiki](https://wiki.alpinelinux.org/wiki/Musl))​。
+2. **安定性の懸念**: musl の特定の機能、例えばロケールサポートの実装は、glibc と比較して制限されています。このため、これらの機能に大きく依存するアプリケーションでは、機能が制限されたり追加の設定が必要となることがあります ​ ([Alpine Linux Wiki](https://wiki.alpinelinux.org/wiki/Musl))​。
+
+リソース効率とセキュリティが最優先される環境では、musl は依然として有力な選択肢です。しかし、パフォーマンスが重要なアプリケーションに対しては、必要なパフォーマンスと安定性基準を満たしていることを確認するために、慎重な評価とテストが推奨されます。
+
+[musl-locales - Alpine Linux packages](https://pkgs.alpinelinux.org/contents?name=musl-locales)
+
+## すごい参考になる (`RUN --mount=type=`)
+
+[2024 年版の Dockerfile の考え方&書き方 | フューチャー技術ブログ](https://future-architect.github.io/articles/20240726a/)
+
+<https://docs.docker.com/reference/dockerfile/#example-cache-apt-packages> とか。

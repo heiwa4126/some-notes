@@ -33,6 +33,7 @@
   - [Git で過去の特定のコミットに移動する方法いろいろ](#git-で過去の特定のコミットに移動する方法いろいろ)
   - [Git で過去の特定のコミットに移動すると、必ず detached HEAD 状態になりますか?](#git-で過去の特定のコミットに移動すると必ず-detached-head-状態になりますか)
   - [Windows 標準の ssh-agent を使って GitHub に ssh 接続する](#windows-標準の-ssh-agent-を使って-github-に-ssh-接続する)
+  - [remote から dev を持ってきてローカルの dev ブランチとして使う](#remote-から-dev-を持ってきてローカルの-dev-ブランチとして使う)
 
 ## 特定のファイルを最後の commit 時に戻す
 
@@ -216,7 +217,7 @@ Git のセキュア流出防止ツールには、awslabs/git-secrets や thought
 1. **Gitleaks**
 
    - **URL**: [https://github.com/gitleaks/gitleaks](https://github.com/gitleaks/gitleaks)
-   - **概要**: Gitleaks は、秘密情報（API キーやパスワードなど）の Git リポジトリへの漏洩を防ぐためのツールです。簡単に使えるコマンドラインツールであり、CI/CD パイプラインに組み込むことができます。
+   - **概要**: Gitleaks は、秘密情報(API キーやパスワードなど)の Git リポジトリへの漏洩を防ぐためのツールです。簡単に使えるコマンドラインツールであり、CI/CD パイプラインに組み込むことができます。
 
 2. **TruffleHog**
 
@@ -233,7 +234,7 @@ Git のセキュア流出防止ツールには、awslabs/git-secrets や thought
    - **URL**: [https://github.com/Yelp/detect-secrets](https://github.com/Yelp/detect-secrets)
    - **概要**: detect-secrets は、静的解析を使用して Git リポジトリ内の秘密情報を検出するためのツールです。プラグインベースであり、カスタマイズが容易です。
 
-5. **git-secrets**（Microsoft の Fork 版）
+5. **git-secrets**(Microsoft の Fork 版)
    - **URL**: [https://github.com/microsoft/git-secrets](https://github.com/microsoft/git-secrets)
    - **概要**: awslabs/git-secrets をベースにした Microsoft のフォーク版です。追加の機能や修正が加えられています。
 
@@ -567,7 +568,7 @@ Git で過去の特定のコミットに移動すると、通常はデタッチ�
 
 ただし、過去のコミットが現在のブランチの最新コミットである場合、または過去のコミットに既にブランチが存在していてそのブランチにチェックアウトした場合は、デタッチド HEAD 状態にはなりません。
 
-デタッチド HEAD 状態で作業を行い、その結果を保存したい場合は、新しいブランチを作成することで可能です。これは以下のコマンドで行うことができます：
+デタッチド HEAD 状態で作業を行い、その結果を保存したい場合は、新しいブランチを作成することで可能です。これは以下のコマンドで行うことができます:
 
 ```sh
 git checkout -b 新しいブランチ名
@@ -623,3 +624,25 @@ git config --global core.sshCommand "'C:/Windows/System32/OpenSSH/ssh.exe'"
 ```
 
 これで毎回パスフレーズを入れずに GitHub につながる。
+
+## remote から dev を持ってきてローカルの dev ブランチとして使う
+
+```console
+$ git branch --all
+
+* main
+remotes/origin/dev
+remotes/origin/main
+```
+
+のとき remotes/origin/dev を持ってきて、ローカルの dev ブランチにするには
+
+```sh
+git fetch origin dev:dev
+```
+
+- リモートの dev ブランチをフェッチ
+- ローカルに dev ブランチを作成
+- フェッチしたリモートの dev ブランチの内容をローカルの dev ブランチに反映
+
+をいっぺんに行う。

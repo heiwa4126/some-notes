@@ -41,10 +41,11 @@ keys.gnupg.net は死んでるみたい。
 
 ほか
 
+- keyserver.ubuntu.com - いちばんまともっぽい
 - pgp.mit.edu
 - pgp.nic.ad.jp
-- keyserver.ubuntu.com - いちばんまともっぽい
 - keys.mailvelope.com
+- pool.sks-keyservers.net (分散型キーサーバネットワーク)
 
 など [Key server (cryptographic) - Wikipedia](<https://en.wikipedia.org/wiki/Key_server_(cryptographic)#Keyserver_examples>)
 
@@ -64,4 +65,14 @@ gpg --keyserver keyserver.ubuntu.com --send-keys ZZZZZZZZZZZZZZZZZ
 
 ```bash
 gpg --keyserver 鍵サーバ --search-keys メールアドレス
+```
+
+## キーサーバのデフォルトを設定するには?
+
+`~/.gnupg/gpg.conf` で
+
+```config
+keyserver hkp://keyserver.ubuntu.com
+# または keyserver hkp://keys.gnupg.net
+# または keyserver hkp://pgp.mit.edu
 ```

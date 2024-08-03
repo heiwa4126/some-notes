@@ -16,6 +16,7 @@
   - [GitHub CLI を使ってシークレットスキャン(secret scanning)を構築する](#github-cli-を使ってシークレットスキャンsecret-scanningを構築する)
   - [GitHub のプラン](#github-のプラン)
   - [自分が invite された Organizations が、GitHub のどのプランか知るには?](#自分が-invite-された-organizations-がgithub-のどのプランか知るには)
+  - [今月使ったリソースを確認する](#今月使ったリソースを確認する)
 
 ## GitHub のチュートリアル
 
@@ -279,3 +280,7 @@ GitHub にはさまざまなプランが用意されています。それぞれ�
 ## 自分が invite された Organizations が、GitHub のどのプランか知るには?
 
 Organization の設定にアクセスできる管理者権限が必要。(終了)
+
+## 今月使ったリソースを確認する
+
+[Usage this month - Billing](https://github.com/settings/billing/summary#usage)
