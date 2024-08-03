@@ -42,19 +42,21 @@
 これでバッファに入るので、tmux 立ち上げたサーバで
 
 ```sh
-# copyバッファのリスト
+# copyバッファのリスト `prefix =`でもOK
 tmux list-buffers
-# ファイルの書き出し
+# ファイルへの書き出し
 tmux save-buffer -a ~/foo.log
 tmux save-buffer -b 0 ~/bar.log
 tmux save-buffer -a | clip.exe  # for WSL
-# copyバッファの削除
+# copyバッファの削除 `prefix =`で `d`でもOK
 tmux delete-buffer -b 0  # -a はないみたい
 ```
 
 あと現在のキーバインドは
 `tmux list-keys | less`
 で見れる。
+
+`prefix ?` でも OK
 
 ## 新しいウインドウやペインを開いたときに cwd を引き継ぐ
 
