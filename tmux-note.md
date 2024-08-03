@@ -52,11 +52,14 @@ tmux save-buffer -a | clip.exe  # for WSL
 tmux delete-buffer -b 0  # -a はないみたい
 ```
 
+参考:
+
+- [Getting Started · tmux/tmux Wiki](https://github.com/tmux/tmux/wiki/Getting-Started#copy-and-paste)
+- [Clipboard · tmux/tmux Wiki](https://github.com/tmux/tmux/wiki/Clipboard)
+
 あと現在のキーバインドは
 `tmux list-keys | less`
-で見れる。
-
-`prefix ?` でも OK
+で見れる。`prefix ?` でも OK
 
 ## 新しいウインドウやペインを開いたときに cwd を引き継ぐ
 
