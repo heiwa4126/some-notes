@@ -2,6 +2,13 @@
 
 よく使うコマンドなど
 
+- [az login](#az-login)
+- [az account list](#az-account-list)
+- [az account list-locations : リージョン一覧](#az-account-list-locations--リージョン一覧)
+- [az account set : デフォルトのサブスクリプションを設定](#az-account-set--デフォルトのサブスクリプションを設定)
+- [az account show](#az-account-show)
+- [サービスプリンシパルの作成](#サービスプリンシパルの作成)
+
 ## az login
 
 ```console
@@ -20,7 +27,13 @@ az account list --query "[].{name:name,id:id}" -o json
 
 output を table にするとなぜか SubscriptionId が表示されない。
 
-## az account set
+## az account list-locations : リージョン一覧
+
+```bash
+az account list-locations --query "[].{name:name}" -o json
+```
+
+## az account set : デフォルトのサブスクリプションを設定
 
 ```bash
 az account set --subscription "your-subscription-name"
