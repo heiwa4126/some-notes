@@ -33,6 +33,7 @@
 - [Git で過去の特定のコミットに移動すると、必ず detached HEAD 状態になりますか?](#git-で過去の特定のコミットに移動すると必ず-detached-head-状態になりますか)
 - [Windows 標準の ssh-agent を使って GitHub に ssh 接続する](#windows-標準の-ssh-agent-を使って-github-に-ssh-接続する)
 - [remote から dev を持ってきてローカルの dev ブランチとして使う](#remote-から-dev-を持ってきてローカルの-dev-ブランチとして使う)
+- [汎用 .gitattributes](#汎用-gitattributes)
 
 ## 特定のファイルを最後の commit 時に戻す
 
@@ -645,3 +646,15 @@ git fetch origin dev:dev
 - フェッチしたリモートの dev ブランチの内容をローカルの dev ブランチに反映
 
 をいっぺんに行う。
+
+## 汎用 .gitattributes
+
+```config
+* text=auto eol=lf
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+*.{reg,[rR][eE][gG]} text eol=crlf encoding=UTF-16LE-BOM
+*.lockb binary diff=lockb
+```
+
+これだけあればだいたい大丈夫(2024-08)

@@ -1,13 +1,22 @@
 # bun メモ
 
-- [bun メモ](#bun-メモ)
-  - [概要](#概要)
-  - [`npm ls` の equivalent](#npm-ls-の-equivalent)
+- [bun の概要](#bun-の概要)
+- [bun でこれだけはやっといたほうがいい設定](#bun-でこれだけはやっといたほうがいい設定)
+- [`npm ls` の equivalent](#npm-ls-の-equivalent)
 
-## 概要
+## bun の概要
 
 - [Bun — A fast all-in-one JavaScript runtime](https://bun.sh/)
 - [oven-sh/bun: Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one](https://github.com/oven-sh/bun)
+
+## bun でこれだけはやっといたほうがいい設定
+
+[Lockfile – Package manager | Bun Docs](https://bun.sh/docs/install/lockfile)
+
+```sh
+git config --global diff.lockb.textconv bun
+git config --global diff.lockb.binary true
+```
 
 ## `npm ls` の equivalent
 
