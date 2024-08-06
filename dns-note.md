@@ -1,9 +1,8 @@
 # DNS メモ
 
-- [DNS メモ](#dns-メモ)
-  - [プライベート DNS モード または DNS over TLS](#プライベート-dns-モード-または-dns-over-tls)
-  - [リンク](#リンク)
-  - [SOA レコードの「プライマリーサーバ (MNAME)」](#soa-レコードのプライマリーサーバ-mname)
+- [プライベート DNS モード または DNS over TLS](#プライベート-dns-モード-または-dns-over-tls)
+- [リンク](#リンク)
+- [SOA レコードの「プライマリーサーバ (MNAME)」](#soa-レコードのプライマリーサーバ-mname)
 
 ## プライベート DNS モード または DNS over TLS
 
@@ -18,8 +17,8 @@
 
 参考:
 
-- https://developers.google.com/speed/public-dns/docs/using#android
-- https://blog.cloudflare.com/enable-private-dns-with-1-1-1-1-on-android-9-pie/
+- <https://developers.google.com/speed/public-dns/docs/using#android>
+- <https://blog.cloudflare.com/enable-private-dns-with-1-1-1-1-on-android-9-pie/>
 
 なぜか使いたい`1dot1dot1dot3.cloudflare-dns.com`だと「接続できません」になる。
 dig では引けるんだけど...
