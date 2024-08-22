@@ -24,7 +24,10 @@
   - [Example Detect QR Code - BoofCV](https://boofcv.org/index.php?title=Example_Detect_QR_Code)
 - (商用) [Robust Barcode Reader SDK - Quick Implementation | Dynamsoft](https://www.dynamsoft.com/barcode-reader/overview/)
 - (商用) [Barcode Scanning Software | Scandit](https://www.scandit.com/products/barcode-scanning/)
+- (商用) [MatrixScan | Multiple Barcode Scanner | Scandit](https://www.scandit.com/products/matrixscan/)
 - (WebAPI) [QR code API: command “read-qr-code” (read / scan QR code, QR code reader)](https://goqr.me/api/doc/read-qr-code/)
+- (ブラウザ専用) [Barcode Detection API - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API)
+  - 日本語訳 [バーコード検出 API - Web API | MDN](https://developer.mozilla.org/ja/docs/Web/API/Barcode_Detection_API)
 
 ## 反則技っぽいやつ
 
