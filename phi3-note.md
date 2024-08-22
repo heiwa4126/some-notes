@@ -2,6 +2,20 @@
 
 けっこういい感じ。
 
+- [概要](#概要)
+- [Web 上ですぐさま試す](#web-上ですぐさま試す)
+- [Phi-3 ファミリー](#phi-3-ファミリー)
+- [モデルのレポジトリ](#モデルのレポジトリ)
+- [実行サンプル](#実行サンプル)
+- [Fine-tuning のやりかたは?](#fine-tuning-のやりかたは)
+- [モデルの評価の方法は?](#モデルの評価の方法は)
+- [flash-attn パッケージ](#flash-attn-パッケージ)
+  - ["You are not running the flash-attention implementation, expect numerical differences." って言われるんですけど?](#you-are-not-running-the-flash-attention-implementation-expect-numerical-differences-って言われるんですけど)
+  - [fine-tuning はともかく推論ではあまり早くならないらしい](#fine-tuning-はともかく推論ではあまり早くならないらしい)
+- [Azure 上の Phi-3 の価格](#azure-上の-phi-3-の価格)
+
+## 概要
+
 - 量子化モデルはもちろん、
   GPU メモリが 8GB あれば非量子化モデルが動く (一番小さいやつ →
   [microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)

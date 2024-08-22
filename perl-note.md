@@ -1,31 +1,36 @@
-いまどきPerl? まあいろいろあって
+# Perl のメモ
 
-# cpanmでローカルにモジュールをインストール
+いまどき Perl? まあいろいろあって
 
-`pip --user`や`npm (-gなし)`みたいなことをcpanmで。
+- [cpanm でローカルにモジュールをインストール](#cpanm-でローカルにモジュールをインストール)
+- [Perl formatter](#perl-formatter)
 
-Perlのパッケージはディストリビューションのパッケージがあればそれを使うに越したことはないのだけど(アップデートが簡単だし)、さまざまざまな政治的理由でそういうことをせざるを得ない時にのノウハウ。
+## cpanm でローカルにモジュールをインストール
 
-[cpanmによるPerlのローカル環境構築 - Perlゼミ(サンプルコードPerl入門)](http://d.hatena.ne.jp/perlcodesample/20101027/1278596435)
+`pip --user`や`npm (-gなし)`みたいなことを cpanm で。
 
-```
+Perl のパッケージはディストリビューションのパッケージがあればそれを使うに越したことはないのだけど(アップデートが簡単だし)、さまざまざまな政治的理由でそういうことをせざるを得ない時にのノウハウ。
+
+[cpanm による Perl のローカル環境構築 - Perl ゼミ(サンプルコード Perl 入門)](http://d.hatena.ne.jp/perlcodesample/20101027/1278596435)
+
+```sh
 export PERL_CPANM_OPT="--local-lib=~/perl5"
 export PATH=$HOME/perl5/bin:$PATH;
 export PERL5LIB=$HOME/perl5/lib/perl5:$PERL5LIB;
 ```
 
-肝は`PERL_CPANM_OPT`。これで普通にcpanmすれば$HOME/perl5以下に入る。XSでも(perl-devがあれば)OK。
+肝は`PERL_CPANM_OPT`。これで普通に cpanm すれば$HOME/perl5 以下に入る。XS でも(perl-dev があれば)OK。
 
-package.jsonみたいな`cpanfile`というのもある。
+package.json みたいな`cpanfile`というのもある。
 
-```
+```sh
 perl cpanm -L extlibpath --installdeps .
 ```
 
-カレントディレクトリにcpanfileを置いて、extlibpathにCAPNモジュールをインストール
+カレントディレクトリに cpanfile を置いて、extlibpath に CAPN モジュールをインストール
 (試してない)。
 
-# perl formatter
+## Perl formatter
 
 perltidy
 
@@ -38,7 +43,7 @@ perltidy
 perltidy -b -i=2 *.pl
 ```
 
-~/.perltidyrcをちゃんと書くとよい。
+~/.perltidyrc をちゃんと書くとよい。
 
 サンプル:
 
