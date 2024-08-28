@@ -6,6 +6,7 @@
 - [ZXing メモ](#zxing-メモ)
   - [FinderPattern インターフェース](#finderpattern-インターフェース)
   - [AlignmentPattern インターフェース](#alignmentpattern-インターフェース)
+- [Barcode Detection API](#barcode-detection-api)
 
 ## メジャーなライブラリ
 
@@ -69,3 +70,18 @@ AlignmentPattern は、QR コードのアライメントパターンを表しま
 - getX(): パターンの X 座標を取得します。
 - getY(): パターンの Y 座標を取得します。
 - getEstimatedModuleSize(): パターンのモジュールサイズを推定します。
+
+## Barcode Detection API
+
+[Barcode Detection API - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API)
+
+問題は「意外とサポートしているブラウザがない」。iOS の Safari と Windows の Chrome 系がダメなのは辛い。
+
+ZXing を wasm にした polyfill はある。
+
+- [Sec-ant/barcode-detector: A Barcode Detection API polyfill that uses ZXing-C++ WebAssembly under the hood.](https://github.com/Sec-ant/barcode-detector)
+  - [barcode-detector - npm](https://www.npmjs.com/package/barcode-detector/v/latest)
+  - [Sec-ant/zxing-wasm: ZXing-C++ WebAssembly as an ES/CJS module with types. Read/Write barcodes in web, node, bun and deno.](https://github.com/Sec-ant/zxing-wasm)
+
+wasm を使うのはちょっとめんどう。
+参照: <https://github.com/Sec-ant/barcode-detector#setzxingmoduleoverrides>
