@@ -4,9 +4,7 @@
 
 - [Amazon Linux 2023 に Python 3.12 をインストールする](#amazon-linux-2023-に-python-312-をインストールする)
 - [Ubuntu 22.04 LTS に Python 3.12 をインストールする](#ubuntu-2204-lts-に-python-312-をインストールする)
-- [pip3 が --user 不要で per-user にインストールされるようになったのはいつからですか?](#pip3-が---user-不要で-per-user-にインストールされるようになったのはいつからですか)
-- [python をインストールする(2019-12)](#python-をインストールする2019-12)
-  - [Amazon Linux 2](#amazon-linux-2)
+  - [get-pip.py で pip, pip3 が置き換えられる問題を回避する](#get-pippy-で-pip-pip3-が置き換えられる問題を回避する)
   - [Ubuntu 18.04 TLS](#ubuntu-1804-tls)
   - [RHEL7, CentOS7](#rhel7-centos7)
   - [RHEL8, CentOS8](#rhel8-centos8)
@@ -90,6 +88,22 @@ sudo apt install python3.12 python3.12-distutils -y
 curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12
 ```
 
+### get-pip.py で pip, pip3 が置き換えられる問題を回避する
+
+たとえば標準で Python3.10 が入っていて、
+上記の最後の行の方法で pip を入れると、pip, pip3 が pip3.12 と同じになってしまう。
+
+これを避けるには、いったん別のディレクトリに入れて、パスを通すか、alias で解決する
+
+````sh
+curl -sS -o get-pip.py https://bootstrap.pypa.io/get-pip.py
+python3.12 get-pip.py --prefix=/usr/local/python3.12
+# 確認
+/usr/local/python3.12/bin/pip3.12 --version
+## このあとpathを追加するか
+## /usr/local/python3.12/bin/pip3.12をパスの通ったところへlinkする
+```sh
+
 ## pip3 が --user 不要で per-user にインストールされるようになったのはいつからですか?
 
 所説あるけど、Python 3.4 かららしい。
@@ -106,7 +120,7 @@ RHEL7 同様 python3 が公式に配布されるようになった。いまの�
 
 ```sh
 sudo yum install python3
-```
+````
 
 pip3
 
