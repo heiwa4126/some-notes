@@ -2,63 +2,93 @@
 
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
-- [Python のメモ](#python-のメモ)
-  - [pip3 が --user 不要で per-user にインストールされるようになったのはいつからですか?](#pip3-が---user-不要で-per-user-にインストールされるようになったのはいつからですか)
-  - [python をインストールする(2019-12)](#python-をインストールする2019-12)
-    - [Amazon Linux 2](#amazon-linux-2)
-    - [Ubuntu 18.04 TLS](#ubuntu-1804-tls)
-    - [RHEL7, CentOS7](#rhel7-centos7)
-    - [RHEL8, CentOS8](#rhel8-centos8)
-    - [Windows python 本家の配布](#windows-python-本家の配布)
-    - [Anaconda, miniconda](#anaconda-miniconda)
-    - [Windows msys2](#windows-msys2)
-    - [Windows Store](#windows-store)
-  - [Jupyter notebook](#jupyter-notebook)
-  - [pip をユーザーローカルに入れる](#pip-をユーザーローカルに入れる)
-  - [pip --user のパス](#pip---user-のパス)
-  - [古いパッケージを見つける](#古いパッケージを見つける)
-  - [pip で更新可能なものをすべて更新するスクリプト](#pip-で更新可能なものをすべて更新するスクリプト)
-  - [vscode と pipenv](#vscode-と-pipenv)
-  - [RHEL7 に pip](#rhel7-に-pip)
-  - [RHEL6 に pip](#rhel6-に-pip)
-  - [pip10 問題](#pip10-問題)
-  - [magic](#magic)
-  - [Ubuntu 18.04 LTS で python3.7](#ubuntu-1804-lts-で-python37)
-  - [Ubuntu 18.04 LTS で python3.9](#ubuntu-1804-lts-で-python39)
-  - [Ubuntu 20.04](#ubuntu-2004)
-  - [venv](#venv)
-  - [python の EOL](#python-の-eol)
-  - [モジュールとパッケージ](#モジュールとパッケージ)
-  - [Windows10 上での Python](#windows10-上での-python)
-  - [Jupyter Notebook の tips](#jupyter-notebook-の-tips)
-  - [2020-resolver](#2020-resolver)
-  - [WARNING: pip is being invoked by an old script wrapper.](#warning-pip-is-being-invoked-by-an-old-script-wrapper)
-  - [ubuntu20.04LTS 以降で python を python3 にする](#ubuntu2004lts-以降で-python-を-python3-にする)
-  - [Python Static Analysis Tools](#python-static-analysis-tools)
-  - [emacs で LSP で python](#emacs-で-lsp-で-python)
-  - [vscode で pylance 使うときに](#vscode-で-pylance-使うときに)
-  - [python の regex に PCRE の\\Q...\\E 的なもの](#python-の-regex-に-pcre-のqe-的なもの)
-  - [black](#black)
-  - [black + flake8](#black--flake8)
-  - [nose](#nose)
-  - [ローカルタイムゾーンを得る](#ローカルタイムゾーンを得る)
-  - [~/.config/flake8 サンプル](#configflake8-サンプル)
-  - [PyFlakes](#pyflakes)
-  - [fleak8](#fleak8)
-  - [コードレビューもどき](#コードレビューもどき)
-  - [python にタイプヒント](#python-にタイプヒント)
-  - [1 個上のフォルダから import](#1-個上のフォルダから-import)
-  - [オブジェクトのクラスを表示する](#オブジェクトのクラスを表示する)
-  - [たまには読もう Python の新しい機能](#たまには読もう-python-の新しい機能)
-  - [Windows の Python は "py" で起動できる](#windows-の-python-は-py-で起動できる)
-  - [pip で PyPi 以外から](#pip-で-pypi-以外から)
-  - [pyproject.toml の project.dependencies を pip に読ませることはできますか?](#pyprojecttoml-の-projectdependencies-を-pip-に読ませることはできますか)
-  - [pyproject.toml に requirements-dev.txt に相当するフィールドはありますか?](#pyprojecttoml-に-requirements-devtxt-に相当するフィールドはありますか)
-  - [pyproject.toml に project.dependencies と project.optional-dependencies の dev を書いたとして、その両方を`pip install --use-pep517` するにはどうしたらいいですか?](#pyprojecttoml-に-projectdependencies-と-projectoptional-dependencies-の-dev-を書いたとしてその両方をpip-install---use-pep517-するにはどうしたらいいですか)
-  - [Python は pyproject.toml を読んで動作を変えますか? (node が package.json を読むように)](#python-は-pyprojecttoml-を読んで動作を変えますか-node-が-packagejson-を読むように)
-  - [pip が npm じゃないのはよくわかったので、何かパッケージマネージャを使うことにする](#pip-が-npm-じゃないのはよくわかったので何かパッケージマネージャを使うことにする)
-  - [パッケージの区切り文字](#パッケージの区切り文字)
-  - [サブパッケージ (subpackages)](#サブパッケージ-subpackages)
+- [Amazon Linux 2023 に Python 3.12 をインストールする](#amazon-linux-2023-に-python-312-をインストールする)
+- [Ubuntu 22.04 LTS に Python 3.12 をインストールする](#ubuntu-2204-lts-に-python-312-をインストールする)
+- [pip3 が --user 不要で per-user にインストールされるようになったのはいつからですか?](#pip3-が---user-不要で-per-user-にインストールされるようになったのはいつからですか)
+- [python をインストールする(2019-12)](#python-をインストールする2019-12)
+  - [Amazon Linux 2](#amazon-linux-2)
+  - [Ubuntu 18.04 TLS](#ubuntu-1804-tls)
+  - [RHEL7, CentOS7](#rhel7-centos7)
+  - [RHEL8, CentOS8](#rhel8-centos8)
+  - [Windows python 本家の配布](#windows-python-本家の配布)
+  - [Anaconda, miniconda](#anaconda-miniconda)
+  - [Windows msys2](#windows-msys2)
+  - [Windows Store](#windows-store)
+- [Jupyter notebook](#jupyter-notebook)
+- [pip をユーザーローカルに入れる](#pip-をユーザーローカルに入れる)
+- [pip --user のパス](#pip---user-のパス)
+- [古いパッケージを見つける](#古いパッケージを見つける)
+- [pip で更新可能なものをすべて更新するスクリプト](#pip-で更新可能なものをすべて更新するスクリプト)
+- [vscode と pipenv](#vscode-と-pipenv)
+- [RHEL7 に pip](#rhel7-に-pip)
+- [RHEL6 に pip](#rhel6-に-pip)
+- [pip10 問題](#pip10-問題)
+- [magic](#magic)
+- [Ubuntu 18.04 LTS で python3.7](#ubuntu-1804-lts-で-python37)
+- [Ubuntu 18.04 LTS で python3.9](#ubuntu-1804-lts-で-python39)
+- [Ubuntu 20.04](#ubuntu-2004)
+- [venv](#venv)
+- [python の EOL](#python-の-eol)
+- [モジュールとパッケージ](#モジュールとパッケージ)
+- [Windows10 上での Python](#windows10-上での-python)
+- [Jupyter Notebook の tips](#jupyter-notebook-の-tips)
+- [2020-resolver](#2020-resolver)
+- [WARNING: pip is being invoked by an old script wrapper.](#warning-pip-is-being-invoked-by-an-old-script-wrapper)
+- [ubuntu20.04LTS 以降で python を python3 にする](#ubuntu2004lts-以降で-python-を-python3-にする)
+- [Python Static Analysis Tools](#python-static-analysis-tools)
+- [emacs で LSP で python](#emacs-で-lsp-で-python)
+- [vscode で pylance 使うときに](#vscode-で-pylance-使うときに)
+- [python の regex に PCRE の\\Q...\\E 的なもの](#python-の-regex-に-pcre-のqe-的なもの)
+- [black](#black)
+- [black + flake8](#black--flake8)
+- [nose](#nose)
+- [ローカルタイムゾーンを得る](#ローカルタイムゾーンを得る)
+- [~/.config/flake8 サンプル](#configflake8-サンプル)
+- [PyFlakes](#pyflakes)
+- [fleak8](#fleak8)
+- [コードレビューもどき](#コードレビューもどき)
+- [python にタイプヒント](#python-にタイプヒント)
+- [1 個上のフォルダから import](#1-個上のフォルダから-import)
+- [オブジェクトのクラスを表示する](#オブジェクトのクラスを表示する)
+- [たまには読もう Python の新しい機能](#たまには読もう-python-の新しい機能)
+- [Windows の Python は "py" で起動できる](#windows-の-python-は-py-で起動できる)
+- [pip で PyPi 以外から](#pip-で-pypi-以外から)
+- [pyproject.toml の project.dependencies を pip に読ませることはできますか?](#pyprojecttoml-の-projectdependencies-を-pip-に読ませることはできますか)
+- [pyproject.toml に requirements-dev.txt に相当するフィールドはありますか?](#pyprojecttoml-に-requirements-devtxt-に相当するフィールドはありますか)
+- [pyproject.toml に project.dependencies と project.optional-dependencies の dev を書いたとして、その両方を`pip install --use-pep517` するにはどうしたらいいですか?](#pyprojecttoml-に-projectdependencies-と-projectoptional-dependencies-の-dev-を書いたとしてその両方をpip-install---use-pep517-するにはどうしたらいいですか)
+- [Python は pyproject.toml を読んで動作を変えますか? (node が package.json を読むように)](#python-は-pyprojecttoml-を読んで動作を変えますか-node-が-packagejson-を読むように)
+- [pip が npm じゃないのはよくわかったので、何かパッケージマネージャを使うことにする](#pip-が-npm-じゃないのはよくわかったので何かパッケージマネージャを使うことにする)
+- [パッケージの区切り文字](#パッケージの区切り文字)
+- [サブパッケージ (subpackages)](#サブパッケージ-subpackages)
+
+## Amazon Linux 2023 に Python 3.12 をインストールする
+
+```sh
+sudo dnf groupinstall "Development Tools" -y
+sudo dnf install openssl-devel libffi-devel bzip2-devel xz-devel wget -y
+mkdir tmp && cd tmp
+wget https://www.python.org/ftp/python/3.12.5/Python-3.12.5.tgz
+tar -xzf Python-3.12.5.tgz && cd Python-3.12.5
+./configure --enable-optimizations
+make -j $(nproc)
+sudo make altinstall
+hash -r
+```
+
+## Ubuntu 22.04 LTS に Python 3.12 をインストールする
+
+LaunchPad を使う。
+
+```sh
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.12 python3.12-distutils -y
+# ここ↓はお好みで
+curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12
+```
 
 ## pip3 が --user 不要で per-user にインストールされるようになったのはいつからですか?
 
