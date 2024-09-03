@@ -122,3 +122,17 @@ OS と言語
 
 - [trivy/pkg/fanal/secret/builtin-rules.go at main · aquasecurity/trivy](https://github.com/aquasecurity/trivy/blob/main/pkg/fanal/secret/builtin-rules.go)
 - [trivy/pkg/fanal/secret/builtin-allow-rules.go at main · aquasecurity/trivy](https://github.com/aquasecurity/trivy/blob/main/pkg/fanal/secret/builtin-allow-rules.go)
+
+## ライセンスのスキャン
+
+fs の場合の例:
+
+```sh
+trivy fs --scanners license --severity HIGH,CRITICAL .
+```
+
+`--severity ...` を消すと
+全部の依存パッケージのライセンスが表示されるけど、
+まあ普通はそれを知りたいとは思わない。
+
+参考: [License - Trivy](https://aquasecurity.github.io/trivy/v0.49/docs/scanner/license/)
