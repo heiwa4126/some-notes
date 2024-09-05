@@ -1,26 +1,26 @@
 # Visual Studio Code メモ
 
-- [Visual Studio Code メモ](#visual-studio-code-メモ)
-  - [Remote Development](#remote-development)
-    - [step1](#step1)
-    - [step 2](#step-2)
-    - [step 3](#step-3)
-    - [メモ](#メモ)
-  - [Powershell 7 が Windows Store で配布されるようになった](#powershell-7-が-windows-store-で配布されるようになった)
-  - [Widnows11 で"Open with Code"が出ない件](#widnows11-でopen-with-codeが出ない件)
-  - [ゼロ幅スペース (Zero Width Space: U+200B)](#ゼロ幅スペース-zero-width-space-u200b)
-  - [bash のキーアサイン](#bash-のキーアサイン)
-  - [VSCode server](#vscode-server)
-  - [VScode server が CPU 100%](#vscode-server-が-cpu-100)
-  - [現在 VScode にインストールされている拡張機能の ID を得るには?](#現在-vscode-にインストールされている拡張機能の-id-を得るには)
-  - [VScode で Javascript/Typescript の import を並び変える](#vscode-で-javascripttypescript-の-import-を並び変える)
-  - [VSCode で WSL 上の Typescript をデバッグしようとすると異常に時間がかかる](#vscode-で-wsl-上の-typescript-をデバッグしようとすると異常に時間がかかる)
-    - [いちおう解決](#いちおう解決)
-  - [.vscode/ はレポジトリに含めるべき?](#vscode-はレポジトリに含めるべき)
-  - [.vscode/tasks.json に書いたタスクはどうやって動かす?](#vscodetasksjson-に書いたタスクはどうやって動かす)
-  - [.vscode/tasks.json と launch.json はどう使い分ける?](#vscodetasksjson-と-launchjson-はどう使い分ける)
-  - [VScode のターミナルでどんなコマンドを叩いても "Argument list too long" と言われるとき](#vscode-のターミナルでどんなコマンドを叩いても-argument-list-too-long-と言われるとき)
-  - [拡張機能のフィルタ](#拡張機能のフィルタ)
+- [Remote Development](#remote-development)
+  - [step1](#step1)
+  - [step 2](#step-2)
+  - [step 3](#step-3)
+  - [メモ](#メモ)
+- [Powershell 7 が Windows Store で配布されるようになった](#powershell-7-が-windows-store-で配布されるようになった)
+- [Widnows11 で"Open with Code"が出ない件](#widnows11-でopen-with-codeが出ない件)
+- [ゼロ幅スペース (Zero Width Space: U+200B)](#ゼロ幅スペース-zero-width-space-u200b)
+- [bash のキーアサイン](#bash-のキーアサイン)
+- [VSCode server](#vscode-server)
+- [VScode server が CPU 100%](#vscode-server-が-cpu-100)
+- [現在 VScode にインストールされている拡張機能の ID を得るには?](#現在-vscode-にインストールされている拡張機能の-id-を得るには)
+- [VScode で Javascript/Typescript の import を並び変える](#vscode-で-javascripttypescript-の-import-を並び変える)
+- [VSCode で WSL 上の Typescript をデバッグしようとすると異常に時間がかかる](#vscode-で-wsl-上の-typescript-をデバッグしようとすると異常に時間がかかる)
+  - [いちおう解決](#いちおう解決)
+- [.vscode/ はレポジトリに含めるべき?](#vscode-はレポジトリに含めるべき)
+- [.vscode/tasks.json に書いたタスクはどうやって動かす?](#vscodetasksjson-に書いたタスクはどうやって動かす)
+- [.vscode/tasks.json と launch.json はどう使い分ける?](#vscodetasksjson-と-launchjson-はどう使い分ける)
+- [VScode のターミナルでどんなコマンドを叩いても "Argument list too long" と言われるとき](#vscode-のターミナルでどんなコマンドを叩いても-argument-list-too-long-と言われるとき)
+- [拡張機能のフィルタ](#拡張機能のフィルタ)
+- [VSCode のターミナルで Ctrl+K を使う](#vscode-のターミナルで-ctrlk-を使う)
 
 ## Remote Development
 
@@ -309,3 +309,15 @@ WSL2 が mirror モードだった(IPv6 を使いたかった)のを、元の NA
 ## 拡張機能のフィルタ
 
 [Extensions view filters](https://code.visualstudio.com/docs/editor/extension-marketplace#_extensions-view-filters)
+
+## VSCode のターミナルで Ctrl+K を使う
+
+[keyboard shortcuts - VSCode: how to make Ctrl+k kill till the end of line in the terminal? - Stack Overflow](https://stackoverflow.com/questions/50569100/vscode-how-to-make-ctrlk-kill-till-the-end-of-line-in-the-terminal)
+
+これがいちばん簡単
+
+```json
+{
+  "terminal.integrated.allowChords": false
+}
+```
