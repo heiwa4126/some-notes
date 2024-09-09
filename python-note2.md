@@ -1,12 +1,12 @@
-# Pythonメモ2
+# Python メモ 2
 
-長くなったので第2部
+長くなったので第 2 部
 
-# loggingモジュール経由でsyslog
+## logging モジュール経由で syslog
 
-NORMALレベルのlogがでなくて苦労した。
-loggingはかなり難しいモジュール。
-**初心者向きの記事読んでlogging使うと行き詰まる**。
+NORMAL レベルの log がでなくて苦労した。
+logging はかなり難しいモジュール。
+**初心者向きの記事読んで logging 使うと行き詰まる**。
 
 ```python
 #!/usr/bin/env python3
@@ -58,7 +58,7 @@ if __name__ == r"__main__":
     l2.critical("critical2")
 ```
 
-もし別モジュールがあるなら、そこでは`logging.getLogger("syslog")`でロガーを得ること。`get_syslogger()`を呼んだりしないこと。(またはlgrを引数で渡すとか)
+もし別モジュールがあるなら、そこでは`logging.getLogger("syslog")`でロガーを得ること。`get_syslogger()`を呼んだりしないこと。(または lgr を引数で渡すとか)
 
 参考:
 
@@ -66,7 +66,7 @@ if __name__ == r"__main__":
 - [Logging HOWTO — Python 3.8.1 ドキュメント](https://docs.python.org/ja/3/howto/logging.html)
 - [Logging クックブック — 複数のモジュールで logging を使う](https://docs.python.org/ja/3/howto/logging-cookbook.html#using-logging-in-multiple-modules)
 
-# loggingモジュールでlog rotation
+## logging モジュールで log rotation
 
 参考:
 
@@ -75,9 +75,19 @@ if __name__ == r"__main__":
 - [RotatingFileHandler](https://docs.python.org/ja/3/library/logging.handlers.html#logging.handlers.RotatingFileHandler)
 - [TimedRotatingFileHandler](https://docs.python.org/ja/3/library/logging.handlers.html#logging.handlers.TimedRotatingFileHandler)
 
-# 構造化ログ
+## 構造化ログ
 
-## python-json-logger
+### python-json-logger
 
 - [madzak/python-json-logger: Json Formatter for the standard python logger](https://github.com/madzak/python-json-logger)
-- [pythonでjson形式でログを出す - Qiita](https://qiita.com/sakamossan/items/8e4141e789a2110e037b)
+- [python で json 形式でログを出す - Qiita](https://qiita.com/sakamossan/items/8e4141e789a2110e037b)
+
+## `__init__.py`
+
+```text
+Pythonで
+__init__.pyが同じディレクトリにあると、その中身が空であっても
+相対パスでincludeができるようになる。というのは正しい?
+```
+
+全然正しくない。
