@@ -1,0 +1,17 @@
+# pnpm のメモ
+
+## pnpm 自体の更新
+
+最近は corepack 経由でやってると思うので
+
+```sh
+corepack prepare pnpm@latest --activate
+```
+
+で。
+
+## pnpm でパッケージをまとめて latest に
+
+```sh
+pnpm up --latest
+```
