@@ -1,19 +1,20 @@
-# AWS CloudFormaton 練習帳
+# AWS CloudFormaton メモ
 
-- [AWS CloudFormaton 練習帳](#aws-cloudformaton-練習帳)
-  - [リファレンス](#リファレンス)
-    - [Ref](#ref)
-  - [チュートリアル](#チュートリアル)
-  - [CloudFormation で S3 を作る](#cloudformation-で-s3-を作る)
-  - [CloudFormation で stack の外のリソースの IAM をマネージするかっこいい方法](#cloudformation-で-stack-の外のリソースの-iam-をマネージするかっこいい方法)
-  - [route53](#route53)
-  - [CLI](#cli)
-  - [CFn のサンプル](#cfn-のサンプル)
-  - [CloudFormation Macros](#cloudformation-macros)
-  - [CloudFomation の YAML で anchors/aliases を使うには?](#cloudfomation-の-yaml-で-anchorsaliases-を使うには)
-  - [ARN](#arn)
-  - [template.yaml の linter](#templateyaml-の-linter)
-  - [UpdateReplacePolicy と DeletionPolicy](#updatereplacepolicy-と-deletionpolicy)
+- [リファレンス](#リファレンス)
+  - [Ref](#ref)
+- [チュートリアル](#チュートリアル)
+- [CloudFormation で S3 を作る](#cloudformation-で-s3-を作る)
+- [CloudFormation で stack の外のリソースの IAM をマネージするかっこいい方法](#cloudformation-で-stack-の外のリソースの-iam-をマネージするかっこいい方法)
+- [route53](#route53)
+- [CLI](#cli)
+- [CFn のサンプル](#cfn-のサンプル)
+- [CloudFormation Macros](#cloudformation-macros)
+- [CloudFomation の YAML で anchors/aliases を使うには?](#cloudfomation-の-yaml-で-anchorsaliases-を使うには)
+- [ARN](#arn)
+- [template.yaml の linter](#templateyaml-の-linter)
+- [UpdateReplacePolicy と DeletionPolicy](#updatereplacepolicy-と-deletionpolicy)
+- [VSCode で SAM の template.yaml で "!Sub "等にエラーを出さなくする](#vscode-で-sam-の-templateyaml-で-sub-等にエラーを出さなくする)
+- [VSCode で SAM の拡張機能は?](#vscode-で-sam-の拡張機能は)
 
 YAML でリソースを作るアレ。
 「せっかく書いても、手動で修正したら(統合性が)壊れちゃうんでしょ」とか思ってたら、
@@ -130,7 +131,7 @@ aws cloudformation create-stack \
 リクエストはけっこう出てるけどいまのところ使えないみたい。
 
 - [Support YAML anchors/aliases in CFN yaml templates · Issue \#613 · aws\-cloudformation/cloudformation\-coverage\-roadmap](https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/613)
-- [CloudFormation coding using YAML\. This is not a “101” on CloudFormation… \| by Bob van den Heuvel \| Schuberg Philis](https://stories.schubergphilis.com/cloudformation-coding-using-yaml-9127025813bb)
+- [CloudFormation coding using YAML\. This is not a “101” on CloudFormation... \| by Bob van den Heuvel \| Schuberg Philis](https://stories.schubergphilis.com/cloudformation-coding-using-yaml-9127025813bb)
 
 ## ARN
 
@@ -163,3 +164,42 @@ aws cloudformation create-stack \
 - [UpdateReplacePolicy 属性 - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-attribute-updatereplacepolicy.html)
 
 参考: [[アップデート] CloudFormation の DeletionPolicy にて、リソース作成時のみ Delete でそれ以外は Retain として動作する RetainExceptOnCreate が設定できるようなりました | DevelopersIO](https://dev.classmethod.jp/articles/cloudformation-retain-except-on-create/)
+
+## VSCode で SAM の template.yaml で "!Sub "等にエラーを出さなくする
+
+- [Incorrectly classifies !Ref and !GetAtt as an unknown tag in serverless · Issue #93 · threadheap/serverless-ide-vscode](https://github.com/threadheap/serverless-ide-vscode/issues/93)
+- [VSCode で AWS CloudFormation を YAML で書くための個人的ベスト設定 #AWS - Qiita](https://qiita.com/yoskeoka/items/6528571a45cd69f93deb#%E8%A8%AD%E5%AE%9A2)
+
+`setting.json` に以下を追加
+
+```json
+"yaml.customTags": [
+    "!Ref",
+    "!Sub scalar",
+    "!Sub sequence",
+    "!Join sequence",
+    "!FindInMap sequence",
+    "!GetAtt scalar",
+    "!GetAtt sequence",
+    "!Base64 mapping",
+    "!GetAZs",
+    "!Select scalar",
+    "!Select sequence",
+    "!Split sequence",
+    "!ImportValue",
+    "!Condition",
+    "!Equals sequence",
+    "!And",
+    "!If",
+    "!Not",
+    "!Or"
+  ]
+```
+
+## VSCode で SAM の拡張機能は?
+
+たぶんこれ:
+[Serverless IDE - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ThreadHeap.serverless-ide-vscode)
+
+こっちはたぶん不要:
+[CloudFormation Linter - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=kddejong.vscode-cfn-lint)

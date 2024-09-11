@@ -1,11 +1,11 @@
 # AWS CDK (Cloud Development Kit)
 
-- [AWS CDK (Cloud Development Kit)](#aws-cdk-cloud-development-kit)
-  - [インストール](#インストール)
-  - [チュートリアル](#チュートリアル)
-  - [AWS CDK Workshop](#aws-cdk-workshop)
-  - [AWS CloudShell](#aws-cloudshell)
-  - [cdk でリージョンを変えるには?](#cdk-でリージョンを変えるには)
+- [インストール](#インストール)
+- [チュートリアル](#チュートリアル)
+- [AWS CDK Workshop](#aws-cdk-workshop)
+- [AWS CloudShell](#aws-cloudshell)
+- [cdk でリージョンを変えるには?](#cdk-でリージョンを変えるには)
+- [AWS CDK には AWS SAM のように lambda を zip にしたりモジュール入れたりするサポートはある?](#aws-cdk-には-aws-sam-のように-lambda-を-zip-にしたりモジュール入れたりするサポートはある)
 
 ## インストール
 
@@ -54,10 +54,34 @@ $ cdk --version
 
 ## cdk でリージョンを変えるには?
 
+(この章、嘘。あとで修正)
+
 環境変数しかないらしい。
 
 ```sh
 export AWS_DEFAULT_REGION="us-west-2"
 ```
 
-事前に `cdk bootstrap aws://123456789012/us-west-2` は必要。
+事前に `cdk bootstrap aws://123456789012/us-west-2` 的のは必要。
+
+## AWS CDK には AWS SAM のように lambda を zip にしたりモジュール入れたりするサポートはある?
+
+[lambda.Code.fromAsset()](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Code.html#static-fromwbrassetpath-options)
+を使う。
+
+で, たとえば `./lib/foo-stack.ts` で
+
+```typescript
+const myFunction = new lambda.Function(this, 'HelloWorldFunction', {
+  runtime: lambda.Runtime.NODEJS_20_X,
+  handler: 'app.lambdaHandler',
+  code: lambda.Code.fromAsset(path.join(__dirname, '..', 'lambda', 'hello'), {
+    exclude: ['*.log', 'tests/**/*']
+  })
+});
+```
+
+のように使う。(Lambda の中身は `./lambda/hello` にある想定)
+
+**ただし** AWS SAM みたいに package.json や requirements.txt を自動で処理してくれないので
+`npm ci` とか `pip install -r requirements.txt --target .` を自前でやる必要はある。
