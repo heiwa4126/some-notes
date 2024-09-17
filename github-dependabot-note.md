@@ -7,6 +7,23 @@ Code security and analysis のところに設定項目がいろいろあるけ�
 
 [GitHub リポジトリで Dependabot セキュリティ アップデートを構成する - Training | Microsoft Learn](https://learn.microsoft.com/ja-jp/training/modules/configure-dependabot-security-updates-on-github-repo/)
 
+## .github/dependabot.yml のテンプレート
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: 'npm' # See documentation for possible values
+    directory: '/' # Location of package manifests
+    schedule:
+      interval: 'monthly'
+    open-pull-requests-limit: 1
+```
+
+`open-pull-requests-limit` を 1 にしておくと、複数の bump を 1 個にしてくれるので手抜きができるらしい。
+その反面([ここ参照](https://docs.github.com/ja/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#open-pull-requests-limit)).
+
+参考: [dependabot.yml ファイルの構成オプション - GitHub Docs](https://docs.github.com/ja/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)
+
 ## Dependency graph
 
 これを enable にすると、
