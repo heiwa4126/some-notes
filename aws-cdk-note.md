@@ -5,6 +5,7 @@
 - [AWS CDK Workshop](#aws-cdk-workshop)
 - [AWS CloudShell](#aws-cloudshell)
 - [cdk でリージョンを変えるには?](#cdk-でリージョンを変えるには)
+- [AWS CDK で環境変数で環境を選択するには](#aws-cdk-で環境変数で環境を選択するには)
 - [AWS CDK には AWS SAM のように lambda を zip にしたりモジュール入れたりするサポートはある?](#aws-cdk-には-aws-sam-のように-lambda-を-zip-にしたりモジュール入れたりするサポートはある)
 
 ## インストール
@@ -63,6 +64,42 @@ export AWS_DEFAULT_REGION="us-west-2"
 ```
 
 事前に `cdk bootstrap aws://123456789012/us-west-2` 的のは必要。
+
+## AWS CDK で環境変数で環境を選択するには
+
+基本 `~/.aws/credentials` 経由でしか環境の選択ができないみたい。
+
+特に CDK で出来ないのが環境変数
+
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_DEFAULT_REGION
+
+を指定しての環境設定。AWS CLI だとこれで動くんだけど。
+
+確認は `cdk doctor` コマンドで。これで `No CDK environment variables` が出るなら動きません。
+
+実は上の 3 つのほかに
+
+- CDK_DEFAULT_ACCOUNT
+
+に AWS アカウントの番号が必要。
+
+つまり
+
+```bash
+export AWS_ACCESS_KEY_ID=AKxxxxxxxxxxxxxxxxxxx
+export AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+export AWS_DEFAULT_REGION=us-west-1
+export CDK_DEFAULT_ACCOUNT=99999999999
+cdk doctor # 確認
+cdk bootstrap # もし最初なら(複数回やっても問題なさそう)
+```
+
+のようにやる。ここまではコードの追加なしにできるし、
+`~/.aws/credentials`を設定しなくてもいける。
+
+複数アカウントだと、内部で上記の環境変数を書き換えるコードを追加するか、すなおに`~/.aws/credentials`に書くかどちらか。
 
 ## AWS CDK には AWS SAM のように lambda を zip にしたりモジュール入れたりするサポートはある?
 
