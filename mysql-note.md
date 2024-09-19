@@ -1,8 +1,8 @@
-# MySQLメモ
+# MySQL メモ
 
-# RHELでMySQL
+## RHEL で MySQL
 
-MySQLレポジトリからではなくRHELのSCLから入れてみる。
+MySQL レポジトリからではなく RHEL の SCL から入れてみる。
 
 [Red Hat Enterprise Linux 7 で MariaDB をアンインストールし、MySQL をインストールする - Red Hat Customer Portal](https://access.redhat.com/ja/solutions/1549463)
 
