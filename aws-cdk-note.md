@@ -7,6 +7,9 @@
 - [cdk でリージョンを変えるには?](#cdk-でリージョンを変えるには)
 - [AWS CDK で環境変数で環境を選択するには](#aws-cdk-で環境変数で環境を選択するには)
 - [AWS CDK には AWS SAM のように lambda を zip にしたりモジュール入れたりするサポートはある?](#aws-cdk-には-aws-sam-のように-lambda-を-zip-にしたりモジュール入れたりするサポートはある)
+- [AWS CDK でリソースの物理 ID を固定する](#aws-cdk-でリソースの物理-id-を固定する)
+- [dependsOn を明示する](#dependson-を明示する)
+- [cdk.CfnOutput() と cdk.Fn.importValue()](#cdkcfnoutput-と-cdkfnimportvalue)
 
 ## インストール
 
@@ -122,3 +125,91 @@ const myFunction = new lambda.Function(this, 'HelloWorldFunction', {
 
 **ただし** AWS SAM みたいに package.json や requirements.txt を自動で処理してくれないので
 `npm ci` とか `pip install -r requirements.txt --target .` を自前でやる必要はある。
+
+## AWS CDK でリソースの物理 ID を固定する
+
+できるんだけど、リソースの種類によって設定方法が異なるのでつらい。
+
+```javascript
+// S3のバケット名を固定
+const bucket = new s3.Bucket(this, 'MyBucket', {
+  bucketName: 'my-fixed-bucket-name'
+});
+
+// テーブル名を固定
+const table = new dynamodb.Table(this, 'MyTable', {
+  tableName: 'my-fixed-table-name',
+  partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING }
+});
+
+// Lambda関数名を固定
+const lambdaFunction = new lambda.Function(this, 'MyFunction', {
+  functionName: 'my-fixed-function-name',
+  runtime: lambda.Runtime.NODEJS_20_X,
+  handler: 'index.handler',
+  code: lambda.Code.fromAsset('lambda')
+});
+
+// IAM Roleの名前を固定
+const myRole = new iam.Role(this, 'MyFixedRole', {
+  roleName: 'my-fixed-role-name',
+  assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com')
+});
+
+// IAM Policyの名前を固定
+const myPolicy = new iam.ManagedPolicy(this, 'MyFixedPolicy', {
+  managedPolicyName: 'my-fixed-policy-name', // 固定名
+  statements: [
+    new iam.PolicyStatement({
+      actions: ['s3:ListBucket'],
+      resources: ['arn:aws:s3:::my-bucket']
+    })
+  ]
+});
+```
+
+どうしてもダメなら
+`cdk.CfnResource()`
+という必殺技もある。
+
+```javascript
+const resource = new cdk.CfnResource(this, 'MyResource', {
+  type: 'AWS::S3::Bucket',
+  properties: {
+    BucketName: 'my-custom-bucket-name'
+  }
+});
+```
+
+CloudFormation と同じに書ける。当然型サポートはない。
+
+メモ: もう 1 階層上の CfnBucket() みたいのもある。
+
+## dependsOn を明示する
+
+ほぼ不要なんだけど要る時は要る。リソースの場合は:
+
+```javascript
+// myFunctionがmyBucketに依存することを明示
+myFunction.node.addDependency(myBucket);
+```
+
+みたいに書く(myFunction はたぶん Role で S3 への put を許可してるとかなんとか)。
+
+stack 間の依存はまた今度。
+
+## cdk.CfnOutput() と cdk.Fn.importValue()
+
+クロススタック参照は
+
+- クロスリージョンでは使えない
+- マルチアカウントでは使えない
+
+ことに注意
+
+クロスリージョン(よくあるシナリオは「REST API を作って、それの証明書をつくる」)
+では SSM パラメータストアを使うのが推奨らしい。
+マルチアカウントでも同様にがんばればできる。
+
+でも正直そこまで来たら CDKTF を使った方がいいと思う。
+CDKTF だと state がアカウントやリージョンと無関係なので。
