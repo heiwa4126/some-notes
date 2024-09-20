@@ -20,4 +20,4 @@ pip list --outdated --format=json | jq '.[].name' -r | xargs -n1 pip install -U
 が依存で入ったパッケージも全部列挙してしまうこと。
 
 素直に何かパッケージマネージャを使うべき。
-`poetry update` とか。
+`poetry update` とか。<https://python-poetry.org/docs/cli/#update>
