@@ -6,8 +6,8 @@
 
 - node v18.12.1
 - Windows 11 (x86_64)
-- Windows Terminal から Powershll 7.3で
-- あとvscode
+- Windows Terminal から Powershll 7.3 で
+- あと vscode
 
 ## テンプレート作成
 
@@ -22,7 +22,7 @@ npm run dev
 
 で、http://127.0.0.1:5173/ をブラウザで開く。
 
-ブラウザを開いたままvscodeでコードを修正すると、自動でリロードされる(HMR)。
+ブラウザを開いたまま vscode でコードを修正すると、自動でリロードされる(HMR)。
 
 ## デプロイ
 
@@ -48,25 +48,40 @@ http://127.0.0.1:4173/ をブラウザで開く。
 npx http-server dist
 ```
 
-http://127.0.0.1:8080/ をブラウザで開く、とかでもOK。
+http://127.0.0.1:8080/ をブラウザで開く、とかでも OK。
 
-# 感想
+## 感想
 
-- **異常に早い**。create-react-app より1000倍ぐらい早いような気がする。
-- WebpackやBabelやtscを入れる手間がぜんぜん要らない。そういえばReactも明示的に入れてない。
+- **異常に早い**。create-react-app より 1000 倍ぐらい早いような気がする。
+- Webpack や Babel や tsc を入れる手間がぜんぜん要らない。そういえば React も明示的に入れてない。
 
-# その他参考リンク
+## その他参考リンク
 
-- [Vite+React+Amplifyの初期設定方法！](https://zenn.dev/akira_abe/articles/20221012-vite-react-amplify)
-- [ViteのプロジェクトにAmplifyの設定を適用する方法 - Qiita](https://qiita.com/maejima_f/items/0188adbcc8f2af564153)
+- [Vite+React+Amplify の初期設定方法!](https://zenn.dev/akira_abe/articles/20221012-vite-react-amplify)
+- [Vite のプロジェクトに Amplify の設定を適用する方法 - Qiita](https://qiita.com/maejima_f/items/0188adbcc8f2af564153)
 
-# DenoでVite
+## Deno で Vite
 
-Deno 1.28から。
+Deno 1.28 から。
 
 参考:
 
 - [denoland/deno-vue-example: An example of using Vue with Deno.](https://github.com/denoland/deno-vue-example)
 - [bartlomieju/vite-deno-example: Example of using Vite with Deno](https://github.com/bartlomieju/vite-deno-example)
 
-(WSLでない)Windowsだと死ぬ。Linuxだと超早い感。もっと試す。
+(WSL でない)Windows だと死ぬ。Linux だと超早い感。もっと試す。
+
+## Vite で対話式でなくプロジェクトを開始する方法メモ
+
+`npm create vite@latest {プロジェクト名} -- --template react-swc-ts`
+
+Bun と pnpm は
+`pnpm create vite {プロジェクト名} --template react-swc-ts`
+
+公式テンプレートのリストは
+[Scaffolding Your First Vite Project](https://vitejs.dev/guide/#scaffolding-your-first-vite-project)
+にある。
+
+コミュニティ版テンプレート(動くかどうかは微妙)は
+[vitejs/awesome-vite: ⚡️ A curated list of awesome things related to Vite.js](https://github.com/vitejs/awesome-vite#templates)
+にある。
