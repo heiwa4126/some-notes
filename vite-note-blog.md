@@ -85,3 +85,5 @@ Bun と pnpm は
 コミュニティ版テンプレート(動くかどうかは微妙)は
 [vitejs/awesome-vite: ⚡️ A curated list of awesome things related to Vite.js](https://github.com/vitejs/awesome-vite#templates)
 にある。
+基本 [degit](https://www.npmjs.com/package/degit)を使って「GitHub からソースをコピー」して使うので、
+パッケージ名などを手で書き換えないといけない。
