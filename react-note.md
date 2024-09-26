@@ -24,6 +24,7 @@
 - [JSX.Element vs ReactElement vs ReactNode](#jsxelement-vs-reactelement-vs-reactnode)
 - [useEffect()の lambda の戻り値って何を返せばいいんでしたっけ?](#useeffectの-lambda-の戻り値って何を返せばいいんでしたっけ)
 - [ReactDOM.render()は複数書けるらしい](#reactdomrenderは複数書けるらしい)
+- [マルチページ React プロジェクト](#マルチページ-react-プロジェクト)
 
 ## 基礎
 
@@ -298,3 +299,22 @@ ReactDOM.render(<SpecificComponent />, document.getElementById('specific-root'))
 ```
 
 あとで試す。
+
+## マルチページ React プロジェクト
+
+- SSR いらない
+- react-router-dom でない本物のマルチページ
+- Vite で書けるとうれしい。できれば React 系で
+
+ということで調べてみたところ
+
+- [シングルページアプリケーションのライブラリでマルチページしたい！ #React - Qiita](https://qiita.com/umiushi_1/items/1c6affdef13d405e1248)
+- [マルチページアプリ | 本番環境用のビルド | Vite](https://ja.vitejs.dev/guide/build.html#multi-page-app)
+
+vite.config の build.rollupOptions.input がキモらしい。
+すこしリンクのところをコンポーネントにすれば楽できそう。
+
+なんでこれで動くかについては [vite-note.md](.\vite-note.md) が参考になるかも。
+
+CSS がページごとになりそう。
+tailwindCSS 使ってると問題になるかも。

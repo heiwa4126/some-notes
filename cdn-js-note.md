@@ -123,3 +123,33 @@ UNPKG、jsDelivr、CDNJS のほかにも、いくつかの有名な CDN やラ�
 ### **まとめ**
 
 これらの CDN サービスやライブラリ配布サイトは、それぞれ異なる特徴や強みを持っています。プロジェクトの要件に応じて、最適な CDN を選択することで、Web サイトのパフォーマンスやセキュリティを向上させることができます。
+
+## SRI (サブリソース完全性)
+
+- [サブリソース完全性 - ウェブセキュリティ | MDN](https://developer.mozilla.org/ja/docs/Web/Security/Subresource_Integrity)
+- [Subresource Integrity - Security on the web | MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+
+`<script integrity="...">`で指定する。(または`<link>`)
+
+アルゴリズムは
+
+```bash
+cat FILENAME.js | openssl dgst -sha384 -binary | openssl base64 -A
+# or
+shasum -b -a 384 FILENAME.js | awk '{ print $1 }' | xxd -r -p | base64
+```
+
+Vite で自動生成は Vite 用と Rollup 用がある。
+
+- [vite-plugin-sri3 - npm](https://www.npmjs.com/package/vite-plugin-sri3)
+- [rollup-plugin-sri - npm](https://www.npmjs.com/package/rollup-plugin-sri)
+
+CDN だと jsDelivr は SRI 付きの`<script>`をコピペできる
+
+例: [react CDN by jsDelivr - A CDN for npm and GitHub](https://www.jsdelivr.com/package/npm/react) より
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" integrity="sha256-2Unxw2h67a3O2shSYYZfKbF80nOZfn9rK/xTsvnUxN0=" crossorigin="anonymous"></script>
+```
+
+ブラウザの import では SRI を指定する方法がない。
