@@ -318,3 +318,5 @@ vite.config の build.rollupOptions.input がキモらしい。
 
 CSS がページごとになりそう。
 tailwindCSS 使ってると問題になるかも。
+
+[Remix - Build Better Websites](https://remix.run/)はどうか?
