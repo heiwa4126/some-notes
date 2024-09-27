@@ -2,11 +2,11 @@
 
 デバッグが難しい。YAML とか JSON で書くやつは全部そんな感じ
 
-- [GitHub Actions メモ](#github-actions-メモ)
-  - [On: が難しい](#on-が難しい)
-  - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
-  - [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
-  - [GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?](#github-actions-の-workflow-runs-に過去の実行結果が残っていますがこれは消すべきですか-一定期間で消えますか)
+- [On: が難しい](#on-が難しい)
+- [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
+- [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
+- [GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?](#github-actions-の-workflow-runs-に過去の実行結果が残っていますがこれは消すべきですか-一定期間で消えますか)
+- [特定のワークフローファイルだけ実行できるようにする方法はある?](#特定のワークフローファイルだけ実行できるようにする方法はある)
 
 ## On: が難しい
 
@@ -29,6 +29,13 @@ on:
 ```
 
 ちょっと雑かも(pre-release や build のところ)。実用上問題ないと思う。
+
+で、プロジェクトの Environment で Deployment branches and tags のところには `v*.*.*` と書く。
+(こっちでは正規表現が使えないから)
+
+なんか変だけど我慢すること。
+
+あと Deployment branches and tags のルールは、OR 条件。
 
 ## on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?
 
@@ -103,3 +110,14 @@ ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
 
 [Usage limits \(使用状況の制限\)](https://docs.github.com/ja/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits)
 によると「開始から 35 日で消える」ように読める。
+
+## 特定のワークフローファイルだけ実行できるようにする方法はある?
+
+1. Required reviewers(必須レビュアーの設定)
+2. Deployment branches and tags(デプロイ対象のブランチとタグの制限)
+3. Wait Timer(遅延タイマー)
+4. Approval workflows(承認フロー)
+
+はあるんだけど、最終的には「全部実行するか or 全部実行しないか」しかない。
+
+ワークフローファイル内部で if:書いて制御するしか手がない。
