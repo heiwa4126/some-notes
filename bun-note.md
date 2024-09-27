@@ -3,6 +3,7 @@
 - [bun の概要](#bun-の概要)
 - [bun でこれだけはやっといたほうがいい設定](#bun-でこれだけはやっといたほうがいい設定)
 - [`npm ls` の equivalent](#npm-ls-の-equivalent)
+- [bun には publish がない](#bun-には-publish-がない)
 
 ## bun の概要
 
@@ -43,3 +44,21 @@ bun pm: Package manager utilities
   └  --all                  trust all untrusted dependencies
   bun pm default-trusted    print the default trusted dependencies list
 ```
+
+## bun には publish がない
+
+```console
+$ bun publish --help
+Uh-oh. bun publish is a subcommand reserved for future use by Bun.
+
+If you were trying to run a package.json script called publish, use bun run publish.
+```
+
+じゃあどうやって Bun のプロジェクトを npmjs.com に発行する?
+
+ヒントになりそうなもの:
+
+- [Bun version & publish manager · Issue #5050 · oven-sh/bun](https://github.com/oven-sh/bun/issues/5050)
+- [Bun 専用(?)TypeScript そのまま npm パッケージの作成に関する覚え書き](https://zenn.dev/macropygia/articles/typescript-only-npm-package-creation)
+
+まあ早い話が「npm でやるのと同じようにやれ」ということですね。
