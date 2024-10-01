@@ -472,7 +472,7 @@ Use "ec2launch [command] --help" for more information about a command.
 `C:\ProgramData\Amazon\EC2Launch\config\agent-config.yml`
 
 ```yaml
-version: '1.0'
+version: "1.0"
 config:
   - stage: boot
     tasks:

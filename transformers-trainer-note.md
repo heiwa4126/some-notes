@@ -7,4 +7,3 @@
 - [huggingface/transformers の Trainer の使い方と挙動 #bert - Qiita](https://qiita.com/nipo/items/44ce3aaf6acd4e2649d1)
 
 [model](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Trainer.model) - これは必須。transformers の PTM か、torch.nn.Module かその他いろいろ
-

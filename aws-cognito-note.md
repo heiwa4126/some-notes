@@ -40,7 +40,7 @@ admin-update-user-attributes はプールIDが引数。
 Lambda関数で定義するカスタム認証プロセスなど、
 1つ以上のフローの任意の組み合わせでユーザーにサインインすることができます。
 
-**注意**  
+**注意**\
 ExplicitAuthFlowsに値を指定しない場合、ユーザークライアントはALLOW_REFRESH_TOKEN_AUTH、
 ALLOW_USER_SRP_AUTH、
 ALLOW_CUSTOM_AUTH
@@ -104,25 +104,25 @@ id tokenから、session token(とその他)を得て、S3バケットからで
 (実際に動かしてません。かなり間違ってる)
 
 ```javascript
-const { S3Client } = require('@aws-sdk/client-s3');
-const { StsClient } = require('@aws-sdk/client-sts');
+const { S3Client } = require("@aws-sdk/client-s3");
+const { StsClient } = require("@aws-sdk/client-sts");
 
 // Initialize the STS client
 const sts = new StsClient({
-  region: '<region>',
+  region: "<region>",
   credentials: {
-    accessKeyId: '<accessKeyId>',
-    secretAccessKey: '<secretAccessKey>'
-  }
+    accessKeyId: "<accessKeyId>",
+    secretAccessKey: "<secretAccessKey>",
+  },
 });
 
 // Assume a role with the web identity token
 const assumeRoleWithWebIdentity = async () => {
   const params = {
-    RoleArn: '<roleArn>',
-    RoleSessionName: '<roleSessionName>',
-    WebIdentityToken: '<webIdentityToken>',
-    DurationSeconds: 3600
+    RoleArn: "<roleArn>",
+    RoleSessionName: "<roleSessionName>",
+    WebIdentityToken: "<webIdentityToken>",
+    DurationSeconds: 3600,
   };
 
   try {
@@ -133,19 +133,19 @@ const assumeRoleWithWebIdentity = async () => {
 
     // Initialize the S3 client with the assumed role credentials
     const s3 = new S3Client({
-      region: '<region>',
+      region: "<region>",
       credentials: {
         accessKeyId: accessKeyId,
         secretAccessKey: secretAccessKey,
-        sessionToken: sessionToken
-      }
+        sessionToken: sessionToken,
+      },
     });
 
     // Read an object from S3
     const result = await s3
       .getObject({
-        Bucket: '<bucketName>',
-        Key: '<objectKey>'
+        Bucket: "<bucketName>",
+        Key: "<objectKey>",
       })
       .promise();
 

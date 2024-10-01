@@ -228,9 +228,9 @@ pulumi config set <key> <value>
 # Pulumiでマルチアカウントや異なるリージョン
 
 ```typescript
-const eastRegion = new aws.Provider('east', {
+const eastRegion = new aws.Provider("east", {
   profile: aws.config.profile,
-  region: 'us-east-1' // Per AWS, ACM certificate must be in the us-east-1 region.
+  region: "us-east-1", // Per AWS, ACM certificate must be in the us-east-1 region.
 });
 ```
 
@@ -238,12 +238,12 @@ const eastRegion = new aws.Provider('east', {
 
 ```typescript
 const certificateValidation = new aws.acm.CertificateValidation(
-  'certificateValidation',
+  "certificateValidation",
   {
     certificateArn: certificate.arn,
-    validationRecordFqdns: validationRecordFqdns
+    validationRecordFqdns: validationRecordFqdns,
   },
-  { provider: eastRegion }
+  { provider: eastRegion },
 );
 ```
 

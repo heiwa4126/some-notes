@@ -28,7 +28,7 @@ auditctl -m "test"
 `/var/log/audit/audit.log`に
 
 ```
- msg='test exe="/usr/sbin/auditctl" hostname=r7 addr=? terminal=pts/2 res=success'
+msg='test exe="/usr/sbin/auditctl" hostname=r7 addr=? terminal=pts/2 res=success'
 ```
 
 みたいのが書かれます。

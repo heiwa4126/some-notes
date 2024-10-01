@@ -34,9 +34,9 @@ Gradle だからしょうがないけど、最初が長い。
 
 ビルドするとエラーが出る (2023-11-29)。
 
-> 1.  Dependency 'androidx.activity:activity:1.8.1' requires libraries and applications that
->     depend on it to compile against version 34 or later of the
->     Android APIs.
+> 1. Dependency 'androidx.activity:activity:1.8.1' requires libraries and applications that
+>    depend on it to compile against version 34 or later of the
+>    Android APIs.
 >
 > :app is currently compiled against android-33.
 

@@ -182,7 +182,7 @@ systemctl start slapd
 
 # sssdのキャッシュ
 
-まるごと消すなら `sssctl cache-remove`  
+まるごと消すなら `sssctl cache-remove`\
 [付録A トラブルシューティング Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/trouble#debug-sssd-conf)
 
 インストールは

@@ -136,23 +136,23 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
-            Action: 'sts:AssumeRole'
+            Action: "sts:AssumeRole"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Policies:
         - PolicyName: policy1
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
-                  - 'secretsmanager:GetSecretValue'
-                Resource: 'arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                  - "secretsmanager:GetSecretValue"
+                Resource: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   SecretTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -185,7 +185,7 @@ Resources:
       Runtime: python3.6
       Policies:
         - AWSSecretsManagerGetSecretValuePolicy:
-            SecretArn: 'arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            SecretArn: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 ただ、世の中には"LB のルールの順番を入れ替える lambda"みたいのもあって
@@ -325,7 +325,7 @@ Resources:
     DependsOn: HelloWorldFunction
     Properties:
       RetentionInDays: 7
-      LogGroupName: !Join ['', ['/aws/lambda/', !Ref HelloWorldFunction]]
+      LogGroupName: !Join ["", ["/aws/lambda/", !Ref HelloWorldFunction]]
 ```
 
 これ LogGroupName がデフォルトと一緒なので、
@@ -334,7 +334,10 @@ Resources:
 最初に書くか、別のパスにするか。
 
 ```yaml
-LogGroupName: !Join ['/', ['/aws/lambda', !Ref AWS::StackName, !Ref HelloWorldFunction]]
+LogGroupName: !Join [
+  "/",
+  ["/aws/lambda", !Ref AWS::StackName, !Ref HelloWorldFunction],
+]
 ```
 
 みたいにするといいとおもう。
@@ -761,7 +764,12 @@ aws-sam-cli-managed-default stack はあるか。
   "AWSTemplateFormatVersion": "2010-09-09",
   "Transform": "AWS::Serverless-2016-10-31",
   "Description": "Managed Stack for AWS SAM CLI",
-  "Metadata": { "SamCliInfo": { "version": "1.33.0", "installationId": "c61a8b52-fb4c-4488-a5ea-de314c54ad2b" } },
+  "Metadata": {
+    "SamCliInfo": {
+      "version": "1.33.0",
+      "installationId": "c61a8b52-fb4c-4488-a5ea-de314c54ad2b"
+    }
+  },
   "Resources": {
     "SamCliSourceBucket": {
       "Type": "AWS::S3::Bucket",
@@ -780,10 +788,23 @@ aws-sam-cli-managed-default stack はあるか。
               "Action": ["s3:GetObject"],
               "Effect": "Allow",
               "Resource": {
-                "Fn::Join": ["", ["arn:", { "Ref": "AWS::Partition" }, ":s3:::", { "Ref": "SamCliSourceBucket" }, "/*"]]
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    { "Ref": "AWS::Partition" },
+                    ":s3:::",
+                    { "Ref": "SamCliSourceBucket" },
+                    "/*"
+                  ]
+                ]
               },
               "Principal": { "Service": "serverlessrepo.amazonaws.com" },
-              "Condition": { "StringEquals": { "aws:SourceAccount": { "Ref": "AWS::AccountId" } } }
+              "Condition": {
+                "StringEquals": {
+                  "aws:SourceAccount": { "Ref": "AWS::AccountId" }
+                }
+              }
             }
           ]
         }
@@ -803,7 +824,7 @@ aws-sam-cli-managed-default stack の output の SourceBucket からバケット
 
 でこれで samconfig.toml を書き換えて、`sam deploy`。
 
-`sam deploy --guided` は便利なんだが、対話的にオペレーションが必要。  
+`sam deploy --guided` は便利なんだが、対話的にオペレーションが必要。\
 `sam deploy` だと SAM の S3 バケットがあったりなかったりしてうまくいかない。
 
 非対話にしたい場合は、

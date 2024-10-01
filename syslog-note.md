@@ -42,9 +42,9 @@ messages:Feb  4 19:12:24 XXXXXXX001 ntpd[6363]: restrict: error in address '::1'
 対策
 
 ```
-        path: /etc/ntp.conf
-        regexp: '^restrict ::1$'
-        replace: '# restrict ::1'
+path: /etc/ntp.conf
+regexp: '^restrict ::1$'
+replace: '# restrict ::1'
 ```
 
 `restrict -6 ::1`もあるらしい。
@@ -52,7 +52,7 @@ messages:Feb  4 19:12:24 XXXXXXX001 ntpd[6363]: restrict: error in address '::1'
 # postfix
 
 ```
- 2月 06 22:53:25 XXXXXX001 postfix/pickup[24937]: warning: inet_protocols: disabling IPv6 name/address support: Address
+2月 06 22:53:25 XXXXXX001 postfix/pickup[24937]: warning: inet_protocols: disabling IPv6 name/address support: Address
 ```
 
 対策

@@ -161,8 +161,6 @@ WSL2 では systemd がサポートされていないため、docker サービ�
 
 これで WSL2 が起動するたびに docker サービスも自動的に起動します。
 
->
-
 ソース: Bing との会話 2023/2/16
 
 1. How to automatically start the Docker daemon on WSL2. <https://bing.com/search?q=WSL2+docker+service+auto+start> アクセス日時 2023/2/16.
@@ -223,8 +221,6 @@ WSL の復元方法は次のとおりです ¹⁴。
 - wsl -d ディストリビューション名を実行してインポートしたディストリビューションに入る
 
 これで WSL の復元ができます。
-
->
 
 ソース: Bing との会話 2023/2/16
 
@@ -290,7 +286,7 @@ wsl --export distro - | wsl gzip > distro.tar.gz
 dircolors -p > ~/.dircolors
 ```
 
-で `~/.dircolors` を作り、これを編集する。今回は `DIR ` で検索して、
+で `~/.dircolors` を作り、これを編集する。今回は `DIR` で検索して、
 
 ```config
 #DIR 01;34 # directory

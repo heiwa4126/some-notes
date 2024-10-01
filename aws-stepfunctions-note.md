@@ -16,9 +16,9 @@ ASLの Resource: に書く
 ここ
 
 - [Step Functions 用統合最適化 - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/connect-suppo
-rted-services.html) - タイトルから想像できない内容...
+  rted-services.html) - タイトルから想像できない内容...
 - DynamoDBについては [Step Functions を使用した DynamoDB API の呼び出し](https://docs.aws.amazon.com/ja_jp/step-functions/lat
-est/dg/connect-ddb.html)
+  est/dg/connect-ddb.html)
 
 統合最適化(optimized integrations)以外の呼び出し方は
 [他のサービスで AWS Step Functions を使用する - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/concepts-service-integrations.html)

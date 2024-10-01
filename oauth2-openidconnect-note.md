@@ -184,15 +184,15 @@ aws cognito-idp admin-initiate-auth \
 またはJavaScriptで
 
 ```javascript
-const AWS = require('aws-sdk');
+const AWS = require("aws-sdk");
 const cognitoIdp = new AWS.CognitoIdentityServiceProvider();
 
-const userPoolId = '<user-pool-id>';
-const clientId = '<client-id>';
-const authFlow = 'ADMIN_NO_SRP_AUTH';
+const userPoolId = "<user-pool-id>";
+const clientId = "<client-id>";
+const authFlow = "ADMIN_NO_SRP_AUTH";
 const authParameters = {
-  USERNAME: '<username>',
-  PASSWORD: '<password>'
+  USERNAME: "<username>",
+  PASSWORD: "<password>",
 };
 
 cognitoIdp.adminInitiateAuth(
@@ -200,7 +200,7 @@ cognitoIdp.adminInitiateAuth(
     UserPoolId: userPoolId,
     ClientId: clientId,
     AuthFlow: authFlow,
-    AuthParameters: authParameters
+    AuthParameters: authParameters,
   },
   (err, data) => {
     if (err) {
@@ -208,7 +208,7 @@ cognitoIdp.adminInitiateAuth(
       return;
     }
     console.log(data);
-  }
+  },
 );
 ```
 
@@ -232,7 +232,7 @@ response = client.admin_initiate_auth(
 print(response)
 ```
 
-4.  取得したアクセストークンを使用してAPI GatewayのAPIを呼び出す。
+4. 取得したアクセストークンを使用してAPI GatewayのAPIを呼び出す。
 
 ```bash
 curl -X <http-method> \
@@ -281,16 +281,16 @@ OAuth 2.0でのPKCE（Proof Key for Code Exchange）は、認可グラントに�
 
 ブラウザでOAuthの認可グラントでPKCEを使う方法は、以下のようになります。
 
-1.  [クライアントは、ランダムな文字列を生成し、それを**コードチャレンジ**と呼びます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)
-2.  [クライアントは、コードチャレンジをハッシュ化し、それを**コードベリファイア**と呼びます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)
-3.  [クライアントは、認可サーバーに対して認可リクエストを送ります。このとき、コードチャレンジと**PKCEメソッド**（ハッシュ化の方法）をパラメータとして含めます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
-4.  [認可サーバーは、クライアントに対して認可コードを返します。**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
-5.  [クライアントは、認可サーバーに対してトークンリクエストを送ります。このとき、認可コードとコードベリファイアをパラメータとして含めます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
-6.  [認可サーバーは、コードベリファイアをハッシュ化し、それがコードチャレンジと一致するかどうか検証します。一致すれば、クライアントに対してアクセストークンとリフレッシュトークンを返します。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+1. [クライアントは、ランダムな文字列を生成し、それを**コードチャレンジ**と呼びます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)
+2. [クライアントは、コードチャレンジをハッシュ化し、それを**コードベリファイア**と呼びます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)
+3. [クライアントは、認可サーバーに対して認可リクエストを送ります。このとき、コードチャレンジと**PKCEメソッド**（ハッシュ化の方法）をパラメータとして含めます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce) [**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+4. [認可サーバーは、クライアントに対して認可コードを返します。**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+5. [クライアントは、認可サーバーに対してトークンリクエストを送ります。このとき、認可コードとコードベリファイアをパラメータとして含めます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce) [**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+6. [認可サーバーは、コードベリファイアをハッシュ化し、それがコードチャレンジと一致するかどうか検証します。一致すれば、クライアントに対してアクセストークンとリフレッシュトークンを返します。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce) [**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
 
 これにより、ブラウザでOAuthの認可グラントでPKCEを使って安全にトークンを取得することができます。
 
-**詳細情報:**[1\. zenn.dev](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)[2\. learn.microsoft.com](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)[3\. applis.io](https://applis.io/posts/what-is-pkce)
+**詳細情報:** [1\. zenn.dev](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce) [2\. learn.microsoft.com](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow) [3\. applis.io](https://applis.io/posts/what-is-pkce)
 
 ## リフレッシュトークンの寿命って取れるの?
 

@@ -194,18 +194,18 @@ VSCode の設定で
 もう 1 つ
 
 ```json
-  "files.watcherExclude": {
-    "**/.*/**": true,
-    "**/cdktf.out/**": true,
-    "**/node_modules/**": true,
-    "**/build/**": true,
-    "**/dist/**": true,
-    "**/__pycache__/**": true,
-    "**/.git/objects/**": false,
-    "**/.git/subtree-cache/**": false,
-    "**/.hg/store/**": false,
-    "**/node_modules/*/**": false
-  }
+"files.watcherExclude": {
+  "**/.*/**": true,
+  "**/cdktf.out/**": true,
+  "**/node_modules/**": true,
+  "**/build/**": true,
+  "**/dist/**": true,
+  "**/__pycache__/**": true,
+  "**/.git/objects/**": false,
+  "**/.git/subtree-cache/**": false,
+  "**/.hg/store/**": false,
+  "**/node_modules/*/**": false
+}
 ```
 
 上記は自分の設定。

@@ -12,10 +12,10 @@ Code security and analysis のところに設定項目がいろいろあるけ�
 ```yaml
 version: 2
 updates:
-  - package-ecosystem: 'npm' # See documentation for possible values
-    directory: '/' # Location of package manifests
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/" # Location of package manifests
     schedule:
-      interval: 'monthly'
+      interval: "monthly"
     open-pull-requests-limit: 1
 ```
 

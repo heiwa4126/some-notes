@@ -437,7 +437,7 @@ fn main() {
 コンパイル時に環境変数の値を取得できる。
 
 ```rust
-    println!("{} v{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
+println!("{} v{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
 ```
 
 でもいい。

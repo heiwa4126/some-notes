@@ -53,9 +53,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     watch: {
-      ignored: ['**/playwright-report/**']
-    }
-  }
+      ignored: ["**/playwright-report/**"],
+    },
+  },
 });
 ```
 

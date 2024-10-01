@@ -319,10 +319,10 @@ npm init -f
 
 ```javascript
 #!/usr/bin/env node
-const express = require('express');
+const express = require("express");
 const app = express();
-app.get('/', (req, res) => res.send('Hello World!'));
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+app.get("/", (req, res) => res.send("Hello World!"));
+app.listen(3000, () => console.log("Example app listening on port 3000!"));
 ```
 
 ([Express の「Hello World」の例](https://expressjs.com/ja/starter/hello-world.html)から引用)
@@ -452,10 +452,10 @@ sudo mv /tmp/npm /usr/share/bash-completion/completions/
 こういうやつ
 
 ```javascript
-import test from 'node:test';
-import assert from 'node:assert';
+import assert from "node:assert";
+import test from "node:test";
 
-test('synchronous passing test', (t) => {
+test("synchronous passing test", (t) => {
   // This test passes because it does not throw an exception.
   assert.strictEqual(1, 1);
 });

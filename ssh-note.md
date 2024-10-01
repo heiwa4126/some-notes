@@ -60,7 +60,7 @@ Host のマッチなんかも、最初に出てきたらマッチする。
 
 ### AllowUsers
 
-複数ユーザは` `(whitespace)で区切る
+複数ユーザは``(whitespace)で区切る
 
 ### Port
 

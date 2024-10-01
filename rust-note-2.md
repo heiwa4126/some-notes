@@ -109,7 +109,7 @@ fn main() {
 aはスライスでなくてもvecでも同じ。例)
 
 ```rust
-    let mut a = vec![1,2,3];
+let mut a = vec![1,2,3];
 ```
 
 - [slice method.iter_mut - Rust](https://doc.rust-lang.org/std/primitive.slice.html#method.iter_mut)

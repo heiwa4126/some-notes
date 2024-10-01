@@ -33,7 +33,7 @@ Tenable社製品メモ
 
 ## Nessus(ネサス)
 
-- [Nessus (software) - Wikipedia](<https://en.wikipedia.org/wiki/Nessus_(software)>)
+- [Nessus (software) - Wikipedia](https://en.wikipedia.org/wiki/Nessus_(software))
 - [Nessus - Wikipedia](https://ja.wikipedia.org/wiki/Nessus) - 来歴とかわかりやすい
 - [Nessus脆弱性評価のダウンロード | Tenable®](https://jp.tenable.com/products/nessus)
 

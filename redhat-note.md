@@ -662,7 +662,7 @@ yum install kernel-devel -y
 VirtualBoxGuestCD をマウントして、CD のディレクトリで
 
 ```
- ./VBoxLinuxAdditions.run
+./VBoxLinuxAdditions.run
 ```
 
 ## 永続的に IPv6 を止める

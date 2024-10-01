@@ -12,7 +12,7 @@
 
 [Workflow syntax for GitHub Actions - GitHub Docs](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on)
 
-よく使う割によくわからんのがこれ:  
+よく使う割によくわからんのがこれ:\
 [on\.push\.<branches\|tags\|branches\-ignore\|tags\-ignore>](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushbranchestagsbranches-ignoretags-ignore)
 
 どうもマッチが正規表現じゃないらしい。
@@ -25,7 +25,7 @@
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+**'
+      - "v[0-9]+.[0-9]+.[0-9]+**"
 ```
 
 ちょっと雑かも(pre-release や build のところ)。実用上問題ないと思う。

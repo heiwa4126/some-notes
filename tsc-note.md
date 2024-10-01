@@ -49,19 +49,19 @@ importのモジュールリファレンス部分
 `/root/src/folder/A.ts` の中に
 
 ```typescript
-import { b } from 'moduleB';
+import { b } from "moduleB";
 ```
 
 があれば
 
-1.  `/root/src/folder/moduleB.ts`
-2.  `/root/src/folder/moduleB.d.ts`
-3.  `/root/src/moduleB.ts`
-4.  `/root/src/moduleB.d.ts`
-5.  `/root/moduleB.ts`
-6.  `/root/moduleB.d.ts`
-7.  `/moduleB.ts`
-8.  `/moduleB.d.ts`
+1. `/root/src/folder/moduleB.ts`
+2. `/root/src/folder/moduleB.d.ts`
+3. `/root/src/moduleB.ts`
+4. `/root/src/moduleB.d.ts`
+5. `/root/moduleB.ts`
+6. `/root/moduleB.d.ts`
+7. `/moduleB.ts`
+8. `/moduleB.d.ts`
 
 をこの順で探す。
 
@@ -74,20 +74,20 @@ import { b } from 'moduleB';
 `/root/src/moduleA.js` の中で
 
 ```javascript
-var x = require('moduleB');
+var x = require("moduleB");
 ```
 
 があれば
 
-1.  `/root/src/node_modules/moduleB.js`
-2.  `/root/src/node_modules/moduleB/package.json` (if it specifies a `"main"` property)
-3.  `/root/src/node_modules/moduleB/index.js`
-4.  `/root/node_modules/moduleB.js`
-5.  `/root/node_modules/moduleB/package.json` (if it specifies a `"main"` property)
-6.  `/root/node_modules/moduleB/index.js`
-7.  `/node_modules/moduleB.js`
-8.  `/node_modules/moduleB/package.json` (if it specifies a `"main"` property)
-9.  `/node_modules/moduleB/index.js`
+1. `/root/src/node_modules/moduleB.js`
+2. `/root/src/node_modules/moduleB/package.json` (if it specifies a `"main"` property)
+3. `/root/src/node_modules/moduleB/index.js`
+4. `/root/node_modules/moduleB.js`
+5. `/root/node_modules/moduleB/package.json` (if it specifies a `"main"` property)
+6. `/root/node_modules/moduleB/index.js`
+7. `/node_modules/moduleB.js`
+8. `/node_modules/moduleB/package.json` (if it specifies a `"main"` property)
+9. `/node_modules/moduleB/index.js`
 
 ## tsc で moduleResolution が nodeの場合
 
@@ -96,20 +96,20 @@ var x = require('moduleB');
 `/root/src/folder/A.ts` の中に
 
 ```typescript
-import { b } from 'moduleB';
+import { b } from "moduleB";
 ```
 
 があれば
 
-1.  `/root/src/node_modules/moduleB.ts`
-2.  `/root/src/node_modules/moduleB.tsx`
-3.  `/root/src/node_modules/moduleB.d.ts`
-4.  `/root/src/node_modules/moduleB/package.json` (if it specifies a `types` property)
-5.  `/root/src/node_modules/@types/moduleB.d.ts`
-6.  `/root/src/node_modules/moduleB/index.ts`
-7.  `/root/src/node_modules/moduleB/index.tsx`
-8.  `/root/src/node_modules/moduleB/index.d.ts`
-9.  `/root/node_modules/moduleB.ts`
+1. `/root/src/node_modules/moduleB.ts`
+2. `/root/src/node_modules/moduleB.tsx`
+3. `/root/src/node_modules/moduleB.d.ts`
+4. `/root/src/node_modules/moduleB/package.json` (if it specifies a `types` property)
+5. `/root/src/node_modules/@types/moduleB.d.ts`
+6. `/root/src/node_modules/moduleB/index.ts`
+7. `/root/src/node_modules/moduleB/index.tsx`
+8. `/root/src/node_modules/moduleB/index.d.ts`
+9. `/root/node_modules/moduleB.ts`
 10. `/root/node_modules/moduleB.tsx`
 11. `/root/node_modules/moduleB.d.ts`
 12. `/root/node_modules/moduleB/package.json` (if it specifies a `types` property)

@@ -70,10 +70,10 @@ VPCがCIDR複数持てるし。
 
 ```yaml
 instance_tags:
-  Name: 'test1'
-  Owner: '{{ owner }}'
+  Name: "test1"
+  Owner: "{{ owner }}"
 count_tag:
-  Name: 'test1'
+  Name: "test1"
 exact_count: 2
 ```
 

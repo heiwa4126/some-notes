@@ -56,7 +56,8 @@ personal access token のところは公式の解説がわかりにくい
 1. GitHub の [Personal Access Tokens (Classic)](https://github.com/settings/tokens) へ行く。
 1. 上のプルダウンで "Generate new token (classic)" を設定
 
-1. - Note: Read Packages
+1.
+   - Note: Read Packages
    - Expiration: とりあえずデフォルトの "30 days" で (お好みで)
    - Select scopes: read:packages のみ
 

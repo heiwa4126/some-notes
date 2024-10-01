@@ -128,13 +128,13 @@ curl http://127.0.0.1/tomcat-test/hello.jsp
 server.xmlの設定
 
 ```xml
-   <Connector protocol="AJP/1.3"
-              address="127.0.0.1"
-              port="8009"
-              redirectPort="8443"
-              enableLookups="false"
-              secret="YOUR_PASSWORD"
-              />
+<Connector protocol="AJP/1.3"
+           address="127.0.0.1"
+           port="8009"
+           redirectPort="8443"
+           enableLookups="false"
+           secret="YOUR_PASSWORD"
+           />
 ```
 
 参考:

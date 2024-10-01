@@ -32,6 +32,8 @@ TypeScript 使えない状況で。
 
 ## `{ name: "Alice", age: 25 }` は Map ではない
 
+Python とは違う。
+
 - [Object - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object) ← こっち
 - [Map - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Map)
 

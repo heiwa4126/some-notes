@@ -12,11 +12,12 @@ JavaScriptでも十分遅くてムカつく。
 CDKは宣言型が苦手な人がつかうのかなあ。(CDKも宣言型だけど)
 
 npmが新しいと `cdk init --language typescript` で
+
 ```
 npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
 ```
-が出て-gオプションが無視されるのもキツい。
 
+が出て-gオプションが無視されるのもキツい。
 
 [AWS CDK: The Good, the Bad and the Ugly - TechConnect IT Solutions](https://techconnect.com.au/aws-cdk-the-good-the-bad-and-the-ugly/)
 
@@ -24,6 +25,5 @@ npm WARN config global `--global`, `--local` are deprecated. Use `--location=glo
 
 (訳)AWS CDKを使ったことがある人なら誰でも、それがいかに恐ろしく遅いかを指摘するだろう。
 cdk diffを実行すると、すべてがTypeScriptコードベースを通してCloudFormationテンプレートに集約され、遅くてもっさりしているとしか言いようがない処理になる。
-
 
 Pulimiとかやってみます。

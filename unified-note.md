@@ -20,10 +20,10 @@ remark や rehype といったテキスト処理ツール、unified-engine と�
 例えば、VFile を使用してファイルを読み込む場合、以下のように書くことができます。
 
 ```javascript
-const vfile = require('vfile');
-const fs = require('fs');
+const vfile = require("vfile");
+const fs = require("fs");
 
-const file = vfile.readSync('path/to/file.md');
+const file = vfile.readSync("path/to/file.md");
 console.log(file.contents); // ファイルの内容を出力する
 ```
 
@@ -31,13 +31,13 @@ console.log(file.contents); // ファイルの内容を出力する
 
 ```javascript
 const file = vfile({
-  path: 'path/to/file.md',
-  contents: fs.readFileSync('path/to/file.md', 'utf-8'),
+  path: "path/to/file.md",
+  contents: fs.readFileSync("path/to/file.md", "utf-8"),
   data: {
-    title: 'My Markdown File',
-    type: 'blog-post',
-    author: 'John Doe'
-  }
+    title: "My Markdown File",
+    type: "blog-post",
+    author: "John Doe",
+  },
 });
 
 console.log(file.data.title); // "My Markdown File" を出力する

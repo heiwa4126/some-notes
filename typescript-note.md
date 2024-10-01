@@ -31,14 +31,14 @@ React の TypeScript で setState hook の一部を書き換えたいとき:
 
 ```typescript
 let hash: { [key: string]: string } = {};
-hash['apple'] = 'りんご';
-hash['banana'] = 'ばなな';
-hash['orange'] = 'オレンジ';
+hash["apple"] = "りんご";
+hash["banana"] = "ばなな";
+hash["orange"] = "オレンジ";
 
 const hash2: { [key: string]: string } = {
-  apple: 'りんご',
-  banana: 'ばなな',
-  orange: 'オレンジ'
+  apple: "りんご",
+  banana: "ばなな",
+  orange: "オレンジ",
 };
 ```
 

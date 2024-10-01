@@ -402,7 +402,7 @@ Mavenが推奨するプラクティスの1つは、「同じことを繰り返�
 例えば、project.version 変数にアクセスするには、次のように参照します。
 
 ```xml
-  <version>${project.version}</version>
+<version>${project.version}</version>
 ```
 
 注意点としては、これらの変数は上記のように継承された後に処理されることです。

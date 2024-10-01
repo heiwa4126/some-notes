@@ -422,7 +422,7 @@ Docker Hub に置いたやつをちょっと動かしたいだけなんだが...
 
 ## チュートリアルズ
 
-- [Docker 入門(第三回)~各種 docker コマンドと Docker イメージ作成について~ | さくらのナレッジ](https://knowledge.sakura.ad.jp/14427/)
+- [Docker 入門(第三回)~~各種 docker コマンドと Docker イメージ作成について~~ | さくらのナレッジ](https://knowledge.sakura.ad.jp/14427/)
 - [Docker 入門(第四回)~ Dockerfile について~ | さくらのナレッジ](https://knowledge.sakura.ad.jp/15253/)
 
 ## snap で docker

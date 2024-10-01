@@ -124,12 +124,12 @@ CLIの解説: [CUE's cli commands | Overview | Cuetorials](https://cuetorials.co
 いや同じところで出るな。dagger.#Plan &で client: platform: にデフォルト値がないのか。
 
 ```json
-    client: {
-        platform: {
-            os: "linux"
-            arch: "x86"
-            }
-    }
+client: {
+    platform: {
+        os: "linux"
+        arch: "x86"
+        }
+}
 ```
 
 とかを付け加えると、とりあえず通ります。値があってるかどうかは微妙。

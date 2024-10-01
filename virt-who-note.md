@@ -110,7 +110,7 @@ LANG=C subscription-manager identity
 
 または https://access.redhat.com/management/activation_keys
 
-の`組織 ID のアクティベーションキー: `の後ろの数字。
+の`組織 ID のアクティベーションキー:`の後ろの数字。
 
 # その後
 
@@ -128,7 +128,7 @@ ESXiが「ハイパーバイザー」として追加されるので(15分ぐら�
 正常にvert-whoが動くことを確認したら
 `virt-who-passwd`でパスワードを暗号化しておく。
 
-[暗号化されたパスワードで virt-who を設定する ](https://access.redhat.com/ja/solutions/2325761)
+[暗号化されたパスワードで virt-who を設定する](https://access.redhat.com/ja/solutions/2325761)
 
 virt-whoを複数立てると、冗長性が上がるのでおすすめ。
 ただし、virt-who-passwdでの暗号は流用できないので、

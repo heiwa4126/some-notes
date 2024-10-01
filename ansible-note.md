@@ -407,9 +407,9 @@ linux-base
 loop_controlの使用例
 
 ```
-    - loop: "{{initial_users}}"
-      loop_control: {loop_var: user}
-      include_tasks: include/create_a_user.yml
+- loop: "{{initial_users}}"
+  loop_control: {loop_var: user}
+  include_tasks: include/create_a_user.yml
 ```
 
 ## lookup
@@ -639,21 +639,21 @@ winrm get winrm/config
 をチェック。以下例(抜粋):
 
 ```
-   Client
-       NetworkDelayms = 5000
-       URLPrefix = wsman
-       AllowUnencrypted = false
-       Auth
-           Basic = true <- ここ
-           Digest = true
-           Kerberos = true
-           Negotiate = true
-           Certificate = true
-           CredSSP = true <- ここも追加
-       DefaultPorts
-           HTTP = 5985
-           HTTPS = 5986 <- ここ
-       TrustedHosts = xx.xxx.xx.xx <-ここ
+Client
+    NetworkDelayms = 5000
+    URLPrefix = wsman
+    AllowUnencrypted = false
+    Auth
+        Basic = true <- ここ
+        Digest = true
+        Kerberos = true
+        Negotiate = true
+        Certificate = true
+        CredSSP = true <- ここも追加
+    DefaultPorts
+        HTTP = 5985
+        HTTPS = 5986 <- ここ
+    TrustedHosts = xx.xxx.xx.xx <-ここ
 ```
 
 TrustedHostsは
@@ -994,15 +994,15 @@ templateモジュールにもある。
 例(抜粋)
 
 ```
-  tasks:
-    - name: test1a-lf-crlf
-      template:
-        src: template/test1.j2
-        dest: /tmp/remove-me-test1.conf
-        owner: "{{test_user}}"
-        group: "{{test_group}}"
-        mode: "{{test_mode}}"
-        newline_sequence: "\r\n"
+tasks:
+  - name: test1a-lf-crlf
+    template:
+      src: template/test1.j2
+      dest: /tmp/remove-me-test1.conf
+      owner: "{{test_user}}"
+      group: "{{test_group}}"
+      mode: "{{test_mode}}"
+      newline_sequence: "\r\n"
 ```
 
 みたいなことができる。
@@ -1304,11 +1304,11 @@ netstatの-pオプションはsuがいるので。
 の出力を集めたいときは
 
 ```
-    - shell: "/sbin/fuser -vn tcp 80 |& cat"
-      become: yes
-      register: rc
-      ignore_errors: True
-      changed_when: no
+- shell: "/sbin/fuser -vn tcp 80 |& cat"
+  become: yes
+  register: rc
+  ignore_errors: True
+  changed_when: no
 ```
 
 みたいなタスクにしないとダメ。
@@ -1391,16 +1391,16 @@ ansible-playbookの-lオプションでも同様。
     - debug: var=inventory_hostname
 
     - debug: msg=OK
-      when: 'inventory_hostname in d1'
+      when: "inventory_hostname in d1"
 
     - debug: msg=OK
-      when: 'inventory_hostname not in d2'
+      when: "inventory_hostname not in d2"
 
     - debug: msg=WRONG
-      when: 'inventory_hostname not in d1'
+      when: "inventory_hostname not in d1"
 
     - debug: msg=WRONG
-      when: 'inventory_hostname in d2'
+      when: "inventory_hostname in d2"
 ```
 
 OKが2個、WRONGが0個出力されるはず
@@ -1445,7 +1445,7 @@ include/importしてるtasksも見る。
 
 ```yaml
 - name: Run shell.
-  shell: '{{ cmd }}' # noqa command-instead-of-shell
+  shell: "{{ cmd }}" # noqa command-instead-of-shell
 ```
 
 こんな感じに`noqa`でできる。
@@ -1558,11 +1558,11 @@ Kerberosだとローカルアカウントには接続できないのに注意。
   become: false
   gather_facts: false
   vars:
-    msg1: 'world'
+    msg1: "world"
 
   tasks:
     - debug:
-        msg: 'Hello, {{ msg1 }}!'
+        msg: "Hello, {{ msg1 }}!"
 ```
 
 読みこむファイル: `vars2.json`

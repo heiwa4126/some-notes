@@ -26,7 +26,7 @@ AWS::Lambda::Functionだと
 ```yaml
 Properties:
   TracingConfig:
-    Mode: 'Active'
+    Mode: "Active"
 ```
 
 Roleは
@@ -38,9 +38,9 @@ Roleは
 
 ```yaml
 XRayGroup:
-  Type: 'AWS::XRay::Group'
+  Type: "AWS::XRay::Group"
   Properties:
-    GroupName: 'Default'
+    GroupName: "Default"
     InsightsConfiguration:
       InsightsEnabled: false
       NotificationsEnabled: false

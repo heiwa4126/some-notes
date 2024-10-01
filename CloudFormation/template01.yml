@@ -1,20 +1,20 @@
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
   vpcOhta00:
-    Type: 'AWS::EC2::VPC'
+    Type: "AWS::EC2::VPC"
     Properties:
       CidrBlock: 10.0.0.0/16
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 016b8088-c40e-4061-8a56-2ff3ac9725c7
 Metadata:
-  'AWS::CloudFormation::Designer':
+  "AWS::CloudFormation::Designer":
     016b8088-c40e-4061-8a56-2ff3ac9725c7:
       size:
         width: 150
         height: 150
       position:
         x: 60
-        'y': 90
+        "y": 90
       z: 1
       embeds: []

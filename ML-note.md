@@ -39,7 +39,7 @@
 
 ## 活性化関数 (Activation function)
 
-$z = \sum_{i=1}^{n} (x_i \cdot w_i) + b$  
+$z = \sum_{i=1}^{n} (x_i \cdot w_i) + b$\
 $a = f(z)$
 
 の $f()$ が活性化関数
@@ -174,16 +174,16 @@ $w_0$ がバイアスなのか。
 $wx+b$ でも
 
 $w=\begin{pmatrix}
-    w_0 \\
-    w_1 \\
-    \vdots \\
-    w_n
+w_0 \\
+w_1 \\
+\vdots \\
+w_n
 \end{pmatrix}
- ,x=\begin{pmatrix}
-    1 \\
-    x_1 \\
-    \vdots \\
-    x_n
+,x=\begin{pmatrix}
+1 \\
+x_1 \\
+\vdots \\
+x_n
 \end{pmatrix}
 $ で $wx$ でもいい。
 

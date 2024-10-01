@@ -143,13 +143,13 @@ useEffect(() => {
 ```jsx
 useEffect(() => {
   const id = setInterval(() => {
-    console.log('Interval running...');
+    console.log("Interval running...");
   }, 1000);
 
   // クリーンアップ関数
   return () => {
     clearInterval(id);
-    console.log('Interval cleared');
+    console.log("Interval cleared");
   };
 }, []);
 ```
@@ -162,10 +162,10 @@ useEffect(() => {
 
 ```jsx
 useEffect(() => {
-  console.log('useEffect mounted');
+  console.log("useEffect mounted");
 
   return () => {
-    console.log('useEffect unmounted');
+    console.log("useEffect unmounted");
   };
 }, []);
 ```
@@ -185,7 +185,7 @@ ReactDOM.render(
   // <React.StrictMode>
   <App />,
   // </React.StrictMode>
-  document.getElementById('root')
+  document.getElementById("root"),
 );
 ```
 
@@ -268,7 +268,7 @@ React コンポーネントの返り値としては JSX.Element を使うこと�
 ```javascript
 useEffect(() => {
   const timer = setTimeout(() => {
-    console.log('Timer executed');
+    console.log("Timer executed");
   }, 1000);
 
   // クリーンアップ関数
@@ -292,10 +292,13 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root"),
 );
 
-ReactDOM.render(<SpecificComponent />, document.getElementById('specific-root'));
+ReactDOM.render(
+  <SpecificComponent />,
+  document.getElementById("specific-root"),
+);
 ```
 
 あとで試す。

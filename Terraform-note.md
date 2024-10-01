@@ -136,9 +136,9 @@ vpc_security_group_ids を使うこと。
 ## associate_public_ip_address で forces replacement とか言われたら
 
 ```hcl
-  lifecycle {
-    ignore_changes = [associate_public_ip_address]
-  }
+lifecycle {
+  ignore_changes = [associate_public_ip_address]
+}
 ```
 
 [Get terraform to ignore "associate_public_ip_address" status for stopped instance - Stack Overflow](https://stackoverflow.com/questions/52519463/get-terraform-to-ignore-associate-public-ip-address-status-for-stopped-instanc)

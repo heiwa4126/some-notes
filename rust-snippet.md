@@ -30,10 +30,10 @@ fn c1(x: Option<&str>) -> Option<String> {
 (intoのとこはto_stringとかto_ownedとかString::fromとか)
 
 ```rust
-    // x.map_or(None, |s| Some(s.into()))
-    // x.and_then(|s| Some(s.into()))
-    // x.map(|s| s.into())
-    x.map(String::from)
+// x.map_or(None, |s| Some(s.into()))
+// x.and_then(|s| Some(s.into()))
+// x.map(|s| s.into())
+x.map(String::from)
 ```
 
 map()を使うのが一番簡単。場合によってはコメントアウトされたとこを応用。

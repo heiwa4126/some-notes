@@ -72,7 +72,7 @@ def get_posts_post_id(post_id: int) -> Post:
 SimpleError と`{"detail": BPNF}`が 全然関連が無いのが問題だと思う場合には
 
 ```python
-        return JSONResponse(SimpleError(detail=BPNF).model_dump(), 404)
+return JSONResponse(SimpleError(detail=BPNF).model_dump(), 404)
 ```
 
 としてもいいです(ちょっと大げさ)。

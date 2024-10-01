@@ -311,7 +311,7 @@ Hugging Face 社の社名の由来の絵文字 🤗、「笑いながら人を�
 
 [Embedding(埋め込み表現)とは、単語や文章等の自然言語の構成要素をベクトル表現に変換する処理を指します](https://di-acc2.com/programming/python/26101/)。[この変換操作は、トークンをベクトル空間に埋め込む操作であることから埋め込み(embedding)ともいわれます(一般的に自然言語処理の分野でトークンは単語であるため、単語埋め込み(word embedding)と呼ぶことが多い)](https://developers.agirobots.com/jp/word2vec-and-embeddinglayer/)。
 
-[Word2Vec は、Word を Vector に変換するという意味で分散表現そのものを指すと解釈できますが、より狭義で CBOW や Skip-gram の 2 つのモデルを指すのが一般的です](https://developers.agirobots.com/jp/word2vec-and-embeddinglayer/)。  
+[Word2Vec は、Word を Vector に変換するという意味で分散表現そのものを指すと解釈できますが、より狭義で CBOW や Skip-gram の 2 つのモデルを指すのが一般的です](https://developers.agirobots.com/jp/word2vec-and-embeddinglayer/)。\
 Word2Vec は、Embedding の起源ではありませんが、Embedding 技術の発展に大きく貢献した技術です。実際に、Word2Vec は、自然言語処理における Embedding 技術の中でも広く使用されています。
 
 - [Word2Vec とは | 分散表現・Skip-gram 法と CBOW の仕組み・ツールや活用事例まで徹底解説 | Ledge.ai](https://ledge.ai/articles/word2vec)

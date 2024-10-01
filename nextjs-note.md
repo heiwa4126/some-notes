@@ -84,7 +84,9 @@ export default function Counter() {
   const [count, setCount] = useState(0);
   return (
     <div>
-      <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
+      <button onClick={() => setCount((count) => count + 1)}>
+        count is {count}
+      </button>
     </div>
   );
 }
@@ -100,7 +102,9 @@ const Counter = () => {
   const [count, setCount] = useState(0);
   return (
     <div>
-      <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
+      <button onClick={() => setCount((count) => count + 1)}>
+        count is {count}
+      </button>
     </div>
   );
 };
@@ -249,11 +253,14 @@ template の方は「ただし、新しいコンポーネントインスタン�
 
 ```typescript
 const getUser = async (id: string) => {
-  const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-    next: {
-      revalidate: 60
-    }
-  });
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/users/${id}`,
+    {
+      next: {
+        revalidate: 60,
+      },
+    },
+  );
   const user: User = await response.json();
 
   return user;

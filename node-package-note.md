@@ -16,9 +16,9 @@ npm i crypto-js  # 標準のcryptではなくわざわざ外部のを使う
 [crypto-js - npm](https://www.npmjs.com/package/crypto-js)
 
 ```javascript
-const SHA256 = require('crypto-js/sha256');
+const SHA256 = require("crypto-js/sha256");
 
-const msg = 'hello world';
+const msg = "hello world";
 
 console.log(msg);
 console.log(SHA256(msg).toString());
@@ -48,9 +48,9 @@ npm install --save-dev mocha
 add2 の package.json を Mocha 用に書き換える
 
 ```json
-  "scripts": {
-    "test": "node_modules/mocha/bin/mocha.js"
-  },
+"scripts": {
+  "test": "node_modules/mocha/bin/mocha.js"
+},
 ```
 
 `add2/index.js` と `add2/test/index-test.js` を書く。

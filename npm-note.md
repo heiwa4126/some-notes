@@ -128,9 +128,9 @@ npmPkgJsonLint ./package.json  # カレントのpackage.jsonを対象にしてli
 自分は package.json に
 
 ```json
-  "scripts": {
-    "lint:package": "npmPkgJsonLint ./package.json",
-  },
+"scripts": {
+  "lint:package": "npmPkgJsonLint ./package.json",
+},
 ```
 
 とか追加してます。あと pre-commit
@@ -145,10 +145,10 @@ bin に複数フィールドがある場合の挙動
 [cowsay/package\.json](https://www.npmjs.com/package/cowsay?activeTab=explore) には bin のエントリが 2 つある
 
 ```json
- "bin": {
-    "cowsay": "./cli.js",
-    "cowthink": "./cli.js"
-  },
+"bin": {
+   "cowsay": "./cli.js",
+   "cowthink": "./cli.js"
+ },
 ```
 
 `npx cowsay hi!`
@@ -373,9 +373,9 @@ npm i https://github.com/heiwa4126/npm-hello1.git
 どっちでやっても package.json は
 
 ```json
-  "dependencies": {
-    "@heiwa4126/hello1": "github:heiwa4126/npm-hello1"
-  }
+"dependencies": {
+  "@heiwa4126/hello1": "github:heiwa4126/npm-hello1"
+}
 ```
 
 になる。ちょっと不思議。
@@ -498,27 +498,27 @@ GitHub Packages とは? ([github-packages-note.md](github-packages-note.md)に�
 ## package.json に作者名とメールアドレスを書く
 
 ```json
-  "author":  "Foo Bar",
+"author":  "Foo Bar",
 ```
 
 から
 
 ```json
-  "author": {
-    "name": "Foo Bar",
-    "email": "bfoo@example.com"
+"author": {
+  "name": "Foo Bar",
+  "email": "bfoo@example.com"
+},
+// もし共著者がいれば以下のように書く
+"contributors": [
+  {
+    "name": "Second Author",
+    "email": "second-author@example.com"
   },
-  // もし共著者がいれば以下のように書く
-  "contributors": [
-    {
-      "name": "Second Author",
-      "email": "second-author@example.com"
-    },
-    {
-      "name": "Third Author",
-      "email": "third-author@example.com"
-    }
-  ],
+  {
+    "name": "Third Author",
+    "email": "third-author@example.com"
+  }
+],
 ```
 
 ## npm unlink は存在しない

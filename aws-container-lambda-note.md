@@ -35,15 +35,15 @@ ECRにすでにあるものをコンテナlambdaとして使うことはでき�
 
 ```yaml
 # 普通の
-   Properties:
-      Code:
-        S3Bucket: "awslambda-ap-ne-1-tasks"
-        S3Key: !Sub "/snapshots/${AWS::AccountId}/..."
-        S3ObjectVersion: "..."
+Properties:
+  Code:
+    S3Bucket: "awslambda-ap-ne-1-tasks"
+    S3Key: !Sub "/snapshots/${AWS::AccountId}/..."
+    S3ObjectVersion: "..."
 # コンテナの
-   Properties:
-      Code:
-        ImageUri: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/..."
+Properties:
+  Code:
+    ImageUri: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/..."
 ```
 
 ImageUrlにECRのARN書けばいいらしい。

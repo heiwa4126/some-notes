@@ -47,7 +47,7 @@ keys.gnupg.net は死んでるみたい。
 - keys.mailvelope.com
 - pool.sks-keyservers.net (分散型キーサーバネットワーク)
 
-など [Key server (cryptographic) - Wikipedia](<https://en.wikipedia.org/wiki/Key_server_(cryptographic)#Keyserver_examples>)
+など [Key server (cryptographic) - Wikipedia](https://en.wikipedia.org/wiki/Key_server_(cryptographic)#Keyserver_examples)
 
 登録は
 

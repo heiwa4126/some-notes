@@ -34,7 +34,24 @@ Biome と併用する
     "printWidth": 120,
     "useTabs": true
   },
-  "excludes": ["**/node_modules", "**/dist", "**/*-lock.json", "**/*-lock.yaml", "*.js", "*.mjs", "*.cjs", "*.ts", "*.tsx", "*.jsx", "*.json", "*.jsonc", "*.graphql", "*.vue", "*.svelte", "*.astro"],
+  "excludes": [
+    "**/node_modules",
+    "**/dist",
+    "**/*-lock.json",
+    "**/*-lock.yaml",
+    "*.js",
+    "*.mjs",
+    "*.cjs",
+    "*.ts",
+    "*.tsx",
+    "*.jsx",
+    "*.json",
+    "*.jsonc",
+    "*.graphql",
+    "*.vue",
+    "*.svelte",
+    "*.astro"
+  ],
   "plugins": [
     "https://plugins.dprint.dev/markdown-0.17.8.wasm",
     "https://plugins.dprint.dev/toml-0.6.2.wasm",

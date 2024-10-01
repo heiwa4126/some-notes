@@ -534,7 +534,7 @@ RHEL はチャネル(レポジトリ)が細分化されててめんどくさい�
 ## pip install --upgrade pip
 ```
 
-こうすると` /opt/rh/python27/root/usr/lib/python2.7/site-packages/pip`に pip が...
+こうすると`/opt/rh/python27/root/usr/lib/python2.7/site-packages/pip`に pip が...
 どう考えても頭がおかしいと思う。
 
 `get-pip.py`のほうが全然まともだと思う。
@@ -1238,13 +1238,13 @@ editable mode でインストールするには `pip install -e .` または `py
 name = "my-package"
 version = "0.1.0"
 dependencies = [
-    "requests",
+  "requests",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest",
-    "pylint",
+  "pytest",
+  "pylint",
 ]
 ```
 

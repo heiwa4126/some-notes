@@ -1,24 +1,23 @@
 # バーコード & QR コードメモ
 
-- [バーコード \& QR コードメモ](#バーコード--qr-コードメモ)
-  - [コードの種類](#コードの種類)
-    - [JAN](#jan)
-    - [CODE128](#code128)
-  - [ブラウザでバーコード](#ブラウザでバーコード)
-  - [QR コードのスキャナ](#qr-コードのスキャナ)
-  - [バーコードのスキャナ](#バーコードのスキャナ)
-    - [javascript-barcode-reader](#javascript-barcode-reader)
-    - [JOB](#job)
-    - [QuaggaJS](#quaggajs)
-    - [QuaggaJS2](#quaggajs2)
-    - [webcodecamjs](#webcodecamjs)
+- [コードの種類](#コードの種類)
+  - [JAN](#jan)
+  - [CODE128](#code128)
+- [ブラウザでバーコード](#ブラウザでバーコード)
+- [QR コードのスキャナ](#qr-コードのスキャナ)
+- [バーコードのスキャナ](#バーコードのスキャナ)
+  - [javascript-barcode-reader](#javascript-barcode-reader)
+  - [JOB](#job)
+  - [QuaggaJS](#quaggajs)
+  - [QuaggaJS2](#quaggajs2)
+  - [webcodecamjs](#webcodecamjs)
 
 ## コードの種類
 
 どうもコード方式と表現方式がごっちゃになって記述されることが多いみたいので注意。
 両方を兼ねてる言い方もあるのがますますややこしい。
 
-例)
+例:
 
 - CODE128 表現方式
 - GS1-128 コード方式+それを CODE128 のスタートコード CODE-C で画像にしたもの
@@ -36,9 +35,9 @@
     2. 商品アイテムコード(3 桁)
     3. チェックデジット(1 桁)
 - 短縮タイプ(8 桁)
-  1.  JAN 企業コード(6 桁)
-  2.  商品アイテムコード(1 桁)
-  3.  チェックデジット(1 桁)
+  1. JAN 企業コード(6 桁)
+  2. 商品アイテムコード(1 桁)
+  3. チェックデジット(1 桁)
 
 参考: [JAN | バーコード講座 | キーエンス](https://www.keyence.co.jp/ss/products/autoid/codereader/basic_jan.jsp)
 

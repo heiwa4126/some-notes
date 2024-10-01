@@ -854,7 +854,7 @@ export PATH="/usr/pgsql-9.5/bin/:$PATH"
 
 ```yaml
 # Use postgres/example user/password credentials
-version: '3.1'
+version: "3.1"
 
 services:
   db:
@@ -907,7 +907,7 @@ postgres=# \q
 なので、docker-compose.yml をこんな風に
 
 ```yaml
-version: '3.1'
+version: "3.1"
 
 services:
   db:
@@ -916,9 +916,9 @@ services:
     environment:
       POSTGRES_PASSWORD: example
     ports:
-      - '35432:5432'
+      - "35432:5432"
     volumes:
-      - 'postgres_data:/var/lib/postgresql/data'
+      - "postgres_data:/var/lib/postgresql/data"
 
 volumes:
   postgres_data:
@@ -933,7 +933,7 @@ volumes:
 
 ```yaml
 ports:
-  - '127.0.0.1:35432:5432'
+  - "127.0.0.1:35432:5432"
 ```
 
 にするなど。

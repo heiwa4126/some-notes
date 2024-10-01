@@ -348,7 +348,7 @@ Hello world.
 - [google/guava: Google core libraries for Java](https://github.com/google/guava)
   を使ったApp.javaに変えてみる。
 
-[com.google.common.base.Strings#repeat](<https://guava.dev/releases/19.0/api/docs/com/google/common/base/Strings.html#repeat(java.lang.String,%20int)>)を使って、Hello worldの上下に罫線を引く。
+[com.google.common.base.Strings#repeat](https://guava.dev/releases/19.0/api/docs/com/google/common/base/Strings.html#repeat(java.lang.String,%20int))を使って、Hello worldの上下に罫線を引く。
 
 `src/main/java/demo/App.java`
 
@@ -458,8 +458,7 @@ $ ls -sh1 ./build/distributions/demo*.{tar,zip}
 # Gradleのappでpostgres
 
 [// https://mvnrepository\.com/artifact/org\.postgresql/postgresql
-implementation group: 'org\.postgresql', name: 'postgresql', version: '42\.2\.23'
-](https://mvnrepository.com/artifact/org.postgresql/postgresql/42.2.23)
+implementation group: 'org\.postgresql', name: 'postgresql', version: '42\.2\.23'](https://mvnrepository.com/artifact/org.postgresql/postgresql/42.2.23)
 
 # Gradle参考リンク
 

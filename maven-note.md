@@ -99,7 +99,7 @@ mvn compile test jar:jar
 ```
 
 ```xml
- <defaultGoal>clean package</defaultGoal>
+<defaultGoal>clean package</defaultGoal>
 ```
 
 ## 階層

@@ -127,9 +127,9 @@ prompt&completion、どんなものを用意したらいいの?
 
 ## `\n\n###\n\n`
 
-Q.  
+Q.\
 OpenAIのplaygoundの `Inject start text` と `Inject restart text` の項目に改行(\n)を入れるには?
 (Azure版だと「応答前のテキスト」「応答後のテキスト」)
 
-A.  
+A.\
 「Shift+Enter」

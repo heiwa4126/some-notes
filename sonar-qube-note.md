@@ -76,8 +76,8 @@ SonarQube Community Edition で検出可能な基本的な脆弱性の例を ECM
 
    ```javascript
    // 脆弱性のあるコード
-   const password = 'mySecretPassword123';
-   const apiKey = '1234567890abcdef';
+   const password = "mySecretPassword123";
+   const apiKey = "1234567890abcdef";
    ```
 
    SonarQube は、ソースコード内にハードコードされたパスワードや API キーを検出します。

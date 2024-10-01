@@ -11,18 +11,18 @@
 pom.xmlやbuild.gradeに追加
 
 ```xml
-		<!-- MyBatis -->
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>2.1.4</version>
-		</dependency>
-		<!-- Model Mapper -->
-		<dependency>
-			<groupId>org.modelmapper.extensions</groupId>
-			<artifactId>modelmapper-spring</artifactId>
-			<version>2.3.9</version>
-		</dependency>
+<!-- MyBatis -->
+<dependency>
+	<groupId>org.mybatis.spring.boot</groupId>
+	<artifactId>mybatis-spring-boot-starter</artifactId>
+	<version>2.1.4</version>
+</dependency>
+<!-- Model Mapper -->
+<dependency>
+	<groupId>org.modelmapper.extensions</groupId>
+	<artifactId>modelmapper-spring</artifactId>
+	<version>2.3.9</version>
+</dependency>
 ```
 
 - [Maven Repository: org.mybatis.spring.boot » mybatis-spring-boot-starter](https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter)

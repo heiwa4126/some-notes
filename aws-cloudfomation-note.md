@@ -43,7 +43,7 @@ YAML でリソースを作るアレ。
 ↑ に載ってたやつ。
 
 ```yaml
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Resources:
   FirstVPC:
     Type: AWS::EC2::VPC

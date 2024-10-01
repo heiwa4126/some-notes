@@ -121,10 +121,10 @@ gzip,brotli,disable から選べる。
 
 File \> Publishing Settings \> Quarity のところで
 
-こうなってるのを:  
+こうなってるのを:\
 ![Alt text](imgs/unity/q1.png)
 
-こうする:  
+こうする:\
 ![Alt text](imgs/unity/q2.png)
 
 下の ▼ ▼ ▼ の一番右をクリックするとプルダウンが出る。
@@ -364,13 +364,13 @@ Project Settings の Player \> Other Settings \> Active Input Handling で
 "Input Manager" から
 
 ```Csharp
-	void Update()
+void Update()
+{
+	if (Input.GetKeyDown(KeyCode.Space))
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			SceneManager.LoadScene(1);
-		}
+		SceneManager.LoadScene(1);
 	}
+}
 ```
 
 "Input System" へ

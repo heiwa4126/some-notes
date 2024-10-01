@@ -123,7 +123,7 @@ F1 スコアは、
 再現率(Recall)(=感度(Sensitivity)) の
 調和平均です。
 
-- [F 値 (評価指標) - Wikipedia](<https://ja.wikipedia.org/wiki/F%E5%80%A4_(%E8%A9%95%E4%BE%A1%E6%8C%87%E6%A8%99)>)
+- [F 値 (評価指標) - Wikipedia](https://ja.wikipedia.org/wiki/F%E5%80%A4_(%E8%A9%95%E4%BE%A1%E6%8C%87%E6%A8%99))
 - [感度とか特異度とか | Tech Blog | CRESCO Tech Blog](https://www.cresco.co.jp/blog/entry/5987.html)
 - [F1 - a Hugging Face Space by evaluate-metric](https://huggingface.co/spaces/evaluate-metric/f1)
 

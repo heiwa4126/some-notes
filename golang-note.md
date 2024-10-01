@@ -211,7 +211,6 @@ alias gcd='cd $MYGOPATH/src/github.com/heiwa4126'
 git config --global ghq.root "$MYGOPATH/src"
 
 ```
-
 GOPATHがない場合は"GOPATH="$HOME/go"になるみたい。
 "$HOME/go/bin"をPATHに追加
 
@@ -679,16 +678,16 @@ write open したファイルの Close()など。
 こんなパターン
 
 ```go
-  func xxx() (err error) {
-    // ...
-    // fileのWrite Open etc...
-    // ...
-    defer func() {
-      if cerr := f.Close(); err == nil {
-        err = cerr
-      }
-    }()
-  }
+func xxx() (err error) {
+  // ...
+  // fileのWrite Open etc...
+  // ...
+  defer func() {
+    if cerr := f.Close(); err == nil {
+      err = cerr
+    }
+  }()
+}
 ```
 
 [Go で defer の処理中のエラーを返す書き方を工夫してみた · hnakamur's blog](https://hnakamur.github.io/blog/2015/04/27/write_function_for_go_defer/)

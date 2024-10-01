@@ -111,7 +111,6 @@ GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力
  3    1285MB  8585MB  7300MB                                          lvm
 
 (parted)
-
 ```
 
 # LVMのコマンド
