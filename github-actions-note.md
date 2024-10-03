@@ -7,6 +7,7 @@
 - [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
 - [GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?](#github-actions-の-workflow-runs-に過去の実行結果が残っていますがこれは消すべきですか-一定期間で消えますか)
 - [特定のワークフローファイルだけ実行できるようにする方法はある?](#特定のワークフローファイルだけ実行できるようにする方法はある)
+- [GitHub Actions のキャッシュサイズを知る方法](#github-actions-のキャッシュサイズを知る方法)
 
 ## On: が難しい
 
@@ -25,7 +26,7 @@
 on:
   push:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+**"
+      - 'v[0-9]+.[0-9]+.[0-9]+**'
 ```
 
 ちょっと雑かも(pre-release や build のところ)。実用上問題ないと思う。
@@ -121,3 +122,19 @@ ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
 はあるんだけど、最終的には「全部実行するか or 全部実行しないか」しかない。
 
 ワークフローファイル内部で if:書いて制御するしか手がない。
+
+## GitHub Actions のキャッシュサイズを知る方法
+
+GitHub Actions のキャッシュのサイズを知る方法はいくつかあります。
+
+GitHub のウェブインターフェースを使用する方法: [キャッシュの管理](https://docs.github.com/ja/actions/writing-workflows/choosing-what-your-workflow-does/caching-dependencies-to-speed-up-workflows#managing-caches)
+
+API を使用する方法
+
+(GPT-4 に書いてもらったメモ。後で確認)
+
+`https://api.github.com/repos/{owner}/{repo}/actions/runs/{run_id}/artifacts` エンドポイントに GET リクエストを送信します。
+
+応答には、実行のアーティファクトに関する情報が含まれます。キャッシュのサイズは、各アーティファクトの size_in_bytes フィールドで確認できます。
+
+これらの方法を使用して、GitHub Actions のキャッシュのサイズを確認できます。キャッシュのサイズを把握することで、プロジェクトのパフォーマンスやリソースの使用状況を把握するのに役立ちます。
