@@ -41,3 +41,31 @@ Python とは違う。
 // オブジェクトからMapを作成
 const map = new Map(Object.entries(obj));
 ```
+
+## Date()の恐怖
+
+```console
+> new Date("2021-01-01")
+2021-01-01T00:00:00.000Z
+
+> new Date(2021,1-1,1)
+2020-12-31T15:00:00.000Z
+```
+
+結果をそろえたいなら、下を
+
+```javascript
+new Date(Date.UTC(2021, 1 - 1, 1));
+```
+
+にして UTC にそろえる。
+
+## Date()の恐怖 2
+
+```console
+> new Date("2021-1-01")
+2020-12-31T15:00:00.000Z
+
+> new Date("2021-01-01")
+2021-01-01T00:00:00.000Z
+```
