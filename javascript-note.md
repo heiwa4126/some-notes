@@ -45,6 +45,8 @@ const map = new Map(Object.entries(obj));
 ## Date()の恐怖
 
 ```console
+$ node
+
 > new Date("2021-01-01")
 2021-01-01T00:00:00.000Z
 
@@ -63,6 +65,8 @@ new Date(Date.UTC(2021, 1 - 1, 1));
 ## Date()の恐怖 2
 
 ```console
+$ node
+
 > new Date("2021-1-01")
 2020-12-31T15:00:00.000Z
 
@@ -70,5 +74,15 @@ new Date(Date.UTC(2021, 1 - 1, 1));
 2021-01-01T00:00:00.000Z
 ```
 
-V8 系でない処理系では上のは例外で死ぬこともあるらしい
-(けどそっちの方がありがたいよね)。
+V8 系でない処理系では、上のは例外で死ぬこともあるらしい。
+けどそっちの方がありがたいよね。
+
+- [Date() コンストラクター - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/Date)
+- [datestring](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#datestring)
+
+> Date コンストラクター(および Date.parse と同等)で日付文字列を解釈する際には、常に入力が ISO 8601 形式 (YYYY-MM-DDTHH:mm:ss.sssZ) であることを確認してください。
+
+- [Date.parse() - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/parse)
+
+> 対応するよう明示的に指定されているのは ISO 8601 形式 (YYYY-MM-DDTHH:mm:ss.sssZ) のみです。
+> 他の形式は実装で定義されており、すべてのブラウザーで動作するとは限りません。
