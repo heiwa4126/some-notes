@@ -1,4 +1,4 @@
-# リッチなエディタ slate のメモ
+# リッチテキストエディタフレームワーク Slate のメモ
 
 - [Introduction | Slate](https://docs.slatejs.org/)
 - [ianstormtaylor/slate: A completely customizable framework for building rich text editors. (Currently in beta.)](https://github.com/ianstormtaylor/slate)
