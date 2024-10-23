@@ -2,8 +2,9 @@
 
 [zod - npm](https://www.npmjs.com/package/zod)
 
-- JavaScript オブジェクトのスキームの確認(バリデーション)と変換
-- JSON とは直接には関係ないけど、JSON で使える型が少ないので、どーしても Zod みたいのが必要になる。
+- JavaScript のオブジェクトのスキームの確認(バリデーション)と変換
+- JSON とは直接には関係ない。けど、JSON で使える型が少ないので、どーしても Zod みたいのが必要になる。
+- 「JSON の書式が違う」みたいのは別のパッケージを使った方がいい。
 
 ## z.coerce と z.transform の使い分け
 
