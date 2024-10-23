@@ -6,6 +6,7 @@
 - [build 時に comment や debug を取り除く](#build-時に-comment-や-debug-を取り除く)
   - [minifier に esbuild を使う場合](#minifier-に-esbuild-を使う場合)
   - [minifier に terser を使う場合](#minifier-に-terser-を使う場合)
+- [JSON5 や JSONC を直接インポート](#json5-や-jsonc-を直接インポート)
 
 ## Deno で Vite
 
@@ -124,3 +125,9 @@ Rollup でやらない場合は
 - [build\.terserOptions](https://ja.vitejs.dev/config/build-options.html#build-terseroptions)
 
 で出来ると思う(試してない)。
+
+## JSON5 や JSONC を直接インポート
+
+Vite のプラグインで出来る。
+
+[vite-plugin-json5 - npm](https://www.npmjs.com/package/vite-plugin-json5)
