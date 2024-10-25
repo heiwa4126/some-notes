@@ -21,7 +21,7 @@
 - [VScode のターミナルでどんなコマンドを叩いても "Argument list too long" と言われるとき](#vscode-のターミナルでどんなコマンドを叩いても-argument-list-too-long-と言われるとき)
 - [拡張機能のフィルタ](#拡張機能のフィルタ)
 - [VSCode のターミナルで Ctrl+K を使う](#vscode-のターミナルで-ctrlk-を使う)
-- [折りたたみ系](#折りたたみ系)
+- [折りたたみ(Folding)系](#折りたたみfolding系)
 
 ## Remote Development
 
@@ -323,7 +323,7 @@ WSL2 が mirror モードだった(IPv6 を使いたかった)のを、元の NA
 }
 ```
 
-## 折りたたみ系
+## 折りたたみ(Folding)系
 
 - `Ctrl + K Ctrl + 0` - ブロックを全部折りたたむ
 - `Ctrl + K Ctrl + [数字]` - 指定したレベルのブロックを折りたたむ
