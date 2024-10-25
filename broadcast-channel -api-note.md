@@ -100,6 +100,8 @@ WebSocket を使うことで、サーバーを介してリアルタイムで全�
 - [react-use - npm](https://www.npmjs.com/package/react-use) - これに useBroadcastChannel() がある、という噂だったが、実際には無かった。でもこれはこれで面白いパッケージなのでメモ。
 - 自分でカスタムフックを書く
 
+**この下のコードはちゃんと動きません。参考程度にしてね。**
+
 ### use-broadcast-channel
 
 インストール:
