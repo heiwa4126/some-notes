@@ -1,37 +1,55 @@
-# node.js のメモ
+# Node.js のメモ
 
 検索すれば出てくるけど、毎回探すのは面倒なのでまとめておく。
 
-- [node.js のメモ](#nodejs-のメモ)
-  - [node.js のインストール](#nodejs-のインストール)
-  - [環境設定](#環境設定)
-  - [環境設定: npm のオートコンプリート(completion)](#環境設定-npm-のオートコンプリートcompletion)
-  - [npm の`-g`](#npm-の-g)
-  - [npm の設定一覧](#npm-の設定一覧)
-  - [npm の設定を編集](#npm-の設定を編集)
-  - [npm にプロキシ設定](#npm-にプロキシ設定)
-  - [パッケージの更新](#パッケージの更新)
-  - [npm -g でインストールされる先](#npm--g-でインストールされる先)
-  - [node がモジュールを探しに行く先を表示](#node-がモジュールを探しに行く先を表示)
-  - [--save と--save-dev](#--save-と--save-dev)
-  - [プロジェクトにインストールしたモジュールの bin を使う](#プロジェクトにインストールしたモジュールの-bin-を使う)
-  - [npm link](#npm-link)
-- [cafile](#cafile)
-- [いちばん簡単な node.js プロジェクトの始め方](#いちばん簡単な-nodejs-プロジェクトの始め方)
-  - [続き: git](#続き-git)
-  - [続き: node-dev](#続き-node-dev)
-    - [そのほか参考リンク](#そのほか参考リンク)
-  - [npm install dev 抜き](#npm-install-dev-抜き)
-  - [npm -g が --location=global になってめんどくさい](#npm--g-が---locationglobal-になってめんどくさい)
-  - [npm の補完](#npm-の補完)
-  - [import/require の "node:"](#importrequire-の-node)
-  - ["node ."](#node-)
-  - [pnpm や yarn には npx に相当するものがありますか?](#pnpm-や-yarn-には-npx-に相当するものがありますか)
-  - [Web Crypto API](#web-crypto-api)
-  - [local storage で暗号化](#local-storage-で暗号化)
-  - [Node.js の JSON](#nodejs-の-json)
+- [Node.js のインストール](#nodejs-のインストール)
+  - [Nodesource によるパッケージ](#nodesource-によるパッケージ)
+  - [LaunchPad](#launchpad)
+  - [以下古い情報](#以下古い情報)
+- [環境設定](#環境設定)
+- [環境設定: npm のオートコンプリート(completion)](#環境設定-npm-のオートコンプリートcompletion)
+- [npm の`-g`](#npm-の-g)
+- [npm の設定一覧](#npm-の設定一覧)
+- [npm の設定を編集](#npm-の設定を編集)
+- [npm にプロキシ設定](#npm-にプロキシ設定)
+- [パッケージの更新](#パッケージの更新)
+- [npm -g でインストールされる先](#npm--g-でインストールされる先)
+- [node がモジュールを探しに行く先を表示](#node-がモジュールを探しに行く先を表示)
+- [--save と--save-dev](#--save-と--save-dev)
+- [プロジェクトにインストールしたモジュールの bin を使う](#プロジェクトにインストールしたモジュールの-bin-を使う)
+- [npm link](#npm-link)
+- [続き: git](#続き-git)
+- [続き: node-dev](#続き-node-dev)
+  - [そのほか参考リンク](#そのほか参考リンク)
+- [npm install dev 抜き](#npm-install-dev-抜き)
+- [npm -g が --location=global になってめんどくさい](#npm--g-が---locationglobal-になってめんどくさい)
+- [npm の補完](#npm-の補完)
+- [import/require の "node:"](#importrequire-の-node)
+- ["node ."](#node-)
+- [pnpm や yarn には npx に相当するものがありますか?](#pnpm-や-yarn-には-npx-に相当するものがありますか)
+- [Web Crypto API](#web-crypto-api)
+- [local storage で暗号化](#local-storage-で暗号化)
+- [Node.js の JSON](#nodejs-の-json)
 
-## node.js のインストール
+## Node.js のインストール
+
+### Nodesource によるパッケージ
+
+[nodesource/distributions: NodeSource Node.js Binary Distributions](https://github.com/nodesource/distributions?tab=readme-ov-file#installation-instructions-deb)で、Debian/Ubuntu に Node.js v22 を入れる例。
+
+```sh
+curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
+sudo -E bash nodesource_setup.sh
+apt-get install nodejs -y
+```
+
+### LaunchPad
+
+[nodejs package : Ubuntu](https://launchpad.net/ubuntu/+source/nodejs)
+
+いまのところ v20 までしかない。
+
+### 以下古い情報
 
 [Installing Node.js via package manager | Node.js](https://nodejs.org/en/download/package-manager/)
 
@@ -319,10 +337,10 @@ npm init -f
 
 ```javascript
 #!/usr/bin/env node
-const express = require("express");
+const express = require('express');
 const app = express();
-app.get("/", (req, res) => res.send("Hello World!"));
-app.listen(3000, () => console.log("Example app listening on port 3000!"));
+app.get('/', (req, res) => res.send('Hello World!'));
+app.listen(3000, () => console.log('Example app listening on port 3000!'));
 ```
 
 ([Express の「Hello World」の例](https://expressjs.com/ja/starter/hello-world.html)から引用)
@@ -452,10 +470,10 @@ sudo mv /tmp/npm /usr/share/bash-completion/completions/
 こういうやつ
 
 ```javascript
-import assert from "node:assert";
-import test from "node:test";
+import assert from 'node:assert';
+import test from 'node:test';
 
-test("synchronous passing test", (t) => {
+test('synchronous passing test', (t) => {
   // This test passes because it does not throw an exception.
   assert.strictEqual(1, 1);
 });
