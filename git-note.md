@@ -2,6 +2,7 @@
 
 - [特定のファイルを最後の commit 時に戻す](#特定のファイルを最後の-commit-時に戻す)
 - [全部のファイルを最後の commit 時に戻す](#全部のファイルを最後の-commit-時に戻す)
+- [リモートレポジトリの dev を fetch して dev ブランチを作る](#リモートレポジトリのdevをfetchしてdevブランチを作る)
 - [git の設定をリスト](#git-の設定をリスト)
 - [gitignore のデフォルト](#gitignore-のデフォルト)
 - [symlink の扱い](#symlink-の扱い)
@@ -45,6 +46,14 @@ git checkout HEAD^ -- <file_path>
 
 ```sh
 git reset --hard
+```
+
+## リモートレポジトリの dev を fetch して dev ブランチを作る
+
+```sh
+git fetch origin dev
+git checkout -b dev origin/dev
+git branch # 確認
 ```
 
 ## git の設定をリスト
