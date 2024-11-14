@@ -2,7 +2,13 @@
 
 圧倒的に流行っているのは ajv らしい。
 
-[ajv vs class-validator vs io-ts vs joi vs superstruct vs ts-interface-checker vs typebox vs typescript-json-schema vs typia vs validator vs yup vs zod | npm trends](https://npmtrends.com/ajv-vs-class-validator-vs-io-ts-vs-joi-vs-superstruct-vs-ts-interface-checker-vs-typebox-vs-typescript-json-schema-vs-typia-vs-validator-vs-yup-vs-zod)
+- [ajv vs io-ts vs joi vs typebox vs validator vs zod | npm trends](https://npmtrends.com/ajv-vs-io-ts-vs-joi-vs-typebox-vs-validator-vs-zod)
+
+どうも express-validator, Fastify, webpack で使われてるので(未確認)、知らずに使われているらしい。
+
+## 比較や一覧
+
+[moltar/typescript-runtime-type-benchmarks: 📊 Benchmark Comparison of Packages with Runtime Validation and TypeScript Support](https://github.com/moltar/typescript-runtime-type-benchmarks?tab=readme-ov-file#readme)
 
 あと ajv は早い。
 [gcanti/io-ts-benchmarks](https://github.com/gcanti/io-ts-benchmarks?tab=readme-ov-file#results)
@@ -58,15 +64,36 @@ JSON Schema と JTD の学習コストが高い。
 
 [honojs/middleware: monorepo for Hono third-party middleware/helpers/wrappers](https://github.com/honojs/middleware)の packages/ の下にある \*-validator
 
+- [middleware/packages/arktype-validator at main · honojs/middleware · GitHub](https://github.com/honojs/middleware/tree/main/packages/arktype-validator)
+- [middleware/packages/class-validator at main · honojs/middleware · GitHub](https://github.com/honojs/middleware/tree/main/packages/class-validator)
+- [middleware/packages/conform-validator at main · honojs/middleware · GitHub](https://github.com/honojs/middleware/tree/main/packages/conform-validator)
+- [middleware/packages/effect-validator at main · honojs/middleware · GitHub](https://github.com/honojs/middleware/tree/main/packages/effect-validator)
+- [middleware/packages/typebox-validator at main · honojs/middleware · GitHub](https://github.com/honojs/middleware/tree/main/packages/typebox-validator)
+- [middleware/packages/typia-validator at main · honojs/middleware · GitHub](https://github.com/honojs/middleware/tree/main/packages/typia-validator)
+- [middleware/packages/valibot-validator at main · honojs/middleware · GitHub](https://github.com/honojs/middleware/tree/main/packages/valibot-validator)
+- [middleware/packages/zod-validator at main · honojs/middleware · GitHub](https://github.com/honojs/middleware/tree/main/packages/zod-validator)
+
 よく使われてるのは zod らしい。
 [@hono/zod-validator - npm](https://www.npmjs.com/package/@hono/zod-validator)
 
-## express.js のバリデータ
+## Express.js のバリデータ
 
-express-validator か joi を使うことが多いらしい。
+express-validator を使うことが多いらしい。
+
+## Fastify のバリデータ
+
+デフォルトは Ajv らしい。
+[Validation-and-Serialization | Fastify](https://fastify.dev/docs/latest/Reference/Validation-and-Serialization/)
+
+JSON Schema を直接書かずに、Typebox などを使うとかっこいいらしい。
+[Type-Providers | Fastify](https://fastify.dev/docs/latest/Reference/Type-Providers/)
 
 ## JSON Schema のメモ
 
 ### 野良`$id`はどう書くべき?
 
 よくわからん。TODO
+
+## JTD(JSON Type Definition) のメモ
+
+"format"はない。
