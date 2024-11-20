@@ -1,23 +1,24 @@
 # TYpescript のメモ
 
-- [TYpescript のメモ](#typescript-のメモ)
-  - [Partial\<T\>](#partialt)
-  - [interface と type](#interface-と-type)
-  - [hash にタイプ](#hash-にタイプ)
-  - [Jupyter で Node.js で TypeScript](#jupyter-で-nodejs-で-typescript)
-  - [tsconfig.json の outDir でポピュラーなものは?](#tsconfigjson-の-outdir-でポピュラーなものは)
-  - [`npm i typescript -D` しないで Typescript の開発はできますか? 例えば deno や bun を使えば出来る?](#npm-i-typescript--d-しないで-typescript-の開発はできますか-例えば-deno-や-bun-を使えば出来る)
-  - [tsc でトランスパイルするときに、インデントをタブにできますか?](#tsc-でトランスパイルするときにインデントをタブにできますか)
+- [Partial\<T\>](#partialt)
+- [interface と type](#interface-と-type)
+- [hash にタイプ](#hash-にタイプ)
+- [Jupyter で Node.js で TypeScript](#jupyter-で-nodejs-で-typescript)
+- [tsconfig.json の outDir でポピュラーなものは?](#tsconfigjson-の-outdir-でポピュラーなものは)
+- [`npm i typescript -D` しないで Typescript の開発はできますか? 例えば deno や bun を使えば出来る?](#npm-i-typescript--d-しないで-typescript-の開発はできますか-例えば-deno-や-bun-を使えば出来る)
+- [tsc でトランスパイルするときに、インデントをタブにできますか?](#tsc-でトランスパイルするときにインデントをタブにできますか)
+- [Promise.reject()に対応する async function の戻り値は?](#promiserejectに対応する-async-function-の戻り値は)
+- [class で private](#class-で-private)
 
 ## Partial&lt;T&gt;
 
 - [Partial&lt;T&gt; | TypeScript 入門『サバイバル TypeScript』](https://typescriptbook.jp/reference/type-reuse/utility-types/partial)
-- https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-1.html#mapped-types
+- <https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-1.html#mapped-types>
 
 React の TypeScript で setState hook の一部を書き換えたいとき:
 
 - [Troubleshooting Handbook: Types | React TypeScript Cheatsheets](https://react-typescript-cheatsheet.netlify.app/docs/basic/troubleshooting/types/#using-partial-types)
-- https://reactjs.org/docs/hooks-reference.html#functional-updates の note
+- <https://reactjs.org/docs/hooks-reference.html#functional-updates> の note
 
 ## interface と type
 
@@ -27,7 +28,10 @@ React の TypeScript で setState hook の一部を書き換えたいとき:
 
 ## hash にタイプ
 
-[typescript で連想配列の配列を宣言(型指定)したい](https://trueman-developer.blogspot.com/2017/04/typescript.html)
+hash というか object。
+
+- [typescript で連想配列の配列を宣言(型指定)したい](https://trueman-developer.blogspot.com/2017/04/typescript.html)
+- [TypeScript: Documentation - Mapped Types](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html)
 
 ```typescript
 let hash: { [key: string]: string } = {};
@@ -41,6 +45,8 @@ const hash2: { [key: string]: string } = {
   orange: "オレンジ",
 };
 ```
+
+でも Map()のほうが効率がいいと思う。
 
 ## Jupyter で Node.js で TypeScript
 
@@ -70,3 +76,16 @@ TypeScript コンパイラ tsc は、生成される JavaScript ファイルの�
 tsc はデフォルトでスペースを使用してインデントします。
 
 後処理で Prettier 使うとかしかない。
+
+## Promise.reject()に対応する async function の戻り値は?
+
+`throw new Error('エラーが発生しました');`
+
+自動的に reject された Promise としてラップされる。
+
+## class で private
+
+- `#height = 0;` - JavaScriptネイティブのプライベートフィールドプロパティ [クラス - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Classes)の「プライベートプロパティ」参照
+- `private height = 0;` - TypeScript のプライベート修飾子
+
+TypeScript ではおおむね後者で用が足りる。

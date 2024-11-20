@@ -8,9 +8,11 @@ Biome と併用する
 
 インストールは `npm install -g dprint` が楽だと思う。[Install - dprint - Code Formatter](https://dprint.dev/install/)
 
+そのあと `cd ~ ; dprint init` でプラグイン選んで、以下のconfigのプラグイン以外のところをコピペする感じ。
+
 早いけど config がちょっとめんどう。
 
-いまのところの `~/dparint.conf`:
+いまのところの `~/dprint.conf`:
 
 ```json
 {
@@ -65,3 +67,9 @@ Biome と併用する
 
 - tab インデントが好きなので Prettier とはかなり違う設定に
 - Biome と併用なので、Biome がサポートしている
+
+## プラグインの更新
+
+`dprint config update`
+
+[Plugins - dprint](https://plugins.dprint.dev/)
