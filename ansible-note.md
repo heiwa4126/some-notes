@@ -1,6 +1,6 @@
-ansibleメモランダム
+# Ansible メモランダム
 
-- [ansibleの学習2021](#ansibleの学習2021)
+- [ansible の学習 2021](#ansible-の学習-2021)
 - [感想](#感想)
 - [インストール](#インストール)
   - [自分の好きな手順](#自分の好きな手順)
@@ -8,148 +8,148 @@ ansibleメモランダム
   - [Ubuntu/Debian](#ubuntudebian)
   - [pip](#pip)
   - [git](#git)
-- [loopについて](#loopについて)
-  - [blockでloopが使えない](#blockでloopが使えない)
-  - [handlersでblockが使えない](#handlersでblockが使えない)
-  - [blockは例外処理ができる](#blockは例外処理ができる)
-  - [tempfileモジュールで作ったファイル/ディレクトリは、自動的に消えない](#tempfileモジュールで作ったファイルディレクトリは自動的に消えない)
-  - [Debian系の/var/run/reboot-required](#debian系のvarrunreboot-required)
-  - [scriptモジュール](#scriptモジュール)
-  - [loopをitemのままで使うとincludeでネストしたときに警告が](#loopをitemのままで使うとincludeでネストしたときに警告が)
+- [loop について](#loop-について)
+  - [block で loop が使えない](#block-で-loop-が使えない)
+  - [handlers で block が使えない](#handlers-で-block-が使えない)
+  - [block は例外処理ができる](#block-は例外処理ができる)
+  - [tempfile モジュールで作ったファイル/ディレクトリは、自動的に消えない](#tempfile-モジュールで作ったファイルディレクトリは自動的に消えない)
+  - [Debian 系の/var/run/reboot-required](#debian-系のvarrunreboot-required)
+  - [script モジュール](#script-モジュール)
+  - [loop を item のままで使うと include でネストしたときに警告が](#loop-を-item-のままで使うと-include-でネストしたときに警告が)
   - [lookup](#lookup)
-- [ansible_os_familyのリスト](#ansible_os_familyのリスト)
-- [includeの変遷](#includeの変遷)
+- [ansible_os_family のリスト](#ansible_os_family-のリスト)
+- [include の変遷](#include-の変遷)
 - [モジュール](#モジュール)
-  - [Windowsのモジュール](#windowsのモジュール)
-  - [setupモジュール](#setupモジュール)
-  - [win_sayモジュール](#win_sayモジュール)
-  - [win_hostnameモジュール](#win_hostnameモジュール)
+  - [Windows のモジュール](#windows-のモジュール)
+  - [setup モジュール](#setup-モジュール)
+  - [win_say モジュール](#win_say-モジュール)
+  - [win_hostname モジュール](#win_hostname-モジュール)
 - [yaml2json](#yaml2json)
 - [changed_when, failed_when](#changed_when-failed_when)
 - [TRANSFORM_INVALID_GROUP_CHARS](#transform_invalid_group_chars)
 - [Interpreter Discovery](#interpreter-discovery)
-- [userモジュールでパスワードの扱い](#userモジュールでパスワードの扱い)
-- [WindowsをAnsibleで管理できるようにする](#windowsをansibleで管理できるようにする)
-  - [ansible 2.6.1のwin_rebootが壊れている](#ansible-261のwin_rebootが壊れている)
+- [user モジュールでパスワードの扱い](#user-モジュールでパスワードの扱い)
+- [Windows を Ansible で管理できるようにする](#windows-を-ansible-で管理できるようにする)
+  - [ansible 2.6.1 の win_reboot が壊れている](#ansible-261-の-win_reboot-が壊れている)
 - ["when"が使えるのは?](#whenが使えるのは)
-- [AmazonLinux2とAnsible](#amazonlinux2とansible)
-- [rolesの練習: epel](#rolesの練習-epel)
-- [ansible-galaxyメモ](#ansible-galaxyメモ)
-  - [デフォルトのroleの場所](#デフォルトのroleの場所)
-  - [非rootで書き込める場所を追加](#非rootで書き込める場所を追加)
-  - [role_pathのサブディレクトリにroleは置ける?](#role_pathのサブディレクトリにroleは置ける)
+- [AmazonLinux2 と Ansible](#amazonlinux2-と-ansible)
+- [roles の練習: epel](#roles-の練習-epel)
+- [ansible-galaxy メモ](#ansible-galaxy-メモ)
+  - [デフォルトの role の場所](#デフォルトの-role-の場所)
+  - [非 root で書き込める場所を追加](#非-root-で書き込める場所を追加)
+  - [role_path のサブディレクトリに role は置ける?](#role_path-のサブディレクトリに-role-は置ける)
   - [ansible-galaxy コマンド](#ansible-galaxy-コマンド)
     - [リスト](#リスト)
     - [取得](#取得)
     - [更新](#更新)
-- [ansibleのデバッグ](#ansibleのデバッグ)
+- [ansible のデバッグ](#ansible-のデバッグ)
 - [参考になったプレイブック](#参考になったプレイブック)
   - [yum update -y](#yum-update--y)
 - [hosts](#hosts)
-  - [when条件でhostsっぽいことをする例](#when条件でhostsっぽいことをする例)
-- [jinja2の関数が使える](#jinja2の関数が使える)
+  - [when 条件で hosts っぽいことをする例](#when-条件で-hosts-っぽいことをする例)
+- [jinja2 の関数が使える](#jinja2-の関数が使える)
 - [ansible-vault](#ansible-vault)
 - [ansible.conf](#ansibleconf)
 - [改行問題](#改行問題)
-  - [win_templateとtemplateモジュールの違いは?](#win_templateとtemplateモジュールの違いは)
+  - [win_template と template モジュールの違いは?](#win_template-と-template-モジュールの違いは)
   - [参考](#参考)
-  - [改行tips](#改行tips)
-- [Ansible 2.4ではloopが無い](#ansible-24ではloopが無い)
+  - [改行 tips](#改行-tips)
+- [Ansible 2.4 では loop が無い](#ansible-24-では-loop-が無い)
 - [参照](#参照)
-- [sshまわり](#sshまわり)
-- [公開鍵でなくパスワードでssh接続する](#公開鍵でなくパスワードでssh接続する)
-- [Windows用のvars例](#windows用のvars例)
-- [ansible.cfgの場所](#ansiblecfgの場所)
-- [Windowsで化ける出力を得る](#windowsで化ける出力を得る)
+- [ssh まわり](#ssh-まわり)
+- [公開鍵でなくパスワードで ssh 接続する](#公開鍵でなくパスワードで-ssh-接続する)
+- [Windows 用の vars 例](#windows-用の-vars-例)
+- [ansible.cfg の場所](#ansiblecfg-の場所)
+- [Windows で化ける出力を得る](#windows-で化ける出力を得る)
 - [local_action](#local_action)
-- [fuserのverboseはなぜかstderrに出る](#fuserのverboseはなぜかstderrに出る)
-- [expectモジュール](#expectモジュール)
+- [fuser の verbose はなぜか stderr に出る](#fuser-の-verbose-はなぜか-stderr-に出る)
+- [expect モジュール](#expect-モジュール)
   - [複数ホストの指定](#複数ホストの指定)
 - [変数をかける場所と優先度](#変数をかける場所と優先度)
-- [dictにkeyがあるときないときの判別](#dictにkeyがあるときないときの判別)
-- [playbookを中断する](#playbookを中断する)
+- [dict に key があるときないときの判別](#dict-に-key-があるときないときの判別)
+- [playbook を中断する](#playbook-を中断する)
 - [ansible-lint](#ansible-lint)
   - [ansible-lint tips](#ansible-lint-tips)
 - [ansible.cfg](#ansiblecfg)
-- [notify handlerの実行順](#notify-handlerの実行順)
-- [Windowsドメインアカウントで接続する](#windowsドメインアカウントで接続する)
-- [windowsでbecome:true](#windowsでbecometrue)
-- [Galaxyコレクション](#galaxyコレクション)
-- [yumモジュールのstateのpresentとlatestの違い](#yumモジュールのstateのpresentとlatestの違い)
-- [quoteフィルタ](#quoteフィルタ)
-- [ansible-playbookの便利オプション](#ansible-playbookの便利オプション)
+- [notify handler の実行順](#notify-handler-の実行順)
+- [Windows ドメインアカウントで接続する](#windows-ドメインアカウントで接続する)
+- [windows で become:true](#windows-で-becometrue)
+- [Galaxy コレクション](#galaxy-コレクション)
+- [yum モジュールの state の present と latest の違い](#yum-モジュールの-state-の-present-と-latest-の違い)
+- [quote フィルタ](#quote-フィルタ)
+- [ansible-playbook の便利オプション](#ansible-playbook-の便利オプション)
 - [デバッガ](#デバッガ)
-- [varsの優先順序](#varsの優先順序)
+- [vars の優先順序](#vars-の優先順序)
 - [トラブルシューティングいろいろ](#トラブルシューティングいろいろ)
   - [requests](#requests)
 - [インストール済みのモジュールの一覧を表示する](#インストール済みのモジュールの一覧を表示する)
-- [ansible.windows.win_package用のproduct_idを探す。](#ansiblewindowswin_package用のproduct_idを探す)
-- [filter pluginsのサンプルは](#filter-pluginsのサンプルは)
-- [collectionの開発](#collectionの開発)
+- [ansible.windows.win_package 用の product_id を探す。](#ansiblewindowswin_package-用の-product_id-を探す)
+- [filter plugins のサンプルは](#filter-plugins-のサンプルは)
+- [collection の開発](#collection-の開発)
 - [roles_path=,collections_path= と \*\_plugins= のちがい](#roles_pathcollections_path-と-_plugins-のちがい)
-- [rolesやcollectionsのfiles/やtemplate/はオーバライドできるか?](#rolesやcollectionsのfilesやtemplateはオーバライドできるか)
+- [roles や collections の files/や template/はオーバライドできるか?](#roles-や-collections-の-filesや-templateはオーバライドできるか)
 - [RHEL 8](#rhel-8)
   - [ほかメモ](#ほかメモ)
-- [RHEL8 ターゲットノードのPython](#rhel8-ターゲットノードのpython)
+- [RHEL8 ターゲットノードの Python](#rhel8-ターゲットノードの-python)
 - [とりあえずインベントリーのチェックだけしたいとき](#とりあえずインベントリーのチェックだけしたいとき)
-- [ansible-coreとansible](#ansible-coreとansible)
-- [コンテナベースのPlaybook実行環境 - Ansible Navigator](#コンテナベースのplaybook実行環境---ansible-navigator)
+- [ansible-core と ansible](#ansible-core-と-ansible)
+- [コンテナベースの Playbook 実行環境 - Ansible Navigator](#コンテナベースの-playbook-実行環境---ansible-navigator)
   - [Ansible Runner](#ansible-runner)
 - [Ansible Runner](#ansible-runner-1)
 - [ansible-lint 6](#ansible-lint-6)
 
-# ansibleの学習2021
+## ansible の学習 2021
 
 公式が日本語で読めるようになってた。時代はかわっていくんだねぇ。
 [はじめに — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/intro_getting_started.html)
 
-ansible.comのトップページも
+ansible.com のトップページも
 [Ansible is Simple IT Automation](https://www.ansible.com/)
 こんな感じに。
 
-# 感想
+## 感想
 
-- chefよりは簡単に使い始められる感じ。あとchefより軽い
-- でもpipとか(--userとか、~/.local/binとか)、python2,3の話とかは慣れてないと辛いかも。
-- あとgitも慣れてるといいかも。
+- chef よりは簡単に使い始められる感じ。あと chef より軽い
+- でも pip とか(--user とか、~/.local/bin とか)、python2,3 の話とかは慣れてないと辛いかも。
+- あと git も慣れてるといいかも。
 - 制御構造がわかりにくくて死ねる。
 - バージョンによって結構変わる。
-- YAMLのsyntax checkのあるエディタを使わないと即死(emacsだとyaml-mode & flymark-yaml)
-  - 実はPlaybookや変数ファイルはJSONやINIで書いてもいいらしい
+- YAML の syntax check のあるエディタを使わないと即死(emacs だと yaml-mode & flymark-yaml)
+  - 実は Playbook や変数ファイルは JSON や INI で書いてもいいらしい
 - デバッガーがあって嬉しい
 
 それ以前に
 
-- sshを公開鍵暗号方式でつなげるようにする。
-- ssh-agent(MacだったらKeychain)でつなげるようにする。
+- ssh を公開鍵暗号方式でつなげるようにする。
+- ssh-agent(Mac だったら Keychain)でつなげるようにする。
 
 という部分で敷居が高い人がいるようだけど...
 
-[【Ansible】Inventoryファイルを利用せずにansibleコマンドを実行する ｜ Developers.IO](https://dev.classmethod.jp/server-side/ansible/ansible-without-inventory/)
+[【Ansible】Inventory ファイルを利用せずに ansible コマンドを実行する | Developers.IO](https://dev.classmethod.jp/server-side/ansible/ansible-without-inventory/)
 
-こういうの↑もできるけど、アカウントが違ったりするともうアウトだし。
+こういうの ↑ もできるけど、アカウントが違ったりするともうアウトだし。
 
-# インストール
+## インストール
 
-コントロールマシンにansibleをインストールする様々な方法。
+コントロールマシンに ansible をインストールする様々な方法。
 
-個人的にはpipでuserに入れるのがいいと思う。
+個人的には pip で user に入れるのがいいと思う。
 
 公式:
 
 - [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - [Ansible のインストール — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/installation_guide/intro_installation.html)
 
-## 自分の好きな手順
+### 自分の好きな手順
 
-1. ディストリのパッケージでpython3入れる
-2. [pypa/get-pip](https://github.com/pypa/get-pip) を使って、ユーザーローカルにpip3を入れる(`curl -kL https://bootstrap.pypa.io/get-pip.py -O; python3 get-pip.py -U --user`)
-3. ~/.local/binにPATHを通す
+1. ディストリのパッケージで python3 入れる
+2. [pypa/get-pip](https://github.com/pypa/get-pip) を使って、ユーザーローカルに pip3 を入れる(`curl -kL https://bootstrap.pypa.io/get-pip.py -O; python3 get-pip.py -U --user`)
+3. ~/.local/bin に PATH を通す
 4. `python3 -m pip install --user -U ansible "ansible-lint[community,yamllint]" pywinrm pexpect` する。
 
-(2021-05) ansible-core==2.12がpython3.8未満をサポートしなくなるので
+(2021-05) ansible-core==2.12 が python3.8 未満をサポートしなくなるので
 
-pthon 3.6の場合
+pthon 3.6 の場合
 
 ```sh
 PIP3="python3 -m pip"
@@ -157,7 +157,7 @@ $PIP3 install --user -U pip setuptools wheel
 $PIP3 install --user -U 'ansible-core==2.11.*' ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
 ```
 
-pthon 3.8以上の場合
+pthon 3.8 以上の場合
 
 ```sh
 PIP3="python3 -m pip"
@@ -166,9 +166,9 @@ $PIP3 install --user -U ansible-core ansible 'ansible-lint[community,yamllint]' 
 ```
 
 (2021-05-24)
-ansible-core>=2.12ではPython 3.8以上必須らしいので
-Python 3.6から上げにくいホストでは(RHEL7など)
-いろいろあるけどこんなかんじでおおむねOK
+ansible-core>=2.12 では Python 3.8 以上必須らしいので
+Python 3.6 から上げにくいホストでは(RHEL7 など)
+いろいろあるけどこんなかんじでおおむね OK
 
 ```sh
 export PIP3="python3 -m pip"
@@ -185,33 +185,33 @@ $PIP3 install --user -U 'ansible-core==2.11.*' ansible 'ansible-lint[community,y
 > Jan 26 2021, 15:33:00) [GCC 8.4.0]. This feature will be removed from ansible-core in version 2.12. Deprecation warnings can be disabled by
 > setting deprecation_warnings=False in ansible.cfg.
 
-って言われるので、上にある通り`deprecation_warnings=False`って書くか(他のdeprecation警告も消えそうなのでおすすめしない)、
+って言われるので、上にある通り`deprecation_warnings=False`って書くか(他の deprecation 警告も消えそうなのでおすすめしない)、
 `2.10.*`にするか。
 
-Ubuntu 18.04LTSだと公式のpython3.8+venvでいけた。
+Ubuntu 18.04LTS だと公式の python3.8+venv でいけた。
 
 [Ansible\-core 2\.12 — Ansible Core Documentation](https://docs.ansible.com/ansible-core/devel/roadmap/ROADMAP_2_12.html)
 
 - 2021-10-25 Release
 
-これまで↑にいろいろ準備する。
+これまで ↑ にいろいろ準備する。
 
-## RHEL7
+### RHEL7
 
-ansibleパッケージは別レポジトリなので
+ansible パッケージは別レポジトリなので
 
 ```
 subscription-manager repos --list | grep -i ansible
 ```
 
-して探す。2018年末現在では
+して探す。2018 年末現在では
 
 ```
 subscription-manager repos --enable=rhel-7-server-ansible-2-rpms
 yum install ansible
 ```
 
-ansible-2.7.5-1が入る。
+ansible-2.7.5-1 が入る。
 
 - rhel-7-server-ansible-2-rpms
 - rhel-7-server-ansible-2.7-rpms
@@ -219,22 +219,22 @@ ansible-2.7.5-1が入る。
 のようにマイナーバージョンつきのレポジトリがあるので
 用途に合わせて選ぶこと。
 
-あとsshpassはrhel-7-server-extras-rpms
+あと sshpass は rhel-7-server-extras-rpms
 
 参考:
 
-- [第33章 Ansible を使用した Red Hat Enterprise Linux System Roles - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/7.5_release_notes/technology_previews_red_hat_enterprise_linux_system_roles_powered_by_ansible)
+- [第 33 章 Ansible を使用した Red Hat Enterprise Linux System Roles - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/7.5_release_notes/technology_previews_red_hat_enterprise_linux_system_roles_powered_by_ansible)
 - [Red Hat Enterprise Linux (RHEL) System Roles](https://access.redhat.com/articles/3050101)
 
-## Ubuntu/Debian
+### Ubuntu/Debian
 
-Ubuntu/Debianで新し目のansibleをパッケージで入れる場合、
+Ubuntu/Debian で新し目の ansible をパッケージで入れる場合、
 この辺参考:
 
 - [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu)
 - [ansible : Ansible, Inc.](https://launchpad.net/~ansible/+archive/ubuntu/ansible)
 
-Ubuntuの場合
+Ubuntu の場合
 
 ```
 apt-get update
@@ -243,12 +243,12 @@ apt-add-repository --yes --update ppa:ansible/ansible
 apt-get install ansible
 ```
 
-↑proxy使っている場合はaptのproxy設定以外に`export=https://...`の類が必要。
+↑proxy 使っている場合は apt の proxy 設定以外に`export=https://...`の類が必要。
 
-## pip
+### pip
 
-pip3でインストールすれば、いきなりpython3で動くのがいい感じ。
-~/.local/binにパスを通して(RHEL7だと標準で、ubuntuだと存在すればパスが通る)
+pip3 でインストールすれば、いきなり python3 で動くのがいい感じ。
+~/.local/bin にパスを通して(RHEL7 だと標準で、ubuntu だと存在すればパスが通る)
 
 ```
 sudo apt install python3-pip
@@ -260,7 +260,7 @@ hash -r
 
 みたいな感じで.
 
-RHEL7, CentOS7では、
+RHEL7, CentOS7 では、
 
 ```
 wget https://bootstrap.pypa.io/get-pip.py
@@ -270,9 +270,9 @@ pip install ansible --user
 hash -r
 ```
 
-がいいと思う。たぶんDebian, Ubuntuでもpipはこっちのほうが。
+がいいと思う。たぶん Debian, Ubuntu でも pip はこっちのほうが。
 
-pipなので古いバージョンのansibleも取得できる
+pip なので古いバージョンの ansible も取得できる
 
 ```
 pip install ansible==2.6 --user
@@ -280,9 +280,9 @@ pip install ansible==2.6 --user
 
 のような感じで。
 
-## git
+### git
 
-ansibleをまるごとgit cloneしておくと捗る。Dymamic inventoryなどハードリンクすると楽。
+ansible をまるごと git clone しておくと捗る。Dymamic inventory などハードリンクすると楽。
 
 - [Ansible on GitHub](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#ansible-on-github)
 - [ansible/ansible - GitHub](https://github.com/ansible/ansible)
@@ -301,7 +301,7 @@ git pull
 
 して更新。
 
-最新環境を使うのは、clone先で
+最新環境を使うのは、clone 先で
 
 ```
 source ./hacking/env-setup
@@ -313,35 +313,35 @@ source ./hacking/env-setup
 
 - [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#running-from-source)
 
-git版はpythonのモジュールまで用意してくれないので
+git 版は python のモジュールまで用意してくれないので
 
 ```
 sudo pip install -r ./requirements.txt
 ```
 
-するか、パッケージ版のansibleをインストールすること。
+するか、パッケージ版の ansible をインストールすること。
 
-# loopについて
+## loop について
 
 - [Loops — Ansible Documentation (超参考になる)](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
-- [2.6からwith_xxxxなループはloopに併合されました](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html?highlight=with_items#migrating-from-with-x-to-loop)
+- [2.6 から with_xxxx なループは loop に併合されました](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html?highlight=with_items#migrating-from-with-x-to-loop)
 
 [これ](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)の、
-「with_xxxxはこう書き換えて」が超参考になる。
+「with_xxxx はこう書き換えて」が超参考になる。
 
-## blockでloopが使えない
+### block で loop が使えない
 
 世界的に怨嗟の声が。
 
 - [feature request: looping over blocks · Issue #13262 · ansible/ansible](https://github.com/ansible/ansible/issues/13262)
 
-実際なんで使えないのかわからん。whenは使えるのに。
+実際なんで使えないのかわからん。when は使えるのに。
 
-## handlersでblockが使えない
+### handlers で block が使えない
 
 なんで?!
 
-## blockは例外処理ができる
+### block は例外処理ができる
 
 [Blocks — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_blocks.html)
 
@@ -365,15 +365,15 @@ tasks:
          msg: "This always executes"
 ```
 
-すべてのエラーはrescueセクションで捕えられる。
+すべてのエラーは rescue セクションで捕えられる。
 
-自分はtempfileモジュールで作ったテンポラリディレクトリを削除するのに使っている。
+自分は tempfile モジュールで作ったテンポラリディレクトリを削除するのに使っている。
 
-## tempfileモジュールで作ったファイル/ディレクトリは、自動的に消えない
+### tempfile モジュールで作ったファイル/ディレクトリは、自動的に消えない
 
 なんで。
 
-## Debian系の/var/run/reboot-required
+### Debian 系の/var/run/reboot-required
 
 実際に出現するのを見たのでメモ
 
@@ -386,17 +386,17 @@ heiwa@ip-172-31-1-134:~$ head /var/run/reboot-required*
 linux-base
 ```
 
-## scriptモジュール
+### script モジュール
 
 [script - Runs a local script on a remote node after transferring it — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/script_module.html)
 
 便利。
 
-おそらく安全のためPATHが制限されていて、
+おそらく安全のため PATH が制限されていて、
 `/usr/local/bin:/usr/bin`
 ぐらいしか書かれていないので、自分で追加するかフルパスでコマンドを書く。
 
-## loopをitemのままで使うとincludeでネストしたときに警告が
+### loop を item のままで使うと include でネストしたときに警告が
 
 こんな警告
 
@@ -404,7 +404,7 @@ linux-base
 [WARNING]: The loop variable 'item' is already in use. You should set the `loop_var` value in the `loop_control` option for the task to something else to avoid variable collisions and unexpected behavior.
 ```
 
-loop_controlの使用例
+loop_control の使用例
 
 ```
 - loop: "{{initial_users}}"
@@ -412,13 +412,13 @@ loop_controlの使用例
   include_tasks: include/create_a_user.yml
 ```
 
-## lookup
+### lookup
 
 [Lookup Plugins — Ansible Documentation](https://docs.ansible.com/ansible/latest/plugins/lookup.html#query)
 
 面白そう。調べる。
 
-# ansible_os_familyのリスト
+## ansible_os_family のリスト
 
 [[When] Condition: `ansible_os_family` Lists | ansible Tutorial](http://www.riptutorial.com/ansible/example/12268/-when--condition----ansible-os-family--lists)
 
@@ -426,22 +426,22 @@ loop_controlの使用例
 
 [ansible/distribution.py at 1737b7be3ecaa6fea9372fe9ba7d8fe659a4e95f · ansible/ansible](https://github.com/ansible/ansible/blob/1737b7be3ecaa6fea9372fe9ba7d8fe659a4e95f/lib/ansible/module_utils/facts/system/distribution.py#L413)
 
-Windowsが無いようだが。
+Windows が無いようだが。
 
-# includeの変遷
+## include の変遷
 
 - [Ansible 2.4 で import_tasks/include_tasks に tags を付けるときの注意点 - 無印吉澤](https://muziyoshiz.hatenablog.com/entry/2018/01/15/231213)
 - [Creating Reusable Playbooks — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse.html)
 
-パスは絶対パスで書かない場合、playbookの場所相対になるみたい。
+パスは絶対パスで書かない場合、playbook の場所相対になるみたい。
 
-# モジュール
+## モジュール
 
 モジュールのドキュメントのありか
 
 - [Module Index — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html)
 
-↑カテゴリーインデックスで若干使いにくい。
+↑ カテゴリーインデックスで若干使いにくい。
 
 - [All modules — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/list_of_all_modules.html)
 
@@ -453,11 +453,11 @@ ansible-doc {{module_name}}
 
 も
 
-## Windowsのモジュール
+### Windows のモジュール
 
 - [Windows modules — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/list_of_windows_modules.html)
 
-## setupモジュール
+### setup モジュール
 
 ホストの情報を取ってくる
 
@@ -469,28 +469,28 @@ ansible-doc {{module_name}}
 ansible all -i hosts -m setup
 ```
 
-## win_sayモジュール
+### win_say モジュール
 
 [win_say - Text to speech module for Windows to speak messages and optionally play sounds — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/win_say_module.html)
 
-クライアントが喋るらしいw。Exampleが面白い。
+クライアントが喋るらしい w。Example が面白い。
 
-## win_hostnameモジュール
+### win_hostname モジュール
 
-2.6から
+2.6 から
 
 [win_hostname - Manages local Windows computer name. — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/win_hostname_module.html#win-hostname-module)
 
-名前しかダメ。プライマリDNSサフィックスはどこで設定するのか...
+名前しかダメ。プライマリ DNS サフィックスはどこで設定するのか...
 
-net_systemモジュールみたいのがほしい。
+net_system モジュールみたいのがほしい。
 
-# yaml2json
+## yaml2json
 
-(古い。yqを使うのが楽)
+(古い。yq を使うのが楽)
 
-混乱したらJSONに変換してみるとらくだと思う。
-pythonでワンライナーを書いてるひとがいたので(
+混乱したら JSON に変換してみるとらくだと思う。
+python でワンライナーを書いてるひとがいたので(
 [plist ファイルの代わりに YAML を使ってみた](https://qiita.com/kitsuyui/items/d254d3f0ba84c6a5d04d))
 それを参考に
 
@@ -500,23 +500,23 @@ alias y2j="python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sy
 
 標準入力を変換なので、ちょっとだけ使いにくい。少し改造する。
 
-ansible-playbookの`--syntax-check`オプションも。
-ただしPlaybookのチェックしかできない(includeとかはダメ)。
+ansible-playbook の`--syntax-check`オプションも。
+ただし Playbook のチェックしかできない(include とかはダメ)。
 
-# changed_when, failed_when
+## changed_when, failed_when
 
-commandモジュール類を使うときは必ず書くこと。
+command モジュール類を使うときは必ず書くこと。
 
 デフォルト動作は
 
-- 必ずchanged.
-- return codeが0以外はfailed.
+- 必ず changed.
+- return code が 0 以外は failed.
 
 なので。
 
-# TRANSFORM_INVALID_GROUP_CHARS
+## TRANSFORM_INVALID_GROUP_CHARS
 
-2.8から
+2.8 から
 インベントリでグループに'-'があると警告が出るようになった。
 
 ```
@@ -537,11 +537,11 @@ host3
 
 に直す。
 
-Pythonはだいたいこれ。roleでもtaskでも変数でもなんでも`-`は使わないほうがいい。
+Python はだいたいこれ。role でも task でも変数でもなんでも`-`は使わないほうがいい。
 
-# Interpreter Discovery
+## Interpreter Discovery
 
-2.8からpython3,2で警告が出るようになった。
+2.8 から python3,2 で警告が出るようになった。
 
 > [DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host XXX should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future Ansible release will default to using the discovered platform python for this host. See https://docs.ansible.com/ansible/2.8/reference_appendices/interpreter_discovery.html for more information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
 
@@ -560,9 +560,9 @@ interpreter_python=auto_silent
 
 を追加した。
 
-# userモジュールでパスワードの扱い
+## user モジュールでパスワードの扱い
 
-/etc/shadowに**そのまま**入るので、何らかのハッシュ化が必要。
+/etc/shadow に**そのまま**入るので、何らかのハッシュ化が必要。
 
 平文パスワードを渡すつもりなら `password_hash()`フィルタが便利。
 [Filters — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#hashing-filters)
@@ -585,7 +585,7 @@ interpreter_python=auto_silent
       Debian: [sudo]
 ```
 
-これだと、varファイルに平文記述になったりして、やや不安なので、事前にhash化する。
+これだと、var ファイルに平文記述になったりして、やや不安なので、事前に hash 化する。
 
 ```
 python -c 'import crypt; print crypt.crypt("SuperSecretSecretPassword","$6$anySalt")'
@@ -599,22 +599,22 @@ python -c 'import crypt; print crypt.crypt("SuperSecretSecretPassword","$6$anySa
 
 この方法でもハッシュ化されたパスワードがブルートフォースされるので扱いは注意。
 
-# WindowsをAnsibleで管理できるようにする
+## Windows を Ansible で管理できるようにする
 
-正しくWinRMを有効にするのが
+正しく WinRM を有効にするのが
 ずいぶん面倒だったものだが、
-最近はスクリプト1個でなんとかなるので凄い。
+最近はスクリプト 1 個でなんとかなるので凄い。
 
-これ→ https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1
+これ → https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1
 
-以下のようにpowershellから入手&実行
+以下のように powershell から入手&実行
 
 ```
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 -OutFile ConfigureRemotingForAnsible.ps1
 powershell -ExecutionPolicy RemoteSigned .\ConfigureRemotingForAnsible.ps1
 ```
 
-追加: CredSSPも有効にしておくといいかも
+追加: CredSSP も有効にしておくといいかも
 
 ```
 Enable-WSManCredSSP -Role Server -Force
@@ -622,19 +622,19 @@ Enable-WSManCredSSP -Role Server -Force
 
 参考:
 
-- [AnsibleでWindowsを操作する準備をする](https://qiita.com/yunano/items/f9d5652a296931a09a70)
+- [Ansible で Windows を操作する準備をする](https://qiita.com/yunano/items/f9d5652a296931a09a70)
 
-WinRMの設定を確認。
+WinRM の設定を確認。
 
 ```
 winrm get winrm/config
 ```
 
-↑で
+↑ で
 
-- BASIC認証が有効
-- HTTPSが有効
-- TrustedHostsにansibleのhostが入っていること
+- BASIC 認証が有効
+- HTTPS が有効
+- TrustedHosts に ansible の host が入っていること
 
 をチェック。以下例(抜粋):
 
@@ -656,7 +656,7 @@ Client
     TrustedHosts = xx.xxx.xx.xx <-ここ
 ```
 
-TrustedHostsは
+TrustedHosts は
 
 ```
 Set-Item WSMan:\localhost\Client\TrustedHosts -Value {{ホスト名やIP}}}
@@ -682,11 +682,11 @@ Clear-Item WSMan:\localhost\Client\Trustedhosts
 
 設定は上書きなので注意(追加じゃない).
 
-↑引用元:
+↑ 引用元:
 
-- [PowerShellでリモートからコマンドを実行する - Masato's IT Library](https://mstn.hateblo.jp/entry/2016/09/13/193124)
+- [PowerShell でリモートからコマンドを実行する - Masato's IT Library](https://mstn.hateblo.jp/entry/2016/09/13/193124)
 
-Ubuntu 18.04 LTS では python2 用の winrmパッケージがなかった(python3用はある)。`pip install pywinrm --user`で入れる。
+Ubuntu 18.04 LTS では python2 用の winrm パッケージがなかった(python3 用はある)。`pip install pywinrm --user`で入れる。
 
 こんなインベントリを書く。
 
@@ -702,7 +702,7 @@ ansible_connection=winrm
 ansible_winrm_server_cert_validation=ignore
 ```
 
-**win_ping**モジュールでテスト(pingモジュールはダメ)。
+**win_ping**モジュールでテスト(ping モジュールはダメ)。
 
 ```
 ansible windows -i hosts-win -m win_ping
@@ -710,21 +710,21 @@ ansible windows -i hosts-win -m win_ping
 
 - [win_ping - A windows version of the classic ping module — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/win_ping_module.html#win-ping-module)
 
-うまくいったらsetupモジュールでfactを見てみる(setupはwin_setupとか無い)。
+うまくいったら setup モジュールで fact を見てみる(setup は win_setup とか無い)。
 
 **【注意】**
-AD環境とかで認証が異なる。 [Windows Remote Management — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html) 参照
+AD 環境とかで認証が異なる。 [Windows Remote Management — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html) 参照
 
 `ansible_winrm_transport` で`ntml`を指定するのが楽そう(深く試していません)。
 
-NTMLよりCredSSPが良さそう。
+NTML より CredSSP が良さそう。
 (機能比較表: [Windows Remote Management — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#authentication-options))
-いろいろ追加準備がある(ansible側にも、管理対象にも)。**今からAnsible使うなら管理対象WindowsでCredSSPを有効にしておくべき。**
+いろいろ追加準備がある(ansible 側にも、管理対象にも)。**今から Ansible 使うなら管理対象 Windows で CredSSP を有効にしておくべき。**
 [Windows Remote Management — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#credssp)
 
-## ansible 2.6.1のwin_rebootが壊れている
+### ansible 2.6.1 の win_reboot が壊れている
 
-pipで取れるansible 2.6.1のwin_rebootが壊れていた話。
+pip で取れる ansible 2.6.1 の win_reboot が壊れていた話。
 
 こんな感じのメッセージが
 
@@ -732,11 +732,11 @@ pipで取れるansible 2.6.1のwin_rebootが壊れていた話。
 fatal: [w1]: FAILED! => {"changed": false, "elapsed": 600, "msg": "timed out waiting for reboot uptime check success: Invalid settings supplied for _extras: Requested option _extras was not defined in configuration", "rebooted": true}
 ```
 
-AnsibleのIssuesに上がってた。
+Ansible の Issues に上がってた。
 
 - [win_reboot fails when windows VM hostname is changed · Issue #42294 · ansible/ansible](https://github.com/ansible/ansible/issues/42294)
 
-↑に従って、最新のをソースから実行↓
+↑ に従って、最新のをソースから実行 ↓
 
 - [Installation Guide — Ansible Documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#running-from-source)
 
@@ -747,18 +747,18 @@ ansible 2.7.0.dev0 (devel bea8e0200c) last updated 2018/07/19 14:34:25 (GMT +900
 (略)
 ```
 
-これでwin_rebootしたらちゃんと動いた。
+これで win_reboot したらちゃんと動いた。
 
-# "when"が使えるのは?
+## "when"が使えるのは?
 
 - Task
 - Block
 - Role
 
-↓これ見る
+↓ これ見る
 [Playbook Keywords — Ansible Documentation](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html)
 
-構造がわかりにくい。playbook.ymlで配列になってるのが"Play"。上位構造から順に:
+構造がわかりにくい。playbook.yml で配列になってるのが"Play"。上位構造から順に:
 
 - Play
   - Role
@@ -769,43 +769,43 @@ ansible 2.7.0.dev0 (devel bea8e0200c) last updated 2018/07/19 14:34:25 (GMT +900
 
 みたいな感じ? 全然正確でない。
 
-# AmazonLinux2とAnsible
+## AmazonLinux2 と Ansible
 
-いまのところAmazonLinux2に対応したRoleが少ないみたい。
-RedHat系ではなくてAmazon系とかを設けるべきだ。
+いまのところ AmazonLinux2 に対応した Role が少ないみたい。
+RedHat 系ではなくて Amazon 系とかを設けるべきだ。
 
-Amazonだけ
-`ansible_distribution_major_version`がNAなので、
+Amazon だけ
+`ansible_distribution_major_version`が NA なので、
 https://github.com/geerlingguy/ansible-role-nginx/blob/master/templates/nginx.repo.j2#L3
-とかで、でたらめなURIになるし。
+とかで、でたらめな URI になるし。
 
 参考:
 
 - [Ansible で Amazon Linux と Amazon Linux 2 を見分ける](https://blog.manabusakai.com/2017/12/ansible-for-amazon-linux-2/)
 
-Ansibleで
-Amazon Linuxがいたら
+Ansible で
+Amazon Linux がいたら
 用心すること。
 
-# rolesの練習: epel
+## roles の練習: epel
 
 - [Amazon EC2 での EPEL の有効化](https://aws.amazon.com/jp/premiumsupport/knowledge-center/ec2-enable-epel/)
 
-AWSのRed HatもCentもAmazonLinuxもos_familyはRedHatなのに、
+AWS の Red Hat も Cent も AmazonLinux も os_family は RedHat なのに、
 こんなに手法が違う...
 
-Amazon Linux 2とAmazon Linuxでまた違うのが辛い。
+Amazon Linux 2 と Amazon Linux でまた違うのが辛い。
 
-# ansible-galaxyメモ
+## ansible-galaxy メモ
 
-## デフォルトのroleの場所
+### デフォルトの role の場所
 
 - /usr/share/ansible/roles
 - /etc/ansible/roles
 
-## 非rootで書き込める場所を追加
+### 非 root で書き込める場所を追加
 
-~/.ansible.cfgなどの設定ファイルで
+~/.ansible.cfg などの設定ファイルで
 
 ```
 [defaults]
@@ -814,79 +814,79 @@ role_path = ~/.ansible/roles
 
 のように記述。':'で複数指定できるらしい。環境変数もあるらしい。
 
-## role_pathのサブディレクトリにroleは置ける?
+### role_path のサブディレクトリに role は置ける?
 
 やってみたらできました。
 
-## ansible-galaxy コマンド
+### ansible-galaxy コマンド
 
-### リスト
+#### リスト
 
 ```
 ansible-galaxy list
 ```
 
-### 取得
+#### 取得
 
 [Ansible Galaxy](https://galaxy.ansible.com/home)の[Ansible Galaxy](https://galaxy.ansible.com/geerlingguy/nginx)を持ってくる例
 
-```
+```sh
 ansible-galaxy install geerlingguy.nginx
 ```
 
-### 更新
+#### 更新
 
 「古いものを見つけて更新する」機能はいまのところない。
-roleフォルダ以下もgitではない。
+role フォルダ以下も git ではない。
 
-```
+```sh
 ansible-galaxy install --force xxxx.xxx
 ```
 
 で上書きはできる。
 
-# ansibleのデバッグ
+## ansible のデバッグ
 
-debugモジュール
+debug モジュール
 
-vオプション(vをたくさん)
+v オプション(v をたくさん)
 
-ANSIBLE_LOG_PATH環境変数
+ANSIBLE_LOG_PATH 環境変数
 
-ANSIBLE_KEEP_REMOTE_FILES環境変数をTrueにセットすると、リモートマシンの~/.ansible/tmpが消えなくなる。
+ANSIBLE_KEEP_REMOTE_FILES 環境変数を True にセットすると、リモートマシンの~/.ansible/tmp が消えなくなる。
 
 `strategy: debug`で失敗時にデバッグモード。
 
-- [Ansible2.0に対応したansible-playbook-debuggerが便利！](https://qiita.com/Gin/items/740cb728471a82c3f1ba)
+- [Ansible2.0 に対応した ansible-playbook-debugger が便利!](https://qiita.com/Gin/items/740cb728471a82c3f1ba)
 - [Ansible の playbook をデバッグしたいときのあれこれ - てくなべ](https://tekunabe.hatenablog.jp/entry/2017/11/03/ansible_debug)
 - [Playbook Debugger — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html)
 - [Strategies — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html)
 
-ansible-playbookの`--syntax-check`オプションでYAMLのチェック
+ansible-playbook の`--syntax-check`オプションで YAML のチェック
 
-# 参考になったプレイブック
+## 参考になったプレイブック
 
-## yum update -y
+### yum update -y
 
 - [Ansible - Update And Reboot (if required) Amazon Linux Servers | Programster's Blog](https://blog.programster.org/ansible-update-and-reboot-if-required-amazon-linux-servers)
 
 `name=*`は気が付かなかった。
-[yumモジュールのドキュメント](https://docs.ansible.com/ansible/latest/modules/yum_module.html)の例参照
+[yum モジュールのドキュメント](https://docs.ansible.com/ansible/latest/modules/yum_module.html)の例参照
 
-# hosts
+## hosts
 
-- hostsキーワードがかけるのはPlayだけ
+- hosts キーワードがかけるのは Play だけ
   [Playbook Keywords — Ansible Documentation](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play)
 
-- hostsには例外が書けない
-  (tagを使う)
+- hosts には例外が書けない
+  (tag を使う)
 
 参考:
 
-- [ansibleで実行対象を切り替える方法 — そこはかとなく書くよん。](http://tdoc.info/blog/2014/05/30/ansible_target_switching.html)
+- [ansible で実行対象を切り替える方法 — そこはかとなく書くよん。](http://tdoc.info/blog/2014/05/30/ansible_target_switching.html)
 - [Tags — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html)
 
-## when条件でhostsっぽいことをする例
+### when 条件で hosts っぽいことをする例
 
 例)
 
@@ -906,7 +906,7 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
       when: "inventory_hostname in groups['redhat']"
 ```
 
-# jinja2の関数が使える
+## jinja2 の関数が使える
 
 [Template Designer Documentation — Jinja2 Documentation (2.10)](http://jinja.pocoo.org/docs/2.10/templates/#list-of-global-functions)
 
@@ -923,9 +923,9 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
         var: lipsum()
 ```
 
-# ansible-vault
+## ansible-vault
 
-パスワードなどを暗号化して、うっかりgithubに上げてしまっても安全に。
+パスワードなどを暗号化して、うっかり github に上げてしまっても安全に。
 
 参考:
 
@@ -935,13 +935,13 @@ ansible-playbookの`--syntax-check`オプションでYAMLのチェック
 
 暗号は実行時に展開される。キーは
 
-- ansible.confにvault_password_fileオプションで指定
-- 環境変数ANSIBLE_VAULT_PASSWORD_FILEで指定
+- ansible.conf に vault_password_file オプションで指定
+- 環境変数 ANSIBLE_VAULT_PASSWORD_FILE で指定
 - 実行時にオプション`--vault-password-file`で指定
 
-で、keyファイルをgit管理パス以外に置く。
+で、key ファイルを git 管理パス以外に置く。
 
-暗号はデフォルトでAES256らしいので、256bit(=32byte)の鍵があればいい。
+暗号はデフォルトで AES256 らしいので、256bit(=32byte)の鍵があればいい。
 
 例)
 
@@ -950,7 +950,7 @@ mkdir -p ~/.config/ansible
 dd if=/dev/urandom of=~/.config/ansible/.ansible_vault bs=32 count=1
 ```
 
-# ansible.conf
+## ansible.conf
 
 設定ファイル。優先順位がややこしい。
 
@@ -965,31 +965,31 @@ dd if=/dev/urandom of=~/.config/ansible/.ansible_vault bs=32 count=1
 
 上にあるほど優先順位が高い。
 
-- (in the current directory)があやしい。playbookと同じディレクトリ?
-- ＄HOMEのだけ.dotで始まるので注意。
-- ファイルの優先順序であって、「全部中身を読んでオーバライドする」式ではないことに注意(ファイルは1個しか読まない)
+- (in the current directory)があやしい。playbook と同じディレクトリ?
+- $ HOME のだけ.dot で始まるので注意。
+- ファイルの優先順序であって、「全部中身を読んでオーバライドする」式ではないことに注意(ファイルは 1 個しか読まない)
 
 設定できる値の例(ansible 2.4)
 
 - [Configuration file — Ansible Documentation](https://docs.ansible.com/ansible/2.4/intro_configuration.html)
 
-デフォルトのansible.cfgはexamplesの下参照
+デフォルトの ansible.cfg は examples の下参照
 
 - [ansible/ansible\.cfg at devel · ansible/ansible](https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg)
-  ↑のraw をcurlでもってきておくと便利。
+  ↑ の raw を curl でもってきておくと便利。
 
-# 改行問題
+## 改行問題
 
-Windowsにテンプレートを設定ファイルとして吐くとき、
-改行がCRLFでないとまずい
-というような場合(逆もありうる。WindowsがAnsibleのホストとか)
+Windows にテンプレートを設定ファイルとして吐くとき、
+改行が CRLF でないとまずい
+というような場合(逆もありうる。Windows が Ansible のホストとか)
 回避策はあるのか。
 
-win_templateモジュールのnewline_sequenceで設定できるらしい(2.4から)
-templateモジュールにもある。
+win_template モジュールの newline_sequence で設定できるらしい(2.4 から)
+template モジュールにもある。
 
 テストしてみた。
-なるほど元のtempleteの改行コードに無関係に出力の改行を制御できる。
+なるほど元の templete の改行コードに無関係に出力の改行を制御できる。
 
 例(抜粋)
 
@@ -1007,39 +1007,39 @@ tasks:
 
 みたいなことができる。
 
-## win_templateとtemplateモジュールの違いは?
+### win_template と template モジュールの違いは?
 
-templateモジュールでwindowsに送った場合、
+template モジュールで windows に送った場合、
 owner:, group:, mode: が無視される。
-オーナーはWinRMの接続ユーザ、モードは...readOnlyとかにならないことは確か。
+オーナーは WinRM の接続ユーザ、モードは...readOnly とかにならないことは確か。
 
-win_templateには
+win_template には
 owner:, group:, mode: が無い。
 
-newline_sequenceのデフォルト値が異なる。
+newline_sequence のデフォルト値が異なる。
 
-## 参考
+### 参考
 
 - [win_template - Templates a file out to a remote server — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/win_template_module.html#notes)
 - [template - Templates a file out to a remote server — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/template_module.html#template-module)
 - [win_template replaces CRLF (\r\n) with LF (\n) · Issue #1480 · ansible/ansible-modules-core](https://github.com/ansible/ansible-modules-core/issues/1480)
-- [ansibleで改行コードの変換 - HPCメモ](http://hpcmemo.hatenablog.com/entry/2017/04/07/142345)
+- [ansible で改行コードの変換 - HPC メモ](http://hpcmemo.hatenablog.com/entry/2017/04/07/142345)
 
-Windosの場合だとUTF-8のBOM問題もあるなあ...
+Windos の場合だと UTF-8 の BOM 問題もあるなあ...
 
-## 改行tips
+### 改行 tips
 
 改行の確認は`od -c`がポータブル。
 たくさんあるならもうすこし考える。
 
-Windowsだと`format-hex`が使える(Powershell 5ぐらいか?)
+Windows だと`format-hex`が使える(Powershell 5 ぐらいか?)
 [Format-HexFormat-Hex | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/wmf/5.0/feedback_formathex)
 
-# Ansible 2.4ではloopが無い
+## Ansible 2.4 では loop が無い
 
 ```
 ---
-# 2.4では動かない(bug). 2.5ぐらいからOK
+## 2.4では動かない(bug). 2.5ぐらいからOK
 - name: loop test ex1
   hosts: all
   gather_facts: no
@@ -1053,18 +1053,18 @@ Windowsだと`format-hex`が使える(Powershell 5ぐらいか?)
         - three
 ```
 
-2.4では死ぬ。
+2.4 では死ぬ。
 
 [Issues using variables in loops · Issue #38314 · ansible/ansible](https://github.com/ansible/ansible/issues/38314)
 
-with_itemsを使う。with_itemsはloop_controlも使える。
+with_items を使う。with_items は loop_control も使える。
 
 例)
 
 ```
 ---
-# loop test
-# loopは2.4では動かない(loopは2.5から).
+## loop test
+## loopは2.4では動かない(loopは2.5から).
 
 - name: loop test ex1
   hosts: redhat
@@ -1089,32 +1089,32 @@ inc2.yml
 - debug: var=outer_item
 ```
 
-# 参照
+## 参照
 
-- [Ansibleドキュメントを活用しよう！ モジュールの調べ方 - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/2018/10/25/ansible-document)
+- [Ansible ドキュメントを活用しよう! モジュールの調べ方 - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/2018/10/25/ansible-document)
 
-# sshまわり
+## ssh まわり
 
 邪悪だが役に立つときもある
 
-- [AnsibleのSSH接続エラーの回避設定 - Qiita](https://qiita.com/taka379sy/items/331a294d67e02e18d68d)
+- [Ansible の SSH 接続エラーの回避設定 - Qiita](https://qiita.com/taka379sy/items/331a294d67e02e18d68d)
 - [ansible sshpass error - Qiita](https://qiita.com/park-jh/items/d14cb20c9dfa0e2628d5)
 
-# 公開鍵でなくパスワードでssh接続する
+## 公開鍵でなくパスワードで ssh 接続する
 
 まあ、そういう環境もある。
 
-sshpass入れて、
+sshpass 入れて、
 `ansible_ssh_pass` にパスワードを書く。
 
-で、そういう環境だとsudoerもちゃんと設定してなくて
-suでrootになれ、とかいうことがしばしば。
+で、そういう環境だと sudoer もちゃんと設定してなくて
+su で root になれ、とかいうことがしばしば。
 
 それは
 `ansible_become_method` と `ansible_become_pass` で。
-(ansible_su_passよりはいい)
+(ansible_su_pass よりはいい)
 
-インベントリのall:varsに書いた例(もちろんホスト別にできる)
+インベントリの all:vars に書いた例(もちろんホスト別にできる)
 
 ```
 [all:vars]
@@ -1125,21 +1125,21 @@ ansible_become_method=su
 ansible_become_pass=p@ssW0rd
 ```
 
-TODO: vaultにする
+TODO: vault にする
 
 参考:
 [Inventory | ansible Tutorial](https://riptutorial.com/ansible/topic/1764/%E7%9B%AE%E9%8C%B2)
 
-RHEL7ではsshpassはrhel-7-server-extras-rpmsにあるので
+RHEL7 では sshpass は rhel-7-server-extras-rpms にあるので
 
 ```
 subscription-manager repos --enable=rhel-7-server-extras-rpms
 yum install -y sshpass
 ```
 
-すること。CentOS7はEPEL?
+すること。CentOS7 は EPEL?
 
-# Windows用のvars例
+## Windows 用の vars 例
 
 インベントリに書いた例
 
@@ -1154,20 +1154,20 @@ ansible_winrm_server_cert_validation=ignore
 
 急いでるときに使うこと。
 
-TODO: ansible_winrm_server_cert_validをignoreしないようにする方法。ADのときとか
+TODO: ansible_winrm_server_cert_valid を ignore しないようにする方法。AD のときとか
 
-# ansible.cfgの場所
+## ansible.cfg の場所
 
-[ansible.cfgを設定しコマンドをシンプルに - aboutnagaishiの日記](http://aboutnagaishi.hatenablog.com/entry/2015/02/14/155734)
+[ansible.cfg を設定しコマンドをシンプルに - aboutnagaishi の日記](http://aboutnagaishi.hatenablog.com/entry/2015/02/14/155734)
 から引用 & 修正
 
-ansible tutorialによれば以下の順番でansible.cfgを探す。
+ansible tutorial によれば以下の順番で ansible.cfg を探す。
 
 1. カレントディレクトリ
 2. 環境変数の ANSIBLE_CONFIG or ~/.ansible.cfg
 3. /etc/ansible/ansible.cfg
 
-ansible.cfg設定例
+ansible.cfg 設定例
 
 ```
 [defaults]
@@ -1179,35 +1179,35 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=
 
 むかしは`inventory`でなく`hostfile`だった。
 
-ssh_connectionのところは
-[AnsibleのSSH接続エラーの回避設定 - Qiita](https://qiita.com/taka379sy/items/331a294d67e02e18d68d)
+ssh_connection のところは
+[Ansible の SSH 接続エラーの回避設定 - Qiita](https://qiita.com/taka379sy/items/331a294d67e02e18d68d)
 からのコピペで、意味はそちらを参照。
 
-ansible.cfgはパッケージでは`/etc/ansible/ansible.cfg`
-git版では`examples/ansible.cfg`
+ansible.cfg はパッケージでは`/etc/ansible/ansible.cfg`
+git 版では`examples/ansible.cfg`
 にあるので、それをコピーして編集すると苦労が減ると思う。
 
-# Windowsで化ける出力を得る
+## Windows で化ける出力を得る
 
-ansibleで情報を引っ張ってくるケースはよくあるんだけれど、
-たまにCP932しか吐かないコマンドがあるので、
+ansible で情報を引っ張ってくるケースはよくあるんだけれど、
+たまに CP932 しか吐かないコマンドがあるので、
 それの対応。
 
-[WindowsのCP932に苦闘している件](https://www.slideshare.net/HidetoshiHirokawa/windowscp932-95190631)
+[Windows の CP932 に苦闘している件](https://www.slideshare.net/HidetoshiHirokawa/windowscp932-95190631)
 にない別解
 
-利点はnkfがいらないこと。
+利点は nkf がいらないこと。
 
-コツは2つ:
+コツは 2 つ:
 
-- win_shellモジュールで、powershellでなくcmd.exeを使う
+- win_shell モジュールで、powershell でなく cmd.exe を使う
 - 出力をいったんファイルに落とす
 
-w32tmを使ったplaybookの例
+w32tm を使った playbook の例
 
 ```
 ---
-# sjis vs asnsible
+## sjis vs asnsible
 - name: Windows ntpq
   hosts: all
   become: no
@@ -1249,27 +1249,27 @@ w32tmを使ったplaybookの例
       changed_when: no
 ```
 
-なぜか改行コードがLFになる。
+なぜか改行コードが LF になる。
 
 TODO: 得たファイルを `iconv -f cp932 -t utf8` する。
 
-# local_action
+## local_action
 
-local_actionはローカル(コントロールマシン)で実行されるのだけど、
-このときにもbecomeの設定が効くので、
-`become: yes`だとローカルでsudo/suしようとする。
+local_action はローカル(コントロールマシン)で実行されるのだけど、
+このときにも become の設定が効くので、
+`become: yes`だとローカルで sudo/su しようとする。
 
-local_actionを使う場合は、
+local_action を使う場合は、
 そのタスクに`become: no`をつけとく習慣にするべき。
 
-あるいは必要なところにだけbecome: yesするか。
-becomeのデフォルトはno(false)。
+あるいは必要なところにだけ become: yes するか。
+become のデフォルトは no(false)。
 
 ほかから呼ばれる可能性もあるので、
 明示したほうがいいかもしれない。
 
-playbookの例。
-netstatの-pオプションはsuがいるので。
+playbook の例。
+netstat の-p オプションは su がいるので。
 
 ```
 ---
@@ -1297,9 +1297,9 @@ netstatの-pオプションはsuがいるので。
 
 - [Understanding Privilege Escalation — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/become.html#id1)
 
-# fuserのverboseはなぜかstderrに出る
+## fuser の verbose はなぜか stderr に出る
 
-しかもPIDはstdoutに出る。なので
+しかも PID は stdout に出る。なので
 `/sbin/fuser -vn tcp 80`
 の出力を集めたいときは
 
@@ -1313,25 +1313,25 @@ netstatの-pオプションはsuがいるので。
 
 みたいなタスクにしないとダメ。
 
-# expectモジュール
+## expect モジュール
 
 - [expect – Executes a command and responds to prompts. — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/expect_module.html)
 
 pexpect >= 3.3 がコントロールマシンではなく
-remote側に必要。
+remote 側に必要。
 
-Ununtu 18.04LTSだと
+Ununtu 18.04LTS だと
 python-pexpect 4.2.1-1
 パッケージがあるので簡単だが、
 
-RHEL7, CentOS7だと、古いパッケージしかなくて、
+RHEL7, CentOS7 だと、古いパッケージしかなくて、
 公式が
-「7では出さない」とか言ってるので
+「7 では出さない」とか言ってるので
 [Does Red Hat ship pexpect 3.3 ? - Red Hat Customer Portal](https://access.redhat.com/solutions/3440581)
-pip入れて、pip install pexpectするしかない。
+pip 入れて、pip install pexpect するしかない。
 
 とりあえず
-rootのuserディレクトリに
+root の user ディレクトリに
 
 ```
 wget https://bootstrap.pypa.io/get-pip.py
@@ -1341,17 +1341,17 @@ pip install pexpect -U --user
 
 して、影響が外へ出ないようにしてやれば大丈夫(なはず)。
 
-rhsclにもpipはあるのだが、
+rhscl にも pip はあるのだが、
 これで入れてちゃんと動くとは思えない。
 
-いまのところansibleにwin_pexpectはないので誰かcontributeしてください。
+いまのところ ansible に win_pexpect はないので誰か contribute してください。
 
 - [expect module fails for windows target systems · Issue #31051 · ansible/ansible · GitHub](https://github.com/ansible/ansible/issues/31051)
-- [Windowsでpexpectを利用する - Qiita](https://qiita.com/shita_fontaine/items/c2ceb1e66450d7e09490)
+- [Windows で pexpect を利用する - Qiita](https://qiita.com/shita_fontaine/items/c2ceb1e66450d7e09490)
 
-## 複数ホストの指定
+### 複数ホストの指定
 
-ちょっと複数ホストや複数グループでansibleを実行したいときに
+ちょっと複数ホストや複数グループで ansible を実行したいときに
 インベントリーにグループを書くのは面倒。
 
 リスト形式で複数指定できる。
@@ -1360,19 +1360,19 @@ rhsclにもpipはあるのだが、
 ansible -m play host1,host2
 ```
 
-ansible-playbookの-lオプションでも同様。
+ansible-playbook の-l オプションでも同様。
 
-# 変数をかける場所と優先度
+## 変数をかける場所と優先度
 
 - [Using Variables — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html)
 - [Working with Inventory — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html)
 
-最近のGoogle翻訳は大したもんだ。
+最近の Google 翻訳は大したもんだ。
 
 - [Google 翻訳](https://translate.google.com/translate?hl=&sl=en&tl=ja&u=https%3A%2F%2Fdocs.ansible.com%2Fansible%2Flatest%2Fuser_guide%2Fplaybooks_variables.html)
 - [Google 翻訳](https://translate.google.com/translate?hl=&sl=en&tl=ja&u=https%3A%2F%2Fdocs.ansible.com%2Fansible%2Flatest%2Fuser_guide%2Fintro_inventory.html)
 
-# dictにkeyがあるときないときの判別
+## dict に key があるときないときの判別
 
 - [Is there a way to check that a dictionary key is not defined in ansible task? - Server Fault](https://serverfault.com/questions/857973/is-there-a-way-to-check-that-a-dictionary-key-is-not-defined-in-ansible-task)
 
@@ -1391,28 +1391,28 @@ ansible-playbookの-lオプションでも同様。
     - debug: var=inventory_hostname
 
     - debug: msg=OK
-      when: "inventory_hostname in d1"
+      when: 'inventory_hostname in d1'
 
     - debug: msg=OK
-      when: "inventory_hostname not in d2"
+      when: 'inventory_hostname not in d2'
 
     - debug: msg=WRONG
-      when: "inventory_hostname not in d1"
+      when: 'inventory_hostname not in d1'
 
     - debug: msg=WRONG
-      when: "inventory_hostname in d2"
+      when: 'inventory_hostname in d2'
 ```
 
-OKが2個、WRONGが0個出力されるはず
+OK が 2 個、WRONG が 0 個出力されるはず
 
-# playbookを中断する
+## playbook を中断する
 
-failモジュールや metaモジュールの `meta: end_host`が使える.
+fail モジュールや meta モジュールの `meta: end_host`が使える.
 
 - [fail – Fail with custom message — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/fail_module.html)
 - [meta – Execute Ansible ‘actions’ — Ansible Documentation](https://docs.ansible.com/ansible/latest/modules/meta_module.html#meta-module)
 
-# ansible-lint
+## ansible-lint
 
 使おう!
 [ansible-community/ansible-lint: Best practices checker for Ansible](https://github.com/ansible-community/ansible-lint)
@@ -1431,30 +1431,30 @@ pip3 install -U --user "ansible-lint[community,yamllint]"
 ansible-lint foo.yml
 ```
 
-playbookの複数指定できるので、findやxargsと組み合わせて使える。
-include/importしてるtasksも見る。
+playbook の複数指定できるので、find や xargs と組み合わせて使える。
+include/import してる tasks も見る。
 
 メッセージの意味は以下参照:
 
 - [Default Rules — Ansible Lint Documentation](https://ansible-lint.readthedocs.io/en/latest/default_rules.html)
-- [ansible-lintのルールに関するメモ - 遠い叫び](https://magai.hateblo.jp/entry/2018/04/20/162648)
+- [ansible-lint のルールに関するメモ - 遠い叫び](https://magai.hateblo.jp/entry/2018/04/20/162648)
 
-## ansible-lint tips
+### ansible-lint tips
 
 警告の抑制は
 
 ```yaml
 - name: Run shell.
-  shell: "{{ cmd }}" # noqa command-instead-of-shell
+  shell: '{{ cmd }}' # noqa command-instead-of-shell
 ```
 
 こんな感じに`noqa`でできる。
 
 [Rules — Ansible Lint Documentation](https://ansible-lint.readthedocs.io/en/latest/rules.html)
 
-# ansible.cfg
+## ansible.cfg
 
-オリジナルはgithub上にある。
+オリジナルは github 上にある。
 
 [ansible/ansible.cfg at devel · ansible/ansible](https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg)
 
@@ -1469,23 +1469,23 @@ curl -O https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible
 - ~/.ansible.cfg (in the home directory)
 - /etc/ansible/ansible.cfg
 
-ANSIBLE_CONFIGは独自の.cfgファイルのパス
+ANSIBLE_CONFIG は独自の.cfg ファイルのパス
 
-# notify handlerの実行順
+## notify handler の実行順
 
-**yamlに書いた順に上から実行される。**
+**yaml に書いた順に上から実行される。**
 
-# Windowsドメインアカウントで接続する
+## Windows ドメインアカウントで接続する
 
 いまのところローカルアドミンでしかつないだことないんだけど、
 あとでやるかもしれないのでメモ
 
 ansible_winrm_transport で Kerberos を指定するらしい。
-[【Ansible】Windowsドメインアカウントで接続する - Qiita](https://qiita.com/myalpine/items/9361ecd46e3705d8425e)
+[【Ansible】Windows ドメインアカウントで接続する - Qiita](https://qiita.com/myalpine/items/9361ecd46e3705d8425e)
 
-Kerberosだとローカルアカウントには接続できないのに注意。
+Kerberos だとローカルアカウントには接続できないのに注意。
 
-必要な手順は↑よりは公式参照。各ディストリで要るライブラリ書いてある。
+必要な手順は ↑ よりは公式参照。各ディストリで要るライブラリ書いてある。
 
 - [Windows リモート管理 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/windows_winrm.html#id2)
 - [Windows リモート管理 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/windows_winrm.html#id8)
@@ -1493,11 +1493,11 @@ Kerberosだとローカルアカウントには接続できないのに注意。
 あと ansible_winrm_transport のデフォルトは NTLM
 [Windows Remote Management — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#ntlm)
 
-# windowsでbecome:true
+## windows で become:true
 
 [権限昇格の理解: become — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/become.html#become-windows)
 
-# Galaxyコレクション
+## Galaxy コレクション
 
 > コレクションは、Playbook、ロール、モジュール、およびプラグインを含むことができる Ansible コンテンツのディストリビューション形式です
 
@@ -1506,12 +1506,12 @@ Kerberosだとローカルアカウントには接続できないのに注意。
 - [コレクションの使用 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/collections_using.html)
 - [Using collections — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
 
-# yumモジュールのstateのpresentとlatestの違い
+## yum モジュールの state の present と latest の違い
 
 - [centos - What is the difference between two "state" option values, "present" and "installed", available in Ansible's yum module? - Stack Overflow](https://stackoverflow.com/questions/40410270/what-is-the-difference-between-two-state-option-values-present-and-install#:~:text=State%20as%20'Present'%20and%20',of%20the%20latest%20available%20version.)
 - [6 practices for super smooth Ansible experience - Max Chernyak](https://max.engineer/six-ansible-practices#separate-your-setup-and-deploy-playbooks)
 
-# quoteフィルタ
+## quote フィルタ
 
 [Using filters to manipulate data — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#manipulating-strings)
 
@@ -1522,24 +1522,24 @@ Kerberosだとローカルアカウントには接続できないのに注意。
 
 このページ、全体に面白い。
 
-# ansible-playbookの便利オプション
+## ansible-playbook の便利オプション
 
-- --syntax-check - playbookのシンタックスチェックだけ。実行しない
+- --syntax-check - playbook のシンタックスチェックだけ。実行しない
 - --list-hosts - 対象になるホストのリストを出力して終わる
 - --list-tasks - 実行されるであろう全タスクをリスト
 - --list-tags - 全タグをリスト
 - --check (-C) - 変更はしないで、起こるかもしれない変化のいくつかを予測する
-- --diff (-D) - ファイルやテンプレートを変更したときに、それらのファイルの差分を表示。--checkと一緒に使うと効果的
+- --diff (-D) - ファイルやテンプレートを変更したときに、それらのファイルの差分を表示。--check と一緒に使うと効果的
 
-`-C`オプションは便利だけど、shell実行するとことかでは無力。
+`-C`オプションは便利だけど、shell 実行するとことかでは無力。
 
-# デバッガ
+## デバッガ
 
 普通のデバッガとはかなりちがうけど、一応ある。
 
 [Debugging tasks — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html)
 
-# varsの優先順序
+## vars の優先順序
 
 [変数の優先度 - 変数の使用 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/playbooks_variables.html#ansible-variable-precedence)
 
@@ -1547,7 +1547,7 @@ Kerberosだとローカルアカウントには接続できないのに注意。
 
 [コマンドラインで変数を渡す - 変数の使用 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/user_guide/playbooks_variables.html#passing-variables-on-the-command-line)
 
-`-e @xxxx`とすればxxxxはファイルとみなす。yamlかjsonが使える。
+`-e @xxxx`とすれば xxxx はファイルとみなす。yaml か json が使える。
 
 よくある例: vars2.yml
 
@@ -1558,11 +1558,11 @@ Kerberosだとローカルアカウントには接続できないのに注意。
   become: false
   gather_facts: false
   vars:
-    msg1: "world"
+    msg1: 'world'
 
   tasks:
     - debug:
-        msg: "Hello, {{ msg1 }}!"
+        msg: 'Hello, {{ msg1 }}!'
 ```
 
 読みこむファイル: `vars2.json`
@@ -1592,22 +1592,22 @@ ok: [localhost] =>
   msg: Hello, こんにちは!
 ```
 
-playbook varsをデフォルト値として(roleのdefaultみたいな)、
+playbook vars をデフォルト値として(role の default みたいな)、
 `-e`でオーバライド、みたいに使うのがいいかな。
 
-# トラブルシューティングいろいろ
+## トラブルシューティングいろいろ
 
-## requests
+### requests
 
 > urllib3 (1.26.4) or chardet (3.0.4) doesn't match a supported version!
 
-みたいのが出たら、requestsを更新しましょう
+みたいのが出たら、requests を更新しましょう
 
 ```sh
 pip3 install --user -U requests
 ```
 
-# インストール済みのモジュールの一覧を表示する
+## インストール済みのモジュールの一覧を表示する
 
 ```sh
 ansible-doc -l
@@ -1619,7 +1619,7 @@ ansible-doc -l
 ansible-doc yum
 ```
 
-# ansible.windows.win_package用のproduct_idを探す。
+## ansible.windows.win_package 用の product_id を探す。
 
 まとめるとこんなかんじ。要管理者権限
 
@@ -1636,20 +1636,20 @@ $a
 $a|Export-Csv -NoTypeInformation -Encoding default -Path test1.csv
 ```
 
-これで見つからなければ、コンパネに表示されるプロダクト名はDisplayNameとして保存されてるので、
-regeditで検索。おなじ場所にUninstallStringという名前で削除方法が書かれてる。
+これで見つからなければ、コンパネに表示されるプロダクト名は DisplayName として保存されてるので、
+regedit で検索。おなじ場所に UninstallString という名前で削除方法が書かれてる。
 
-# filter pluginsのサンプルは
+## filter plugins のサンプルは
 
 [ansible/core\.py at devel · ansible/ansible · GitHub](https://github.com/ansible/ansible/blob/devel/lib/ansible/plugins/filter/core.py)
 で `FilterModule`を検索。
 
-# collectionの開発
+## collection の開発
 
 - [Developing collections — Ansible Documentation](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections.html)
 - [コレクションの開発 — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/dev_guide/developing_collections.html)
 
-作業ディレクトリ作って、デフォルトのコレクションパスにsymlink置く、という手法でいく。
+作業ディレクトリ作って、デフォルトのコレクションパスに symlink 置く、という手法でいく。
 
 ```sh
 mkdir -p workdir ; cd workdir
@@ -1658,7 +1658,7 @@ cd heiwa4126
 ln -s `pwd -p` ~/.ansible/collections/ansible_collections
 ```
 
-で、`ansible-galaxy collection list`に`heiwa4126.helloworld`があればOK
+で、`ansible-galaxy collection list`に`heiwa4126.helloworld`があれば OK
 
 ```sh
 cd helloworld/roles
@@ -1674,7 +1674,7 @@ emacs tasks/main.yml
 
 とか書いて、
 
-playbookは
+playbook は
 
 ```yaml
 ---
@@ -1683,9 +1683,9 @@ playbookは
     - heiwa4126.helloworld.helloworld
 ```
 
-でOK
+で OK
 
-roleだけでは寂しいので、`collections/heiwa4126/helloworld/plugins/filter/star.py`として
+role だけでは寂しいので、`collections/heiwa4126/helloworld/plugins/filter/star.py`として
 
 ```python
 class FilterModule(object):
@@ -1695,7 +1695,7 @@ class FilterModule(object):
         }
 ```
 
-で、playbookを
+で、playbook を
 
 ```yaml
 - hosts: localhost
@@ -1708,34 +1708,34 @@ class FilterModule(object):
         msg: '{{ "hello" | heiwa4126.helloworld.add_stars }}'
 ```
 
-長いな。namespaceだけでもimportできないのか。
+長いな。namespace だけでも import できないのか。
 
-[\[Ansible\] 自作のコレクションを作ってGalaxyで公開するまで \- Qiita](https://qiita.com/zaki-lknr/items/4771b65b2385591e0678)
+[\[Ansible\] 自作のコレクションを作って Galaxy で公開するまで \- Qiita](https://qiita.com/zaki-lknr/items/4771b65b2385591e0678)
 
-# roles_path=,collections_path= と \*\_plugins= のちがい
+## roles_path=,collections_path= と \*\_plugins= のちがい
 
-どうもroles_path=,collections_path=は、書いたパスしか探しに行かないけど、
+どうも roles_path=,collections_path=は、書いたパスしか探しに行かないけど、
 \*\_plugins=はデフォルトパスも探しに行くみたい。
 
 ソース読むか...
 
-# rolesやcollectionsのfiles/やtemplate/はオーバライドできるか?
+## roles や collections の files/や template/はオーバライドできるか?
 
-playbook側でオーバライドできるか。またオーバライドされたくないときはどうするかをチェックする。
+playbook 側でオーバライドできるか。またオーバライドされたくないときはどうするかをチェックする。
 
 サーチパスが
 標準では
-ロール側のtemplates/のほうが優先なので、
-playbookでオーバライドできない。
-この順: [ansibleはどこからtemplateを探すのか？ - gom68の日記](https://gom.hatenablog.com/entry/2018/03/06/183000)
+ロール側の templates/のほうが優先なので、
+playbook でオーバライドできない。
+この順: [ansible はどこから template を探すのか? - gom68 の日記](https://gom.hatenablog.com/entry/2018/03/06/183000)
 
 公式ドキュメントはこれかな。 [Search paths in Ansible — Ansible Documentation](https://docs.ansible.com/ansible/latest/user_guide/playbook_pathing.html)
 
-defaults/に変数書いて、それをplaybookで書き換えるしかなさそう。
+defaults/に変数書いて、それを playbook で書き換えるしかなさそう。
 
-# RHEL 8
+## RHEL 8
 
-とりあえず古い(2.9)けどRedHatがメンテしてると思うので、これでもいいなら。
+とりあえず古い(2.9)けど RedHat がメンテしてると思うので、これでもいいなら。
 
 参考:
 
@@ -1748,21 +1748,21 @@ sudo yum repolist | grep ansible-2-for-rhel-8-rhui-rpms
 sudo yum install ansible -y
 ```
 
-AWSとかAzureのRedHatではシステムがregisteredされてなくて
-subscription-manager使えないとか言われるかもしれないけど
+AWS とか Azure の RedHat ではシステムが registered されてなくて
+subscription-manager 使えないとか言われるかもしれないけど
 その場合は
 
 ```sh
 grep -i ansible /etc/yum.repos.d/*.repo
 ```
 
-でファイルを見つけて、該当部分をenabled=1にしてださい。
+でファイルを見つけて、該当部分を enabled=1 にしてださい。
 
 ```sh
 sudo yum-config-manager --enablerepo ansible-2-for-rhel-8-rhui-rpms
 ```
 
-みたいのはRHEL8ではできません。
+みたいのは RHEL8 ではできません。
 
 入れた結果:
 
@@ -1776,39 +1776,39 @@ ansible 2.9.27
   python version = 3.6.8 (default, Jan 14 2022, 11:04:20) [GCC 8.5.0 20210514 (Red Hat 8.5.0-7)]
 ```
 
-EPELから入れたほうが楽だとは思うけど
+EPEL から入れたほうが楽だとは思うけど
 なんか不幸な現場でこういう方法もあり。
 
-ここにRPMもあるので、いよいよダメならここからどうぞ
+ここに RPM もあるので、いよいよダメならここからどうぞ
 https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/
 
-このパッケージ版のansibleの使うpythonってどこにあるの?
+このパッケージ版の ansible の使う python ってどこにあるの?
 /usr/libexec/platform-python (Python 3.6)を使うらしい。
 
-## ほかメモ
+### ほかメモ
 
 > Red Hat Enterprise Linux (RHEL) のすべてのオンデマンド Amazon マシンイメージ (AMI) は、AWS で Red Hat Update Infrastructure (RHUI) を使用するように構成されています。
 
 [Red Hat よくある質問](https://aws.amazon.com/jp/partners/redhat/faqs/)
 
-# RHEL8 ターゲットノードのPython
+## RHEL8 ターゲットノードの Python
 
-RHEL7までは必ずpython2が入っていて、コントロールマシン以外ではそれを使っていたわけだけど、
-RHEL8からは /usr/libexec/platform-python 式になって、パスに`python`が無い。
+RHEL7 までは必ず python2 が入っていて、コントロールマシン以外ではそれを使っていたわけだけど、
+RHEL8 からは /usr/libexec/platform-python 式になって、パスに`python`が無い。
 
-[RHEL8系ディストリビューションでPython 3を使う - Qiita](https://qiita.com/yamada-hakase/items/ed38a66ac10cf9cfe07e)
+[RHEL8 系ディストリビューションで Python 3 を使う - Qiita](https://qiita.com/yamada-hakase/items/ed38a66ac10cf9cfe07e)
 
 んで
 
-[RHEL8 を Ansible から触ってみよう！ - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/ansible_on_rhel8)
+[RHEL8 を Ansible から触ってみよう! - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/ansible_on_rhel8)
 
-いいのかこんなんで。まあRedHatの人が書いてるんだからいいんでしょうけど。
+いいのかこんなんで。まあ RedHat の人が書いてるんだからいいんでしょうけど。
 
-いまRed Hat 8.6とパッケージ版のansible2.9でやってみたら
-/usr/libexec/platform-pythonをdiscoverしたので
+いま Red Hat 8.6 とパッケージ版の ansible2.9 でやってみたら
+/usr/libexec/platform-python を discover したので
 なんの設定もいらないみたい。なんか環境依存っぽいような気もする。
 
-# とりあえずインベントリーのチェックだけしたいとき
+## とりあえずインベントリーのチェックだけしたいとき
 
 ```sh
 ansible --list-hosts all
@@ -1825,7 +1825,7 @@ ansible --list-hosts all
 ansible -m debug all
 ```
 
-# ansible-coreとansible
+## ansible-core と ansible
 
 ```
 $ pip3 list | grep ansible
@@ -1849,31 +1849,31 @@ $ ls ansible* -d
 /home/heiwa/.local/lib/python3.10/site-packages/ansiblelint
 ```
 
-# コンテナベースのPlaybook実行環境 - Ansible Navigator
+## コンテナベースの Playbook 実行環境 - Ansible Navigator
 
 - [Ansible Navigator Documentation — Ansible Navigator Documentation](https://ansible-navigator.readthedocs.io/en/latest/)
-- [2022年のAnsibleとわたし - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/ansible_future_2022)
+- [2022 年の Ansible とわたし - 赤帽エンジニアブログ](https://rheb.hatenablog.com/entry/ansible_future_2022)
 - [Ansible Navigator Creator ガイド Red Hat Ansible Automation Platform 2.0-ea | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_ansible_automation_platform/2.0-ea/html/ansible_navigator_creator_guide/index)
 - [(512) つまずき Ansible 【Part36】ansible-navigator - YouTube](https://www.youtube.com/watch?v=q2DBQ-4fK18&list=PLf_-SnMN4mXMnwXkRefiN2FExpdUVCIsw&index=1)
 - [ansible/ansible-navigator: A text-based user interface (TUI) for the Red Hat Ansible Automation Platform.](https://github.com/ansible/ansible-navigator)
 
-## Ansible Runner
+### Ansible Runner
 
 - [ansible/ansible-runner · Quay](https://quay.io/repository/ansible/ansible-runner)
 - [Ansible Runner — ansible-runner documentation](https://ansible-runner.readthedocs.io/en/stable/)
 - [Ansible Runner v2.0.0 を触ってみた - Qiita](https://qiita.com/aoen210/items/ccfdb9060229b9b7fb16)
 
-# Ansible Runner
+## Ansible Runner
 
 ```bash
 pip3 install --user -U ansible-runner
 ```
 
-# ansible-lint 6
+## ansible-lint 6
 
-ansible-lint 6からansible-core 2.11以上 をインストールするようになったので、
+ansible-lint 6 から ansible-core 2.11 以上 をインストールするようになったので、
 
-coreでない古いansibleとansible-lintを使いたいときは、
+core でない古い ansible と ansible-lint を使いたいときは、
 
 ```bash
 pip3 install --user -U 'ansible==2.9.*' 'ansible-lint==5.*'

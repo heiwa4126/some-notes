@@ -9,6 +9,8 @@
 - [tsc でトランスパイルするときに、インデントをタブにできますか?](#tsc-でトランスパイルするときにインデントをタブにできますか)
 - [Promise.reject()に対応する async function の戻り値は?](#promiserejectに対応する-async-function-の戻り値は)
 - [class で private](#class-で-private)
+- [TypeScript にのみ存在する標準型](#typescript-にのみ存在する標準型)
+  - [参考リンク](#参考リンク)
 
 ## Partial&lt;T&gt;
 
@@ -35,14 +37,14 @@ hash というか object。
 
 ```typescript
 let hash: { [key: string]: string } = {};
-hash["apple"] = "りんご";
-hash["banana"] = "ばなな";
-hash["orange"] = "オレンジ";
+hash['apple'] = 'りんご';
+hash['banana'] = 'ばなな';
+hash['orange'] = 'オレンジ';
 
 const hash2: { [key: string]: string } = {
-  apple: "りんご",
-  banana: "ばなな",
-  orange: "オレンジ",
+  apple: 'りんご',
+  banana: 'ばなな',
+  orange: 'オレンジ'
 };
 ```
 
@@ -85,7 +87,74 @@ tsc はデフォルトでスペースを使用してインデントします。
 
 ## class で private
 
-- `#height = 0;` - JavaScriptネイティブのプライベートフィールドプロパティ [クラス - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Classes)の「プライベートプロパティ」参照
+- `#height = 0;` - JavaScript ネイティブのプライベートフィールドプロパティ [クラス - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Classes)の「プライベートプロパティ」参照
 - `private height = 0;` - TypeScript のプライベート修飾子
 
 TypeScript ではおおむね後者で用が足りる。
+
+## TypeScript にのみ存在する標準型
+
+[TypeScript: Documentation - Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+
+※ JavaScript の標準組み込みオブジェクトはこちら。[標準組み込みオブジェクト - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects)
+
+ざっくり解説:
+
+1. **`Partial<T>`**  
+   指定した型 `T` の全てのプロパティをオプショナル（`undefined` 可能）にする。
+
+2. **`Required<T>`**  
+   指定した型 `T` の全てのプロパティを必須にする。
+
+3. **`Readonly<T>`**  
+   指定した型 `T` の全てのプロパティを読み取り専用にする。
+
+4. **`Record<K, T>`**  
+   キー `K` と値 `T` からなるオブジェクト型を作成する。
+
+5. **`Pick<T, K>`**  
+   型 `T` から、指定したキー `K` のプロパティだけを取り出す。
+
+6. **`Omit<T, K>`**  
+   型 `T` から、指定したキー `K` のプロパティを除外する。
+
+7. **`Exclude<T, U>`**  
+   型 `T` から型 `U` に割り当て可能な型を除外する。
+
+8. **`Extract<T, U>`**  
+   型 `T` から型 `U` に割り当て可能な型を抽出する。
+
+9. **`NonNullable<T>`**  
+   型 `T` から `null` および `undefined` を除外する。
+
+10. **`Parameters<T>`**  
+    関数型 `T` の引数型をタプル型として取得する。
+
+11. **`ConstructorParameters<T>`**  
+    コンストラクタ型 `T` の引数型をタプル型として取得する。
+
+12. **`ReturnType<T>`**  
+    関数型 `T` の戻り値の型を取得する。
+
+13. **`InstanceType<T>`**  
+    コンストラクタ型 `T` のインスタンスの型を取得する。
+
+14. **`ThisParameterType<T>`**  
+    型 `T` から `this` パラメータの型を抽出する。
+
+15. **`OmitThisParameter<T>`**  
+    型 `T` から `this` パラメータを除去する。
+
+16. **`ThisType<T>`**  
+    型 `T` を `this` の型として設定するための特別な型。
+
+17. **`Awaited<T>`**  
+    プロミスの戻り値型を取得する（TypeScript 4.5 以降で追加）。
+
+これらの型は、TypeScript が型安全性を向上させるために提供しているツールであり、すべてがコンパイル時に解決され、JavaScript のランタイムには影響を与えません。
+特に、ユーティリティ型（`Partial<T>` や `Pick<T>` など）は、コードの保守性や柔軟性を高めるために非常に便利です。
+
+### 参考リンク
+
+- [TypeScript の Partial Type について理解する](https://zenn.dev/tommykw/articles/d7ce0b4efdabc4)
+- [超便利な TypeScript の 8 つのユーティリティ型で効率アップ](https://gizanbeak.com/post/ts-utility-types)
