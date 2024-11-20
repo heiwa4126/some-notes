@@ -2,7 +2,8 @@
 
 - [特定のファイルを最後の commit 時に戻す](#特定のファイルを最後の-commit-時に戻す)
 - [全部のファイルを最後の commit 時に戻す](#全部のファイルを最後の-commit-時に戻す)
-- [リモートレポジトリの dev を fetch して dev ブランチを作る](#リモートレポジトリのdevをfetchしてdevブランチを作る)
+- [特定のファイルのステージングを取り消す](#特定のファイルのステージングを取り消す)
+- [リモートレポジトリの dev を fetch して dev ブランチを作る](#リモートレポジトリの-dev-を-fetch-して-dev-ブランチを作る)
 - [git の設定をリスト](#git-の設定をリスト)
 - [gitignore のデフォルト](#gitignore-のデフォルト)
 - [symlink の扱い](#symlink-の扱い)
@@ -46,6 +47,14 @@ git checkout HEAD^ -- <file_path>
 
 ```sh
 git reset --hard
+```
+
+## 特定のファイルのステージングを取り消す
+
+```sh
+git restore --staged ファイル名
+# または
+git reset HEAD ファイル名
 ```
 
 ## リモートレポジトリの dev を fetch して dev ブランチを作る

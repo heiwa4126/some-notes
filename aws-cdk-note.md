@@ -10,6 +10,7 @@
 - [AWS CDK でリソースの物理 ID を固定する](#aws-cdk-でリソースの物理-id-を固定する)
 - [dependsOn を明示する](#dependson-を明示する)
 - [cdk.CfnOutput() と cdk.Fn.importValue()](#cdkcfnoutput-と-cdkfnimportvalue)
+- [`cdk init` で パッケージマネージャの指定と、`git init`を止めさせたい](#cdk-init-で-パッケージマネージャの指定とgit-initを止めさせたい)
 
 ## インストール
 
@@ -112,12 +113,12 @@ cdk bootstrap # もし最初なら(複数回やっても問題なさそう)
 で, たとえば `./lib/foo-stack.ts` で
 
 ```typescript
-const myFunction = new lambda.Function(this, "HelloWorldFunction", {
+const myFunction = new lambda.Function(this, 'HelloWorldFunction', {
   runtime: lambda.Runtime.NODEJS_20_X,
-  handler: "app.lambdaHandler",
-  code: lambda.Code.fromAsset(path.join(__dirname, "..", "lambda", "hello"), {
-    exclude: ["*.log", "tests/**/*"],
-  }),
+  handler: 'app.lambdaHandler',
+  code: lambda.Code.fromAsset(path.join(__dirname, '..', 'lambda', 'hello'), {
+    exclude: ['*.log', 'tests/**/*']
+  })
 });
 ```
 
@@ -132,39 +133,39 @@ const myFunction = new lambda.Function(this, "HelloWorldFunction", {
 
 ```javascript
 // S3のバケット名を固定
-const bucket = new s3.Bucket(this, "MyBucket", {
-  bucketName: "my-fixed-bucket-name",
+const bucket = new s3.Bucket(this, 'MyBucket', {
+  bucketName: 'my-fixed-bucket-name'
 });
 
 // テーブル名を固定
-const table = new dynamodb.Table(this, "MyTable", {
-  tableName: "my-fixed-table-name",
-  partitionKey: { name: "id", type: dynamodb.AttributeType.STRING },
+const table = new dynamodb.Table(this, 'MyTable', {
+  tableName: 'my-fixed-table-name',
+  partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING }
 });
 
 // Lambda関数名を固定
-const lambdaFunction = new lambda.Function(this, "MyFunction", {
-  functionName: "my-fixed-function-name",
+const lambdaFunction = new lambda.Function(this, 'MyFunction', {
+  functionName: 'my-fixed-function-name',
   runtime: lambda.Runtime.NODEJS_20_X,
-  handler: "index.handler",
-  code: lambda.Code.fromAsset("lambda"),
+  handler: 'index.handler',
+  code: lambda.Code.fromAsset('lambda')
 });
 
 // IAM Roleの名前を固定
-const myRole = new iam.Role(this, "MyFixedRole", {
-  roleName: "my-fixed-role-name",
-  assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
+const myRole = new iam.Role(this, 'MyFixedRole', {
+  roleName: 'my-fixed-role-name',
+  assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com')
 });
 
 // IAM Policyの名前を固定
-const myPolicy = new iam.ManagedPolicy(this, "MyFixedPolicy", {
-  managedPolicyName: "my-fixed-policy-name", // 固定名
+const myPolicy = new iam.ManagedPolicy(this, 'MyFixedPolicy', {
+  managedPolicyName: 'my-fixed-policy-name', // 固定名
   statements: [
     new iam.PolicyStatement({
-      actions: ["s3:ListBucket"],
-      resources: ["arn:aws:s3:::my-bucket"],
-    }),
-  ],
+      actions: ['s3:ListBucket'],
+      resources: ['arn:aws:s3:::my-bucket']
+    })
+  ]
 });
 ```
 
@@ -173,11 +174,11 @@ const myPolicy = new iam.ManagedPolicy(this, "MyFixedPolicy", {
 という必殺技もある。
 
 ```javascript
-const resource = new cdk.CfnResource(this, "MyResource", {
-  type: "AWS::S3::Bucket",
+const resource = new cdk.CfnResource(this, 'MyResource', {
+  type: 'AWS::S3::Bucket',
   properties: {
-    BucketName: "my-custom-bucket-name",
-  },
+    BucketName: 'my-custom-bucket-name'
+  }
 });
 ```
 
@@ -213,3 +214,15 @@ stack 間の依存はまた今度。
 
 でも正直そこまで来たら CDKTF を使った方がいいと思う。
 CDKTF だと state がアカウントやリージョンと無関係なので。
+
+## `cdk init` で パッケージマネージャの指定と、`git init`を止めさせたい
+
+[cdk init - AWS Cloud Development Kit (AWS CDK) v2](https://docs.aws.amazon.com/cdk/v2/guide/ref-cli-cmd-init.html)
+
+```sh
+cdk init app -l typescript --generate-only
+bun i  # ここは好きなパッケージマネージャを使う
+git init
+git add --all
+git commit -am 'initial commit'
+```
