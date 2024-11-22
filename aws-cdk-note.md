@@ -11,6 +11,7 @@
 - [dependsOn を明示する](#dependson-を明示する)
 - [cdk.CfnOutput() と cdk.Fn.importValue()](#cdkcfnoutput-と-cdkfnimportvalue)
 - [`cdk init` で パッケージマネージャの指定と、`git init`を止めさせたい](#cdk-init-で-パッケージマネージャの指定とgit-initを止めさせたい)
+- [lambda.Function のかわりに NodejsFunction を使う](#lambdafunction-のかわりに-nodejsfunction-を使う)
 
 ## インストール
 
@@ -226,3 +227,18 @@ git init
 git add --all
 git commit -am 'initial commit'
 ```
+
+## lambda.Function のかわりに NodejsFunction を使う
+
+- [class Function (construct) · AWS CDK](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Function.html) - ZIP や Image は、これでしか扱えない
+- aws-cdk-lib なので安定板
+  - [class NodejsFunction (construct) · AWS CDK](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda_nodejs.NodejsFunction.html)
+- @aws-cdk/なので、古いまたはアルファ版
+  - [class PythonFunction (construct) · AWS CDK](https://docs.aws.amazon.com/cdk/api/v2/docs/@aws-cdk_aws-lambda-python-alpha.PythonFunction.html)
+  - [class GoFunction (construct) · AWS CDK](https://docs.aws.amazon.com/cdk/api/v2/docs/@aws-cdk_aws-lambda-go-alpha.GoFunction.html)
+
+NodejsFunction を使うと、モジュールの管理や TypeScript のトランスパイルなんかを esbuild がやってくれるので、すごい楽。
+
+ただし esbuild がインストールされてないと、Docker でやろうとしてイメージをビルドしはじめるので、先に`npm add esbuild -D` しておくといい。
+
+esbuild オプションも渡せるので「バンドルせずに layer にするモジュール」も指定できるし、mjs も cjs も出せる。minify も。

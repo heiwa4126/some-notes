@@ -1,41 +1,50 @@
 # AWS SAM と AWS Lambda のメモ
 
-- [AWS SAM と AWS Lambda のメモ](#aws-sam-と-aws-lambda-のメモ)
-  - [outputs をメモするのを忘れたら](#outputs-をメモするのを忘れたら)
-  - [template.yaml でリソースを作り、lamda にそれのアクセス権を与える](#templateyaml-でリソースを作りlamda-にそれのアクセス権を与える)
-  - [template.yaml で作っていないリソースに対して、lamda にアクセス権を与える](#templateyaml-で作っていないリソースに対してlamda-にアクセス権を与える)
-  - [SAM のアップロード用 S3 bucket が同じ名前になるのはなんで?](#sam-のアップロード用-s3-bucket-が同じ名前になるのはなんで)
-  - [AWS Lambda と SAM の参考](#aws-lambda-と-sam-の参考)
-  - [AWS Lambda 関数のバージョン](#aws-lambda-関数のバージョン)
-  - [まずはここかから](#まずはここかから)
-  - [API Gateway にカスタムドメインを](#api-gateway-にカスタムドメインを)
-  - [CFn の変数](#cfn-の変数)
-  - [log](#log)
-  - [SAM の template.yaml で Fn::Transeform が使えない](#sam-の-templateyaml-で-fntranseform-が使えない)
-  - [SAM の自動テスト](#sam-の自動テスト)
-  - [SAM の policy のテンプレート](#sam-の-policy-のテンプレート)
-  - [SAM で layer を使う](#sam-で-layer-を使う)
-  - [他人の SAM を参考にする](#他人の-sam-を参考にする)
-  - [layer](#layer)
-    - [注意](#注意)
-  - [CloudWatch Events で定期実行する SAM プロジェクト](#cloudwatch-events-で定期実行する-sam-プロジェクト)
-  - [テンプレート](#テンプレート)
-  - [AWS::Serverless::HttpApi](#awsserverlesshttpapi)
-  - [SAM で認証認可が必要な lambda を書く](#sam-で認証認可が必要な-lambda-を書く)
-    - [SSL クライアント証明書も使えるらしい](#ssl-クライアント証明書も使えるらしい)
-    - [API キー](#api-キー)
-    - [Lambda オーソライザー](#lambda-オーソライザー)
-    - [Cognito](#cognito)
-  - [AWS::Serverless::Function が自動的につくるリソース](#awsserverlessfunction-が自動的につくるリソース)
-  - [sam local invoke](#sam-local-invoke)
-    - [オプション -n (--env-vars)](#オプション--n---env-vars)
-    - [オプション -e (--event)](#オプション--e---event)
-    - [オプション --region](#オプション---region)
-  - [HelloWorldFunction may not have authorization defined, Is this okay?](#helloworldfunction-may-not-have-authorization-defined-is-this-okay)
-  - [Functions の Policies に ManagedPolicy を書く方法](#functions-の-policies-に-managedpolicy-を書く方法)
-  - [aws-sam-cli-managed-default というスタック](#aws-sam-cli-managed-default-というスタック)
-  - [sam deploy でデプロイする](#sam-deploy-でデプロイする)
-  - [AWS::Partition 疑似パラメータ](#awspartition-疑似パラメータ)
+- [outputs をメモするのを忘れたら](#outputs-をメモするのを忘れたら)
+- [template.yaml でリソースを作り、lamda にそれのアクセス権を与える](#templateyaml-でリソースを作りlamda-にそれのアクセス権を与える)
+- [template.yaml で作っていないリソースに対して、lamda にアクセス権を与える](#templateyaml-で作っていないリソースに対してlamda-にアクセス権を与える)
+- [SAM のアップロード用 S3 bucket が同じ名前になるのはなんで?](#sam-のアップロード用-s3-bucket-が同じ名前になるのはなんで)
+- [AWS Lambda と SAM の参考](#aws-lambda-と-sam-の参考)
+- [AWS Lambda 関数のバージョン](#aws-lambda-関数のバージョン)
+- [まずはここかから](#まずはここかから)
+- [API Gateway にカスタムドメインを](#api-gateway-にカスタムドメインを)
+- [CFn の変数](#cfn-の変数)
+- [log](#log)
+- [SAM の template.yaml で Fn::Transeform が使えない](#sam-の-templateyaml-で-fntranseform-が使えない)
+- [SAM の自動テスト](#sam-の自動テスト)
+- [SAM の policy のテンプレート](#sam-の-policy-のテンプレート)
+- [SAM で layer を使う](#sam-で-layer-を使う)
+- [他人の SAM を参考にする](#他人の-sam-を参考にする)
+- [layer](#layer)
+  - [注意](#注意)
+- [CloudWatch Events で定期実行する SAM プロジェクト](#cloudwatch-events-で定期実行する-sam-プロジェクト)
+- [テンプレート](#テンプレート)
+- [AWS::Serverless::HttpApi](#awsserverlesshttpapi)
+- [SAM で認証認可が必要な lambda を書く](#sam-で認証認可が必要な-lambda-を書く)
+  - [SSL クライアント証明書も使えるらしい](#ssl-クライアント証明書も使えるらしい)
+  - [API キー](#api-キー)
+  - [Lambda オーソライザー](#lambda-オーソライザー)
+  - [Cognito](#cognito)
+- [AWS::Serverless::Function が自動的につくるリソース](#awsserverlessfunction-が自動的につくるリソース)
+- [sam local invoke](#sam-local-invoke)
+  - [オプション -n (--env-vars)](#オプション--n---env-vars)
+  - [オプション -e (--event)](#オプション--e---event)
+  - [オプション --region](#オプション---region)
+- [HelloWorldFunction may not have authorization defined, Is this okay?](#helloworldfunction-may-not-have-authorization-defined-is-this-okay)
+- [Functions の Policies に ManagedPolicy を書く方法](#functions-の-policies-に-managedpolicy-を書く方法)
+- [aws-sam-cli-managed-default というスタック](#aws-sam-cli-managed-default-というスタック)
+- [sam deploy でデプロイする](#sam-deploy-でデプロイする)
+- [AWS::Partition 疑似パラメータ](#awspartition-疑似パラメータ)
+- [sam local invoke で body やメソッド、環境変数を渡す](#sam-local-invoke-で-body-やメソッド環境変数を渡す)
+  - [メソッドの指定](#メソッドの指定)
+  - [contents の渡し方](#contents-の渡し方)
+    - [方法 1: イベント JSON ファイルを指定](#方法-1-イベント-json-ファイルを指定)
+    - [方法 2: 標準入力でデータを渡す](#方法-2-標準入力でデータを渡す)
+  - [環境変数の渡し方](#環境変数の渡し方)
+    - [方法 1: 実行環境の変数を渡す](#方法-1-実行環境の変数を渡す)
+    - [方法 2: `--env-vars` オプションを使う](#方法-2---env-vars-オプションを使う)
+    - [方法 3: `template.yaml` の `Globals` セクションで指定](#方法-3-templateyaml-の-globals-セクションで指定)
+- [service-role/AWSLambdaBasicExecutionRole は強すぎる](#service-roleawslambdabasicexecutionrole-は強すぎる)
 
 ## outputs をメモするのを忘れたら
 
@@ -120,7 +129,7 @@ SomeBucket=********** sam local invoke
 
 参考:
 
-- [AWS SAM がめちゃめちゃアップデートされてる件 – Classmethod サーバーレス Advent Calendar 2017 #serverless #adventcalendar #reinvent ｜ Developers.IO](https://dev.classmethod.jp/server-side/serverless/20171203-updates-about-aws-serverless-application-model/) - ちょっと古いけど参考になる
+- [AWS SAM がめちゃめちゃアップデートされてる件 – Classmethod サーバーレス Advent Calendar 2017 #serverless #adventcalendar #reinvent | Developers.IO](https://dev.classmethod.jp/server-side/serverless/20171203-updates-about-aws-serverless-application-model/) - ちょっと古いけど参考になる
 - [AWS SAM テンプレートを作成する - AWS CodeDeploy](https://docs.aws.amazon.com/ja_jp/codedeploy/latest/userguide/tutorial-lambda-sam-template.html)
 - [Lambda 関数で使用できる環境変数 - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/lambda-environment-variables.html) - デフォルトの環境変数。かぶらないようにする、または意図的にオーバライドする。
 
@@ -136,23 +145,23 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: "2012-10-17"
+        Version: '2012-10-17'
         Statement:
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
-            Action: "sts:AssumeRole"
+            Action: 'sts:AssumeRole'
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Policies:
         - PolicyName: policy1
           PolicyDocument:
-            Version: "2012-10-17"
+            Version: '2012-10-17'
             Statement:
               - Effect: Allow
                 Action:
-                  - "secretsmanager:GetSecretValue"
-                Resource: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                  - 'secretsmanager:GetSecretValue'
+                Resource: 'arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
   SecretTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -185,7 +194,7 @@ Resources:
       Runtime: python3.6
       Policies:
         - AWSSecretsManagerGetSecretValuePolicy:
-            SecretArn: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            SecretArn: 'arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ```
 
 ただ、世の中には"LB のルールの順番を入れ替える lambda"みたいのもあって
@@ -203,16 +212,16 @@ Resources:
 - [AWS Lambda 関数を使用する際のベストプラクティス - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/best-practices.html)
 - [AWS Lambda 環境変数 - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/env_variables.html)
 - [Lambda 関数で環境変数のクライアント側を暗号化する - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/tutorial-env_console.html)
-- [[アップデート]AWS SAM のデプロイが簡単になりました ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/aws-sam-simplifies-deployment/)
+- [[アップデート]AWS SAM のデプロイが簡単になりました | Developers.IO](https://dev.classmethod.jp/cloud/aws/aws-sam-simplifies-deployment/)
 - [AWS SAM を使う前に CloudFormation テンプレートを書こう - Qiita](https://qiita.com/izanari/items/78258251cced2f713b33)
 
 ## AWS Lambda 関数のバージョン
 
 - [AWS Lambda 関数のバージョン - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/configuration-versions.html)
 - [AWS Lambda 関数のエイリアス - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/configuration-aliases.html)
-- [AWS Lambda のバージョン管理の仕組み ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/lambda-versioning/)
+- [AWS Lambda のバージョン管理の仕組み | Developers.IO](https://dev.classmethod.jp/cloud/aws/lambda-versioning/)
 - [AWS Lambda バージョン管理のススメ - Qiita](https://qiita.com/quotto/items/4c364074edc69cb67d70)
-- [TECHSCORE ｜知っておきたかった AWS SAM の小ネタ 4 選 | TECHSCORE BLOG](https://www.techscore.com/blog/2018/12/07/aws-sam-tips/) - `--parameter-overrides`の使い所が参考になる。
+- [TECHSCORE |知っておきたかった AWS SAM の小ネタ 4 選 | TECHSCORE BLOG](https://www.techscore.com/blog/2018/12/07/aws-sam-tips/) - `--parameter-overrides`の使い所が参考になる。
 
 ## まずはここかから
 
@@ -281,7 +290,7 @@ api-id
 
 API ID を得るには
 
-```
+```sh
 aws apigateway get-rest-apis
 ```
 
@@ -325,7 +334,7 @@ Resources:
     DependsOn: HelloWorldFunction
     Properties:
       RetentionInDays: 7
-      LogGroupName: !Join ["", ["/aws/lambda/", !Ref HelloWorldFunction]]
+      LogGroupName: !Join ['', ['/aws/lambda/', !Ref HelloWorldFunction]]
 ```
 
 これ LogGroupName がデフォルトと一緒なので、
@@ -334,10 +343,7 @@ Resources:
 最初に書くか、別のパスにするか。
 
 ```yaml
-LogGroupName: !Join [
-  "/",
-  ["/aws/lambda", !Ref AWS::StackName, !Ref HelloWorldFunction],
-]
+LogGroupName: !Join ['/', ['/aws/lambda', !Ref AWS::StackName, !Ref HelloWorldFunction]]
 ```
 
 みたいにするといいとおもう。
@@ -579,12 +585,12 @@ Lambda オーソライザーか cognito のほうが楽かも...調べる
 
 (戻ってきた)
 API キーがなぜ API Gateway のオーソライザーの中にないか? どうもこれは OpenAPI(swaggr)の規格だかららしい。
-[API キーを使用する理由と条件  |  OpenAPI を使用した Cloud Endpoints  |  Google Cloud](https://cloud.google.com/endpoints/docs/openapi/when-why-api-key?hl=ja) ← これわかりやすい。Google の翻訳は良い。
+[API キーを使用する理由と条件 | OpenAPI を使用した Cloud Endpoints | Google Cloud](https://cloud.google.com/endpoints/docs/openapi/when-why-api-key?hl=ja) ← これわかりやすい。Google の翻訳は良い。
 
 ↑ から引用 ↓
 
-- API キーは、API の呼び出し元のプロジェクト（アプリケーションまたはサイト）を識別します。
-- 認証トークンは、アプリまたはサイトを利用するユーザー（個人）を識別します
+- API キーは、API の呼び出し元のプロジェクト(アプリケーションまたはサイト)を識別します。
+- 認証トークンは、アプリまたはサイトを利用するユーザー(個人)を識別します
 
 ### Lambda オーソライザー
 
@@ -788,16 +794,7 @@ aws-sam-cli-managed-default stack はあるか。
               "Action": ["s3:GetObject"],
               "Effect": "Allow",
               "Resource": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    { "Ref": "AWS::Partition" },
-                    ":s3:::",
-                    { "Ref": "SamCliSourceBucket" },
-                    "/*"
-                  ]
-                ]
+                "Fn::Join": ["", ["arn:", { "Ref": "AWS::Partition" }, ":s3:::", { "Ref": "SamCliSourceBucket" }, "/*"]]
               },
               "Principal": { "Service": "serverlessrepo.amazonaws.com" },
               "Condition": {
@@ -852,3 +849,103 @@ template.yaml に "aws:" って書いてあるところ全部治すべき。
 似たものに
 [AWS::URLSuffix](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html#cfn-pseudo-param-urlsuffix)
 がある、こっちはあんまりないかも。
+
+## sam local invoke で body やメソッド、環境変数を渡す
+
+`sam local invoke -t <template> <functionID>`
+
+### メソッドの指定
+
+`event.json` ファイルにメソッドを指定して -e オプションで渡す。
+
+```json
+{
+  "httpMethod": "POST",
+  "body": "{ \"key\": \"value\" }",
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}
+```
+
+と書いて、こんな感じで渡す。contents も渡せる
+
+```bash
+sam local invoke MyFunctionName -e event.json
+```
+
+### contents の渡し方
+
+#### 方法 1: イベント JSON ファイルを指定
+
+前述のように `-e` オプションを使い、ファイルを指定
+
+#### 方法 2: 標準入力でデータを渡す
+
+標準入力を使って直接 JSON データを渡すことも可能
+
+```bash
+echo '{ "key": "value" }' | sam local invoke MyFunctionName
+```
+
+### 環境変数の渡し方
+
+#### 方法 1: 実行環境の変数を渡す
+
+実行環境の変数をそのまま Lambda に渡せる。
+
+```bash
+ENV_VAR1=value1 ENV_VAR2=value2 sam local invoke MyFunctionName
+```
+
+#### 方法 2: `--env-vars` オプションを使う
+
+環境変数を定義した JSON ファイルを作成し(例: `env.json`)
+
+```json
+{
+  "MyFunctionName": {
+    "ENV_VAR1": "value1",
+    "ENV_VAR2": "value2"
+  }
+}
+```
+
+`--env-vars` オプションで渡す
+
+```bash
+sam local invoke MyFunctionName --env-vars env.json
+```
+
+#### 方法 3: `template.yaml` の `Globals` セクションで指定
+
+SAM テンプレートで環境変数を定義することもできます:
+
+```yaml
+Globals:
+  Function:
+    Environment:
+      Variables:
+        ENV_VAR1: value1
+        ENV_VAR2: value2
+```
+
+## service-role/AWSLambdaBasicExecutionRole は強すぎる
+
+[AWSLambdaBasicExecutionRole - AWS マネージドポリシー](https://docs.aws.amazon.com/ja_jp/aws-managed-policy/latest/reference/AWSLambdaBasicExecutionRole.html#AWSLambdaBasicExecutionRole-json)
+
+可能なら、特定の Log にのみ書き込めた方がいいかも。例:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
+      // "Resource" : "*", // 元のAWSLambdaBasicExecutionRoleの設定
+      "Resource": ["arn:aws:logs:<region>:<account-id>:log-group:/aws/lambda/<your-lambda-name>:*"]
+    }
+  ]
+}
+```
