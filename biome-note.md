@@ -8,6 +8,12 @@
   "organizeImports": {
     "enabled": true
   },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "root": "."
+  },
   "json": {
     "parser": {
       "allowComments": true,
@@ -29,6 +35,9 @@
 ```
 
 コメント入り JSON と 末尾のコンマを許可している。
+
+vcs.root は、~/biome.json でまとめて設定を書く用。
+[Configuration | Biome](https://biomejs.dev/reference/configuration/#vcs)参照
 
 ## ありがちな run-scripts
 

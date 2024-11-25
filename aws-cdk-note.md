@@ -12,6 +12,7 @@
 - [cdk.CfnOutput() と cdk.Fn.importValue()](#cdkcfnoutput-と-cdkfnimportvalue)
 - [`cdk init` で パッケージマネージャの指定と、`git init`を止めさせたい](#cdk-init-で-パッケージマネージャの指定とgit-initを止めさせたい)
 - [lambda.Function のかわりに NodejsFunction を使う](#lambdafunction-のかわりに-nodejsfunction-を使う)
+- [AWS CDK と CloudFormation の Pros \& Cons](#aws-cdk-と-cloudformation-の-pros--cons)
 
 ## インストール
 
@@ -30,9 +31,8 @@ cdk bootstrap aws://123456789012/ap-northeast-1
 
 ## AWS CDK Workshop
 
-素性はよくわからないけど日本語あった。[AWS Cloud Development Kit \(AWS CDK\) ワークショップへようこそ!](https://summit-online-japan-cdk.workshop.aws/)
-
 オリジナル: [AWS CDK Intro Workshop :: AWS Cloud Development Kit (AWS CDK) Workshop](https://cdkworkshop.com/)
+日本語もあります。
 
 ## AWS CloudShell
 
@@ -221,6 +221,7 @@ CDKTF だと state がアカウントやリージョンと無関係なので。
 [cdk init - AWS Cloud Development Kit (AWS CDK) v2](https://docs.aws.amazon.com/cdk/v2/guide/ref-cli-cmd-init.html)
 
 ```sh
+mkdir learn-cdk1 && cd !$  # フォルダ名わりと重要。パッケージ名に使われる。
 cdk init app -l typescript --generate-only
 bun i  # ここは好きなパッケージマネージャを使う
 git init
@@ -242,3 +243,45 @@ NodejsFunction を使うと、モジュールの管理や TypeScript のトラ�
 ただし esbuild がインストールされてないと、Docker でやろうとしてイメージをビルドしはじめるので、先に`npm add esbuild -D` しておくといい。
 
 esbuild オプションも渡せるので「バンドルせずに layer にするモジュール」も指定できるし、mjs も cjs も出せる。minify も。
+
+## AWS CDK と CloudFormation の Pros & Cons
+
+利点:
+
+- **抽象化されたリソース定義**: 高レベルの抽象化により、複雑な CloudFormation テンプレートを簡潔なコードで記述可能。
+- **プログラミングの柔軟性**: TypeScript や Python などの言語でロジックを組み込め、動的なリソース作成が可能。
+- **モジュール性と再利用性**: スタックやコンストラクトを分離してモジュール化し、再利用性を高められる。
+- **簡単なデプロイ**: `cdk deploy`コマンドで、コードからリソース作成や更新を簡単に実行。
+- **変更のプレビュー**: `cdk diff`コマンドで、リソース変更の差分を視覚的に確認できる。
+- **コミュニティサポート**: AWS 公式ライブラリやサードパーティ製の便利な Construct が豊富。
+
+欠点:
+
+- **学習コスト**: CDK 独自の API や設計思想を理解する必要があり、初心者にはハードルが高い。
+- **抽象化の制限**: 高レベル抽象が原因で、細かい設定が必要な場合に CloudFormation を直接操作する必要がある。
+- **依存関係の管理**: CDK ライブラリの更新に伴う破壊的変更や依存関係の複雑化が発生する場合がある。
+- **デバッグの難しさ**: CloudFormation エラーが発生した際、エラーの原因が CDK コードから追いづらい。
+- **生成テンプレートのサイズ**: CDK が生成する CloudFormation テンプレートが冗長になることがある。
+- **対応の遅れ**: 新しい AWS サービスや機能が CDK に対応するまでにタイムラグがある場合がある。
+- **デプロイの遅延**: 大規模なスタックではデプロイに時間がかかることがある。
+
+以下中学生版
+
+AWS CDK のいいところ:
+
+- **シンプルに書ける**: むずかしい設定も、プログラムを書くみたいに簡単に書ける。
+- **自由に操作できる**: プログラムで条件をつけたり、自動でリソースを作ったりできる。
+- **使い回せる**: 作ったものをいろいろなプロジェクトで使えるようにできる。
+- **簡単に公開できる**: コマンド 1 つで作ったリソースを AWS に送れる。
+- **変更が分かりやすい**: 「どこが変わったか」を確認できる機能がある。
+- **たくさんの便利な部品**: AWS 公式や他の人が作った便利なツールがたくさん使える。
+
+AWS CDK のよくないところ:
+
+- **覚えるのが大変**: 使い方を理解するまでに時間がかかる。
+- **細かい設定が難しい**: 難しいカスタマイズをする時は、別の方法を使わないといけないことがある。
+- **更新が面倒なことも**: 新しい機能が増えると、CDK の設定を直さないといけない場合がある。
+- **エラーが分かりにくい**: プログラムを動かした時に起きた問題の原因が探しにくい。
+- **作るものが増える**: 作ったファイルが大きくて見づらくなることがある。
+- **新機能への対応が遅れる**: AWS の新しいサービスが CDK で使えるようになるまで時間がかかることがある。
+- **時間がかかることも**: 大きなプロジェクトだと、AWS に送るのに時間がかかることがある。
