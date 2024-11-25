@@ -13,6 +13,7 @@
 - [`cdk init` で パッケージマネージャの指定と、`git init`を止めさせたい](#cdk-init-で-パッケージマネージャの指定とgit-initを止めさせたい)
 - [lambda.Function のかわりに NodejsFunction を使う](#lambdafunction-のかわりに-nodejsfunction-を使う)
 - [AWS CDK と CloudFormation の Pros \& Cons](#aws-cdk-と-cloudformation-の-pros--cons)
+- [CDK で物理 ID が指定できるリソース](#cdk-で物理-id-が指定できるリソース)
 
 ## インストール
 
@@ -285,3 +286,56 @@ AWS CDK のよくないところ:
 - **作るものが増える**: 作ったファイルが大きくて見づらくなることがある。
 - **新機能への対応が遅れる**: AWS の新しいサービスが CDK で使えるようになるまで時間がかかることがある。
 - **時間がかかることも**: 大きなプロジェクトだと、AWS に送るのに時間がかかることがある。
+
+## CDK で物理 ID が指定できるリソース
+
+そもそも AWS CDK では物理名を設定することは非推奨だけれども、プロパティによって指定できるものプロパティもある。
+
+| リソース名                            | プロパティ             | 説明                           |
+| ------------------------------------- | ---------------------- | ------------------------------ |
+| **S3 バケット**                       | `bucketName`           | バケット名を指定               |
+| **DynamoDB テーブル**                 | `tableName`            | テーブル名を指定               |
+| **EFS ファイルシステム**              | `fileSystemName`       | ファイルシステム名を指定       |
+| **VPC**                               | `vpcName`              | VPC の名前を指定               |
+| **サブネット**                        | `subnetName`           | サブネットの名前を指定         |
+| **セキュリティグループ**              | `securityGroupName`    | セキュリティグループ名を指定   |
+| **Elastic Load Balancer (ALB/NLB)**   | `loadBalancerName`     | ロードバランサー名を指定       |
+| **EC2 インスタンス**                  | `instanceName`         | インスタンス名を指定           |
+| **ECS クラスター**                    | `clusterName`          | クラスター名を指定             |
+| **Lambda 関数**                       | `functionName`         | 関数名を指定                   |
+| **RDS インスタンス**                  | `dbInstanceIdentifier` | インスタンス ID を指定         |
+| **Aurora クラスター**                 | `clusterIdentifier`    | クラスター ID を指定           |
+| **ElastiCache クラスター**            | `clusterName`          | クラスター名を指定             |
+| **Neptune クラスター**                | `dbClusterIdentifier`  | クラスター ID を指定           |
+| **SNS トピック**                      | `topicName`            | トピック名を指定               |
+| **SQS キュー**                        | `queueName`            | キュー名を指定                 |
+| **CloudFront ディストリビューション** | `distributionName`     | ディストリビューション名を指定 |
+| **IAM ロール**                        | `roleName`             | ロール名を指定                 |
+| **IAM ユーザー**                      | `userName`             | ユーザー名を指定               |
+| **IAM グループ**                      | `groupName`            | グループ名を指定               |
+| **IAM ポリシー**                      | `policyName`           | ポリシー名を指定               |
+| **CloudWatch アラーム**               | `alarmName`            | アラーム名を指定               |
+| **CloudWatch ダッシュボード**         | `dashboardName`        | ダッシュボード名を指定         |
+| **Logs グループ**                     | `logGroupName`         | ロググループ名を指定           |
+
+※ この表は一部。
+
+一方 CDK で絶対に物理名を固定できないリソースは
+
+| リソース名                                    | 説明                                                                                |
+| --------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **VPC ピアリング**                            | VPC ピアリングの ID は自動生成されるため、ユーザーが指定できません。                |
+| **IAM ロールポリシーアタッチメント**          | ロールポリシーアタッチメントは ID が自動生成されます。                              |
+| **Auto Scaling グループ**                     | Auto Scaling グループの ID は自動生成され、名前を固定できません。                   |
+| **Elastic IP**                                | Elastic IP は自動的に割り当てられる IP アドレスで、物理 ID は手動で指定できません。 |
+| **Route 53 レコードセット**                   | レコードセットの名前や ID は自動生成されます。                                      |
+| **CloudFormation スタック**                   | スタックの ID は自動生成され、ユーザーが直接指定することはできません。              |
+| **Amazon Kinesis ストリーム**                 | ストリーム名は指定できますが、ストリーム ID は自動生成されます。                    |
+| **SQS キュー（FIFO）**                        | FIFO キューは名前を指定できますが、物理 ID（内部的なキュー ID）は自動生成されます。 |
+| **CloudWatch イベントルール**                 | ルールの ID は CloudFormation が自動生成します。                                    |
+| **API Gateway リソース**                      | リソース ID は自動生成されます。                                                    |
+| **SNS サブスクリプション**                    | サブスクリプションの ID は自動生成され、手動で指定できません。                      |
+| **DynamoDB グローバルセカンダリインデックス** | インデックス ID は自動的に生成されます。                                            |
+| **CloudWatch メトリクス**                     | メトリクス名は指定できますが、メトリクスの内部 ID は自動生成されます。              |
+| **Lambda レイヤー**                           | レイヤーの ID は自動生成されます。                                                  |
+| **Elastic Beanstalk 環境**                    | 環境 ID は自動生成されます。                                                        |
