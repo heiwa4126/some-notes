@@ -14,6 +14,7 @@
 - [lambda.Function のかわりに NodejsFunction を使う](#lambdafunction-のかわりに-nodejsfunction-を使う)
 - [AWS CDK と CloudFormation の Pros \& Cons](#aws-cdk-と-cloudformation-の-pros--cons)
 - [CDK で物理 ID が指定できるリソース](#cdk-で物理-id-が指定できるリソース)
+- [Construct](#construct)
 
 ## インストール
 
@@ -339,3 +340,10 @@ AWS CDK のよくないところ:
 | **CloudWatch メトリクス**                     | メトリクス名は指定できますが、メトリクスの内部 ID は自動生成されます。              |
 | **Lambda レイヤー**                           | レイヤーの ID は自動生成されます。                                                  |
 | **Elastic Beanstalk 環境**                    | 環境 ID は自動生成されます。                                                        |
+
+## Construct
+
+`import type { Construct } from "constructs";` の Construct。
+汎用っぽい名前だけど、AWS CDK 専用。"aws-cdk-lib/constructs" にするべきだったのでは?
+
+[constructs - npm](https://www.npmjs.com/package/constructs)
