@@ -15,6 +15,13 @@
 - [AWS CDK と CloudFormation の Pros \& Cons](#aws-cdk-と-cloudformation-の-pros--cons)
 - [CDK で物理 ID が指定できるリソース](#cdk-で物理-id-が指定できるリソース)
 - [Construct](#construct)
+- [AWS CDK プロジェクトの構成](#aws-cdk-プロジェクトの構成)
+  - [`bin/` ディレクトリ](#bin-ディレクトリ)
+  - [`lib/` ディレクトリ](#lib-ディレクトリ)
+  - [その他のファイル](#その他のファイル)
+  - [CDK のディレクトリ構造参考リンク](#cdk-のディレクトリ構造参考リンク)
+- [何でコンストラクタでリソースをつくるの?](#何でコンストラクタでリソースをつくるの)
+- [AWS CDK のテストはどう書く?](#aws-cdkのテストはどう書く)
 
 ## インストール
 
@@ -332,7 +339,7 @@ AWS CDK のよくないところ:
 | **Route 53 レコードセット**                   | レコードセットの名前や ID は自動生成されます。                                      |
 | **CloudFormation スタック**                   | スタックの ID は自動生成され、ユーザーが直接指定することはできません。              |
 | **Amazon Kinesis ストリーム**                 | ストリーム名は指定できますが、ストリーム ID は自動生成されます。                    |
-| **SQS キュー（FIFO）**                        | FIFO キューは名前を指定できますが、物理 ID（内部的なキュー ID）は自動生成されます。 |
+| **SQS キュー(FIFO)**                          | FIFO キューは名前を指定できますが、物理 ID(内部的なキュー ID)は自動生成されます。   |
 | **CloudWatch イベントルール**                 | ルールの ID は CloudFormation が自動生成します。                                    |
 | **API Gateway リソース**                      | リソース ID は自動生成されます。                                                    |
 | **SNS サブスクリプション**                    | サブスクリプションの ID は自動生成され、手動で指定できません。                      |
@@ -347,3 +354,47 @@ AWS CDK のよくないところ:
 汎用っぽい名前だけど、AWS CDK 専用。"aws-cdk-lib/constructs" にするべきだったのでは?
 
 [constructs - npm](https://www.npmjs.com/package/constructs)
+
+## AWS CDK プロジェクトの構成
+
+明確な規定はない。
+bin/と lib/じゃなくて、entry/と stack/にすればよかったのに。
+
+で、以下は慣習的なルール。
+
+### `bin/` ディレクトリ
+
+- **役割**: CDK アプリケーションのエントリポイントとなるスクリプトを配置します。「エントリーポイント」(entry point)と呼ぶ(非公式名称)。  
+  ここにあるスクリプトは、CDK アプリを初期化し、スタックをインスタンス化してデプロイ環境を定義します。
+- **内容**: 通常、プロジェクト名やアプリ名に基づくファイル名の TypeScript/JavaScript スクリプトが含まれます。`cdk deploy` コマンドで実行されるスクリプトです。
+
+### `lib/` ディレクトリ
+
+- **役割**: スタックの定義を行うコードを配置します。「スタック定義ファイル」(stack definition file)と呼ぶ(非公式名称)。 各スタックは、関連する AWS リソースをグループ化したものとして扱われます。
+- **内容**: TypeScript または JavaScript で記述されたクラスファイルが格納されます。複数のスタックを作成する場合は、`lib/` 以下に複数のファイルを配置することが一般的です。
+
+### その他のファイル
+
+- **`cdk.json`**: CDK アプリの設定ファイルで、エントリポイントスクリプトやデフォルトの設定を記述。
+- **`cdk.context.json`**: デプロイ時に使用されるコンテキスト値を保存。
+- **`node_modules/`**: 必要な依存パッケージがインストールされる Node.js 標準のディレクトリ。
+
+### CDK のディレクトリ構造参考リンク
+
+- [大規模プロジェクトのコード編成 - AWS 規範ガイダンス](https://docs.aws.amazon.com/ja_jp/prescriptive-guidance/latest/best-practices-cdk-typescript-iac/organizing-code-best-practices.html)
+- [Understanding AWS-CDK Directory Structure](https://www.turbogeek.co.uk/cdk-files/)
+
+## 何でコンストラクタでリソースをつくるの?
+
+CDK のスタックやコンストラクトは、「インフラの状態」を明示的に構築する設計思想に基づいています。リソースはコンストラクタ内で定義されることで、構成要素がスタックの初期化時に完全に定義されます。
+
+リソースは「ステート」だからそうなるわな。
+
+クラスメソッドをサポートスクリプト(同じパターンのリソースを何度も作るなど)として
+使うのはベストプラクティスに従っている。
+
+[AWS CDK ベストプラクティス - AWS 規範ガイダンス](https://docs.aws.amazon.com/ja_jp/prescriptive-guidance/latest/best-practices-cdk-typescript-iac/best-practices.html)
+
+## AWS CDK のテストはどう書く?
+
+[テスト駆動型の開発アプローチを採用 - AWS 規範ガイダンス](https://docs.aws.amazon.com/ja_jp/prescriptive-guidance/latest/best-practices-cdk-typescript-iac/development-best-practices.html)
