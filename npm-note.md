@@ -1,39 +1,39 @@
 # npm メモ
 
-- [npm メモ](#npm-メモ)
-  - [多分最初にこれよんだほうがよさそう](#多分最初にこれよんだほうがよさそう)
-  - [scripts のコロン](#scripts-のコロン)
-  - [package.json の dependencies のバージョン](#packagejson-の-dependencies-のバージョン)
-  - [package.json の linter はありますか?](#packagejson-の-linter-はありますか)
-  - [package.json の bin フィールド](#packagejson-の-bin-フィールド)
-  - [package.json の bin で複数書いて CommonJS と ECMAScript を混在させる](#packagejson-の-bin-で複数書いて-commonjs-と-ecmascript-を混在させる)
-  - [package.json の files に package.json を書く必要はありますか?](#packagejson-の-files-に-packagejson-を書く必要はありますか)
-  - [package.json の exports の node](#packagejson-の-exports-の-node)
-  - [package.json の exports vs main](#packagejson-の-exports-vs-main)
-  - [package.json の exports 内の types を使えるのはどのバージョンの tsc からですか?](#packagejson-の-exports-内の-types-を使えるのはどのバージョンの-tsc-からですか)
-  - [tsconfig の moduleResolution](#tsconfig-の-moduleresolution)
-  - [TypeScript 5.0 で追加された moduleResorution: bundle](#typescript-50-で追加された-moduleresorution-bundle)
-  - [moduleResolution の node モジュール解決方式](#moduleresolution-の-node-モジュール解決方式)
-  - [ECMAScript Module Support と CommonJS implementation の違い](#ecmascript-module-support-と-commonjs-implementation-の違い)
-  - [`npm install -g` でインストールされたパッケージの一覧](#npm-install--g-でインストールされたパッケージの一覧)
-  - [`npm install -g` のインストール先を per user にする](#npm-install--g-のインストール先を-per-user-にする)
-  - [モジュールとパッケージの違い](#モジュールとパッケージの違い)
-  - [GitHub を`npm i` する](#github-をnpm-i-する)
-  - [.npmrc は HOME 以外の場所にできませんか?](#npmrc-は-home-以外の場所にできませんか)
-  - [`npm version`サブコマンド](#npm-versionサブコマンド)
-  - [npm パッケージを GitHub の releases として公開](#npm-パッケージを-github-の-releases-として公開)
-  - [`npm run` でなくて実行できるもの](#npm-run-でなくて実行できるもの)
-  - [新しめの linter や formatter など (2024-04)](#新しめの-linter-や-formatter-など-2024-04)
-  - [package.json に作者名とメールアドレスを書く](#packagejson-に作者名とメールアドレスを書く)
-  - [npm unlink は存在しない](#npm-unlink-は存在しない)
-  - [npm でグローバルでインストールしたパッケージを require() で呼ぶ](#npm-でグローバルでインストールしたパッケージを-require-で呼ぶ)
-    - [モジュールを探しに行くパスをリストするなら](#モジュールを探しに行くパスをリストするなら)
-    - [まとめ](#まとめ)
-  - [npx foo で実行されるのは何?](#npx-foo-で実行されるのは何)
-  - [npm link を ローカルの node_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
-    - [注意](#注意)
-  - [`npm i`, `npm ci`, `npm up` の違い](#npm-i-npm-ci-npm-up-の違い)
-  - [npm-version のサブコマンドでわかりにくいやつ](#npm-version-のサブコマンドでわかりにくいやつ)
+- [多分最初にこれよんだほうがよさそう](#多分最初にこれよんだほうがよさそう)
+- [scripts のコロン](#scripts-のコロン)
+- [package.json の dependencies のバージョン](#packagejson-の-dependencies-のバージョン)
+- [package.json の linter はありますか?](#packagejson-の-linter-はありますか)
+- [package.json の bin フィールド](#packagejson-の-bin-フィールド)
+- [package.json の bin で複数書いて CommonJS と ECMAScript を混在させる](#packagejson-の-bin-で複数書いて-commonjs-と-ecmascript-を混在させる)
+- [package.json の files に package.json を書く必要はありますか?](#packagejson-の-files-に-packagejson-を書く必要はありますか)
+- [package.json の exports の node](#packagejson-の-exports-の-node)
+- [package.json の exports vs main](#packagejson-の-exports-vs-main)
+- [package.json の exports 内の types を使えるのはどのバージョンの tsc からですか?](#packagejson-の-exports-内の-types-を使えるのはどのバージョンの-tsc-からですか)
+- [tsconfig の moduleResolution](#tsconfig-の-moduleresolution)
+- [TypeScript 5.0 で追加された moduleResorution: bundle](#typescript-50-で追加された-moduleresorution-bundle)
+- [moduleResolution の node モジュール解決方式](#moduleresolution-の-node-モジュール解決方式)
+- [ECMAScript Module Support と CommonJS implementation の違い](#ecmascript-module-support-と-commonjs-implementation-の違い)
+- [`npm install -g` でインストールされたパッケージの一覧](#npm-install--g-でインストールされたパッケージの一覧)
+- [`npm install -g` のインストール先を per user にする](#npm-install--g-のインストール先を-per-user-にする)
+- [モジュールとパッケージの違い](#モジュールとパッケージの違い)
+- [GitHub を`npm i` する](#github-をnpm-i-する)
+- [.npmrc は HOME 以外の場所にできませんか?](#npmrc-は-home-以外の場所にできませんか)
+- [`npm version`サブコマンド](#npm-versionサブコマンド)
+- [npm パッケージを GitHub の releases として公開](#npm-パッケージを-github-の-releases-として公開)
+- [`npm run` でなくて実行できるもの](#npm-run-でなくて実行できるもの)
+- [新しめの linter や formatter など (2024-04)](#新しめの-linter-や-formatter-など-2024-04)
+- [package.json に作者名とメールアドレスを書く](#packagejson-に作者名とメールアドレスを書く)
+- [npm unlink は存在しない](#npm-unlink-は存在しない)
+- [npm でグローバルでインストールしたパッケージを require() で呼ぶ](#npm-でグローバルでインストールしたパッケージを-require-で呼ぶ)
+  - [モジュールを探しに行くパスをリストするなら](#モジュールを探しに行くパスをリストするなら)
+  - [まとめ](#まとめ)
+- [npx foo で実行されるのは何?](#npx-foo-で実行されるのは何)
+- [npm link を ローカルの node_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
+  - [注意](#注意)
+- [`npm i`, `npm ci`, `npm up` の違い](#npm-i-npm-ci-npm-up-の違い)
+- [npm-version のサブコマンドでわかりにくいやつ](#npm-version-のサブコマンドでわかりにくいやつ)
+- [`npm update` と `ncu` の違い](#npm-update-と-ncu-の違い)
 
 ## 多分最初にこれよんだほうがよさそう
 
@@ -714,3 +714,22 @@ rm -rf "$NPM_CONFIG_PREFIX" # 別に消さなくてもいい
    結果: 1.0.1-2
 5. で `npm version patch`:
    結果: 1.0.1
+
+## `npm update` と `ncu` の違い
+
+ncu [npm-check-updates - npm](https://www.npmjs.com/package/npm-check-updates?ref=dailydev)
+
+`npm update` は package.json を変更しない。既存の範囲内で依存関係を更新する。
+例えば、package.json に書かれている依存関係が
+"^1.2.3" の場合、npm update は 1.x.x の最新バージョンに更新するが、
+2.0.0 には更新しない。
+
+`ncu` はとにかく最新のにするらしい。
+
+あと
+
+- `pnpm update` は `npm update`
+- `pnpm update -L` は `ncu`
+- `bun update` は `ncu` (これ嘘かも。`~`のやつちゃんと処理してる。`--latest`オプションがついたらしい。`bun update --help`参照)
+
+らしい。
