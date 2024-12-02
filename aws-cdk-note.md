@@ -415,7 +415,7 @@ CDK のスタックやコンストラクトは、「インフラの状態」を�
 
 1. あきらめる。
 2. リソースの物理 ID を固定する。あらかじめ名前で参照できるようにする。
-3. Lambda-backed custom resources を使い、SSM パラメータなどで値を共有する。
+3. (お勧めしない) Lambda-backed custom resources を使い、SSM パラメータなどで値を共有する。
    CDK の AwsCustomResource は Lambda-backed custom resources の一種。
 
 3.の欠点は
@@ -423,3 +423,4 @@ CDK のスタックやコンストラクトは、「インフラの状態」を�
 - physicalResourceId を毎回変えなければならない。cdk diff が毎回生ずる。
 - スタックの Outputs を渡そうとすると、AwsCustomResource では無理で、専用の Lambda-backed custom resources が必要。getResponseField()で、リーフノードしか指定できないから。
 
+上記の「欠点」は何を言ってるかわからないと思います。
