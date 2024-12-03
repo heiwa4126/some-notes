@@ -84,3 +84,10 @@ uv pip compile pyproject.toml -o requirements.txt
 ```
 
 dev は `--extra` オプションで出来そうな気がするのだが、動かない。
+
+## uv で PyTorch をインストールする
+
+参照:
+
+- [2\.5 CUDA 依存の PyTorch をインストールするための extra\-index\-url の設定](https://zenn.dev/turing_motors/articles/594fbef42a36ee#2.5-cuda%E4%BE%9D%E5%AD%98%E3%81%AEpytorch%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AEextra-index-url%E3%81%AE%E8%A8%AD%E5%AE%9A)
+- [Previous PyTorch Versions | PyTorch](https://pytorch.org/get-started/previous-versions/)
