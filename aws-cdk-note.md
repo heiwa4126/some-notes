@@ -23,6 +23,10 @@
 - [何でコンストラクタでリソースをつくるの?](#何でコンストラクタでリソースをつくるの)
 - [AWS CDK のテストはどう書く?](#aws-cdk-のテストはどう書く)
 - [マルチリージョンでスタック間の値を引き継ぐ](#マルチリージョンでスタック間の値を引き継ぐ)
+  - [おなじことを CDK for Terraform(CDKTF)でやってみる](#おなじことを-cdk-for-terraformcdktfでやってみる)
+    - [1. Terraform の Remote State を利用する](#1-terraform-の-remote-state-を利用する)
+    - [2. SSM パラメータを利用する](#2-ssm-パラメータを利用する)
+    - [3. AWS Resource Access Manager(RAM)を利用](#3-aws-resource-access-managerramを利用)
 
 ## インストール
 
@@ -34,6 +38,9 @@ cdk bootstrap aws://123456789012/ap-northeast-1
 # ↑リージョンにcdk用のS3バケットやIAMを作る。多分各リージョンで1回は実行する必要がある。
 # これ実行後cloudformationでCDKToolkitを参照
 ```
+
+**v1 と v2 は本当に混じり勝ちなので注意すること。**
+特に AI のサポートや、ブログから持ってきたコード。
 
 ## チュートリアル
 
@@ -424,3 +431,103 @@ CDK のスタックやコンストラクトは、「インフラの状態」を�
 - スタックの Outputs を渡そうとすると、AwsCustomResource では無理で、専用の Lambda-backed custom resources が必要。getResponseField()で、リーフノードしか指定できないから。
 
 上記の「欠点」は何を言ってるかわからないと思います。
+
+### おなじことを CDK for Terraform(CDKTF)でやってみる
+
+CDK for Terraform(CDKTF)で異なるリージョンに複数のスタックを作成し、
+一方のスタックで作成したリソース(例えば DynamoDB の ARN)を別のスタックで参照する場合、
+次のようなアプローチが考えられます。
+
+#### 1. Terraform の Remote State を利用する
+
+Terraform は状態ファイル(state)を管理する仕組みがあり、これを使って別のスタック(Workspace)から情報を参照することが可能です。
+
+**手順:**
+
+1. **Stack1(DynamoDB を作成するスタック)**  
+   DynamoDB の ARN を出力変数として定義します。
+
+   ```typescript
+   import * as cdktf from 'cdktf';
+   import { DynamoDbTable } from '@cdktf/provider-aws';
+
+   const table = new DynamoDbTable(stack, 'DynamoTable', {
+     name: 'my-dynamo-table',
+     hashKey: 'id',
+     attribute: [{ name: 'id', type: 'S' }],
+     billingMode: 'PAY_PER_REQUEST'
+   });
+
+   new cdktf.TerraformOutput(stack, 'DynamoDbArn', {
+     value: table.arn
+   });
+   ```
+
+   スタックの状態をリモートに保存します(例えば S3 を利用)。
+
+   ```typescript
+   new cdktf.TerraformBackend(stack, {
+     s3: {
+       bucket: 'my-remote-state-bucket',
+       key: 'stack1/terraform.tfstate',
+       region: 'us-east-1'
+     }
+   });
+   ```
+
+2. **Stack2(別のスタックで ARN を参照する)**  
+   Terraform のリモート状態データを参照します。
+
+   ```typescript
+   import * as cdktf from 'cdktf';
+   import { TerraformRemoteStateS3 } from '@cdktf/provider-terraform';
+
+   const remoteState = new TerraformRemoteStateS3(stack, 'RemoteState', {
+     bucket: 'my-remote-state-bucket',
+     key: 'stack1/terraform.tfstate',
+     region: 'us-east-1'
+   });
+
+   const dynamoArn = remoteState.getString('outputs.DynamoDbArn');
+
+   console.log(`DynamoDB ARN: ${dynamoArn}`);
+   ```
+
+#### 2. SSM パラメータを利用する
+
+AWS Systems Manager (SSM) パラメータストアを介して情報を共有します。
+
+**手順:**
+
+1. **Stack1**  
+   DynamoDB の ARN を SSM パラメータストアに保存します。
+
+   ```typescript
+   import { SsmParameter } from '@cdktf/provider-aws';
+
+   new SsmParameter(stack, 'DynamoDbArnParam', {
+     name: '/stack1/dynamodb/arn',
+     type: 'String',
+     value: table.arn
+   });
+   ```
+
+2. **Stack2**  
+   SSM パラメータを読み取ります。
+
+   ```typescript
+   import { DataAwsSsmParameter } from '@cdktf/provider-aws';
+
+   const dynamoArnParam = new DataAwsSsmParameter(stack, 'DynamoDbArnParam', {
+     name: '/stack1/dynamodb/arn'
+   });
+
+   console.log(`DynamoDB ARN: ${dynamoArnParam.value}`);
+   ```
+
+#### 3. AWS Resource Access Manager(RAM)を利用
+
+スタック間の明確な分離が必要な場合、リソースを共有するために AWS RAM を使用するのも選択肢です。
+
+- AWS RAM で使えるリソースの種類がきわめて限定的なので、特定の場合にしか使えない。(例: VPC、AWS License Manager、Route 53 など)。
+- 一部のリソースタイプは Organizations としか共有できない。
