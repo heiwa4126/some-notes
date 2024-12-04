@@ -1,4 +1,4 @@
-# NVidia のメモ
+# NVIDIA のメモ
 
 ## メモリ使用量だけ表示
 
@@ -127,3 +127,56 @@ Built on Wed_Apr_17_19:19:55_PDT_2024
 Cuda compilation tools, release 12.5, V12.5.40
 Build cuda_12.5.r12.5/compiler.34177558_0
 ```
+
+## CUDA のバージョンを知る
+
+`nvidia-smi` で表示される CUDA のバージョンと、
+`nvcc` で表示される CUDA のバージョンと、
+どちらが正しい CUDA のバージョンですか?
+
+以下例:
+
+```console
+> nvcc -V
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Wed_Apr_17_19:36:51_Pacific_Daylight_Time_2024
+Cuda compilation tools, release 12.5, V12.5.40
+Build cuda_12.5.r12.5/compiler.34177558_0
+
+> nvidia-smi
+Wed Dec  4 10:19:56 2024
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 566.03                 Driver Version: 566.03         CUDA Version: 12.7     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 3070 ...  WDDM  |   00000000:01:00.0  On |                  N/A |
+| N/A   45C    P8             15W /   85W |     711MiB /   8192MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+(略)
+```
+
+- `nvidia-smi` -
+  NVIDIA ドライバーが対応している最大の CUDA バージョンを示します。このため、最新のドライバーがインストールされている場合でも、表示される CUDA バージョンはドライバーに依存します。
+- `nvcc` -
+  CUDA Toolkit に含まれるコンパイラのバージョンを表示。 これは CUDA プログラムをコンパイルするために必要なバージョンです。
+
+### PyTorch はどの CUDA のバージョンのやつをインストールするべき?
+
+- [Start Locally | PyTorch](https://pytorch.org/get-started/locally/)
+- [Previous PyTorch Versions | PyTorch](https://pytorch.org/get-started/previous-versions/#wheel-1)
+
+**`nvidia-smi` に表示される CUDA バージョンを確認してください。**
+
+PyTorch の公式サイト（例: Previous Versions）で提供される CUDA バージョンは、「PyTorch がビルドされた CUDA ランタイムバージョン」を指します。
+
+PyTorch を動かすだけなら、nvcc のバージョン（インストール済みの CUDA ツールキット）は直接関係ありません。
+
+PyTorch には CUDA ランタイムが同梱されており、**通常は**独自に CUDA をインストールする必要がありません
+(ただし、カスタム CUDA カーネルや独自のコンパイルが必要な場合、nvcc のバージョンも考慮する必要があります。この場合、PyTorch と同じ CUDA バージョンのツールキットをインストールするのが推奨されます)。
+
+## 便利ツール `nvi
