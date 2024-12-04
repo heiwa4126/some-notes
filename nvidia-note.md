@@ -179,4 +179,8 @@ PyTorch を動かすだけなら、nvcc のバージョン（インストール�
 PyTorch には CUDA ランタイムが同梱されており、**通常は**独自に CUDA をインストールする必要がありません
 (ただし、カスタム CUDA カーネルや独自のコンパイルが必要な場合、nvcc のバージョンも考慮する必要があります。この場合、PyTorch と同じ CUDA バージョンのツールキットをインストールするのが推奨されます)。
 
-## 便利ツール `nvi
+## 便利ツール `nvitop`
+
+TUI 版の NVIDIA の top (「タスクマネージャのパフォーマンス」みたいなやつ)
+
+[nvitop · PyPI](https://pypi.org/project/nvitop/)
