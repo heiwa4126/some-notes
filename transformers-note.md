@@ -3,6 +3,72 @@
 Hugging Face 🤗 の。
 LLM のノートに書いてたのがだんだん大きくなりすぎたので分ける。
 
+- [Hugging Face のモデルのキャッシュを消す方法 (とリストする方法)](#hugging-face-のモデルのキャッシュを消す方法-とリストする方法)
+  - [キャッシュに関する古い情報](#キャッシュに関する古い情報)
+- [accelerate](#accelerate)
+- [モデル、 アーキテクチャ、チェックポイント](#モデル-アーキテクチャチェックポイント)
+- [pipeline() の task にかけるもの](#pipeline-の-task-にかけるもの)
+- [PEFT](#peft)
+- [Trainer の compute_metrics](#trainer-の-compute_metrics)
+- [accuracy](#accuracy)
+- [F1 スコア (F 値, F-measure)](#f1-スコア-f-値-f-measure)
+- [Trainer の 損失関数(loss function)](#trainer-の-損失関数loss-function)
+- [fine-tuning がうまくいかないときメモ](#fine-tuning-がうまくいかないときメモ)
+- [TensorBoard の薄いグラフ](#tensorboard-の薄いグラフ)
+- [Terraformres で使う TensorBoard メモ](#terraformres-で使う-tensorboard-メモ)
+- [タスク](#タスク)
+- [認証が必要なモデル](#認証が必要なモデル)
+
+## Hugging Face のモデルのキャッシュを消す方法 (とリストする方法)
+
+```bash
+pip install huggingface_hub[cli]
+huggingface-cli scan-cache  # キャッシュ済みのモデルを列挙する
+```
+
+のようにマネージメントするのが正しいっぽい。
+
+キャッシュの削除は `huggingface-cli delete-cache` で TUI で出来る。( `--disable-tui` オプションあり)
+
+例:
+
+```console
+$ huggingface-cli delete-cache
+
+? Select revisions to delete: 0 revisions selected counting for 0.0.
+  ○ None of the following (if selected, nothing will be deleted).
+
+Model microsoft/Phi-3-mini-4k-instruct (15.3G, used 2 days ago)
+❯ ○ 5fa34190: (detached) # modified 7 months ago
+  ○ d269012b: (detached) # modified 7 months ago
+  ○ ff07dc01: (detached) # modified 6 months ago
+  ○ 0a67737c: main # modified 2 days ago
+```
+
+こんな感じになるので、上下キーと、スペースで選んで、リターンキーで決定。
+`(detached)` のはプロジェクトで明示的に使ってなければ消してもいい。
+
+参考リンク:
+
+- [Clean your cache](https://huggingface.co/docs/huggingface_hub/guides/manage-cache#clean-your-cache)
+- [Using TUI - Manage \`huggingface_hub\` cache-system](https://huggingface.co/docs/huggingface_hub/guides/manage-cache#using-the-tui)
+- [huggingface-hub · PyPI](https://pypi.org/project/huggingface-hub/)
+
+### キャッシュに関する古い情報
+
+検索すると
+キャッシュディレクトリは
+
+- macOS または Linux の場合: ~/.cache/huggingface
+- Windows の場合: %APPDATA%/huggingface
+
+で、変更は TRANSFORMERS_CACHE 環境変数で、
+
+ぐらいのことはすぐ出てくるのですが、正式なドキュメントが見つからない。
+
+- [Manage \`huggingface_hub\` cache-system](https://huggingface.co/docs/huggingface_hub/main/guides/manage-cache)
+- [Cache management](https://huggingface.co/docs/datasets/cache) - データセット(datasets)の方
+
 ## accelerate
 
 便利。PyTorch 専用?
@@ -123,7 +189,7 @@ F1 スコアは、
 再現率(Recall)(=感度(Sensitivity)) の
 調和平均です。
 
-- [F 値 (評価指標) - Wikipedia](https://ja.wikipedia.org/wiki/F%E5%80%A4_(%E8%A9%95%E4%BE%A1%E6%8C%87%E6%A8%99))
+- [F 値 (評価指標) - Wikipedia](<https://ja.wikipedia.org/wiki/F%E5%80%A4_(%E8%A9%95%E4%BE%A1%E6%8C%87%E6%A8%99)>)
 - [感度とか特異度とか | Tech Blog | CRESCO Tech Blog](https://www.cresco.co.jp/blog/entry/5987.html)
 - [F1 - a Hugging Face Space by evaluate-metric](https://huggingface.co/spaces/evaluate-metric/f1)
 

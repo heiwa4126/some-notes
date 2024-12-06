@@ -196,43 +196,7 @@ NLP は 自然言語処理 (Natural Language Processing)。
 英語版:
 [Introduction - Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/en/chapter0/1?fw=pt)
 
-## Transformers のモデルのキャッシュを消す方法
 
-検索すると
-キャッシュディレクトリは
-
-- macOS または Linux の場合: ~/.cache/huggingface
-- Windows の場合: %APPDATA%/huggingface
-
-で、変更は TRANSFORMERS_CACHE 環境変数で、
-
-ぐらいのことはすぐ出てくるのですが、正式なドキュメントが見つからない。
-
-- [Manage \`huggingface_hub\` cache-system](https://huggingface.co/docs/huggingface_hub/main/guides/manage-cache)
-- [Cache management](https://huggingface.co/docs/datasets/cache) - データセット(datasets)の方
-
-```bash
-pip install huggingface_hub[cli]
-huggingface-cli scan-cache
-```
-
-のようにマネージメントするのが「正しい」っぽい。
-
-キャッシュの削除は `huggingface-cli delete-cache` で TUI で出来る。( --disable-tui オプションあり)
-
-```console
-$ huggingface-cli delete-cache
-? Select revisions to delete: 0 revisions selected counting for 0.0.
-❯ ○ None of the following (if selected, nothing will be deleted).
-
-Model laion/mscoco_finetuned_CoCa-ViT-L-14-laion2B-s13B-b90k (2.6G, used 2 days ago)
-  ○ 11cc43ad: main # modified 6 days ago
-```
-
-- [Clean your cache](https://huggingface.co/docs/huggingface_hub/guides/manage-cache#clean-your-cache)
-- [Using TUI - Manage \`huggingface_hub\` cache-system](https://huggingface.co/docs/huggingface_hub/guides/manage-cache#using-the-tui)
-
-[huggingface-hub · PyPI](https://pypi.org/project/huggingface-hub/)
 
 ## Transformers で扱える有名モデルと扱えない有名モデル
 

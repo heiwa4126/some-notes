@@ -20,6 +20,12 @@ test.script = "flake8 && pytest" # これでもいいらしい
 [Change the executor type](https://poethepoet.natn.io/global_options.html#change-the-executor-type)
 デフォルトが "auto"なので、3 番目の virtualenv に該当する。
 
+ここに書いてあった。
+[Usage with uv](https://poethepoet.natn.io/guides/without_poetry.html#usage-with-uv)
+
+あと、poe の設定は `pyproject.toml` でなくて `poe_tasks.toml` に書けるらしい。 `tool.poe.` の後を書く感じ。
+[Usage with with json or yaml instead of toml](https://poethepoet.natn.io/guides/without_poetry.html#usage-with-with-json-or-yaml-instead-of-toml)
+
 ## `uv sync`
 
 `uv sync` は
@@ -91,3 +97,16 @@ dev は `--extra` オプションで出来そうな気がするのだが、動�
 
 - [2\.5 CUDA 依存の PyTorch をインストールするための extra\-index\-url の設定](https://zenn.dev/turing_motors/articles/594fbef42a36ee#2.5-cuda%E4%BE%9D%E5%AD%98%E3%81%AEpytorch%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AEextra-index-url%E3%81%AE%E8%A8%AD%E5%AE%9A)
 - [Previous PyTorch Versions | PyTorch](https://pytorch.org/get-started/previous-versions/)
+
+## uv init の --build-backend オプション
+
+パッケージにして PyPI にのせる予定なら、自分のよく使ってる build-backend を指定しておくといい。
+
+自分は Hatch 　に慣れてるので
+`uv init --build-backend hatch`
+で。
+
+参照:
+
+- [Commands | uv](https://docs.astral.sh/uv/reference/cli/#uv-init)
+- [build\-system table](https://peps.python.org/pep-0518/#build-system-table)
