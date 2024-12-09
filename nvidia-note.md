@@ -172,9 +172,9 @@ Wed Dec  4 10:19:56 2024
 
 **`nvidia-smi` に表示される CUDA バージョンを確認してください。**
 
-PyTorch の公式サイト（例: Previous Versions）で提供される CUDA バージョンは、「PyTorch がビルドされた CUDA ランタイムバージョン」を指します。
+PyTorch の公式サイト(例: Previous Versions)で提供される CUDA バージョンは、「PyTorch がビルドされた CUDA ランタイムバージョン」を指します。
 
-PyTorch を動かすだけなら、nvcc のバージョン（インストール済みの CUDA ツールキット）は直接関係ありません。
+PyTorch を動かすだけなら、nvcc のバージョン(インストール済みの CUDA ツールキット)は直接関係ありません。
 
 PyTorch には CUDA ランタイムが同梱されており、**通常は**独自に CUDA をインストールする必要がありません
 (ただし、カスタム CUDA カーネルや独自のコンパイルが必要な場合、nvcc のバージョンも考慮する必要があります。この場合、PyTorch と同じ CUDA バージョンのツールキットをインストールするのが推奨されます)。
@@ -184,3 +184,8 @@ PyTorch には CUDA ランタイムが同梱されており、**通常は**独�
 TUI 版の NVIDIA の top (「タスクマネージャのパフォーマンス」みたいなやつ)
 
 [nvitop · PyPI](https://pypi.org/project/nvitop/)
+
+`uv tool install nvitop` で入れとくといいと思う。
+
+- [XuehaiPan/nvitop: An interactive NVIDIA-GPU process viewer and beyond, the one-stop solution for GPU process management.](https://github.com/XuehaiPan/nvitop)
+  - [Keybindings for Monitor Mode](https://github.com/XuehaiPan/nvitop?tab=readme-ov-file#keybindings-for-monitor-mode)
