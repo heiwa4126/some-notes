@@ -9,7 +9,6 @@
 - [LLM の代表的なタスク](#llm-の代表的なタスク)
   - [タスクもっと](#タスクもっと)
 - [Transformers のチュートリアル](#transformers-のチュートリアル)
-- [Transformers のモデルのキャッシュを消す方法](#transformers-のモデルのキャッシュを消す方法)
 - [Transformers で扱える有名モデルと扱えない有名モデル](#transformers-で扱える有名モデルと扱えない有名モデル)
 - [AI における「モデル」とは](#ai-におけるモデルとは)
 - [Hugging Face Hub にある有名モデル](#hugging-face-hub-にある有名モデル)
@@ -42,12 +41,12 @@
     - [構文解析 (Syntactic Analysis)](#構文解析-syntactic-analysis)
   - [応用能力](#応用能力)
     - [表現 (Expression)](#表現-expression)
-    - [翻訳　(Translation)](#翻訳translation)
+    - [翻訳 (Translation)](#翻訳-translation)
     - [要約 (Summarization)](#要約-summarization)
     - [情報検索 (Information Retrieval)](#情報検索-information-retrieval)
-    - [論理的推論　(Logical Reasoning)](#論理的推論logical-reasoning)
+    - [論理的推論 (Logical Reasoning)](#論理的推論-logical-reasoning)
     - [数学的推論 (Mathematical Reasoning)](#数学的推論-mathematical-reasoning)
-    - [抽出　(Extraction)](#抽出extraction)
+    - [抽出 (Extraction)](#抽出-extraction)
     - [知識・質問応答 (Knowledge \& Question Answering)](#知識質問応答-knowledge--question-answering)
 - [アライン率(Alignment Rate)](#アライン率alignment-rate)
   - [アライン率の具体的な意味](#アライン率の具体的な意味)
@@ -59,6 +58,18 @@
   - [バイアス (Bias)](#バイアス-bias)
   - [真実性 (Truthfulness)](#真実性-truthfulness)
   - [堅牢性 (Robustness)](#堅牢性-robustness)
+- [llm-jp-eval で使われるデータセット](#llm-jp-eval-で使われるデータセット)
+  - [自然言語推論](#自然言語推論)
+    - [Jamp データセット](#jamp-データセット)
+- [llm-jp-eval で使われる評価指標](#llm-jp-eval-で使われる評価指標)
+  - [完全一致率 (exact match ratio)](#完全一致率-exact-match-ratio)
+  - [文字ベース F 値 (Character-based F-score)](#文字ベース-f-値-character-based-f-score)
+  - [集合ベース F 値(Set-based F-score)](#集合ベース-f-値set-based-f-score)
+  - [おまけ: 「F 値」解説](#おまけ-f-値解説)
+    - [基本概念](#基本概念)
+    - [なぜ F 値を使うのか?](#なぜ-f-値を使うのか)
+    - [F 値の種類](#f-値の種類)
+    - [F 値の実用例](#f-値の実用例)
 
 ## 概要
 
@@ -195,8 +206,6 @@ NLP は 自然言語処理 (Natural Language Processing)。
 
 英語版:
 [Introduction - Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/en/chapter0/1?fw=pt)
-
-
 
 ## Transformers で扱える有名モデルと扱えない有名モデル
 
@@ -642,7 +651,7 @@ LLM の日本語能力を比較するためのリーダーボード
 
 この評価では、AI が与えられたコンテキストに基づいて自然で一貫性のある文章を作成できるかを測定する。
 
-#### 翻訳　(Translation)
+#### 翻訳 (Translation)
 
 - **jaster** の
   - **ALT e-to-j** (英語から日本語への翻訳)
@@ -666,9 +675,9 @@ LLM の日本語能力を比較するためのリーダーボード
 
 ※ JGLUE は、情報検索や文書検索の精度を測るためのベンチマークです。
 
-#### 論理的推論　(Logical Reasoning)
+#### 論理的推論 (Logical Reasoning)
 
-**MT-bench**　の reasoning タスク。
+**MT-bench** の reasoning タスク。
 
 モデルが論理的に思考し、与えられた情報から合理的な結論を導けるかを評価する。
 
@@ -679,7 +688,7 @@ LLM の日本語能力を比較するためのリーダーボード
 
 モデルが数学的な問題を解決できる能力を測る。
 
-#### 抽出　(Extraction)
+#### 抽出 (Extraction)
 
 - **jaster** の
   - **wiki_ner** (名前付き実体認識)
@@ -761,3 +770,128 @@ AI の回答がどれほど真実に基づいているかを測定する。AI �
 **jaster** の **JMMLU の拡張版**。
 
 AI が様々な状況下で安定したパフォーマンスを発揮するか、特に予期しない入力や挑戦的な状況においても一貫性を保つことが評価される。
+
+## llm-jp-eval で使われるデータセット
+
+[大規模言語モデル入門 II 〜生成型 LLM の実装と評価 : 書籍案内 | 技術評論社](https://gihyo.jp/book/2024/978-4-297-14393-0)
+の 10.2 節を読みながら書いてるメモ。
+
+### 自然言語推論
+
+前提文と仮定文を用意して、
+その文ペアの論理的な関係を予測するタスク。
+
+#### Jamp データセット
+
+## llm-jp-eval で使われる評価指標
+
+[大規模言語モデル入門 II 〜生成型 LLM の実装と評価 : 書籍案内 | 技術評論社](https://gihyo.jp/book/2024/978-4-297-14393-0)
+の 10.2.3 節を読みながら書いてるメモ。
+
+### 完全一致率 (exact match ratio)
+
+完全一致率 = 正解事例と予測事例の一致数/事例数
+
+$$
+\text{完全一致率} = \frac{\text{正解事例と予測事例の一致数}}{\text{事例数}}
+$$
+
+### 文字ベース F 値 (Character-based F-score)
+
+文字単位での正解と予測の一致を評価する指標です。
+自然言語処理や情報抽出の分野で、特に名前の一致や OCR(光学文字認識)など、
+正確な文字レベルの一致が重要なタスクで使われます。
+
+具体例:
+
+- 正解: 猫はかわいい
+- 予測: 猫はかっこいい
+
+この場合
+
+- 一致する文字(True Positive, TP): 猫は
+- 過剰な文字(False Positive, FP): っこ
+- 不足している文字(False Negative, FN): かわ
+
+評価式:
+
+- Precision (適合率): TP / (TP + FP)
+- Recall (再現率): TP / (TP + FN)
+- F-score: 2 × (Precision × Recall) / (Precision + Recall)
+
+### 集合ベース F 値(Set-based F-score)
+
+### おまけ: 「F 値」解説
+
+F 値は、**Precision(適合率)** と **Recall(再現率)** という 2 つの評価指標を 1 つにまとめた指標です。
+主に分類タスクや検索タスクで、モデルの予測性能をバランスよく評価するために用いられます。
+F 値は **Precision** と **Recall** の
+[調和平均](https://ja.wikipedia.org/wiki/%E8%AA%BF%E5%92%8C%E5%B9%B3%E5%9D%87)
+として計算されます。
+
+#### 基本概念
+
+1. **Precision(適合率)**  
+   モデルが「正しい」と予測した結果のうち、本当に正しかった割合を表します。
+
+   $$
+   \text{Precision} = \frac{\text{True Positive (TP)}}{\text{True Positive (TP)} + \text{False Positive (FP)}}
+   $$
+
+   **例**:\
+   モデルが猫の画像を 10 枚予測し、そのうち 7 枚が正解だった場合、適合率は 7/10 = 0.7。
+
+2. **Recall(再現率)**  
+   実際に正しいもののうち、モデルが正しく予測できた割合を表します。
+
+   $$
+   \text{Recall} = \frac{\text{True Positive (TP)}}{\text{True Positive (TP)} + \text{False Negative (FN)}}
+   $$
+
+   **例**:\
+   実際に猫の画像が 15 枚あり、そのうち 7 枚をモデルが正しく予測した場合、再現率は 7/15 = 0.47。
+
+3. **F 値 (F-score)**  
+   Precision と Recall を統一的に評価するための指標です。
+
+   $$
+   F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+   $$
+
+   - **F 値の範囲**: 0(最低)〜1(最高)
+   - **解釈**: F 値が 1 に近いほど、Precision と Recall の両方を高い水準で満たしています。
+
+#### なぜ F 値を使うのか?
+
+1. **Precision と Recall のバランスを取る**
+
+   - Precision が高い場合、予測が正確だが一部を見逃す可能性がある。
+   - Recall が高い場合、多くを見つけるが誤った予測が増える可能性がある。
+   - F 値はこれらのトレードオフを 1 つの指標で表現します。
+
+2. **モデル比較に便利**
+   - Precision と Recall のどちらか一方に偏らず、全体的な性能を評価できるため、異なるモデル間での比較がしやすい。
+
+#### F 値の種類
+
+F 値には調和平均の重みを変えたバリエーションがあります。
+
+1. **F1 値** (デフォルト)\
+   Precision と Recall を等しく重要とする場合に使います。
+
+2. **Fβ 値** - 重み付き F 値 (Weighted F-measure)\
+   Recall を重視する場合は β > 1、Precision を重視する場合は β < 1。
+
+   $$
+   F\beta = (1 + \beta^2) \cdot \frac{\text{Precision} \cdot \text{Recall}}{\beta^2 \cdot \text{Precision} + \text{Recall}}
+   $$
+
+   **例**: F2 値は Recall をより重視し、F0.5 値は Precision を重視します。
+
+#### F 値の実用例
+
+- **検索エンジン**: ユーザーが求める結果を正確に(Precision)、そして漏れなく(Recall)返すことが重要。
+- **自然言語処理**: 情報抽出や文書分類でモデルの性能を評価。
+- **医療診断**: 正しい診断(Precision)と病気の見逃しを減らす(Recall)バランスが重要。
+
+F 値は評価対象やタスクの目的に応じて最適なモデル選択をサポートします。
