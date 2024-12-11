@@ -60,7 +60,29 @@
   - [堅牢性 (Robustness)](#堅牢性-robustness)
 - [llm-jp-eval で使われるデータセット](#llm-jp-eval-で使われるデータセット)
   - [自然言語推論](#自然言語推論)
-    - [Jamp データセット](#jamp-データセット)
+    - [Jamp - 時間推論データセット](#jamp---時間推論データセット)
+    - [JaNLI - 敵対的推論データセット](#janli---敵対的推論データセット)
+    - [JNLI データセット](#jnli-データセット)
+    - [JSeM - 日本語含意関係データセット](#jsem---日本語含意関係データセット)
+    - [JSICK - 英語含意関係データセットの日本語訳](#jsick---英語含意関係データセットの日本語訳)
+  - [質疑応答](#質疑応答)
+    - [JEMHopQA](#jemhopqa)
+    - [NIILC](#niilc)
+  - [機械読解](#機械読解)
+    - [JSQuAD](#jsquad)
+  - [多岐選択式質問応答](#多岐選択式質問応答)
+    - [JCommonsenseQA](#jcommonsenseqa)
+  - [エンティティ極性分析](#エンティティ極性分析)
+    - [chABSA](#chabsa)
+  - [基礎解析](#基礎解析)
+    - [読み推定 Wikipedia Anotated Corpus](#読み推定-wikipedia-anotated-corpus)
+    - [固有表現認識 Wikipedia Anotated Corpus](#固有表現認識-wikipedia-anotated-corpus)
+    - [述語構造解析](#述語構造解析)
+    - [共参照解析](#共参照解析)
+  - [数学的推論](#数学的推論)
+    - [MAWPS](#mawps)
+  - [意味的類似度計算](#意味的類似度計算)
+    - [JSTS](#jsts)
 - [llm-jp-eval で使われる評価指標](#llm-jp-eval-で使われる評価指標)
   - [完全一致率 (exact match ratio)](#完全一致率-exact-match-ratio)
   - [文字ベース F 値 (Character-based F-score)](#文字ベース-f-値-character-based-f-score)
@@ -70,6 +92,13 @@
     - [なぜ F 値を使うのか?](#なぜ-f-値を使うのか)
     - [F 値の種類](#f-値の種類)
     - [F 値の実用例](#f-値の実用例)
+  - [相関係数](#相関係数)
+  - [ピアソンの積率相関係数(Pearson's Correlation Coefficient)](#ピアソンの積率相関係数pearsons-correlation-coefficient)
+    - [ピアソンの計算式](#ピアソンの計算式)
+    - [ピアソンの特徴](#ピアソンの特徴)
+  - [スピアマンの順位相関係数(Spearman's Rank Correlation Coefficient)](#スピアマンの順位相関係数spearmans-rank-correlation-coefficient)
+    - [スピアマンの計算式](#スピアマンの計算式)
+    - [スピアマンの特徴](#スピアマンの特徴)
 
 ## 概要
 
@@ -776,12 +805,90 @@ AI が様々な状況下で安定したパフォーマンスを発揮するか�
 [大規模言語モデル入門 II 〜生成型 LLM の実装と評価 : 書籍案内 | 技術評論社](https://gihyo.jp/book/2024/978-4-297-14393-0)
 の 10.2 節を読みながら書いてるメモ。
 
+他参考:
+
+- [日本語 LLM 評価データセットの huggingface/datasets 登録状況](https://zenn.dev/hellorusk/articles/45c2f6fac964fc)
+- [llm-book/llm-jp-eval at main](https://huggingface.co/datasets/llm-book/llm-jp-eval/tree/main) ここの Python のコード中にデータセットの源 URL が入ってる
+- [JGLUE/datasets at main · yahoojapan/JGLUE](https://github.com/yahoojapan/JGLUE/tree/main/datasets)
+
 ### 自然言語推論
 
 前提文と仮定文を用意して、
 その文ペアの論理的な関係を予測するタスク。
 
-#### Jamp データセット
+#### Jamp - 時間推論データセット
+
+- [tomo-vv/temporalNLI_dataset](https://github.com/tomo-vv/temporalNLI_dataset)
+  - dataset/train_all.tsv
+  - dataset/test_2.tsv
+
+[完全一致率](#完全一致率-exact-match-ratio)で比較。
+
+#### JaNLI - 敵対的推論データセット
+
+- [JaNLI: 日本語の言語現象に基づく敵対的推論データセット JED2022_yanaka](https://jedworkshop.github.io/jed2022/materials/jed2022_d-2_%E8%B0%B7%E4%B8%AD.pdf)
+- [verypluming/JaNLI](https://github.com/verypluming/JaNLI)
+- [hpprc/janli · Datasets at Hugging Face](https://huggingface.co/datasets/hpprc/janli)
+
+[完全一致率](#完全一致率-exact-match-ratio)で比較。
+
+#### JNLI データセット
+
+画像キャプションをもとに作成されたデータセット。
+
+- [JGLUE/datasets/jnli-v1.1 at main · yahoojapan/JGLUE](https://github.com/yahoojapan/JGLUE/tree/main/datasets/jnli-v1.1)
+
+[完全一致率](#完全一致率-exact-match-ratio)で比較。
+
+#### JSeM - 日本語含意関係データセット
+
+- [DaisukeBekki/JSeM: Japanese semantic test suite (FraCaS counterpart and extensions)](https://github.com/DaisukeBekki/JSeM)
+- [JSeM: Japanese semantic test suite (Japanese FraCaS and extensions) | JSeM](https://daisukebekki.github.io/JSeM/)
+
+[完全一致率](#完全一致率-exact-match-ratio)で比較。
+
+#### JSICK - 英語含意関係データセットの日本語訳
+
+- [verypluming/JSICK: Repository for JSICK](https://github.com/verypluming/JSICK)
+- [hpprc/jsick · Datasets at Hugging Face](https://huggingface.co/datasets/hpprc/jsick)
+
+[完全一致率](#完全一致率-exact-match-ratio)で比較。
+
+### 質疑応答
+
+#### JEMHopQA
+
+#### NIILC
+
+### 機械読解
+
+#### JSQuAD
+
+### 多岐選択式質問応答
+
+#### JCommonsenseQA
+
+### エンティティ極性分析
+
+#### chABSA
+
+### 基礎解析
+
+#### 読み推定 Wikipedia Anotated Corpus
+
+#### 固有表現認識 Wikipedia Anotated Corpus
+
+#### 述語構造解析
+
+#### 共参照解析
+
+### 数学的推論
+
+#### MAWPS
+
+### 意味的類似度計算
+
+#### JSTS
 
 ## llm-jp-eval で使われる評価指標
 
@@ -789,8 +896,6 @@ AI が様々な状況下で安定したパフォーマンスを発揮するか�
 の 10.2.3 節を読みながら書いてるメモ。
 
 ### 完全一致率 (exact match ratio)
-
-完全一致率 = 正解事例と予測事例の一致数/事例数
 
 $$
 \text{完全一致率} = \frac{\text{正解事例と予測事例の一致数}}{\text{事例数}}
@@ -809,9 +914,9 @@ $$
 
 この場合
 
-- 一致する文字(True Positive, TP): 猫は
-- 過剰な文字(False Positive, FP): っこ
-- 不足している文字(False Negative, FN): かわ
+- 一致する文字 (True Positive, TP): 猫は
+- 過剰な文字 (False Positive, FP): っこ
+- 不足している文字 (False Negative, FN): かわ
 
 評価式:
 
@@ -821,6 +926,29 @@ $$
 
 ### 集合ベース F 値(Set-based F-score)
 
+集合ベース F 値は、単語やフレーズ、文といった集合単位で正解と予測を評価する指標です。
+たとえば、構造化情報の抽出やトピック分類など、
+単位が文字ではなく「意味のある単位」に焦点を当てる場合に使われます。
+
+具体例:
+
+- 正解: {猫, かわいい}
+- 予測: {猫, かっこいい}
+
+この場合
+
+- 一致する要素 (True Positive, TP): {猫}
+- 過剰な要素 (False Positive, FP): {かっこいい}
+- 不足している要素 (False Negative, FN): {かわいい}
+
+評価式:
+
+文字ベースと同じ。
+
+- Precision (適合率): TP / (TP + FP)
+- Recall (再現率): TP / (TP + FN)
+- F-score: 2 × (Precision × Recall) / (Precision + Recall)
+
 ### おまけ: 「F 値」解説
 
 F 値は、**Precision(適合率)** と **Recall(再現率)** という 2 つの評価指標を 1 つにまとめた指標です。
@@ -828,6 +956,8 @@ F 値は、**Precision(適合率)** と **Recall(再現率)** という 2 つの
 F 値は **Precision** と **Recall** の
 [調和平均](https://ja.wikipedia.org/wiki/%E8%AA%BF%E5%92%8C%E5%B9%B3%E5%9D%87)
 として計算されます。
+
+参考: [Precision と Recall の違いと覚え方](https://www.chowagiken.co.jp/blog/Precision_Recall)
 
 #### 基本概念
 
@@ -895,3 +1025,100 @@ F 値には調和平均の重みを変えたバリエーションがあります
 - **医療診断**: 正しい診断(Precision)と病気の見逃しを減らす(Recall)バランスが重要。
 
 F 値は評価対象やタスクの目的に応じて最適なモデル選択をサポートします。
+
+### 相関係数
+
+「ピアソンの積率相関係数」と
+「スピアマンの順位相関係数」が
+使われる。
+
+| 特徴                 | ピアソンの積率相関係数 | スピアマンの順位相関係数 |
+| -------------------- | ---------------------- | ------------------------ |
+| **関係の種類**       | 線形関係               | 単調関係                 |
+| **データの特性**     | 連続変数               | 順位データまたは連続変数 |
+| **外れ値の影響**     | 大きい                 | 小さい                   |
+| **非線形関係の検出** | 不可能                 | 可能                     |
+
+使い分け:
+
+1. **ピアソンを使う場面**:
+
+   - データが線形関係にあると仮定できる場合。
+   - 外れ値が少ないデータ。
+
+2. **スピアマンを使う場面**:
+   - 非線形の単調関係を評価したい場合。
+   - 外れ値が多い場合。
+   - データが順位またはカテゴリの場合。
+
+実用例:
+
+1. **ピアソン**:
+
+   - 身長と体重の関係
+   - 売上と広告費の関係(線形性が期待できる場合)
+
+2. **スピアマン**:
+   - テストの順位と学習時間の関係
+   - 商品の評価ランキングと売上の関係
+
+モデル評価で使う場合:
+
+相関係数は数値データ同士の関係性を測る指標なので、数値データでなければ計算できない。
+普通モデルの出力は文字列なので、そのままでは使えない。
+[dottxt-ai/outlines: Structured Text Generation](https://github.com/dottxt-ai/outlines)
+を使うらしいのだが詳細不明。LangChain みたいなもの?(主義主張思想がかなり違うけど)
+
+### ピアソンの積率相関係数(Pearson's Correlation Coefficient)
+
+ピアソンの積率相関係数は、**2 つの連続変数の線形関係の強さ**を測定する指標です。
+その値は **-1 から 1 の範囲** をとり、
+値が 0 に近いほど関係が弱く、
+1 または-1 に近いほど強い関係があることを示します。
+
+- +1 : 完全な正の相関(片方が増えるともう片方も増える)
+- -1 : 完全な負の相関(片方が増えるともう片方は減る)
+- 0 : 無相関(関係がない)
+
+#### ピアソンの計算式
+
+$$
+r = \frac{\sum*{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum*{i=1}^n (x*i - \bar{x})^2 \sum*{i=1}^n (y_i - \bar{y})^2}}
+$$
+
+- $x_i,y_i$ : 各データ点
+- $\bar{x},\bar{y}$: $x_i,y_i$ の平均
+- $n$: データ点の数
+
+#### ピアソンの特徴
+
+- **線形性が前提**: 線形関係でない場合、結果が正確に解釈できません。
+- 外れ値に敏感: 極端な値があると、相関係数が大きく変わることがあります。
+
+### スピアマンの順位相関係数(Spearman's Rank Correlation Coefficient)
+
+スピアマンの順位相関係数は、**2 つの変数の単調関係の強さ** を測定する指標です。
+データを **順位(rank)に基づいて評価** するため、
+非線形の関係でも利用できます。
+
+- 値の範囲はピアソンと同じく **-1 から 1**。
+- 単調関係: 片方が増加(または減少)すれば、もう片方も増加(または減少)する。
+
+#### スピアマンの計算式
+
+スピアマンの相関係数 $\rho$ は、順位データを用いたピアソン相関係数として計算されます。
+
+簡易計算式(順位データが重複しない場合):
+
+$$
+\rho = 1 - \frac{6 \sum d_i^2}{n(n^2 - 1)}
+$$
+
+- $d_i$ : 各データペアの順位差 ( $d_i = \text{rank}(x_i) - \text{rank}(y_i)$)
+- $n$ : データペアの数
+
+#### スピアマンの特徴
+
+- 非線形の単調関係も検出可能。
+- 外れ値に強い(順位を用いるため影響を受けにくい)。
+- 順位データやカテゴリデータにも対応可能。
