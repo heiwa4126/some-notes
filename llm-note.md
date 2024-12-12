@@ -58,7 +58,7 @@
   - [バイアス (Bias)](#バイアス-bias)
   - [真実性 (Truthfulness)](#真実性-truthfulness)
   - [堅牢性 (Robustness)](#堅牢性-robustness)
-- [llm-jp-eval で使われるデータセット](#llm-jp-eval-で使われるデータセット)
+- [llm-jp-eval ベンチマークで使われるデータセット](#llm-jp-eval-ベンチマークで使われるデータセット)
   - [自然言語推論](#自然言語推論)
     - [Jamp - 時間推論データセット](#jamp---時間推論データセット)
     - [JaNLI - 敵対的推論データセット](#janli---敵対的推論データセット)
@@ -83,7 +83,7 @@
     - [MAWPS](#mawps)
   - [意味的類似度計算](#意味的類似度計算)
     - [JSTS](#jsts)
-- [llm-jp-eval で使われる評価指標](#llm-jp-eval-で使われる評価指標)
+- [llm-jp-eval ベンチマークで使われる評価指標](#llm-jp-eval-ベンチマークで使われる評価指標)
   - [完全一致率 (exact match ratio)](#完全一致率-exact-match-ratio)
   - [文字ベース F 値 (Character-based F-score)](#文字ベース-f-値-character-based-f-score)
   - [集合ベース F 値(Set-based F-score)](#集合ベース-f-値set-based-f-score)
@@ -604,7 +604,7 @@ Hugging Face Diffusers は、画像や音声の生成において最先端の拡
 ### 評価用語
 
 - **ベンチマーク (benchmark)** -
-  データセットや評価方法などを定めたもの。LLM 間の比較に使う。
+  データセットや評価方法などを定めたもの。**LLM 間の比較に使う**。複数の「データセットと評価指数」の組から出来ている。
 - **リーダーボード (leaderboard)** -
   べンチマークなどでのモデルの性能を見やすくウエプページなどの形でまとめたもの。
   評価基準はべンチマーク以外もある(ChatbotArena など)
@@ -800,7 +800,7 @@ AI の回答がどれほど真実に基づいているかを測定する。AI �
 
 AI が様々な状況下で安定したパフォーマンスを発揮するか、特に予期しない入力や挑戦的な状況においても一貫性を保つことが評価される。
 
-## llm-jp-eval で使われるデータセット
+## llm-jp-eval ベンチマークで使われるデータセット
 
 [大規模言語モデル入門 II 〜生成型 LLM の実装と評価 : 書籍案内 | 技術評論社](https://gihyo.jp/book/2024/978-4-297-14393-0)
 の 10.2 節を読みながら書いてるメモ。
@@ -810,6 +810,22 @@ AI が様々な状況下で安定したパフォーマンスを発揮するか�
 - [日本語 LLM 評価データセットの huggingface/datasets 登録状況](https://zenn.dev/hellorusk/articles/45c2f6fac964fc)
 - [llm-book/llm-jp-eval at main](https://huggingface.co/datasets/llm-book/llm-jp-eval/tree/main) ここの Python のコード中にデータセットの源 URL が入ってる
 - [JGLUE/datasets at main · yahoojapan/JGLUE](https://github.com/yahoojapan/JGLUE/tree/main/datasets)
+
+| カテゴリ             | データセット               | ライセンス   | 評価指標        |
+| -------------------- | -------------------------- | ------------ | --------------- |
+| 自然言語推論         | Jamp                       | CC BY-SA 4.0 | 完全一致率      |
+|                      | JaNLI                      | CC BY-SA 4.0 | 完全一致率      |
+|                      | JNLI                       | CC BY-SA 4.0 | 完全一致率      |
+|                      | JSeM                       | BSD 3-Clause | 完全一致率      |
+|                      | JSICK                      | CC BY-SA 4.0 | 完全一致率      |
+| 質問応答             | JEMHopQA                   | CC BY-SA 4.0 | 文字ベース F 値 |
+|                      | NIILC                      | CC BY-SA 4.0 | 文字ベース F 値 |
+| 機械読解             | JSQuAD                     | CC BY-SA 4.0 | 文字ベース F 値 |
+| 多肢選択式質問応答   | JCommonsenseQA             | CC BY-SA 4.0 | 完全一致率      |
+| エンティティ極性分析 | chABSA                     | CC BY 4.0    | 集合ベース F 値 |
+| 基礎解析             | Wikipedia Annotated Corpus | CC BY-SA 4.0 | 集合ベース F 値 |
+| 数学的推論           | MAWPS                      | Apache-2.0   | 完全一致率      |
+| 意味の類似度計算     | JSTS                       | CC BY-SA 4.0 | 相関係数        |
 
 ### 自然言語推論
 
@@ -890,7 +906,7 @@ AI が様々な状況下で安定したパフォーマンスを発揮するか�
 
 #### JSTS
 
-## llm-jp-eval で使われる評価指標
+## llm-jp-eval ベンチマークで使われる評価指標
 
 [大規模言語モデル入門 II 〜生成型 LLM の実装と評価 : 書籍案内 | 技術評論社](https://gihyo.jp/book/2024/978-4-297-14393-0)
 の 10.2.3 節を読みながら書いてるメモ。
