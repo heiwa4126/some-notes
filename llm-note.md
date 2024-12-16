@@ -58,6 +58,7 @@
   - [バイアス (Bias)](#バイアス-bias)
   - [真実性 (Truthfulness)](#真実性-truthfulness)
   - [堅牢性 (Robustness)](#堅牢性-robustness)
+- [Intuition(直観) の発音](#intuition直観-の発音)
 - [llm-jp-eval ベンチマークで使われるデータセット](#llm-jp-eval-ベンチマークで使われるデータセット)
   - [自然言語推論](#自然言語推論)
     - [Jamp - 時間推論データセット](#jamp---時間推論データセット)
@@ -99,6 +100,7 @@
   - [スピアマンの順位相関係数(Spearman's Rank Correlation Coefficient)](#スピアマンの順位相関係数spearmans-rank-correlation-coefficient)
     - [スピアマンの計算式](#スピアマンの計算式)
     - [スピアマンの特徴](#スピアマンの特徴)
+- [Japanese Vicuna QA](#japanese-vicuna-qa)
 
 ## 概要
 
@@ -800,6 +802,12 @@ AI の回答がどれほど真実に基づいているかを測定する。AI �
 
 AI が様々な状況下で安定したパフォーマンスを発揮するか、特に予期しない入力や挑戦的な状況においても一貫性を保つことが評価される。
 
+## Intuition(直観) の発音
+
+in·tyoo·**i**·shn
+
+i にアクセント。
+
 ## llm-jp-eval ベンチマークで使われるデータセット
 
 [大規模言語モデル入門 II 〜生成型 LLM の実装と評価 : 書籍案内 | 技術評論社](https://gihyo.jp/book/2024/978-4-297-14393-0)
@@ -1138,3 +1146,24 @@ $$
 - 非線形の単調関係も検出可能。
 - 外れ値に強い(順位を用いるため影響を受けにくい)。
 - 順位データやカテゴリデータにも対応可能。
+
+## Japanese Vicuna QA
+
+ビクーニャ、またはビクーナ。
+ラクダ科に分類される偶蹄類。
+[ビクーニャ - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%93%E3%82%AF%E3%83%BC%E3%83%8B%E3%83%A3)
+
+Vicuna QA を手作業で日本語に翻訳したもの。
+
+- LLM vs 他の LLM の出力を、さらにほかの LLM がランク付けして評価する
+  - 自動評価で迅速評価
+  - ただし評価するモデルのバイアスが課題
+- 公開データセットで構成され、再現性が高い
+- 正確性、詳細性、創造性などを多面的に評価すると言われる
+- プロンプト工学の検証にも有効
+
+参考:
+
+- [日本語 VicunaQA ベンチマーク:リーダーボード | ja-vicuna-qa-benchmark – Weights & Biases](https://wandb.ai/llm-jp-eval/ja-vicuna-qa-benchmark/reports/-VicunaQA---Vmlldzo2Mjk2OTI3?accessToken=zmfqg0olpjj7yarp6gpofxi8jl0v1no32hh38fi8s3suko9hm9hk2irj2b5c17xh)
+- [ku-nlp/ja-vicuna-qa-benchmark](https://github.com/ku-nlp/ja-vicuna-qa-benchmark)
+- 実例: [llm-book/ja-vicuna-qa-benchmark · Datasets at Hugging Face](https://huggingface.co/datasets/llm-book/ja-vicuna-qa-benchmark/viewer)
