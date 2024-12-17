@@ -101,6 +101,7 @@
     - [スピアマンの計算式](#スピアマンの計算式)
     - [スピアマンの特徴](#スピアマンの特徴)
 - [Japanese Vicuna QA](#japanese-vicuna-qa)
+- [ベンチマークを共通で扱うツール](#ベンチマークを共通で扱うツール)
 
 ## 概要
 
@@ -912,7 +913,32 @@ i にアクセント。
 
 ### 意味的類似度計算
 
+テキストのペアが与えられ、その意味的な近さを評価する。
+
 #### JSTS
+
+日本語の STS。
+
+- [JGLUE/datasets/jsts-v1.1 at main · yahoojapan/JGLUE](https://github.com/yahoojapan/JGLUE/tree/main/datasets/jsts-v1.1)
+- [日本語テキスト埋め込みベンチマーク JMTEB の構築 - SB Intuitions TECH BLOG](https://www.sbintuitions.co.jp/blog/entry/2024/05/16/130848)
+
+1 つの画像に付けられたキャプションを 2 つ用意して、
+そのキャプションの近似度を 5 人の人間が 0 から 5 までのスコアで評価し、
+その平均値を正解ラベルとしたデータセット。
+
+0 は「全く異なる意味」、5 は「完全に同じ意味」。
+
+相関係数で比較。
+
+[JSTS](https://github.com/yahoojapan/JGLUE?tab=readme-ov-file#jsts) 参照。
+
+画像の元は [COCO - Common Objects in Context](https://cocodataset.org/#home)
+むかしは "MS COCO" と呼ばれていたが、オープン化されて "COCO Dataset" になったらしい。
+
+MS COCO → [YJCaptions](https://github.com/yahoojapan/YJCaptions) → JSTS という流れ。
+
+JSTS は [flexeval](https://github.com/sbintuitions/flexeval) には入ってないけど、
+おなじ SB Intuitions の[JMTEB](https://github.com/sbintuitions/JMTEB)で出来るらしい。
 
 ## llm-jp-eval ベンチマークで使われる評価指標
 
@@ -1167,3 +1193,11 @@ Vicuna QA を手作業で日本語に翻訳したもの。
 - [日本語 VicunaQA ベンチマーク:リーダーボード | ja-vicuna-qa-benchmark – Weights & Biases](https://wandb.ai/llm-jp-eval/ja-vicuna-qa-benchmark/reports/-VicunaQA---Vmlldzo2Mjk2OTI3?accessToken=zmfqg0olpjj7yarp6gpofxi8jl0v1no32hh38fi8s3suko9hm9hk2irj2b5c17xh)
 - [ku-nlp/ja-vicuna-qa-benchmark](https://github.com/ku-nlp/ja-vicuna-qa-benchmark)
 - 実例: [llm-book/ja-vicuna-qa-benchmark · Datasets at Hugging Face](https://huggingface.co/datasets/llm-book/ja-vicuna-qa-benchmark/viewer)
+
+## ベンチマークを共通で扱うツール
+
+プロンプト(zero-shot だったり few-shot だったり)のちがいで性能変わったりもあるので、
+統一基準で動かせるものがあれば便利ではある。
+
+- [sbintuitions/flexeval: Flexible evaluation tool for language models](https://github.com/sbintuitions/flexeval)
+- [sbintuitions/JMTEB: The evaluation scripts of JMTEB (Japanese Massive Text Embedding Benchmark)](https://github.com/sbintuitions/JMTEB?tab=readme-ov-file)
