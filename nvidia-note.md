@@ -46,6 +46,10 @@ $nvidiaSmiOutput -split "`n" | ForEach-Object {
 } | Format-Table -AutoSize
 ```
 
+## nvidia-smi で使用可能なクエリ項目を全部表示
+
+`nvidia-smi --help-query-gpu`
+
 ## VSCode で Jupyter を使っているときに Jupyter kernel を再起動して CUDA のメモリを開ける
 
 F1 押して `Jupyter: restart kernel`
