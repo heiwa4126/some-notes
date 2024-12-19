@@ -110,3 +110,12 @@ dev は `--extra` オプションで出来そうな気がするのだが、動�
 
 - [Commands | uv](https://docs.astral.sh/uv/reference/cli/#uv-init)
 - [build\-system table](https://peps.python.org/pep-0518/#build-system-table)
+
+## uv sync
+
+- `uv sync` - `npm i` 相当。モジュールを更新する。
+- `uv sync --locked` - `npm ci` 相当。`uv.lock`に従ってモジュールをインストールする。
+
+`uv sync --lock` という 「ロックファイルの更新を伴う`uv sync`」というオプションもあるので注意。
+
+`uv sync` は `~= 0.9` みたいのも無視するらしい。
