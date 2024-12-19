@@ -22,6 +22,7 @@
 - [拡張機能のフィルタ](#拡張機能のフィルタ)
 - [VSCode のターミナルで Ctrl+K を使う](#vscode-のターミナルで-ctrlk-を使う)
 - [折りたたみ(Folding)系](#折りたたみfolding系)
+- [VSCode に GPU を使わせない設定](#vscodeにgpu-を使わせない設定)
 
 ## Remote Development
 
@@ -331,3 +332,19 @@ WSL2 が mirror モードだった(IPv6 を使いたかった)のを、元の NA
 - `Ctrl + K Ctrl + L` - カーソルのあるブロックを折りたたむ / 展開
 - `Ctrl + Shift + [`- カーソルのあるブロックを折りたたむ
 - `Ctrl + Shift + ]`- カーソルのあるブロックを展開
+
+## VSCode に GPU を使わせない設定
+
+[How can I disable GPU rendering in Visual Studio Code - Stack Overflow](https://stackoverflow.com/questions/29966747/how-can-i-disable-gpu-rendering-in-visual-studio-code)
+
+argv.json に
+
+```json
+"disable-hardware-acceleration": true
+```
+
+または
+
+```sh
+code --disable-gpu
+```
