@@ -193,3 +193,18 @@ TUI 版の NVIDIA の top (「タスクマネージャのパフォーマンス�
 
 - [XuehaiPan/nvitop: An interactive NVIDIA-GPU process viewer and beyond, the one-stop solution for GPU process management.](https://github.com/XuehaiPan/nvitop)
   - [Keybindings for Monitor Mode](https://github.com/XuehaiPan/nvitop?tab=readme-ov-file#keybindings-for-monitor-mode)
+
+## NVIDIA Visual Profiler (nvcc)
+
+CUDA もよく書きませんのに。まあメモとして。
+
+- [NVIDIA Visual Profiler | NVIDIA Developer](https://developer.nvidia.com/nvidia-visual-profiler)
+- [Profiler](https://docs.nvidia.com/cuda/profiler-users-guide/)
+- [NVIDIA Visual Profiler 入門 #GPU - Qiita](https://qiita.com/Hiroki11x/items/3737e4e267c1035a4b55)
+- [nvprof コマンド と NVIDIA Visual Profiler(GUI アプリ) を使って GPU のプロファイリングを行い、tf.nn.conv2d の計算時間を計測してみる - Kei Minagawa's Blog](https://keimina.hatenablog.jp/entry/2018/12/27/232813)
+- [Microsoft Word - cudaprofiler_ug3.docx](http://i2.ioes.saga-u.ac.jp/cudaprofiler_ug3.pdf)
+- [nvprof と NVIDIA Visual Profiler で GPU の使用状況を確認する #Jupyter - Qiita](https://qiita.com/chlochan/items/06a30a4fcc19096e64f9)
+
+nvprof で採取して nvcc でビジュアル化。
+
+最近は NVIDIA Nsight Systems というのを使うらしい (NVIDIA Nsight とは別物)。
