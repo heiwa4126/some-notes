@@ -18,6 +18,13 @@ LLM のノートに書いてたのがだんだん大きくなりすぎたので�
 - [Terraformres で使う TensorBoard メモ](#terraformres-で使う-tensorboard-メモ)
 - [タスク](#タスク)
 - [認証が必要なモデル](#認証が必要なモデル)
+- [chat template](#chat-template)
+  - [モデルの Hugging Face ページを確認する](#モデルの-hugging-face-ページを確認する)
+  - [トークナイザーのデフォルトテンプレートを確認](#トークナイザーのデフォルトテンプレートを確認)
+  - [モデルファミリーのドキュメントを確認](#モデルファミリーのドキュメントを確認)
+  - [モデル開発者の GitHub リポジトリを確認](#モデル開発者の-github-リポジトリを確認)
+  - [モデルの開発者やコミュニティに問い合わせる](#モデルの開発者やコミュニティに問い合わせる)
+- [chat template によって chat の input として生成される token のイメージ](#chat-template-によって-chat-の-input-として生成される-token-のイメージ)
 
 ## Hugging Face のモデルのキャッシュを消す方法 (とリストする方法)
 
@@ -380,3 +387,65 @@ model = AutoModelForCausalLM.from_pretrained(
 
 - [AutoTokenizer で chiTra トークナイザを読み込む #transformers - Qiita](https://qiita.com/mh-northlander/items/0b543edfec2e341bd4a0)
 - [Using a model with custom code](https://huggingface.co/docs/transformers/main/en/custom_models#using-a-model-with-custom-code)
+
+## chat template
+
+モデルごとに違うんだけど... どうやって知ったらいい?
+
+参考:
+
+- [Chat Templates](https://huggingface.co/docs/transformers/main/en/chat_templating)
+- [Chat Templates(日本語)](https://huggingface.co/docs/transformers/ja/chat_templating)
+- [HuggingFace Transformers の チャットモデルテンプレート を試す｜ npaka](https://note.com/npaka/n/nf5d78c00b3df)
+
+### モデルの Hugging Face ページを確認する
+
+- モデルの Hugging Face ページで「Files and versions」タブを確認
+- `tokenizer_config.json`や`config.json`内に`chat_template`の定義があることがあります
+- また、モデルの README にも記載されていることがあります
+
+### トークナイザーのデフォルトテンプレートを確認
+
+直接トークナイザーから確認できることがあります。
+
+```python
+from transformers import AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("モデル名")
+if hasattr(tokenizer, "chat_template"):
+    print(tokenizer.chat_template)
+```
+
+### モデルファミリーのドキュメントを確認
+
+- Llama 系: `<s>[INST] {prompt} [/INST]`
+- Mistral 系: `<s>[INST] {prompt} [/INST]`
+- Falcon 系: `User: {prompt}\nAssistant:`
+
+など、モデルファミリーごとに標準的なテンプレートがあります
+
+### モデル開発者の GitHub リポジトリを確認
+
+- トレーニングスクリプトや例示コードにテンプレートが記載されていることがあります。
+- issues や discussions でも議論されていることがあります。
+
+### モデルの開発者やコミュニティに問い合わせる
+
+はい。
+
+## chat template によって chat の input として生成される token のイメージ
+
+Llama の場合こんなノリになるらしい。
+
+```text
+<s>[SYSTEM] You are a helpful assistant who provides clear and concise answers. Be polite and informative. [/SYSTEM]
+<s>[INST] What is the capital of France? [/INST] Paris
+<s>[INST] Who wrote '1984'? [/INST] George Orwell
+```
+
+改行が必要かはよくわからない。
+
+[Chat Templates](https://huggingface.co/docs/transformers/main/en/chat_templating)
+の
+`tokenizer.apply_chat_template()`
+のコード参照。
