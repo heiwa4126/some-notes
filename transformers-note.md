@@ -25,6 +25,8 @@ LLM のノートに書いてたのがだんだん大きくなりすぎたので�
   - [モデル開発者の GitHub リポジトリを確認](#モデル開発者の-github-リポジトリを確認)
   - [モデルの開発者やコミュニティに問い合わせる](#モデルの開発者やコミュニティに問い合わせる)
 - [chat template によって chat の input として生成される token のイメージ](#chat-template-によって-chat-の-input-として生成される-token-のイメージ)
+- [chat template の例](#chat-template-の例)
+- [vLLM OpenAI Compatible Server の chat template](#vllm-openai-compatible-server-の-chat-template)
 
 ## Hugging Face のモデルのキャッシュを消す方法 (とリストする方法)
 
@@ -397,6 +399,7 @@ model = AutoModelForCausalLM.from_pretrained(
 - [Chat Templates](https://huggingface.co/docs/transformers/main/en/chat_templating)
 - [Chat Templates(日本語)](https://huggingface.co/docs/transformers/ja/chat_templating)
 - [HuggingFace Transformers の チャットモデルテンプレート を試す｜ npaka](https://note.com/npaka/n/nf5d78c00b3df)
+- [LLM のチャットテンプレート | LLM Japan](https://www.llmjapan.com/blog/chat_template/)
 
 ### モデルの Hugging Face ページを確認する
 
@@ -431,7 +434,14 @@ if hasattr(tokenizer, "chat_template"):
 
 ### モデルの開発者やコミュニティに問い合わせる
 
-はい。
+例:
+[tokyotech-llm/Swallow-7b-instruct-hf · tokenizer.chat_template](https://huggingface.co/tokyotech-llm/Swallow-7b-instruct-hf/discussions/2)
+
+例 2:
+[llama2:7b-chat/template](https://ollama.com/library/llama2:7b-chat/blobs/2e0493f67d0c)
+
+Ollama のテンプレートは Jinja2 でなく独自形式。
+<https://github.com/ollama/ollama/blob/main/docs/modelfile.md#template>
 
 ## chat template によって chat の input として生成される token のイメージ
 
@@ -449,3 +459,49 @@ Llama の場合こんなノリになるらしい。
 の
 `tokenizer.apply_chat_template()`
 のコード参照。
+
+## chat template の例
+
+[microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)
+
+テンプレートは以下の通り (Jinja2):
+
+```jinja
+{% for message in messages %}{% if message['role'] == 'system' %}{{'<|system|>
+' + message['content'] + '<|end|>
+'}}{% elif message['role'] == 'user' %}{{'<|user|>
+' + message['content'] + '<|end|>
+'}}{% elif message['role'] == 'assistant' %}{{'<|assistant|>
+' + message['content'] + '<|end|>
+'}}{% endif %}{% endfor %}{% if add_generation_prompt %}{{ '<|assistant|>
+' }}{% else %}{{ eos_token }}{% endif %}
+```
+
+で、サンプルは
+
+```text
+<|system|>
+You are a helpful assistant who provides clear and concise answers. Be polite and informative.<|end|>
+<|user|>
+Hello, how are you?<|end|>
+<|assistant|>
+I'm doing great. How can I help you today?<|end|>
+<|user|>
+I'd like to show off how chat templating works!<|end|>
+<|endoftext|>
+```
+
+## vLLM OpenAI Compatible Server の chat template
+
+[OpenAI Compatible Server の Chat Template のところ — vLLM](https://docs.vllm.ai/en/v0.4.1/serving/openai_compatible_server.html#chat-template)
+
+`vllm serve --chat-template` や
+`python -m vllm.entrypoints.openai.api_server --chat-template` や
+`from vllm.entrypoints.openai.api_server import run_server` の 引数 `from vllm.engine.arg_utils import AsyncEngineArgs` の `chat_template` で分類の場合は
+Jinja2 形式で chat テンプレートを与えられるようになってるらしい。
+
+`--chat-template` オプションではファイルも可。`./foo.jinja` や `/foo/bar.jinja` で。
+
+有名モデルの chat テンプレートは以下にサンプルがある
+<https://github.com/vllm-project/vllm/tree/main/examples/>
+んだけど、なんか異常にややこしくない?
