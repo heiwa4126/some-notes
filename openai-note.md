@@ -146,3 +146,38 @@ A.\
 > OpenAI が developer メッセージを導入した理由は、従来の system メッセージを補完する形で、開発者視点での意図や指示をより明確に伝えるためです。これにより、モデルの動作や出力をカスタマイズする際の柔軟性が向上し、開発者の目的に応じた会話設計が可能になります。
 
 だそうですが、意味が分からん。
+
+## /v1/completions API は廃止になったらしい
+
+というか /v1/completions を使っていたモデルが廃止になった?
+[GPT-4 API の一般提供と Completions API の旧モデルの廃止 | OpenAI](https://openai.com/ja-JP/index/gpt-4-api-general-availability/)
+
+### 旧形式（Completions API）
+
+```python
+import openai
+
+openai.api_key = 'YOUR_API_KEY'
+response = openai.Completion.create(
+    model="text-davinci-003",
+    prompt="OpenAIについて教えてください。",
+    max_tokens=50
+)
+print(response.choices[0].text)
+```
+
+### 新形式（Chat Completions API）
+
+```python
+import openai
+
+openai.api_key = 'YOUR_API_KEY'
+response = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "user", "content": "OpenAIについて教えてください。"}
+    ],
+    max_tokens=50
+)
+print(response.choices[0].message['content'])
+```
