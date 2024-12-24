@@ -2,7 +2,11 @@
 
 ## uv にはタスクマネージャが無い
 
-poethepoet か taskipy を使う。
+[Using \`uv run\` as a task runner · Issue #5903 · astral-sh/uv](https://github.com/astral-sh/uv/issues/5903)
+を見てると、もうすぐ `uv task` でいけるようになるみたい。
+
+それまでは
+PoeThePoet か taskipy を使う。
 
 - [PoeThePoet ドキュメント](https://github.com/nat-n/poethepoet)
 - [Taskipy ドキュメント](https://taskipy.dev/)
@@ -102,7 +106,7 @@ dev は `--extra` オプションで出来そうな気がするのだが、動�
 
 パッケージにして PyPI にのせる予定なら、自分のよく使ってる build-backend を指定しておくといい。
 
-自分は Hatch 　に慣れてるので
+自分は Hatch に慣れてるので
 `uv init --build-backend hatch`
 で。
 
