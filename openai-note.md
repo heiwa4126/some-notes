@@ -152,7 +152,7 @@ A.\
 というか /v1/completions を使っていたモデルが廃止になった?
 [GPT-4 API の一般提供と Completions API の旧モデルの廃止 | OpenAI](https://openai.com/ja-JP/index/gpt-4-api-general-availability/)
 
-### 旧形式（Completions API）
+### 旧形式(Completions API)
 
 ```python
 import openai
@@ -166,7 +166,7 @@ response = openai.Completion.create(
 print(response.choices[0].text)
 ```
 
-### 新形式（Chat Completions API）
+### 新形式(Chat Completions API)
 
 ```python
 import openai
@@ -179,5 +179,37 @@ response = openai.ChatCompletion.create(
     ],
     max_tokens=50
 )
-print(response.choices[0].message['content'])
+print(response.choices[0].message.content)
 ```
+
+## store オプション
+
+<https://platform.openai.com/docs/api-reference/chat/create#chat-create-store>
+
+> このオプションを有効にすると、ユーザーのリクエストとそれに対する AI の応答が、OpenAI の製品改善のために使用される可能性があります。
+> これは、AI モデルの性能向上や新しいモデルの開発に役立つ可能性があります。
+
+## Create new secret key での Permissions の意味
+
+公式で説明している記事があまりない...
+[Assign API Key Permissions | OpenAI Help Center](https://help.openai.com/en/articles/8867743-assign-api-key-permissions)
+
+## API
+
+- Models
+  - `/v1/models`: サポートされているすべてのモデルのリストを取得します。各モデルの詳細や使用可能な機能が確認可能です。
+- Model capabilities
+  - `/v1/audio`: 音声認識や翻訳機能を提供。例として Whisper API で音声をテキストに変換。
+  - `/v1/chat/completions`: 会話型 AI での応答生成を行います。GPT モデルを活用。
+  - `/v1/embeddings`: テキストデータの意味的なベクトル表現を生成し、検索や分類に利用可能。
+  - `/v1/images`: DALL·E などのモデルを利用し、画像生成や編集を提供。
+  - `/v1/moderations`: コンテンツの適切性を判断する機能。NSFW や不適切表現を検知。
+- Assistants
+  - `/v1/assistants`: 定義済みの AI アシスタントを操作するためのエンドポイント。カスタマイズが可能。
+  - `/v1/models` (required for Assistants): AI アシスタントに適用するモデルのリストとその選択に必要なデータを提供。
+  - `/v1/threads`: 会話の履歴を管理して文脈の理解を深めるために使用。
+  - `/v1/models` (required for Threads): 会話モデルでスレッドの履歴を活用するためのモデル。
+- Fine-tuning
+  - `/v1/fine_tuning`: カスタムデータを使ったモデルの微調整を行い、専門的な応答や特化機能を実現。
+- Files
+  - `/v1/files`: データのアップロードや管理、モデルのトレーニング用データファイルを扱うエンドポイント。

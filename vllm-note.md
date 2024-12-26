@@ -6,7 +6,23 @@
 
 よくわからないので GPT に Huggin Face と procon してもらったのを、とりあえずコピペしておく。
 
-vLLM(Virtual Large Language Model)は、大規模言語モデル (LLM) の高速推論を効率的に実現するためのオープンソースフレームワークです。具体的には、**高速かつ大規模並列推論**を目指した設計が特徴です。この点をベースに、Hugging Face との比較を以下にまとめます。
+> vLLM(Virtual Large Language Model)は、大規模言語モデル (LLM) の高速推論を効率的に実現するためのオープンソースフレームワークです。
+> 具体的には、**高速かつ大規模並列推論**を目指した設計が特徴です。この点をベースに、Hugging Face との比較を以下にまとめます。
+
+自分で感じたのは
+
+- 同じモデルを使っても Hugging Face (HF. TGI でない元々の)よりスループットが極端に良い。10 倍以上?
+- 同じモデルを使っても GPU メモリ効率が良いらしい。
+- 連続バッチ処理など動的バッチが凄いらしい(実感はない)。
+- HF のモデルハブから読める。GGUF も読める。
+- OpenAI API 互換インターフェースがある (これ便利)
+- AWQ や GPTQ の量子化を指定してモデルが読めるので(HF でもできるけど)、巨大モデルがとりあえず動かせる。
+
+など。
+
+### 参考リンク
+
+- [vLLM の仕組みをざっくりと理解する | データアナリティクスラボ](https://dalab.jp/archives/journal/vllm/)
 
 ### vLLM の特徴
 
@@ -85,3 +101,22 @@ vLLM は生成だけ、
 
 - コンテナでかい。6GB ぐらい? この他にモデルも要る。
 - NVIDIA Container Toolkit は要る。[Installing the NVIDIA Container Toolkit — NVIDIA Container Toolkit 1.17.0 documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+
+## `vllm serve --help` (vllm.entrypoints.openai.api_server)
+
+でかいので別ファイルにしました。
+[vllm serve --help](vllm-serve-help.txt)
+
+公式は
+
+- [Engine Arguments — vLLM](https://docs.vllm.ai/en/stable/usage/engine_args.html#engine-arguments)
+- [Engine Arguments — vLLM](https://docs.vllm.ai/en/v0.5.0/models/engine_args.html) - 古い。vllm.entrypoints.openai.api_server のころのやつ
+- [OpenAI Compatible Server — vLLM](https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html)
+
+## quantization に指定できるパラメータ
+
+```text
+--quantization/-q (choose from aqlm, awq, deepspeedfp, tpu_int8, fp8, fbgemm_fp8, modelopt, marlin, gguf, gptq_marlin_24, gptq_marlin, awq_marlin, gptq, compressed-tensors, bitsandbytes, qqq, hqq, experts_int8, neuron_quant, ipex, None)
+```
+
+あと `--quantization-param-path QUANTIZATION_PARAM_PATH` が必要。
