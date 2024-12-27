@@ -121,11 +121,14 @@ vLLM は生成だけ、
 
 あと `--quantization-param-path QUANTIZATION_PARAM_PATH` が必要。
 
-## LLM サーバーフレームワーク
+## LLM サーバーフレームワーク (LLM serving frameworks)
 
-vLLM や SGLang のようなソフトウェアは、一般的に「LLM サーバーフレームワーク」または「LLM 推論フレームワーク」と呼ばれています。
-単に「LLM サーバー」とも。
-これらのフレームワークは、大規模言語モデル（LLM）の効率的な推論と展開を可能にするために設計されています。
+vLLM や SGLang のようなソフトウェアは、一般的に
+「LLM サーバーフレームワーク」または「LLM 推論フレームワーク」と呼ばれています。
+他にも「LLM 推論サービング」、単に「LLM サーバー」「LLM フレームワーク」とも。
+これらのフレームワークは、大規模言語モデル(LLM)の効率的な推論と展開を可能にするために設計されています。
+
+モデルと推論エンジン(バックエンド)の組み合わせを簡単に切り替えられる。
 
 ### 主な特徴
 
@@ -143,3 +146,126 @@ vLLM や SGLang のようなソフトウェアは、一般的に「LLM サーバ
 - **LangGraph**: LangChain の一部として、AutoGen と同様に Agent システムの開発に焦点を当てたフレームワークです。
 
 これらのフレームワークは、それぞれ異なる特徴や用途に焦点を当てており、開発者は自身のプロジェクトの要件に応じて適切なフレームワークを選択することができます。
+
+## もうすこし LLM サーバーフレームワーク (LLM Server Framework) の定義
+
+LLM サーバーフレームワークは、
+大規模言語モデル (Large Language Models; LLMs) を
+
+- 効率的かつスケーラブルにデプロイ、
+- サービング(提供)、
+- および管理
+
+するためのソフトウェアプラットフォームまたはライブラリを指します。
+
+### **主な機能**
+
+1. **モデルサービング**:
+
+   - LLM をエンドポイントとして公開し、リクエストに応じて推論結果を返す。
+   - REST API、gRPC、WebSocket などのインターフェースをサポート。
+
+2. **スケーラビリティ**:
+
+   - 複数のリクエストを同時に処理するためのバッチング機能。
+   - 分散処理やマルチ GPU 環境に対応。
+
+3. **効率化**:
+
+   - 推論速度を向上させる技術(Lazy Loading、キャッシュ、量子化)。
+   - GPU や CPU のリソースを最適に使用。
+
+4. **簡易デプロイ**:
+
+   - モデルの準備からサービングまでのプロセスを簡略化。
+   - コンテナ化(Docker)やクラウドデプロイのサポート。
+
+5. **モニタリングと管理**:
+
+   - 使用状況のトラッキング、ログ管理、エラー検出。
+   - サービングモデルのバージョン管理。
+
+6. **拡張性**:
+   - カスタム推論ロジックや、特定のユースケースに対応するための拡張機能をサポート。
+
+### **代表的な LLM サーバーフレームワーク**
+
+以下は「LLM サーバーフレームワーク」として注目されているツールの例です:
+
+1. **vLLM**:
+
+   - 高速な推論とリクエスト管理の最適化。
+   - 複数リクエストを効率的に処理可能。
+
+2. **Hugging Face Text Generation Inference**:
+
+   - Hugging Face Transformers との深い統合。
+   - 簡易なデプロイと管理機能を提供。
+
+3. **DeepSpeed Inference**:
+
+   - Microsoft が開発。大規模モデル向けの高速推論と最適化。推論だけでなく、学習(トレーニング)にも強力な機能を提供する。
+
+4. **Ray Serve**:
+
+   - 分散コンピューティングフレームワーク「Ray」の一部で、LLM サービングをサポート。
+
+5. **SGLang**:
+
+   - 軽量でリアルタイム推論に特化。
+
+6. **FasterTransformer**:
+   - NVIDIA が開発。GPU 最適化に特化した推論ライブラリ。
+
+それぞれの範囲が微妙。もういちど。
+
+まずモデル(LLM)。これはわかる。
+
+有名推論エンジン(バックエンド)
+
+- ONNX Runtime - ONNX フォーマットのモデルを推論する汎用エンジン。CPU、GPU、TPU など幅広いハードウェアをサポート。
+- NVIDIA TensorRT - NVIDIA GPU 向けに最適化された高性能推論エンジン。モデルのコンパイルと最適化による高速化。
+- FasterTransformer - NVIDIA が開発した、Transformer モデルに特化した推論ライブラリ。
+- DeepSpeed Inference - Microsoft が開発した大規模言語モデル向け推論エンジン。DeepSpeed ライブラリの一部。
+- PyTorch - PyTorch フレームワークの標準推論エンジン
+- TensorFlow Serving - TensorFlow モデルをデプロイするための推論エンジン。
+- OpenVINO - Intel が提供するエッジ向け推論エンジン。Intel CPU や iGPU での最適化。モデルの低レイテンシ推論。エッジデバイスや低リソース環境むけ
+- JAX/XLA - Google が開発した数値計算ライブラリ「JAX」に基づいた推論エンジン。TPU での高速推論をサポート。TPU むけ
+- Hugging Face Text Generation Inference - Hugging Face が開発した、特にテキスト生成に特化した推論エンジン。Transformers モデルの最適化。高速なテキスト生成。
+- TVM (Apache TVM) - 深層学習コンパイラ。異なるハードウェア（CPU、GPU、FPGA）向けにコンパイル。
+- Triton Inference Server - NVIDIA が開発した汎用的なモデルサービングエンジン。ONNX Runtime、TensorRT、PyTorch、TensorFlow などの複数エンジンを統合。
+- Habana SynapseAI - Habana Labs（Intel の子会社）が提供する推論エンジン。Habana Gaudi アクセラレータ向け最適化。
+- AWS Inferentia - AWS が提供する専用推論チップ（Inferentia）向けエンジン。Neuron SDK を利用したモデル最適化。
+
+推論エンジンや LLM サーバーフレームワークからちょっとズレてるもの
+
+Hugging Face Transformers (通称 HF)
+
+モデルのライブラリおよびフレームワーク。
+推論エンジンの上に抽象化されたフレームワーク、とも言える。
+
+- 機能
+  - モデル管理
+  - API インターフェース
+  - トレーニングと微調整
+  - バックエンド連携
+- バックエンドとして使えるもの
+  - PyTorch:
+  - TensorFlow:
+  - ONNX Runtime:
+  - TensorRT:
+  - DeepSpeed Inference:
+  - Accelerate:
+
+llama.cpp
+
+Meta の LLaMA（Large Language Model for AI）モデルを **CPU ベース で** 効率的に動作させるためのライブラリ。
+モデルを実行するための効率的なコードを含むため、推論エンジンの一種と考えることができます。
+
+Ollama
+
+LLaMA モデルを含むさまざまな LLM をローカル環境で簡単に利用できるプラットフォーム。
+内部で llama.cpp を使っているらしい。
+
+- [How ollama uses llama.cpp : r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/comments/1cjaybn/how_ollama_uses_llamacpp/)
+- [Ollama がローカル LLM をどうやって呼び出しているのか](https://zenn.dev/laiso/articles/c1bc554b38228b)
