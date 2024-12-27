@@ -269,3 +269,9 @@ LLaMA モデルを含むさまざまな LLM をローカル環境で簡単に利
 
 - [How ollama uses llama.cpp : r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/comments/1cjaybn/how_ollama_uses_llamacpp/)
 - [Ollama がローカル LLM をどうやって呼び出しているのか](https://zenn.dev/laiso/articles/c1bc554b38228b)
+
+NVIDIA TensorRT-LLM
+
+TensorRT を LLM 用に強化したもの。
+モデルコンパイラとエンジンとバックエンドのセット。
+使うのが難しい...
