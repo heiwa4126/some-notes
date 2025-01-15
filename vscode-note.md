@@ -22,7 +22,8 @@
 - [拡張機能のフィルタ](#拡張機能のフィルタ)
 - [VSCode のターミナルで Ctrl+K を使う](#vscode-のターミナルで-ctrlk-を使う)
 - [折りたたみ(Folding)系](#折りたたみfolding系)
-- [VSCode に GPU を使わせない設定](#vscodeにgpu-を使わせない設定)
+- [VSCode に GPU を使わせない設定](#vscode-に-gpu-を使わせない設定)
+- [折り返しの有効無効](#折り返しの有効無効)
 
 ## Remote Development
 
@@ -348,3 +349,7 @@ argv.json に
 ```sh
 code --disable-gpu
 ```
+
+## 折り返しの有効無効
+
+`Alt+Z`
