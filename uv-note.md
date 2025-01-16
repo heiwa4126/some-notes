@@ -72,6 +72,8 @@ test.script = "flake8 && pytest" # これでもいいらしい
 
 `npm up`に相当するのは `uv lock --upgrade` して `uv sync`
 
+`--upgrade` は　`-U` でもいい。
+
 ## uv で pyproject.toml で devDependencies に相当するもの
 
 `npm i -D` に相当するのは `uv add --dev`。
