@@ -68,10 +68,9 @@ test.script = "flake8 && pytest" # これでもいいらしい
 
 ## `uv sync`
 
-`uv sync` は
-`npm i` 相当。パッケージは更新される。
+`uv sync` は `npm ci` 相当。パッケージは `uv.lock` に従う。
 
-`npm ci` のようにロックファイルと同じバージョンを入れるなら `uv sync --lock`。
+`npm up`に相当するのは `uv lock --upgrade` して `uv sync`
 
 ## uv で pyproject.toml で devDependencies に相当するもの
 
