@@ -105,6 +105,7 @@
 - [Instruct モデル](#instruct-モデル)
   - [Instruct モデル の作り方](#instruct-モデル-の作り方)
   - [日本語の指示付きデータセットで Hugging Face Hub にあるやつ](#日本語の指示付きデータセットで-hugging-face-hub-にあるやつ)
+  - [汎用言語モデルと Instruct モデルの指示への応答性能を比較するためのベンチマーク](#汎用言語モデルと-instruct-モデルの指示への応答性能を比較するためのベンチマーク)
 
 ## 概要
 
@@ -1217,9 +1218,9 @@ Instruct モデル = 汎用言語モデル + 指示適応学習と捉えるこ�
 
 1. 基礎となる汎用言語モデル
    - 大規模なデータセットで事前学習され、多様な知識や言語能力を備えています。この段階では特定の指示への最適化はされていません。
-2. インストラクションチューニング（Instruction Fine-Tuning）
+2. インストラクションチューニング(Instruction Fine-Tuning)
    - 指示付きデータセットを使い、モデルが指示や命令文を正確に解釈し、適切な応答を生成するよう訓練します。
-   - このデータセットには、人間のフィードバック（例: Reinforcement Learning from Human Feedback, RLHF）による調整が加わることがあります。
+   - このデータセットには、人間のフィードバック(例: Reinforcement Learning from Human Feedback, RLHF)による調整が加わることがあります。
    - 例: 「このテキストを要約してください」「〇〇についてのリストを作ってください」などの具体的な指示を含む。
 3. 結果: Instruct モデル
    - このプロセスの結果として、ユーザー意図をより適切に理解し、応答を出力する能力が向上します。
@@ -1230,3 +1231,13 @@ Instruct モデル = 汎用言語モデル + 指示適応学習と捉えるこ�
 - [dolly-15k-ja](https://huggingface.co/datasets?modality=modality:text&sort=trending&search=dolly-15k-ja) - Databricks 社が公開した英語の指示データセット dolly-15k を自動翻訳して日本語化したもの。ただし自動翻訳による品質のばらつきが。
 - [jimba-instuction-1k-beta](https://huggingface.co/datasets/Kendamarron/jimba-instuction-1k-beta) - Calm2-7b-chat モデルを用いて生成し、人手でチェック・修正した日本語のインストラクションデータセット。商用利用も可能。
 - 他、[Hugging Face – The AI community building the future.](https://huggingface.co/datasets?modality=modality:text&sort=trending&search=Japanese+instruction)
+
+### 汎用言語モデルと Instruct モデルの指示への応答性能を比較するためのベンチマーク
+
+(以下正しいかは微妙)
+
+- HELM (Holistic Evaluation of Language Models) - https://crfm.stanford.edu/helm/
+- BIG-bench (Beyond the Imitation Game Benchmark) - https://github.com/google/BIG-bench
+- Super-NaturalInstructions
+- OpenAI の独自ベンチマーク
+- Chatbot Arena (蒸留モデル対話評価)
