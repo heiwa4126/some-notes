@@ -102,6 +102,9 @@
     - [スピアマンの特徴](#スピアマンの特徴)
 - [Japanese Vicuna QA](#japanese-vicuna-qa)
 - [ベンチマークを共通で扱うツール](#ベンチマークを共通で扱うツール)
+- [Instruct モデル](#instruct-モデル)
+  - [Instruct モデル の作り方](#instruct-モデル-の作り方)
+  - [日本語の指示付きデータセットで Hugging Face Hub にあるやつ](#日本語の指示付きデータセットで-hugging-face-hub-にあるやつ)
 
 ## 概要
 
@@ -1201,3 +1204,29 @@ Vicuna QA を手作業で日本語に翻訳したもの。
 
 - [sbintuitions/flexeval: Flexible evaluation tool for language models](https://github.com/sbintuitions/flexeval)
 - [sbintuitions/JMTEB: The evaluation scripts of JMTEB (Japanese Massive Text Embedding Benchmark)](https://github.com/sbintuitions/JMTEB?tab=readme-ov-file)
+
+## Instruct モデル
+
+- Instruct モデル - 明確で具体的な指示に適する
+- 汎用言語モデル - 幅広いタスクや抽象的な指示に対応可能
+
+汎用言語モデルに対してインストラクションチューニングを施したものが Instruct モデル。\
+Instruct モデル = 汎用言語モデル + 指示適応学習と捉えることができる。
+
+### Instruct モデル の作り方
+
+1. 基礎となる汎用言語モデル
+   - 大規模なデータセットで事前学習され、多様な知識や言語能力を備えています。この段階では特定の指示への最適化はされていません。
+2. インストラクションチューニング（Instruction Fine-Tuning）
+   - 指示付きデータセットを使い、モデルが指示や命令文を正確に解釈し、適切な応答を生成するよう訓練します。
+   - このデータセットには、人間のフィードバック（例: Reinforcement Learning from Human Feedback, RLHF）による調整が加わることがあります。
+   - 例: 「このテキストを要約してください」「〇〇についてのリストを作ってください」などの具体的な指示を含む。
+3. 結果: Instruct モデル
+   - このプロセスの結果として、ユーザー意図をより適切に理解し、応答を出力する能力が向上します。
+   - 例えば、OpenAI の InstructGPT シリーズは、GPT-3 をベースにインストラクションチューニングを施したものです。
+
+### 日本語の指示付きデータセットで Hugging Face Hub にあるやつ
+
+- [dolly-15k-ja](https://huggingface.co/datasets?modality=modality:text&sort=trending&search=dolly-15k-ja) - Databricks 社が公開した英語の指示データセット dolly-15k を自動翻訳して日本語化したもの。ただし自動翻訳による品質のばらつきが。
+- [jimba-instuction-1k-beta](https://huggingface.co/datasets/Kendamarron/jimba-instuction-1k-beta) - Calm2-7b-chat モデルを用いて生成し、人手でチェック・修正した日本語のインストラクションデータセット。商用利用も可能。
+- 他、[Hugging Face – The AI community building the future.](https://huggingface.co/datasets?modality=modality:text&sort=trending&search=Japanese+instruction)
