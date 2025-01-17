@@ -194,6 +194,21 @@ TUI 版の NVIDIA の top (「タスクマネージャのパフォーマンス�
 - [XuehaiPan/nvitop: An interactive NVIDIA-GPU process viewer and beyond, the one-stop solution for GPU process management.](https://github.com/XuehaiPan/nvitop)
   - [Keybindings for Monitor Mode](https://github.com/XuehaiPan/nvitop?tab=readme-ov-file#keybindings-for-monitor-mode)
 
+## 便利ツール `nvtop`
+
+[Syllo/nvtop: GPU & Accelerator process monitoring for AMD, Apple, Huawei, Intel, NVIDIA and Qualcomm](https://github.com/Syllo/nvtop)
+
+Ubuntu 24.04 では普通に apt で。
+
+Ubuntu 20.04, 22.04 では PPA で。
+
+```sh
+sudo add-apt-repository ppa:flexiondotorg/nvtop
+sudo apt install nvtop
+```
+
+参考: [Distribution Specific Installation Process - Ubuntu / Debian](https://github.com/Syllo/nvtop?tab=readme-ov-file#ubuntu--debian)
+
 ## NVIDIA Visual Profiler (nvcc)
 
 CUDA もよく書きませんのに。まあメモとして。
