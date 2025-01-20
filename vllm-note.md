@@ -232,10 +232,10 @@ LLM サーバーフレームワークは、
 - OpenVINO - Intel が提供するエッジ向け推論エンジン。Intel CPU や iGPU での最適化。モデルの低レイテンシ推論。エッジデバイスや低リソース環境むけ
 - JAX/XLA - Google が開発した数値計算ライブラリ「JAX」に基づいた推論エンジン。TPU での高速推論をサポート。TPU むけ
 - Hugging Face Text Generation Inference - Hugging Face が開発した、特にテキスト生成に特化した推論エンジン。Transformers モデルの最適化。高速なテキスト生成。
-- TVM (Apache TVM) - 深層学習コンパイラ。異なるハードウェア（CPU、GPU、FPGA）向けにコンパイル。
+- TVM (Apache TVM) - 深層学習コンパイラ。異なるハードウェア(CPU、GPU、FPGA)向けにコンパイル。
 - Triton Inference Server - NVIDIA が開発した汎用的なモデルサービングエンジン。ONNX Runtime、TensorRT、PyTorch、TensorFlow などの複数エンジンを統合。
-- Habana SynapseAI - Habana Labs（Intel の子会社）が提供する推論エンジン。Habana Gaudi アクセラレータ向け最適化。
-- AWS Inferentia - AWS が提供する専用推論チップ（Inferentia）向けエンジン。Neuron SDK を利用したモデル最適化。
+- Habana SynapseAI - Habana Labs(Intel の子会社)が提供する推論エンジン。Habana Gaudi アクセラレータ向け最適化。
+- AWS Inferentia - AWS が提供する専用推論チップ(Inferentia)向けエンジン。Neuron SDK を利用したモデル最適化。
 
 推論エンジンや LLM サーバーフレームワークからちょっとズレてるもの
 
@@ -259,7 +259,7 @@ Hugging Face Transformers (通称 HF)
 
 llama.cpp
 
-Meta の LLaMA（Large Language Model for AI）モデルを **CPU ベース で** 効率的に動作させるためのライブラリ。
+Meta の LLaMA(Large Language Model for AI)モデルを **CPU ベース で** 効率的に動作させるためのライブラリ。
 モデルを実行するための効率的なコードを含むため、推論エンジンの一種と考えることができます。
 
 Ollama
@@ -275,3 +275,87 @@ NVIDIA TensorRT-LLM
 TensorRT を LLM 用に強化したもの。
 モデルコンパイラとエンジンとバックエンドのセット。
 使うのが難しい...
+
+## vLLM の量子化オプション
+
+`-q`または `--quantization` でつかえるオプションは以下の通り
+
+- aqlm
+- awq
+- deepspeedfp
+- tpu_int8
+- fp8
+- fbgemm_fp8
+- modelopt
+- marlin
+- gguf
+- gptq_marlin_24
+- gptq_marlin
+- awq_marlin
+- gptq
+- compressed-tensors
+- bitsandbytes
+- qqq
+- hqq
+- experts_int8
+- neuron_quant
+- ipex
+- None (量子化なし)
+
+それぞれの簡単な説明:
+
+1. AWQ (Activation-aware Weight Quantization)
+   - 活性化値を考慮した重み量子化手法
+   - 4-bit までの量子化を実現しながら、精度の低下を最小限に抑える
+2. GPTQ (GPT Quantization)
+   - 後量子化手法の 1 つで、訓練済みモデルを量子化
+   - 4-bit 量子化でも高い精度を維持できる
+3. GGUF (GPT-Generated Unified Format)
+   - Llama や Mistral モデル用に最適化された形式
+   - 様々なビット精度での量子化をサポート
+4. BitsAndBytes
+   - Hugging Face が提供する量子化ライブラリ
+   - 4-bit、8-bit 量子化をサポート
+   - QLoRA などの手法との相性が良い
+5. FP8 / FBGEMM_FP8
+   - 8-bit 浮動小数点形式での量子化
+   - FBGEMM は Meta が開発した量子化ライブラリ
+6. TPU_INT8
+   - TPU 向けの 8-bit 整数量子化
+   - Google Cloud TPU での実行に最適化
+7. Marlin / GPTQ_Marlin / AWQ_Marlin
+   - Marlin アクセラレータ向けに最適化された量子化手法
+   - GPTQ や AWQ の手法をベースにしている
+8. AQLM (Accurate Quantized Language Model)
+   - より正確な量子化を目指した新しい手法
+   - モデルの振る舞いを保持しながら効率的な量子化を実現
+9. Neuron_Quant
+   - AWS Neuron プロセッサ向けの量子化手法
+   - AWS のインフラストラクチャに最適化
+10. IPEX (Intel Extension for PyTorch)
+    - Intel 製プロセッサ向けの最適化された量子化手法
+11. Compressed-Tensors
+    - テンソル圧縮による量子化手法
+    - モデルサイズの削減を重視
+12. DeepSpeedFP
+    - DeepSpeed フレームワークによる浮動小数点量子化
+13. ModelOpt
+    - モデル最適化のための汎用的な量子化フレームワーク
+14. QQQ / HQQ
+    - 新しい世代の量子化手法
+    - より高度な圧縮と精度のバランスを目指す
+15. Experts_INT8
+    - 専門家システムを用いた 8-bit 整数量子化
+    - 特定のタスクに特化した最適化が可能
+
+### Llama3 の 70B モデルを A10G(24GB)\*4 で
+
+Llama 70B の場合、おおよそ以下のメモリが必要
+
+- BF16/FP16: 約 140GB
+- 8-bit: 約 70GB
+- 4-bit: 約 35GB
+
+4bit しかなさそう...
+
+awq か gptq を試してみる。
