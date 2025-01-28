@@ -3,6 +3,8 @@
 - [接続が切れたあとで tmux a したときに ssh-agent が切れる話](#接続が切れたあとで-tmux-a-したときに-ssh-agent-が切れる話)
 - [tmux のコピーモード](#tmux-のコピーモード)
 - [新しいウインドウやペインを開いたときに cwd を引き継ぐ](#新しいウインドウやペインを開いたときに-cwd-を引き継ぐ)
+- [水平分割](#水平分割)
+- [垂直分割](#垂直分割)
 
 ## 接続が切れたあとで tmux a したときに ssh-agent が切れる話
 
@@ -73,3 +75,11 @@ bind c new-window -c "#{pane_current_path}"
 bind % split-window -h -c "#{pane_current_path}"
 bind '"' split-window -v -c "#{pane_current_path}"
 ```
+
+## 水平分割
+
+prefix + "
+
+## 垂直分割
+
+prefix + %
