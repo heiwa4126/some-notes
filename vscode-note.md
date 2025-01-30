@@ -24,6 +24,7 @@
 - [折りたたみ(Folding)系](#折りたたみfolding系)
 - [VSCode に GPU を使わせない設定](#vscode-に-gpu-を使わせない設定)
 - [折り返しの有効無効](#折り返しの有効無効)
+- [VSCode の Jupyter 拡張で Pylance が reportMissingImports と言ってくるとき](#vscode-の-jupyter-拡張で-pylance-が-reportmissingimports-と言ってくるとき)
 
 ## Remote Development
 
@@ -353,3 +354,14 @@ code --disable-gpu
 ## 折り返しの有効無効
 
 `Alt+Z`
+
+## VSCode の Jupyter 拡張で Pylance が reportMissingImports と言ってくるとき
+
+> インポート "xxxxxx" を解決できませんでした Pylance(reportMissingImports)
+
+みたいのが出るとき。特に .venv 使ってるとよく出る。
+
+1. Jupyter のカーネルを選択する
+2. コマンドパレットで `Python: Restart Language Server`
+
+なんかこれ自動でやってくれないの?
