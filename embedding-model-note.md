@@ -54,7 +54,7 @@
 - [BAAI/bge-m3 · Hugging Face](https://huggingface.co/BAAI/bge-m3)
 - [FlagEmbedding/research/BGE_M3 at master · FlagOpen/FlagEmbedding](https://github.com/FlagOpen/FlagEmbedding/tree/master/research/BGE_M3)
 
-Beijing Academy of Artificial Intelligence (BAAI)
+Beijing Academy of Artificial Intelligence (BAAI) - 北京智源人工智能研究院
 
 よくわからんがいろいろすごいらしい。
 [複数の関連度から検索可能な BGE M3-Embedding の紹介 - Algomatic Tech Blog](https://tech.algomatic.jp/entry/papers/retrieval/chen-24-bgem3)
