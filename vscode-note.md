@@ -25,6 +25,7 @@
 - [VSCode に GPU を使わせない設定](#vscode-に-gpu-を使わせない設定)
 - [折り返しの有効無効](#折り返しの有効無効)
 - [VSCode の Jupyter 拡張で Pylance が reportMissingImports と言ってくるとき](#vscode-の-jupyter-拡張で-pylance-が-reportmissingimports-と言ってくるとき)
+  - [ひとつの解決案](#ひとつの解決案)
 
 ## Remote Development
 
@@ -365,3 +366,17 @@ code --disable-gpu
 2. コマンドパレットで `Python: Restart Language Server`
 
 なんかこれ自動でやってくれないの?
+
+### ひとつの解決案
+
+VSCode のワークスペースの設定(`.vscode/settings.json`)で
+
+```json
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"
+}
+```
+
+こうしておくのはいい考えかも。POSIX ならこれで。
+
+Windows だとどうかな...
