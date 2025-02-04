@@ -160,3 +160,18 @@ dev は `--extra` オプションで出来そうな気がするのだが、動�
 `uv sync --lock` という 「ロックファイルの更新を伴う`uv sync`」というオプションもあるので注意。
 
 `uv sync` は `~= 0.9` みたいのも無視するらしい。
+
+## uv でモジュールのアップデート
+
+`uv lock -U && uv sync`
+
+## uv で使える Python を列挙
+
+```sh
+# 全部列挙
+uv python list --all-versions
+# インストールされてるもののみ
+uv python list --only-installed
+# 普通はこれで
+uv python list
+```
