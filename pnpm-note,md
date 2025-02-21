@@ -15,3 +15,10 @@ corepack prepare pnpm@latest --activate
 ```sh
 pnpm up --latest
 ```
+
+## pnpm でキャッシュを消す
+
+```sh
+# 問答無用で全部消す
+pnpm store prune
+```

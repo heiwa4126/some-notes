@@ -4,6 +4,7 @@
 - [bun でこれだけはやっといたほうがいい設定](#bun-でこれだけはやっといたほうがいい設定)
 - [`npm ls` の equivalent](#npm-ls-の-equivalent)
 - [bun には publish がない](#bun-には-publish-がない)
+- [bun のグローバルキャッシュをクリアする](#bunのグローバルキャッシュをクリアする)
 
 ## bun の概要
 
@@ -62,3 +63,9 @@ If you were trying to run a package.json script called publish, use bun run publ
 - [Bun 専用(?)TypeScript そのまま npm パッケージの作成に関する覚え書き](https://zenn.dev/macropygia/articles/typescript-only-npm-package-creation)
 
 まあ早い話が「npm でやるのと同じようにやれ」ということですね。
+
+## bun のグローバルキャッシュをクリアする
+
+```sh
+bun pm cache rm
+```

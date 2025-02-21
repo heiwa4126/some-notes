@@ -175,3 +175,15 @@ uv python list --only-installed
 # 普通はこれで
 uv python list
 ```
+
+## uv でキャッシュを削除
+
+[Caching | uv](https://docs.astral.sh/uv/concepts/cache/#clearing-the-cache)
+
+とりあえず
+
+```sh
+uv cache prune
+```
+
+でいいのでは。Python のキャッシュけっこうでかいので、マメに消すといいとおもう。
