@@ -20,3 +20,7 @@ ECS でなければできないことは以下の通り:
 
 Fargate では自動化されている部分を細かくカスタマイズしたい場合、
 ECS を使う、という感じ。
+
+## チュートリアル
+
+- まあこのへんから? [Introduction to AWS Fargate (日本語吹き替え版) - AWS Skill Builder](https://explore.skillbuilder.aws/learn/courses/1589/Introduction-to-AWS-Fargate-Japanese-%E6%97%A5%E6%9C%AC%E8%AA%9E%E5%90%B9%E3%81%8D%E6%9B%BF%E3%81%88%E7%89%88)

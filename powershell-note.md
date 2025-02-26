@@ -6,32 +6,32 @@ Powershell が絡むとすべてがめんどくさくなる
 
 建て増しを重ねた温泉旅館。火事になると大勢が焼け死ぬ。
 
-- [powershell-note](#powershell-note)
-  - [Powershell の常識、世間の非常識](#powershell-の常識世間の非常識)
-  - [Powershell のいいところ](#powershell-のいいところ)
-  - [いつもの呪文](#いつもの呪文)
-    - [この呪文のいらない実行の仕方](#この呪文のいらない実行の仕方)
-  - [module の場所](#module-の場所)
-  - [インストールされているモジュールをリスト](#インストールされているモジュールをリスト)
-  - [type()とメンバー](#typeとメンバー)
-  - [モジュールの削除](#モジュールの削除)
-  - [strict モード](#strict-モード)
-  - [エラーがあったらそこで止まる](#エラーがあったらそこで止まる)
-  - [相対パスで Import-Module](#相対パスで-import-module)
-  - [using module](#using-module)
-  - [unit test](#unit-test)
-  - [namespace](#namespace)
-  - [function の型ノート](#function-の型ノート)
-  - [Powershell の長いプロンプトを短くする](#powershell-の長いプロンプトを短くする)
-    - [vscode の場合](#vscode-の場合)
-  - [vscode の terminal で使う powershell を v6,v7 にする](#vscode-の-terminal-で使う-powershell-を-v6v7-にする)
-  - [TIPS](#tips)
-  - [isFile, isDir のたぐい](#isfile-isdir-のたぐい)
-  - [Powershell で bash の '\&' みたいの](#powershell-で-bash-の--みたいの)
-  - [Powershell で、プロパティ全部出す](#powershell-でプロパティ全部出す)
-  - [Powershell の補完](#powershell-の補完)
-  - [ea 0](#ea-0)
-  - [PowerShell で jobs](#powershell-で-jobs)
+- [Powershell の常識、世間の非常識](#powershell-の常識世間の非常識)
+- [Powershell のいいところ](#powershell-のいいところ)
+- [いつもの呪文](#いつもの呪文)
+  - [この呪文のいらない実行の仕方](#この呪文のいらない実行の仕方)
+- [module の場所](#module-の場所)
+- [インストールされているモジュールをリスト](#インストールされているモジュールをリスト)
+- [type()とメンバー](#typeとメンバー)
+- [モジュールの削除](#モジュールの削除)
+- [strict モード](#strict-モード)
+- [エラーがあったらそこで止まる](#エラーがあったらそこで止まる)
+- [相対パスで Import-Module](#相対パスで-import-module)
+- [using module](#using-module)
+- [unit test](#unit-test)
+- [namespace](#namespace)
+- [function の型ノート](#function-の型ノート)
+- [Powershell の長いプロンプトを短くする](#powershell-の長いプロンプトを短くする)
+  - [vscode の場合](#vscode-の場合)
+- [vscode の terminal で使う powershell を v6,v7 にする](#vscode-の-terminal-で使う-powershell-を-v6v7-にする)
+- [TIPS](#tips)
+- [isFile, isDir のたぐい](#isfile-isdir-のたぐい)
+- [Powershell で bash の '\&' みたいの](#powershell-で-bash-の--みたいの)
+- [Powershell で、プロパティ全部出す](#powershell-でプロパティ全部出す)
+- [Powershell の補完](#powershell-の補完)
+- [ea 0](#ea-0)
+- [PowerShell で jobs](#powershell-で-jobs)
+- [grep の代わり](#grep-の代わり)
 
 ## Powershell の常識、世間の非常識
 
@@ -356,3 +356,16 @@ Set-PSReadLineKeyHandler -Key Tab -Function Complete
 - [Receive-Job (Microsoft.PowerShell.Core) - PowerShell | Microsoft Learn](https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/receive-job?view=powershell-7.4)
 
 [PowerShell で処理をバックグラウンドで実行する | 晴耕雨読](https://tex2e.github.io/blog/powershell/background-job)
+
+## grep の代わり
+
+```powershell
+# ファイル名に fooが含まれるものをリスト
+ls | where Name -match "foo"
+ls | where Name -like "*foo*"
+
+# ファイル中に fooが含まれるものをリスト
+ls | Select-String -Pattern "foo"
+ls | sls "foo" # エリアスとデフォルトオプションで
+sls foo *
+```
