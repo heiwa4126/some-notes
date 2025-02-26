@@ -73,11 +73,107 @@ ECS を使う、という感じ。
 
 ## AWS ECS 用語
 
-- **クラスター**: ECS クラスターは、コンテナを実行するための計算リソースのグループ(EC2 インスタンスや Fargate のようなサービス)です。
-  クラスター自体はコンテナを含みませんが、コンテナが配置される場所です。
-- **タスク**: (なんか変)タスクは、コンテナの実行単位です。1 つのタスクには、複数のコンテナが含まれる場合があります。
-  各コンテナは、定義されたイメージと設定に基づいて実行されます。
-- **サービス**: ECS サービスは、特定のタスク定義に基づいてタスクの実行を管理します。
-  サービスを使用すると、タスクが常に所定の数だけ実行されるようにできます。サービス自体はコンテナを直接含まないですが、タスクを起動するために使用されます。
+### クラスター
 
-サービスとして、タスク(1 ショット)またはサービスが選べる。
+ECS クラスターは、コンテナを実行するための計算リソースのグループ(EC2 インスタンスや Fargate のようなサービス)です。
+クラスター自体はコンテナを含みませんが、コンテナが配置される場所です。
+
+複数のサービスを配置することができる。
+
+### タスク定義
+
+タスク定義は、アプリケーションを構成するテンプレート(ブループリント)です。
+JSON 形式で記述でき、以下のような情報を含みます:
+
+- 使用する Docker イメージ(複数可)
+- CPU やメモリの割り当て
+- ネットワーク設定
+- コンテナ間の通信方法
+- 起動タイプ(Fargate や EC2 など)
+
+タスク定義をもとにサービスが生成されます。
+
+### サービス
+
+ECS の「サービス」は、**特定のタスク定義に基づいてタスクを管理・運用する仕組み**です。
+サービスは、アプリケーションの高可用性やスケーラビリティを実現するために設計されています。
+
+サービスには「サービス」と「タスク」の 2 種類ある。
+
+- サービスは、指定された数(デザイアドカウント:desired count)のタスクが常に実行されるように管理します。
+- タスクが停止した場合、自動的に再起動して望ましい状態を維持します。
+- サービスはロードバランサー(Elastic Load Balancer)と連携し、トラフィックを各タスクに分散できます。
+- オートスケーリングを使用して、トラフィック量やリソース利用率に応じてタスク数を動的に調整できます。
+
+### タスク
+
+一方、「タスク」は、**タスク定義に基づいて起動されるコンテナ群(1 つ以上のコンテナ)の実行単位**です。
+
+- タスクは、単発で起動することもできますし、サービスによって管理される形で起動することもあります。
+- タスクにはライフサイクルがあり、終了条件(例:ジョブ完了)を満たすと停止します。
+- サービスによって管理されない単発のタスクは、停止しても自動的に再起動されません。
+
+### サービス vs. 単発タスク
+
+- **「サービス」** は「特定のタスク定義に基づいて複数のタスクを管理・維持する仕組み」であり、高可用性やスケーラビリティが必要なシステム向けです。
+- **「単発タスク」** は「一時的なジョブやバッチ処理など、終了後に再起動が不要な処理」に適しています。
+
+| 特徴                     | サービス                                          | 単発タスク                           |
+| ------------------------ | ------------------------------------------------- | ------------------------------------ |
+| 管理方法                 | 指定した数のタスクを常に実行・維持                | 手動で起動し、終了後は再起動されない |
+| 主な用途                 | Web アプリケーションや API などの常時稼働システム | バッチ処理や一時的なジョブ           |
+| 自動再起動               | 停止したタスクは自動的に再起動                    | 停止後は再起動されない               |
+| オートスケーリング対応   | 対応可能                                          | 非対応                               |
+| ロードバランサーとの連携 | 可能                                              | 不可能                               |
+
+## docker-compose.yml から AWS ECS のタスク定義の元はつくれますか?
+
+[aws/amazon-ecs-cli: The Amazon ECS CLI enables users to run their applications on ECS/Fargate using the Docker Compose file format, quickly provision resources, push/pull images in ECR, and monitor running applications on ECS/Fargate.](https://github.com/aws/amazon-ecs-cli)
+で出来るらしい。
+
+こんな感じ(未検証)
+
+```sh
+ecs-cli compose --project-name your-project-name \
+-f docker-compose.yml \
+--ecs-params ecs-params.yml \
+create --region your-region \
+--launch-type EC2
+```
+
+## 「単発タスク」の場合、REST API 等のリクエストがあってからコンテナが起動される?
+
+そうじゃないらしい。
+
+`aws ecs run-task` で検索
+
+- [AWS CLI を使って Amazon ECS のタスクを手動で実行する - michimani.net](https://michimani.net/post/aws-run-ecs-task-using-aws-cli/)
+- [Amazon ECS タスクを冪等に起動できるようになりました | DevelopersIO](https://dev.classmethod.jp/articles/idempotent-ecs-task-run/)
+
+containerOverrides で CMD を置き換えもできるらしい。
+
+boto3 だったらこんなノリらしい
+
+```python
+import boto3
+
+ecs = boto3.client('ecs')
+
+response = ecs.run_task(
+    cluster='cluster-name',
+    taskDefinition='task-definition-family',
+    launchType='EC2',  # または 'FARGATE'
+    overrides={
+        'containerOverrides': [
+            {
+                'name': 'container_name',
+                'command': ["command", "arg1", "arg2"],
+            },
+        ],
+    },
+)
+```
+
+## copilot-cli が面白そう
+
+[Overview - AWS Copilot CLI](https://aws.github.io/copilot-cli/ja/docs/overview/)
