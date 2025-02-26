@@ -43,7 +43,7 @@ ECS を使う、という感じ。
 
 - まあこのへんから? [Introduction to AWS Fargate (日本語吹き替え版) - AWS Skill Builder](https://explore.skillbuilder.aws/learn/courses/1589/Introduction-to-AWS-Fargate-Japanese-%E6%97%A5%E6%9C%AC%E8%AA%9E%E5%90%B9%E3%81%8D%E6%9B%BF%E3%81%88%E7%89%88) なんか古い... まあいいか
 - [Amazon ECS の AWS Fargate - Amazon Elastic Container Service](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/AWS_Fargate.html#fargate-walkthrough)
-- AWS のポータルから作る [Fargate 起動タイプ用の Amazon ECS Linux タスクを作成する方法について説明します。 - Amazon Elastic Container Service](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/getting-started-fargate.html)
+- AWS のポータルから作る [Fargate 起動タイプ用の Amazon ECS Linux タスクを作成する方法について説明します。 - Amazon Elastic Container Service](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/getting-started-fargate.html) - チュートリアルっぽいのに不親切。まあしょうがないけど。これこのままやると「動作確認」が無いのね。いまなら Amazon VPC AWS CloudShell で curl で確認できる。
 - AWS CLI で作る [AWS CLI を使用して、Fargate 起動タイプ用の Amazon ECS Linux タスクを作成する - Amazon Elastic Container Service](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/ECS_AWSCLI_Fargate.html)
 
 ## CFn の場合
@@ -75,7 +75,9 @@ ECS を使う、という感じ。
 
 - **クラスター**: ECS クラスターは、コンテナを実行するための計算リソースのグループ(EC2 インスタンスや Fargate のようなサービス)です。
   クラスター自体はコンテナを含みませんが、コンテナが配置される場所です。
-- **タスク**: タスクは、コンテナの実行単位です。1 つのタスクには、複数のコンテナが含まれる場合があります。
+- **タスク**: (なんか変)タスクは、コンテナの実行単位です。1 つのタスクには、複数のコンテナが含まれる場合があります。
   各コンテナは、定義されたイメージと設定に基づいて実行されます。
 - **サービス**: ECS サービスは、特定のタスク定義に基づいてタスクの実行を管理します。
   サービスを使用すると、タスクが常に所定の数だけ実行されるようにできます。サービス自体はコンテナを直接含まないですが、タスクを起動するために使用されます。
+
+サービスとして、タスク(1 ショット)またはサービスが選べる。

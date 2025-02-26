@@ -1,19 +1,19 @@
 # AWS CLI のメモ
 
-- [AWS CLI のメモ](#aws-cli-のメモ)
-  - [aws cli の最新バージョンは?](#aws-cli-の最新バージョンは)
-  - [aws cli のプロファイルの場所](#aws-cli-のプロファイルの場所)
-  - [コマンド補完](#コマンド補完)
-  - [AWS CLI のインストール手順](#aws-cli-のインストール手順)
-    - [pip の最新版をユーザーローカルにインストールする](#pip-の最新版をユーザーローカルにインストールする)
-    - [Amazon Linux 2](#amazon-linux-2)
-    - [Debian, Ubuntu Linux 系](#debian-ubuntu-linux-系)
-    - [RHEL 7, CentOS 7](#rhel-7-centos-7)
-    - [Windows](#windows)
-    - [Windows(古い)](#windows古い)
-  - [pip で awscli のインストールに失敗する](#pip-で-awscli-のインストールに失敗する)
-  - [ログインとリスト](#ログインとリスト)
-  - [AMI のイメージ ID から名前を得る](#ami-のイメージ-id-から名前を得る)
+- [aws cli の最新バージョンは?](#aws-cli-の最新バージョンは)
+- [aws cli のプロファイルの場所](#aws-cli-のプロファイルの場所)
+- [コマンド補完](#コマンド補完)
+- [AWS CLI のインストール手順](#aws-cli-のインストール手順)
+  - [pip の最新版をユーザーローカルにインストールする](#pip-の最新版をユーザーローカルにインストールする)
+  - [Amazon Linux 2](#amazon-linux-2)
+  - [Debian, Ubuntu Linux 系](#debian-ubuntu-linux-系)
+  - [RHEL 7, CentOS 7](#rhel-7-centos-7)
+  - [Windows](#windows)
+  - [Windows(古い)](#windows古い)
+- [pip で awscli のインストールに失敗する](#pip-で-awscli-のインストールに失敗する)
+- [ログインとリスト](#ログインとリスト)
+- [AMI のイメージ ID から名前を得る](#ami-のイメージ-id-から名前を得る)
+- [AWS CloudShell から VPC に接続](#aws-cloudshell-から-vpc-に接続)
 
 ## aws cli の最新バージョンは?
 
@@ -171,3 +171,15 @@ ami はリージョンごとに ID が違うみたい。
 Terraform なんかでは filter で ID を見つける。
 
 これ参照: [aws_instance | Resources | hashicorp/aws | Terraform | Terraform Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#basic-example-using-ami-lookup)
+
+## AWS CloudShell から VPC に接続
+
+VPN とか無しにできるらしい。
+
+- [CloudShell を VPC で試してみた #AWS - Qiita](https://qiita.com/zumax/items/64433406a6123862957e)
+- [【AWS】手を動かして学ぶ AWS AWS CloudShell #AWS - Qiita](https://qiita.com/ymd65536/items/14f6dc1164cbf83b7de8)
+- [AWS CloudShell を VPC 環境下で起動してみた - DENET 技術ブログ](https://blog.denet.co.jp/aws-cloudshell-on-vpc/)
+- [Amazon VPC AWS CloudShell での の使用 - AWS CloudShell](https://docs.aws.amazon.com/ja_jp/cloudshell/latest/userguide/using-cshell-in-vpc.html)
+- [CloudShell の VPC 環境を作成する - AWS CloudShell](https://docs.aws.amazon.com/ja_jp/cloudshell/latest/userguide/creating-vpc-environment.html)
+
+最大 2 個まで作れて、削除は画面上部の\[アクション ▼\]からできるらしい。
