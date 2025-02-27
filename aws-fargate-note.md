@@ -174,6 +174,19 @@ response = ecs.run_task(
 )
 ```
 
+- Lambda から
+  - [lambda から ECS:RunTask を使用し、Task を起動する #AWS - Qiita](https://qiita.com/kosuke-ikeura/items/277bb91e8d68d92500b1)
+- Step Functions から
+  - [Step Functions から ECS Task を呼びだすときに、実行するシェルスクリプトを指定してみた #AWS - Qiita](https://qiita.com/sugimount-a/items/31d03c17cc2055502fca)
+  - [Step Functions で ECS タスク(Fargate)を定期実行してみる | DevelopersIO](https://dev.classmethod.jp/articles/try-to-retry-ecs-tasks-using-step-functions/)
+  - [StepFunctions で ECS タスクを起動し、コマンドを指定した場合の優先順位 - CloudBuilders](https://www.cloudbuilders.jp/articles/3849/)
+
+「Lambda から ecs run task して、SQS に入れる」とかはありがちらしい。
+
+「step functions で ecs run task して、SQS に入れる lambda を呼ぶ」もありがちらしい。
+
 ## copilot-cli が面白そう
 
 [Overview - AWS Copilot CLI](https://aws.github.io/copilot-cli/ja/docs/overview/)
+
+名前がよくないので検索が面倒。Groq と Grok みたい。
