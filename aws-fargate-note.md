@@ -187,6 +187,49 @@ response = ecs.run_task(
 
 「step functions で ecs run task して、SQS に入れる lambda を呼ぶ」もありがちらしい。
 
+## ecs.run_task で one-off task を起動するとき、引数を与える方法は argv だけ?
+
+RPC みたいなものは無くて、あとは
+
+- 環境変数で渡す
+- S3 または DynamoDB などで渡す
+- SSM Parameter Store / Secrets Manager など
+
+などの、まあ誰でも思いつくものしかなさそう。
+
+## ecs.run_task で one-off task を起動するとき、結果はどうやって得る?
+
+例えば stdout/stderr は取得できない(cloudwatch には出せる)。
+
+タスクの終了コードは確認できる。
+[describe_tasks - Boto3 1.37.2 documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ecs/client/describe_tasks.html)
+
+## ロギング
+
+タスク定義で logConfiguration を書けば cloudwatch にだせる。
+
+サンプル(未検証):
+
+```json
+{
+  "containerDefinitions": [
+    {
+      "name": "your-container-name",
+      "image": "your-image-name",
+      ...
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/your-log-group",
+          "awslogs-region": "your-region",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
+```
+
 ## copilot-cli が面白そう
 
 [Overview - AWS Copilot CLI](https://aws.github.io/copilot-cli/ja/docs/overview/)
