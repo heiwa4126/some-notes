@@ -252,3 +252,34 @@ RPC みたいなものは無くて、あとは
 
 - ECR - $0.10/GB-月
 - CloudWatch
+
+## Fargate そのものはともかく、VPC 周りがめんどくさい
+
+「サービスごとにエンドポイントを作成する必要がある」のがめんどくさい。
+
+お題:
+
+> AWS VPC のプライベート subnet で ECR 上のコンテナを fargate で動かし、
+> このコンテナ自体は s3 バケットに出力と CloudWatch にログを出す、
+> のだとしたら、GW と PrivateLink は何が必要?
+
+### 必要な Gateway や PrivateLink (VPC エンドポイント)
+
+NAT Gateway を使えば...
+価格はものすごく上がるけど(時間単位で課金される)...
+
+| サービス            | 必要なエンドポイントの種類                                      | 備考                                             |
+| ------------------- | --------------------------------------------------------------- | ------------------------------------------------ |
+| **ECR API**         | Interface VPC エンドポイント (`com.amazonaws.<region>.ecr.api`) | ECR の API コール用 (イメージのプルには関係ない) |
+| **ECR DKR**         | Interface VPC エンドポイント (`com.amazonaws.<region>.ecr.dkr`) | イメージのプルに必要                             |
+| **S3**              | Gateway VPC エンドポイント (`com.amazonaws.<region>.s3`)        | S3 へのアクセス用                                |
+| **CloudWatch Logs** | Interface VPC エンドポイント (`com.amazonaws.<region>.logs`)    | CloudWatch Logs へのログ送信                     |
+
+プライベート DNS へ、これの正引きと逆引きが登録される。
+
+#### その他のオプション
+
+- **ECS Agent / ECS Telemetry** (ECS を Fargate で動かす場合)
+  - `com.amazonaws.<region>.ecs`
+  - `com.amazonaws.<region>.ecs-telemetry`
+  - `com.amazonaws.<region>.ec2` (ECS タスクが IAM 認証を使う場合)

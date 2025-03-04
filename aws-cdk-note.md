@@ -27,6 +27,7 @@
     - [1. Terraform の Remote State を利用する](#1-terraform-の-remote-state-を利用する)
     - [2. SSM パラメータを利用する](#2-ssm-パラメータを利用する)
     - [3. AWS Resource Access Manager(RAM)を利用](#3-aws-resource-access-managerramを利用)
+- [CDK CLI のバージョンと、CDK ライブラリのバージョンが連動しなくなる (cdk acknowledge 32775)](#cdk-cli-のバージョンとcdk-ライブラリのバージョンが連動しなくなる-cdk-acknowledge-32775)
 
 ## インストール
 
@@ -531,3 +532,22 @@ AWS Systems Manager (SSM) パラメータストアを介して情報を共有し
 
 - AWS RAM で使えるリソースの種類がきわめて限定的なので、特定の場合にしか使えない。(例: VPC、AWS License Manager、Route 53 など)。
 - 一部のリソースタイプは Organizations としか共有できない。
+
+## CDK CLI のバージョンと、CDK ライブラリのバージョンが連動しなくなる (cdk acknowledge 32775)
+
+"CDK CLI versions and CDK library versions will soon diverge"
+<https://github.com/aws/aws-cdk/issues/32775>
+(2025-01-07)
+
+なので
+
+自分の CDK プロジェクトで
+
+```sh
+# npmの場合
+npm install aws-cdk@^2
+# pythonの場合
+pip install aws-cdk-lib>=2,<3
+```
+
+と同様のことを package.json とか pyproject.toml とか requirements.txt に書いとけ、ということです。

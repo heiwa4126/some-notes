@@ -8,7 +8,7 @@ Biome と併用する
 
 インストールは `npm install -g dprint` が楽だと思う。[Install - dprint - Code Formatter](https://dprint.dev/install/)
 
-そのあと `cd ~ ; dprint init` でプラグイン選んで、以下のconfigのプラグイン以外のところをコピペする感じ。
+そのあと `cd ~ ; dprint init` でプラグイン選んで、以下の config のプラグイン以外のところをコピペする感じ。
 
 早いけど config がちょっとめんどう。
 
@@ -23,10 +23,7 @@ Biome と併用する
     "printWidth": 120,
     "useTabs": true
   },
-  "dockerfile": {
-    "printWidth": 120,
-    "useTabs": true
-  },
+  "dockerfile": {},
   "malva": {
     "printWidth": 120,
     "useTabs": true,
@@ -36,24 +33,7 @@ Biome と併用する
     "printWidth": 120,
     "useTabs": true
   },
-  "excludes": [
-    "**/node_modules",
-    "**/dist",
-    "**/*-lock.json",
-    "**/*-lock.yaml",
-    "*.js",
-    "*.mjs",
-    "*.cjs",
-    "*.ts",
-    "*.tsx",
-    "*.jsx",
-    "*.json",
-    "*.jsonc",
-    "*.graphql",
-    "*.vue",
-    "*.svelte",
-    "*.astro"
-  ],
+  "excludes": ["**/node_modules", "**/dist", "**/*-lock.json", "**/*-lock.yaml", "*.js", "*.mjs", "*.cjs", "*.ts", "*.tsx", "*.jsx", "*.json", "*.jsonc", "*.graphql", "*.vue", "*.svelte", "*.astro"],
   "plugins": [
     "https://plugins.dprint.dev/markdown-0.17.8.wasm",
     "https://plugins.dprint.dev/toml-0.6.2.wasm",
