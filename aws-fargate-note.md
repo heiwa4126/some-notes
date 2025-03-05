@@ -283,3 +283,10 @@ NAT Gateway を使えば...
   - `com.amazonaws.<region>.ecs`
   - `com.amazonaws.<region>.ecs-telemetry`
   - `com.amazonaws.<region>.ec2` (ECS タスクが IAM 認証を使う場合)
+
+## VPC エンドポイント
+
+まず「インターフェイスエンドポイント」と「ゲートウェイエンドポイント」の 2 種類がある。
+
+- **インターフェイスエンドポイント**: AWS PrivateLink を利用して、VPC 内の ENI(Elastic Network Interface)を通じて AWS サービスや独自サービスにプライベート接続します。多くの AWS サービスに対応しています
+- **ゲートウェイエンドポイント**: VPC のルートテーブルを変更して、S3 や DynamoDB などのサービスにゲートウェイ経由でアクセスします。対応サービスは S3 と DynamoDB のみです
