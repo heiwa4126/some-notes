@@ -72,3 +72,24 @@ default(または第 1 引数) を指定しないか、または `...`(Ellipsis)
 ### おまけ: Pydantic の default の `...`
 
 Pydantic の Field 関数における...(Ellipsis;エリプシス;「省略」の意味)は、必須フィールドを示すために使用されます。
+
+## chain の最後に置いて、コンテンツをかならず文字列でとるやつ
+
+`StrOutputParser()`
+
+[StrOutputParser — 🦜🔗 LangChain documentation](https://python.langchain.com/api_reference/core/output_parsers/langchain_core.output_parsers.string.StrOutputParser.html)
+
+```python
+from langchain.schema import StrOutputParser
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+prompt = PromptTemplate.from_template("こんにちは、{name}さん！")
+
+chain = prompt|llm|StrOutputParser()
+
+
+
+```

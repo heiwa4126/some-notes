@@ -72,7 +72,7 @@ test.script = "flake8 && pytest" # これでもいいらしい
 
 `npm up`に相当するのは `uv lock --upgrade` して `uv sync`
 
-`--upgrade` は　`-U` でもいい。
+`--upgrade` は `-U` でもいい。
 
 ## uv で pyproject.toml で devDependencies に相当するもの
 
@@ -157,13 +157,25 @@ dev は `--extra` オプションで出来そうな気がするのだが、動�
 - `uv sync` - `npm i` 相当。モジュールを更新する。
 - `uv sync --locked` - `npm ci` 相当。`uv.lock`に従ってモジュールをインストールする。
 
-`uv sync --lock` という 「ロックファイルの更新を伴う`uv sync`」というオプションもあるので注意。
+`uv sync` は `~= 0.9` みたいのも無視するらしい(不明)
 
-`uv sync` は `~= 0.9` みたいのも無視するらしい。
+### Docker とかに便利
+
+`uv sync --locked --compile-bytecode --link-mode copy`
+
+環境変数でもいける。
+
+参考: [uv-docker-example/standalone.Dockerfile at main · astral-sh/uv-docker-example](https://github.com/astral-sh/uv-docker-example/blob/main/standalone.Dockerfile)
 
 ## uv でモジュールのアップデート
 
 `uv lock -U && uv sync`
+
+参考: [uv cache](https://docs.astral.sh/uv/reference/cli/#uv-publish)
+
+特定のパッケージのみ更新する
+`uv lock --upgrade-package xxx`
+もあります。
 
 ## uv で使える Python を列挙
 
@@ -178,12 +190,21 @@ uv python list
 
 ## uv でキャッシュを削除
 
-[Caching | uv](https://docs.astral.sh/uv/concepts/cache/#clearing-the-cache)
+- [Caching | uv](https://docs.astral.sh/uv/concepts/cache/#clearing-the-cache)
+- [uv cache](https://docs.astral.sh/uv/reference/cli/#uv-cache)
 
 とりあえず
 
 ```sh
+# 使用されていないキャッシュエントリのみを削除
 uv cache prune
 ```
 
 でいいのでは。Python のキャッシュけっこうでかいので、マメに消すといいとおもう。
+
+一年に 1 度ぐらい以下を実行
+
+```sh
+# キャッシュ内のすべてのパッケージを削除
+uv cache clean
+```

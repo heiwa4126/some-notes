@@ -290,3 +290,43 @@ NAT Gateway を使えば...
 
 - **インターフェイスエンドポイント**: AWS PrivateLink を利用して、VPC 内の ENI(Elastic Network Interface)を通じて AWS サービスや独自サービスにプライベート接続します。多くの AWS サービスに対応しています
 - **ゲートウェイエンドポイント**: VPC のルートテーブルを変更して、S3 や DynamoDB などのサービスにゲートウェイ経由でアクセスします。対応サービスは S3 と DynamoDB のみです
+
+## Fargate はパブリック IPv6 は使える?
+
+NAT GW は高いので、AWS ECS の fargate で パブリック IPv6 を使って VPC からインタネットにアクセスできる?
+
+**以下 ChatGPT による(未検証)**
+
+はい、AWS ECS の Fargate でパブリック IPv6 を使って VPC からインターネットにアクセスできます。  
+以下の条件を満たしていることを確認してください。
+
+### 1. **VPC の IPv6 設定**
+
+- VPC に IPv6 CIDR ブロックを割り当てる
+- サブネットに IPv6 CIDR を設定する
+- Fargate タスクが実行されるサブネットが **「パブリックサブネット」** であることを確認
+
+### 2. **Fargate タスクのネットワーク設定**
+
+- タスクのネットワークモードが `awsvpc` であることを確認
+- タスクの ENI (Elastic Network Interface) に `Auto-assign IPv6` を有効化
+
+### 3. **ルートテーブルの設定**
+
+- `::/0`（IPv6 全体）のトラフィックを `igw-xxxxxxxx`（Internet Gateway）に向けるルートを設定
+
+### 4. **セキュリティグループと NACL の設定**
+
+- `::/0` に対して **送信（Outbound）許可**
+- 必要に応じて `::/0` からの受信（Inbound）も許可
+
+### 5. **タスク実行ロール**
+
+- 必要な場合、IAM ロールに適切な `AWSVPC` ネットワークアクセス権限を付与
+
+### **確認方法**
+
+- Fargate タスクが `ip -6 addr` で IPv6 アドレスを取得しているか確認
+- `ping -6 google.com` や `curl -6 https://ipv6.google.com` で IPv6 経由の通信をテスト
+
+もし VPC 内のプライベートサブネットで Fargate を動かしたい場合は、Egress-Only Internet Gateway を使うことでインターネットへの IPv6 アウトバウンド通信が可能になります。
