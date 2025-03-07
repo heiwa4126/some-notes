@@ -117,7 +117,12 @@ Amazon Nova はクロスリージョンでしか動作しない、ってこと?
 「東京リージョンでオンデマンドスループットを利用する際は、クロスリージョンの inference profile（apac プレフィックス）を使用する必要がある」
 かもしれないらしいかも。
 
-なんとなく AWS の誰かが設定間違ってるだけのような気がする。
+なんとなく AWS の誰かが設定間違ってるだけのような気がする...
+
+間違っていませんでした。
+[Model support by AWS Region in Amazon Bedrock - Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/models-regions.html)
+
+上記によると特定のリージョン(オレンジの △ の中に!マーク Yes\*)ではクロスリージョンでしか動作しない。
 
 ## Amazon Nova Lite vs GPT-4o mini (2025-03)
 
