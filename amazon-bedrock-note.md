@@ -146,9 +146,13 @@ Amazon Nova はクロスリージョンでしか動作しない、ってこと?
 | **HumanEval** | 85.4% (0-shot, pass@1)   | 87.2% (0-shot) |
 | **MATH**      | 73.3% (Chain-of-Thought) | 70.2% (0-shot) |
 
+- [GPT-4o mini vs Nova Lite](https://llm-stats.com/models/compare/gpt-4o-mini-2024-07-18-vs-nova-lite)
+- [Amazon Nova Lite vs GPT-4o Mini - Detailed Performance & Feature Comparison](https://docsbot.ai/models/compare/amazon-nova-lite/gpt-4o-mini)
+
 LangChain とかで容易に llm 差し替えられるなら、
 Amazon Nova Lite の方がいいかもしんない。
-出力トークンがちょい少ないか。
+最大出力トークンが 5K なのはちょい少ないか。
+[What is Amazon Nova? - Amazon Nova](https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html)
 
 ### Amazon Nova Pro vs GPT-4o
 
