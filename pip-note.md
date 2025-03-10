@@ -2,6 +2,14 @@
 
 ## `npm update` 的なやつ
 
+### ワンライナー版
+
+```sh
+pip list --user --format=freeze | cut -d= -f1 | xargs pip install --user --upgrade --no-warn-script-location`
+```
+
+### 以下古い
+
 ```sh
 pip list --outdated --format=json | jq '.[].name' -r | xargs -n1 pip install -U
 ```
