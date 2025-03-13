@@ -2,7 +2,7 @@
 
 ## サービスにリンクされたロール(SLR)とは?
 
-AWS の特定リージョンで初めて AWS ECS Cluster を作成するとき
+AWS の特定テナントで初めて AWS ECS Cluster を作成するとき
 
 - `aws iam create-service-linked-role --aws-service-name es.amazonaws.com`
 - または CloudFormation で AWS::IAM::ServiceLinkedRole リソース
@@ -180,3 +180,24 @@ ServiceLinkedRole(
 ```
 
 TypeScript の場合は上記の npmjs か GitHub にサンプルが載ってる。
+
+### AWS CLI で SLR
+
+`aws iam create-service-linked-role --aws-service-name es.amazonaws.com`
+は何回実行しても OK みたいだけど(エラーメッセージは出る)、
+事前に存在チェックを入れたいなら以下のように。
+
+```sh
+#!/bin/bash -ue
+ROLE_NAME="AWSServiceRoleForAmazonElasticsearchService"
+SERVICE_NAME="es.amazonaws.com"
+
+# SLRの存在をチェック
+if aws iam list-roles --query "Roles[?RoleName=='$ROLE_NAME'].RoleName" --output text | grep -q "$ROLE_NAME"; then
+  echo "Service-linked role '$ROLE_NAME' already exists. Skipping creation."
+else
+  echo "Creating service-linked role '$ROLE_NAME'..."
+  aws iam create-service-linked-role --aws-service-name "$SERVICE_NAME"
+  echo "Service-linked role '$ROLE_NAME' created successfully."
+fi
+```
