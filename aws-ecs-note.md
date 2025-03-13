@@ -19,7 +19,7 @@ AWS の特定テナントで初めて AWS ECS Cluster を作成するとき
 
 AWS ECS Cluster を特定のリージョンで初めて作成するときに、以下のように **サービスにリンクされたロール (Service-Linked Role, SLR)** を作成する必要がある理由を説明します。
 
-### 1. サービスにリンクされたロール (SLR) とは?
+### 1. SLR(サービスにリンクされたロール) とは?
 
 サービスにリンクされたロールは、特定の AWS サービスがそのサービスのリソースを管理するために AWS IAM で自動的に作成される特別な IAM ロールです。これにより、AWS サービスが他の AWS リソースにアクセスできるようになります。
 
@@ -130,7 +130,15 @@ ECS 以外にも、AWS の一部のサービスでは **特定のリージョン
 aws iam create-service-linked-role --aws-service-name es.amazonaws.com
 ```
 
+(es はたぶん ElasticSearch だね w)
+
 これは、ECS とは別に **OpenSearch (旧 Elasticsearch) のリソース管理を許可するため** に必要です。
+
+SLR が必要なサービスのリストは
+[IAM と連携する AWS のサービス - AWS Identity and Access Management](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html)
+にある表で、「サービスリンクロール」が「はい」になっているものがそれです。
+
+けっこうあるな...
 
 ### まとめ
 
@@ -156,7 +164,7 @@ AWS::IAM::ServiceLinkedRole を使うと
 
 回避するためには CDK だったら `upsert-slr` がある。
 
-- [upsert - npm search](https://www.npmjs.com/search?q=upsert)
+- [upsert-slr - npm](https://www.npmjs.com/package/upsert-slr)
 - [upsert-slr · PyPI](https://pypi.org/project/upsert-slr/)
 - [tmokmss/upsert-slr: Manage AWS service-linked roles in a better way.](https://github.com/tmokmss/upsert-slr)
 - [CDK Tips: 自作コンストラクトを Python 向けに公開する - maybe daily dev notes](https://tmokmss.hatenablog.com/entry/publish_cdk_construct_to_pyhon_pypi)
@@ -183,14 +191,14 @@ TypeScript の場合は上記の npmjs か GitHub にサンプルが載ってる
 
 ### AWS CLI で SLR
 
-`aws iam create-service-linked-role --aws-service-name es.amazonaws.com`
+`aws iam create-service-linked-role --aws-service-name SERVICE_NAME.amazonaws.com`
 は何回実行しても OK みたいだけど(エラーメッセージは出る)、
-事前に存在チェックを入れたいなら以下のように。
+事前に存在チェックを入れたいなら以下のように(ECS の場合)。
 
 ```sh
 #!/bin/bash -ue
-ROLE_NAME="AWSServiceRoleForAmazonElasticsearchService"
-SERVICE_NAME="es.amazonaws.com"
+ROLE_NAME="AWSServiceRoleForECS"
+SERVICE_NAME="ecs.amazonaws.com"
 
 # SLRの存在をチェック
 if aws iam list-roles --query "Roles[?RoleName=='$ROLE_NAME'].RoleName" --output text | grep -q "$ROLE_NAME"; then
@@ -201,3 +209,5 @@ else
   echo "Service-linked role '$ROLE_NAME' created successfully."
 fi
 ```
+
+ROLE_NAME と SERVICE_NAME が全然違うのがミソかも。
