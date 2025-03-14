@@ -208,3 +208,18 @@ uv cache prune
 # キャッシュ内のすべてのパッケージを削除
 uv cache clean
 ```
+
+## uv のシェル補完
+
+uv はあんまり補完つかわないかも。
+
+[Shell autocompletion](https://docs.astral.sh/uv/getting-started/installation/#shell-autocompletion)
+
+bash ならとりあえずこんなノリで
+
+```bash
+uv generate-shell-completion bash > uv.bash-completion
+sudo mv uv.bash-completion /etc/bash_completion.d/
+```
+
+`uv.bash-completion` けっこう長いので別ファイルがいいと思います。
