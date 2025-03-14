@@ -1,5 +1,8 @@
 # poe (Poe the Poet)メモ
 
+- [Poe the Poet](https://poethepoet.natn.io/)
+- [nat-n/poethepoet: A task runner that works well with poetry or uv.](https://github.com/nat-n/poethepoet)
+
 ## 補完
 
 [Enable tab completion for your shell](https://poethepoet.natn.io/installation.html#enable-tab-completion-for-your-shell)
