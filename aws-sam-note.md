@@ -45,6 +45,7 @@
     - [方法 2: `--env-vars` オプションを使う](#方法-2---env-vars-オプションを使う)
     - [方法 3: `template.yaml` の `Globals` セクションで指定](#方法-3-templateyaml-の-globals-セクションで指定)
 - [service-role/AWSLambdaBasicExecutionRole は強すぎる](#service-roleawslambdabasicexecutionrole-は強すぎる)
+- [AWS SAM がいつの間にか PyPI パッケージになってた](#aws-sam-がいつの間にか-pypi-パッケージになってた)
 
 ## outputs をメモするのを忘れたら
 
@@ -949,3 +950,12 @@ Globals:
   ]
 }
 ```
+
+## AWS SAM がいつの間にか PyPI パッケージになってた
+
+[aws-sam-cli · PyPI](https://pypi.org/project/aws-sam-cli/)
+
+[awscliv2 · PyPI](https://pypi.org/project/awscliv2/)と違って AWS の提供なので使っても大丈夫そう
+(`git+https://github.com/aws/aws-cli.git@v2` はあるけど)
+
+`uv tool install` でインストールできるかな...
