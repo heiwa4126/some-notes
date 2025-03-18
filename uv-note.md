@@ -223,3 +223,11 @@ sudo mv uv.bash-completion /etc/bash_completion.d/
 ```
 
 `uv.bash-completion` けっこう長いので別ファイルがいいと思います。
+
+## uv には `npm version patch` みたいなやつがない
+
+しょうがないので PyPI でパッケージを探す。
+
+これなんかよさそう:
+[bump-my-version · PyPI](https://pypi.org/project/bump-my-version/)
+
