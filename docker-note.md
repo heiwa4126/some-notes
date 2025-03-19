@@ -37,9 +37,11 @@
 - [配布されている Docker イメージのタグのリスト](#配布されている-docker-イメージのタグのリスト)
   - [Google の distroless のタグ一覧](#google-の-distroless-のタグ一覧)
 - [Google の distroless に入っている Python や Node.js のバージョンはどうやって調べられますか?](#google-の-distroless-に入っている-python-や-nodejs-のバージョンはどうやって調べられますか)
+- [distroless にはデバッグ用のイメージがある](#distroless-にはデバッグ用のイメージがある)
 - [Docker Content Trust (DCT)](#docker-content-trust-dct)
 - [Alpine の musl は 2024 年でもまだ不安定だったり遅かったりしますか?](#alpine-の-musl-は-2024-年でもまだ不安定だったり遅かったりしますか)
 - [すごい参考になる (`RUN --mount=type=`)](#すごい参考になる-run---mounttype)
+- [docker pull でイメージが更新されないとき](#docker-pull-でイメージが更新されないとき)
 
 ## インストール
 
@@ -952,6 +954,14 @@ gcloud container images list-tags gcr.io/distroless/<イメージ名>
 
 のだが、結構難しい。
 
+## distroless にはデバッグ用のイメージがある
+
+```sh
+docker run --rm -it gcr.io/distroless/base:debug
+```
+
+これで busybox につながる。
+
 ## Docker Content Trust (DCT)
 
 ```sh
@@ -1093,3 +1103,12 @@ Docker Content Trust (DCT) は、Docker イメージに対する信頼性を�
 [2024 年版の Dockerfile の考え方&書き方 | フューチャー技術ブログ](https://future-architect.github.io/articles/20240726a/)
 
 <https://docs.docker.com/reference/dockerfile/#example-cache-apt-packages> とか。
+
+## docker pull でイメージが更新されないとき
+
+debian:bookworm-slim (debian 12.9) が 12.10 になんだか更新されないで困ったときの話。
+
+1. [debian Tags | Docker Hub](https://hub.docker.com/_/debian/tags?name=bookworm-slim) へ行く
+2. OS/ARCH を選んで digest のリンクをクリック
+3. Index digest の sha256 がわかるので `docker pull debian@sha256:xxxxx` xxxx のところを置き換えて実行
+4. 終わったら `docker image prune` とかしておく。
