@@ -42,6 +42,7 @@
 - [Alpine の musl は 2024 年でもまだ不安定だったり遅かったりしますか?](#alpine-の-musl-は-2024-年でもまだ不安定だったり遅かったりしますか)
 - [すごい参考になる (`RUN --mount=type=`)](#すごい参考になる-run---mounttype)
 - [docker pull でイメージが更新されないとき](#docker-pull-でイメージが更新されないとき)
+- [IMAGE ID](#image-id)
 
 ## インストール
 
@@ -1112,3 +1113,9 @@ debian:bookworm-slim (debian 12.9) が 12.10 になんだか更新されない�
 2. OS/ARCH を選んで digest のリンクをクリック
 3. Index digest の sha256 がわかるので `docker pull debian@sha256:xxxxx` xxxx のところを置き換えて実行
 4. 終わったら `docker image prune` とかしておく。
+
+## IMAGE ID
+
+IMAGE ID は同じイメージでも docker ごとに異なるらしい。
+
+比較が必要なら digest を得る。 `docker images --digests`
