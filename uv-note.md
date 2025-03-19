@@ -231,3 +231,4 @@ sudo mv uv.bash-completion /etc/bash_completion.d/
 これなんかよさそう:
 [bump-my-version · PyPI](https://pypi.org/project/bump-my-version/)
 
+使い方がわからん...
