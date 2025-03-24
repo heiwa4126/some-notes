@@ -18,7 +18,11 @@ pnpm up --latest
 
 ## pnpm でキャッシュを消す
 
+pnpm用語では、キャッシュでなくストアというらしい。
+
 ```sh
-# 問答無用で全部消す
+# ストアから参照されていないパッケージを削除する
 pnpm store prune
 ```
+
+<https://pnpm.io/cli/store#prune>
