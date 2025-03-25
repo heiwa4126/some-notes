@@ -16,3 +16,12 @@
 
 from 先を変えること。
 <https://reactrouter.com/upgrading/v6#upgrade-to-v7>
+
+なので npm i するのも react-router のほうがいいかも。
+
+## Remix 2
+
+React Router v7 の Framework モード。このへんから始める:
+
+- [React Router Home | React Router](https://reactrouter.com/home)
+- [Address Book | React Router](https://reactrouter.com/tutorials/address-book)

@@ -38,6 +38,7 @@
   - [Google の distroless のタグ一覧](#google-の-distroless-のタグ一覧)
 - [Google の distroless に入っている Python や Node.js のバージョンはどうやって調べられますか?](#google-の-distroless-に入っている-python-や-nodejs-のバージョンはどうやって調べられますか)
 - [distroless にはデバッグ用のイメージがある](#distroless-にはデバッグ用のイメージがある)
+- [例えば gcr.io/distroless/nodejs22-debian12 のとき](#例えば-gcriodistrolessnodejs22-debian12-のとき)
 - [Docker Content Trust (DCT)](#docker-content-trust-dct)
 - [Alpine の musl は 2024 年でもまだ不安定だったり遅かったりしますか?](#alpine-の-musl-は-2024-年でもまだ不安定だったり遅かったりしますか)
 - [すごい参考になる (`RUN --mount=type=`)](#すごい参考になる-run---mounttype)
@@ -962,6 +963,21 @@ docker run --rm -it gcr.io/distroless/base:debug
 ```
 
 これで busybox につながる。
+
+例えば base でないイメージでも
+
+```sh
+docker run --rm -it --entrypoint=sh gcr.io/distroless/nodejs22-debian12:debug
+```
+
+`FROM gcr.io/distroless/nodejs22-debian12:debug` で作ったイメージも同様に`--entrypoint=sh`で busybox に入れる。
+
+参考: <https://github.com/GoogleContainerTools/distroless?tab=readme-ov-file#debug-images>
+
+## 例えば gcr.io/distroless/nodejs22-debian12 のとき
+
+npm は入ってないので、`npm run start` に書いてあるスクリプトを実行する必要があって、
+で、gcr.io/distroless/nodejs22-debian12 は nodejs が起動するので、CMD には`/nodejs/bin/node` は書かない。
 
 ## Docker Content Trust (DCT)
 
