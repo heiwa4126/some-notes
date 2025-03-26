@@ -26,6 +26,41 @@
 - dark mode なんかはこうやって書く [Dark mode - Core concepts - Tailwind CSS](https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually)
 - Vite は`@tailwindcss/vite`を使う。<https://tailwindcss.com/docs/installation/using-vite>に説明あり。
 
+### v4 ではカスタム CSS ルールセットの直接的な再利用ができなくなった
+
+```css
+.btn {
+  @apply rounded-md py-2 px-4 font-semibold text-white;
+}
+.btn1 {
+  @apply btn bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700;
+}
+.btn2 {
+  @apply btn bg-red-700 hover:bg-red-600 active:bg-red-800;
+}
+```
+
+こういうのが出来ない。`Cannot apply unknown utility class: btn` というエラーになる。
+
+`class="btn btn1"` 的な方法か `@layer` を使うか、ユーティリティとして定義する。
+
+```css
+@utility btn {
+  @apply rounded-md py-2 px-4 font-semibold text-white;
+}
+
+.btn1 {
+  @apply btn bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700;
+}
+
+.btn2 {
+  @apply btn bg-red-700 hover:bg-red-600 active:bg-red-800;
+}
+```
+
+- [Functions and directives - Core concepts - Tailwind CSS](https://tailwindcss.com/docs/functions-and-directives#utility-directive)
+- [Adding custom styles - Core concepts - Tailwind CSS](https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities)
+
 ## v4 参考リンク
 
 - [Tailwind CSS の一歩進んだ書き方](https://zenn.dev/ixkaito/articles/advanced-tailwindcss)
