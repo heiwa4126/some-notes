@@ -44,6 +44,7 @@
 - [すごい参考になる (`RUN --mount=type=`)](#すごい参考になる-run---mounttype)
 - [docker pull でイメージが更新されないとき](#docker-pull-でイメージが更新されないとき)
 - [IMAGE ID](#image-id)
+- [ヘルスチェック](#ヘルスチェック)
 
 ## インストール
 
@@ -1135,3 +1136,16 @@ debian:bookworm-slim (debian 12.9) が 12.10 になんだか更新されない�
 IMAGE ID は同じイメージでも docker ごとに異なるらしい。
 
 比較が必要なら digest を得る。 `docker images --digests`
+
+## ヘルスチェック
+
+- <https://docs.docker.com/reference/dockerfile/#healthcheck>
+- <https://docs.docker.jp/engine/reference/builder.html#healthcheck>
+
+例えばこんな風に書く
+
+```dockerfile
+FROM python:3.9
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8000/health || exit 1
+```

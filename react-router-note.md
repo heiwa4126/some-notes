@@ -1,8 +1,8 @@
 # React Router のメモ
 
-## v7
+## v7 (の Declarative Mode)
 
-この 2 つは同じ
+以下の 2 つは同じ
 
 - [react-router - npm](https://www.npmjs.com/package/react-router)
 - [react-router-dom - npm](https://www.npmjs.com/package/react-router-dom)
