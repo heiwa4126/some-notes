@@ -25,17 +25,31 @@
 - arbitrary values が使えるプロパティが増えた。`bg-[#242424]`とか。楽
 - dark mode なんかはこうやって書く [Dark mode - Core concepts - Tailwind CSS](https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually)
 - Vite は`@tailwindcss/vite`を使う。<https://tailwindcss.com/docs/installation/using-vite>に説明あり。
+  - Vite でのミグレーションの詳細は <https://tailwindcss.com/docs/installation/using-vite>
+  - その他さまざまなフレームワークでの詳細は <https://tailwindcss.com/docs/installation/framework-guides>
 
-### v4 ではカスタム CSS ルールセットの直接的な再利用ができなくなった
+## v4 で PostCSS が不要になった、というのは微妙に正確ではなくて
+
+フレームワークによっては必要な時もある。
+
+- オリジナルの - [postcss - npm](https://www.npmjs.com/package/postcss)
+- TailWindCSS v4 専用?の - [@tailwindcss/postcss - npm](https://www.npmjs.com/package/@tailwindcss/postcss)
+
+参照: [Using PostCSS](https://tailwindcss.com/docs/upgrade-guide#using-postcss)
+
+## v4 ではカスタム CSS ルールセットの直接的な再利用ができなくなった
 
 ```css
 .btn {
+  /* ボタンの形状を定義 */
   @apply rounded-md py-2 px-4 font-semibold text-white;
 }
 .btn1 {
+  /* 色だけ変える(青) */
   @apply btn bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700;
 }
 .btn2 {
+  /* 色だけ変える(赤) */
   @apply btn bg-red-700 hover:bg-red-600 active:bg-red-800;
 }
 ```
@@ -65,3 +79,13 @@
 
 - [Tailwind CSS の一歩進んだ書き方](https://zenn.dev/ixkaito/articles/advanced-tailwindcss)
 - [Tailwind CSS V4 まとめ！](https://zenn.dev/miz_dev/articles/tailwind-css-v4)
+
+## v4 で Google Fonts
+
+`@import`がそのまま使えるようになった。
+**ただし `@import "tailwindcss";` より前で宣言すること。**
+
+### 参考
+
+- [font-family - Typography - Tailwind CSS](https://tailwindcss.com/docs/font-family)
+- [Customizing your theme](https://tailwindcss.com/docs/font-family#customizing-your-theme) のちょっと下。Google Fonts の例が出てる。
