@@ -12,6 +12,18 @@
 
 ものすごく書き換えないとダメ。
 
+[Upgrade guide - Getting started - Tailwind CSS](https://tailwindcss.com/docs/upgrade-guide)
+
+codemod 的なもの
+https://tailwindcss.com/docs/upgrade-guide#using-the-upgrade-tool
+に
+
+```sh
+npx @tailwindcss/upgrade
+```
+
+もあるけど、あんまりうまくいかない。
+
 - PostCSS が不要になった。モジュールも不要(postcss と autoprefixer)
 - postcss.config.js と tailwind.config.js は削除。content 配列も要らなくなって楽。
 - 全部の \*.css の先頭に `@import "tailwindcss";` が要る
@@ -89,3 +101,12 @@
 
 - [font-family - Typography - Tailwind CSS](https://tailwindcss.com/docs/font-family)
 - [Customizing your theme](https://tailwindcss.com/docs/font-family#customizing-your-theme) のちょっと下。Google Fonts の例が出てる。
+
+## ダークモード
+
+この手法がいちばん簡単。
+[Toggling dark mode manually](https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually)
+
+## @tailwindcss/typography 以外のタイポグラフィ
+
+plugin として使えるものは他にないみたい...
