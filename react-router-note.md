@@ -1,5 +1,10 @@
 # React Router のメモ
 
+React Router v7 の framework モード (元 Remix) については別ページに。
+[remix-note.md](remix-note.md)
+
+- v7 の data モード [Installation | React Router](https://reactrouter.com/start/data/installation)
+
 ## v7 (の Declarative Mode)
 
 以下の 2 つは同じ
