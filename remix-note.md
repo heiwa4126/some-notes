@@ -77,3 +77,14 @@ export default function Products({ params }: Route.MetaArgs) {
   );
 }
 ```
+
+## basePath
+
+GitHub Pages なんかで `/` に置けないときに。
+
+`react-router.config.ts`で
+`basename` に設定する。
+
+[Config | React Router API Reference](https://api.reactrouter.com/v7/types/_react_router_dev.config.Config.html#__type.basename)
+
+`/foo/` でも `/foo` でもいいみたいだけど、最後の'/'は付けといたほうがいいような気がする。
