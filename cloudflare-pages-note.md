@@ -23,7 +23,7 @@ Cloudflare Pages の無料プランの制限は以下の通り:
 無料なので活用する。
 
 1. Cloudflare Pages と GitHub/GitLab を連携済み
-2. 自動ビルド設定が有効になっている（pages.dev のサイトを使ってる）
+2. 自動ビルド設定が有効になっている(pages.dev のサイトを使ってる)
 
 のときに、プルリクを新しく作ると、
 `https://674cfedb.project-name.pages.dev`
@@ -125,3 +125,85 @@ pnpm create cloudflare@latest cfp-test0
 `pnpm run deploy` (某プロキシがあると死ぬ)
 
 `pnpm deploy` は npmjs.com にパッケージをデプロイするコマンドだ。
+
+## CF の wrangler と workerd とは何?
+
+以下 ChatGPT の回答。
+
+Cloudflare(CF)の **`wrangler`** と **`workerd`** は、Cloudflare Workers の開発や実行に関わるツールですが、それぞれの役割が異なります。以下に簡潔にまとめます。
+
+### wrangler (ラングラー) とは?
+
+**Cloudflare Workers 向けの CLI**
+
+#### 主な用途:
+
+- Cloudflare Workers の開発・ビルド・デプロイ
+- 開発中のローカルサーバー起動 (`wrangler dev`)
+- 設定管理(`wrangler.toml`)
+- KV や R2 など Cloudflare のリソースの操作
+
+#### 例:
+
+```bash
+wrangler dev           # ローカルで開発サーバーを起動
+wrangler publish       # 本番環境にデプロイ
+wrangler login         # 認証してCloudflareアカウントと接続
+```
+
+#### 補足:
+
+- `wrangler` は Node.js で書かれていたが、現在は Rust 製の高速なバージョンに置き換えられている。
+- Vite や Webpack のようなビルド機能と Cloudflare 向けの設定をいい感じにまとめてくれる。
+
+### workerd (ワーカーディまたはワーカード)　とは?
+
+**Cloudflare Workers の実行エンジン本体(オープンソース)**
+
+#### 正確に言うと:
+
+Cloudflare Workers の **ランタイムのコア部分**で、Cloudflare が独自に開発・使用している JavaScript/TypeScript/Wasmtime 実行環境。
+
+#### 特徴:
+
+- V8 ベース(Node.js と同じ JS エンジン)だが、Node API は提供しない
+- `fetch()` や `Request`/`Response` など、ブラウザライクな API を提供
+- **Cloudflare Workers と完全に互換性のある環境をローカルで動かせる**
+- **Docker イメージや systemd サービスとして実行できる**
+
+#### 用途:
+
+- 独自に Workers ライクなサービスをホスティングしたい場合
+- Wrangler から `wrangler dev` を実行すると裏で `workerd` が動いている(Cloudflare が公式サポート)
+
+#### 補足:
+
+Cloudflare では **実際に本番環境でこれを使って全世界で Workers を動かしている**。
+
+### イメージで整理すると:
+
+```
+あなたのコード (JS/TS)
+    │
+    ├──▶ Wrangler:CLIツール
+    │      ├─ ビルド
+    │      ├─ デプロイ
+    │      └─ ローカル起動
+    │
+    └──▶ Workerd:実行エンジン(runtime)
+           └─ JavaScriptコードをクラウド/ローカルで実行
+```
+
+### まとめ
+
+| 名前       | wrangler                       | workerd                               |
+| ---------- | ------------------------------ | ------------------------------------- |
+| 役割       | CLI ツール、開発・デプロイ補助 | Workers 実行エンジン(runtime)         |
+| 主な用途   | 開発補助、デプロイ             | 実際のコードの実行                    |
+| 開発言語   | Rust                           | C++(+ V8)                             |
+| 利用シーン | ローカル開発・本番デプロイ     | ローカルで Workers のような環境を再現 |
+
+### リンク
+
+- [Cloudflare の JavaScript ランタイム「workerd」を動かしてみる](https://zenn.dev/mryhryki/articles/2022-09-29-workerd)
+- [cloudflare/workerd: The JavaScript / Wasm runtime that powers Cloudflare Workers](https://github.com/cloudflare/workerd)
