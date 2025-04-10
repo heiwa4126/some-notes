@@ -240,3 +240,28 @@ Cloudflare では **実際に本番環境でこれを使って全世界で Worke
 `npm run deploy`でなくて
 GitHub と連携したサイトなら、
 free プランでも「カスタムドメイン」タブが出てくる。
+
+## wrangler pages
+
+[Direct Upload · Cloudflare Pages docs](https://developers.cloudflare.com/pages/get-started/direct-upload/)
+
+```console
+$ wrangler pages --help
+wrangler pages
+
+⚡️ Configure Cloudflare Pages
+
+COMMANDS
+  wrangler pages dev [directory] [-- command..]  Develop your full-stack Pages application locally
+  wrangler pages functions                       Helpers related to Pages Functions
+  wrangler pages project                         Interact with your Pages projects
+  wrangler pages deployment                      Interact with the deployments of a project
+  wrangler pages deploy [directory]              Deploy a directory of static assets as a Pages deployment  [aliases: publish]
+  wrangler pages secret                          Generate a secret that can be referenced in a Pages project
+  wrangler pages download                        Download settings from your project
+
+GLOBAL FLAGS
+      --cwd      Run as if Wrangler was started in the specified directory instead of the current working directory  [string]
+  -h, --help     Show help  [boolean]
+  -v, --version  Show version number  [boolean]
+```
