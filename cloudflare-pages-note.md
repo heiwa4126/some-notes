@@ -207,3 +207,36 @@ Cloudflare では **実際に本番環境でこれを使って全世界で Worke
 
 - [Cloudflare の JavaScript ランタイム「workerd」を動かしてみる](https://zenn.dev/mryhryki/articles/2022-09-29-workerd)
 - [cloudflare/workerd: The JavaScript / Wasm runtime that powers Cloudflare Workers](https://github.com/cloudflare/workerd)
+
+## リビルドを無視する
+
+**質問:** Cloudflare Pages で GitHub 連携しているときに、README を書き換えても再ビルドされてしまいます。特定のファイルの変更を無視することはできる?
+
+**答え: いまのところ方法はない**
+
+`.cfignore` は伝説らしい。
+
+## Cloudflare DNS を使わずにカスタムドメインを設定できる?
+
+明快な答えがみつからないけど、どうも出来ないっぽい。
+でかい企業だと辛いのでは。
+
+有料プランだとできる、という話もあるのだが、真偽不明。
+
+### その後
+
+フリープランでも Cloudflare DNS を使わずにカスタムドメインを設定できた。
+
+1. **まず Cloudflare DNS に最低 1 個ドメインを登録する。** そうでないと「カスタムドメイン」タブが出てこないから
+2. で、対象ドメインに CNAME で `<project name>.pages.dev.` を登録する (最後のドット重要)。
+   たとえば `www2.example.net` の CNAME が `<project name>.pages.dev.` だとしよう。
+3. 対象プロジェクトの「カスタムドメイン」タブから、「自分の DNS プロバイダー(CNAME セットアップを開始)」で設定した`www2.example.net`を登録する。
+4. しばらくすると 緑色で `・アクティブ` になる。「ドメインが有効になると、メールで通知されます」と言われるけどメールぜんぜん届かない。
+
+単に CNAME だけだと証明書がダメ。
+
+### さらにその後
+
+`npm run deploy`でなくて
+GitHub と連携したサイトなら、
+free プランでも「カスタムドメイン」タブが出てくる。
