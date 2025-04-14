@@ -16,6 +16,15 @@ Cloudflare Pages の無料プランの制限は以下の通り:
 - **ユーザー**: サイトの管理者は無制限。
 - **プロジェクト**: アカウントあたり 100 プロジェクトまで(ソフトリミット)。
 
+動的な部分 (Cloudflare Pages Functions & Workers)
+
+- 1 日あたり 10 万リクエスト
+- 1 リクエストあたり 10 ミリ秒の CPU 時間
+- Workers KV のストレージも無料で 1GB まで
+- 超過時は自動課金されず、単にエラーになります
+
+参照: [開発プラットフォーム | Cloudflare](https://www.cloudflare.com/ja-jp/plans/developer-platform-pricing/)
+
 ## プレビューデプロイ
 
 [Preview deployments · Cloudflare Pages docs](https://developers.cloudflare.com/pages/configuration/preview-deployments/)
@@ -264,4 +273,37 @@ GLOBAL FLAGS
       --cwd      Run as if Wrangler was started in the specified directory instead of the current working directory  [string]
   -h, --help     Show help  [boolean]
   -v, --version  Show version number  [boolean]
+```
+
+## Pages はデフォルトが「フォールバック」または「ソフト 404」らしい
+
+まとめ: \_redirects は思ったようには動かない。静的コンテンツの転送はタダなので割り切る。
+
+つまり
+`https://example.pages.dev/notexists1` でも
+`https://example.pages.dev/notexists2` でも
+`https://example.pages.dev/` を返してくる。
+
+SPA 的には便利なんだけど(たとえば React Router)
+本当に存在しない場合は 404 ページを返してほしい。
+
+[Redirects · Cloudflare Pages docs](https://developers.cloudflare.com/pages/configuration/redirects/)
+
+- `https://example.pages.dev/`
+- `https://example.pages.dev/about`　(静的または SPA 的に存在)
+
+は存在するが、`https://example.pages.dev/notexists1`などは存在しないので、404.txt を返して欲しい、という場合は
+
+```text
+/about/* / 200
+/* /404.txt 404
+```
+
+\_redirects は Pages のルートに置く必要があるので
+例えば Vite+React のプロジェクトの場合、pubic/ に書く。
+
+404.txt も同様。pubic/
+
+```text
+404 Not Found
 ```
