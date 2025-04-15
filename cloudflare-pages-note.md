@@ -25,6 +25,9 @@ Cloudflare Pages の無料プランの制限は以下の通り:
 
 参照: [開発プラットフォーム | Cloudflare](https://www.cloudflare.com/ja-jp/plans/developer-platform-pricing/)
 
+面白いのは
+**静的コンテンツ(静的アセット)の転送量(egress)には、Free プランを含め、明示的な制限は設けられていない**こと。
+
 ## プレビューデプロイ
 
 [Preview deployments · Cloudflare Pages docs](https://developers.cloudflare.com/pages/configuration/preview-deployments/)
@@ -227,6 +230,8 @@ Cloudflare では **実際に本番環境でこれを使って全世界で Worke
 
 ## Cloudflare DNS を使わずにカスタムドメインを設定できる?
 
+**結論: Pages なら出来る(Apex 以外)、Workers ならできない。**
+
 明快な答えがみつからないけど、どうも出来ないっぽい。
 でかい企業だと辛いのでは。
 
@@ -277,7 +282,7 @@ GLOBAL FLAGS
 
 ## Pages はデフォルトが「フォールバック」または「ソフト 404」らしい
 
-まとめ: \_redirects は思ったようには動かない。静的コンテンツの転送はタダなので割り切る。
+**まとめ: \_redirects は思ったようには動かない。静的コンテンツの転送はタダなので割り切る。**
 
 つまり
 `https://example.pages.dev/notexists1` でも
@@ -286,6 +291,7 @@ GLOBAL FLAGS
 
 SPA 的には便利なんだけど(たとえば React Router)
 本当に存在しない場合は 404 ページを返してほしい。
+...んだけど結構難しい。
 
 [Redirects · Cloudflare Pages docs](https://developers.cloudflare.com/pages/configuration/redirects/)
 
@@ -307,3 +313,10 @@ SPA 的には便利なんだけど(たとえば React Router)
 ```text
 404 Not Found
 ```
+
+## Functions で使うモジュール
+
+は root の project.json に書けばいい。
+
+フロントエンドと Functions で使うモジュールを混ぜたくない、
+という意見もあるでしょーが、それは無視する。
