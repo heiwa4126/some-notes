@@ -168,7 +168,7 @@ wrangler login         # 認証してCloudflareアカウントと接続
 - `wrangler` は Node.js で書かれていたが、現在は Rust 製の高速なバージョンに置き換えられている。
 - Vite や Webpack のようなビルド機能と Cloudflare 向けの設定をいい感じにまとめてくれる。
 
-### workerd (ワーカーディまたはワーカード)　とは?
+### workerd (ワーカーディまたはワーカード) とは?
 
 **Cloudflare Workers の実行エンジン本体(オープンソース)**
 
@@ -296,7 +296,7 @@ SPA 的には便利なんだけど(たとえば React Router)
 [Redirects · Cloudflare Pages docs](https://developers.cloudflare.com/pages/configuration/redirects/)
 
 - `https://example.pages.dev/`
-- `https://example.pages.dev/about`　(静的または SPA 的に存在)
+- `https://example.pages.dev/about` (静的または SPA 的に存在)
 
 は存在するが、`https://example.pages.dev/notexists1`などは存在しないので、404.txt を返して欲しい、という場合は
 
@@ -320,3 +320,167 @@ SPA 的には便利なんだけど(たとえば React Router)
 
 フロントエンドと Functions で使うモジュールを混ぜたくない、
 という意見もあるでしょーが、それは無視する。
+
+## ビルド設定
+
+いま自分の Cloudflare Pages の設定で
+
+```text
+ビルド構成
+
+ビルドコマンド: pnpm install --frozen-lockfile && pnpm run build
+ビルド出力: build/client
+ルートディレクトリ:
+ビルドコメント: 有効
+```
+
+みたいになってるとき(RRv7 のプロジェクトを pnpm でやってるので)、
+ビルドコメントとルートディレクトリとはなんでしょう?
+
+### ビルドコメント (Build Comments)
+
+この設定を「有効」にすると、Cloudflare Pages はデプロイ履歴に各ビルドの Git コミットメッセージを表示するようになります。
+
+### ルートディレクトリ (Root Directory)
+
+あなたのプロジェクトのソースコードがリポジトリ内のどこにあるかを Cloudflare Pages に伝えるための設定です。
+ビルドコマンド(pnpm install...)はこのディレクトリを起点として実行されます。
+
+デフォルト: この項目が空欄(未設定)の場合、Cloudflare Pages はリポジトリの最上位(ルート)ディレクトリをプロジェクトのルートディレクトリとして扱います。
+
+利用シーン: 例えば、1 つのリポジトリ内にフロントエンド(例: /frontend)とバックエンド(例: /backend)のコードが別々のディレクトリに存在する場合(モノレポ構成など)、
+Pages でフロントエンドだけをビルド・デプロイしたいなら、ルートディレクトリに /frontend と指定します。
+
+## `./+types/`
+
+`tsconfig.json` に
+
+```json
+		"rootDirs": [".", "./.react-router/types"],
+```
+
+と書いてあるので
+app/routes/home.tsx で
+
+```typescript
+import type { Route } from './+types/home';
+```
+
+と書くと
+`.react-router/types/app/routes/+types/home.ts`
+から定義を読む。
+
+一方
+app/routes/products/home.tsx
+で
+
+```typescript
+import type { Route } from './+types/home';
+```
+
+と書くと、同じ記述なのに
+`.react-router/types/app/routes/products/+types/home.ts`
+から定義を読む。
+
+確認は
+
+```sh
+pnpm typecheck
+```
+
+で。(実体は `react-router typegen && tsc`)
+
+`react-router typegen` は dev や build で自動生成されてるらしい。
+
+## CloudFront Pages で出来ることを AWS にやらせてみる
+
+結論: 転送量にもよるけど月額 数十円〜数百円程度ではないか。
+
+**質問**
+
+Cloudflare Pages で
+
+- 静的コンテンツ (一部 Functions)
+- SSL 化
+- カスタムドメイン
+
+を**無料**で実現しています。これを Amazon の S3 や Cloudfront で実現するとしたら、
+費用のかかるリソースはどれで、可能なら費用の見積もりもおねがいします。
+
+**Google Gemini に聞いてみた結果**
+
+Cloudflare Pages で無料で実現できている機能(静的コンテンツ、一部 Functions、SSL 化、カスタムドメイン)を Amazon S3 と CloudFront で実現する場合、費用が発生する主なリソースは以下の通りです。
+
+**費用のかかるリソース:**
+
+- **Amazon S3 (静的コンテンツのホスティング):**
+
+  - **ストレージ容量:** 保存する静的コンテンツのデータ量に応じて課金されます。
+  - **データ転送量 (アウトバウンド):** S3 からインターネットへデータが転送される量に応じて課金されます。ウェブサイトへのアクセスが増えるほど、この費用も増加します。
+  - **リクエスト数 (PUT/GET など):** S3 バケットへのオブジェクトのアップロードやダウンロードなどのリクエスト数に応じて課金されます。
+
+- **AWS Lambda@Edge (一部 Functions の代替):**
+
+  - **リクエスト数:** Lambda 関数が実行された回数に応じて課金されます。
+  - **コンピューティング時間:** Lambda 関数の実行時間に応じて課金されます。
+
+- **Amazon CloudFront (コンテンツ配信ネットワーク):**
+
+  - **データ転送量 (アウトバウンド):** CloudFront からインターネットへデータが転送される量に応じて課金されます。ウェブサイトへのアクセスが増えるほど、この費用も増加します。CloudFront は世界中にエッジロケーションを持つため、ユーザーに近い場所からコンテンツを配信でき、高速化とレイテンシの削減に貢献しますが、その分データ転送量に応じた費用が発生します。
+  - **HTTP/HTTPS リクエスト数:** CloudFront が受信した HTTP および HTTPS リクエストの数に応じて課金されます。
+
+- **Amazon Route 53 (カスタムドメインの DNS 管理):**
+  - **ホストゾーンの料金:** カスタムドメインの DNS レコードを管理するためのホストゾーンを作成すると、月額料金が発生します。
+  - **DNS クエリ数:** ドメインへのアクセスが発生するたびに DNS クエリが実行され、そのクエリ数に応じて課金されます。
+
+**無料で利用できるリソース:**
+
+- **AWS Certificate Manager (ACM):** SSL/TLS 証明書を無料でプロビジョニング、管理、デプロイできます。CloudFront と連携させることで、カスタムドメインでの HTTPS 通信を無料で実現できます。
+
+**AWS での見積もり (概算):**
+
+正確な見積もりは、ウェブサイトのトラフィック量、コンテンツのサイズ、関数の実行回数や実行時間など、具体的な利用状況によって大きく変動します。以下は、一般的な小規模なウェブサイトを想定した非常にざっくりとした概算です。
+
+**仮定:**
+
+- 静的コンテンツのサイズ: 1 GB
+- 月間のデータ転送量 (アウトバウンド): 10 GB
+- 月間の HTTP/HTTPS リクエスト数: 100 万件
+- Lambda@Edge の月間実行回数: 10 万回
+- Route 53 の DNS クエリ数: 月間 100 万件
+
+**概算費用:**
+
+- **Amazon S3:** 月額 数十円〜数百円程度 (データ転送量とリクエスト数に大きく依存)
+- **AWS Lambda@Edge:** 月額 数十円程度 (実行回数と実行時間に大きく依存)
+- **Amazon CloudFront:** 月額 数百円〜数千円程度 (データ転送量に大きく依存)
+- **Amazon Route 53:** 月額 約 50 円程度 (ホストゾーン料金とクエリ数)
+
+**合計:** 月額 数百円〜数千円程度
+
+**注意点:**
+
+- 上記はあくまで非常にざっくりとした概算であり、実際の費用は利用状況によって大きく異なります。
+- AWS の料金体系は複雑で、リージョンによっても料金が異なります。
+- より正確な見積もりには、AWS Pricing Calculator を利用することをお勧めします。
+- Cloudflare Pages の無料枠は非常に魅力的であり、特に小規模なウェブサイトや個人利用の場合は、AWS よりも大幅にコストを抑えることができます。
+
+Cloudflare Pages のように、静的コンテンツのホスティング、一部の動的な機能、SSL 化、カスタムドメインを無料で利用できるサービスは、コスト面で大きなメリットがあります。AWS で同様の構成を組む場合は、上記のような費用が発生することを理解しておく必要があります。
+
+## "SPA support" or "SPA mode"
+
+実際に静的ファイル(アセット)が存在しない URL を呼ぶと、
+ルートの HTML を返す機能を何と呼ぶか?
+という話。
+
+一般的には "Fallback Routing" と呼ぶらしい。
+
+Cloudflare では "SPA support" や "SPA mode" と呼ぶらしい。
+
+- Netlify では「History pushstate」や「Redirect and rewrite rules」
+- Vercel では「Rewrites」
+- AWS CloudFront では「Default root object」や「Custom error responses」
+
+という名称。
+
+React Router では History モードと呼ぶらしい(History API 由来)。

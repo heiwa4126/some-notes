@@ -88,3 +88,89 @@ GitHub Pages なんかで `/` に置けないときに。
 [Config | React Router API Reference](https://api.reactrouter.com/v7/types/_react_router_dev.config.Config.html#__type.basename)
 
 `/foo/` でも `/foo` でもいいみたいだけど、最後の'/'は付けといたほうがいいような気がする。
+
+## ハイドレーション(Hydration;水分補給)
+
+動的でない部分をなるべく HTML として返す仕掛け。
+SEO 対策とか、クライアント側で最初の表示が早くなるとかの効果がある(はず)。
+
+ハイドレーションされてるかされてないかを確認するには
+
+- w3m や lynx などのテキストブラウザで見てみる
+- Chrome などの開発者モードで、Network→ 最初にロードされる HTML の preview を見る
+
+でわかる。要は JavaScript 抜きで何が見られるか、ということ。
+
+まず、SSR が有効(`ssr:true`)なケースでは、
+
+- サーバサイドで React が動いて、どうしても動的じゃないとダメじゃない部分を除いたものを送信してくる
+- その後ページ全体を描画する JavaScript を要求。これを使ってクライアント側の React がハイドレーションする
+
+という仕掛けなのでハイドレーション云々を気にする必要はない。
+
+SSR 有効で特定のページのみプリレンダリングを選択、というケース。
+ビルドすると index.html が生成され、イニシャルではそれが配信される。
+なので build して index.html を編集すると(`<title>`がおすすめ)、
+2 段階で変わるページが見えて面白い。
+
+SSR 無効かつプリレンダリングも指定しない場合(つまり SPA)の時は
+
+```typescript
+export function HydrateFallback() {
+  return <p>Loading, please wait...</p>;
+}
+```
+
+を root.tsx などに書いておかないと
+
+> 💿 Hey developer 👋. You can provide a way better UX than this when your app is loading JS modules and/or running `clientLoader` functions. Check out https://remix.run/route/hydrate-fallback for more information.
+
+という警告がコンソールに出る。
+
+SSR 無効でプリレンダリングを指定する場合
+
+- あらかじめプリレンダリングされた HTML(SSG; Static Site Generation)を送信してくる
+- その後ページ全体を描画する JavaScript を要求。これを使ってクライアント側の React がハイドレーションする
+
+というしかけになる。
+
+SSR 無効でプリレンダリングされていない URL は
+事実上の SPA で、
+ルートから呼ばれるしかけになるので
+「ソフト 404」や「フォールバック」でない
+HTTP サーバだと URL 直接、とかリロードに失敗するので面白い。
+
+### ハイドレーションで最初の表示は早くなるはず
+
+ただし
+
+1. どうしても JavaScript がないとダメな部分を除いた HTML
+2. そのページ全体をレンダリングする JavaScript を読む
+
+の 2 段がまえなので、データの流量は倍などになるし、「最後」までにかかる時間はそれなりになるわけで。
+
+### hydration という用語について
+
+正確には、
+
+1. 最初に「どうしても JavaScript がないとダメな部分を除いた HTML」が来る。これは SSR だとサーバー側で React によって生成されたもの。pre-build だったら SSG。
+2. その HTML は まだ hydration(再活性化)されていない状態。
+3. ブラウザがその HTML を受け取った後、クライアント側の React がその HTML に対して hydration を行う。
+
+というのが正しい hydration の説明。
+
+で、1.の状態の HTML には特に定まった用語がない。
+ので、状況に応じてさまざまな呼び方をされ、それが混乱のもとになる。
+
+呼び方の例:
+
+- Static HTML
+- Initial HTML
+- Static HTML Shell
+- Initial HTML Payload
+
+とりあえず自分は「初期 HTML (Initial HTML)」と呼ぶことにする。
+
+## 重要: Loader() じゃなくて loader()
+
+[データローディング - React Router v7 ドキュメント 日本語版](https://react-router-docs-ja.techtalk.jp/start/framework/data-loading#%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E3%83%AD%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0)

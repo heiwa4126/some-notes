@@ -5,7 +5,7 @@ React Router v7 の framework モード (元 Remix) については別ページ�
 
 - v7 の data モード [Installation | React Router](https://reactrouter.com/start/data/installation)
 
-## v7 (の Declarative Mode)
+## RRv7 (の Declarative Mode)
 
 以下の 2 つは同じ
 
@@ -24,7 +24,7 @@ from 先を変えること。
 
 なので npm i するのも react-router のほうがいいかも。
 
-## Remix 2
+## Remix 2 (or 3?)
 
 React Router v7 の Framework モード。このへんから始める:
 
