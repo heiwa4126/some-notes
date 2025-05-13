@@ -7,6 +7,7 @@
   - [minifier に esbuild を使う場合](#minifier-に-esbuild-を使う場合)
   - [minifier に terser を使う場合](#minifier-に-terser-を使う場合)
 - [JSON5 や JSONC を直接インポート](#json5-や-jsonc-を直接インポート)
+- [Vite dev で TSL](#vite-dev-で-tsl)
 
 ## Deno で Vite
 
@@ -131,3 +132,39 @@ Rollup でやらない場合は
 Vite のプラグインで出来る。
 
 [vite-plugin-json5 - npm](https://www.npmjs.com/package/vite-plugin-json5)
+
+## Vite dev で TSL
+
+開発サーバーで TSL/SSL を使いたいとき。例えば
+
+- Service Workers とか
+- MediaDevices API など
+- OAuth
+
+みたいな HTTPS ないとダメなやつを開発したいときは
+[mkcert](https://github.com/FiloSottile/mkcert) を使うのが一番簡単
+
+vite.config.ts に
+
+```
+import react from "@vitejs/plugin-react";
+import fs from "node:fs";
+import { defineConfig } from "vite";
+
+// https://vite.dev/config/
+export default defineConfig({
+	plugins: [react()],
+	server: {
+		https: {
+			key: fs.readFileSync("./localhost-key.pem"),
+			cert: fs.readFileSync("./localhost.pem"),
+		},
+	},
+});
+```
+
+場合によっては `npm i -D @types/node`
+
+証明書の PEM はプロジェクトに含めないほうがいいみたいので .gitignore に `*.pem` とか書く。
+
+これで <https://localhost:5173/> や <https://localhost:4173/> で作業
