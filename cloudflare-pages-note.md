@@ -1,5 +1,12 @@
 # Cloudflare Pages のメモ
 
+[Migrate from Pages to Workers · Cloudflare Workers docs](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/)
+によると Pages から Workers へのミグレーションが推奨らしいけど、
+Workers にすると
+"Custom domains outside Cloudflare zones"(
+[Compatibility matrix](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/#compatibility-matrix)
+参照)が使えなくなるので、まあよほどのことがないと移行はしないよね...
+
 ## 無料枠
 
 詳細: [Limits · Cloudflare Pages docs](https://developers.cloudflare.com/pages/platform/limits/)
