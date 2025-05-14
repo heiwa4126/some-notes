@@ -1,4 +1,6 @@
-# snapでcertbotを入れたとき snap.certbot.renew.timer が入っている
+# Certbot メモ
+
+## snap で certbot を入れたとき snap.certbot.renew.timer が入っている
 
 あるホストの様子
 
@@ -31,24 +33,24 @@ $ journalctl -r -u snap.certbot.renew.service
 (略)
 ```
 
-[LetsEncryptの自動更新snap.certbot.renewを確認する - Qiita](https://qiita.com/woonotch/items/b1208dd792be00e6c447)
+[LetsEncrypt の自動更新 snap.certbot.renew を確認する - Qiita](https://qiita.com/woonotch/items/b1208dd792be00e6c447)
 
-# certbotのバックログ数を減らす
+## certbot のバックログ数を減らす
 
-うまい方法がない。デフォルトで1000なので
+うまい方法がない。デフォルトで 1000 なので
 
 ```bash
 sudo systemctl edit --full snap.certbot.renew.service
 ```
 
-で `ExecStart=`の行に `--max-log-backups 10` とか追加すればいい。のだがsnapが更新されたらもう一度やらないと。
+で `ExecStart=`の行に `--max-log-backups 10` とか追加すればいい。のだが snap が更新されたらもう一度やらないと。
 
 ```bash
 sudo systemctl edit snap.certbot.renew.service
 ```
 
-で、元のExecStart=をコピペして、--max-log-backupsをつければいいのだけど、
+で、元の ExecStart=をコピペして、--max-log-backups をつければいいのだけど、
 (/etc/systemd/system/snap.certbot.renew.service.d/override.conf)
-これも元のsnapのExecStart=行がかわったら反映されないよね...
+これも元の snap の ExecStart=行がかわったら反映されないよね...
 
 snap run の --timer オプションって何?
