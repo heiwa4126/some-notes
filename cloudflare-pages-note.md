@@ -7,6 +7,8 @@ Workers にすると
 [Compatibility matrix](https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/#compatibility-matrix)
 参照)が使えなくなるので、まあよほどのことがないと移行はしないよね...
 
+あと Cloudflare Web Analytics も Pages なら簡単だし。
+
 ## 無料枠
 
 詳細: [Limits · Cloudflare Pages docs](https://developers.cloudflare.com/pages/platform/limits/)
