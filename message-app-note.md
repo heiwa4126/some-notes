@@ -21,7 +21,10 @@ Message+(VeVerizon Messages)から Google message (Google Jibe)の話とか。
 - そうでないもの
   - OTT (Over The Top App) - 通信事業者に依存しない
 
-「携帯電話事業者が提供するネットワークインフラと規格に基づくもの」を別の言い方をすると「電話番号(MSISDN)のあるものでしか使えない」ということ。
+「携帯電話事業者が提供するネットワークインフラと規格に基づくもの」を別の言い方をすると
+「電話番号(MSISDN)のあるものでしか使えない」
+「携帯通信網（GSM/3G/4G/5G）を使って動作する」
+ということ。
 
 まあ普通にテクスティングする人にとっては「そんなことはどうでもいい」。
 
@@ -129,3 +132,36 @@ au は「EZweb メール」、
 が MMS。ただしそれぞれ独自の実装で、本物の MMS 規格 と互換が無い。
 
 ↑ これはけっこう微妙な表現。他文献も見てね。
+
+## 世界初の SMS 受信可能なケータイ
+
+1992 年 12 月 3 日に送信された世界初の SMS「Merry Christmas」は、
+イギリスの通信事業者 Vodafone のネットワークを通じて、
+Vodafone のエンジニアのニール・パップワースがコンピュータから送信し、
+Orbitel 901 で受信されました。
+
+- [SMS - Wikipedia](https://en.wikipedia.org/wiki/SMS)
+- ['Merry Christmas': The 30th anniversary of the first text message](https://www.vodafone.co.uk/newscentre/features/merry-christmas-the-30th-anniversary-of-the-first-text-message/)
+- [Merry Christmas - Vodafone UK News Centre](https://www.vodafone.co.uk/newscentre/tag/merry-christmas/)
+
+受信のみなのでポケベルみたいな感じ?
+
+## 世界初の SMS 送受信可能なケータイ
+
+フィンランドの Nokia が 1994 年 1 月に発売した Nokia 2010 です。
+Nokia 2010 で SMS を送受信できた最初の通信事業者は、
+フィンランドの Radiolinja(現在の Elisa)でした。
+
+## 中国の SMS
+
+中国の SMS,MMS.RCS ベース(TCP/IP ベースではない)の texting アプリ
+
+RCS を 5G Messages(5G 消息)というブランド名で展開してるらしい。
+MMS は無くて SMS/RCS らしい。
+
+アプリは
+
+- 中国移動(China Mobile)の "5G Messages"
+- Juphoon 社の "Juphoon"
+
+らしい。
