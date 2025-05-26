@@ -2,47 +2,49 @@
 
 AWS や Azure で VM 作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
-- [Ubuntu, Debain おぼえがき](#ubuntu-debain-おぼえがき)
-  - [ホスト名の設定](#ホスト名の設定)
-  - [タイムゾーン](#タイムゾーン)
-  - [locale](#locale)
-  - [EDITOR を変更](#editor-を変更)
-  - [デフォルトユーザ](#デフォルトユーザ)
-    - [AWS](#aws)
-    - [Azure](#azure)
-    - [cloud-init](#cloud-init)
-    - [user を追加](#user-を追加)
-      - [ubuntu on AWS 編](#ubuntu-on-aws-編)
-    - [sudo でパスワードがいらないのを無効(有効)にする](#sudo-でパスワードがいらないのを無効有効にする)
-  - [絶対いれとくパッケージ](#絶対いれとくパッケージ)
-    - [bash-completion](#bash-completion)
-  - [サービスの再起動が必要かどうか知る (古い)](#サービスの再起動が必要かどうか知る-古い)
-  - [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
-  - [auto-upgrades, unattended-upgrades](#auto-upgrades-unattended-upgrades)
-  - [Ubuntu/Debian で apt autoremove でキープされる kernel パッケージの数](#ubuntudebian-で-apt-autoremove-でキープされる-kernel-パッケージの数)
-  - [no_proxy](#no_proxy)
-  - [参考](#参考)
-  - [Unattended Upgrades の有効/無効](#unattended-upgrades-の有効無効)
-  - [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
-  - [yum history みたいのを Debian/Ubuntu で](#yum-history-みたいのを-debianubuntu-で)
-  - [netplan.io](#netplanio)
-  - [Let's Encrypt で証明書が更新されたか知る](#lets-encrypt-で証明書が更新されたか知る)
-  - [import debian.deb822](#import-debiandeb822)
-  - [ubuntu で IPAfont](#ubuntu-で-ipafont)
-  - [netplan で DHCP を renew する](#netplan-で-dhcp-を-renew-する)
-  - [friendly-recovery](#friendly-recovery)
-  - [インストールされているパッケージの一覧](#インストールされているパッケージの一覧)
-  - [パッケージの更新履歴](#パッケージの更新履歴)
-  - [/etc/group の編集](#etcgroup-の編集)
-  - [xz の zgrep](#xz-の-zgrep)
-  - [ppa](#ppa)
-  - [パッケージの changelog](#パッケージの-changelog)
-  - [Ubuntu 22.04 で python3.8, 3.9 がいるとき](#ubuntu-2204-で-python38-39-がいるとき)
-  - [dmesg: read kernel buffer failed: Operation not permitted](#dmesg-read-kernel-buffer-failed-operation-not-permitted)
-  - [crypto-policies](#crypto-policies)
-  - [needrestart](#needrestart)
-  - [Debian/Ubuntu でシステムワイドに PATH を追加したいとき](#debianubuntu-でシステムワイドに-path-を追加したいとき)
-  - [Debian/Ubuntu でシステムワイドに ライブラリパス を追加したいとき](#debianubuntu-でシステムワイドに-ライブラリパス-を追加したいとき)
+- [ホスト名の設定](#ホスト名の設定)
+- [タイムゾーン](#タイムゾーン)
+- [locale](#locale)
+- [EDITOR を変更](#editor-を変更)
+- [デフォルトユーザ](#デフォルトユーザ)
+  - [AWS](#aws)
+  - [Azure](#azure)
+  - [cloud-init](#cloud-init)
+  - [user を追加](#user-を追加)
+    - [ubuntu on AWS 編](#ubuntu-on-aws-編)
+  - [sudo でパスワードがいらないのを無効(有効)にする](#sudo-でパスワードがいらないのを無効有効にする)
+- [絶対いれとくパッケージ](#絶対いれとくパッケージ)
+  - [bash-completion](#bash-completion)
+- [サービスの再起動が必要かどうか知る (古い)](#サービスの再起動が必要かどうか知る-古い)
+- [ホストの再起動が必要かどうか知る](#ホストの再起動が必要かどうか知る)
+- [auto-upgrades, unattended-upgrades](#auto-upgrades-unattended-upgrades)
+- [Ubuntu/Debian で apt autoremove でキープされる kernel パッケージの数](#ubuntudebian-で-apt-autoremove-でキープされる-kernel-パッケージの数)
+- [no_proxy](#no_proxy)
+- [参考](#参考)
+- [Unattended Upgrades の有効/無効](#unattended-upgrades-の有効無効)
+- [`A start job is running for wait for network to be configured` で起動が遅い](#a-start-job-is-running-for-wait-for-network-to-be-configured-で起動が遅い)
+- [yum history みたいのを Debian/Ubuntu で](#yum-history-みたいのを-debianubuntu-で)
+- [netplan.io](#netplanio)
+- [Let's Encrypt で証明書が更新されたか知る](#lets-encrypt-で証明書が更新されたか知る)
+- [import debian.deb822](#import-debiandeb822)
+- [ubuntu で IPAfont](#ubuntu-で-ipafont)
+- [netplan で DHCP を renew する](#netplan-で-dhcp-を-renew-する)
+- [friendly-recovery](#friendly-recovery)
+- [インストールされているパッケージの一覧](#インストールされているパッケージの一覧)
+- [パッケージの更新履歴](#パッケージの更新履歴)
+- [/etc/group の編集](#etcgroup-の編集)
+- [xz の zgrep](#xz-の-zgrep)
+- [ppa](#ppa)
+- [パッケージの changelog](#パッケージの-changelog)
+- [Ubuntu 22.04 で python3.8, 3.9 がいるとき](#ubuntu-2204-で-python38-39-がいるとき)
+- [dmesg: read kernel buffer failed: Operation not permitted](#dmesg-read-kernel-buffer-failed-operation-not-permitted)
+- [crypto-policies](#crypto-policies)
+- [needrestart](#needrestart)
+- [Debian/Ubuntu でシステムワイドに PATH を追加したいとき](#debianubuntu-でシステムワイドに-path-を追加したいとき)
+- [Debian/Ubuntu でシステムワイドに ライブラリパス を追加したいとき](#debianubuntu-でシステムワイドに-ライブラリパス-を追加したいとき)
+- [locate](#locate)
+  - [locate で正規表現](#locate-で正規表現)
+- [GNU grep なら PCRE が使える](#gnu-grep-なら-pcre-が使える)
 
 ## ホスト名の設定
 
@@ -780,3 +782,20 @@ nvcc 等が /usr/local/cuda/bin (実態は symlink の symlink) に入るので�
 パッケージで管理されてた...
 
 上記の作業は不要。
+
+## locate
+
+24.04LTS 以降は slocate でも mlocate でもなく plocate.
+22.04LTS から使える。
+
+### locate で正規表現
+
+```sh
+locate -r 'パターン'
+```
+
+## GNU grep なら PCRE が使える
+
+```sh
+grep -P `パターン`
+```
