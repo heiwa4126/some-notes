@@ -214,6 +214,11 @@
 
 [『帝国データバンク会社年鑑』『全国企業あれこれランキング』発行終了のお知らせ|株式会社 帝国データバンク[TDB]](https://www.tdb.co.jp/newsroom/news/n8vcx_7zeob/)
 
+### TDB 企業サーチのサンプル
+
+[TDB 企業サーチ - ご利用ガイド｜株式会社 帝国データバンク[TDB]](https://www.tdb.co.jp/tcs-guide/)　の一番下にリンクがあって、
+[直リン(PDF)](https://www.tdb.co.jp/_remix/static/samp_ks-GACjAf43.pdf)はこれ。なんか 500 円にしてはショボすぎる。
+
 ## 法人番号
 
 「TDB 企業サーチは法人番号でも検索できる」から調べたメモ
@@ -237,7 +242,7 @@
 
 次が
 [gBizINFO (METI)経済産業省](https://info.gbiz.go.jp/)
-けっこういろんな情報が取れる。
+けっこういろんな情報が取れる。旧・法人インフォ
 
 [GVA 法人検索|法人情報や法人番号の検索サービス](https://toukibo.ai-con.lawyer/search-service)
 これは国税庁の API を使ってるので、同じ、または省略される。
@@ -256,6 +261,17 @@
 - [G-Search データベースサービス|会員向けサイト](https://db.g-search.or.jp/)
 - [クリックサーチ | NBS:ネットビジネスサポート株式会社](https://www.net-bizs.jp/clicksearch/)
 
+### サンプルデータ
+
+- 直接行けないかも [Fuma サンプルデータ](https://fumadata.com/fds/images/sample.pdf)
+- [Musubu (ムスブ) 企業情報の定義](https://knowledge.musubu.in/ja/knowledge/search-shutoku-teigi)
+  - [企業情報取得の方法について](https://knowledge.musubu.in/ja/knowledge/ search-shutoku-houhou)
+  - [情報取得前に閲覧可能な項目](https://knowledge.musubu.in/ja/knowledge/search-shutoku-etsuran)
+- [［データサンプル］東京商工リサーチ企業情報｜ G-Search データベースサービス](https://db.g-search.or.jp/wdbs/sample/qtst.html)
+  - 上のはサンプルの 1 つで、各データベース毎にサンプルがみられるらしい。
+  - たとえば[企業情報・与信情報](https://db.g-search.or.jp/detail/catalog.html#company)カテゴリで [リスモン G\-与信ナビ](https://db.g-search.or.jp/comp/QRMS.html)だと、サンプルは[これ](https://db.g-search.or.jp/wdbs/sample/qrms.html)
+- [クリックサーチ | NBS：ネットビジネスサポート株式会社](https://www.net-bizs.jp/clicksearch/)のサンプルはこのページやパンフレットにあるやつだけみたい。
+
 ## 図書館で使える検索サービス
 
 大きな図書館だと「ビジネス支援コーナー」みたいのがあって、
@@ -265,3 +281,17 @@
 例:
 [ビジネス支援 | 港区立図書館](https://www.lib-minato.jp/guide/guide11.html)
 の「商用データベース等閲覧サービス」のところ参照
+
+## その他
+
+直接会社情報じゃないんだけど
+[公表情報ダウンロード｜国税庁インボイス制度適格請求書発行事業者公表サイト](https://www.invoice-kohyo.nta.go.jp/download/index.html)
+これ面白そう。
+
+[EDINET](https://disclosure2.edinet-fsa.go.jp/WEEK0010.aspx)
+有価証券報告書などの金融商品取引法に基づく開示書類を電子的に提出・閲覧できるシステム
+例えば NTT だったら "es:E04430" で検索。
+情報の一部は gBizInfo でも見れる。
+
+なんか 1 個 1 個探すの面倒になった。
+[行政 API 情報一覧 | e-Gov API カタログ](https://api-catalog.e-gov.go.jp/info/ja/apicatalog/list?limit=50)
