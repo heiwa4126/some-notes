@@ -45,4 +45,75 @@ from langgraph.prebuilt import create_react_agent
 
 - Thought: agent ノードが、LLM が思考し、次のアクションを決定する(点線のとこ)部分に該当します。
 - Action: tools ノードが、LLM が選択したツールを実行する部分に該当します。
-- Observation: tools ノードから agent ノードに戻る矢印が、ツール実行の結果（Observation）を LLM にフィードバックする流れを示しています。
+- Observation: tools ノードから agent ノードに戻る矢印が、ツール実行の結果(Observation)を LLM にフィードバックする流れを示しています。
+
+# Annotated の第 2 引数
+
+LangGraph の state でこういう感じのパターンがよくある。
+んだけどなんか意味が分からない。
+
+```python
+from typing import Annotated
+from typing_extensions import TypedDict
+from langgraph.graph.message import add_messages
+
+class AgentState(TypedDict):
+    messages: Annotated[list, add_messages]
+```
+
+まず重要なのは
+**Annotated の第 2 引数以降は
+(プログラム中で統一されていれば)
+ユーザがどう使ってもかまわない**
+ということ。
+
+公式: [Annotated\[\<type\>, \<metadata\>\]](https://docs.python.org/ja/3.13/library/typing.html#typing.Annotated)
+
+例えば
+
+Pydantic でバリデートするなら
+Annotated の第 2 引数以降に制約やバリデーション関数を指定する。
+
+FastAPI では
+Annotated の第 2 引数は API ドキュメントのためのメタデータ。
+
+あと mypy は Annotated の第 1 引数以降はチェックしない。
+
+微妙にまちがってる例として:
+[Python の「Annotated」を初心者に向けてわかりやすく解説する | DevelopersIO](https://dev.classmethod.jp/articles/python-annotated-for-beginner/)
+
+で、
+LangGraph では Annotated の第 2 引数は **state 更新のための reducer 関数を指定する**ことになっている。
+
+LangGraph 公式: [Process state updates with reducers](https://langchain-ai.github.io/langgraph/how-tos/graph-api/?h=reducer#process-state-updates-with-reducers)
+
+LangGraph の state で
+Annotated の第 2 引数(reducer 関数)を指定しない場合、そのフィールドの更新は「上書き(override)」がデフォルトで使われる。
+
+で、なんでこんな変なことをしてるか、普通に reducer 関数を指定する引数作ればいいんじゃないの?
+と思うでしょう?
+
+それはこんなのが書けるようにするため。
+
+```python
+class State(TypedDict):
+    messages: Annotated[list, add_messages]  # メッセージ追加
+    total: Annotated[int, operator.add]      # 数値加算
+    data: Annotated[dict, lambda old, new: {**old, **new}]  # 辞書マージ
+    counter: int  # 通常の置き換え
+```
+
+すごいですねえ! フィールドごとに更新の方法を変えられるわけだ。
+
+Annotated の第 2 引数を私用(誤字ではない)しているライブラリの例は
+お近くの ChatGPT 等で
+
+> Python の Annotated で第 2 引数以降には何を書いてもよく、それをどう使うかはユーザやライブラリに任されているようです。有名なのは Pydantic, FastAPI, LangGraph の state などですが、この他の例を挙げてください。
+
+と聞いてみてください。いろいろ出てきますよ。
+
+あたりまえですがこのようなアノテーションの使い方は
+ライブラリやプログラムごとのローカルルールです。
+なので乱用するとプログラムの可読性を損ないます(この LangGraph の話がいい例)。
+
+独自の使い方をする場合はちゃんとドキュメントに書いておきましょう。
