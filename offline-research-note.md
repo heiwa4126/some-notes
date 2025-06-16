@@ -263,9 +263,9 @@
 
 ### サンプルデータ
 
-- 直接行けないかも [Fuma サンプルデータ](https://fumadata.com/fds/images/sample.pdf)
+- 直接行けないかも [Fuma サンプルデータ](https://fumadata.com/fds/images/sample.pdf) サイト更新されてリンク切れ
 - [Musubu (ムスブ) 企業情報の定義](https://knowledge.musubu.in/ja/knowledge/search-shutoku-teigi)
-  - [企業情報取得の方法について](https://knowledge.musubu.in/ja/knowledge/ search-shutoku-houhou)
+  - [企業情報取得の方法について](https://knowledge.musubu.in/ja/knowledge/search-shutoku-houhou)
   - [情報取得前に閲覧可能な項目](https://knowledge.musubu.in/ja/knowledge/search-shutoku-etsuran)
 - [［データサンプル］東京商工リサーチ企業情報｜ G-Search データベースサービス](https://db.g-search.or.jp/wdbs/sample/qtst.html)
   - 上のはサンプルの 1 つで、各データベース毎にサンプルがみられるらしい。
