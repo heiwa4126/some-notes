@@ -81,6 +81,7 @@ Pydantic の Field 関数における...(Ellipsis;エリプシス;「省略」�
 
 ```python
 from langchain.schema import StrOutputParser
+from langchain_core.output_parsers import StrOutputParser # こっちの方が新しいらしい
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
@@ -89,7 +90,5 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 prompt = PromptTemplate.from_template("こんにちは、{name}さん！")
 
 chain = prompt|llm|StrOutputParser()
-
-
 
 ```

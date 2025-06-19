@@ -1,6 +1,6 @@
 # @biomejs/biome のメモ
 
-## ありがちな biome.json
+## ありがちな biome.json (v1)
 
 ```json
 {
@@ -50,6 +50,17 @@ vcs.root は、~/biome.json でまとめて設定を書く用。
   }
 }
 ```
+
+## v2 が出たので設定ファイルをミグレートする (2025-06)
+
+```sh
+biome migrate --write
+# か、プロジェクトごとdevにbiomeに入れてるとかなら
+# `npx @biomejs/biome migrate --write` 的にやる
+```
+
+で cwd 以下の biome.json が全部更新される。
+自分の環境では `files.ignore` が無くなったのを `includes` の `!` パターンに置き換えられた。
 
 ## VSCode 設定
 
