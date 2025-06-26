@@ -247,4 +247,9 @@ uv python uninstall 3.12.8
 懸念事項
 
 - VSCode の右下のバージョン表示がかわらない
+  - VSCode の再起動 → ダメ
+  - コマンドパレットで "Python: Clear Cache and Reload Window" → ダメ
 - なんか `uv python list` で 3.12 -\> 3.12.8 のエリアスがあったみたいだけど消えた。
+- `uv tool install` でインストールしてた poe が "誤ったインタプリタです" とか言い出した
+  - しょうがないんで `uv tool install poethepoet --reinstall` したら治った
+  - どうも `uv tool` のやつが全部ダメ
