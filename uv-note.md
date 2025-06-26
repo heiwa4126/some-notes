@@ -243,3 +243,8 @@ uv python install 3.12.11
 uv venv
 uv python uninstall 3.12.8
 ```
+
+懸念事項
+
+- VSCode の右下のバージョン表示がかわらない
+- なんか `uv python list` で 3.12 -\> 3.12.8 のエリアスがあったみたいだけど消えた。
