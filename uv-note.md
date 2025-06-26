@@ -232,3 +232,14 @@ sudo mv uv.bash-completion /etc/bash_completion.d/
 [bump-my-version · PyPI](https://pypi.org/project/bump-my-version/)
 
 使い方がわからん...
+
+## uv の venv で使ってる Python のパッチバージョンを上げる
+
+3.12.8 を 3.12.11 にしたときのメモ。
+
+```sh
+uv python list | grep -Fi 3.12
+uv python install 3.12.11
+uv venv
+uv python uninstall 3.12.8
+```
