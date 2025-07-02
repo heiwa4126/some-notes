@@ -253,3 +253,10 @@ uv python uninstall 3.12.8
 - `uv tool install` でインストールしてた poe が "誤ったインタプリタです" とか言い出した
   - しょうがないんで `uv tool install poethepoet --reinstall` したら治った
   - どうも `uv tool` のやつが全部ダメ
+
+## GitHub Dependabot
+
+2025 年 3 月から uv がサポートされてた。(それまでは pip 使ってた)
+
+- [Dependabot version updates now support uv in general availability - GitHub Changelog](https://github.blog/changelog/2025-03-13-dependabot-version-updates-now-support-uv-in-general-availability/)
+- [Dependabot の uv サポートを試す - kakakakakku blog](https://kakakakakku.hatenablog.com/entry/2025/03/23/124812)
