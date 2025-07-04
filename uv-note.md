@@ -254,6 +254,17 @@ uv python uninstall 3.12.8
   - しょうがないんで `uv tool install poethepoet --reinstall` したら治った
   - どうも `uv tool` のやつが全部ダメ
 
+`uv python upgrade` が使えるようになったらまた試してみたい。
+
+## `uv tool install` でインストールしたパッケージが使う Python のバージョンを知るには
+
+```sh
+uvx python -c "import sys; print(sys.version)"
+```
+
+uvx は
+.python-version や pyproject.toml の tool.uv セクションも見て動くらしい。
+
 ## GitHub Dependabot
 
 2025 年 3 月から uv がサポートされてた。(それまでは pip 使ってた)
