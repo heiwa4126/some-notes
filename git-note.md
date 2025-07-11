@@ -3,6 +3,7 @@
 - [特定のファイルを最後の commit 時に戻す](#特定のファイルを最後の-commit-時に戻す)
 - [全部のファイルを最後の commit 時に戻す](#全部のファイルを最後の-commit-時に戻す)
 - [特定のファイルのステージングを取り消す](#特定のファイルのステージングを取り消す)
+- [add \& commit を取り消す](#add--commit-を取り消す)
 - [リモートレポジトリの dev を fetch して dev ブランチを作る](#リモートレポジトリの-dev-を-fetch-して-dev-ブランチを作る)
 - [git の設定をリスト](#git-の設定をリスト)
 - [gitignore のデフォルト](#gitignore-のデフォルト)
@@ -55,6 +56,20 @@ git reset --hard
 git restore --staged ファイル名
 # または
 git reset HEAD ファイル名
+```
+
+## add & commit を取り消す
+
+```sh
+git add --all
+git commit -am "i did it!"
+```
+
+みたいな後に、間違ったファイルをステージング&コミットしたことに気づいたとき
+
+```sh
+git reset --soft HEAD~1
+git reset
 ```
 
 ## リモートレポジトリの dev を fetch して dev ブランチを作る

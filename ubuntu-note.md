@@ -1,4 +1,4 @@
-# Ubuntu, Debain おぼえがき
+# Ubuntu, Debian おぼえがき
 
 AWS や Azure で VM 作る時に、毎回やって、毎回忘れるなにかをメモしておく。
 
@@ -45,6 +45,7 @@ AWS や Azure で VM 作る時に、毎回やって、毎回忘れるなにか�
 - [locate](#locate)
   - [locate で正規表現](#locate-で正規表現)
 - [GNU grep なら PCRE が使える](#gnu-grep-なら-pcre-が使える)
+- [apt のキャッシュを消す](#apt-のキャッシュを消す)
 
 ## ホスト名の設定
 
@@ -798,4 +799,11 @@ locate -r 'パターン'
 
 ```sh
 grep -P `パターン`
+```
+
+## apt のキャッシュを消す
+
+```sh
+sudo apt clean  # /var/cache/apt/archives/ にある すべての .deb ファイルを削除。
+sudo apt autoclean # ふるいものだけ消す
 ```
