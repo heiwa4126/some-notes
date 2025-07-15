@@ -1,5 +1,16 @@
 # 非同期 Python
 
+asyncio は基本的にシングルスレッド・シングルプロセスのイベントループで動作するため、
+「並列処理」と言っても、
+実際には並行(concurrent)処理であり、
+真の並列(parallel)処理ではない。
+
+あと
+これらに対して、タスクが一つずつ順番に実行され、前のタスクが完了するまで次のタスクは開始されないのを
+逐次(sequential)と言う。
+
+並行処理は、ミクロに見れば逐次的
+
 ## 参考リンク
 
 まずはこれ。
@@ -135,6 +146,9 @@ async def fetch_data():
 
 タスク(Task)とは
 コルーチンをイベントループに登録して実行するためのラッパー。
+Task は実は Future のサブクラスで「コルーチン実行用の Promise」だと思えばいい
+
+Future は「手動制御可能な Promise」のようなもの
 
 イベントループとは
 非同期タスクやコルーチンをスケジューリングして、順番に実行する仕組み。
@@ -220,6 +234,52 @@ with asyncio.Runner(loop_factory=uvloop_factory) as runner:
     runner.run(main())
 ```
 
+## asyncio.create_task(coro)
+
+[asyncio\.create_task \( coro , \* , name = None , context = None \)](https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task)
+
+1. coro(コルーチンオブジェクト)を Task に変換。
+2. その Task を現在のイベントループに登録(スケジューリング)
+
+なので 「非同期関数を実行して coro を得る」時と違って、関数の実行が始まる。
+
+結果や例外は
+
+- await task
+- asyncio.gather(task,...)
+
+で取得する。
+
+で、ドキュメントには
+
+> タスクが実行中に消えてしまうのを防ぐため、この関数の結果への参照を保存してください。イベントループはタスクへの弱参照のみを保持します。
+
+と書いてあるので保持したほうがいいかも。ただ asyncio.gather()とか使えば
+
+## asyncio.gather() vs asyncio.TaskGroup()
+
+```py
+results = await asyncio.gather(task1(), task2(), task3())
+#
+async with asyncio.TaskGroup() as tg:
+    fut1 = tg.create_task(task1())
+    fut2 = tg.create_task(task2())
+    fut3 = tg.create_task(task3())
+result = (fut1.result, fut2.result, fut3.result)  # result不要ならfutは不要
+```
+
+asyncio.gather()は
+例外が発生すると、
+その例外が即座に伝播され、他のタスクはキャンセルされません。
+キャンセルされないけど例外が throw されるので、
+たとえば task2()で例外が起きた場合
+task3()は実行されても result がとれないかもしれない。
+(ただし return_exceptions=True を使えばうまいぐあいに results に例外も結果として返せる)
+
+asyncio.TaskGroup()は
+グループ内のタスクのいずれかが例外を出すと、他のタスクもキャンセルされる。
+ただし results に相当するものが無い。
+
 ## uvloop
 
 「import するだけでイベントループが早くなる」んだそうです。
@@ -286,3 +346,91 @@ False
 [8\.9\.3\. async with 文](https://docs.python.org/ja/3.13/reference/compound_stmts.html#the-async-with-statement)
 
 非同期コンテキストマネージャはデコレータ([@asynccontextmanager](https://docs.python.org/ja/3.13/library/contextlib.html#contextlib.asynccontextmanager))を使うと簡潔に書ける。
+
+## asyncio.to_thread()
+
+別スレッドで実行する。別スレッドなので CPU バウンドな処理や、ブロックする I/O してもいい。
+すでに非同期対応している処理や、スレッド非対応な処理を入れるのは NG。(たとえば async def な関数とか)
+あとスレッド非対応な C 拡張やライブラリもダメ。
+
+asyncio.to_thread()の戻り値は coro なので、await できるし task にしてもいい。
+
+## sqlite3 を非同期で
+
+[sqlite3 --- SQLite データベース用の DB-API 2.0 インターフェース — Python 3.13.5 ドキュメント](https://docs.python.org/ja/3.13/library/sqlite3.html)
+を非同期で使うこともできるけど
+[aiosqlite·PyPI](https://pypi.org/project/aiosqlite/)
+を使う方が簡潔に書ける。
+
+## await
+
+```py
+import asyncio
+
+async def  func1():
+	// do something
+
+async def main():
+    print('hello')
+    await func1()
+    print('world')
+
+asyncio.run(main())
+```
+
+みたいなコードがあるとき、
+
+1. main()の返す coro オブジェクトがイベントループにスケジュールされる
+2. そのうちイベントループから main()が実行される
+3. main()の`await func1()` まできたら
+   1. main()をサスペンドする
+   2. func1()返す coro オブジェクトがイベントループにスケジュールされる
+   3. そのうちイベントループから func1()が実行され、完了する
+   4. サスペンドを解除して続きの行が実行される
+4. おしまい
+
+のような流れ。
+
+## asyncio.eager_task_factory()
+
+- [Eager Task Factory](https://docs.python.org/ja/3/library/asyncio-task.html#eager-task-factory)
+- [How can I start a Python async coroutine eagerly? - Stack Overflow](https://stackoverflow.com/questions/69145007/how-can-i-start-a-python-async-coroutine-eagerly)
+
+Python 3.12 で導入された新しい機能。
+通常、asyncio.create_task() で作成されたタスクは「遅延実行(lazy execution)」され、
+次のイベントループのイテレーションで初めて実行が開始されます。
+
+一方、eager_task_factory を使うと、タスク作成時点で即座にコルーチンの実行が始まる。
+
+## 非同期関数の引数にコールバックを与える
+
+できる。ただコールバックが同期か非同期化で呼び出し方が異なる。
+
+`inspect.iscoroutinefunction(callback)` で動的にチェックして分岐するか、
+2 種類つくるか
+
+## 非同期関数をラップする非同期デコレータ
+
+できる。
+
+```py
+def log_args_decorator(func):
+    @functools.wraps(func)
+    async def wrapper(*args, **kwargs):
+        print(f"Calling {func.__name__} with args={args}, kwargs={kwargs}")
+        return await func(*args, **kwargs)
+    return wrapper
+
+@log_args_decorator
+async def greet(name):
+    await asyncio.sleep(0.5)
+    print(f"Hello, {name}!")
+
+asyncio.run(greet("Tokyo"))
+```
+
+## asyncio をサポートする便利なパッケージ
+
+aiofiles, aiocsv, aiohttp, httpx などが有名だけど、その他
+
+[timofurrer/awesome-asyncio: A curated list of awesome Python asyncio frameworks, libraries, software and resources](https://github.com/timofurrer/awesome-asyncio)
