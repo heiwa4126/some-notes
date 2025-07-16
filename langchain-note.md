@@ -90,5 +90,78 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 prompt = PromptTemplate.from_template("こんにちは、{name}さん！")
 
 chain = prompt|llm|StrOutputParser()
+```
 
+## 「必ず構造化形式で生成する」パターン
+
+Pydantic と
+.with_structured_output()を使うのが一番簡単。
+
+場合によっては
+StructuredOutputParser や PydanticOutputParser を使う。
+
+プロンプトを工夫してると時間ばかりかかるのでやめたほうがいい。
+
+あと
+[Common issues when transitioning to Pydantic 2](https://python.langchain.com/docs/versions/v0_3/#common-issues-when-transitioning-to-pydantic-2)
+を参照して `langchain_core.pydantic_v1` は使わないこと。
+
+> Do not use the langchain_core.pydantic_v1 namespace
+
+あと
+
+- [Output parsers | 🦜️🔗 LangChain](https://python.langchain.com/docs/concepts/output_parsers/)
+- [output_parsers — 🦜🔗 LangChain documentation](https://python.langchain.com/api_reference/langchain/output_parsers.html)
+
+には「へー」と思うようなパーサが載ってるので参照。
+
+.with_structured_output()の例
+
+```python
+from langchain_aws import ChatBedrock
+from langchain_core.prompts import ChatPromptTemplate
+from pydantic import BaseModel, Field
+
+llm = ChatBedrock(model="apac.amazon.nova-pro-v1:0")
+# モデルは好きなのを使ってください。ここでは Amazon Bedrock の Nova Pro を使っています。
+
+class Book(BaseModel):
+    title: str = Field(description="本のタイトル")
+    author: str = Field(description="著者名")
+    genre: str = Field(description="ジャンル")
+    summary: str = Field(description="あらすじ")
+
+prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", "ユーザーが入力した本の情報を答えて下さい。"),
+        ("human", "{book}"),
+    ]
+)
+
+chain = prompt | llm.with_structured_output(Book)
+
+output = chain.invoke({"book": "ゲゲゲの鬼太郎"})
+
+print("\n=== type(output) ===")
+print(type(output))  # <-- <class '__main__.Book'> になっているはず
+
+print("\n=== output ===")
+print(output)
+
+print("\n=== output (JSON) ===")
+print(
+    output.model_dump_json(indent=2)
+)  # pydanticのBaseModelのインスタンスメソッドを使う例
+```
+
+出力は
+
+```console
+=== output (JSON) ===
+{
+  "title": "ゲゲゲの鬼太郎",
+  "author": "水木しげる",
+  "genre": "漫画",
+  "summary": "ゲゲゲの鬼太郎は、水木しげるによる日本の漫画作品。妖怪が活躍するストーリーで、主人公の鬼太郎が仲間たちと共に妖怪退治をする内容です。"
+}
 ```
