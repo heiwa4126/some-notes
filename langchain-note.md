@@ -106,7 +106,7 @@ StructuredOutputParser や PydanticOutputParser を使う。
 
 もし LLM 自体が Structured Outputs をサポートしているなら
 (例えば OpenAI。[API に Structured Outputs を導入 | OpenAI](https://openai.com/ja-JP/index/introducing-structured-outputs-in-the-api/))
-`response_format="json"` が有効な場合もある。
+`response_format="json"` が有効な場合もある。**ここ嘘かも。これは"JSON MODE"で"Structured Output"ではないかも**
 
 Structured Output をサポートしているプロバイダの一覧(モデルではない)
 [Chat models | 🦜️🔗 LangChain](https://python.langchain.com/docs/integrations/chat/)
