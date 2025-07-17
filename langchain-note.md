@@ -92,15 +92,24 @@ prompt = PromptTemplate.from_template("こんにちは、{name}さん！")
 chain = prompt|llm|StrOutputParser()
 ```
 
-## 「必ず構造化形式で生成する」パターン
+## LangChain で「必ず構造化形式で生成する」パターン
+
+[How to return structured data from a model | 🦜️🔗 LangChain](https://python.langchain.com/docs/how_to/structured_output/)
+
+プロンプトを工夫してると時間ばかりかかるので LangChain に任せた方がいいと思う。
 
 Pydantic と
-.with_structured_output()を使うのが一番簡単。
+.with_structured_output()を使うのが一番簡単っぽい。
 
 場合によっては
 StructuredOutputParser や PydanticOutputParser を使う。
 
-プロンプトを工夫してると時間ばかりかかるのでやめたほうがいい。
+もし LLM 自体が Structured Outputs をサポートしているなら
+(例えば OpenAI。[API に Structured Outputs を導入 | OpenAI](https://openai.com/ja-JP/index/introducing-structured-outputs-in-the-api/))
+`response_format="json"` が有効な場合もある。
+
+Structured Output をサポートしているプロバイダの一覧(モデルではない)
+[Chat models | 🦜️🔗 LangChain](https://python.langchain.com/docs/integrations/chat/)
 
 あと
 [Common issues when transitioning to Pydantic 2](https://python.langchain.com/docs/versions/v0_3/#common-issues-when-transitioning-to-pydantic-2)
@@ -122,8 +131,14 @@ from langchain_aws import ChatBedrock
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
-llm = ChatBedrock(model="apac.amazon.nova-pro-v1:0")
-# モデルは好きなのを使ってください。ここでは Amazon Bedrock の Nova Pro を使っています。
+llm = ChatBedrock(
+    model="apac.amazon.nova-pro-v1:0",
+    # 効くかは微妙 https://python.langchain.com/docs/integrations/chat/bedrock/#model-features では使えることになっている
+    response_format="json",
+    # 最近のバージョンはこちら。まず上を試して、警告が出たらこっち↓に。
+    model_kwargs={"response_format": "json"},
+) # モデルは好きなのを使ってください。
+# ここでは Amazon Bedrock の Nova Pro を使っています。
 
 class Book(BaseModel):
     title: str = Field(description="本のタイトル")
