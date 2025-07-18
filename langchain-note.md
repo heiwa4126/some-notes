@@ -94,21 +94,38 @@ chain = prompt|llm|StrOutputParser()
 
 ## LangChain で「必ず構造化形式で生成する」パターン
 
-[How to return structured data from a model | 🦜️🔗 LangChain](https://python.langchain.com/docs/how_to/structured_output/)
-
 プロンプトを工夫してると時間ばかりかかるので LangChain に任せた方がいいと思う。
+
+- コンセプト - [Structured outputs | 🦜️🔗 LangChain](https://python.langchain.com/docs/concepts/structured_outputs/)
+- ハウトゥ - [How to return structured data from a model | 🦜️🔗 LangChain](https://python.langchain.com/docs/how_to/structured_output/)
 
 Pydantic と
 .with_structured_output()を使うのが一番簡単っぽい。
+スキームは
+
+- Pydantic
+- TypeDict
+- JSON スキーマ
+
+が使える。
 
 場合によっては
-StructuredOutputParser や PydanticOutputParser を使う。
+StructuredOutputParser や PydanticOutputParser を使うなど。
+ここに書いてある [Using PydanticOutputParser](https://python.langchain.com/docs/how_to/structured_output/#using-pydanticoutputparser)
 
+動作原理は
 もし LLM 自体が Structured Outputs をサポートしているなら
 (例えば OpenAI。[API に Structured Outputs を導入 | OpenAI](https://openai.com/ja-JP/index/introducing-structured-outputs-in-the-api/))
 `response_format="json"` が有効な場合もある。**ここ嘘かも。これは"JSON MODE"で"Structured Output"ではないかも**
 
-Structured Output をサポートしているプロバイダの一覧(モデルではない)
+どうも LangChain は.with_structured_output()を使うと
+自動で
+
+- native APIs for structuring outputs
+- tool/function calling
+- JSON mode
+
+(LangChain の) Structured Output をサポートしているプロバイダの一覧(モデルではない)
 [Chat models | 🦜️🔗 LangChain](https://python.langchain.com/docs/integrations/chat/)
 
 あと
@@ -133,29 +150,26 @@ from pydantic import BaseModel, Field
 
 llm = ChatBedrock(
     model="apac.amazon.nova-pro-v1:0",
-    # 効くかは微妙 https://python.langchain.com/docs/integrations/chat/bedrock/#model-features では使えることになっている
-    response_format="json",
-    # 最近のバージョンはこちら。まず上を試して、警告が出たらこっち↓に。
-    model_kwargs={"response_format": "json"},
 ) # モデルは好きなのを使ってください。
 # ここでは Amazon Bedrock の Nova Pro を使っています。
 
 class Book(BaseModel):
-    title: str = Field(description="本のタイトル")
-    author: str = Field(description="著者名")
-    genre: str = Field(description="ジャンル")
-    summary: str = Field(description="あらすじ")
+    """Represents a book with its title, author, genre, and summary."""
+    title: str = Field(...,description="本のタイトル")
+    author: str = Field(...,description="著者名")
+    genre: str = Field(...,description="ジャンル")
+    summary: str = Field(...,description="あらすじ")
 
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", "ユーザーが入力した本の情報を答えて下さい。"),
-        ("human", "{book}"),
+        ("human", "{input}"),
     ]
 )
 
 chain = prompt | llm.with_structured_output(Book)
 
-output = chain.invoke({"book": "ゲゲゲの鬼太郎"})
+output = chain.invoke("ゲゲゲの鬼太郎")
 
 print("\n=== type(output) ===")
 print(type(output))  # <-- <class '__main__.Book'> になっているはず
@@ -166,7 +180,7 @@ print(output)
 print("\n=== output (JSON) ===")
 print(
     output.model_dump_json(indent=2)
-)  # pydanticのBaseModelのインスタンスメソッドを使う例
+)  # pydanticのBaseModelのインスタンスメソッドを使う例. mypyは怒る(静的にはDictだから)
 ```
 
 出力は
@@ -180,3 +194,13 @@ print(
   "summary": "ゲゲゲの鬼太郎は、水木しげるによる日本の漫画作品。妖怪が活躍するストーリーで、主人公の鬼太郎が仲間たちと共に妖怪退治をする内容です。"
 }
 ```
+
+みたいな感じ
+
+# LangChain のデバッグ
+
+お手軽なのは
+[set_debug and set_verbose](https://python.langchain.com/docs/how_to/debugging/#set_debug-and-set_verbose)
+
+- ざっくり全体を見たい場合: set_verbose(True)
+- すべての詳細をチェックしたい場合: set_debug(True)
