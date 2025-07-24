@@ -204,3 +204,25 @@ print(
 
 - ざっくり全体を見たい場合: set_verbose(True)
 - すべての詳細をチェックしたい場合: set_debug(True)
+
+# @tool の関数の戻り値
+
+[tool — 🦜🔗 LangChain documentation](https://python.langchain.com/api_reference/core/tools/langchain_core.tools.convert.tool.html)
+には
+
+必要：
+
+- 関数は (str) -> str 型である必要があります
+- 関数にはドキュメント文字列が必要です
+
+と書かれているけれど、実際には str でなくても int でも`List[str]`でも動くのでドキュメントの方が間違っているのではないか、という話。
+
+[Documentation of \`@tool\` decorator lists an incorrect requirement · Issue #31405 · langchain-ai/langchain](https://github.com/langchain-ai/langchain/issues/31405)
+
+# Tools は Runnable なので
+
+invoke とか ainvoke で呼び出せる。
+
+あと Runnable もツールにできる。マルチエージェントとかできますよね
+
+[How to create tools | 🦜️🔗 LangChain](https://python.langchain.com/docs/how_to/custom_tools/)
