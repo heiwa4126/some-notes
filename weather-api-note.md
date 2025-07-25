@@ -19,6 +19,11 @@
 - [JSON output](https://github.com/chubin/wttr.in?tab=readme-ov-file#json-output)
 - [【wttr.in】ターミナル/VSCode から最速 3 秒で天気を確認する #Terminal - Qiita](https://qiita.com/shirokuma89dev/items/1d86d4caec2d3cd1402d)
 
+欠点:
+
+- なんかよく死んでる気がする。
+- 東京の天気を要求すると、式根島の天気が返ってくる(間違ってはいないけどちがう)。
+
 ### 実装
 
 とりあえず同期で。ネタは「現在気温を得る」
@@ -66,6 +71,7 @@ def get_temperature_wttr(location: str) -> Optional[int]:
 - [Weather API - OpenWeatherMap](https://openweathermap.org/api)
 - [Current weather and forecast - OpenWeatherMap](https://openweathermap.org/)
 - [OpenWeatherMap - Wikipedia](https://ja.wikipedia.org/wiki/OpenWeatherMap)
+- [FAQ](https://openweathermap.org/faq)の "How to get an API key" のところ
 - [OpenWeatherMap API を使う](https://zenn.dev/shimpo/articles/open-weather-map-go-20250209)
 
 ### 実装例

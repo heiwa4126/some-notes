@@ -226,3 +226,6 @@ invoke とか ainvoke で呼び出せる。
 あと Runnable もツールにできる。マルチエージェントとかできますよね
 
 [How to create tools | 🦜️🔗 LangChain](https://python.langchain.com/docs/how_to/custom_tools/)
+
+もしかすると エージェントを MCP にする、とかもできるかもしれない。
+streaming とかはできないような気もするが。
