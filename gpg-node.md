@@ -35,7 +35,7 @@ gpg --edit-key bob
 ## キーサーバー
 
 デフォルトは
-hkps://keys.openpgp.org
+`hkps://keys.openpgp.org`
 ですが、
 keys.gnupg.net は死んでるみたい。
 
