@@ -2,7 +2,7 @@
 
 ## 参考
 
-- [GnuPG チートシート（簡易版）](https://zenn.dev/spiegel/articles/20200920-gnupg-cheat-sheet)
+- [GnuPG チートシート(簡易版)](https://zenn.dev/spiegel/articles/20200920-gnupg-cheat-sheet)
 
 ## キーリングのリスト
 
@@ -47,7 +47,7 @@ keys.gnupg.net は死んでるみたい。
 - keys.mailvelope.com
 - pool.sks-keyservers.net (分散型キーサーバネットワーク)
 
-など [Key server (cryptographic) - Wikipedia](https://en.wikipedia.org/wiki/Key_server_(cryptographic)#Keyserver_examples)
+など [Key server (cryptographic) - Wikipedia](<https://en.wikipedia.org/wiki/Key_server_(cryptographic)#Keyserver_examples>)
 
 登録は
 
@@ -56,7 +56,7 @@ keys.gnupg.net は死んでるみたい。
 実行例
 
 ```bash
-gpg -k heiwa4126
+gpg -k heiwa4126  # ZZZZ...のとこはここで表示されたIDに置き換える
 gpg --keyserver pgp.nic.ad.jp --send-keys ZZZZZZZZZZZZZZZZZ
 gpg --keyserver keyserver.ubuntu.com --send-keys ZZZZZZZZZZZZZZZZZ
 ```
@@ -66,6 +66,14 @@ gpg --keyserver keyserver.ubuntu.com --send-keys ZZZZZZZZZZZZZZZZZ
 ```bash
 gpg --keyserver 鍵サーバ --search-keys メールアドレス
 ```
+
+### keys.openpgp.org はベリファイメール式
+
+--send-key のあとメールアドレスにベリファイメールが届く式になっている。
+リンク先が変な日本語だけど、まあ理解できるのでがんばって。
+メールは 2 回とどくよ。
+
+あと keys.openpgp.org は `-search-keys` で部分検索ができないよ!
 
 ## キーサーバのデフォルトを設定するには?
 
