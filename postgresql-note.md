@@ -1,48 +1,46 @@
-# PostgreSQLメモ
+# PostgreSQL メモ
 
-- [PostgreSQLメモ](#postgresqlメモ)
-  - [PostgreSQLのサンプルデータ](#postgresqlのサンプルデータ)
-  - [PostgreSQLのlibパスは?](#postgresqlのlibパスは)
-  - [/usr/pgsql-XX/binにパスが通ってない問題](#usrpgsql-xxbinにパスが通ってない問題)
-  - [valuntilがNULLの時](#valuntilがnullの時)
-  - [PostgreSQLをインストールする](#postgresqlをインストールする)
-  - [PostgreSQLの認証問題](#postgresqlの認証問題)
-  - [Postgres配布のPostgreSQL](#postgres配布のpostgresql)
-  - [ユーザ一覧](#ユーザ一覧)
-  - [show grantsみたいの](#show-grantsみたいの)
-  - [よくあるテストユーザとテストデータの作り方](#よくあるテストユーザとテストデータの作り方)
-  - [JDBC](#jdbc)
-  - [WALアーカイブとは](#walアーカイブとは)
-  - [pg_basebackup](#pg_basebackup)
-  - [サーバからWALアーカイブを消す](#サーバからwalアーカイブを消す)
-    - [.backupファイルサンプル](#backupファイルサンプル)
-  - [Slony-Iでレプリケーション](#slony-iでレプリケーション)
-  - [スーパーユーザー権限のロールを作成](#スーパーユーザー権限のロールを作成)
-  - [RHEL系でpostgresユーザのプロンプト](#rhel系でpostgresユーザのプロンプト)
-  - [1台のホストに9.6,9.5,9.4](#1台のホストに969594)
-  - [メタ情報](#メタ情報)
-  - [dockerでpostgres](#dockerでpostgres)
-  - [systemdで起動されるpostgresのPGDATAを変更する](#systemdで起動されるpostgresのpgdataを変更する)
-  - [Docker](#docker)
-  - [publicスキーマー](#publicスキーマー)
-  - [特定のロールのgrantを表示する](#特定のロールのgrantを表示する)
+- [PostgreSQL のサンプルデータ](#postgresqlのサンプルデータ)
+- [PostgreSQL の lib パスは?](#postgresqlのlibパスは)
+- [/usr/pgsql-XX/bin にパスが通ってない問題](#usrpgsql-xxbinにパスが通ってない問題)
+- [valuntil が NULL の時](#valuntilがnullの時)
+- [PostgreSQL をインストールする](#postgresqlをインストールする)
+- [PostgreSQL の認証問題](#postgresqlの認証問題)
+- [Postgres 配布の PostgreSQL](#postgres配布のpostgresql)
+- [ユーザ一覧](#ユーザ一覧)
+- [show grants みたいの](#show-grantsみたいの)
+- [よくあるテストユーザとテストデータの作り方](#よくあるテストユーザとテストデータの作り方)
+- [JDBC](#jdbc)
+- [WAL アーカイブとは](#walアーカイブとは)
+- [pg_basebackup](#pg_basebackup)
+- [サーバから WAL アーカイブを消す](#サーバからwalアーカイブを消す)
+  - [.backup ファイルサンプル](#backupファイルサンプル)
+- [Slony-I でレプリケーション](#slony-iでレプリケーション)
+- [スーパーユーザー権限のロールを作成](#スーパーユーザー権限のロールを作成)
+- [RHEL 系で postgres ユーザのプロンプト](#rhel系でpostgresユーザのプロンプト)
+- [1 台のホストに 9.6,9.5,9.4](#1台のホストに969594)
+- [メタ情報](#メタ情報)
+- [docker で postgres](#dockerでpostgres)
+- [systemd で起動される postgres の PGDATA を変更する](#systemdで起動されるpostgresのpgdataを変更する)
+- [public スキーマー](#publicスキーマー)
+- [特定のロールの grant を表示する](#特定のロールのgrantを表示する)
 
-## PostgreSQLのサンプルデータ
+## PostgreSQL のサンプルデータ
 
-PostgreSQL Tutorialに適当なサンプルがある。
+PostgreSQL Tutorial に適当なサンプルがある。
 
 - [[PostgreSQL] サンプルのデータベースを用意する ｜ DevelopersIO](https://dev.classmethod.jp/etc/postgresql-create-sample-database/)
 - [PostgreSQL Sample Database](http://www.postgresqltutorial.com/postgresql-sample-database/)
 
-## PostgreSQLのlibパスは?
+## PostgreSQL の lib パスは?
 
-libpq.soのあるパスなのかlibpq.so.5までのフルパスなのか
+libpq.so のあるパスなのか libpq.so.5 までのフルパスなのか
 微妙なんだが
 
 `pg_config --libdir`
 
 で出るやつでいいのでは。
-(Postgres配布のパッケージだとpg_configはPATHが通ってないことが多い。`/usr/pgsql-9.6/bin/pg_config`とかにある。)
+(Postgres 配布のパッケージだと pg_config は PATH が通ってないことが多い。`/usr/pgsql-9.6/bin/pg_config`とかにある。)
 
 例:
 
@@ -61,7 +59,7 @@ find `pg_config --libdir` -maxdepth 1 -type f -not -type l -name libpq\*
 
 長いな。
 
-## /usr/pgsql-XX/binにパスが通ってない問題
+## /usr/pgsql-XX/bin にパスが通ってない問題
 
 `/var/lib/pgsql/.pgsql_profile`に
 
@@ -71,11 +69,11 @@ export PATH=$PATH:/usr/pgsql-9.6/bin
 
 とか書いておく。
 
-`/var/lib/pgsql`は(大概)postgresユーザのホームディレクトリ。
+`/var/lib/pgsql`は(大概)postgres ユーザのホームディレクトリ。
 
-## valuntilがNULLの時
+## valuntil が NULL の時
 
-ALTER ROLEでパスワードを設定した時、VALID UNTILを指定しないと、pg_userのvaiuntilはNULLになる。
+ALTER ROLE でパスワードを設定した時、VALID UNTIL を指定しないと、pg_user の vaiuntil は NULL になる。
 
 ```
 postgres=# select usename,valuntil from pg_user where valuntil is NULL;
@@ -85,21 +83,21 @@ postgres=# select usename,valuntil from pg_user where valuntil is NULL;
 (1 行)
 ```
 
-valuntilがNULLの時のパスワードは決して無効にならない。
+valuntil が NULL の時のパスワードは決して無効にならない。
 
 - [How long will the PostgreSQL user password expire when the valuntil value in pq_user is NULL? - Stack Overflow](https://stackoverflow.com/questions/45788831/how-long-will-the-postgresql-user-password-expire-when-the-valuntil-value-in-pq)
-- [PostgreSQL: Documentation: 11: 52.8. pg_authid](https://www.postgresql.org/docs/current/catalog-pg-authid.html) (rollvaliduntilのところ)
+- [PostgreSQL: Documentation: 11: 52.8. pg_authid](https://www.postgresql.org/docs/current/catalog-pg-authid.html) (rollvaliduntil のところ)
 
-不安ならabstimeのinfinityを設定しておく
+不安なら abstime の infinity を設定しておく
 
 - [PostgreSQL: Documentation: 11: 8.5. Date/Time Types](https://www.postgresql.org/docs/current/datatype-datetime.html)
 - [PostgreSQL・ロールのパスワード設定](http://www.ajisaba.net/db/postgresql/role_password.html)
 
-## PostgreSQLをインストールする
+## PostgreSQL をインストールする
 
 インストールそのものは簡単なんだけど、その後の話を含めて。
 
-まずRHEL7系でRHELのレポジトリにある、ちょっと古い(9.2)を入れるところから。
+まず RHEL7 系で RHEL のレポジトリにある、ちょっと古い(9.2)を入れるところから。
 
 ```sh
 sudo yum install postgresql-server postgresql postgresql-libs
@@ -110,7 +108,7 @@ exit # rootへ戻る
 systemctl enable postgresql --now
 ```
 
-initdbの出力メモ
+initdb の出力メモ
 
 ```
 $ initdb
@@ -152,7 +150,7 @@ or
     pg_ctl -D /var/lib/pgsql/data -l logfile start
 ```
 
-この最後のメッセージに従わないこと。上にある通りsystemdで起動すること。
+この最後のメッセージに従わないこと。上にある通り systemd で起動すること。
 
 で、このままだと(上の警告にもある通り)
 `/var/lib/pgsql/data/pg_hba.conf` が
@@ -192,15 +190,15 @@ postgres=# SELECT version();
 postgres=# \q
 ```
 
-↓次節に続く
+↓ 次節に続く
 
-## PostgreSQLの認証問題
+## PostgreSQL の認証問題
 
 めんどくさい上に、毎回忘れる。ちゃんと理解してないから。
 
 example
 
-**postgresユーザ以外**で以下のコマンドを実行して
+**postgres ユーザ以外**で以下のコマンドを実行して
 入れないことを確認
 
 ```sh
@@ -208,7 +206,7 @@ psql -h localhost -U postgres
 ```
 
 もし入れるようなら
-`/var/lib/pgsql/data/pg_hba.conf`(RHELの場合) が
+`/var/lib/pgsql/data/pg_hba.conf`(RHEL の場合) が
 
 ```
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
@@ -238,8 +236,8 @@ host    all             all             ::1/128                 md5
 
 上記は
 
-- UNIXのpostgresユーザからは`psql`コマンドだけで、パスワードなしでpostgresロールで入れる。
-- 他のUNIXユーザでも`psql -h localhost -U postgres`で、パスワード入れればpostgresロールで入れる。
+- UNIX の postgres ユーザからは`psql`コマンドだけで、パスワードなしで postgres ロールで入れる。
+- 他の UNIX ユーザでも`psql -h localhost -U postgres`で、パスワード入れれば postgres ロールで入れる。
   という設定。
 
 でパスワードを設定する。
@@ -251,20 +249,20 @@ psql -c "alter role postgres with password '{password}'";
 
 `{password}`のところは好きに変える。
 
-どのUNIXユーザからでも(postgresユーザ含む)
+どの UNIX ユーザからでも(postgres ユーザ含む)
 以下のコマンドを実行して
 
 - パスワードで入れることを確認
-- TCPで入れることを確認
+- TCP で入れることを確認
 
 ```sh
 psql -h localhost -U postgres postgres
 ```
 
-で、パスワード聞かれたら答えて入れればOK。
+で、パスワード聞かれたら答えて入れれば OK。
 
 で、パスワードなしに接続するには
-~/.pgpassに書く。
+~/.pgpass に書く。
 
 ```sh
 touch ~/.pgpass
@@ -279,11 +277,11 @@ localhost:*:postgres:postgres:{password}
 
 `{password}`のところはさっきのパスワード。
 
-## Postgres配布のPostgreSQL
+## Postgres 配布の PostgreSQL
 
 基本は
 [Repo RPMs - PostgreSQL YUM Repository](https://yum.postgresql.org/repopackages/)から
-OSのリンクをコピーして
+OS のリンクをコピーして
 
 ```
 yum install <ここにペースト>
@@ -292,9 +290,9 @@ su - postgres
 initdb
 ```
 
-でOK.
+で OK.
 
-Debian,Ubuntuだったら
+Debian,Ubuntu だったら
 [Apt - PostgreSQL wiki](https://wiki.postgresql.org/wiki/Apt)
 から。
 
@@ -305,9 +303,9 @@ Debian,Ubuntuだったら
 - `\du`
 - `select usename,passwd,valuntil from pg_user;`
 
-## show grantsみたいの
+## show grants みたいの
 
-mysqlの`show grants for user`みたいのが無い。
+mysql の`show grants for user`みたいのが無い。
 `\l`と`\z`でそこそこ要は足りるけど...
 
 ```sql
@@ -318,7 +316,7 @@ select rolname, rolsuper, rolcanlogin from pg_roles;
 
 ## よくあるテストユーザとテストデータの作り方
 
-初期UNIXユーザを`heiwa`として、
+初期 UNIX ユーザを`heiwa`として、
 
 これをやると`heiwa`ユーザ(role)で、
 ソケット経由でつなぐことができる。
@@ -339,22 +337,22 @@ alter role heiwa with login;
 \q
 ```
 
-(TODO: create roleでwith loginを使った方が早いかも。確認後修正)
+(TODO: create role で with login を使った方が早いかも。確認後修正)
 
-でheiwaユーザに戻って
+で heiwa ユーザに戻って
 
 ```sh
 psql test01
 ```
 
-でパスワード入れずにつながることを確認(UNIX socketでpeer認証)。
-DBの名前も`heiwa`にすると`psql`だけでOk
+でパスワード入れずにつながることを確認(UNIX socket で peer 認証)。
+DB の名前も`heiwa`にすると`psql`だけで Ok
 
 ```sh
 psql -h localhost -U heiwa test01
 ```
 
-でパスワード入れてつながることを確認(TCP/IPでmd5認証)。
+でパスワード入れてつながることを確認(TCP/IP で md5 認証)。
 
 適当なテーブルを作ってみる
 
@@ -381,7 +379,7 @@ select * from words where japanese like '%ん%' order by japanese;
 - [PostgreSQL JDBC Driver](https://jdbc.postgresql.org/)
 - [Connecting to the Database](https://jdbc.postgresql.org/documentation/head/connect.html)
 
-Unix Domain socketでつなぐには
+Unix Domain socket でつなぐには
 [Connecting to the Database](https://jdbc.postgresql.org/documentation/head/connect.html)の
 `Unix sockets`セクション参照。
 
@@ -390,32 +388,32 @@ Unix Domain socketでつなぐには
 
 [junixsocket/PostgresqlAFUNIXSocketFactory.java at master · fiken/junixsocket](https://github.com/fiken/junixsocket/blob/master/junixsocket-common/src/main/java/org/newsclub/net/unix/socketfactory/PostgresqlAFUNIXSocketFactory.java)
 
-## WALアーカイブとは
+## WAL アーカイブとは
 
-WALのアーカイブ(をぃ)。チェックポイントで反映済みのWAL。完了したWALファイルのアーカイブ。
+WAL のアーカイブ(をぃ)。チェックポイントで反映済みの WAL。完了した WAL ファイルのアーカイブ。
 
-カレントのベースバックアップ(PG_DATAの下全部)と、すべてのWALのアーカイブがあれば、
-PostgreSQLが起動して以来のすべての時点にデータベースを復元できる。
-WALにはすべてのredo/undoアクションが入っているから(archive_modeがreplica/archive以上の場合)。
+カレントのベースバックアップ(PG_DATA の下全部)と、すべての WAL のアーカイブがあれば、
+PostgreSQL が起動して以来のすべての時点にデータベースを復元できる。
+WAL にはすべての redo/undo アクションが入っているから(archive_mode が replica/archive 以上の場合)。
 
 バックアップ先には
 
-- 現在の$PG_DATAの下全部
-- 過去のWALすべて(つまりWALアーカイブ)
+- 現在の$PG_DATA の下全部
+- 過去の WAL すべて(つまり WAL アーカイブ)
 
-を保存するようにすれば、任意の時点にDBを戻せる。
-これをPITR(ポイントインタイムリカバリ)という。
+を保存するようにすれば、任意の時点に DB を戻せる。
+これを PITR(ポイントインタイムリカバリ)という。
 
-WALアーカイブ先は
+WAL アーカイブ先は
 バックアップサーバへ
 ネットワークファイルシステムでつないで使うのが
 まともな設計。
 
 ## pg_basebackup
 
-- [PostgreSQLのバックアップ手法のまとめ - Qiita](https://qiita.com/bwtakacy/items/65260e29a25b5fbde835)
-- [pg_basebackupを試す « LANCARD.LAB｜ランカードコムのスタッフブログ](https://www.lancard.com/blog/2018/03/22/pg_basebackup%E3%82%92%E8%A9%A6%E3%81%99/)
-- [第25章 バックアップとリストア](https://www.postgresql.jp/document/9.6/html/backup.html)
+- [PostgreSQL のバックアップ手法のまとめ - Qiita](https://qiita.com/bwtakacy/items/65260e29a25b5fbde835)
+- [pg_basebackup を試す « LANCARD.LAB ｜ランカードコムのスタッフブログ](https://www.lancard.com/blog/2018/03/22/pg_basebackup%E3%82%92%E8%A9%A6%E3%81%99/)
+- [第 25 章 バックアップとリストア](https://www.postgresql.jp/document/9.6/html/backup.html)
 
 準備
 
@@ -426,13 +424,13 @@ chown postgres:postgres /tmp/postgres_backup
 chmod 0700 /tmp/postgres_backup
 ```
 
-あとpostgres.confでWALアーカイブの設定と
+あと postgres.conf で WAL アーカイブの設定と
 
 ```
 max_wal_senders = 1
 ```
 
-さらにpg_hba.conf でreplicaを設定。以下例:
+さらに pg_hba.conf で replica を設定。以下例:
 
 ```
 local   replication     postgres                                peer
@@ -446,35 +444,35 @@ local   replication     postgres                                peer
 pg_basebackup -Ft -z -x -D /tmp/postgres_backup
 ```
 
-- Ft tar形式
-- z gzip圧縮
+- Ft tar 形式
+- z gzip 圧縮
 - x `-X fecth`に同じ. 完全なスタンドアローンバックアップを作成
-  max_wal_senders=2にして`-X s`のほうがいいかも。->ダメでした。 WAL streaming can only be used in plain modeだって
+  max_wal_senders=2 にして`-X s`のほうがいいかも。->ダメでした。 WAL streaming can only be used in plain mode だって
 - D バックアップするディレクトリ。「存在していて、かつ空」でなければダメ
 
 参照: [pg_basebackup](https://www.postgresql.jp/document/9.6/html/app-pgbasebackup.html)
 
-tarballのリストを出してみる。
+tarball のリストを出してみる。
 
 ```
 tar ztvf /tmp/postgres_backup/base.tar.gz
 ```
 
-ほんとにPGDATA以下全部(バックアップファイルとかも含めて)入ってるのがわかる。
+ほんとに PGDATA 以下全部(バックアップファイルとかも含めて)入ってるのがわかる。
 
-出来たtarballは
+出来た tarball は
 完全なスタンドアローンバックアップなので
 適当なところに展開するだけで(
 既存と共用するなら`archive_command`のパスを考慮する。
-postgresロールのパスがわからないなら`pg_hba.conf`をいじる、など。
+postgres ロールのパスがわからないなら`pg_hba.conf`をいじる、など。
 )
 
-## サーバからWALアーカイブを消す
+## サーバから WAL アーカイブを消す
 
-バックアップ先にはWALすべてを残すとして、サーバ自体にWALアーカイブすべてを残しておく必要はない。
+バックアップ先には WAL すべてを残すとして、サーバ自体に WAL アーカイブすべてを残しておく必要はない。
 
-RHEL7標準のpostgresでは`postgresql-contrib`パッケージに`pg_archivecleanup`が入ってる。
-Postgre配布でも`postgresqlXX-contrib`のはず。XXは96とか12とか
+RHEL7 標準の postgres では`postgresql-contrib`パッケージに`pg_archivecleanup`が入ってる。
+Postgre 配布でも`postgresqlXX-contrib`のはず。XX は 96 とか 12 とか
 
 `pg_archivecleanup -d {アーカイブディレクトリ} {一番新しい.backup}.backup`
 
@@ -498,17 +496,17 @@ fi
     logger -i -t WALclear -pinfo
 ```
 
-頭3つの環境変数は構成によって修正すること。
+頭 3 つの環境変数は構成によって修正すること。
 
-で、.backupファイルは`pg_basebackup`を実行したときに出来るので、
-バックアップをとらないとWALアーカイブはどんどん増える。
+で、.backup ファイルは`pg_basebackup`を実行したときに出来るので、
+バックアップをとらないと WAL アーカイブはどんどん増える。
 
 参考: [25.3.2. ベースバックアップの作成](https://www.postgresql.jp/document/9.6/html/continuous-archiving.html#backup-base-backup)
 
-[postgresql - pg_archivecleanupでファイルの保存期間または日付でクリーンアップを指定する方法](https://stackoverrun.com/ja/q/4609920)
-↑ちょこっとだけbugがある
+[postgresql - pg_archivecleanup でファイルの保存期間または日付でクリーンアップを指定する方法](https://stackoverrun.com/ja/q/4609920)
+↑ ちょこっとだけ bug がある
 
-6日より前のアーカイブ済みを消す例。
+6 日より前のアーカイブ済みを消す例。
 
 ```sh
 PG_ARCH=/usr/pgsql-9.5/bin/pg_archivecleanup
@@ -544,7 +542,7 @@ find $ARCDIR -mtime +$DAYS -name '*backup' | sort -r | tail -n +2 |\
 
 これを`/etc/cron.daily/WALclear`に置く。変数はアレンジすること。
 
-### .backupファイルサンプル
+### .backup ファイルサンプル
 
 ```
 $ cat data/pg_xlog/000000010000000000000005.00000020.backup
@@ -560,21 +558,21 @@ STOP TIME: 2020-08-20 05:21:57 UTC
 
 なんか書いてから`pg_basebackup`すればよかったかな... あとでやりなおす。
 
-## Slony-Iでレプリケーション
+## Slony-I でレプリケーション
 
-なぜか客先がSlony-Iを使っているので調査。(「スローニ」ロシア語で「象」)
+なぜか客先が Slony-I を使っているので調査。(「スローニ」ロシア語で「象」)
 
 - [Slony-I (トリガーによる行単位レプリケーションツール)](https://www.sraoss.co.jp/tech-blog/pgsql/slony-i/)
 - [Slony-I の調査 | | 1Q77](https://blog.1q77.com/2018/12/what-is-slony-i/)
 - [Slony-I - Wikipedia](https://ja.wikipedia.org/wiki/Slony-I)
 - [Slony-I](https://www.slony.info/)
-- [7分で振り返るPostgreSQLレプリケーション機能の10年の歩み（NTTデータ テクノロジーカンファレンス 2019 講演資料、201…](https://www.slideshare.net/nttdata-tech/postgresql-replication-10years-nttdata-fujii)
-- [PostgreSQLレプリケーション10周年！徹底紹介！（PostgreSQL Conference Japan 2019講演資料）](https://www.slideshare.net/nttdata-tech/postgresql-replication-10years-nttdata-fujii-masao)
+- [7 分で振り返る PostgreSQL レプリケーション機能の 10 年の歩み（NTT データ テクノロジーカンファレンス 2019 講演資料、201…](https://www.slideshare.net/nttdata-tech/postgresql-replication-10years-nttdata-fujii)
+- [PostgreSQL レプリケーション 10 周年！徹底紹介！（PostgreSQL Conference Japan 2019 講演資料）](https://www.slideshare.net/nttdata-tech/postgresql-replication-10years-nttdata-fujii-masao)
 
 なるほどいろいろ事情があるのだなあ。
 
-Postgres 10からは [論理レプリケーション(ロジカルレプリケーション)](https://www.postgresql.jp/document/10/html/logical-replication.html)
-が使えるのでSlonyは減っていくと思われる。10以上同士なら動く?
+Postgres 10 からは [論理レプリケーション(ロジカルレプリケーション)](https://www.postgresql.jp/document/10/html/logical-replication.html)
+が使えるので Slony は減っていくと思われる。10 以上同士なら動く?
 
 ## スーパーユーザー権限のロールを作成
 
@@ -582,11 +580,11 @@ Postgres 10からは [論理レプリケーション(ロジカルレプリケー
 create role user1 with superuser login password 'SuperSecretPassword';
 ```
 
-## RHEL系でpostgresユーザのプロンプト
+## RHEL 系で postgres ユーザのプロンプト
 
-RHEL系で
-[PostgreSQLのレポジトリ](https://yum.postgresql.org/repopackages/)から
-PostgreSQLをインストールすると
+RHEL 系で
+[PostgreSQL のレポジトリ](https://yum.postgresql.org/repopackages/)から
+PostgreSQL をインストールすると
 プロンプトが
 
 ```
@@ -595,7 +593,7 @@ $ sudo -iu postgres
 \s-\v\$
 ```
 
-で、ホスト名が出ない。普通のPS1([\u@\h \W]\$ )とかに変更する。
+で、ホスト名が出ない。普通の PS1([\u@\h \W]\$ )とかに変更する。
 
 いろいろ方法はあろうけど
 
@@ -611,7 +609,7 @@ sudo -iu postgres
 cp /etc/skel/.bashrc .
 ```
 
-して、~postgres/.bash_profileの頭の方に
+して、~postgres/.bash_profile の頭の方に
 
 ```sh
 if [ -f ~/.bashrc ]; then
@@ -621,11 +619,11 @@ fi
 
 を入れるかで。
 
-## 1台のホストに9.6,9.5,9.4
+## 1 台のホストに 9.6,9.5,9.4
 
-同時起動はしないけどRHEL系1台に3つのバージョンが必要だったときのメモ。
+同時起動はしないけど RHEL 系 1 台に 3 つのバージョンが必要だったときのメモ。
 
-[Repo RPMs - PostgreSQL YUM Repository](https://yum.postgresql.org/repopackages/)から。↑参照
+[Repo RPMs - PostgreSQL YUM Repository](https://yum.postgresql.org/repopackages/)から。↑ 参照
 
 ```sh
 yum-config-manager --enable pgdg94
@@ -643,11 +641,11 @@ systemctl disable --now postgresql-9.4 postgresql-9.5 postgresql-9.6
 /var/lib/pgsql/9.4/data
 ```
 
-最後にインストールしたやつののPGDATAになってる。
-~postgres/.bash_profileに記述があるので、よく使うやつに修正(PATHも追加)
+最後にインストールしたやつのの PGDATA になってる。
+~postgres/.bash_profile に記述があるので、よく使うやつに修正(PATH も追加)
 
 各バージョンのバイナリは`/usr/pgsql-9.4/bin`にあるから、
-`sudo -iu postgres`して手でPATH追加していくことにする。
+`sudo -iu postgres`して手で PATH 追加していくことにする。
 
 ```
 sudo -iu postgres
@@ -661,11 +659,11 @@ psql
 pg_ctl -D "$PGDATA" stop
 ```
 
-これを3バージョンくりかえす。
+これを 3 バージョンくりかえす。
 
 ## メタ情報
 
-pg\_で始まるtableはどのdatabaseでも一緒。
+pg\_で始まる table はどの database でも一緒。
 
 ```sql
 -- namespace(schema)一覧
@@ -758,19 +756,19 @@ SELECT n.nspname||'.'||t.dictname
   ORDER BY n.nspname, t.dictname;
 ```
 
-別DBのテーブルの参照はいちおう出来ないことになっている。
-(DBLINK や Foreign Data Wrapperを使う)
+別 DB のテーブルの参照はいちおう出来ないことになっている。
+(DBLINK や Foreign Data Wrapper を使う)
 
-テーブル名は スキーマ名.テーブル名で。スキーマ名publicは省略できる。
+テーブル名は スキーマ名.テーブル名で。スキーマ名 public は省略できる。
 例:
 
 ```sql
 select * from information_schema.sql_languages;
 ```
 
-## dockerでpostgres
+## docker で postgres
 
-./dataにDBを永続化する例。
+./data に DB を永続化する例。
 
 ```sh
 #!/bin/sh -e
@@ -808,12 +806,12 @@ docker rm pg
 
 - [postgres - Docker Hub](https://hub.docker.com/_/postgres)
 
-## systemdで起動されるpostgresのPGDATAを変更する
+## systemd で起動される postgres の PGDATA を変更する
 
-postgres\*.serviceファイルを直接変更しちゃダメ。
+postgres\*.service ファイルを直接変更しちゃダメ。
 
-(以下の例はRHEL系のpostgresのレポジトリからインストールした9.5のもの。
-Debian,Ubuntuでは微妙に違うかも)
+(以下の例は RHEL 系の postgres のレポジトリからインストールした 9.5 のもの。
+Debian,Ubuntu では微妙に違うかも)
 
 ```
 sudo systemctl edit postgresql-9.5
@@ -827,18 +825,18 @@ sudo systemctl edit postgresql-9.5
 Environment=PGDATA=/data
 ```
 
-する。(/dataのところは書き換える)
+する。(/data のところは書き換える)
 
-/dataのパーミッションは
+/data のパーミッションは
 
 ```
 sudo mkdir -p /data -m 0700
 sudo chown postgres:postgres /data
 ```
 
-あと~postgresの.profileや.bash_profileでPGDATAを設定しているなら
+あと~postgres の.profile や.bash_profile で PGDATA を設定しているなら
 それも書き換えたほうが生活が楽。
-PATHも
+PATH も
 
 ```
 export PATH="/usr/pgsql-9.5/bin/:$PATH"
@@ -846,109 +844,7 @@ export PATH="/usr/pgsql-9.5/bin/:$PATH"
 
 など。
 
-## Docker
-
-[postgres - Official Image | Docker Hub](https://hub.docker.com/_/postgres)
-
-これにある docker-compose.yml をそのまま使うとして
-
-```yaml
-# Use postgres/example user/password credentials
-version: "3.1"
-
-services:
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: example
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-```
-
-こんな感じ
-
-```console
-$ docker compose up -d
-$ docker compose exec db bash
-# psql -U postgres
-psql (15.3 (Debian 15.3-1.pgdg120+1))
-Type "help" for help.
-
-postgres=# \du
-                                   List of roles
- Role name |                         Attributes                         | Member of
------------+------------------------------------------------------------+-----------
- postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
-
-postgres=# \q
-```
-
-とりあえずpsql(とlibpq)がイメージに入ってる。
-
-あと上記の設定で [Adminer](https://www.adminer.org/) が <http://localhost:8080> で動くので
-
-- データベース種類 - PostgreSQL
-- サーバ - db
-- パスワード - example
-- データベース - postgre
-
-で入れる。(ブラウザが「そのパスワードがデータ侵害で検出されました」とうるさい)
-
-で、まあこれだと
-
-- dockerの外からつながらない
-- DBが永続化されない
-
-なので、docker-compose.yml をこんな風に
-
-```yaml
-version: "3.1"
-
-services:
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: example
-    ports:
-      - "35432:5432"
-    volumes:
-      - "postgres_data:/var/lib/postgresql/data"
-
-volumes:
-  postgres_data:
-    external: false
-```
-
-これで
-`PGPASSWORD=example psql -U postgres -h 127.0.0.1 -p 35432 postgres`
-で入れる。
-
-別に世界に公開したくなければ
-
-```yaml
-ports:
-  - "127.0.0.1:35432:5432"
-```
-
-にするなど。
-
-停止は
-
-```bash
-docker compose down
-# または
-docker compose down -v  # ボリュームも消す
-```
-
-[docker compose down — Docker-docs-ja 20.10 ドキュメント](https://docs.docker.jp/engine/reference/commandline/compose_down.html)
-
-## publicスキーマー
+## public スキーマー
 
 ```text
 ERROR:  permission denied for schema public
@@ -956,10 +852,10 @@ ERROR:  permission denied for schema public
 
 が出たら
 
-[PostgreSQL 15ではpublicスキーマへの書き込みが制限されます | DevelopersIO](https://dev.classmethod.jp/articles/postgresql-15-revoke-create-on-public-schema/)
+[PostgreSQL 15 では public スキーマへの書き込みが制限されます | DevelopersIO](https://dev.classmethod.jp/articles/postgresql-15-revoke-create-on-public-schema/)
 127.0.0.1:
 
-## 特定のロールのgrantを表示する
+## 特定のロールの grant を表示する
 
 ```sql
 SELECT
