@@ -64,8 +64,26 @@ select * from names where name like '%ん%';
 -- v18なら2つとも出る
 ```
 
-### Unicode ID と LDML (Locale Data Markup Language)
+### Locale ID と LDML (Locale Data Markup Language)
 
+- IETF 言語タグ (BCP 47 ; Best Current Practice. RFC 5646 / RFC 4647)
+  - BCP 47 Unicode 拡張
+    - `-u-` 拡張(Unicode Locale Extension, RFC 6067)  
+      例: `ja-JP-u-ks-level1`(日本語、日本、照合順序レベル 1)
+    - `-t-` 拡張(Transformed Content Extension, RFC 6497)  
+      例: `en-t-ja`(日本語から変換された英語)
+
+だいたい「ロケールタグ」「Unicode ロケール」「Locale ID」と言えば通じる。
+
+LDML (Locale Data Markup Language)は「実装」で
+Locale ID は LDML を一意に指定する ID。
+
+RFC 6067 は `-u-` のところまでの仕様で、
+のこりは LDML の仕様の方(UTS #35)を見ないとダメ。
+
+で、これが UTS#35 仕様: [Unicode Locale Data Markup Language (LDML)](https://unicode.org/reports/tr35/tr35.html#unicode-language-and-locale-identifiers)
+
+で、
 `ja-JP-u-kf-upper-ks-level1` の詳細
 
 - `ja-JP` - 言語:日本(ja)、地域:日本(JP)
@@ -153,3 +171,33 @@ FROM pg_collation where collname = 'ja-x-icu';
 collcollate が None の場合、そのままでは使えないので `
 
 ## 日本の法人名に emoji は使えますか?
+
+
+## ICUとは何?
+
+ICU(International Components for Unicode)は、**Unicodeと国際化(i18n)・地域化(l10n)を支援するためのオープンソースライブラリ群**です。主にC/C++向けの「ICU4C」とJava向けの「ICU4J」が提供されています。
+
+### 主な特徴と機能
+
+ICUは、以下のような多言語・多文化対応の機能を提供します:
+
+- **文字コード変換**:Unicodeと他の文字セット(Shift-JIS、ISO-8859など)との相互変換 [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
+- **照合(Collation)**:言語や地域ごとのルールに基づいた文字列比較(例:日本語の「あ」と「ア」の順序)[2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
+- **書式化(Formatting)**:数値、日付、時刻、通貨などをロケールに応じて表示 [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
+- **カレンダーとタイムゾーン**:グレゴリオ暦以外の暦やタイムゾーンの計算 [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
+- **Unicodeサポート**:正規化、大文字・小文字変換、文字プロパティの取得など [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
+- **正規表現**:Unicode対応の正規表現エンジン [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
+- **双方向テキスト(BiDi)**:右から左に書く言語(アラビア語、ヘブライ語)と左から右の言語の混在処理 [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
+- **テキスト境界検出**:単語、文、段落の区切りを検出 [1](https://ja.wikipedia.org/wiki/International_Components_for_Unicode)。
+
+### なぜICUが重要なのか?
+
+Unicodeは、世界中の言語を一つの文字セットで扱えるようにする標準です。ICUはこのUnicode標準に準拠し、**多言語対応のソフトウェア開発を簡素化し、同じ結果をすべてのプラットフォームで得られるようにする**ことを目的としています [3](https://icu.unicode.org/?hl=ja)。
+
+### 利用例
+
+ICUは、Google、Apple、Microsoft、Adobeなどの大手企業の製品や、Linuxディストリビューション、JavaやPythonなどの言語環境でも広く使われています [3](https://icu.unicode.org/?hl=ja)。
+
+---
+
+もしICUを使った具体的なコード例や、導入方法について知りたい場合は、どの言語(C++、Javaなど)で使いたいか教えてください。さらに詳しくご案内できます!
