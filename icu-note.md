@@ -64,7 +64,7 @@ select * from names where name like '%ん%';
 -- v18なら2つとも出る
 ```
 
-### LDML (Locale Data Markup Language)
+### Unicode ID と LDML (Locale Data Markup Language)
 
 `ja-JP-u-kf-upper-ks-level1` の詳細
 
