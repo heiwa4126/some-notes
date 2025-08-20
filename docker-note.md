@@ -45,6 +45,7 @@
 - [docker pull でイメージが更新されないとき](#docker-pull-でイメージが更新されないとき)
 - [IMAGE ID](#image-id)
 - [ヘルスチェック](#ヘルスチェック)
+- [最新のコンテナ](#最新のコンテナ)
 
 ## インストール
 
@@ -1149,3 +1150,8 @@ FROM python:3.9
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:8000/health || exit 1
 ```
+
+## 最新のコンテナ
+
+最新のコンテナにするコマンドは特にないみたい。
+`docker pull hoge:latest` ぐらい?
