@@ -218,7 +218,7 @@ asyncio.run() は、コルーチン内で発生した例外をそのまま呼び
 
 [class asyncio\.Runner\(\*, debug=None, loop_factory=None\)](https://docs.python.org/ja/3/library/asyncio-runner.html#asyncio.Runner)
 
-loop_factory で uvloop を指定するのにつかう w
+loop_factory で uvloop を指定するのにつかう (違う w)
 
 ```py
 
@@ -235,6 +235,30 @@ async def main():
 with asyncio.Runner(loop_factory=uvloop_factory) as runner:
     runner.run(main())
 ```
+
+### uvloop 使うだけなら
+
+```python
+import asyncio
+import uvloop
+
+# グローバルに設定
+asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+
+# 通常通り使用
+asyncio.run(main())
+```
+
+または
+
+```python
+import uvloop
+
+# uvloop付きで直接実行
+uvloop.run(main())
+```
+
+で OK
 
 ## asyncio.create_task(coro)
 
