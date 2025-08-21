@@ -38,6 +38,36 @@ marp-vscode は marpit フレームワークの上で書かれているので
 
 最初のやつはセキュリティ的にヤバいしオフラインでどうなるかわからん。後者を試す。
 
+拡張機能は
+
+- `mermaid-preview` [Mermaid Preview - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=vstirbu.vscode-mermaid-preview)
+- あと `marp-vscode` [Marp for VS Code - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode)
+
+手順は
+
+- まず .mmd でファイル作る
+- `Mermaid Preview: Preview Diagram` でプレビュー開く & 編集
+- プレビュー画面の左上に export アイコンがあるので、そこから
+- で marp のほうにインライン
+
 画像のサイジングは Marp の特殊記法を使う
 [Image syntax](https://marpit.marp.app/image-syntax)
 参照。
+
+これでプレビューみながらサイズを調整すると、その比率でエクスポートされる
+(何言ってるかわからんと思うが試してみて)
+
+あとこの記法を使うと図が左揃になる。これは CSS で治す。
+
+```text
+---
+marp: true
+style: |
+  section img {
+    display: block;
+    margin: auto;
+  }
+---
+```
+
+こんな感じ。セクション単位で指定できるはず。
