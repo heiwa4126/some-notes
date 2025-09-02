@@ -1,5 +1,15 @@
 # @biomejs/biome のメモ
 
+## biome.json の場所
+
+.jsonc でもいいらしい。
+
+カレント以外は見ない。
+親ディレクトリ、先祖ディレクトリも見る、というのは噓っぽい。
+
+`--config-path="$HOME/biome.json"` とか書くのが一番良さそう。
+
+
 ## ありがちな biome.json (v1)
 
 ```json

@@ -271,3 +271,29 @@ uvx は
 
 - [Dependabot version updates now support uv in general availability - GitHub Changelog](https://github.blog/changelog/2025-03-13-dependabot-version-updates-now-support-uv-in-general-availability/)
 - [Dependabot の uv サポートを試す - kakakakakku blog](https://kakakakakku.hatenablog.com/entry/2025/03/23/124812)
+
+## vscode と使うときの障害 1
+
+uv で作成した python のプロジェクトを vscode で開いたとき、
+最初のターミナルが自動で.venv 環境にならない(もう 1 個ターミナルを開くと venv になる)。
+
+最初のターミナルを venv にするには、どう設定すればいい?
+
+まず「Python インタプリタを.venv の下のを選んでおく」は当然として
+
+`.vscode/settings.json` に**どちらか**の設定を追加する:
+
+```json
+{
+  // 1) ウィンドウを開いた直後に“初期ターミナル”が自動起動しないようにする
+  "terminal.integrated.hideOnStartup": "always",
+
+  // 2) すでに開いているターミナル(=最初のターミナル)にも環境を注入してアクティブ化する
+  "python.terminal.activateEnvInCurrentTerminal": true
+}
+```
+
+自分は 2 にしました。
+ちょっと待つと最初のターミナルにも `source .venv/bin/activate` がニョロっと実行される。2 個目は早い
+
+...これグローバル設定でもいいんじゃね?
