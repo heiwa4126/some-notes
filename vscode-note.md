@@ -24,6 +24,7 @@
 - [折りたたみ(Folding)系](#折りたたみfolding系)
 - [VSCode に GPU を使わせない設定](#vscode-に-gpu-を使わせない設定)
 - [折り返しの有効無効](#折り返しの有効無効)
+- [マルチカーソルで折り返しを無視する](#マルチカーソルで折り返しを無視する)
 - [VSCode の Jupyter 拡張で Pylance が reportMissingImports と言ってくるとき](#vscode-の-jupyter-拡張で-pylance-が-reportmissingimports-と言ってくるとき)
   - [ひとつの解決案](#ひとつの解決案)
 
@@ -355,6 +356,23 @@ code --disable-gpu
 ## 折り返しの有効無効
 
 `Alt+Z`
+
+## マルチカーソルで折り返しを無視する
+
+完璧な方法はない。なんかショートカットでできるといいのにねえ。
+
+`Alt+Z`で切り替えろ。
+
+設定で論理行のみにするには
+
+```json
+{
+  "editor.wordWrap": "off"
+  # 言語ごとにもOK
+}
+```
+
+だけど。
 
 ## VSCode の Jupyter 拡張で Pylance が reportMissingImports と言ってくるとき
 
