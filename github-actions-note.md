@@ -8,6 +8,7 @@
 - [GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?](#github-actions-の-workflow-runs-に過去の実行結果が残っていますがこれは消すべきですか-一定期間で消えますか)
 - [特定のワークフローファイルだけ実行できるようにする方法はある?](#特定のワークフローファイルだけ実行できるようにする方法はある)
 - [GitHub Actions のキャッシュサイズを知る方法](#github-actions-のキャッシュサイズを知る方法)
+- [SHA pinning enforcement](#sha-pinning-enforcement)
 
 ## On: が難しい
 
@@ -138,3 +139,53 @@ API を使用する方法
 応答には、実行のアーティファクトに関する情報が含まれます。キャッシュのサイズは、各アーティファクトの size_in_bytes フィールドで確認できます。
 
 これらの方法を使用して、GitHub Actions のキャッシュのサイズを確認できます。キャッシュのサイズを把握することで、プロジェクトのパフォーマンスやリソースの使用状況を把握するのに役立ちます。
+
+## SHA pinning enforcement
+
+ハッシュでピンニングされてない action を実行させない機能らしい。
+
+[GitHub Actions policy now supports blocking and SHA pinning actions - GitHub Changelog](https://github.blog/changelog/2025-08-15-github-actions-policy-now-supports-blocking-and-sha-pinning-actions/)
+
+で、free アカウントでも使えるらしい(public レポのみ?)んだけど、UI のどこにあるかがわからん。
+
+ありました
+
+1. リポジトリに入る
+2. Settings タブを開く
+3. 左サイドバーの Code and automation セクションの中に Actions → General があります
+4. そのページの冒頭に Actions permissions というセクションが
+5. これの "Require actions to be pinned to a full-length commit SHA" がそれ。
+
+ついでに Actions permissions セクションの項目の説明。
+
+1. Allow all actions and reusable workflows (デフォルト)
+   - すべての Actions / 再利用可能ワークフローを利用可能。
+   - 誰が作ったか(公式・外部・自分)を問わず GitHub Marketplace のアクションを自由に使えます。
+   - セキュリティ的には最も緩い設定です。
+2. Disable actions
+   - このリポジトリでは GitHub Actions を完全に無効化します。
+   - Actions タブ自体が非表示になり、ワークフローは走りません。
+   - CI/CD を一切使いたくない場合に選びます。
+3. Allow <username> actions and reusable workflows
+   - 自分のアカウント配下にあるリポジトリで定義したアクションと再利用可能ワークフローのみ使えるように制限。
+   - 他人が公開している Marketplace のアクションは使えません。
+   - 内製アクションだけで完結させたい場合に使います。
+4. Allow <username>, and select non-<username> actions and reusable workflows
+   - 自分のリポジトリ内のアクションはすべて許可。
+   - それに加えて、「指定した外部のアクション」だけ許可できます。
+   - 設定は allow リストを別途 YAML などで指定する形です。
+   - 外部アクションの利用を最小限に制御しながら使いたいときに便利。
+
+で "Require actions to be pinned to a full-length commit SHA" は:
+
+- 有効化すると、アクションを使うときに必ず コミット SHA で参照しなければならなくなります。
+  - uses: actions/checkout@v4 # ❌ ← バージョンタグは不可
+  - uses: actions/checkout@a81bbbf... # ✅ ← コミット SHA で指定
+- タグやブランチ参照だと、後から中身が変わってしまうリスクがあるため、セキュリティを高めたいときに使う設定です。
+- チェックを入れると、SHA でピンしていないワークフローは実行時に失敗します。
+
+"コミット SHA" は人間の管理できるものではないので
+[pinact](https://github.com/suzuki-shunsuke/pinact)
+を使いましょう。
+
+あと gh でも参照設定できるけど "Actions permissions" セクション丸ごと参照&丸ごと設定なんで、あまり便利じゃない。
