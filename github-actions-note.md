@@ -5,6 +5,7 @@
 - [On: が難しい](#on-が難しい)
 - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
 - [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
+- [レポジトリ名の取得](#レポジトリ名の取得)
 - [GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?](#github-actions-の-workflow-runs-に過去の実行結果が残っていますがこれは消すべきですか-一定期間で消えますか)
 - [特定のワークフローファイルだけ実行できるようにする方法はある?](#特定のワークフローファイルだけ実行できるようにする方法はある)
 - [GitHub Actions のキャッシュサイズを知る方法](#github-actions-のキャッシュサイズを知る方法)
@@ -65,6 +66,8 @@ steps:
 
 ## GITHUB_REPO_NAME 環境変数が空
 
+(この情報は古い。次のセクション参照)
+
 gh-pages ブランチで GutHub Pages を作ろうと思ったら(base:で指定したかった)
 GITHUB_REPO_NAME 環境変数が空で、理由がわからない。
 
@@ -107,6 +110,12 @@ bash だったら
 ```bash
 ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
 ```
+
+## レポジトリ名の取得
+
+`github.event.repository.name` がよさそう。
+
+[continuous integration - Repository Name as a GitHub Action environment variable? - Stack Overflow](https://stackoverflow.com/questions/62803531/repository-name-as-a-github-action-environment-variable)
 
 ## GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?
 
