@@ -297,3 +297,28 @@ uv で作成した python のプロジェクトを vscode で開いたとき、
 ちょっと待つと最初のターミナルにも `source .venv/bin/activate` がニョロっと実行される。2 個目は早い
 
 ...これグローバル設定でもいいんじゃね?
+
+## uv がビルドバックエンドとして使えるようになった
+
+[Build backend | uv](https://docs.astral.sh/uv/concepts/build-backend/)
+
+### バックエンド回りでありがちな設定メモ
+
+src/ の下に \_test.py でテスト書くとき、パッケージに含めない設定。
+tests/の方はオマケ(未検証)
+
+```yaml
+[tool.uv.build-backend]
+source-exclude = [
+  "**/*_test.py",
+  "tests/**",
+]
+wheel-exclude = [
+  "**/*_test.py",
+  "tests/**",
+]
+```
+
+[build-backend](https://docs.astral.sh/uv/reference/settings/#build-backend)
+
+実際に `uv build` すると wheel の方にはライセンスや README とかも入らない。.gitignore なんかも。
