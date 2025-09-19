@@ -10,6 +10,8 @@
 - [特定のワークフローファイルだけ実行できるようにする方法はある?](#特定のワークフローファイルだけ実行できるようにする方法はある)
 - [GitHub Actions のキャッシュサイズを知る方法](#github-actions-のキャッシュサイズを知る方法)
 - [SHA pinning enforcement](#sha-pinning-enforcement)
+- [VSCode の GitHub Actions 拡張](#vscode-の-github-actions-拡張)
+- [env: と environment:](#env-と-environment)
 
 ## On: が難しい
 
@@ -198,3 +200,34 @@ API を使用する方法
 を使いましょう。
 
 あと gh でも参照設定できるけど "Actions permissions" セクション丸ごと参照&丸ごと設定なんで、あまり便利じゃない。
+
+## VSCode の GitHub Actions 拡張
+
+- [github/vscode-github-actions: GitHub Actions extension for VS Code](https://github.com/github/vscode-github-actions)
+- [GitHub Actions - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-github-actions)
+
+```yaml
+jobs:
+  uv-example:
+    name: python
+    runs-on: ubuntu-latest
+    environment: testpypi
+```
+
+のようなワークフローを書くと、 environment:の行で `Value 'testpypi' is not valid` という警告が消えません。
+
+回避する方法は無い(行ごと無効プラグマとか無し)ので、無視してください。
+[Suppress \`vars\` context validation in an environment set via an expression. · Issue #96 · github/vscode-github-actions](https://github.com/github/vscode-github-actions/issues/96)
+
+actionlint を併用する。
+
+あとインデントはスペースのみ。
+
+## env: と environment:
+
+全然違うものらしい...
+
+env: は環境変数の定義。使える場所は workflow 全体, job, step。そのスコープでのみ有効
+
+- [env - GitHub Actions 　のワークフロー構文 - GitHub Docs](https://docs.github.com/ja/actions/reference/workflows-and-actions/workflow-syntax#env)
+- [変数に情報を格納する - GitHub Docs](https://docs.github.com/ja/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables)

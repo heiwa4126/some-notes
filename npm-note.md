@@ -34,6 +34,13 @@
 - [`npm i`, `npm ci`, `npm up` の違い](#npm-i-npm-ci-npm-up-の違い)
 - [npm-version のサブコマンドでわかりにくいやつ](#npm-version-のサブコマンドでわかりにくいやつ)
 - [`npm update` と `ncu` の違い](#npm-update-と-ncu-の違い)
+- [npmjs への trusted publishing](#npmjs-への-trusted-publishing)
+  - [概要](#概要)
+  - [主な特徴](#主な特徴)
+  - [対応環境](#対応環境)
+  - [設定方法](#設定方法)
+  - [provenance を無効化したい場合](#provenance-を無効化したい場合)
+  - [今後の展望](#今後の展望)
 
 ## 多分最初にこれよんだほうがよさそう
 
@@ -733,3 +740,77 @@ ncu [npm-check-updates - npm](https://www.npmjs.com/package/npm-check-updates?re
 - `bun update` は `ncu` (これ嘘かも。`~`のやつちゃんと処理してる。`--latest`オプションがついたらしい。`bun update --help`参照)
 
 らしい。
+
+## npmjs への trusted publishing
+
+PyPI/TestPyPI では 2023 年から実装されてた trusted publishing が
+npmjs でも 2025 年 7 月 31 日から使えるようになった。
+
+- [npm trusted publishing with OIDC is generally available - GitHub Changelog](https://github.blog/changelog/2025-07-31-npm-trusted-publishing-with-oidc-is-generally-available/)
+- [Trusted publishing for npm packages | npm Docs](https://docs.npmjs.com/trusted-publishers)
+- [npm Trusted Publishing で OIDC を使ってトークンレスで CI から npm パッケージを公開する | Web Scratch](https://efcl.info/2025/09/07/npm-oidc/)
+- [トークン不要で npm パッケージを公開できる trusted publishing を試す - ろぼいんブログ](https://roboin.io/article/2025/08/12/testing-npm-trusted-publishing-publish-packages-without-tokens/)
+- [OIDC を利用した npm パッケージの公開が可能になったので、Changeset×GitHub Actions で試してみる](https://www.k8o.me/blog/npm-trusted-publishing-for-npm-packages)
+
+これ使うとトークン設定不要で GitHub Actions (と GitLab) から `npm publish`できる上に
+Sigstore 署名も付く。
+
+以下:
+[2025 年 7 月 31 日: npm Trusted Publishing with OIDC が一般公開された](https://github.blog/changelog/2025-07-31-npm-trusted-publishing-with-oidc-is-generally-available/)
+のまとめ:
+
+### 概要
+
+- **npm Trusted Publishing with OIDC** が **一般公開**されました。
+- GitHub Actions や GitLab CI/CD から、**長期トークン不要で安全に npm パッケージを公開**できるようになります。
+- **npm CLI v11.5.1 以降**が必要です。
+
+### 主な特徴
+
+1. **トークン不要の公開**  
+   OIDC を使って、GitHub Actions や GitLab CI/CD の特定のワークフローから直接公開可能。
+
+2. **セキュリティ向上**
+
+   - 長期トークンの保存・漏洩・ローテーションのリスクを排除。
+   - ワークフロー固有の短期認証情報を使用。
+
+3. **自動的な provenance（出所証明）生成**
+   - `--provenance` フラグは不要。
+   - パッケージにビルド環境の暗号的証明が付与される。
+   - ユーザーはパッケージの出所を検証可能。
+
+### 対応環境
+
+- **npm パッケージ全般**（公開・非公開、スコープ付き・なし）
+- **GitHub Actions（GitHub-hosted runners）**
+- **GitLab CI/CD（gitlab.com shared runners）**
+
+※プライベートリポジトリからの公開では provenance は利用不可。
+
+### 設定方法
+
+1. **npmjs.com で Trusted Publisher を設定**
+
+   - GitHub の場合：ユーザー/組織名、リポジトリ名、ワークフローファイル名、環境名を指定。
+   - GitLab の場合：ネームスペース、プロジェクト、CI ファイルパス、環境名を指定。
+
+2. **GitHub Actions ワークフローに権限を追加**
+
+   ```yaml
+   permissions:
+     id-token: write
+     contents: read
+   ```
+
+3. **npm publish を実行するだけで OK**
+
+### provenance を無効化したい場合
+
+- 環境変数 `NPM_CONFIG_PROVENANCE=false` を設定
+- または `.npmrc` や `package.json` に設定を追加
+
+### 今後の展望
+
+- **他の CI/CD プロバイダーや自ホストランナーへの対応**も予定。
+- プライベートプレビュー参加者の設定はそのまま有効。

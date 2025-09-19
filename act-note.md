@@ -166,3 +166,5 @@ INFO[0000] Using docker host 'unix:///var/run/docker.sock', and daemon socket 'u
 ```
 
 ## なんかいろいろ裏技があるらしい
+
+## つかえない API があるらしい

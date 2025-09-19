@@ -322,3 +322,7 @@ wheel-exclude = [
 [build-backend](https://docs.astral.sh/uv/reference/settings/#build-backend)
 
 実際に `uv build` すると wheel の方にはライセンスや README とかも入らない。.gitignore なんかも。
+
+## `uv run --isolated --no-project --with`
+
+パッケージをビルドしたあとの検証に超便利。
