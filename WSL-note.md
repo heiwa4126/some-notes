@@ -1,25 +1,25 @@
 # WSL メモ
 
-- [WSL メモ](#wsl-メモ)
-  - [WSL2 で IPv6 がつながらない](#wsl2-で-ipv6-がつながらない)
-  - [WSL 上の Ubuntu にはなぜ linux-image\* パッケージがインストールされていないのか](#wsl-上の-ubuntu-にはなぜ-linux-image-パッケージがインストールされていないのか)
-  - [WSL の時間がずれる](#wsl-の時間がずれる)
-  - [WSL の再起動](#wsl-の再起動)
-  - [WSL の syslog は Windows イベントログに出る](#wsl-の-syslog-は-windows-イベントログに出る)
-  - [WSL2 で w コマンドを叩いても他の pts が表示されないのはなぜ?](#wsl2-で-w-コマンドを叩いても他の-pts-が表示されないのはなぜ)
-  - [WSL2 で docker は使えますか?](#wsl2-で-docker-は使えますか)
-    - [WSL2 で docker は使えますか? - Bing の答え](#wsl2-で-docker-は使えますか---bing-の答え)
-    - [docker サービスは自動起動しますか?](#docker-サービスは自動起動しますか)
-    - [ChatGPT にも聞いてみた: WSL2 で docker は使えますか?](#chatgpt-にも聞いてみた-wsl2-で-docker-は使えますか)
-    - [つづき: その Microsoft の公式ドキュメントやオンラインのチュートリアルの URL を教えてください](#つづき-その-microsoft-の公式ドキュメントやオンラインのチュートリアルの-url-を教えてください)
-  - [WSL をバックアップすることはできますか?](#wsl-をバックアップすることはできますか)
-    - [リストアする方法も教えてください](#リストアする方法も教えてください)
-    - [wsl --export の出力は圧縮されないのですか?](#wsl---export-の出力は圧縮されないのですか)
-    - [エクスポートしながら圧縮する方法はありませんか?](#エクスポートしながら圧縮する方法はありませんか)
-    - [エクスポートしながら圧縮: あとで試すメモ](#エクスポートしながら圧縮-あとで試すメモ)
-  - [WSL で Windows のやりとり](#wsl-で-windows-のやりとり)
-  - [WSL で ls するとディレクトリの色が暗くて見づらいのを直す](#wsl-で-ls-するとディレクトリの色が暗くて見づらいのを直す)
-  - [WSL から CSV を Excel で開く](#wsl-から-csv-を-excel-で開く)
+- [WSL2 で IPv6 がつながらない](#wsl2-で-ipv6-がつながらない)
+- [WSL 上の Ubuntu にはなぜ linux-image\* パッケージがインストールされていないのか](#wsl-上の-ubuntu-にはなぜ-linux-image-パッケージがインストールされていないのか)
+- [WSL の時間がずれる](#wsl-の時間がずれる)
+- [WSL の再起動](#wsl-の再起動)
+- [WSL の syslog は Windows イベントログに出る](#wsl-の-syslog-は-windows-イベントログに出る)
+- [WSL2 で w コマンドを叩いても他の pts が表示されないのはなぜ?](#wsl2-で-w-コマンドを叩いても他の-pts-が表示されないのはなぜ)
+- [WSL2 で docker は使えますか?](#wsl2-で-docker-は使えますか)
+  - [WSL2 で docker は使えますか? - Bing の答え](#wsl2-で-docker-は使えますか---bing-の答え)
+  - [docker サービスは自動起動しますか?](#docker-サービスは自動起動しますか)
+  - [ChatGPT にも聞いてみた: WSL2 で docker は使えますか?](#chatgpt-にも聞いてみた-wsl2-で-docker-は使えますか)
+  - [つづき: その Microsoft の公式ドキュメントやオンラインのチュートリアルの URL を教えてください](#つづき-その-microsoft-の公式ドキュメントやオンラインのチュートリアルの-url-を教えてください)
+- [WSL をバックアップすることはできますか?](#wsl-をバックアップすることはできますか)
+  - [リストアする方法も教えてください](#リストアする方法も教えてください)
+  - [wsl --export の出力は圧縮されないのですか?](#wsl---export-の出力は圧縮されないのですか)
+  - [エクスポートしながら圧縮する方法はありませんか?](#エクスポートしながら圧縮する方法はありませんか)
+  - [エクスポートしながら圧縮: あとで試すメモ](#エクスポートしながら圧縮-あとで試すメモ)
+- [WSL で Windows のやりとり](#wsl-で-windows-のやりとり)
+- [WSL で ls するとディレクトリの色が暗くて見づらいのを直す](#wsl-で-ls-するとディレクトリの色が暗くて見づらいのを直す)
+- [WSL から CSV を Excel で開く](#wsl-から-csv-を-excel-で開く)
+- [wslu](#wslu)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -356,3 +356,15 @@ ln -s  "/mnt/c/Program Files (x86)/Microsoft Office/root/Office16/EXCEL.EXE" ~/b
 ```
 
 `excel foo.csv &` で開くよ。
+
+## wslu
+
+ブラウザで認証するやつなどで便利
+
+```sh
+sudo apt install wslu -y
+# 以下の環境変数を.bashrcなどに設定
+export BROWSER=wslview
+```
+
+[WSL ユーザー必見！知らないと損する wslu コマンドガイド【パス変換・GUI 連携 etc】 - uepon 日々の備忘録](https://uepon.hatenadiary.com/entry/2025/06/23/225250)
