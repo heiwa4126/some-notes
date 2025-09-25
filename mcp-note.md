@@ -1,6 +1,6 @@
 # MCP(Model Context Protocol)のメモ
 
-MCP のことなら claude に聞くといいです。
+MCP のことなら Claude に聞くといいです。
 
 ## ざっくり理解
 

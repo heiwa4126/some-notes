@@ -2,6 +2,8 @@
 
 ## `/help` で表示されるメッセージ
 
+(ちょっと古い)
+
 `@mermAId` は vscode-mermAId 拡張によるもの。
 
 ```text
@@ -40,3 +42,7 @@
 #terminalSelection - The active terminal's selection
 #file - ワークスペースでファイルを選択する
 ```
+
+## チャットの過去を消すコマンド
+
+`/clear`

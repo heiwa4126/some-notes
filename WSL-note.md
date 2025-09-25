@@ -20,6 +20,7 @@
 - [WSL で ls するとディレクトリの色が暗くて見づらいのを直す](#wsl-で-ls-するとディレクトリの色が暗くて見づらいのを直す)
 - [WSL から CSV を Excel で開く](#wsl-から-csv-を-excel-で開く)
 - [wslu](#wslu)
+- [Windows のパスが追加されるのがウザい](#windows-のパスが追加されるのがウザい)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -47,7 +48,7 @@ curl: (7) Couldn't connect to server
 参考:
 
 - [ミラー モードのネットワーク](https://learn.microsoft.com/ja-jp/windows/wsl/networking#mirrored-mode-networking)
-- [WSL 2.0.0 で導入されたミラーモードは万能薬なのか？ #Network - Qiita](https://qiita.com/shigeokamoto/items/bad3ce237f0b19aea147)
+- [WSL 2.0.0 で導入されたミラーモードは万能薬なのか? #Network - Qiita](https://qiita.com/shigeokamoto/items/bad3ce237f0b19aea147)
 
 ミラーモードのネットワークけっこうおもしろい。
 WSL 上と Windows 上のポートがいっぺんに見える。
@@ -123,10 +124,10 @@ Bing Search に聞いてみた。
 
 ### WSL2 で docker は使えますか? - Bing の答え
 
-はい、WSL2 では docker を使えます ²³⁴⁵。
-WSL2 は Linux カーネルを実装しているので、docker のネイティブな動作が可能になります ²。
-しかし、WSL2 では systemd がサポートされていないので、docker をインストールするにはいくつかの手順が必要です ¹⁴。
-一つの方法は、次のようにすることです ⁴。
+はい、WSL2 では docker を使えます 2345。
+WSL2 は Linux カーネルを実装しているので、docker のネイティブな動作が可能になります 2。
+しかし、WSL2 では systemd がサポートされていないので、docker をインストールするにはいくつかの手順が必要です 14。
+一つの方法は、次のようにすることです 4。
 
 - WSL2 で Ubuntu をインストールする
 - Ubuntu で sudo apt update と sudo apt upgrade を実行する
@@ -142,17 +143,17 @@ WSL2 は Linux カーネルを実装しているので、docker のネイティ�
 ソース: Bing との会話 2023/2/16
 
 1. Docker Desktop WSL 2 バックエンド — Docker-docs-ja 20.10 .... <https://docs.docker.jp/docker-for-windows/wsl.html> アクセス日時 2023/2/16.
-2. Windows ＋ WSL2 で Docker 環境を用意しよう - カゴヤの .... <https://www.kagoya.jp/howto/cloud/container/wsl2_docker/> アクセス日時 2023/2/16.
+2. Windows + WSL2 で Docker 環境を用意しよう - カゴヤの .... <https://www.kagoya.jp/howto/cloud/container/wsl2_docker/> アクセス日時 2023/2/16.
 3. WSL2 に docker をインストールしてみた - Qiita. <https://qiita.com/hkusaba/items/5b44248d758214f99e97> アクセス日時 2023/2/16.
 4. windows に WSL2+Docker 環境を構築する手順 - Qiita. <https://qiita.com/taka777n/items/ea3a1b3a2802aabf3db2> アクセス日時 2023/2/16.
-5. 知乎专栏 - 随心写作，自由表达 - 知乎. <https://zhuanlan.zhihu.com/p/148511634> アクセス日時 2023/2/16.
+5. 知乎专栏 - 随心写作,自由表达 - 知乎. <https://zhuanlan.zhihu.com/p/148511634> アクセス日時 2023/2/16.
 
 ### docker サービスは自動起動しますか?
 
-いいえ、WSL2 では docker サービスは自動起動しません ¹³⁴。
-WSL2 では systemd がサポートされていないため、docker サービスを起動するには毎回コマンドを実行する必要があります ¹。
-しかし、自動起動する方法もあります。一つの方法は、プロファイルファイルに docker サービスを起動するコマンドを追加することです ¹²。
-具体的には、次のようにします ¹。
+いいえ、WSL2 では docker サービスは自動起動しません 134。
+WSL2 では systemd がサポートされていないため、docker サービスを起動するには毎回コマンドを実行する必要があります 1。
+しかし、自動起動する方法もあります。一つの方法は、プロファイルファイルに docker サービスを起動するコマンドを追加することです 12。
+具体的には、次のようにします 1。
 
 - Ubuntu で sudo visudo を実行して sudoers ファイルを編集する
 - ファイルの最後に自分のユーザー名 ALL=(ALL:ALL) NOPASSWD: /usr/sbin/service docker start という行を追加する
@@ -194,9 +195,9 @@ WSL2 では systemd がサポートされていないため、docker サービ�
 
 ## WSL をバックアップすることはできますか?
 
-はい、WSL をバックアップすることはできます ¹²³。
-WSL をバックアップするには、wsl --export コマンドを使って WSL のディストリビューションを tar ファイルにエクスポートすることができます ¹²³。
-具体的には、次のようにします ¹²³。
+はい、WSL をバックアップすることはできます 123。
+WSL をバックアップするには、wsl --export コマンドを使って WSL のディストリビューションを tar ファイルにエクスポートすることができます 123。
+具体的には、次のようにします 123。
 
 - コマンドプロンプトか PowerShell を開く
 - wsl --list --verbose を実行してバックアップしたいディストリビューションの名前を確認する
@@ -213,7 +214,7 @@ WSL をバックアップするには、wsl --export コマンドを使って WS
 
 ### リストアする方法も教えてください
 
-WSL の復元方法は次のとおりです ¹⁴。
+WSL の復元方法は次のとおりです 14。
 
 - コマンドプロンプトか PowerShell を開く
 - wsl --import ディストリビューション名 インストール先フォルダ バックアップファイル名を実行してバックアップファイルからディストリビューションをインポートする
@@ -231,8 +232,8 @@ WSL の復元方法は次のとおりです ¹⁴。
 
 ### wsl --export の出力は圧縮されないのですか?
 
-wsl --export の出力は圧縮されないのです ¹。
-wsl --export は指定したディストリビューションを tar ファイルにエクスポートするだけで、圧縮は行いません。圧縮すると時間がかかるからです ¹。
+wsl --export の出力は圧縮されないのです 1。
+wsl --export は指定したディストリビューションを tar ファイルにエクスポートするだけで、圧縮は行いません。圧縮すると時間がかかるからです 1。
 もし圧縮したい場合は、別のツールを使って tar ファイルを圧縮する必要があります。
 
 ソース: Bing との会話 2023/2/16
@@ -244,7 +245,7 @@ wsl --export は指定したディストリビューションを tar ファイ�
 
 ### エクスポートしながら圧縮する方法はありませんか?
 
-wsl --export でエクスポートしながら圧縮する方法はありません ²。wsl --export は圧縮オプションを備えていません ²。しかし、パイプを使って wsl --export の出力を別のツールに渡して圧縮することはできます ¹。例えば、次のようなコマンドを使えば、wsl --export の出力を gzip で圧縮してファイルに保存できます。
+wsl --export でエクスポートしながら圧縮する方法はありません 2。wsl --export は圧縮オプションを備えていません 2。しかし、パイプを使って wsl --export の出力を別のツールに渡して圧縮することはできます 1。例えば、次のようなコマンドを使えば、wsl --export の出力を gzip で圧縮してファイルに保存できます。
 
 ```powershell
 wsl --export ディストリビューション名 - | gzip > バックアップファイル名.gz
@@ -367,4 +368,19 @@ sudo apt install wslu -y
 export BROWSER=wslview
 ```
 
-[WSL ユーザー必見！知らないと損する wslu コマンドガイド【パス変換・GUI 連携 etc】 - uepon 日々の備忘録](https://uepon.hatenadiary.com/entry/2025/06/23/225250)
+[WSL ユーザー必見!知らないと損する wslu コマンドガイド【パス変換・GUI 連携 etc】 - uepon 日々の備忘録](https://uepon.hatenadiary.com/entry/2025/06/23/225250)
+
+## Windows のパスが追加されるのがウザい
+
+```sh
+sudo nano /etc/wsl.conf
+```
+
+で
+
+```config
+[interop]
+appendWindowsPath = false
+```
+
+という設定を追加・編集したのち、Windows 側で `wsl --shutdown`
