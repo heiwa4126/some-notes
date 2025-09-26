@@ -17,30 +17,44 @@
 
 [Workflow syntax for GitHub Actions - GitHub Docs](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on)
 
-よく使う割によくわからんのがこれ:\
-[on\.push\.<branches\|tags\|branches\-ignore\|tags\-ignore>](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushbranchestagsbranches-ignoretags-ignore)
+よく使う割によくわからん。
+どうもマッチが正規表現じゃないらしい。Glob らしい(Glob のさらに拡張。`+`があるし)
 
-どうもマッチが正規表現じゃないらしい。
+- [on\.push\.<branches\|tags\|branches\-ignore\|tags\-ignore>](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushbranchestagsbranches-ignoretags-ignore)
+- [フィルター パターンのチート シート](https://docs.github.com/ja/actions/reference/workflows-and-actions/workflow-syntax#filter-pattern-cheat-sheet)
+- おそらくこれは使われていない。`hashFiles()`等用 [@actions/glob - npm](https://www.npmjs.com/package/@actions/glob)
 
 > branches、branches-ignore、tags、tags-ignore キーワードは、_、_、+、 ?、! などの文字を使用して複数のブランチ名やタグ名にマッチするグロブ・パターンを受け付けます。名前にこれらの文字が含まれており、リテラル・マッチを行いたい場合は、各特殊文字を \ でエスケープする必要があります。グロブパターンの詳細については、"GitHub アクションのワークフロー構文" を参照してください。
 
-とえあえず、「頭に v、続けて[SemVer](https://semver.org/lang/ja/)」にマッチする(pre-release や build も考慮) on.push.tags は以下の感じ
+とりあえず、「頭に v、続けて[SemVer](https://semver.org/lang/ja/)」にマッチする(pre-release や build も考慮) on.push.tags は以下の感じ
 
 ```yaml
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+**'
+      # 通常リリース: 例) v1.2.3
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      # プリリリースのみ: 例) v1.2.3-rc.1, v1.2.3-beta など(必ず '-' が付く)
+      - 'v[0-9]+.[0-9]+.[0-9]+-*'
 ```
 
-ちょっと雑かも(pre-release や build のところ)。実用上問題ないと思う。
+ちょっと雑かも(pre-release や build のところ)。**実用上問題ない**と思う。
 
-で、プロジェクトの Environment で Deployment branches and tags のところには `v*.*.*` と書く。
-(こっちでは正規表現が使えないから)
+で、プロジェクトの Environment で Deployment branches and tags のところはまた別物で
 
-なんか変だけど我慢すること。
+- [デプロイと環境 - GitHub Docs](https://docs.github.com/ja/actions/reference/workflows-and-actions/deployments-and-environments#deployment-branches-and-tags)
+- [Class: File (Ruby 2.5.1)](https://ruby-doc.org/core-2.5.1/File.html#method-c-fnmatch)
 
-あと Deployment branches and tags のルールは、OR 条件。
+```ruby
+# 通常リリース(例: v1.2.3)
+v[0-9]*.[0-9]*.[0-9]*
+# プリリリースのみ: v1.2.3-rc.1, v1.2.3-beta など(必ず '-' が付く)
+v[0-9]*.[0-9]*.[0-9]*-?*
+```
+
+...なんか変だけど我慢すること。
+
+あと Deployment branches and tags のルールも、OR 条件。
 
 ## on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?
 
@@ -73,7 +87,7 @@ steps:
 gh-pages ブランチで GutHub Pages を作ろうと思ったら(base:で指定したかった)
 GITHUB_REPO_NAME 環境変数が空で、理由がわからない。
 
-[https://docs.github.com/en/actions/learn-github-actions/variables](https://docs.github.com/en/actions/learn-github-actions/variables)
+<https://docs.github.com/en/actions/learn-github-actions/variables>
 
 ドキュメントにもこの変数載ってないので、
 
@@ -229,5 +243,5 @@ actionlint を併用する。
 
 env: は環境変数の定義。使える場所は workflow 全体, job, step。そのスコープでのみ有効
 
-- [env - GitHub Actions 　のワークフロー構文 - GitHub Docs](https://docs.github.com/ja/actions/reference/workflows-and-actions/workflow-syntax#env)
+- [env - GitHub Actions のワークフロー構文 - GitHub Docs](https://docs.github.com/ja/actions/reference/workflows-and-actions/workflow-syntax#env)
 - [変数に情報を格納する - GitHub Docs](https://docs.github.com/ja/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables)
