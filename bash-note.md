@@ -1,39 +1,43 @@
-.profileや.bash_profileで毎回混乱するので、
+# bash メモ
+
+.profile や.bash_profile で毎回混乱するので、
 きちんと理解する。
 
 - [参考リンク](#参考リンク)
-- [.profile, .bash_profileの関係](#profile-bash_profileの関係)
+- [.profile, .bash_profile の関係](#profile-bash_profile-の関係)
 - [exit code](#exit-code)
 - [特定のフォルダの下にあるスクリプトをすべて実行する](#特定のフォルダの下にあるスクリプトをすべて実行する)
 - [ファイルから引数を読み込んで処理](#ファイルから引数を読み込んで処理)
-- [psの出力を長くする](#psの出力を長くする)
-- [tarでリスト](#tarでリスト)
-- [tarで特定のファイルだけ標準出力](#tarで特定のファイルだけ標準出力)
-- [ファイル/ディレクトリのmodeを8進数で得る](#ファイルディレクトリのmodeを8進数で得る)
+- [ps の出力を長くする](#ps-の出力を長くする)
+- [tar でリスト](#tar-でリスト)
+- [tar で特定のファイルだけ標準出力](#tar-で特定のファイルだけ標準出力)
+- [ファイル/ディレクトリの mode を 8 進数で得る](#ファイルディレクトリの-mode-を-8-進数で得る)
 - [ディレクトリを指定のモードで作成する](#ディレクトリを指定のモードで作成する)
-- [mountでディスクを列挙するのをやめる](#mountでディスクを列挙するのをやめる)
+- [mount でディスクを列挙するのをやめる](#mount-でディスクを列挙するのをやめる)
 - [sudo -e](#sudo--e)
 - [hex dump](#hex-dump)
-- [/rootのfsck](#rootのfsck)
-  - [systemdでない場合](#systemdでない場合)
-  - [systemdの場合](#systemdの場合)
-- [同じパスワードでも/etc/shadowで同じ値にならない話](#同じパスワードでもetcshadowで同じ値にならない話)
-- [stderrをless](#stderrをless)
-- [xargsで入力が空の時エラーにしないオプションは](#xargsで入力が空の時エラーにしないオプションは)
+- [/root の fsck](#root-の-fsck)
+  - [systemd でない場合](#systemd-でない場合)
+  - [systemd の場合](#systemd-の場合)
+- [同じパスワードでも/etc/shadow で同じ値にならない話](#同じパスワードでもetcshadow-で同じ値にならない話)
+- [stderr を less](#stderr-を-less)
+- [xargs で入力が空の時エラーにしないオプションは](#xargs-で入力が空の時エラーにしないオプションは)
 - [日付でソート](#日付でソート)
-- [bashのショートカットキー](#bashのショートカットキー)
+- [bash のショートカットキー](#bash-のショートカットキー)
 - [`@-`とは](#-とは)
+- [usermod -aG](#usermod--ag)
+- [lsof の複数条件](#lsof-の複数条件)
 
-# 参考リンク
+## 参考リンク
 
 - man 1 bash
 - [Man page of BASH (日本語: JM Project)](https://linuxjm.osdn.jp/html/GNU_bash/man1/bash.1.html)
 - [Bash Reference Manual (GNU project)](https://www.gnu.org/software/bash/manual/bash.html)
 
-# .profile, .bash_profileの関係
+## .profile, .bash_profile の関係
 
 引用は
-[JM Projectのmanページ](https://linuxjm.osdn.jp/html/GNU_bash/man1/bash.1.html)
+[JM Project の man ページ](https://linuxjm.osdn.jp/html/GNU_bash/man1/bash.1.html)
 、起動(Invocation)のセクションから。
 
 > bash が **対話的(interactive shell)なログインシェル(login shell)** として起動されるか、 --login オプション付きの非対話的シェルとして起動されると...
@@ -41,7 +45,7 @@
 - 対話的である/対話的でない
 - ログインシェルである/ログインシェルでない
 
-の4通りが有りうるわけで。
+の 4 通りが有りうるわけで。
 
 > **ログインシェル(login shell)とは**、0 番目の引き数の最初の文字が - であるシェル、または --login オプション付きで起動されたシェルのことです。
 
@@ -60,7 +64,7 @@ $ ps f
  2752 pts/0    R+     0:00      \_ ps f
 ```
 
-- tmuxやscreenだとまた`-bash`に戻る。
+- tmux や screen だとまた`-bash`に戻る。
 - `sudo -i` は `-bash`
 - `sudo su` は `bash`
 
@@ -78,10 +82,10 @@ $ ps f
 
 > **ログインシェルでない対話的シェルとして起動されると**、 ~/.bashrc ファイルがあれば、 bash はここからコマンドを読み込み、実行します。
 
-よくあるスケルトンでは.profile中で.bashrcを読むようなコードが書いてある。
+よくあるスケルトンでは.profile 中で.bashrc を読むようなコードが書いてある。
 
 ```
-# if running bash
+## if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
@@ -90,14 +94,14 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 ```
 
-引用元: Ubntu 16.04LTSの`/etc/skel/.profile`
+引用元: Ubntu 16.04LTS の`/etc/skel/.profile`
 
 > ログインシェルが終了するときには、 ~/.bash_logout ファイルがあれば、 bash はこれを読み込んで実行します
 
-.bash_logoutにssh-agentを殺すような処理を書く例
+.bash_logout に ssh-agent を殺すような処理を書く例
 
 ```
-# if this is the last copy of my shell exiting the host and there are any agents running, kill them.
+## if this is the last copy of my shell exiting the host and there are any agents running, kill them.
 if [ $(w | grep $USER | wc -l) -eq 1 ]; then
    pkill ssh-agent
 fi
@@ -105,7 +109,7 @@ fi
 
 引用元: [Managing multiple SSH agents - Wikitech](https://wikitech.wikimedia.org/wiki/Managing_multiple_SSH_agents)
 
-**非対話的に実行されると** (「例えばシェルスクリプトを実行するために」)、.bashrcも.profile等も読まない。
+**非対話的に実行されると** (「例えばシェルスクリプトを実行するために」)、.bashrc も.profile 等も読まない。
 
 ただし、環境変数 BASH_ENV という抜け穴がある。
 
@@ -113,7 +117,7 @@ fi
 
 > ただし、ファイル名を探すために PATH 環境変数の値が使われることはありません。
 
-例外がもう1つ
+例外がもう 1 つ
 
 > bash は、リモートシェルデーモン rshd やセキュアシェルデーモン sshd によって実行された場合など、標準入力がネットワーク接続に接続された状態で実行されたかどうかを調べます。
 > この方法によって実行されていると bash が判断した場合、
@@ -121,33 +125,33 @@ fi
 
 > sh として呼び出された場合には、この動作は行いません。
 
-# exit code
+## exit code
 
-/bin/sh, /bin/bashを使って起動したプロセスのexit codeは
-shが予約している領域があるよ、という話。
+/bin/sh, /bin/bash を使って起動したプロセスの exit code は
+sh が予約している領域があるよ、という話。
 
 > exit codes 1 - 2, 126 - 165, and 255
 
-> 上記の表の通り，Exit Code 1, 2, 126〜165, 255 は特別な意味を持ち，スクリプトやプログラム内で exit に指定するパラメータとしては避けるべきである
+> 上記の表の通り,Exit Code 1, 2, 126〜165, 255 は特別な意味を持ち,スクリプトやプログラム内で exit に指定するパラメータとしては避けるべきである
 
 - [Exit Codes With Special Meanings](http://tldp.org/LDP/abs/html/exitcodes.html)
 - [コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code](https://qiita.com/Linda_pp/items/1104d2d9a263b60e104b)
 
-あと、POSIXでは64～78が提案されているので
+あと、POSIX では 64 ~ 78 が提案されているので
 /usr/include/sysexits.h
 これを使うのが行儀がいい(はず)。
 
 - [https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h](https://opensource.apple.com/source/Libc/Libc-320/include/sysexits.h)
 
-たとえばpythonだとosモジュールでos.EX_USAGEなどが定義されている。
+たとえば python だと os モジュールで os.EX_USAGE などが定義されている。
 
-ただしWindowsのosモジュールはos.EX_xxxが無い(POSIXじゃないから)。
+ただし Windows の os モジュールは os.EX_xxx が無い(POSIX じゃないから)。
 
 参考:
 
-- [Linux: .bashrcと.bash_profileの違いを今度こそ理解する](https://techracho.bpsinc.jp/hachi8833/2019_06_06/66396)
+- [Linux: .bashrc と.bash_profile の違いを今度こそ理解する](https://techracho.bpsinc.jp/hachi8833/2019_06_06/66396)
 
-# 特定のフォルダの下にあるスクリプトをすべて実行する
+## 特定のフォルダの下にあるスクリプトをすべて実行する
 
 一番かんたんに思いつきそうなのはこれ(実行フラグがついていないものは考えていない)
 
@@ -155,15 +159,15 @@ shが予約している領域があるよ、という話。
 for p in /etc/cron.daily/* ; do   echo "$p";   sh "$p"; done
 ```
 
-少し考えたのはこれ(並列実行20は適当な値)
+少し考えたのはこれ(並列実行 20 は適当な値)
 
 ```
 find /etc/cron.daily -type f -perm /+x | xargs -n1 -P20 sh
 ```
 
-もっと良い方法があると思う。↑は複雑すぎる。
+もっと良い方法があると思う。↑ は複雑すぎる。
 
-# ファイルから引数を読み込んで処理
+## ファイルから引数を読み込んで処理
 
 ```
 yum install $(<list)
@@ -179,9 +183,9 @@ cat list | xargs yum install
 
 と同じ
 
-# psの出力を長くする
+## ps の出力を長くする
 
-shellと関係ないけどよく忘れるのでメモ
+shell と関係ないけどよく忘れるのでメモ
 
 ```
 COLUMNS=999 ps axf
@@ -193,13 +197,13 @@ COLUMNS=999 ps axf
 ps axfww
 ```
 
-w2個で制限がなくなる。
+w2 個で制限がなくなる。
 
 参考: [Man page of PS](https://linuxjm.osdn.jp/html/procps/man1/ps.1.html)
 
-# tarでリスト
+## tar でリスト
 
-これもshellと関係ないけどよく忘れるのでメモ。
+これも shell と関係ないけどよく忘れるのでメモ。
 (TODO: なんでよく忘れるか、を考える)
 
 ```
@@ -212,19 +216,19 @@ tar ztf foo.tar.gz
 tar ztvf foo.tar.gz
 ```
 
-zcvf,zxvfのc,xのところにt(--list)を使う。
+zcvf,zxvf の c,x のところに t(--list)を使う。
 
-# tarで特定のファイルだけ標準出力
+## tar で特定のファイルだけ標準出力
 
 `-O`オプションとファイルの指定
 
-たまたまあったtarballでの例
+たまたまあった tarball での例
 
 ```sh
 tar zxvf yum-r8.tar.gz yum/check_update_security/r8.json -O | jq . | less
 ```
 
-# ファイル/ディレクトリのmodeを8進数で得る
+## ファイル/ディレクトリの mode を 8 進数で得る
 
 ```
 stat -c "%a %n" *
@@ -232,9 +236,9 @@ stat -c "%a %n" *
 
 - [How can I get octal file permissions from command line? - Ask Ubuntu](https://askubuntu.com/questions/152001/how-can-i-get-octal-file-permissions-from-command-line)
 
-# ディレクトリを指定のモードで作成する
+## ディレクトリを指定のモードで作成する
 
-mkdirの`-m`オプションを使う。
+mkdir の`-m`オプションを使う。
 
 例)
 
@@ -244,7 +248,7 @@ mkdir -m 1770 ~/tmp
 
 - [Man page of MKDIR](https://linuxjm.osdn.jp/html/GNU_fileutils/man1/mkdir.1.html)
 
-# mountでディスクを列挙するのをやめる
+## mount でディスクを列挙するのをやめる
 
 最近は仮想ファイルシステムが多いので、`mount`でディスクを列挙しようとすると目が死ぬ。
 
@@ -255,16 +259,16 @@ mkdir -m 1770 ~/tmp
 に同じ
 )
 
-# sudo -e
+## sudo -e
 
 ```bash
 sudo -e /etc/foobar.conf
-# sudo $EDITOR /etc/foobar.conf に同じ
+## sudo $EDITOR /etc/foobar.conf に同じ
 ```
 
 みたいなことができる。かっこいいかもしれない。
 
-# hex dump
+## hex dump
 
 ```
 od -tx1
@@ -279,9 +283,9 @@ xxd
 - [Man page of OD](https://linuxjm.osdn.jp/html/gnumaniak/man1/od.1.html)
 - [man xxd (1): 16 進ダンプを作成したり、元に戻したり。](http://ja.manpages.org/xxd)
 
-# /rootのfsck
+## /root の fsck
 
-## systemdでない場合
+### systemd でない場合
 
 まず
 
@@ -297,9 +301,9 @@ fsck -n /
 shutdown -F -r now
 ```
 
-で、再起動時にfsckを実行させる。これは`touch /forcefsck`と同じ。
+で、再起動時に fsck を実行させる。これは`touch /forcefsck`と同じ。
 
-まだ問題があるようなら、CD bootなどで。
+まだ問題があるようなら、CD boot などで。
 
 参考:
 
@@ -307,9 +311,9 @@ shutdown -F -r now
 
 `/forcefsck`は自動的に削除される。
 
-## systemdの場合
+### systemd の場合
 
-ext2,3,4ならtune2fsの`-c`オプションが使える。
+ext2,3,4 なら tune2fs の`-c`オプションが使える。
 
 例:
 
@@ -317,27 +321,27 @@ ext2,3,4ならtune2fsの`-c`オプションが使える。
 sudo tune2fs -c1 /dev/sda1
 ```
 
-でreboot。
+で reboot。
 
-xfsなら
+xfs なら
 
 ```sh
 sudo xfs_repair -d /dev/sda1
 ```
 
-でいいらしい(未確認)。manには「直ちにrebootする」と書いてある。fsck.xfsはダミーのコマンドで、実行しても何も起きない。
-[RHEL 8のこの記事が参考になる](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/managing_file_systems/checking-an-xfs-file-system-with-xfs-repair_checking-and-repairing-a-file-system)。
+でいいらしい(未確認)。man には「直ちに reboot する」と書いてある。fsck.xfs はダミーのコマンドで、実行しても何も起きない。
+[RHEL 8 のこの記事が参考になる](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/managing_file_systems/checking-an-xfs-file-system-with-xfs-repair_checking-and-repairing-a-file-system)。
 
 参考:
 
 - [tune2fs(8) - Linux man page](https://linux.die.net/man/8/tune2fs)
 - [xfs_repair(8): repair XFS filesystem - Linux man page](https://linux.die.net/man/8/xfs_repair)
-- [13.4. xfs_repair で XFS ファイルシステムの確認 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/managing_file_systems/checking-an-xfs-file-system-with-xfs-repair_checking-and-repairing-a-file-system)
-- [13.8. e2fsck で ext2、ext3、または ext4 ファイルシステムの修復 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/managing_file_systems/repairing-an-ext2-ext3-or-ext4-file-system-with-e2fsck_checking-and-repairing-a-file-system)
+- [13.4. xfs_repair で XFS ファイルシステムの確認 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/managing_file_systems/checking-an-xfs-file-system-with-xfs-repair_checking-and-repairing-a-file-system)
+- [13.8. e2fsck で ext2、ext3、または ext4 ファイルシステムの修復 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/managing_file_systems/repairing-an-ext2-ext3-or-ext4-file-system-with-e2fsck_checking-and-repairing-a-file-system)
 
-# 同じパスワードでも/etc/shadowで同じ値にならない話
+## 同じパスワードでも/etc/shadow で同じ値にならない話
 
-頭にsaltが入ってるから。
+頭に salt が入ってるから。
 
 実験:
 
@@ -349,31 +353,31 @@ $ mkpasswd -m sha-512
 パスワード: # 同じく"test"とかタイプする。
 $6$w/4/NSMdk$Uhnu9e6ebwfffnD63QwaRtkztr8/fa4y/Bw5maFWsOH9F/qZ9iL6wB3oiNbJieS3RkuE77QIy7l.1o0ty.fJJ0
 
-# saltを指定してみる
+## saltを指定してみる
 $ mkpasswd -m sha-512 -S 00000000
 パスワード:
 $6$00000000$Ecw0YyyJ4sK4v4s7/V/HvstYmY48Hthq0T3M/Dr70frxMfGTUbP4llrgm2vTwJbQxGGbP2cDUlvl2QeO6tPwo0
 $ mkpasswd -m sha-512 -S 00000000
 パスワード:
 $6$00000000$Ecw0YyyJ4sK4v4s7/V/HvstYmY48Hthq0T3M/Dr70frxMfGTUbP4llrgm2vTwJbQxGGbP2cDUlvl2QeO6tPwo0
-# おなじsaltで同じパスワードならハッシュはおなじになる
+## おなじsaltで同じパスワードならハッシュはおなじになる
 ```
 
-mkpasswdはwhoisパッケージに入ってる。
+mkpasswd は whois パッケージに入ってる。
 
-参考: [ひつまぶし食べたい: /etc/shadowについて勉強してみた](http://hitsumabushi-pc.blogspot.com/2011/12/etcshadow.html)
+参考: [ひつまぶし食べたい: /etc/shadow について勉強してみた](http://hitsumabushi-pc.blogspot.com/2011/12/etcshadow.html)
 
-# stderrをless
+## stderr を less
 
 よくあるこれなんだけど
 
-標準出力とエラー出力を混ぜてless
+標準出力とエラー出力を混ぜて less
 
 ```sh
 foobar 2>&1 | less
 ```
 
-標準出力を捨てて、エラー出力だけをless
+標準出力を捨てて、エラー出力だけを less
 
 ```sh
 foobar 2>&1 > /dev/null | less
@@ -387,13 +391,13 @@ foobar | err2stdout | less
 
 みたいにできるといいんだけど。
 
-# xargsで入力が空の時エラーにしないオプションは
+## xargs で入力が空の時エラーにしないオプションは
 
 `-r`, `--no-run-if-empty`
 
-# 日付でソート
+## 日付でソート
 
-syslogの出力で、先頭が
+syslog の出力で、先頭が
 `Jan 19 23:56:40: ...`
 みたいなやつをソートする方法
 
@@ -405,28 +409,28 @@ fgrep -h SomeWordToSearch /var/log/messages* | sort -k1M -k2n -k3
 
 [Sort logs by date field in bash](https://stackoverflow.com/questions/5242986/sort-logs-by-date-field-in-bash)
 
-降順にするのは `sort -k1Mr -k2nr -k3r` とするか、tacコマンドを使う。
+降順にするのは `sort -k1Mr -k2nr -k3r` とするか、tac コマンドを使う。
 
-# bashのショートカットキー
+## bash のショートカットキー
 
 - [Readline Interaction \(Bash Reference Manual\)](https://www.gnu.org/software/bash/manual/html_node/Readline-Interaction.html)
 - [リードライン相互作用](https://runebook.dev/ja/docs/bash/readline-interaction) - 機械翻訳?
 
-cut & yank あるって知ってました? undoもあるよ。
+cut & yank あるって知ってました? undo もあるよ。
 
-# `@-`とは
+## `@-`とは
 
-curlで使える構文で、`@file`でファイルから読み込む。で、`@-`でstdinから読み込む。
+curl で使える構文で、`@file`でファイルから読み込む。で、`@-`で stdin から読み込む。
 
-これとhereドキュメントと組み合わせると
+これと here ドキュメントと組み合わせると
 
 - [bash \- Curl with multiline of JSON \- Stack Overflow](https://stackoverflow.com/questions/34847981/curl-with-multiline-of-json)
-- [curlでパフォーマンス測定 \| DevelopersIO](https://dev.classmethod.jp/articles/curl-benchmark/)
-- [Bashの便利な構文だがよく忘れてしまうものの備忘録 \- Qiita](https://qiita.com/Ping/items/57fd75465dfada76e633#curl)
+- [curl でパフォーマンス測定 \| DevelopersIO](https://dev.classmethod.jp/articles/curl-benchmark/)
+- [Bash の便利な構文だがよく忘れてしまうものの備忘録 \- Qiita](https://qiita.com/Ping/items/57fd75465dfada76e633#curl)
 
 みたいなことができる。
 
-# usermod -aG
+## usermod -aG
 
 `-aG` は 補助グループを**追加**することができる`usermod`のオプション。
 `-G` だと上書き。
@@ -434,38 +438,38 @@ curlで使える構文で、`@file`でファイルから読み込む。で、`@-
 以下例
 
 ```bash
-# useradd test1
-# id test1
+## useradd test1
+## id test1
 uid=1001(test1) gid=1001(test1) groups=1001(test1)
 
-# groupadd g1
-# groupadd g2
-# usermod -G g1 test1
-# id test1
+## groupadd g1
+## groupadd g2
+## usermod -G g1 test1
+## id test1
 uid=1001(test1) gid=1001(test1) groups=1001(test1),1002(g1)
-# usermod -G g2 test1
-# id test1
+## usermod -G g2 test1
+## id test1
 uid=1001(test1) gid=1001(test1) groups=1001(test1),1003(g2)
-## 追加したg1が消えてしまう
+### 追加したg1が消えてしまう
 
-# usermod -aG g1 test1
-# id test1
+## usermod -aG g1 test1
+## id test1
 uid=1001(test1) gid=1001(test1) groups=1001(test1),1002(g1),1003(g2)
 ```
 
-# lsofの複数条件
+## lsof の複数条件
 
-オプションをただ並べるとor条件になってしまう。
-`-a`を使うとAND条件になるのだけど
+オプションをただ並べると or 条件になってしまう。
+`-a`を使うと AND 条件になるのだけど
 
 > Caution: the -a option causes all list selection options to be ANDed;
 
-「注意：-aオプションは、すべてのリスト選択オプションがANDになります。
-選択オプションの間に配置することで、選択されたペアのANDを発生させることはできません。」
+「注意:-a オプションは、すべてのリスト選択オプションが AND になります。
+選択オプションの間に配置することで、選択されたペアの AND を発生させることはできません。」
 
 ```bash
-# 例: nginxで使っているunixソケットの一覧。
-# `-a`はどこにあっても結果は同じ
+## 例: nginxで使っているunixソケットの一覧。
+## `-a`はどこにあっても結果は同じ
 lsof -a -c nginx -U
 ```
 

@@ -68,3 +68,5 @@ pnpm completion bash > "$BCPATH/pnpm"
 aqua completion bash > "$BCPATH/aqua"
 cosign completion bash > "$BCPATH/cosign"
 ```
+
+これを時々実行する感じ。
