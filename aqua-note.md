@@ -1,4 +1,4 @@
-# aqua のメモ
+# aquaproj/aqua のメモ
 
 "CLI Version Manager"
 「コマンドラインツールのバージョン管理をするコマンドラインツール」
@@ -7,6 +7,7 @@
 
 - [aqua Official Website | aqua](https://aquaproj.github.io/)
 - [aqua CLI Version Manager 入門](https://zenn.dev/shunsuke_suzuki/books/aqua-handbook)
+- GitHub - [aquaproj/aqua: Declarative CLI Version manager written in Go. Support Lazy Install, Registry, and continuous update with Renovate. CLI version is switched seamlessly](https://github.com/aquaproj/aqua)
 
 ## 感想
 
