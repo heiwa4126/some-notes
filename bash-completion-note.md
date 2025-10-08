@@ -4,6 +4,12 @@ bash の補完って、bash の機能ではないんだってさ。全然知ら�
 
 [scop/bash-completion: Programmable completion functions for bash](https://github.com/scop/bash-completion?tab=readme-ov-file#readme)
 
+scop/bash-completion は「手動で作った補完関数のコレクション」
+
+## ホストにインストールされている bash-completion のバージョンを知る方法
+
+パッケージマネージャ経由か、スクリプトの中から探すかどっちか
+
 ## 手元の Ubuntu で
 
 ```console
@@ -31,9 +37,9 @@ Download-Size: 180 kB
 APT-Manual-Installed: no
 APT-Sources: http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages
 Description: bash シェル用のプログラム可能な補完機能
- bash completion は bash の標準的な補完処理をたった数ストロークで複雑なコマ
- ンドラインを実現できるように拡張します。このプロジェクトは最も普及した Linux/UNIX
- コマンド用のプログラム可能な補完ルーチンを作り出し、システム管理 者やプログラマが日常作業で必要なタイピングの量を削減するために始められました。
+ bash completion は bash の標準的な補完処理をたった数ストロークで複雑なコマンドラインを実現できるように拡張します。
+ このプロジェクトは最も普及した Linux/UNIX コマンド用のプログラム可能な補完ルーチンを作り出し、
+ システム管理者やプログラマが日常作業で必要なタイピングの量を削減するために始められました。
 ```
 
 ## per-user の completion
@@ -70,3 +76,5 @@ cosign completion bash > "$BCPATH/cosign"
 ```
 
 これを時々実行する感じ。
+
+lazy load の
