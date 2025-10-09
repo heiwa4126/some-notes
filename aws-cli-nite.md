@@ -14,6 +14,7 @@
 - [ログインとリスト](#ログインとリスト)
 - [AMI のイメージ ID から名前を得る](#ami-のイメージ-id-から名前を得る)
 - [AWS CloudShell から VPC に接続](#aws-cloudshell-から-vpc-に接続)
+- [aws cli の bash completion](#aws-cli-の-bash-completion)
 
 ## aws cli の最新バージョンは?
 
@@ -183,3 +184,28 @@ VPN とか無しにできるらしい。
 - [CloudShell の VPC 環境を作成する - AWS CloudShell](https://docs.aws.amazon.com/ja_jp/cloudshell/latest/userguide/creating-vpc-environment.html)
 
 最大 2 個まで作れて、削除は画面上部の\[アクション ▼\]からできるらしい。
+
+## aws cli の bash completion
+
+基本は
+
+```bash
+complete -C "$(which aws_completer)" aws
+```
+
+を実行するか ~/.bashrc や ~/.profile に書く。
+
+lazy loading したければ
+
+```bash
+# ~/.bashrc に追記
+_aws_lazy_complete() {
+    complete -C "$(which aws_completer)" aws
+    unset -f _aws_lazy_complete
+}
+complete -F _aws_lazy_complete aws
+```
+
+が定石らしい。
+
+根性のあるひとは which のかわりに `command -v` を使って効率よくしよう!

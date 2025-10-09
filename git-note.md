@@ -37,6 +37,7 @@
 - [Windows 標準の ssh-agent を使って GitHub に ssh 接続する](#windows-標準の-ssh-agent-を使って-github-に-ssh-接続する)
 - [remote から dev を持ってきてローカルの dev ブランチとして使う](#remote-から-dev-を持ってきてローカルの-dev-ブランチとして使う)
 - [汎用 .gitattributes](#汎用-gitattributes)
+- [git l\<TAB\> と打っても ls-files が補完されない](#git-ltab-と打っても-ls-files-が補完されない)
 
 ## 特定のファイルを最後の commit 時に戻す
 
@@ -691,3 +692,46 @@ git fetch origin dev:dev
 ```
 
 これだけあればだいたい大丈夫(2024-08)
+
+## git l\<TAB\> と打っても ls-files が補完されない
+
+のはバグじゃないそうです。
+
+[raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash](https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash)
+中に、隠し環境変数が書いてある。
+
+```bash
+# You can set the following environment variables to influence the behavior of
+# the completion routines:
+#
+#   GIT_COMPLETION_CHECKOUT_NO_GUESS
+#
+#     When set to "1", do not include "DWIM" suggestions in git-checkout
+#     and git-switch completion (e.g., completing "foo" when "origin/foo"
+#     exists).
+#
+#   GIT_COMPLETION_SHOW_ALL_COMMANDS
+#
+#     When set to "1" suggest all commands, including plumbing commands
+#     which are hidden by default (e.g. "cat-file" on "git ca<TAB>").
+#
+#   GIT_COMPLETION_SHOW_ALL
+#
+#     When set to "1" suggest all options, including options which are
+#     typically hidden (e.g. '--allow-empty' for 'git commit').
+#
+#   GIT_COMPLETION_IGNORE_CASE
+#
+#     When set, uses for-each-ref '--ignore-case' to find refs that match
+#     case insensitively, even on systems with case sensitive file systems
+#     (e.g., completing tag name "FOO" on "git checkout f<TAB>").
+```
+
+| 環境変数                               | 説明                                                                                                                                                                                                          | デフォルト      | 推奨設定                                   |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ------------------------------------------ |
+| **`GIT_COMPLETION_CHECKOUT_NO_GUESS`** | `git checkout` や `git switch` のときに、「ブランチ名を省略形で補完する」DWIM (“Do What I Mean”) 補完を**無効化**します。<br>例: `git checkout foo` と入力したときに `origin/foo` を自動候補に出さない。      | 0(無効)         | 普通は設定不要。誤補完が気になる人だけ     |
+| **`GIT_COMPLETION_SHOW_ALL_COMMANDS`** | 通常は「porcelain(ユーザー向け)」コマンドのみ補完しますが、これを `1` にすると「plumbing(内部用)」も含め**すべてのコマンドを補完**します。<br>例: `git l<TAB>` で `ls-files`, `ls-tree`, `ls-remote` が出る。 | 0(無効)         | 🔹 おすすめ:(開発者・上級ユーザー向け)     |
+| **`GIT_COMPLETION_SHOW_ALL`**          | 通常非表示の「レアなオプション」もすべて補完対象にします。<br>例: `git commit --a<TAB>` で `--allow-empty` などが出る。                                                                                       | 0(無効)         | 🔸 必要に応じて (オプション探索したいとき) |
+| **`GIT_COMPLETION_IGNORE_CASE`**       | タグ名やブランチ名の補完を**大文字小文字を区別せず**に行うようにします。                                                                                                                                      | unset(区別あり) | 🌟 おすすめ:(macOS や Windows で特に便利)  |
+
+参考: [git switch/checkout のタブ補完をローカルブランチだけにする方法 #Git - Qiita](https://qiita.com/_umakuch/items/fe9b64da9e4040333939)
