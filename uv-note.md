@@ -326,3 +326,20 @@ wheel-exclude = [
 ## `uv run --isolated --no-project --with`
 
 パッケージをビルドしたあとの検証に超便利。
+
+## ミグレーション
+
+これがいい感じ
+
+- [migrate-to-uv](https://mkniewallner.github.io/migrate-to-uv/)
+- [mkniewallner/migrate-to-uv: Migrate a project from Poetry/Pipenv/pip-tools/pip to uv package manager](https://github.com/mkniewallner/migrate-to-uv)
+
+例:
+
+```bash
+uvx migrate-to-uv \
+  --requirements-file requirements.txt \
+  --dev-requirements-file requirements-dev.txt
+```
+
+参考: [パッケージマネージャー uv への移行ガイド](https://zenn.dev/diia/scraps/03b4d18a92f298)

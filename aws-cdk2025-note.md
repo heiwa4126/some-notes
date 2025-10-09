@@ -13,3 +13,48 @@ VSCode+GitHub Copilot で MCP も使うよ。
 - [AWS CDK with Python Step by Step | Udemy](https://www.udemy.com/course/aws-cdk-with-python-step-by-step/?couponCode=MT251008JP)
 - [GitHub - amirkarimi/cdk-tutor: A CLI application that teaches AWS CDK in Python to software engineers](https://github.com/amirkarimi/cdk-tutor)
 - [AWS Workshops](<https://www.workshops.aws/?tag=AWS%20Cloud%20Development%20Kit%20(AWS%20CDK)>)
+
+## uv 化
+
+```bash
+mkdir aws-cdk-p1
+cd !$
+cdk init app --language python
+rm -rf .venv
+uvx migrate-to-uv --requirements-file requirements.txt --dev-requirements-file requirements-dev.txt
+uv python pin 3.12
+uv sync
+```
+
+で、
+
+```bash
+uv run cdk ls
+```
+
+> warning: No `requires-python` value found in the workspace. Defaulting to `>=3.12`.
+
+的なことを言われるときには
+
+```toml
+[project]
+requires-python = ">=3.12"
+```
+
+みたいのを追加。
+
+あと `uv run` 毎回書くのはめんどいので `. .venv/bin/activate` か `poe`でラップ
+
+poe の `poe_tasks.toml`例
+
+```yaml
+envfile = ".env"
+
+[executor]
+type = "uv"
+
+[tasks]
+ls = "cdk ls"
+```
+
+で `poe ls` 的に
