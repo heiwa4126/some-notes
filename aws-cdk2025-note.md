@@ -57,4 +57,56 @@ type = "uv"
 ls = "cdk ls"
 ```
 
-で `poe ls` 的に
+で `poe ls` 的に。
+
+## cdk-mcp-server
+
+[mcp/src/cdk-mcp-server/README.md at main · awslabs/mcp · GitHub](https://github.com/awslabs/mcp/blob/main/src/cdk-mcp-server/README.md)
+
+いろいろ試してみましたが、per-user で `uv tool` で入れといて `uvx` で起動、
+にしました。
+
+インストール:
+
+```sh
+uv tool install awslabs.cdk-mcp-server@latest
+```
+
+で、ワークスペースの `.vscode/mcp.json`
+
+```json
+{
+  "servers": {
+    "cdk-mcp-server": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["awslabs.cdk-mcp-server"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      }
+    }
+  }
+}
+```
+
+- `@latest` はつけないでおく。
+  そのかわり`uv tool update --all`は頻繁に実行
+- `"cwd": "${workspaceFolder}"` は要るかわからん
+
+動作確認は、chat ウインドウにある「ツールの構成...」アイコンクリック。
+
+※ アイコンは「ドライバとスパナのぶっちがい」。送信 ▷ アイコンの左側あたり
+
+リストに"MCP サーバー: cdk-mcp-server" と表示される。展開すると tools が出てくる。
+ホバーすると description がポップアップする。
+
+あとは 「GetAwsSolutionsConstructPattern を使ってこの S3 バケットが十分にセキュアか考察して」のようなことを GitHub Copilot の chat で聞く。
+
+(最初はツール名を明示して使うほうがいいみたい。ツール名は
+[README.md](https://github.com/awslabs/mcp/blob/main/src/cdk-mcp-server/README.md)
+参照)
+
+> GetAwsSolutionsConstructPattern を実行しました - cdk-mcp-server(MCP サーバー)
+
+のように表示されたら cdk-mcp-server は動いている。
