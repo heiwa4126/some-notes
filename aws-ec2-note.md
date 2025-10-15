@@ -106,3 +106,7 @@ IPv6 やってみるかな...
 - [AWS EC2 を IPv6 で構築する方法 #AWS - Qiita](https://qiita.com/koji4104/items/4a2b4554ae01061334e4)
 - [AWS EC2 を IPv6 のみ(パブリック IPv4 アドレスなし)で作って ssh 接続する #AWS - Qiita](https://qiita.com/ran/items/7ae62f7dba2bba49e330)
 - [Egress-Only インターネットゲートウェイを使用してアウトバウンド IPv6 トラフィックを有効にする - Amazon Virtual Private Cloud](https://docs.aws.amazon.com/ja_jp/vpc/latest/userguide/egress-only-internet-gateway.html)
+
+## いろいろやってみたけど NATGW ないと EC2 が不便すぎる
+
+WebAPI を立てるなら Docker にしたほうがコストが下がると思う。
