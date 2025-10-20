@@ -6,6 +6,7 @@
 - [add \& commit を取り消す](#add--commit-を取り消す)
 - [リモートレポジトリの dev を fetch して dev ブランチを作る](#リモートレポジトリの-dev-を-fetch-して-dev-ブランチを作る)
 - [git の設定をリスト](#git-の設定をリスト)
+- [ローカルレポジトリの tag を全部消す](#ローカルレポジトリの-tag-を全部消す)
 - [gitignore のデフォルト](#gitignore-のデフォルト)
 - [symlink の扱い](#symlink-の扱い)
 - [master to main](#master-to-main)
@@ -100,6 +101,12 @@ git config --local -l # local設定だけ
 の 5 通り。
 
 git デフォルト値も出るといいなあ(好きな設定をつっこめるので、ちょっとむずかしい)
+
+## ローカルレポジトリの tag を全部消す
+
+```sh
+git tag -d $(git tag)
+```
 
 ## gitignore のデフォルト
 
