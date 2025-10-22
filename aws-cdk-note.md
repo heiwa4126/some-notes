@@ -28,6 +28,7 @@
     - [2. SSM パラメータを利用する](#2-ssm-パラメータを利用する)
     - [3. AWS Resource Access Manager(RAM)を利用](#3-aws-resource-access-managerramを利用)
 - [CDK CLI のバージョンと、CDK ライブラリのバージョンが連動しなくなる (cdk acknowledge 32775)](#cdk-cli-のバージョンとcdk-ライブラリのバージョンが連動しなくなる-cdk-acknowledge-32775)
+- [AWS CDK with Python で uv を始める](#aws-cdk-with-python-で-uv-を始める)
 
 ## インストール
 
@@ -551,3 +552,35 @@ pip install aws-cdk-lib>=2,<3
 ```
 
 と同様のことを package.json とか pyproject.toml とか requirements.txt に書いとけ、ということです。
+
+## AWS CDK with Python で uv を始める
+
+```sh
+mkdir xx1 && cd !$
+cdk init app --language python --generate-only
+uv init --python 3.12
+uv add -r requirements.txt
+uv add --dev -r requirements-dev.txt
+rm requirements.txt requirements-dev.txt
+. .venv/bin/activate
+# テスト
+cdk list
+```
+
+このあと
+
+```sh
+uv lock -U && uv sync
+git init
+git commit -am 'initial commit'
+```
+
+など
+
+参考:
+
+- [Building Python Lambda Functions in CDK with uv · Max Friedrich](https://maxfriedrich.de/2025/01/02/uv-lambda-cdk/)
+- [Using uv with the Python AWS CDK | Manny Savage](https://savage.cx/kbase/2024-12-01-uv-aws-cdk/)
+- [AWS CDK の Lambda Python が uv をサポートしました | DevelopersIO](https://dev.classmethod.jp/articles/aws-cdk-lambda-python-supported-uv/)
+
+Lambda 用の aws-lambda-python-alpha も uv つかえるらしい。
