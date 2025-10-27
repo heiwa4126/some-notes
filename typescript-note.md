@@ -23,6 +23,8 @@ import する場合、EMS では拡張子が必要です。で TypeScript では
 - Bun や Vite では `import { greet } from "./index` でうまいこと処理します。
 - Deno では `import { greet } from "./index.ts` でないとダメです(厳格)。
 
+「ts-node や tsx で動くのに、EMS にトランスパイルして動かそうとすると死ぬ」ってやつの理由がこれ。
+
 その他リンク:
 
 - [TS 5.7 の --rewriteRelativeImportExtensions オプションを使う前に読む記事](https://zenn.dev/uhyo/articles/rewrite-relative-import-extensions-read-before-use)
