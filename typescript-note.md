@@ -72,6 +72,15 @@ const hash2: { [key: string]: string } = {
 
 でも Map()のほうが効率がいいと思う。
 
+```ts
+// Map<string, string> を即値として作成
+const fruitMap: Map<string, string> = new Map([
+  ['apple', 'りんご'],
+  ['banana', 'ばなな'],
+  ['orange', 'オレンジ']
+]);
+```
+
 ## Jupyter で Node.js で TypeScript
 
 ちょっとだけ小さいコードの確認用に Jupyter が使えるといいなあ、と思った。
