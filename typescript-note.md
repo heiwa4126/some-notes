@@ -1,5 +1,6 @@
 # TypeScript のメモ
 
+- [超重要: import の拡張子](#超重要-import-の拡張子)
 - [Partial\<T\>](#partialt)
 - [interface と type](#interface-と-type)
 - [hash にタイプ](#hash-にタイプ)
@@ -11,6 +12,25 @@
 - [class で private](#class-で-private)
 - [TypeScript にのみ存在する標準型](#typescript-にのみ存在する標準型)
   - [参考リンク](#参考リンク)
+
+## 超重要: import の拡張子
+
+import する場合、EMS では拡張子が必要です。で TypeScript では:
+
+- TypeScript では `import "./index.js"` と書く必要があって、実際には `index.ts` が読まれます。**これは TypeScript(tsc) の仕様です。バグじゃありません**。
+  - [TypeScript: TSConfig Reference - Docs on every TSConfig option](https://www.typescriptlang.org/tsconfig/#allowImportingTsExtensions)
+  - [TypeScript: Documentation - Modules - Reference](https://www.typescriptlang.org/docs/handbook/modules/reference.html)
+- Bun や Vite では `import { greet } from "./index` でうまいこと処理します。
+- Deno では `import { greet } from "./index.ts` でないとダメです(厳格)。
+
+その他リンク:
+
+- [TS 5.7 の --rewriteRelativeImportExtensions オプションを使う前に読む記事](https://zenn.dev/uhyo/articles/rewrite-relative-import-extensions-read-before-use)
+- [TypeScript Cannot find module を解決する.js 拡張子戦略](https://openillumi.com/ts-esm-fix-module-not-found-js/)
+
+tsc を使う限り、いまのところ(v5.9) `import "./index.js"` を `import "./index"` と書く方法はない。
+
+`allowImportingTsExtensions` とか `rewriteRelativeImportExtensions` を使ってもムダ。
 
 ## Partial&lt;T&gt;
 
