@@ -108,7 +108,7 @@ outDir オプションは TypeScript のコンパイラが生成する JavaScrip
 TypeScript コンパイラ tsc は、生成される JavaScript ファイルのインデントスタイルを直接制御するオプションを提供していません。
 tsc はデフォルトでスペースを使用してインデントします。
 
-後処理で Prettier 使うとかしかない。
+後処理で Prettier 使うとかバンドらで minify しかない。
 
 ## Promise.reject()に対応する async function の戻り値は?
 
