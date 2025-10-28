@@ -298,6 +298,11 @@ uv で作成した python のプロジェクトを vscode で開いたとき、
 
 ...これグローバル設定でもいいんじゃね?
 
+## vscode で.venv 以下をデフォルトでデフォルトインタプリタにする
+
+検索するといろいろ出てくるけど、どれも廃止されてる。
+手動選択がいちばんいいみたい
+
 ## uv がビルドバックエンドとして使えるようになった
 
 [Build backend | uv](https://docs.astral.sh/uv/concepts/build-backend/)
