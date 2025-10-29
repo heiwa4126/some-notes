@@ -68,3 +68,27 @@ reg.exe delete "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a
 
 - [How to show Taskbar labels on Windows 11 23H2 \- Pureinfotech](https://pureinfotech.com/show-taskbar-labels-never-combine-windows-11/)
 - [Windows 11 のタスクバーに待望の「結合しない」モードが導入へ。有効にする方法はこちら | ソフトアンテナ](https://softantenna.com/blog/windows-11-taskbar-neber-combine-mode/)
+
+## Shift+Space
+
+Windows11 の日本語 MS-IME で、IME オンオフトグルを Shift+SPACE に割り当てる手順
+
+1. **IME 設定画面を開く**
+
+   - タスクバー右下の **IME アイコン（「あ」または「A」）を右クリック**
+   - メニューから **「設定」** を選択
+   - または、**Windows キー →「ime」と入力 →「日本語 IME 設定」** を選択
+
+2. **キーとタッチのカスタマイズを有効化**
+
+   - 「Microsoft IME」設定画面で **キーとタッチのカスタマイズ** をクリック
+   - 「キーの割り当て」を **オン** にします
+
+3. **Shift + Space に機能を割り当てる**
+
+   - 割り当て可能なキー一覧に **Shift + Space**があります
+   - その右側のドロップダウンから **IME-オン/オフ**を選択
+     - これで「Shift + Space」を押すたびに IME がオン/オフ切り替わります
+
+4. **設定を保存して閉じる**
+   - 設定画面を閉じるとすぐに反映されます
