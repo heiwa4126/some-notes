@@ -78,3 +78,32 @@ cosign completion bash > "$BCPATH/cosign"
 これを時々実行する感じ。
 
 lazy load の
+
+## AWS CLI の補完
+
+AWS 公式はこれ
+[Configuring command completion in the AWS CLI - AWS Command Line Interface](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-completion.html#cli-command-completion-configure)
+
+```sh
+complete -C '/usr/local/bin/aws_completer' aws
+```
+
+以下は lazy load 版。~/.bashrc などに書く
+最初の 1 回は tab を 2 回たたかないとダメかも
+
+```sh
+# AWS CLI completion (lazy load)
+
+_aws_completion() {
+  unset -f _aws_completion
+  if command -v aws_completer >/dev/null 2>&1; then
+    complete -C aws_completer aws
+  fi
+  # Called again to trigger completion after registration
+  COMP_WORDS=${COMP_WORDS[@]}
+  COMP_CWORD=$COMP_CWORD
+  aws_completer
+}
+
+complete -F _aws_completion aws
+```

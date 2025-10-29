@@ -20,6 +20,7 @@
 - [WSL で ls するとディレクトリの色が暗くて見づらいのを直す](#wsl-で-ls-するとディレクトリの色が暗くて見づらいのを直す)
 - [WSL から CSV を Excel で開く](#wsl-から-csv-を-excel-で開く)
 - [wslu](#wslu)
+  - [wslview でこんな風になるときの対処法](#wslviewでこんな風になるときの対処法)
 - [Windows のパスが追加されるのがウザい](#windows-のパスが追加されるのがウザい)
 
 ## WSL2 で IPv6 がつながらない
@@ -369,6 +370,26 @@ export BROWSER=wslview
 ```
 
 [WSL ユーザー必見!知らないと損する wslu コマンドガイド【パス変換・GUI 連携 etc】 - uepon 日々の備忘録](https://uepon.hatenadiary.com/entry/2025/06/23/225250)
+
+### wslview でこんな風になるときの対処法
+
+```console
+$ wslview http://www.example.com/
+
+grep: /proc/sys/fs/binfmt_misc/WSLInterop: No such file or directory
+WSL Interopability is disabled. Please enable it before using WSL.
+grep: /proc/sys/fs/binfmt_misc/WSLInterop: No such file or directory
+[error] WSL Interoperability is disabled. Please enable it before using WSL.
+```
+
+[WSL で Windows の EXE が実行できなくなったときの対処 - ぶていのログでぶログ](https://tech.buty4649.net/entry/2023/04/21/170643)
+
+```sh
+echo ":WSLInterop:M::MZ::/init:PF" | sudo tee /usr/lib/binfmt.d/WSLInterop.conf
+sudo systemctl restart systemd-binfmt
+# 確認
+ ls -lah /proc/sys/fs/binfmt_misc/WSLInterop
+```
 
 ## Windows のパスが追加されるのがウザい
 
