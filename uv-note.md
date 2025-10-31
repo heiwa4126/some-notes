@@ -348,3 +348,43 @@ uvx migrate-to-uv \
 ```
 
 参考: [パッケージマネージャー uv への移行ガイド](https://zenn.dev/diia/scraps/03b4d18a92f298)
+
+## uv tool でインストールされたパッケージはどの Python で実行される?
+
+どうも微妙にわからん。なんかパッケージ書いて試してみる
+
+なんだか
+
+```sh
+uv tool install --python 3.10 awslabs.aws-diagram-mcp-server`
+```
+
+みたいに指定できるらしい。
+
+`--python`オプションを指定しないときは、デフォルトの Python で、
+デフォルトの Python は
+
+```sh
+cd
+uv run python --verson
+```
+
+でわかる。
+
+では`uv init`で作った`.python-version`がある場所で`uv tool install`するとどうなる?
+
+## uvx で実行するパッケージはどの Python で実行される?
+
+これも微妙にわからん。
+
+ただ uvx のオプションで指定はできるので、
+Python 3.10 が推奨の awslab の MCP とかでは
+(典拠:[mcp/DEVELOPER_GUIDE.md at main · awslabs/mcp · GitHub](https://github.com/awslabs/mcp/blob/main/DEVELOPER_GUIDE.md))
+
+```sh
+uv python install 3.10
+uvx --python 3.10 awslabs.aws-diagram-mcp-server@latest
+# stdio MCP なので Ctrl+Cで停止
+```
+
+みたいにすればいいし、mcp.json でも args で書ける(はず)
