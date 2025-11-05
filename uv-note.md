@@ -373,6 +373,25 @@ uv run python --verson
 
 では`uv init`で作った`.python-version`がある場所で`uv tool install`するとどうなる?
 
+実は隠し設定っぽいものがあるらしい。
+
+- [Configuration files](https://docs.astral.sh/uv/concepts/configuration-files/)
+- [Python versions | uv](https://docs.astral.sh/uv/concepts/python-versions/)
+- [how to change default python version in uv? · Issue #8135 · astral-sh/uv](https://github.com/astral-sh/uv/issues/8135)
+- [On Windows systems, how to manually configure user-level configuration files(uv.toml) · Issue #14553 · astral-sh/uv](https://github.com/astral-sh/uv/issues/14553)
+
+以上より
+XDG だと ~/.config/uv/config.toml
+
+```toml
+[python]
+default = "3.12"
+```
+
+.python-version がない場合はグローバル設定としてこれが使われるみたい。
+
+どちらもなければ 最新安定版(現在は 3.12)を自動的に選択・インストールするらしい
+
 ## uvx で実行するパッケージはどの Python で実行される?
 
 これも微妙にわからん。
