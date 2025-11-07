@@ -70,3 +70,49 @@ UI はあるのだが
 
 `q login && q chat`
 こっちはわりと死なない感じ。
+
+## GitHub Copilot の .github/copilot-instructions.md に相当するもの
+
+「パッケージレベルルール」というらしい。
+
+ワークスペースルートに `.amazonq/rules` フォルダを作り、
+
+```text
+.amazonq/rules/
+├── coding-style.md       # 「どう書くか」
+├── project-guidelines.md # 「どう進めるか」
+└── architecture.md       # 「どう設計するか」
+```
+
+みたいな感じで書く。
+
+**ルールファイルの名前は自由で、人間がわかればいい。**
+
+`.amazonq/rules/` ディレクトリ内のすべてのファイルが自動的にコンテキストに追加される。
+
+- [IDE の Amazon Q Developer チャットへのワークスペースコンテキストの追加 - Amazon Q Developer](https://docs.aws.amazon.com/ja_jp/amazonq/latest/qdeveloper-ug/workspace-context.html)
+- [Amazon Q Developer チャットで使用するプロンプトをライブラリに保存する - Amazon Q Developer](https://docs.aws.amazon.com/ja_jp/amazonq/latest/qdeveloper-ug/context-prompt-library.html)
+- [コンテキスト項目のピン留め - Amazon Q Developer](https://docs.aws.amazon.com/ja_jp/amazonq/latest/qdeveloper-ug/context-pinning.html)
+- [Amazon Q Developer チャットで使用するプロジェクトルールの作成 - Amazon Q Developer](https://docs.aws.amazon.com/ja_jp/amazonq/latest/qdeveloper-ug/context-project-rules.html)
+
+## パッケージレベルの mcp.json はある?
+
+Amazon Q にはないらしい。
+
+[bug: Workspace specific mcp config (.amazonq/mcp.json) is not loaded · Issue #2478 · aws/amazon-q-developer-cli](https://github.com/aws/amazon-q-developer-cli/issues/2478)
+
+Q CLI ではバグありらしいが、VSCode 拡張では `.amazonq/mcp.json` でいけるらしい。試す。→ 試した。いける。
+
+どっちかというと
+`~/.aws/amazonq/mcp.json`
+に書くグローバル設定の方がレガシーで、
+`~/.aws/amazonq/default.json`
+に
+
+```json
+{
+  "useLegacyMcpJson": true
+}
+```
+
+と書かないといけないらしい。(このへん曖昧)

@@ -407,3 +407,61 @@ uvx --python 3.10 awslabs.aws-diagram-mcp-server@latest
 ```
 
 みたいにすればいいし、mcp.json でも args で書ける(はず)
+
+## uv add で pypi 以外から
+
+例:
+
+```sh
+pip install -i https://test.pypi.org/simple/ whoruv
+# 上と等価
+uv add --index-url https://test.pypi.org/simple/ whoruv
+```
+
+whoruv の情報:
+
+- [heiwa4126/whoruv: Display Python version, executable path, and script path when run with uv](https://github.com/heiwa4126/whoruv)
+- [whoruv · PyPI](https://pypi.org/project/whoruv/)
+- [whoruv · TestPyPI](https://test.pypi.org/project/whoruv/)
+
+実際にやると
+
+```console
+$ uv add --index-url https://test.pypi.org/simple/ whoruv
+
+warning: Indexes specified via `--index-url` will not be persisted to the `pyproject.toml` file; use `--default-index` instead.
+
+Resolved 2 packages in 1.00s
+Prepared 1 package in 178ms
+Installed 1 package in 4ms
+ + whoruv==0.0.3a2
+```
+
+みたいな警告が出る。
+
+```toml
+[tool.uv.index]
+url = "https://test.pypi.org/simple"
+```
+
+だと全部 testPypI になってしまう。
+
+- uv にはまだ個別パッケージごとにインデックスを指定する構文はない
+- uv.lock にも記録されない
+- dependency-groups でも解決できない
+- ただし直 URL は指定できるので TestPyPI へ行って URL を取得すれば `uv sync`で行ける
+
+```sh
+uv add https://test-files.pythonhosted.org/packages/4e/0e/1caef2b6329e5bca770150f5cc62b60cd6de5e476b68c80031c6265018ce/whoruv-0.0.3a2-py3-none-any.whl
+```
+
+というノリで行ける。pyproject.toml に
+
+```toml
+[tool.uv.sources]
+whoruv = { url = "https://test-files.pythonhosted.org/packages/4e/0e/1caef2b6329e5bca770150f5cc62b60cd6de5e476b68c80031c6265018ce/whoruv-0.0.3a2-py3-none-any.whl" }
+```
+
+が追加される。
+
+GitHub 上のやつとかもたぶん同じノリで (注: GitHub Packages には Python は無いので release とかで)
