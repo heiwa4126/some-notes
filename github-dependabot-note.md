@@ -12,10 +12,10 @@ Code security and analysis のところに設定項目がいろいろあるけ�
 ```yaml
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: 'npm' # See documentation for possible values
+    directory: '/' # Location of package manifests
     schedule:
-      interval: "monthly"
+      interval: 'monthly'
     open-pull-requests-limit: 1
 ```
 
@@ -135,3 +135,33 @@ GitHub の Dependabot アラートは、リポジトリのセキュリティ設�
 
 組織の所有者やエンタープライズでも組織内のすべてのリポジトリに対して依存関係グラフと Dependabot アラートを一度に有効にすることができるので、
 設定しといてほしいです。
+
+## dependabot で uv の困ったエラー
+
+こんなやつ
+
+```console
+2025-11-11T08:15:46.5500758Z Dependabot encountered '1' error(s) during execution, please check the logs for more details.
+2025-11-11T08:15:46.5501654Z +-------------------------------------------------------------------------------------------+
+2025-11-11T08:15:46.5502494Z |                               Dependencies failed to update                               |
+2025-11-11T08:15:46.5503235Z +------------+-------------------------------------+----------------------------------------+
+2025-11-11T08:15:46.5504232Z | Dependency | Error Type                          | Error Details                          |
+2025-11-11T08:15:46.5505445Z +------------+-------------------------------------+----------------------------------------+
+2025-11-11T08:15:46.5506375Z | uv-build   | dependency_file_content_not_changed | {                                      |
+2025-11-11T08:15:46.5507183Z |            |                                     |   "message": "Content did not change!" |
+2025-11-11T08:15:46.5507826Z |            |                                     | }                                      |
+2025-11-11T08:15:46.5508373Z +------------+-------------------------------------+----------------------------------------+
+2025-11-11T08:15:46.6840426Z Failure running container 7438124e092f7c076da986d5f317be30467e4e472b2952c1dd961a4ee3cf22ce: Error: Command failed with exit code 1: /bin/sh -c $DEPENDABOT_HOME/dependabot-updater/bin/run update_files
+2025-11-11T08:15:47.1175662Z Cleaned up container 7438124e092f7c076da986d5f317be30467e4e472b2952c1dd961a4ee3cf22ce
+2025-11-11T08:15:47.1289277Z   proxy | 2025/11/11 08:15:47 24/47 calls cached (51%)
+2025-11-11T08:15:47.1301891Z   proxy | 2025/11/11 08:15:47 Posting metrics to remote API endpoint
+2025-11-11T08:15:47.9026799Z ##[error]Dependabot encountered an error performing the update
+```
+
+Dependabot は「更新が必要だと判断したが、ファイルが変わらない」場合に失敗扱いにしてしまう。
+
+issues はこのへん。問題は認識されているけど修正されていないらしい。
+
+- [Error updating build-system dependencies with uv · Issue #12124 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/12124)
+- [uv errors the Dependabot job when attempted version updates are incompatible · Issue #12087 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/12087)
+- [Dependabot not updating python packages via \`uv\` · Issue #13014 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/13014)
