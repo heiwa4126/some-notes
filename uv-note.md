@@ -465,3 +465,52 @@ whoruv = { url = "https://test-files.pythonhosted.org/packages/4e/0e/1caef2b6329
 が追加される。
 
 GitHub 上のやつとかもたぶん同じノリで (注: GitHub Packages には Python は無いので release とかで)
+
+## uv と zScaler
+
+`uv add` は問題ないんだけど `uv python install` 周りだけ SSL エラーになる。
+
+こんな感じ
+
+```console
+$ uv python install 3.13
+
+error: Failed to install cpython-3.13.9-linux-x86_64-gnu
+  Caused by: Request failed after 3 retries
+  Caused by: Failed to download https://github.com/astral-sh/python-build-standalone/releases/download/20251028/cpython-3.13.9%2B20251028-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz
+  Caused by: error sending request for url (https://github.com/astral-sh/python-build-standalone/releases/download/20251028/cpython-3.13.9%2B20251028-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz)
+  Caused by: client error (Connect)
+  Caused by: invalid peer certificate: UnknownIssuer
+```
+
+環境変数 SSL_CERT_FILE で回避できる。
+
+```console
+$ SSL_CERT_FILE=/etc/ssl/certs/ZscalerRootCertificate.pem uv python install 3.13
+
+cpython-3.13.9-linux-x86_64-gnu (download) ------------------------------ 6.81 MiB/32.64 MiB
+Installed Python 3.13.9 in 30.68s
+ + cpython-3.13.9-linux-x86_64-gnu (python3.13)
+```
+
+SSL_CERT_FILE は OpenSSL やそれを利用する多くのアプリケーション(Python、Rust、curl など)で使われる標準的な環境変数なので
+
+```sh
+cat /etc/ssl/certs/ca-certificates.crt zscaler.pem > ~/custom-ca-bundle.pem
+export SSL_CERT_FILE=~/custom-ca-bundle.pem
+```
+
+のようなノリで使うのがいいらしい。もしくは `update-ca-certificates` で zScaler.pem を追加するとか。
+
+[TLS certificates | uv](https://docs.astral.sh/uv/concepts/authentication/certificates/)
+によると
+**uv はデフォルトで Mozilla の webpki-roots(Rust の webpki-roots crate) を使っていて、OS の CA ストアを参照していない。**
+
+zscaler の CERT が OS ストアに入ってるなら
+`export UV_NATIVE_TLS=true` か `--native-tls` がよさそう。
+
+Windows の pwsh だと
+
+```powershell
+[Environment]::SetEnvironmentVariable("UV_NATIVE_TLS", "true", "User")
+```

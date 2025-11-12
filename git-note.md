@@ -40,6 +40,7 @@
 - [remote から dev を持ってきてローカルの dev ブランチとして使う](#remote-から-dev-を持ってきてローカルの-dev-ブランチとして使う)
 - [汎用 .gitattributes](#汎用-gitattributes)
 - [git l\<TAB\> と打っても ls-files が補完されない](#git-ltab-と打っても-ls-files-が補完されない)
+- [`git push --tags` は `git push` を兼ねるか?](#git-push---tags-は-git-push-を兼ねるか)
 
 ## 特定のファイルを最後の commit 時に戻す
 
@@ -753,3 +754,16 @@ git fetch origin dev:dev
 | **`GIT_COMPLETION_IGNORE_CASE`**       | タグ名やブランチ名の補完を**大文字小文字を区別せず**に行うようにします。                                                                                                                                      | unset(区別あり) | 🌟 おすすめ:(macOS や Windows で特に便利)  |
 
 参考: [git switch/checkout のタブ補完をローカルブランチだけにする方法 #Git - Qiita](https://qiita.com/_umakuch/items/fe9b64da9e4040333939)
+
+## `git push --tags` は `git push` を兼ねるか?
+
+兼ねません。
+
+```sh
+git push && git push --tags
+# または
+git push --follow-tags
+## git v1.8.3 (2013-05-23) から使える
+```
+
+で。
