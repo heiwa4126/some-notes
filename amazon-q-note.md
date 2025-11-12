@@ -116,3 +116,8 @@ Q CLI ではバグありらしいが、VSCode 拡張では `.amazonq/mcp.json` �
 ```
 
 と書かないといけないらしい。(このへん曖昧)
+
+## IDE と Q CLI で使える chat コマンドがかなり違う
+
+- CLI - [チャットコマンド - Amazon Q Developer](https://docs.aws.amazon.com/ja_jp/amazonq/latest/qdeveloper-ug/command-line-chat-commands.html)
+- IDE - [Chatting with Amazon Q Developer about code - Amazon Q Developer](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/q-in-IDE-chat.html)
