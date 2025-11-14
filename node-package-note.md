@@ -16,9 +16,9 @@ npm i crypto-js  # 標準のcryptではなくわざわざ外部のを使う
 [crypto-js - npm](https://www.npmjs.com/package/crypto-js)
 
 ```javascript
-const SHA256 = require("crypto-js/sha256");
+const SHA256 = require('crypto-js/sha256');
 
-const msg = "hello world";
+const msg = 'hello world';
 
 console.log(msg);
 console.log(SHA256(msg).toString());
@@ -130,3 +130,16 @@ corepack prepare yarn@stable --activate
 - スコープがついてたら確実に「パッケージ」
 - require()で読めたら「モジュール」
 - それ以外はあいまい
+
+## npmjs の ts アイコン
+
+npmjs の各パッケージのページで、パッケージ名の横に 青い ts アイコンが自動でつきますが、これはどういう基準でつくものなのか?
+
+[javascript - TypeScript icon missing on packages on npm website - Stack Overflow](https://stackoverflow.com/questions/72423301/typescript-icon-missing-on-packages-on-npm-website)
+
+公式な答えはないけど
+
+- package.json ファイルに types(または typings)フィールドが存在し、その値が有効な.d.ts ファイルのパスを指している場合
+- また、main や module などのエントリポイントが.d.ts ファイルを含むディレクトリを指している場合
+
+らしいです。

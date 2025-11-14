@@ -42,6 +42,8 @@
   - [provenance を無効化したい場合](#provenance-を無効化したい場合)
   - [今後の展望](#今後の展望)
 - [npm publish の tag について](#npm-publish-の-tag-について)
+- [`pnpm up -L` が npm には無い](#pnpm-up--l-が-npm-には無い)
+- [`npm version`を使って、次のパッチバージョンの rc 版にする](#npm-versionを使って次のパッチバージョンの-rc-版にする)
 - [XDG Base Directory に従った npm の per-user の設定](#xdg-base-directory-に従った-npm-の-per-user-の設定)
 
 ## 多分最初にこれよんだほうがよさそう
@@ -823,6 +825,25 @@ Sigstore 署名も付く。
 - 有名な tag には stable, beta, dev, canary と latest(--tag を指定しない場合) がある
 - 公式に予約されているのは latest だけ
 - latest タグは「最新安定版」とみなされるらしい
+
+## `pnpm up -L` が npm には無い
+
+個別にやる
+
+```sh
+# 例
+npm install vitest@latest
+```
+
+ポリシーの違い。
+
+## `npm version`を使って、次のパッチバージョンの rc 版にする
+
+```sh
+npm version prerelease --preid=rc
+```
+
+preid をつけないと数字だけになる。
 
 ## XDG Base Directory に従った npm の per-user の設定
 

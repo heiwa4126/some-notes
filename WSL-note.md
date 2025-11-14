@@ -20,8 +20,9 @@
 - [WSL で ls するとディレクトリの色が暗くて見づらいのを直す](#wsl-で-ls-するとディレクトリの色が暗くて見づらいのを直す)
 - [WSL から CSV を Excel で開く](#wsl-から-csv-を-excel-で開く)
 - [wslu](#wslu)
-  - [wslview でこんな風になるときの対処法](#wslviewでこんな風になるときの対処法)
+  - [wslview でこんな風になるときの対処法](#wslview-でこんな風になるときの対処法)
 - [Windows のパスが追加されるのがウザい](#windows-のパスが追加されるのがウザい)
+- [WSL では /etc/cron.daily などが実行されないので](#wsl-では-etccrondaily-などが実行されないので)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -405,3 +406,15 @@ appendWindowsPath = false
 ```
 
 という設定を追加・編集したのち、Windows 側で `wsl --shutdown`
+
+## WSL では /etc/cron.daily などが実行されないので
+
+手動でやるなら
+
+```sh
+sudo run-parts /etc/cron.daily
+sudo run-parts /etc/cron.weekly
+sudo run-parts /etc/cron.monthly
+```
+
+`--test`オプションで dry-run
