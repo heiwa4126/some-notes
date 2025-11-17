@@ -84,3 +84,10 @@ keyserver hkp://keyserver.ubuntu.com
 # または keyserver hkp://keys.gnupg.net
 # または keyserver hkp://pgp.mit.edu
 ```
+
+## GPG で単一ファイルの公開鍵暗号&複号
+
+```sh
+gpg --encrypt --recipient alice@example.com secret.pdf
+gpg --decrypt secret.pdf.gpg > secret.pdf
+```
