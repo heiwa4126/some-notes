@@ -29,7 +29,7 @@
   - [モジュールを探しに行くパスをリストするなら](#モジュールを探しに行くパスをリストするなら)
   - [まとめ](#まとめ)
 - [npx foo で実行されるのは何?](#npx-foo-で実行されるのは何)
-- [npm link を ローカルの node_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
+- [npm link を ローカルの node\_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
   - [注意](#注意)
 - [`npm i`, `npm ci`, `npm up` の違い](#npm-i-npm-ci-npm-up-の違い)
 - [npm-version のサブコマンドでわかりにくいやつ](#npm-version-のサブコマンドでわかりにくいやつ)
@@ -45,6 +45,7 @@
 - [`pnpm up -L` が npm には無い](#pnpm-up--l-が-npm-には無い)
 - [`npm version`を使って、次のパッチバージョンの rc 版にする](#npm-versionを使って次のパッチバージョンの-rc-版にする)
 - [XDG Base Directory に従った npm の per-user の設定](#xdg-base-directory-に従った-npm-の-per-user-の設定)
+- [パッケージ中でバージョンを表示したいとき](#パッケージ中でバージョンを表示したいとき)
 
 ## 多分最初にこれよんだほうがよさそう
 
@@ -865,4 +866,13 @@ cache=${HOME}/.cache/npm
 ```sh
 export NPM_CONFIG_USERCONFIG="$HOME/.config/npm/npmrc"
 port PATH="$HOME/.local/share/npm/bin:$PATH"
+```
+
+## パッケージ中でバージョンを表示したいとき
+
+npm パッケージは `package.json` を含んでいるので、直接これを参照できる。
+
+```js
+import pkg from './package.json' with { type: 'json' };
+console.log(pkg.version);
 ```

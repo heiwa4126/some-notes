@@ -1,5 +1,8 @@
 # Python のパッケージングについてのメモ
 
+**この記事超古い**。
+GitHub から Direct Publishing しましょう。Sigstore で証跡も付くよ。
+
 [Python Packaging User Guide](https://packaging.python.org/en/latest/)
 ([日本語版](https://packaging.python.org/ja/latest/))を読め。
 

@@ -514,3 +514,21 @@ Windows の pwsh だと
 ```powershell
 [Environment]::SetEnvironmentVariable("UV_NATIVE_TLS", "true", "User")
 ```
+
+## uvx で TestPyPI 上のパッケージを動かすのはめんどくさい
+
+例:
+
+```sh
+uvx --index-url https://test.pypi.org/simple --extra-index-url https://pypi.org/simple --index-strategy unsafe-best-match bumpuv@0.0.5a2 --version
+```
+
+[bumpuv 0.0.5a2 · TestPyPI](https://test.pypi.org/project/bumpuv/0.0.5a2/)
+
+バージョンを表示するだけなんだけど
+
+- そもそも uv が prerelease を禁止してるので `--index-strategy unsafe-best-match` をつけないと死ぬ
+- 同じ理由で `bumpuv@latest` が使えないので、バージョンを明示(`@0.0.5a2`)する
+- `--extra-index-url` をつけないと 全部 TestPyPI を見に行くので、TestPyPI 上に依存パッケージが無いと死ぬ(上記の場合は gitpython)
+
+`pipx` なら楽かな、と思ったけどそうでもない。

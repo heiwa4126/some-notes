@@ -87,7 +87,12 @@ keyserver hkp://keyserver.ubuntu.com
 
 ## GPG で単一ファイルの公開鍵暗号&複号
 
+例:
+
 ```sh
 gpg --encrypt --recipient alice@example.com secret.pdf
 gpg --decrypt secret.pdf.gpg > secret.pdf
 ```
+
+--encrypt, --recipient, --decrypt はショートオプションがあって、
+-e, -r, -d

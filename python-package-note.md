@@ -101,3 +101,46 @@ project.urls.Homepage に書けばいいと思うでしょ? (または Home-page
 なんかバグっぽい。
 
 同様に `Author:` も変。 project.authors[] に name= だけのを作る。
+
+## パッケージ中でバージョンを表示したいとき
+
+`__init__.py` で
+
+```python
+from importlib.metadata import version
+__version__ = version(__package__ or __name__)  # Python 3.9+ only
+```
+
+`__package__ or __name__` のところはパッケージ名を直接書いてもいい。
+
+### この手法の欠点
+
+1. **パッケージがインストールされていないと動作しない** - 開発中に `pip install -e .` (editable install) していない場合、`PackageNotFoundError` が発生する
+2. **パフォーマンス** - `importlib.metadata.version()` は毎回メタデータを読み込むため、頻繁に呼ばれるとオーバーヘッドになる
+3. **Python 3.8 以前では非対応** - `importlib.metadata` は Python 3.8+ (3.8 では backport の `importlib_metadata` が必要)
+
+代替手段として、pyproject.toml のバージョンを直接 `__version__ = "1.0.0"` のように書く方法もあるが、二重管理になる。
+
+### バージョンを一元管理する方法
+
+**Hatch** を使う場合は、`pyproject.toml` に:
+
+```toml
+[tool.hatch.version]
+path = "src/mypackage/__init__.py"
+```
+
+と書いておけば、`__init__.py` の `__version__ = "1.0.0"` を単一の情報源(SSOT)として使える。
+
+**uv** では現時点(2024 年)で同等の機能は提供されていない。uv はビルドバックエンドではなくパッケージマネージャーなので、ビルド時のバージョン取得は setuptools や Hatch などのビルドバックエンドに依存する。
+
+uv 環境でも Hatch をビルドバックエンドとして使えば同じことができる:
+
+```toml
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/mypackage/__init__.py"
+```
