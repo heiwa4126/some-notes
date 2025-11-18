@@ -12,6 +12,7 @@
 - [SHA pinning enforcement](#sha-pinning-enforcement)
 - [VSCode の GitHub Actions 拡張](#vscode-の-github-actions-拡張)
 - [env: と environment:](#env-と-environment)
+- [workflows を特定のユーザや特定のブランチに制限する](#workflows-を特定のユーザや特定のブランチに制限する)
 
 ## On: が難しい
 
@@ -245,3 +246,33 @@ env: は環境変数の定義。使える場所は workflow 全体, job, step。
 
 - [env - GitHub Actions のワークフロー構文 - GitHub Docs](https://docs.github.com/ja/actions/reference/workflows-and-actions/workflow-syntax#env)
 - [変数に情報を格納する - GitHub Docs](https://docs.github.com/ja/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables)
+
+## workflows を特定のユーザや特定のブランチに制限する
+
+workflow 中に
+
+```yaml
+jobs:
+  security-check:
+    name: Security check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check repository owner
+        if: github.repository_owner != github.actor
+        run: |
+          echo "Error: Only repository owner can trigger this workflow"
+          exit 1
+```
+
+だけだと、うっかりプルリクでマージされる可能性があるので
+これと併用して environment を使うといい。
+
+(だから Direct publishing でも environment 指定できるようになっているんだな)。
+
+Environment Protection の設定手順:
+
+1. Settings → Environments → 環境作るまたは既存環境選ぶ
+2. "Required reviewers" にオーナーを追加
+3. "Deployment branches" を main のみに制限
+
+4. は状況に応じて設定

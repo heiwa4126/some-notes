@@ -15,6 +15,7 @@
 - [コンソールからペーストするときインデントさせない](#コンソールからペーストするときインデントさせない)
 - [git 以下でバックアップファイルができない](#git-以下でバックアップファイルができない)
 - [melpa の GPG キー](#melpa-の-gpg-キー)
+- [dired モードで d の取り消し](#dired-モードで-d-の取り消し)
 
 ## sort & uniq
 
@@ -67,46 +68,46 @@ M-x delete-duplicate-lines
 元: [GNU Emacs Manual - Help](https://flex.phys.tohoku.ac.jp/texi/emacs-jp/emacs-jp_26.html)
 
 ```text
-以下はヘルプコマンドの要約です．
+以下はヘルプコマンドの要約です.
 
 C-h a string RET
-指定したstringがコマンド名に含まれているコマンドのリストを表示します(command-apropos)．
+指定したstringがコマンド名に含まれているコマンドのリストを表示します(command-apropos).
 
 C-h b
-現在のキーの割り当て表を表示します．現在の主モードにローカルな割り当てを 最初に，そのあとにすべてのグローバル割り当てを表示します (describe-bindings)．
+現在のキーの割り当て表を表示します.現在の主モードにローカルな割り当てを 最初に,そのあとにすべてのグローバル割り当てを表示します (describe-bindings).
 
 C-h c key
-keyが実行するコマンド名を表示します(describe-key-briefly)． cは`character'のcです．keyについてさらに情報を得るには C-h kを使います．
+keyが実行するコマンド名を表示します(describe-key-briefly). cは`character'のcです.keyについてさらに情報を得るには C-h kを使います.
 
 C-h f function RET
-functionの名前のLisp関数の説明を表示します (describe-function)． コマンドはLisp関数なのでコマンド名も使えます．
+functionの名前のLisp関数の説明を表示します (describe-function). コマンドはLisp関数なのでコマンド名も使えます.
 
 C-h i
-Infoというドキュメントファイルを読むプログラムを実行します(info)． Emacsの完全なマニュアルがInfoでオンラインで見られます．
+Infoというドキュメントファイルを読むプログラムを実行します(info). Emacsの完全なマニュアルがInfoでオンラインで見られます.
 
 C-h k key
-keyが実行するコマンド名とそのドキュメントを表示します (describe-key)．
+keyが実行するコマンド名とそのドキュメントを表示します (describe-key).
 
 C-h l
-入力した最後の100文字を表示します(view-lossage)．
+入力した最後の100文字を表示します(view-lossage).
 
 C-h m
-現在の主モードについてのドキュメントを表示します(describe-mode)．
+現在の主モードについてのドキュメントを表示します(describe-mode).
 
 C-h n
-Emacsの変更についてのドキュメントを，最も最近のものから表示します (view-emacs-news)．
+Emacsの変更についてのドキュメントを,最も最近のものから表示します (view-emacs-news).
 
 C-h s
-現在の構文表の内容とその意味を表示します(describe-syntax)．
+現在の構文表の内容とその意味を表示します(describe-syntax).
 
 C-h t
-Emacsチュートリアルを表示します(help-with-tutorial)．
+Emacsチュートリアルを表示します(help-with-tutorial).
 
 C-h v var RET
-Lisp変数varのドキュメントを表示します(describe-variable)．
+Lisp変数varのドキュメントを表示します(describe-variable).
 
 C-h w command RET
-指定したコマンドを実行するキーを表示します(where-is)．
+指定したコマンドを実行するキーを表示します(where-is).
 ```
 
 ## LSP モード
@@ -238,3 +239,8 @@ gpg --keyserver keyserver.ubuntu.com --homedir ~/.emacs.d/elpa/gnupg --receive-k
 ```
 
 もうキーサーバーが keyserver.ubuntu.com ぐらいしかまともに動いてない感じ。
+
+## dired モードで d の取り消し
+
+`u` で選択中の 1 個取り消し。
+`U` で全部取り消し。

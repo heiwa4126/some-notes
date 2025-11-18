@@ -27,6 +27,7 @@
 - [マルチカーソルで折り返しを無視する](#マルチカーソルで折り返しを無視する)
 - [VSCode の Jupyter 拡張で Pylance が reportMissingImports と言ってくるとき](#vscode-の-jupyter-拡張で-pylance-が-reportmissingimports-と言ってくるとき)
   - [ひとつの解決案](#ひとつの解決案)
+- [VSCode でプロファイルの複製で WSL の拡張が複製されない](#vscode-でプロファイルの複製で-wsl-の拡張が複製されない)
 
 ## Remote Development
 
@@ -398,3 +399,17 @@ VSCode のワークスペースの設定(`.vscode/settings.json`)で
 こうしておくのはいい考えかも。POSIX ならこれで。
 
 Windows だとどうかな...
+
+## VSCode でプロファイルの複製で WSL の拡張が複製されない
+
+バグ。 [Cannot create new profile via copying default one · Issue #198518 · microsoft/vscode](https://github.com/microsoft/vscode/issues/198518)
+いまのところリモートごとに設定する必要がある。
+
+ので、
+
+1. もとになるプロファイルを Windows で開く。「新しいウインドウ」
+2. 複製プロファイルを作る
+3. WSL 側でプロファイル指定して code を開く `code --profile hoge .`
+4. 拡張機能から「WSL へインストール」を押しまくる
+
+が楽(楽じゃないけど)。
