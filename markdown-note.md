@@ -48,3 +48,25 @@ Reference-style links(参照スタイルリンク)
 GFM 対応プラグイン(`markdown-it-py[plugins]`)
 
 [Markdown-It-Py Plugin Extensions — mdit-py-plugins](https://mdit-py-plugins.readthedocs.io/en/latest/)
+
+## HTML にレンダリングしたときの CSS
+
+markdown を HTML にレンダリングしただけだとスタイルが皆無なので、ちょっとカッコ悪い。
+
+GFM スタイルを CDN から読むことが出来る。
+
+- [github-markdown-css - Libraries - cdnjs - The #1 free and open source CDN built to make life easier for developers](https://cdnjs.com/libraries/github-markdown-css)
+- [github-markdown-css CDN by jsDelivr - A free, fast, and reliable Open Source CDN](https://cdn.jsdelivr.net/npm/github-markdown-css/)
+- ソース - [sindresorhus/github-markdown-css: The minimal amount of CSS to replicate the GitHub Markdown style](https://github.com/sindresorhus/github-markdown-css?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library)
+
+例としてこんな感じで。body のクラスに注意(適応するブロックに class 書く)。
+5.8.1 のところは上記 CDN のリンクで確認して適宜変更。latest みたいのは無い。
+
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css">
+<style>
+	body {padding: 1.5em;}
+</style>
+</head>
+<body class="markdown-body">
+```
