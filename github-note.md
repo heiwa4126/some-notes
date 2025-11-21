@@ -1,22 +1,25 @@
 # github.com のメモ
 
-- [github.com のメモ](#githubcom-のメモ)
-  - [GitHub のチュートリアル](#github-のチュートリアル)
-  - [80,443/tcp しかつながらない proxy を超えて、github に ssh でつなぐ](#80443tcp-しかつながらない-proxy-を超えてgithub-に-ssh-でつなぐ)
-  - [Firefox の markdown 拡張](#firefox-の-markdown-拡張)
-  - [release の練習](#release-の練習)
-    - [タグをつける](#タグをつける)
-    - [GitHub 側](#github-側)
-  - [GitHub から ssh 公開鍵をインポート](#github-から-ssh-公開鍵をインポート)
-  - [GitHub から特定のディレクトリだけダウンロード](#github-から特定のディレクトリだけダウンロード)
-  - [GitHub の Branch protection rule とは](#github-の-branch-protection-rule-とは)
-  - [PAT(Personal Access Tokens) について](#patpersonal-access-tokens-について)
-  - [GitHub のレポジトリで、ブランチ名を master にしているのを main に変えるには?](#github-のレポジトリでブランチ名を-master-にしているのを-main-に変えるには)
-  - [GitHub のプライベートレポジトリから トークンを使って git clone する手順を教えてください](#github-のプライベートレポジトリから-トークンを使って-git-clone-する手順を教えてください)
-  - [GitHub CLI を使ってシークレットスキャン(secret scanning)を構築する](#github-cli-を使ってシークレットスキャンsecret-scanningを構築する)
-  - [GitHub のプラン](#github-のプラン)
-  - [自分が invite された Organizations が、GitHub のどのプランか知るには?](#自分が-invite-された-organizations-がgithub-のどのプランか知るには)
-  - [今月使ったリソースを確認する](#今月使ったリソースを確認する)
+- [GitHub のチュートリアル](#github-のチュートリアル)
+- [80,443/tcp しかつながらない proxy を超えて、github に ssh でつなぐ](#80443tcp-しかつながらない-proxy-を超えてgithub-に-ssh-でつなぐ)
+- [Firefox の markdown 拡張](#firefox-の-markdown-拡張)
+- [release の練習](#release-の練習)
+  - [タグをつける](#タグをつける)
+  - [GitHub 側](#github-側)
+- [GitHub から ssh 公開鍵をインポート](#github-から-ssh-公開鍵をインポート)
+- [GitHub から特定のディレクトリだけダウンロード](#github-から特定のディレクトリだけダウンロード)
+- [GitHub の Branch protection rule とは](#github-の-branch-protection-rule-とは)
+- [PAT(Personal Access Tokens) について](#patpersonal-access-tokens-について)
+- [GitHub のレポジトリで、ブランチ名を master にしているのを main に変えるには?](#github-のレポジトリでブランチ名を-master-にしているのを-main-に変えるには)
+- [GitHub のプライベートレポジトリから トークンを使って git clone する手順を教えてください](#github-のプライベートレポジトリから-トークンを使って-git-clone-する手順を教えてください)
+- [GitHub CLI を使ってシークレットスキャン(secret scanning)を構築する](#github-cli-を使ってシークレットスキャンsecret-scanningを構築する)
+- [GitHub のプラン](#github-のプラン)
+- [自分が invite された Organizations が、GitHub のどのプランか知るには?](#自分が-invite-された-organizations-がgithub-のどのプランか知るには)
+- [今月使ったリソースを確認する](#今月使ったリソースを確認する)
+- ["Your main branch isn't protected"](#your-main-branch-isnt-protected)
+  - [**チーム開発なら追加でおすすめ**](#チーム開発なら追加でおすすめ)
+  - [**その他のルールの意味(ざっくり)**](#その他のルールの意味ざっくり)
+  - [GitHub でブランチ保護設定画面に行く方法](#github-でブランチ保護設定画面に行く方法)
 
 ## GitHub のチュートリアル
 
@@ -284,3 +287,57 @@ Organization の設定にアクセスできる管理者権限が必要。(終了
 ## 今月使ったリソースを確認する
 
 [Usage this month - Billing](https://github.com/settings/billing/summary#usage)
+
+## "Your main branch isn't protected"
+
+プロジェクトルートにこれが出てたら
+
+1. **「Protect this branch」**をクリック。
+2. GitHub の「Branch protection rules」画面で設定
+
+参考: [保護されたブランチの管理 - GitHub ドキュメント](https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches)
+
+ルールたくさんあるので解説(2025-11 現在)
+
+**最低限おすすめのルール**
+
+- ✅ **Restrict deletions**  
+  → ブランチ削除を防ぐ
+- ✅ **Block force pushes**  
+  → 強制プッシュを防ぐ
+
+個人開発なら、最低限これだけでも OK
+
+### **チーム開発なら追加でおすすめ**
+
+- ✅ **Require a pull request before merging**  
+  → 直接 push 禁止、必ず PR 経由でマージ
+- ✅ **Require status checks to pass**  
+  → CI テストが通らないとマージできない
+- ✅ **Require code scanning results**(セキュリティ重視なら)  
+  → コードスキャン結果必須
+
+### **その他のルールの意味(ざっくり)**
+
+- **Restrict creations / updates** → 特定ユーザー以外がブランチ作成・更新できない
+- **Require linear history** → マージコミット禁止(履歴を直線に保つ)
+- **Require deployments to succeed** → デプロイ成功後のみマージ可能
+- **Require signed commits** → 署名必須(GPG,SSH,S/MIME どれでも)
+- **Require code quality results / Copilot code review** → 静的解析や AI レビューを必須にする
+
+### GitHub でブランチ保護設定画面に行く方法
+
+うっかり"Your main branch isn't protected"表示を消してしまった場合
+
+1. 対象リポジトリのトップページを開く
+2. 上部メニューから 「Settings」 をクリック
+3. 左側メニューで 「Branches」 を選択
+4. 「Branch protection rules」 セクションにある 「Add rule」 をクリック
+5. 「Branch name pattern」に main と入力し、必要な保護オプションを設定
+
+もしメインブランチが master なら 5.では master と入力してね
+
+で、画面変わって Target branches で デフォルトブランチを追加。
+Enforcement status 　を Active に変更。
+
+これでやっと完成
