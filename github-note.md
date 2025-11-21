@@ -338,6 +338,6 @@ Organization の設定にアクセスできる管理者権限が必要。(終了
 もしメインブランチが master なら 5.では master と入力してね
 
 で、画面変わって Target branches で デフォルトブランチを追加。
-Enforcement status 　を Active に変更。
+Enforcement status を Active に変更。
 
-これでやっと完成
+これでやっと完成。
