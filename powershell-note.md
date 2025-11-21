@@ -48,10 +48,13 @@ Powershell が絡むとすべてがめんどくさくなる
 
 ## いつもの呪文
 
-管理者権限で
+「このシステムではスクリプトの実行が無効になっているため」が出たら
 
 ```powershell
+# 管理者権限で
 Set-ExecutionPolicy RemoteSigned
+# カレントユーザだけだったら
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 参考にならない: [about_Execution_Policies - PowerShell | Microsoft Docs](https://docs.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_execution_policies) - これ見たら普通の人は即死。

@@ -1,15 +1,25 @@
 # bun メモ
 
 - [bun の概要](#bun-の概要)
+- [Windows でインストールに失敗するとき](#windows-でインストールに失敗するとき)
 - [bun でこれだけはやっといたほうがいい設定](#bun-でこれだけはやっといたほうがいい設定)
 - [`npm ls` の equivalent](#npm-ls-の-equivalent)
 - [bun には publish がない](#bun-には-publish-がない)
-- [bun のグローバルキャッシュをクリアする](#bunのグローバルキャッシュをクリアする)
+- [bun のグローバルキャッシュをクリアする](#bun-のグローバルキャッシュをクリアする)
 
 ## bun の概要
 
 - [Bun — A fast all-in-one JavaScript runtime](https://bun.sh/)
 - [oven-sh/bun: Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one](https://github.com/oven-sh/bun)
+
+## Windows でインストールに失敗するとき
+
+```pwsh
+# これを (https://bun.com/ に載ってるやつ)
+powershell -c "irm bun.sh/install.ps1 | iex"
+# こうする
+powershell -NoProfile -c "irm https://bun.sh/install.ps1 | iex"
+```
 
 ## bun でこれだけはやっといたほうがいい設定
 

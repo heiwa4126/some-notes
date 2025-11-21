@@ -21,7 +21,8 @@
 
 ### プロジェクト固有
 
-- GitHub Copilot - `.github/copilot-instructions.md`
+- GitHub Copilot - `.github/copilot-instructions.md` [Use custom instructions in VS Code](https://code.visualstudio.com/docs/copilot/customization/custom-instructions)
+  - AGENTS.md も読むらしい [Use an AGENTS\.md file](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_use-an-agentsmd-file)
 - Amazon Q - `.amazonq/rules/**/*.md` 全部の md がマージされるらしい
 - Claude Code - `.claude/agents/*.md`
   - リポジトリのルートの AGENTS.md は読まないらしい。これ参照: [How to use AGENTS.md in Claude Code](https://aiengineerguide.com/blog/how-to-use-agents-md-in-claude-code/)

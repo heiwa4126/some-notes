@@ -107,7 +107,8 @@ VSCode+GitHub Copilot で使う場合
 
 `.github` フォルダに Markdown ファイルを配置することで、プロジェクト固有のカスタムエージェントを作成できます。
 
-[Custom agents in VS Code](https://code.visualstudio.com/docs/copilot/customization/custom-agents)
+- [Custom agents in VS Code](https://code.visualstudio.com/docs/copilot/customization/custom-agents)
+- [コードレビュー用のカスタムエージェントを作成する](https://code.visualstudio.com/docs/copilot/getting-started#_create-a-custom-agent-for-code-reviews)
 
 ## Plan モードについて
 

@@ -39,7 +39,7 @@ aqua の Standard Registry は
 <https://github.com/aquaproj/aqua-registry/blob/main/aqua.yaml>
 には aqua 本体や関連ツールの定義だけ。
 
-[Registry とは｜ aqua CLI Version Manager 入門](https://zenn.dev/shunsuke_suzuki/books/aqua-handbook/viewer/registry)
+[Registry とは| aqua CLI Version Manager 入門](https://zenn.dev/shunsuke_suzuki/books/aqua-handbook/viewer/registry)
 
 で pkgs/ 以下が本番で、定義(YAML2 個)書いてプルリクする仕掛け。
 
@@ -93,7 +93,7 @@ mkdir working_dir && cd !$
 aqua init # カレントディレクトリに aqua.yaml ができる
 aqua g -i cli/cli # 最新版の gh (GitHub CLI) をパッケージ名で指定
 aqua g -i # TUIでインタラクティブにパッケージ指定.
-## Tab キーで選択（チェック）を追加
+## Tab キーで選択(チェック)を追加
 ## Shift+Tab で選択を解除
 ## Enter キーで確定
 ## 終了はCtrl+C(fzfだから)
@@ -187,7 +187,7 @@ aqua rm -m pl --all
 ## チェックサム
 
 - [Search packages | aqua](https://aquaproj.github.io/docs/tutorial/search-packages)
-- [Checksum の検証｜ aqua CLI Version Manager 入門](https://zenn.dev/shunsuke_suzuki/books/aqua-handbook/viewer/checksum-verification)
+- [Checksum の検証| aqua CLI Version Manager 入門](https://zenn.dev/shunsuke_suzuki/books/aqua-handbook/viewer/checksum-verification)
 
 チェックサムの扱いがややこしい。
 
@@ -215,7 +215,7 @@ checksum:
 
 ## Mend Renovate
 
-- [Renovate による自動 update ｜ aqua CLI Version Manager 入門](https://zenn.dev/shunsuke_suzuki/books/aqua-handbook/viewer/renovate)
+- [Renovate による自動 update | aqua CLI Version Manager 入門](https://zenn.dev/shunsuke_suzuki/books/aqua-handbook/viewer/renovate)
 - [Update packages by Renovate | aqua](https://aquaproj.github.io/docs/guides/renovate/)
 
 [renovate](https://github.com/renovatebot/renovate)
@@ -232,3 +232,15 @@ Renovate は評判だけ読むと dependabot よりははるかにいいらし�
 ## aqua が検索で探しにくい問題
 
 aquaproj か aqua cli で探すといいらしい。
+
+## Windows で `aqua i` でインストールされる場所
+
+`%LOCALAPPDATA%\aquaproj-aqua\bin`
+
+パスに追記する。
+
+あとグローバル設定に移動するには
+
+```pwsh
+cd (Split-Path $Env:AQUA_GLOBAL_CONFIG)
+```
