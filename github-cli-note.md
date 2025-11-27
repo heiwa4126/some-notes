@@ -28,6 +28,10 @@ gh run view [run-id] --log-failed
 
 # 最後に失敗したワークフローのrun-idを取得
 RUN_ID=$(gh run list --status failure --limit 1 --json databaseId --jq '.[0].databaseId')
+
+# 上↑の発展: publish.ymlで失敗した最後のrun-idを取得
+RUN_ID=$(gh run list --workflow=publish.yml --status failure --limit 1 --json databaseId --jq '.[0].databaseId')
+echo "Failed publish.yml run ID: $RUN_ID"
 ```
 
 ## gh の bash completion
@@ -39,3 +43,5 @@ gh completion -s bash
 この出力を.bashrc に追記するとか、遅延ロードするとか
 
 ## `gh auth login` は expire しないらしい
+
+そのうえ keyring のない Linux では平文で token が保存されるらしい。
