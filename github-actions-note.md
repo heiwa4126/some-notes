@@ -4,7 +4,7 @@
 
 - [On: が難しい](#on-が難しい)
 - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
-- [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
+- [GITHUB\_REPO\_NAME 環境変数が空](#github_repo_name-環境変数が空)
 - [レポジトリ名の取得](#レポジトリ名の取得)
 - [GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?](#github-actions-の-workflow-runs-に過去の実行結果が残っていますがこれは消すべきですか-一定期間で消えますか)
 - [特定のワークフローファイルだけ実行できるようにする方法はある?](#特定のワークフローファイルだけ実行できるようにする方法はある)
@@ -13,6 +13,9 @@
 - [VSCode の GitHub Actions 拡張](#vscode-の-github-actions-拡張)
 - [env: と environment:](#env-と-environment)
 - [workflows を特定のユーザや特定のブランチに制限する](#workflows-を特定のユーザや特定のブランチに制限する)
+- [GitHub Actions をデバッグするときに便利な GitHub CLI コマンド](#github-actions-をデバッグするときに便利な-github-cli-コマンド)
+- [gh の bash completion](#gh-の-bash-completion)
+- [`gh auth login` は expire しないらしい](#gh-auth-login-は-expire-しないらしい)
 
 ## On: が難しい
 
