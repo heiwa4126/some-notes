@@ -378,12 +378,30 @@ Free プラン以外は 1 リクエスト $0.04 で買える。
 
 **重要**: 「インラインコード補完」は Ctrl+I や Ctrl+Alt+I を押して出てくるやつではないやつ。
 
-### 追加プレミアムリクエストリクエストを買う
+### 追加プレミアムリクエストを買う
 
 1 リクエスト $0.04 なんだけど、それは
 <https://github.com/settings/billing/budgets>
 で、`SKU: All Premium Request SKUs` の列の 3 点メニューから edit 押して
-billing の数字をふやせばいいらしい。
+billing の数字をふやせばいいらしい。単位は$1 らしい。
+
+### そもそも 「1 リクエスト」とは何?
+
+[What is a request?](https://docs.github.com/en/copilot/concepts/billing/copilot-requests#what-is-a-request)
+
+| 機能                     | 1 リクエストの定義                        | モデル倍率適用 | 備考                                  |
+| ------------------------ | ----------------------------------------- | -------------- | ------------------------------------- |
+| **Copilot Chat**         | チャットで 1 回プロンプト送信             | はい           | Claude Sonnet 4.5 → 1x、Haiku → 0.33x |
+| **Copilot CLI**          | CLI で 1 回コマンド実行                   | はい           | `copilot suggest` など                |
+| **Copilot Code Review**  | Pull Request レビュー 1 回                | はい           | 1 レビュー = 1 リクエスト             |
+| **Copilot Coding Agent** | セッション開始 + ステアリングコメントごと | はい           | 例: 修正提案、PR 作成                 |
+| **Spark**                | アプリ生成の 1 プロンプト                 | はい           | 1 回で 4 リクエスト消費               |
+| **Copilot Spaces**       | ナレッジベース検索 1 回                   | はい           |                                       |
+| **コード補完（IDE）**    | インライン補完                            | **いいえ**     | モデル選択しても消費しない            |
+
+"Spark" は新機能らしい。
+[About GitHub Spark - GitHub Enterprise Cloud Docs](https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/spark)
+要は Vibe Coding らしい。
 
 ## 機能 (2025-11)
 
