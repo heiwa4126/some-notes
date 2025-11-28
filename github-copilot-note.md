@@ -189,7 +189,7 @@ Copilot は複数の情報源(コード、エディタ、ターミナルなど)�
 - **`#file`**  
   → 特定のファイルを参照するよう指示します。  
   例: `#file:gameReducer.js #file:gameInit.js how are these files related?`  
-  → 「gameReducer.js と gameInit.js はどう関連していますか？」
+  → 「gameReducer.js と gameInit.js はどう関連していますか?」
 
 - **`#selection`**  
   → エディタで選択したコード部分を参照します。  
@@ -204,7 +204,7 @@ Copilot は複数の情報源(コード、エディタ、ターミナルなど)�
 - **`#codebase`**  
   → プロジェクト全体のコードベースを参照します。  
   例: `#codebase where is the user authentication implemented?`  
-  → 「ユーザー認証はどこで実装されていますか？」
+  → 「ユーザー認証はどこで実装されていますか?」
 
 - **`#git`**  
   → Git の履歴や差分を参照します。  
@@ -324,4 +324,91 @@ GitHub の Web コンソールに移動してから
 <https://github.com/settings/copilot/features>
 へ移動
 
-> GitHub Copilot Business is active for your account
+## プレミアムリクエストとは
+
+- [GitHub Copilot premium requests - GitHub Docs](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-premium-requests)
+- [Requests in GitHub Copilot - GitHub Docs](https://docs.github.com/en/copilot/concepts/billing/copilot-requests)
+
+プレミアムリクエストの単位は「回数」らしい。
+
+2025-11 現在のモデルと倍率
+
+- **GPT-4.1** → **0x**(消費なし)
+- **GPT-4o** → **0x**(消費なし)
+- **GPT-5 mini** → **0x**(消費なし)
+- **Grok Code Fast 1** → **0x**(消費なし)
+- **Claude Haiku 4.5** → **0.33x**(軽量モデル、低消費)
+- **Claude Sonnet 4** → **1x**
+- **Claude Sonnet 4.5** → **1x**
+- **Gemini 2.5 Pro** → **1x**
+- **GPT-5** → **1x**
+
+で、
+
+- **0x のモデル**(GPT-4.1、GPT-4o、GPT-5 mini、Grok Code Fast 1)はプレミアムリクエストを消費しません。  
+  → これらを使えば、赤いバーの超過を気にせず利用可能。
+- **1x のモデル**(Claude Sonnet、Gemini Pro、GPT-5)は 1 リクエスト= 1 プレミアムリクエスト消費。
+- **Claude Haiku 4.5**は 0.33x なので、3 回で約 1 リクエスト分。
+
+超過時の挙動は
+
+- プレミアムリクエストが上限を超えると:
+  - **1x や 0.33x モデルは利用不可** (またはベースモデルに強制切り替え)。
+  - **0x モデルは引き続き利用可能** (通常のコード補完や GPT-4o チャットは問題なし)。
+- Overages(従量課金)が有効なら、1x モデルは$0.04/回、0.33x モデルは$0.013/回で課金。
+
+で、課金なしでもプランに応じて月当たりの無料枠がある
+
+> 各 Copilot プランには、ユーザーごとのプレミアムリクエスト割り当てが含まれています。割り当てはプランによって異なります。割り当ては毎月 1 日 00:00:00 UTC にリセットされます。
+
+引用元: [Monthly allowance](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-premium-requests#monthly-allowance) のあたり
+
+具体的なプレミアムリクエスト数は
+[Comparing Copilot plans](https://docs.github.com/en/copilot/get-started/plans#comparing-copilot-plans) の表の "Premium requests" 行参照
+
+抜き書き:
+
+- Copilot Business：300 premium requests / user / month
+- Copilot Enterprise：1,000 premium requests / user / month
+- Copilot Free：50 premium requests / user / month
+
+Free プラン以外は 1 リクエスト $0.04 で買える。
+
+あと、インラインコード補完（IDE での入力補助）ではプレミアムリクエストを消費しない。
+
+**重要**: 「インラインコード補完」は Ctrl+I や Ctrl+Alt+I を押して出てくるやつではないやつ。
+
+### 追加プレミアムリクエストリクエストを買う
+
+1 リクエスト $0.04 なんだけど、それは
+<https://github.com/settings/billing/budgets>
+で、`SKU: All Premium Request SKUs` の列の 3 点メニューから edit 押して
+billing の数字をふやせばいいらしい。
+
+## 機能 (2025-11)
+
+GitHub Copilot Business で
+https://github.com/settings/copilot/features
+の Features 節のかんたんな説明。
+
+| 機能名                            | 説明                                               | 状態     |
+| --------------------------------- | -------------------------------------------------- | -------- |
+| Copilot in VS Code                | VS Code で Copilot を使用可能                      | Enabled  |
+| Copilot in JetBrains IDEs         | JetBrains IDE で Copilot を使用可能                | Enabled  |
+| Copilot in Neovim                 | Neovim で Copilot を使用可能                       | Enabled  |
+| Copilot Chat in VS Code           | VS Code で Copilot Chat を使用可能                 | Enabled  |
+| Copilot Chat in JetBrains IDEs    | JetBrains IDE で Copilot Chat を使用可能           | Enabled  |
+| Copilot Chat in Neovim            | Neovim で Copilot Chat を使用可能                  | Enabled  |
+| Copilot Chat in GitHub.com        | GitHub.com 上で Copilot Chat を使用可能            | Enabled  |
+| Copilot Code Completion           | コード補完機能                                     | Enabled  |
+| Copilot Code Brushes              | コードブラシ機能（コードのリファクタリングや変換） | Enabled  |
+| Copilot Code Review               | コードレビュー支援機能                             | Enabled  |
+| Copilot Autofix Code Scans        | セキュリティスキャン結果の自動修正                 | Enabled  |
+| Copilot Autofix Code Scans (Beta) | セキュリティスキャン結果の自動修正（ベータ版）     | Enabled  |
+| Copilot for Pull Requests         | Pull Request での Copilot 支援                     | Enabled  |
+| Copilot for Docs                  | ドキュメント検索と質問応答                         | Enabled  |
+| Copilot for CLI                   | コマンドラインで Copilot を使用可能                | Enabled  |
+| Copilot Code Brushes (Beta)       | コードブラシ機能（ベータ版）                       | Enabled  |
+| Copilot Code Review (Beta)        | コードレビュー支援機能（ベータ版）                 | Enabled  |
+| Copilot Autofix Code Scans (Beta) | セキュリティスキャン結果の自動修正（ベータ版）     | Enabled  |
+| Privacy: Share anonymized data    | 匿名化された使用データを共有                       | Disabled |
