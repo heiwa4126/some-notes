@@ -317,3 +317,11 @@ VSCode の場合
 グローバルで使うには
 `現在のユーザープロファイルフォルダーにカスタムエージェントプロファイルを作成し、それをすべてのワークスペースで使用します`
 と書かれていて、どこに置けばいいのかよくわからない。
+
+## 自分がどのライセンスの GitHub Copilot をつかっているのかわからなくなったら
+
+GitHub の Web コンソールに移動してから
+<https://github.com/settings/copilot/features>
+へ移動
+
+> GitHub Copilot Business is active for your account

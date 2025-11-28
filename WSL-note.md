@@ -23,6 +23,7 @@
   - [wslview でこんな風になるときの対処法](#wslview-でこんな風になるときの対処法)
 - [Windows のパスが追加されるのがウザい](#windows-のパスが追加されるのがウザい)
 - [WSL では /etc/cron.daily などが実行されないので](#wsl-では-etccrondaily-などが実行されないので)
+- [WSL で keyring](#wsl-で-keyring)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -418,3 +419,12 @@ sudo run-parts /etc/cron.monthly
 ```
 
 `--test`オプションで dry-run
+
+## WSL で keyring
+
+Linux だけで完結するなら [Pass: The Standard Unix Password Manager](https://www.passwordstore.org/) が有名。EC2 で X がないやつでも同じ手順で使えるし、POSIX なら(BusyBox-only はダメらしい)どこでも動く。
+
+```sh
+sudo apt update
+sudo apt install pass gnupg2
+```
