@@ -153,3 +153,11 @@ CDN だと jsDelivr は SRI 付きの`<script>`をコピペできる
 ```
 
 ブラウザの import では SRI を指定する方法がない。
+
+### CDN はいまのところ package.json の exports を真剣にみてくれない
+
+- **unpkg** → `exports`を部分的にしか見ない、`?module`は`module`フィールド依存
+- **jsDelivr** → `exports`に対応（`?module`よりも`exports`を優先）
+- **esm.sh** → `exports`に完全対応
+
+なので CDN 対応にするには `module` フィールドは削除しないほうがいいです(2025-11 現在)
