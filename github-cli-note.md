@@ -32,6 +32,10 @@ RUN_ID=$(gh run list --status failure --limit 1 --json databaseId --jq '.[0].dat
 # 上↑の発展: publish.ymlで失敗した最後のrun-idを取得
 RUN_ID=$(gh run list --workflow=publish.yml --status failure --limit 1 --json databaseId --jq '.[0].databaseId')
 echo "Failed publish.yml run ID: $RUN_ID"
+
+# [run-id]のログを取得
+# リダイレクトしてAIエージェントに食わせると便利
+gh run view [run-id] --log
 ```
 
 ## gh の bash completion
