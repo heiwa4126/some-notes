@@ -29,7 +29,7 @@
   - [モジュールを探しに行くパスをリストするなら](#モジュールを探しに行くパスをリストするなら)
   - [まとめ](#まとめ)
 - [npx foo で実行されるのは何?](#npx-foo-で実行されるのは何)
-- [npm link を ローカルの node\_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
+- [npm link を ローカルの node_modules に入れる方法はありますか?](#npm-link-を-ローカルの-node_modules-に入れる方法はありますか)
   - [注意](#注意)
 - [`npm i`, `npm ci`, `npm up` の違い](#npm-i-npm-ci-npm-up-の違い)
 - [npm-version のサブコマンドでわかりにくいやつ](#npm-version-のサブコマンドでわかりにくいやつ)
@@ -46,6 +46,11 @@
 - [`npm version`を使って、次のパッチバージョンの rc 版にする](#npm-versionを使って次のパッチバージョンの-rc-版にする)
 - [XDG Base Directory に従った npm の per-user の設定](#xdg-base-directory-に従った-npm-の-per-user-の設定)
 - [パッケージ中でバージョンを表示したいとき](#パッケージ中でバージョンを表示したいとき)
+- [bin フィールドに複数あるとき `npx` で実行されるのはどれ?](#bin-フィールドに複数あるとき-npx-で実行されるのはどれ)
+  - [根拠](#根拠)
+  - [実例](#実例)
+  - [補足](#補足)
+- [bin フィールドで指定したスクリプトに shebang は必要?](#bin-フィールドで指定したスクリプトに-shebang-は必要)
 
 ## 多分最初にこれよんだほうがよさそう
 
@@ -780,16 +785,16 @@ Sigstore 署名も付く。
    - 長期トークンの保存・漏洩・ローテーションのリスクを排除。
    - ワークフロー固有の短期認証情報を使用。
 
-3. **自動的な provenance（出所証明）生成**
+3. **自動的な provenance(出所証明)生成**
    - `--provenance` フラグは不要。
    - パッケージにビルド環境の暗号的証明が付与される。
    - ユーザーはパッケージの出所を検証可能。
 
 ### 対応環境
 
-- **npm パッケージ全般**（公開・非公開、スコープ付き・なし）
-- **GitHub Actions（GitHub-hosted runners）**
-- **GitLab CI/CD（gitlab.com shared runners）**
+- **npm パッケージ全般**(公開・非公開、スコープ付き・なし)
+- **GitHub Actions(GitHub-hosted runners)**
+- **GitLab CI/CD(gitlab.com shared runners)**
 
 ※プライベートリポジトリからの公開では provenance は利用不可。
 
@@ -797,8 +802,8 @@ Sigstore 署名も付く。
 
 1. **npmjs.com で Trusted Publisher を設定**
 
-   - GitHub の場合：ユーザー/組織名、リポジトリ名、ワークフローファイル名、環境名を指定。
-   - GitLab の場合：ネームスペース、プロジェクト、CI ファイルパス、環境名を指定。
+   - GitHub の場合:ユーザー/組織名、リポジトリ名、ワークフローファイル名、環境名を指定。
+   - GitLab の場合:ネームスペース、プロジェクト、CI ファイルパス、環境名を指定。
 
 2. **GitHub Actions ワークフローに権限を追加**
 
@@ -876,3 +881,60 @@ npm パッケージは `package.json` を含んでいるので、直接これを
 import pkg from './package.json' with { type: 'json' };
 console.log(pkg.version);
 ```
+
+## bin フィールドに複数あるとき `npx` で実行されるのはどれ?
+
+`package.json` の `bin` に複数のコマンドを定義している場合、
+`npx <パッケージ名>` は次のヒューリスティックで「どれを実行するか」を決めます:
+
+1.  **bin に 1 つだけ** (または複数だが**すべてが同じコマンドの別名**)なら、それを実行。 [\[docs.npmjs.com\]](https://docs.npmjs.com/cli/v9/commands/npx/?v=true)
+2.  **複数あり、その中に `name` と一致するエントリ**(スコープを除いたパッケージ名)があるなら、そのコマンドを実行。 [\[docs.npmjs.com\]](https://docs.npmjs.com/cli/v9/commands/npx/?v=true)
+3.  上記で **一意に決められない場合はエラー**(どの実行ファイルか特定できないため)。別のコマンドを実行したいなら `--package` を明示して `npx -p <pkg> <command>` の形で呼び出します。 [\[docs.npmjs.com\]](https://docs.npmjs.com/cli/v9/commands/npx/?v=true)
+
+### 根拠
+
+公式ドキュメントの原文引用:
+
+- **npx の実行対象決定ルール(npm v9 docs)**
+
+  > “If no `--package` options are provided, then npm will attempt to determine the executable name from the package specifier... **If the package has a single entry in its `bin` field..., then that command will be used. If the package has multiple `bin` entries, and one of them matches the unscoped portion of the `name` field, then that command will be used.** If this does not result in exactly one option..., **then npm exec exits with an error. To run a binary other than the named binary, specify one or more `--package` options** ...”  
+  > [npx | npm Docs(v9)](https://docs.npmjs.com/cli/v9/commands/npx/?v=true) [\[docs.npmjs.com\]](https://docs.npmjs.com/cli/v9/commands/npx/?v=true)
+
+- **bin フィールドの意味(複数可・名前 → 実行ファイルのマッピング)**  
+  npm の `package.json` 解説では `bin` は「**コマンド名 → 実行ファイルへのパス**」の対応を定義するフィールドで、複数定義が可能です。  
+  [package.json | npm Docs(最新 v11)](https://docs.npmjs.com/cli/v11/configuring-npm/package-json) [\[docs.npmjs.com\]](https://docs.npmjs.com/cli/v11/configuring-npm/package-json)
+
+- **GitHub の npx ドキュメント(同旨の説明)**  
+  上記と同じルールが `npm/cli` の公式レポジトリにも記載されています。  
+  [npx.md(npm/cli)](https://github.com/npm/cli/blob/latest/docs/lib/content/commands/npx.md) [\[github.com\]](https://github.com/npm/cli/blob/latest/docs/lib/content/commands/npx.md)
+
+### 実例
+
+たとえば、`package.json` が次のように複数の `bin` を持つとします:
+
+```json
+{
+  "name": "@scope/foo",
+  "bin": {
+    "foo": "./dist/cli-foo.js",
+    "bar": "./dist/cli-bar.js"
+  }
+  // ...
+}
+```
+
+- `npx @scope/foo` → **`foo` が実行**されます(スコープを外した `name` が `foo` と一致)。 [\[docs.npmjs.com\]](https://docs.npmjs.com/cli/v9/commands/npx/?v=true)
+- `npx -p @scope/foo bar` → **`bar` を実行**できます(`--package` を明示)。 [\[docs.npmjs.com\]](https://docs.npmjs.com/cli/v9/commands/npx/?v=true)
+
+もし `bin` が 2 つ以上あり、**どれもパッケージ名と一致しない**場合は、`npx <パッケージ名>` は **エラーで終了**します。その際は `npx -p <pkg> <command>` と **コマンド名を直接指定**してください。 [\[docs.npmjs.com\]](https://docs.npmjs.com/cli/v9/commands/npx/?v=true)
+
+### 補足
+
+- `bin` は**文字列 1 つ**だけを指定した場合、**パッケージ名と同名のコマンド**として公開されます。複数コマンドを公開したいときは**オブジェクトで複数エントリ**を定義します。 [\[docs.npmjs.com\]](https://docs.npmjs.com/cli/v11/configuring-npm/package-json)
+- 「パッケージ名と異なるコマンドを `npx` で直接叩きたい」場合は、`--package`(短縮 `-p`)を使う方法が定番です(例:`npx -p cowsay cowthink`)。 [\[stackoverflow.com\]](https://stackoverflow.com/questions/53571669/is-it-possible-to-run-multiple-binaries-from-a-single-module-via-npx)
+
+## bin フィールドで指定したスクリプトに shebang は必要?
+
+pnpm では不要。npm では必要。
+
+何を言ってるかわから(略)。**結論は「とりあえず書いとけ」**
