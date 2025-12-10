@@ -28,6 +28,7 @@
 - [VSCode の Jupyter 拡張で Pylance が reportMissingImports と言ってくるとき](#vscode-の-jupyter-拡張で-pylance-が-reportmissingimports-と言ってくるとき)
   - [ひとつの解決案](#ひとつの解決案)
 - [VSCode でプロファイルの複製で WSL の拡張が複製されない](#vscode-でプロファイルの複製で-wsl-の拡張が複製されない)
+- [VSCode の terminal での completion がウザい](#vscode-の-terminal-での-completion-がウザい)
 
 ## Remote Development
 
@@ -413,3 +414,16 @@ Windows だとどうかな...
 4. 拡張機能から「WSL へインストール」を押しまくる
 
 が楽(楽じゃないけど)。
+
+## VSCode の terminal での completion がウザい
+
+PowerShell はともかく、bash/zsh でやられても辛いので
+
+```json
+{
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.suggest.enabled": false
+}
+```
+
+こんな感じでしばらく使ってみる

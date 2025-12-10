@@ -21,6 +21,9 @@
   - [**その他のルールの意味(ざっくり)**](#その他のルールの意味ざっくり)
   - [GitHub でブランチ保護設定画面に行く方法](#github-でブランチ保護設定画面に行く方法)
 - [Windows 上の Git Credential Manager (GCM)を WSL で使う](#windows-上の-git-credential-manager-gcmを-wsl-で使う)
+- [GitHub 2FA の Recovery codes](#github-2fa-の-recovery-codes)
+  - [Recovery code の取得方法](#recovery-code-の取得方法)
+  - [Recovery codes の使い方](#recovery-codes-の使い方)
 
 ## GitHub のチュートリアル
 
@@ -389,3 +392,28 @@ git config --global credential.helper '/mnt/c/Program Files/Git/mingw64/bin/git-
 ## 設定されたことを確認
 git config --global --get credential.helper
 ```
+
+## GitHub 2FA の Recovery codes
+
+まさかの時にそなえて Recovery code を取得しておきましょう
+
+### Recovery code の取得方法
+
+1. GitHub にログイン
+2. <https://github.com/settings/auth/recovery-codes> へ移動
+
+参考: [2 要素認証リカバリコードのダウンロード](https://docs.github.com/ja/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication-recovery-methods#downloading-your-two-factor-authentication-recovery-codes)
+
+### Recovery codes の使い方
+
+参考: [2 要素認証クレデンシャルをなくした際のアカウントの回復 - GitHub ドキュメント](https://docs.github.com/ja/authentication/securing-your-account-with-two-factor-authentication-2fa/recovering-your-account-if-you-lose-your-2fa-credentials)
+
+1.  GitHub ログイン画面でユーザー名とパスワードを入力
+2.  2FA コード入力画面で「Enter a recovery code」を選択
+3.  保存してあるリカバリーコードのうち、**未使用の 1 つ**を入力
+
+**注意!**
+
+- 各コードは**一度しか使えません**。
+- 使用したコードは無効になるので、残りのコードを安全な場所に保管してください
+- すべて使い切った場合は、GitHub で新しいリカバリーコードを再生成できます(上の 「取得方法」参照)
