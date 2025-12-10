@@ -7,6 +7,8 @@
 
 ## インストール
 
+[Install via package manager](https://github.com/AlDanial/cloc?tab=readme-ov-file#install-via-package-manager)
+
 ```sh
 sudo apt install cloc
 ```
@@ -29,6 +31,31 @@ cloc . --exclude-list-file=.gitignore
 # gitで管理してるファイルのみカウント
 cloc $(git ls-files)
 ```
+
+### 実行例
+
+```console
+$ cloc $(git ls-files)
+      32 text files.
+      31 unique files.
+       6 files ignored.
+
+github.com/AlDanial/cloc v 1.90  T=0.02 s (1531.5 files/s, 274546.8 lines/s)
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+YAML                             4            563             18           2106
+TypeScript                       8            132            131            728
+Markdown                         6            165              0            406
+HTML                             5             19              0            214
+JSON                             3              5              0            174
+-------------------------------------------------------------------------------
+SUM:                            26            884            149           3628
+-------------------------------------------------------------------------------
+```
+
+これ TypeScript のプロジェクトなんで、lock ファイルが大きい。
+それをメトリックに入れるのはどうかとは思うけど
 
 ## 便利なオプション
 
