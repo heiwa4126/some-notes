@@ -82,3 +82,35 @@ node_modules/.bin/esbuild に対して最適化 (shim → 実行可能ファイ�
 ※ shim = 薄い代理スクリプト(ラッパー)
 
 shim 残したままでも動くが、ちょっと遅くなる。
+
+## trustPolicy: no-downgrade の件
+
+前のバージョンは Sigstore で Provenance がついてた
+→
+新しいバージョンにはなぜか署名された Provenance がない
+
+という時にエラーを出す。んだけど
+
+- [X ユーザーの pnpm さん: 「We have discovered that chokidar has switched off provenance a year ago and now it fails with the trustPolicy setting set to no-downgrade. We'll need to think about a way to deal with these cases. https://t.co/fSEJQYWr1e」 / X](https://x.com/pnpmjs/status/1987836672705237243)
+- [chokidar v4.0.1- npm](https://www.npmjs.com/package/chokidar/v/4.0.1) - Provenance がある、でも Source Commit なんかがリンク切れ。Rekor はある
+- [chokidar v4.0.2- npm](https://www.npmjs.com/package/chokidar/v/4.0.2) - Provenance がない
+- [Provenance is missing in 4.0.2 & 4.0.3 · Issue #1440 · paulmillr/chokidar](https://github.com/paulmillr/chokidar/issues/1440)
+
+みたいなことがある。何ぞこれ。
+
+上の Issue で chokidar v5 にしろ、と言ってるけど、依存(tsup の)だとそうもいかないしなあ。
+
+pnpm の機能がちゃんと動いてる証拠ではあるのだけど。
+
+とりあえず
+
+- pnpm-workspace.yaml の `trustPolicy: no-downgrade` はそのまま
+- package.json に
+  ```json
+  "pnpm": {
+  	"overrides": {
+  		"chokidar": "4.0.1"
+  	}
+  },
+  ```
+  で、しのぐ。

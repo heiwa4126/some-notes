@@ -8,7 +8,6 @@
   - [GitHub 側](#github-側)
 - [GitHub から ssh 公開鍵をインポート](#github-から-ssh-公開鍵をインポート)
 - [GitHub から特定のディレクトリだけダウンロード](#github-から特定のディレクトリだけダウンロード)
-- [GitHub の Branch protection rule とは](#github-の-branch-protection-rule-とは)
 - [PAT(Personal Access Tokens) について](#patpersonal-access-tokens-について)
 - [GitHub のレポジトリで、ブランチ名を master にしているのを main に変えるには?](#github-のレポジトリでブランチ名を-master-にしているのを-main-に変えるには)
 - [GitHub のプライベートレポジトリから トークンを使って git clone する手順を教えてください](#github-のプライベートレポジトリから-トークンを使って-git-clone-する手順を教えてください)
@@ -16,7 +15,7 @@
 - [GitHub のプラン](#github-のプラン)
 - [自分が invite された Organizations が、GitHub のどのプランか知るには?](#自分が-invite-された-organizations-がgithub-のどのプランか知るには)
 - [今月使ったリソースを確認する](#今月使ったリソースを確認する)
-- ["Your main branch isn't protected"](#your-main-branch-isnt-protected)
+- ["Your main branch isn't protected" - GitHub の Branch protection rule とは](#your-main-branch-isnt-protected---github-の-branch-protection-rule-とは)
   - [**チーム開発なら追加でおすすめ**](#チーム開発なら追加でおすすめ)
   - [**その他のルールの意味(ざっくり)**](#その他のルールの意味ざっくり)
   - [GitHub でブランチ保護設定画面に行く方法](#github-でブランチ保護設定画面に行く方法)
@@ -24,6 +23,7 @@
 - [GitHub 2FA の Recovery codes](#github-2fa-の-recovery-codes)
   - [Recovery code の取得方法](#recovery-code-の取得方法)
   - [Recovery codes の使い方](#recovery-codes-の使い方)
+- [default branch 以外も fetch する](#default-branch-以外も-fetch-する)
 
 ## GitHub のチュートリアル
 
@@ -137,13 +137,6 @@ GitHub の ssh キーの操作は以下参照
 
 - [git - How to download a folder from github? - Stack Overflow](https://stackoverflow.com/questions/33066582/how-to-download-a-folder-from-github) - svn を使う方法と tarball で一部取り出す方法
 - [git - Download a single folder or directory from a GitHub repo - Stack Overflow](https://stackoverflow.com/questions/7106012/download-a-single-folder-or-directory-from-a-github-repo) - ブラウザが使えるならツールもある
-
-## GitHub の Branch protection rule とは
-
-GitHub の Branch protection rule は、リポジトリのブランチを保護するためのルールです。
-このルールを設定することで、特定のブランチに対して、必要なレビューが完了している場合にのみマージできるようにしたり、強制プッシュを禁止したりすることができます。
-
-[ブランチ保護ルールを管理する \- GitHub Docs](https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule)
 
 ## PAT(Personal Access Tokens) について
 
@@ -292,9 +285,16 @@ Organization の設定にアクセスできる管理者権限が必要。(終了
 
 [Usage this month - Billing](https://github.com/settings/billing/summary#usage)
 
-## "Your main branch isn't protected"
+## "Your main branch isn't protected" - GitHub の Branch protection rule とは
 
-プロジェクトルートにこれが出てたら
+GitHub の Branch protection rule は、リポジトリのブランチを保護するためのルールです。
+このルールを設定することで、特定のブランチに対して、必要なレビューが完了している場合にのみマージできるようにしたり、強制プッシュを禁止したりすることができます。
+
+[ブランチ保護ルールを管理する \- GitHub Docs](https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule)
+
+プロジェクトルートに
+"Your main branch isn't protected"
+が出てたら
 
 1. **「Protect this branch」**をクリック。
 2. GitHub の「Branch protection rules」画面で設定
@@ -417,3 +417,18 @@ git config --global --get credential.helper
 - 各コードは**一度しか使えません**。
 - 使用したコードは無効になるので、残りのコードを安全な場所に保管してください
 - すべて使い切った場合は、GitHub で新しいリカバリーコードを再生成できます(上の 「取得方法」参照)
+
+## default branch 以外も fetch する
+
+GitHub から default branch を clone したあと、ほかのブランチも fetch するには?
+
+前提として
+GitHub のリポジトリを通常の git clone(--single-branch を付けない)で複製した場合:
+
+```sh
+# まず取得済みのリモートブランチ一覧を確認
+git branch -r
+
+# すべてのリモートブランチの更新を取得
+git fetch origin --prune
+```
