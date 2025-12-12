@@ -114,3 +114,9 @@ Rolldown は TypeScript 関連の以下のコンパイラオプションを**選
 
 - **ライブラリ配布で `declarationMap: true` を使うとき**は、**tsdown の `sourcemap` は事実上“オン”前提**になる点に注意。テストや配布サイズの観点で `hidden`(コメントを埋め込まない)を選ぶのが現場では無難です。 [\[tsdown.dev\]](https://tsdown.dev/options/sourcemap), [\[tsdown.dev\]](https://tsdown.dev/reference/api/typealias.sourcemap)
 - **パス解決の問題**が出たら、まず **tsconfig の `baseUrl`/`paths`** を確認。必要なら tsdown 側で Rolldown の input/ output オプションを上書きして微調整します。 [\[rolldown.rs\]](https://rolldown.rs/options/tsconfig), [\[tsdown.dev\]](https://tsdown.dev/advanced/rolldown-options)
+
+## `./dist/_virtual/rolldown_runtime.cjs` みたいなファイルができるんだけど
+
+バンドルしないと出来るかも。必要なので `npm pack` には含めること。
+
+`bundleRuntime: true` で別ファイルにしないことができる??
