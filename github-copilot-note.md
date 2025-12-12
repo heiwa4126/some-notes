@@ -368,13 +368,13 @@ GitHub の Web コンソールに移動してから
 
 抜き書き:
 
-- Copilot Business：300 premium requests / user / month
-- Copilot Enterprise：1,000 premium requests / user / month
-- Copilot Free：50 premium requests / user / month
+- Copilot Business:300 premium requests / user / month
+- Copilot Enterprise:1,000 premium requests / user / month
+- Copilot Free:50 premium requests / user / month
 
 Free プラン以外は 1 リクエスト $0.04 で買える。
 
-あと、インラインコード補完（IDE での入力補助）ではプレミアムリクエストを消費しない。
+あと、インラインコード補完(IDE での入力補助)ではプレミアムリクエストを消費しない。
 
 **重要**: 「インラインコード補完」は Ctrl+I や Ctrl+Alt+I を押して出てくるやつではないやつ。
 
@@ -397,7 +397,7 @@ billing の数字をふやせばいいらしい。単位は$1 らしい。
 | **Copilot Coding Agent** | セッション開始 + ステアリングコメントごと | はい           | 例: 修正提案、PR 作成                 |
 | **Spark**                | アプリ生成の 1 プロンプト                 | はい           | 1 回で 4 リクエスト消費               |
 | **Copilot Spaces**       | ナレッジベース検索 1 回                   | はい           |                                       |
-| **コード補完（IDE）**    | インライン補完                            | **いいえ**     | モデル選択しても消費しない            |
+| **コード補完(IDE)**      | インライン補完                            | **いいえ**     | モデル選択しても消費しない            |
 
 "Spark" は新機能らしい。
 [About GitHub Spark - GitHub Enterprise Cloud Docs](https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/spark)
@@ -409,24 +409,71 @@ GitHub Copilot Business で
 https://github.com/settings/copilot/features
 の Features 節のかんたんな説明。
 
-| 機能名                            | 説明                                               | 状態     |
-| --------------------------------- | -------------------------------------------------- | -------- |
-| Copilot in VS Code                | VS Code で Copilot を使用可能                      | Enabled  |
-| Copilot in JetBrains IDEs         | JetBrains IDE で Copilot を使用可能                | Enabled  |
-| Copilot in Neovim                 | Neovim で Copilot を使用可能                       | Enabled  |
-| Copilot Chat in VS Code           | VS Code で Copilot Chat を使用可能                 | Enabled  |
-| Copilot Chat in JetBrains IDEs    | JetBrains IDE で Copilot Chat を使用可能           | Enabled  |
-| Copilot Chat in Neovim            | Neovim で Copilot Chat を使用可能                  | Enabled  |
-| Copilot Chat in GitHub.com        | GitHub.com 上で Copilot Chat を使用可能            | Enabled  |
-| Copilot Code Completion           | コード補完機能                                     | Enabled  |
-| Copilot Code Brushes              | コードブラシ機能（コードのリファクタリングや変換） | Enabled  |
-| Copilot Code Review               | コードレビュー支援機能                             | Enabled  |
-| Copilot Autofix Code Scans        | セキュリティスキャン結果の自動修正                 | Enabled  |
-| Copilot Autofix Code Scans (Beta) | セキュリティスキャン結果の自動修正（ベータ版）     | Enabled  |
-| Copilot for Pull Requests         | Pull Request での Copilot 支援                     | Enabled  |
-| Copilot for Docs                  | ドキュメント検索と質問応答                         | Enabled  |
-| Copilot for CLI                   | コマンドラインで Copilot を使用可能                | Enabled  |
-| Copilot Code Brushes (Beta)       | コードブラシ機能（ベータ版）                       | Enabled  |
-| Copilot Code Review (Beta)        | コードレビュー支援機能（ベータ版）                 | Enabled  |
-| Copilot Autofix Code Scans (Beta) | セキュリティスキャン結果の自動修正（ベータ版）     | Enabled  |
-| Privacy: Share anonymized data    | 匿名化された使用データを共有                       | Disabled |
+| 機能名                            | 説明                                             | 状態     |
+| --------------------------------- | ------------------------------------------------ | -------- |
+| Copilot in VS Code                | VS Code で Copilot を使用可能                    | Enabled  |
+| Copilot in JetBrains IDEs         | JetBrains IDE で Copilot を使用可能              | Enabled  |
+| Copilot in Neovim                 | Neovim で Copilot を使用可能                     | Enabled  |
+| Copilot Chat in VS Code           | VS Code で Copilot Chat を使用可能               | Enabled  |
+| Copilot Chat in JetBrains IDEs    | JetBrains IDE で Copilot Chat を使用可能         | Enabled  |
+| Copilot Chat in Neovim            | Neovim で Copilot Chat を使用可能                | Enabled  |
+| Copilot Chat in GitHub.com        | GitHub.com 上で Copilot Chat を使用可能          | Enabled  |
+| Copilot Code Completion           | コード補完機能                                   | Enabled  |
+| Copilot Code Brushes              | コードブラシ機能(コードのリファクタリングや変換) | Enabled  |
+| Copilot Code Review               | コードレビュー支援機能                           | Enabled  |
+| Copilot Autofix Code Scans        | セキュリティスキャン結果の自動修正               | Enabled  |
+| Copilot Autofix Code Scans (Beta) | セキュリティスキャン結果の自動修正(ベータ版)     | Enabled  |
+| Copilot for Pull Requests         | Pull Request での Copilot 支援                   | Enabled  |
+| Copilot for Docs                  | ドキュメント検索と質問応答                       | Enabled  |
+| Copilot for CLI                   | コマンドラインで Copilot を使用可能              | Enabled  |
+| Copilot Code Brushes (Beta)       | コードブラシ機能(ベータ版)                       | Enabled  |
+| Copilot Code Review (Beta)        | コードレビュー支援機能(ベータ版)                 | Enabled  |
+| Copilot Autofix Code Scans (Beta) | セキュリティスキャン結果の自動修正(ベータ版)     | Enabled  |
+| Privacy: Share anonymized data    | 匿名化された使用データを共有                     | Disabled |
+
+## GitHub Copilot の new agents (2025-11 頃)
+
+VS Code の Copilot の Chat ビュー右上の「+」からプルダウンで出せるメニューの下半分
+
+- New Background Agent
+- New Cloud Agent
+- New Codex Agent
+
+とは何か? 以下ざっくり ChatGPT で調査:
+
+- **New Background Agent**
+
+  - **バックグラウンド・エージェント**を作成します。CLI ベース(Copilot CLI や Codex の CLI 相当)でローカル上に“自律的に”走り続け、あなたが別作業をしている間に、計画済みの変更や検証を進めます。
+  - 1.107 以降は **Git worktree による隔離実行**が選べるため、メイン作業ツリーと競合せずに並列で動かせます。Chat ビューのセッション一覧から進捗・変更ファイル数などを追跡できます。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/agents/background-agents), [\[neowin.net\]](https://www.neowin.net/news/visual-studio-code-1107-launches-with-multi-agent-orchestration-and-agent-hq/)
+  - 用途:明確に範囲が決まった修正や試作、テストの実行など「対話なしで進められるタスク」。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/agents/background-agents)
+
+- **New Cloud Agent**
+
+  - **クラウド・エージェント**を作成します。代表例は **GitHub Copilot Coding Agent**。PR 下書きを作り、クラウドの隔離環境で多ファイル変更を進め、コミットを積み上げます。VS Code から開始・移管・監視でき、PR ログにもリンクされます。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/agents/cloud-agents), [\[github.blog\]](https://github.blog/changelog/2025-07-14-start-and-track-github-copilot-coding-agent-sessions-from-visual-studio-code/)
+  - 用途:大規模リファクタや機能追加など、**GitHub リポジトリ/PR に紐付けてチームでレビューしたい作業**。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/agents/cloud-agents)
+
+- **New Codex Agent**
+  - **OpenAI Codex の IDE 拡張(VS Code)によるエージェント**を新規作成します。Codex は“読み・書き・実行”まで行うコーディングエージェントで、ローカル併走やクラウド委任の両方をサポートします(Windows は WSL 推奨のエクスペリメンタル)。 [\[developers...openai.com\]](https://developers.openai.com/codex/ide), [\[marketplac...studio.com\]](https://marketplace.visualstudio.com/items?itemName=OpenAI.chatgpt)
+  - メニューから起動すると、Codex 専用のチャット(Agent/Chat/Full Access 等のモード・Reasoning Effort)でやり取りするセッションが作られます。 [\[marketplac...studio.com\]](https://marketplace.visualstudio.com/items?itemName=OpenAI.chatgpt)
+
+### 使い分けの目安(ざっくり)
+
+- **新しいチャット/チャット エディター/チャット ウィンドウ**  
+  → 相談・設計・小規模編集・説明など、**インタラクティブに進めたい**時。 [\[vscode.dokyumento.jp\]](https://vscode.dokyumento.jp/docs/copilot/chat/getting-started-chat)
+- **Background Agent**  
+  → ローカルで**非対話・並列**に進めたいタスク(worktree 隔離で安全)。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/agents/background-agents)
+- **Cloud Agent(Copilot Coding Agent)**  
+  → **PR 駆動**で進める中〜大規模変更(クラウドで継続的に作業)。 [\[github.blog\]](https://github.blog/changelog/2025-07-14-start-and-track-github-copilot-coding-agent-sessions-from-visual-studio-code/), [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/agents/cloud-agents)
+- **Codex Agent**  
+  → **OpenAI Codex**を主エージェントにして、VS Code から直接ペアプロ&自動編集・実行を委任。 [\[developers...openai.com\]](https://developers.openai.com/codex/ide), [\[marketplac...studio.com\]](https://marketplace.visualstudio.com/items?itemName=OpenAI.chatgpt)
+
+### FAQ/よくある設定/トラブルシューティング
+
+- **どこからセッションを確認する?**  
+  Chat ビューのセッションリスト(Agent Sessions 統合)。必要なら `chat.agentSessionsViewLocation` で独立ビューを再表示できます(今後削除予定の記載あり)。 [\[neowin.net\]](https://www.neowin.net/news/visual-studio-code-1107-launches-with-multi-agent-orchestration-and-agent-hq/)
+- **Background Agent の隔離実行**  
+  新規作成時に「current workspace / dedicated Git worktree」を選択。**worktree 選択で変更が分離**され、並列実行の競合を避けられます。 [\[neowin.net\]](https://www.neowin.net/news/visual-studio-code-1107-launches-with-multi-agent-orchestration-and-agent-hq/), [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/agents/background-agents)
+- **Codex(Windows)**  
+  Windows は**WSL ワークスペース推奨**。VS Code で拡張を入れ、ChatGPT アカウントでサインイン。必要に応じてクラウド委任も可能。 [\[developers...openai.com\]](https://developers.openai.com/codex/ide)
+- **クラウドエージェントの可用性**  
+  Copilot Coding Agent は **Pro/Pro+ ほか Business/Enterprise**で公開プレビュー。組織ポリシーで有効化が必要な場合があります。 [\[github.blog\]](https://github.blog/changelog/2025-07-14-start-and-track-github-copilot-coding-agent-sessions-from-visual-studio-code/)
