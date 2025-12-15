@@ -51,6 +51,7 @@
   - [実例](#実例)
   - [補足](#補足)
 - [bin フィールドで指定したスクリプトに shebang は必要?](#bin-フィールドで指定したスクリプトに-shebang-は必要)
+- [./node_modules/.bin にあるコードを実行する正しい方法は?](#node_modulesbin-にあるコードを実行する正しい方法は)
 
 ## 多分最初にこれよんだほうがよさそう
 
@@ -938,3 +939,28 @@ console.log(pkg.version);
 pnpm では不要。npm では必要。
 
 何を言ってるかわから(略)。**結論は「とりあえず書いとけ」**
+
+## ./node_modules/.bin にあるコードを実行する正しい方法は?
+
+これ超ハマリどころらしくて。いちばんいいのは **run-scripts に書いとく**、だと思う。
+
+tsc(typescript)の例。tsc はパッケージ名とコマンドが異なるので良いサンプル
+
+```sh
+# 動く例
+npx tsc --version
+npm exec tsc -- --version
+npm exec -- tsc --version
+pnpm exec tsc --version
+pnpm tsc --version
+
+# ダメな例
+npm exec tsc --version
+pnpx tsc --version
+pnpm dlx tsc --version
+```
+
+- `npm exec` はオプションを npm が喰う
+- `pnpx`, `pnpm dlx` は `./node_modules/.bin` を見ない
+
+というのがポイント。

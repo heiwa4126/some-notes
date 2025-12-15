@@ -77,6 +77,60 @@ Auth0 は 1 ユーザ 20 個までパスキーを持てるそうです。
 - **Amazon** - `アカウントサービス › ログインとセキュリティ › パスキー` のところ
 - **Meta(Facebook)** - <https://accountscenter.facebook.com/password_and_security/> のパスキーのところ
 
+## パスキーのローカルストア
+
+- Windows Credential Manager
+- macOS の Secure Enclave
+- iOS の Secure Enclave
+- Android Keystore
+
+ストアと別に「同期のしくみ」として
+
+- Microsoft アカウントによるクラウド同期
+- Google Password Manager
+- iCloud keychain
+
+Windows Hello は「ローカル認証手段(主に生体)」のブランド名
+
+## TPM (Trusted Platform Module)
+
+Windows のハードウェアセキュリティモジュールの呼び名
+
+で、TPM とかぶる(「同等」とは言い難い)ほかのデバイス上のモジュールは
+
+**iOS(iPhone/iPad)**
+
+- **Secure Enclave**という独立したセキュリティプロセッサを搭載
+- A7 チップ以降のすべての iOS デバイスに内蔵
+- 暗号化キーの保管、生体認証(Touch ID/Face ID)、Apple Pay などを処理
+
+**Mac**
+
+- **Apple Silicon(M1 以降)**: Secure Enclave を統合
+- **Intel Mac(T2 チップ搭載機)**: T2 セキュリティチップに Secure Enclave 機能を搭載
+- 古い Intel Mac には TPM 相当の機能がない場合もあります
+
+**Android**
+
+- **Trustzone**(ARM 製)や専用のセキュリティチップを使用
+- Android 9 以降では**StrongBox Keymaster**という強化されたハードウェアセキュリティモジュールをサポート
+- 端末メーカーや機種により実装が異なる。Pixel、Galaxy などハイエンドモデルは Titan M など専用チップを搭載
+
+Android は端末によってセキュリティレベルに大きな差がありそう。安い端末はセキュリティ機能が意図的に弱い、またはバックドアの懸念も。
+
+## 主要ブラウザ × OS ごとの「認証手段」「ローカルストア」「同期サービス」比較表
+
+| **ブラウザ / OS**    | **認証手段**              | **ローカルストア**               | **同期サービス(ブランド名)**                  |
+| -------------------- | ------------------------- | -------------------------------- | --------------------------------------------- |
+| **Chrome (Windows)** | Windows Hello             | Windows Credential Manager / TPM | **Google Password Manager**                   |
+| **Chrome (macOS)**   | Touch ID / Secure Enclave | macOS Keychain (Secure Enclave)  | **Google Password Manager**                   |
+| **Chrome (iOS)**     | Face ID / Secure Enclave  | iOS Keychain (Secure Enclave)    | **Google Password Manager**                   |
+| **Chrome (Android)** | 生体認証 / PIN            | **Android Keystore**             | **Google Password Manager**                   |
+| **Edge (Windows)**   | Windows Hello             | Windows Credential Manager / TPM | **Microsoft Edge Sync**(Microsoft アカウント) |
+| **Edge (macOS)**     | Touch ID                  | macOS Keychain                   | **Microsoft Edge Sync**                       |
+| **Safari (macOS)**   | Touch ID                  | macOS Keychain                   | **iCloud Keychain**                           |
+| **Safari (iOS)**     | Face ID / Touch ID        | iOS Keychain                     | **iCloud Keychain**                           |
+
 ## 概要
 
 - [「パスキー」って一体何だ? パスワード不要の世界がやってくる(1/4 ページ) - ITmedia NEWS](https://www.itmedia.co.jp/news/articles/2301/23/news086.html)
