@@ -429,6 +429,6 @@ GitHub のリポジトリを通常の git clone(--single-branch を付けない)
 # まず取得済みのリモートブランチ一覧を確認
 git branch -r
 
-# すべてのリモートブランチの更新を取得
-git fetch origin --prune
+# 特定のリモートブランチを取得
+git checkout -b feature-branch origin/feature-branch
 ```
