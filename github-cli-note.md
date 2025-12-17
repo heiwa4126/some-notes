@@ -38,6 +38,16 @@ echo "Failed publish.yml run ID: $RUN_ID"
 gh run view [run-id] --log
 ```
 
+### VSCode でエラーログだけ取りたいなら...
+
+[GitHub Actions - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=github.vscode-github-actions)の方がお手軽かも。
+
+1. アクティビティバーで GitHub Actions アイコンを押す。
+2. WORKFLOWS ペインから対象のワークフローを選ぶ
+3. エラーになってるジョブの右端の "View Job Logs"アイコンを押す
+
+GitHub Copilot Chat のコンテキストにも選べるよ。
+
 ## gh の bash completion
 
 ```sh
