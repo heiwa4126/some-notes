@@ -29,6 +29,8 @@
   - [ひとつの解決案](#ひとつの解決案)
 - [VSCode でプロファイルの複製で WSL の拡張が複製されない](#vscode-でプロファイルの複製で-wsl-の拡張が複製されない)
 - [VSCode の terminal での completion がウザい](#vscode-の-terminal-での-completion-がウザい)
+- [ワークスペース単位で拡張を無効にできる](#ワークスペース単位で拡張を無効にできる)
+- [Pylance を軽くする](#pylance-を軽くする)
 
 ## Remote Development
 
@@ -427,3 +429,17 @@ PowerShell はともかく、bash/zsh でやられても辛いので
 ```
 
 こんな感じでしばらく使ってみる
+
+## ワークスペース単位で拡張を無効にできる
+
+「TypeScript のプロジェクトで Python 関連をとめる」みたいなことができる。
+
+Python の例でいくと
+拡張機能一覧で Python の右側にある歯車アイコン → 「無効化」 → 「ワークスペースで無効化」
+
+`.vscode/settings.json` には設定が**書き込まれない**ので、
+ほかのホストで作業する場合は、そのつど設定が必要
+
+## Pylance を軽くする
+
+[Pylance Configuration Tips · microsoft/pylance-release Wiki](https://github.com/microsoft/pylance-release/wiki/Pylance-Configuration-Tips)
