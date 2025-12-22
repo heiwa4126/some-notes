@@ -299,9 +299,15 @@ Copilot は複数の情報源(コード、エディタ、ターミナルなど)�
 #file - ワークスペースでファイルを選択する
 ```
 
-## チャットの過去を消すコマンド
+## 会話をクリアするコマンド
 
 `/clear`
+
+というか、「この件に関しては、ここまで(セッション終了)」というコマンドでもある。
+会話長くなるとだんだん AI が変なこと言い出すので(過去会話の要約に失敗するなど)
+いいところで切り上げた方がいいみたい。必要なら"Recent Sessions"から呼び出して続けられる。
+
+会話を削除するのは `/delete`。
 
 ## カスタムエージェント
 
@@ -477,3 +483,32 @@ VS Code の Copilot の Chat ビュー右上の「+」からプルダウンで�
   Windows は**WSL ワークスペース推奨**。VS Code で拡張を入れ、ChatGPT アカウントでサインイン。必要に応じてクラウド委任も可能。 [\[developers...openai.com\]](https://developers.openai.com/codex/ide)
 - **クラウドエージェントの可用性**  
   Copilot Coding Agent は **Pro/Pro+ ほか Business/Enterprise**で公開プレビュー。組織ポリシーで有効化が必要な場合があります。 [\[github.blog\]](https://github.blog/changelog/2025-07-14-start-and-track-github-copilot-coding-agent-sessions-from-visual-studio-code/)
+
+## エージェント
+
+- [ビルドインエージェント(Agent,Plan,Ask and Edit)](https://code.visualstudio.com/docs/copilot/chat/copilot-chat#_builtin-agents)
+- [カスタムエージェント](https://code.visualstudio.com/docs/copilot/customization/custom-agents)
+
+使い分けが微妙なものがある(Agent と Edit)
+
+[Copilot ask, edit, and agent modes: What they do and when to use them - The GitHub Blog](https://github.blog/ai-and-ml/copilot-ask-edit-and-agent-modes-what-they-do-and-when-to-use-them/)
+
+> Ask モードは高速で便利、そしてコードに触れることなくプログラミングに関する質問に答えることに特化しています
+
+> Edit モードは、やりたいことは分かっているけれど、必ずしもすべてを自分で書きたくない時に最適です。コードブロックをハイライトし、「エラー処理を追加」や「async/await を使ってリファクタリング」といった指示を入力すると、Copilot が自動的にコードを書き換えてくれます。
+
+> Agent モードでは、高レベルのプロンプトを渡すだけで、Copilot が自律的にステップを計画し、適切なファイルを選択し、ツールやターミナルコマンドを実行し、タスクが完了するまでコード編集を繰り返す様子を見ることができます。
+
+[Ask Mode vs Agent Mode - Choosing the Right Copilot Experience for .NET - .NET Blog](https://devblogs.microsoft.com/dotnet/ask-mode-vs-agent-mode/)
+
+| 特徴                   | Ask モード                 | Agent モード                                     |
+| ---------------------- | -------------------------- | ------------------------------------------------ |
+| ワークスペーススコープ | 現在のファイルと選択       | ワークスペース全体                               |
+| 主な用途               | 学習とガイダンス           | コード分析と修正                                 |
+| 応答速度               | 速い                       | 時間がかかる場合があります(ワークスペースを分析) |
+| コードの変更           | 提案を提供する             | 直接編集できる                                   |
+| コンテキスト認識       | アクティブなファイルと選択 | 複数ファイルのプロジェクトコンテキスト           |
+| 最適な用途             | 概念的な質問               | リファクタリングと自動化                         |
+
+Plan モードの考察
+[From Awesome Copilot to Plan Agent: GitHub's Built\-in Planning Revolution \| Azure with AJ](https://azurewithaj.com/posts/github-plan-agent/#the-new-built-in-plan-agent)
