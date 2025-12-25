@@ -24,6 +24,7 @@
 - [Windows のパスが追加されるのがウザい](#windows-のパスが追加されるのがウザい)
 - [WSL では /etc/cron.daily などが実行されないので](#wsl-では-etccrondaily-などが実行されないので)
 - [WSL で keyring](#wsl-で-keyring)
+- [Explorer のアドレスバーから wsl を実行できる](#explorer-のアドレスバーから-wsl-を実行できる)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -428,3 +429,7 @@ Linux だけで完結するなら [Pass: The Standard Unix Password Manager](htt
 sudo apt update
 sudo apt install pass gnupg2
 ```
+
+## Explorer のアドレスバーから wsl を実行できる
+
+cmd.exe や pwsh と同じように `wsl` で。
