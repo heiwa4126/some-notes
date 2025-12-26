@@ -14,6 +14,7 @@
 - [env: と environment:](#env-と-environment)
 - [workflows を特定のユーザや特定のブランチに制限する](#workflows-を特定のユーザや特定のブランチに制限する)
 - [actions/checkout が .gitattributes の設定を無視する](#actionscheckout-が-gitattributes-の設定を無視する)
+- [タグをつけなおす](#タグをつけなおす)
 
 ## On: が難しい
 
@@ -284,3 +285,29 @@ Environment Protection の設定手順:
 - [Issue search results](https://github.com/search?q=repo%3Aactions%2Fcheckout++.gitattributes&type=issues)
 
 もう治す気が全くないらしいので、改行コードが絡む場合(テストケースとか)は注意。
+
+## タグをつけなおす
+
+こういうワークフローで、
+
+```yaml
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+```
+
+ワークフローにバグがあったりして、修正して再度実行したいときは
+
+```sh
+TAG=0.0.5 # ここは仮
+git tag -d "v${TAG}" && git push origin ":refs/tags/v${TAG}"
+git add --all && git commit -am '[WIP] fix workflow'
+git tag  "v${TAG}" -m ''  && git push --all --follow-tags
+```
+
+こんなかんじ。
+オプション類は各自調整。
+
+`TAG=0.0.5`のところは `git describe --tags --abbrev=0`にするとか(`v9.9.9`式になるので注意!)
+アレンジして。
