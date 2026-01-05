@@ -83,3 +83,13 @@ npm / PyPI パッケージのプロジェクトなら Trivy よりお勧めら�
 を併用
 
 ※ ただし pip-audit は requirements.txt 前提で uv.lock をサポートしていない。
+
+## GitHub Actions で Reusable Workflow を使うか、Action を使うか
+
+- Reusable Workflow(の例): <https://github.com/google/osv-scanner-action/blob/main/.github/workflows/osv-scanner-reusable.yml>
+- Action の方: [osv-scanner-action/osv-scanner-action/action.yml at 375a0e8ebdc98e99b02ac4338a724f5750f21213 · google/osv-scanner-action](https://github.com/google/osv-scanner-action/blob/375a0e8ebdc98e99b02ac4338a724f5750f21213/osv-scanner-action/action.yml)
+
+Action の方は自由度は高い。CLI で osv-scanner する感覚に近い。事前に action/checkout が必要。
+
+Reusable Workflow のほうは機能が高く(sarif、`--ghsa` オプション)、設定は簡単。
+ただし steps に書けないので job にする。事前に action/checkout が不要(内部でやる)
