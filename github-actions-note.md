@@ -15,6 +15,7 @@
 - [workflows を特定のユーザや特定のブランチに制限する](#workflows-を特定のユーザや特定のブランチに制限する)
 - [actions/checkout が .gitattributes の設定を無視する](#actionscheckout-が-gitattributes-の設定を無視する)
 - [タグをつけなおす](#タグをつけなおす)
+- [VSCode 拡張](#vscode-拡張)
 
 ## On: が難しい
 
@@ -288,6 +289,8 @@ Environment Protection の設定手順:
 
 ## タグをつけなおす
 
+(すいません。これあんまり役に立たない)
+
 こういうワークフローで、
 
 ```yaml
@@ -311,3 +314,13 @@ git tag  "v${TAG}" -m ''  && git push --all --follow-tags
 
 `TAG=0.0.5`のところは `git describe --tags --abbrev=0`にするとか(`v9.9.9`式になるので注意!)
 アレンジして。
+
+## VSCode 拡張
+
+[GitHub Actions - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-github-actions)
+
+シンタックスハイライトや lint は普通だけど、
+なんといっても Actions のログが見れるのが便利。
+
+ただ背後で GitHub CLI (gh)が動いてるらしく、
+GitHub アカウントを複数持ってるときは `gh auth status` & `gh auth switch` でアクティブアカウントを切り替えること。
