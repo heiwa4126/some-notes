@@ -16,6 +16,7 @@
 - [actions/checkout が .gitattributes の設定を無視する](#actionscheckout-が-gitattributes-の設定を無視する)
 - [タグをつけなおす](#タグをつけなおす)
 - [VSCode 拡張](#vscode-拡張)
+- [permission:](#permission)
 
 ## On: が難しい
 
@@ -324,3 +325,13 @@ git tag  "v${TAG}" -m ''  && git push --all --follow-tags
 
 ただ背後で GitHub CLI (gh)が動いてるらしく、
 GitHub アカウントを複数持ってるときは `gh auth status` & `gh auth switch` でアクティブアカウントを切り替えること。
+
+## permission:
+
+`permission:` で
+`secrets.GITHUB_TOKEN` のスコープを制御できる。
+
+参考:
+
+- [GitHub Actions permissions](https://www.graphite.com/guides/github-actions-permissions)
+- [GitHub - Understanding Workflow Permissions - DEV Community](https://dev.to/pwd9000/fgjgghjgh-19ka)
