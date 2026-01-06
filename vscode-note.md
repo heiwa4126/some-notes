@@ -31,6 +31,8 @@
 - [VSCode の terminal での completion がウザい](#vscode-の-terminal-での-completion-がウザい)
 - [ワークスペース単位で拡張を無効にできる](#ワークスペース単位で拡張を無効にできる)
 - [Pylance を軽くする](#pylance-を軽くする)
+- [Code Spell Checker](#code-spell-checker)
+  - [Code Spell Checker で exclude files を設定する](#code-spell-checker-で-exclude-files-を設定する)
 
 ## Remote Development
 
@@ -443,3 +445,30 @@ Python の例でいくと
 ## Pylance を軽くする
 
 [Pylance Configuration Tips · microsoft/pylance-release Wiki](https://github.com/microsoft/pylance-release/wiki/Pylance-Configuration-Tips)
+
+## Code Spell Checker
+
+便利
+[Code Spell Checker - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
+
+### Code Spell Checker で exclude files を設定する
+
+例:
+
+```json
+{
+  // .vscode/settings.json などに記述
+  "cSpell.ignorePaths": [
+    "**/node_modules/**",
+    "**/*.lock", // 任意の拡張の .lock を除外
+    "**/*-lock.json", // npm系の -lock.json を除外（例：package-lock.json）
+    "**/pnpm-lock.yaml",
+    "**/yarn.lock"
+  ],
+  // 必要なら .gitignore も尊重させる
+  "cSpell.useGitignore": true
+}
+```
+
+参考:
+[Files, Folders, and Workspaces | VS Code Spell Checker](https://streetsidesoftware.com/vscode-spell-checker/docs/configuration/files-folders-and-workspaces)
