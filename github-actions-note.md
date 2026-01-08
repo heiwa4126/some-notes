@@ -17,6 +17,7 @@
 - [タグをつけなおす](#タグをつけなおす)
 - [VSCode 拡張](#vscode-拡張)
 - [permission:](#permission)
+- [action/setup-node](#actionsetup-node)
 
 ## On: が難しい
 
@@ -335,3 +336,45 @@ GitHub アカウントを複数持ってるときは `gh auth status` & `gh auth
 
 - [GitHub Actions permissions](https://www.graphite.com/guides/github-actions-permissions)
 - [GitHub - Understanding Workflow Permissions - DEV Community](https://dev.to/pwd9000/fgjgghjgh-19ka)
+
+## action/setup-node
+
+action/setup-node は action/cache を内部で呼んでる。
+
+`cache:` は省略すると、何もしてくれない。npm でも `cache: npm` と書くこと。
+
+あと `cache-dependency-path:` (このファイルのハッシュがキーになるらしい) は cache が npm, pnpm, yarn なら自動で設定される。
+(2026-01 現在。GitHub のソース参照。<https://github.com/actions/setup-node/blob/main/src/cache-utils.ts>)
+
+つまり bun だと bun.lock か bun.lockb を記述するべき。
+
+pnpm スペシャルとして pnpm のグローバルストアと node_modules/以下のリンクをキャッシュしてくれる。
+つまり `pnpm install --frozen-lockfile` (`npm ci`相当) 以外はなにもしなくていい。
+
+あと `registry-url:` と `scope:` で ${NPM_CONFIG_USERCONFIG} に .npmrc が自動生成される。
+モジュールをプライベートレポジトリから install するのに便利で
+
+```yaml
+- uses: actions/setup-node@v6
+  with:
+    registry-url: https://npm.pkg.github.com/
+    scope: '@yourOrg'
+```
+
+で、こんな .npmrc が自動生成されるので
+
+```text
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+@yourOrg:registry=https://npm.pkg.github.com/
+```
+
+依存インストール時には
+
+```yaml
+- name: Install dependencies
+  run: pnpm install --frozen-lockfile
+  env:
+    NODE_AUTH_TOKEN: ここはsecretから取るなど各々工夫
+```
+
+のようにして使う

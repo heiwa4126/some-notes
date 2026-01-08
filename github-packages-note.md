@@ -50,7 +50,7 @@ personal access token (classic) の認証が必要。
 personal access token のところは公式の解説がわかりにくい
 
 - [個人用アクセス トークンを管理する - GitHub Docs](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
-- [GitHub Packages を使って自作ライブラリを管理しよう｜エンジニアファースト](https://engineer-first.net/create-github-packages)
+- [GitHub Packages を使って自作ライブラリを管理しよう|エンジニアファースト](https://engineer-first.net/create-github-packages)
 - [Personal access tokens \(classic\)](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-tokens-classic)
   [personal access token \(classic\) の作成](https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#personal-access-token-classic-%E3%81%AE%E4%BD%9C%E6%88%90)
 
@@ -188,3 +188,88 @@ GitHub Packages のリポジトリがプライベートの場合でも、パッ�
    ```
 
 これにより、プライベートな GitHub Packages からパッケージがインストールされます。
+
+## パッケージの可視性
+
+パブリックレポジトリで作った GitHub Packages はデフォルトではパブリックになる。
+プライベートレポジトリで作った GitHub Packages はデフォルトではプライベートになる。
+
+この動作は変更可能。
+参考: [パッケージがリポジトリからアクセス許可を継承するかどうかを選ぶ](https://docs.github.com/ja/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility#selecting-whether-a-package-inherits-permissions-from-a-repository)
+
+組織と個人では手順が違うらしい
+
+- [Configuring access to packages for your personal account](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility#configuring-access-to-packages-for-your-personal-account)
+- [Configuring access to packages for an organization](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility#configuring-access-to-packages-for-an-organization)
+
+あとからパッケージの「可視性」の切り替えも可能。
+パブリック、プライベート、Internal の切り替えは
+各々のパッケージの "Package settings" の "Danger Zone" の "Change package visibility" からできる。
+
+このへん参照: [Configuring visibility of packages for your personal account](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility#configuring-visibility-of-packages-for-your-personal-account)
+
+## PAT なしに GitHub Package にアクセスする
+
+とにかく PAT は使いにくい
+
+- トークンの取得が面倒で、かつ手動
+- トークンの設定が面倒で、かつ手動
+- 必要な scope がよくわからない。read:packages だけでは不足。repo も必要。組織の場合は SAML SSO の承認も必要
+- トークンに期限がある(「期限切れなし」トークンも作れます)
+
+間違える落とし穴だらけ。
+
+### PAT なしに GitHub Package にアクセスする - ローカルで開発する場合
+
+`gh auth token` で取得するのが一番簡単だけど、スコープが大きすぎで危険。
+
+ここはあきらめて Web 画面でカチャカチャやって PAT(classic) を取得するのがいいと思う。
+
+- read:package スコープのみ
+- 組織の場合は SSO authorize を忘れないこと
+
+<https://github.com/settings/tokens>
+
+### PAT なしに GitHub Package にアクセスする - CI/CD 編
+
+こっちは地味に便利だし、よりセキュアになる。推奨
+
+最初は GitHub Container Registry (GHCR)用に 2021 年 3 月 24 日ごろに導入された。  
+[Packages: Container registry now supports GITHUB_TOKEN - GitHub Changelog](https://github.blog/changelog/2021-03-24-packages-container-registry-now-supports-github_token/)
+
+npm, NuGet 等、他のパッケージに展開されたのは 2022〜2023 年にかけて
+
+WebUI では
+各々のパッケージの "Package settings" の "Manage Actions access" でレポジトリを追加して、最低限 Role:Read を与える。
+
+スクリーンショット付きのくわしい手順は
+[パッケージへのワークフローのアクセスの確保](https://docs.github.com/ja/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility#ensuring-workflow-access-to-your-package)
+を参照。
+
+これで例えば node で pnpm だったら task の steps:で
+
+```yaml
+
+build_task:
+   permissions:
+      packages: read # for GitHub Packages
+      # ...
+   steps:
+   # ...
+   - name: Setup npm auth for GitHub Packages
+      run: |
+         cat >> .npmrc << 'EOF'
+         @YourOrg:registry=https://npm.pkg.github.com
+         //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+         EOF
+   # ...
+   - name: Install dependencies (pnpm install)
+      run: pnpm install --frozen-lockfile
+      env:
+         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+みたいに書ける。
+
+> [!CAUTION]
+> この部分をそのまま使わないで! [github-actions-note.md の action/setup-node](./github-actions-note.md#actionsetup-node) を読んで!
