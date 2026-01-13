@@ -9,6 +9,20 @@
 
 [【npm】11 月 21 日以降に npm install した人へ - Shai-Hulud 感染チェック & 多層防御ガイド](https://zenn.dev/hand_dot/articles/04542a91bc432e)
 
+## 概要
+
+要は「依存関係に含まれる既知の脆弱性」を検出するツール
+
+「依存関係に含まれる既知の脆弱性」は長いので
+
+- 依存脆弱性 (dependency vulnerabilities)
+- 依存関係の脆弱性
+- SCA 脆弱性 (SCA = Software Composition Analysis)
+- サプライチェーン脆弱性 (supply chain vulnerabilities)
+- 自分のコードではなく、取り込んだ外部コンポーネントに起因する脆弱性
+
+とも言う。
+
 ## インストール
 
 Aqua だと `aqua g -i google/osv-scanner ; aqua i` でインストールできる。Linux でも Windows でも同様。
@@ -257,19 +271,18 @@ lodash  4.17.15    4.17.21   npm   GHSA-29mw-wpgm-hmr9  Medium    0.2% (47th)  0
 
 インストールが容易で実行が簡単で早くて無料。CI/CD でも使いやすい
 
+- **パッケージマネージャ組込機能**
+  - `npm audit`, `yarn audit`, `pnpm audit` (Node.js) - bun には audit がない
+  - `pip-audit` (Python)
+  - `cargo audit` (Rust)
 - **osv-scanner**
   - Google 製。[OSV データベース](https://osv.dev/)を利用して`lockfile`や`SBOM`をスキャン
 - **Trivy**
   - Aqua Security 製。コンテナ・ファイル・リポジトリ・SBOM 対応
-- **パッケージマネージャ組込機能**
-  - `npm audit` (Node.js)
-  - `yarn audit`
-  - `pip-audit` (Python)
-  - `cargo audit` (Rust)
 - **Grype**
-  - Anchore 製。コンテナやディレクトリをスキャン。SBOM 対応
+  - Anchore 製。コンテナやディレクトリをスキャン。デフォルトで再帰検索。lockfile は直接サポートしないので、SBOM 出してから、それをスキャン
 - **Snyk CLI(無料枠あり)**
-  - OSS 版は制限付きだが簡単に使える。`package.json`や`lockfile`対応
+  - OSS 版は制限付きだが簡単に使える。`package.json`や`lockfile`対応。無料枠でもアカウント作ってログイン(`snyk auth`)する必要があるのでめんどくさい。
 - **Safety**
   - Python 専用。`requirements.txt` や `pip` 環境をスキャン
 - **Dependency-Check**
@@ -353,3 +366,146 @@ git clone https://github.com/google/osv.git
 # 2. スキャン時にオフラインモードを指定
 osv-scanner --offline --local-db ./osv <lockfile>
 ```
+
+## OSV(Open Source Vulnerabilities)
+
+- **管理運営**:OSV.dev は Google と OpenSSF(Open Source Security Foundation)によって開発・運営されています。公式「OSV Team」によりメンテされています。 [\[osv.dev\]](https://osv.dev/), [\[osv.dev\]](https://osv.dev/blog/)
+- **データソース**:GitHub Security Advisories、OSS‐Fuzz、PyPA、RustSec、Debian Security Tracker、Chainguard など 30 以上のエコシステム・ディストリビューションから情報を取り込み。 [\[osv.dev\]](https://osv.dev/), [\[osv.dev\]](https://osv.dev/blog/)
+- **更新頻度**:
+  - データは継続的に取り込まれるため、**随時・リアルタイムに近い更新**が行われます。
+  - ブログや SLO でも、「API クエリが高速化」「カバレッジ拡充」などに触れられており、最新版状態の維持を重視しています。 [\[osv.dev\]](https://osv.dev/blog/)
+
+## NVD(National Vulnerability Database)
+
+- **管理機関**:NVD は米国 NIST(National Institute of Standards and Technology) ITL(Information Technology Laboratory)が運営しています。 [\[nist.gov\]](https://www.nist.gov/itl/nvd), [\[inventivehq.com\]](https://inventivehq.com/blog/nvd-database-update-frequency-and-cve-enrichment-timeline)
+- **更新フロー**:
+  1.  MITRE が CVE ID を割り当てる → CVE リスト公開
+  2.  NIST が NVD に **自動インジェスト**(毎時間実行) → CVE データ取り込み [\[inventivehq.com\]](https://inventivehq.com/blog/nvd-database-update-frequency-and-cve-enrichment-timeline), [\[nist.gov\]](https://www.nist.gov/itl/nvd)
+  3.  NIST アナリストが CVSS スコア、CWE 分類、CPE マッピングなど**データの精緻化(エンリッチ)作業**を実施 [\[inventivehq.com\]](https://inventivehq.com/blog/nvd-database-update-frequency-and-cve-enrichment-timeline), [\[nist.gov\]](https://www.nist.gov/itl/nvd)
+- **頻度**:
+  - 基本的に **毎時間** CVE を取り込み
+  - エンリッチされた情報(スコア付与など)は **数時間〜数日単位で随時更新**。 [\[inventivehq.com\]](https://inventivehq.com/blog/nvd-database-update-frequency-and-cve-enrichment-timeline), [\[dev.housin...rizona.edu\]](https://dev.housing.arizona.edu/how-often-is-the-nvd-updated)
+  - 日々 10〜20 件の新規 CVE と、数件の既存エントリ更新が行われています。 [\[inventivehq.com\]](https://inventivehq.com/blog/nvd-database-update-frequency-and-cve-enrichment-timeline), [\[dev.housin...rizona.edu\]](https://dev.housing.arizona.edu/how-often-is-the-nvd-updated)
+
+### エンリッチ(enrich)
+
+基本情報に追加の詳細や付加価値を加える処理のことです。
+NVD の場合、MITRE から受け取った CVE の「最低限の情報」(ID、概要)に対して、次のような追加作業をします:
+
+- CVSS スコア(脆弱性の深刻度を数値化)
+- CWE 分類(脆弱性の種類)
+- CPE マッピング(影響を受ける製品やバージョンの特定)
+- 関連リンクやパッチ情報の追加
+
+このプロセスによって、単なる「脆弱性 ID のリスト」が、リスク評価や対策判断に使える豊富なデータセットに変わります。
+要するに、「エンリッチ」= 情報を充実させることです。
+
+## Trivy の脆弱性 DB (trivy‐db)
+
+- **ビルド担当**:Aqua Security チームが管理する `trivy-db` リポジトリが、主要な更新源です。 [\[github.com\]](https://github.com/aquasecurity/trivy-db), [\[trivy.dev\]](https://trivy.dev/docs/latest/community/contribute/vulnerability-database/overview/)
+- **構成フロー**:
+  1.  **`vuln-list-update`** リポジトリ:Cron ジョブで NVD、GHSA、各 Linux ディストリビューションのアドバイザリ等を定期取得し `vuln-list` に格納。 [\[trivy.dev\]](https://trivy.dev/docs/latest/community/contribute/vulnerability-database/overview/)
+  2.  **`trivy-db`** リポジトリ:`vuln-list` のデータを受け取り、Trivy 独自形式に加工し、6 時間ごとに OCI レジストリへビルド・公開。 [\[github.com\]](https://github.com/aquasecurity/trivy-db), [\[trivy.dev\]](https://trivy.dev/docs/latest/community/contribute/vulnerability-database/overview/)
+- **更新間隔**:おおよそ **6 時間ごと** に最新化されます。 [\[github.com\]](https://github.com/aquasecurity/trivy-db), [\[trivy.dev\]](https://trivy.dev/docs/latest/community/contribute/vulnerability-database/overview/)
+- **データ元**:NVD、Red Hat、Debian、GitHub Advisory、その他多数のアドバイザリを統合。 [\[github.com\]](https://github.com/aquasecurity/trivy-db), [\[deepwiki.com\]](https://deepwiki.com/aquasecurity/trivy-db)
+
+## Grype の脆弱性 DB (vulnerability.db)
+
+- **ビルド&メンテナ**:Anchore(開発元)が提供する `grype-db` ツールと `vunnel` を使って CI(GitHub Actions)で自動的に daily 更新。 [\[cloudsecurity.org\]](https://cloudsecurity.org/tool/grype), [\[dev.to\]](https://dev.to/chainguard/deep-dive-where-does-grype-data-come-from-n9e)
+- **更新フロー**:
+  1.  **vunnel ツール**:NVD、Red Hat、Debian、GHSA、Canonical、Ubuntu、Alpine などのアドバイザリを収集し標準化。 [\[dev.to\]](https://dev.to/chainguard/deep-dive-where-does-grype-data-come-from-n9e)
+  2.  **grype-db ツール**:収集データを SQLite 形式の `vulnerability.db` にまとめる。 [\[cloudsecurity.org\]](https://cloudsecurity.org/tool/grype), [\[dev.to\]](https://dev.to/chainguard/deep-dive-where-does-grype-data-come-from-n9e)
+  3.  **日時頻度**:**毎日** GitHub Actions によりビルド・公開されます。 [\[cloudsecurity.org\]](https://cloudsecurity.org/tool/grype), [\[dev.to\]](https://dev.to/chainguard/deep-dive-where-does-grype-data-come-from-n9e)
+- **DB の構造**:SQLite v6 スキーマを採用し、ブロブ型ストレージ&インデックス付き。 [\[deepwiki.com\]](https://deepwiki.com/anchore/grype/2.2-vulnerability-database-system), [\[dev.to\]](https://dev.to/chainguard/deep-dive-where-does-grype-data-come-from-n9e)
+
+## 速報性で比較すると
+
+1. Dependabot (GitHub ネイティブ、最速)
+1. npm audit (GitHub Advisory 統合済み)
+1. Snyk (独自 DB + GitHub Advisory)
+1. osv-scanner (OSV 経由で GitHub Advisory)
+1. trivy (複数 DB 統合)
+
+`npm audit`は代表で、pip-audit([PyPI Advisory Database](https://github.com/pypa/advisory-database)使用)など
+
+## pip-audit デモ
+
+```sh
+mkdir working2 && cd working2
+uv init
+uv add pip-audit --dev
+
+# 脆弱性があるパッケージをインストール
+# 例: Django 2.2.0 (複数の既知の脆弱性あり)
+uv add django==2.2.0
+
+# pip-auditで検出
+uv run pip-audit
+
+# おまけ
+osv-scanner . # osv-scannerで検出
+trivy fs .    # trivyで検出
+grype .       # grypeで検出
+```
+
+## 言い方
+
+「依存関係まわりの脆弱性」を指す用語はむやみにたくさんある。
+Perplexity にリストを作ってもらった。
+
+### 「依存関係の脆弱性」を直接指す言い方
+
+- 既知の脆弱性を持つコンポーネントの利用 / 使用[3]
+- 既知の脆弱性を含むコンポーネント / ライブラリ / パッケージ[4][3]
+- 脆弱なコンポーネント / ライブラリ / パッケージ / OSS コンポーネント[6][3][4]
+- 脆弱な依存パッケージ / 依存コンポーネント[5][10]
+- 依存関係に起因する脆弱性 / 依存関係由来の脆弱性[1][5]
+- オープンソースの脆弱性 / OSS の脆弱性(管理)[2][6]
+
+### SCA・サプライチェーン文脈の言い方
+
+- ソフトウェアサプライチェーンの脆弱性 / リスク[5][6]
+- ソフトウェアサプライチェーンセキュリティのリスク[6]
+- サードパーティコンポーネントの脆弱性 / サードパーティ依存の脆弱性[3][5]
+- ソフトウェア構成(コンポジション)の脆弱性 / OSS 構成の脆弱性[2][4][6]
+
+### 「依存関係ツリー」や階層性に言及する言い方
+
+- 間接依存関係に潜む脆弱性 / 深い階層の依存関係に潜む脆弱性[4][1]
+- 依存関係の依存関係(transitive dependencies)の脆弱性[4]
+- 依存関係ツリー全体に内在する脆弱性 / 依存グラフに内在する脆弱性[6][4]
+
+### 攻撃手法寄りの言い方(広義には同じ領域)
+
+これらは狭義には「脆弱性」より「攻撃」ですが、実務では依存関係・サプライチェーン脆弱性の話とセットで同列に語られます。[7][1][5]
+
+- 依存関係混乱攻撃(Dependency Confusion / 依存関係かく乱攻撃)[7][1]
+- パッケージのタイポスクワッティング(typosquatting)[1][7]
+- マリシャスパッケージ(悪意あるパッケージ)[7]
+- サプライチェーン攻撃(ソフトウェアサプライチェーン攻撃)[5][1][6]
+
+### ツール・管理側から見た呼び方
+
+- OSS 脆弱性管理 / OSS コンポーネントの脆弱性管理[8][2][6]
+- 依存関係の脆弱性管理 / 依存関係リスク管理[10][5][6]
+- オープンソースパッケージの既知の脆弱性(検出)[8][4]
+- SCA による OSS 脆弱性の可視化 / 依存関係の可視化[2][8][6]
+
+このあたりを組み合わせれば、「依存関係に含まれる既知の脆弱性」を少しニュアンスを変えて表現したいときにかなりバリエーションを持たせられると思います。
+
+[1]: https://guardian.jpn.com/security/cloud-supply/vulnerable-dependencies/
+[2]: https://www.hitachi-solutions.co.jp/sbom/blog/2021120106/
+[3]: https://www.jhipster.tech/jp/dependency-vulnerabilities-check/
+[4]: https://www.paloaltonetworks.jp/cyberpedia/what-is-sca
+[5]: https://japanese.opswat.com/blog/managing-dependency-vulnerabilities-in-your-software-supply-chain
+[6]: https://yamory.io/blog/about-sca
+[7]: https://yamory.io/blog/about-malicious-package
+[8]: https://www.ricksoft.jp/blog/articles/001258.html
+[9]: https://blog.serverworks.co.jp/web-security-basic-terms-guide
+[10]: https://zenn.dev/mavericks/articles/5c7c6a4aa7955b
+
+## 使い分け
+
+小規模なパッケージだったら `pnpm audit`(類) で十分。
+
+npmjs(等)にパブリッシュするときに osv-scanner(等)使うのはありだと思う。
