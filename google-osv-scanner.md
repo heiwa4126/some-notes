@@ -242,6 +242,12 @@ lodash  4.17.15    4.17.21   npm   GHSA-35jh-r3h4-6jhm  High      0.7% (72nd)  0
 lodash  4.17.15    4.17.21   npm   GHSA-29mw-wpgm-hmr9  Medium    0.2% (47th)  0.1
 ```
 
+### GitHub Actions の reuseable workflow を使って lodash のやつを試してみた
+
+あたりまえだけど、おなじログが出る。SARIF はこんな感じ(結構大きいので貼るのやめた)。
+
+重要: 「GitHub の Code scanning alerts は、デフォルトブランチでのスキャン結果のみを Security タブに表示します。」
+
 ## この系統の製品まとめ
 
 ここに書くのも変なんだけど
@@ -252,7 +258,7 @@ lodash  4.17.15    4.17.21   npm   GHSA-29mw-wpgm-hmr9  Medium    0.2% (47th)  0
 インストールが容易で実行が簡単で早くて無料。CI/CD でも使いやすい
 
 - **osv-scanner**
-  - Google 製。OSV データベースを利用して`lockfile`や`SBOM`をスキャン
+  - Google 製。[OSV データベース](https://osv.dev/)を利用して`lockfile`や`SBOM`をスキャン
 - **Trivy**
   - Aqua Security 製。コンテナ・ファイル・リポジトリ・SBOM 対応
 - **パッケージマネージャ組込機能**
