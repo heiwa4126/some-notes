@@ -189,6 +189,25 @@ GitHub Packages のリポジトリがプライベートの場合でも、パッ�
 
 これにより、プライベートな GitHub Packages からパッケージがインストールされます。
 
+### PAT のかわりに GitHub Token を使うこともできる
+
+PAT は WebUI がめんどくさい。
+
+1. gh (GitHub CLI) をインストールする
+2. `gh auth login` で yourOrg にログインする。
+3. `gh auth status`で Active account が yourOrg のメンバーで、かつ Token scopes に `read:packages` があることを確認する。
+4. Token scopes に `read:packages` がない場合は、`gh auth refresh --scopes read:packages` で 再度 yourOrg にログインする。
+5. こんな感じで .npmrc をプロジェクトルートなどに作る
+   ```sh
+   GITHUB_TOKEN=$(gh auth token)
+   echo "@yourOrg:registry=https://npm.pkg.github.com" > .npmrc
+   echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> .npmrc
+   ```
+   `.npmrc` はトークンが含まれるので絶対に公開しないこと。.gitignore に追加
+
+利点は設定が自動化できること。
+欠点はスコープが大きすぎて、インセキュアなこと。PAT のほうがお勧め
+
 ## パッケージの可視性
 
 パブリックレポジトリで作った GitHub Packages はデフォルトではパブリックになる。
