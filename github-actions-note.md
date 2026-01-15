@@ -18,6 +18,8 @@
 - [VSCode 拡張](#vscode-拡張)
 - [permission:](#permission)
 - [action/setup-node](#actionsetup-node)
+- [GITHUB_TOKEN と permissions:](#github_token-と-permissions)
+- [secrets.GITHUB_TOKEN と github.token](#secretsgithub_token-と-githubtoken)
 
 ## On: が難しい
 
@@ -378,3 +380,35 @@ pnpm スペシャルとして pnpm のグローバルストアと node_modules/�
 ```
 
 のようにして使う
+
+## GITHUB_TOKEN と permissions:
+
+permissions:は workflow と job に書ける。
+
+**一度でも permissions を記述したら、書かなかったスコープは none(無効)**
+
+なので
+**Workflow 全体の permissions は、特別な理由がない限り書かない方が安全。**
+job に記述すること
+
+デフォルト値は
+`https://github.com/<userOrOrg>/<reponame>/settings/actions`
+の Workflow permissions
+
+レポジトリの "Setting"->"Actions"->"General"-> "Workflow permissions" のところ。
+デフォルトは "Read repository contents and packages permissions" で
+
+- Contents:read
+- Packages:read
+
+らしい。
+
+(実際にやってみると Metadata:read もついてたけど
+Metadata スコープとは?)
+
+## secrets.GITHUB_TOKEN と github.token
+
+同じ値。
+
+推奨は github.token。
+secrets.GITHUB_TOKEN は互換性のために残されているらしい。
