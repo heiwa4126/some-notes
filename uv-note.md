@@ -532,3 +532,88 @@ uvx --index-url https://test.pypi.org/simple --extra-index-url https://pypi.org/
 - `--extra-index-url` をつけないと 全部 TestPyPI を見に行くので、TestPyPI 上に依存パッケージが無いと死ぬ(上記の場合は gitpython)
 
 `pipx` なら楽かな、と思ったけどそうでもない。
+
+## ビルドバックエンド
+
+「ビルドバックエンド不要」なのは、本当に個人的な使い捨てスクリプトくらい。
+
+## "editable install"
+
+`npm link` みたいなやつ。ただし uv では venv レベルでクローズなとこが違う。
+PEP660 で規定。
+
+uv でビルドバックエンドを指定すれば、`uv pip install -e .` みたいなことをやる必要はほとんどない。
+
+`uv pip install -e .` が必要なのは
+ビルドバックエンドがない場合だけ。
+
+あと `uv pip install` は pyproject.toml を変更しないので、
+あとから依存を再構築ができない。
+
+```sh
+uv init test1 --python 3.12 --build-backend uv
+cd test1
+uv sync
+```
+
+で
+
+```console
+$ uv pip list
+
+Package Version Editable project location
+------- ------- ------------------------------------------
+test1   0.1.0   /home/user1/works/python/uv/editable/test1
+
+$ tomlq .project.dependencies pyproject.toml
+
+[]
+```
+
+親ディレクトリにもどって
+
+```sh
+uv init test2 --python 3.12 --build-backend uv
+cd test2
+uv sync
+```
+
+```console
+$ uv pip list
+
+(空)
+
+$ uv pip install -e .
+
+$ uv pip ls
+Package Version Editable project location
+------- ------- ------------------------------------------
+test2   0.1.0   /home/user1/works/python/uv/editable/test2
+
+$ tomlq .project.dependencies pyproject.toml
+
+[]
+```
+
+続けて
+
+```console
+$ uv add ../test1  # test1の現在のパッケージが.venv以下にコピーされる
+$ uv pip ls
+Package Version Editable project location
+------- ------- ------------------------------------------
+test1   0.1.0
+test2   0.1.0   /home/user1/works/python/uv/editable/test2
+
+$ tomlq .project.dependencies pyproject.toml
+
+["test1"]
+
+$ ls -lad .venv/lib/python3.12/site-packages/test1/*
+```
+
+## uv workspace
+
+モノレポで uv 管理のパッケージ test1 と test2 があるとして、test2 から test1 を使いたい。
+開発中は test2 に test1 を editable install したい、デプロイ時には test2 では test1 依存にしたい。
+というとき、どうすればいい?

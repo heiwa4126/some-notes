@@ -128,3 +128,48 @@ LEARN MORE
   Learn about exit codes using `gh help exit-codes`
   Learn about accessibility experiences using `gh help accessibility`
 ```
+
+## gh CLI から Variables や Secrets は登録できる?
+
+登録できる。レポジトリの指定方法は 3 通りある。
+
+### 1) カレントディレクトリの Git リモートから自動推測(デフォルト)
+
+作業中のリポジトリ配下で実行すると、そのディレクトリの Git リモート(例: `origin`)から `OWNER/REPO` が推測されます。追加指定は不要です。 [\[docs.github.com\]](https://docs.github.com/ja/github-cli/github-cli/quickstart)
+
+```sh
+# 例:現在のリポジトリに Secret を設定
+gh secret set MY_SECRET --body "value"
+
+# 現在のリポジトリに Variable を設定
+gh variable set FEATURE_FLAG --body "on"
+```
+
+### 2) `--repo` / `-R` フラグで明示指定
+
+どこから実行しても、対象リポジトリを `[HOST/]OWNER/REPO` 形式で指定できます。GitHub Enterprise のホスト名を含めた指定も可。 [\[cli.github.com\]](https://cli.github.com/manual/gh_secret_set), [\[mankier.com\]](https://www.mankier.com/1/gh-secret-set), [\[cli.github.com\]](https://cli.github.com/manual/gh_variable_set)
+
+```sh
+# GitHub.com の特定リポジトリに Secret
+gh secret set DOCKER_TOKEN --body "$TOKEN" --repo your-org/your-repo
+
+# Enterprise の特定リポジトリに Variable(ホスト名付き)
+gh variable set API_URL --body "https://api.example.local" \
+  --repo ghe.example.com/your-org/your-repo
+```
+
+### 3) **環境変数 `GH_REPO` で固定する**
+
+頻繁に同じリポジトリを操作する場合は、環境変数 `GH_REPO` に `[HOST/]OWNER/REPO` を設定しておくと、各コマンドで対象が既定になります。 [\[cli.github.com\]](https://cli.github.com/manual/gh_help_environment)
+
+```sh
+export GH_REPO=your-org/your-repo
+# 以降 --repo を付けずに対象が your-org/your-repo になる
+gh secret set SENTRY_DSN --body "$DSN"
+gh variable set LOG_LEVEL --body "debug"
+```
+
+### 補足
+
+- **Organization レベル**を指定する場合は `--org your-org` を使います(Secrets/Variables ともに可)。 [\[cli.github.com\]](https://cli.github.com/manual/gh_secret_set), [\[cli.github.com\]](https://cli.github.com/manual/gh_variable_set)
+- **Environment 向け**なら `--env production` のように環境名を加えます(事前に Environment が存在している必要あり。未作成なら `gh api -X PUT /repos/OWNER/REPO/environments/ENV` で作成可能)。 [\[cli.github.com\]](https://cli.github.com/manual/gh_secret_set), [\[cli.github.com\]](https://cli.github.com/manual/gh_variable_set), [\[stackoverflow.com\]](https://stackoverflow.com/questions/70943164/create-environment-for-repository-using-gh)

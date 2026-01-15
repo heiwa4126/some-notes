@@ -431,8 +431,7 @@ NVD の場合、MITRE から受け取った CVE の「最低限の情報」(ID�
 ## pip-audit デモ
 
 ```sh
-mkdir working2 && cd working2
-uv init
+uv init working2 --build-backend uv && cd working2
 uv add pip-audit --dev
 
 # 脆弱性があるパッケージをインストール

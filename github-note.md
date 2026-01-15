@@ -35,31 +35,33 @@
 
 Linux だったら~/.ssh/config で
 
-```conf
-Host github.com
-     # Hostname github.com
-     # Port 22
+```config
+Host ssh-github.com
      Hostname ssh.github.com
      Port 443
      User git
      Compression yes
      IdentityFile ~/.ssh/github
-     ProxyCommand  /usr/bin/connect-proxy -H 111.222.333.444:3128 %h %p
 ```
 
-みたいな感じで(要アレンジ)。
+みたいな感じで(要アレンジ)。クローンするとき、
+`git@github.com:heiwa4126/some-notes.git` を
+`git@ssh-github.com:heiwa4126/some-notes.git` にする。
+
+`Host ssh.github.com` はダメ。
+先に`Host github.com` にマッチするみたい。
 
 Windows だったら
 
 - putty で"github.com"プロファイルを作る
   - port: **443**
-  - host: **ssh**.github.com
+  - host: **ssh**-github.com
   - Auto-login username: git
   - Proxy を環境に合わせて設定
   - 鍵
 - Close window on Exit で Never を選んで接続することで`ssh -T git@github.com`に相当するテストを行う。
 
-のがコツ。Repositry to clone は、github の緑のボタンで出てくるやつをそのまま使える(ここだったら`git@github.com:heiwa4126/some-notes.git`で)
+のがコツ。Repository to clone は、github の緑のボタンで出てくるやつをそのまま使える(ここだったら`git@github.com:heiwa4126/some-notes.git`で)
 
 ## Firefox の markdown 拡張
 
