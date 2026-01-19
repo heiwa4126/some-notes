@@ -75,6 +75,9 @@ v[0-9]*.[0-9]*.[0-9]*-?*
 
 で、どれが checkout されるかというと「デフォルトブランチの最新の checkout」みたい。
 
+制御するなら
+concurrency: の cancel-in-progress: を使う。
+
 - [jobs\.<job_id>\.steps\[\*\]\.uses](https://docs.github.com/ja/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsuses)
 - [actions/checkout: Action for checking out a repo](https://github.com/actions/checkout)
 
@@ -431,18 +434,18 @@ Docker 版は shellcheck と pyflakes 入り
 
 デフォルトは bash なんだけど
 
-- デフォルトだと  `bash -e {0}`
+- デフォルトだと `bash -e {0}`
 - 指定すると `bash --noprofile --norc -eo pipefail {0}`
- 
+
 なんだそうな。
 
 ### `--noprofile`
 
-ログイン時や非対話起動時に読み込まれる **プロファイル系の起動ファイルを読まなくする。
+ログイン時や非対話起動時に読み込まれる \*\*プロファイル系の起動ファイルを読まなくする。
 
 ### `--norc`
 
-**rc ファイルを読みません**。  
+**rc ファイルを読みません**。
 
 ユーザー環境の `.bashrc` にエイリアス・関数・`shopt` 等があると CI とローカルで挙動が変わることがあります。これを避けます。
 
@@ -451,10 +454,10 @@ Docker 版は shellcheck と pyflakes 入り
 `set -e` と同じで、**コマンドが非ゼロで終了したら直ちにシェルを終了**します。  
 ただし有名な落とし穴があり、以下では終了しません(= 無効化される文脈がある):
 
-*   `if` の条件式内、`while`/`until` の条件式内
-*   `&&` / `||` の右辺
-*   `!`(否定)で実行したコマンド
-*   サブシェル(`( ... )`)内、`command`/`builtin` などで抑制された場合
+- `if` の条件式内、`while`/`until` の条件式内
+- `&&` / `||` の右辺
+- `!`(否定)で実行したコマンド
+- サブシェル(`( ... )`)内、`command`/`builtin` などで抑制された場合
 
 で、
 `set -o pipefail` と同じで、**パイプラインのどこか1つでも失敗したら失敗(非ゼロ)として扱う**ようにします。  
