@@ -158,7 +158,7 @@ Future は「手動制御可能な Promise」のようなもの
 イベントループの流れ:
 
 1. プログラムが非同期タスクやコルーチンをイベントループに登録する。
-2. イベントループが 登録された処理の中から「今すぐ実行できるものがあるか」を確認する。
+2. イベントループが登録された処理の中から「今すぐ実行できるものがあるか」を確認する。
 3. イベントループが実行可能な処理を選び、順番に実行する。
 4. 処理が await などで待機状態になると、イベントループはその処理を一時停止する。
 5. イベントループが他の実行可能な処理に切り替えて、並行して進める。
@@ -195,7 +195,7 @@ asyncio.set_event_loop(loop)
 
 ## asyncio.gather(\*aws)
 
-<https://docs.python.org/ja/3/library/asyncio-task.html#running-tasks-concurrently> には 「並行な Task 実行(Running Tasks Concurrently)」と書かれているけど、これも 「awaitables をカレントのイベントループで実行」なので「並行」とはいいがたいのではないか。
+<https://docs.python.org/ja/3/library/asyncio-task.html#running-tasks-concurrently> には「並行な Task 実行(Running Tasks Concurrently)」と書かれているけど、これも「awaitables をカレントのイベントループで実行」なので「並行」とはいいがたいのではないか。
 
 あと、asyncio.gather()はカレントループに既存で awaitables があってもなくても
 asyncio.gather()で指定した awaitables のみ待ち受ける。
@@ -267,7 +267,7 @@ uvloop.run(main())
 1. coro(コルーチンオブジェクト)を Task に変換。
 2. その Task を現在のイベントループに登録(スケジューリング)
 
-なので 「非同期関数を実行して coro を得る」時と違って、関数の実行が始まる。
+なので「非同期関数を実行して coro を得る」時と違って、関数の実行が始まる。
 
 結果や例外は
 

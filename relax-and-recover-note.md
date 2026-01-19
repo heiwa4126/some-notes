@@ -17,8 +17,8 @@ Relax and Recover(ReaR)メモ
 - [Relax-and-Recover - Linux Disaster Recovery](http://relax-and-recover.org/)
 - [Relax-and-Recover FAQ](http://relax-and-recover.org/documentation/faq)
 - [Relax-and-Recover usage](http://relax-and-recover.org/usage/)
-- [rear/rear.8.adoc at master · rear/rear · GitHub](https://github.com/rear/rear/blob/master/doc/rear.8.adoc) - CIFSでクレデンシャルファイルを使う例が載ってる。「動かない」と言う話も多数あり
-- [rear/default.conf at 55529525343f31ba0b523078fbdb79be81ec6f76 · rear/rear · GitHub](https://github.com/rear/rear/blob/55529525343f31ba0b523078fbdb79be81ec6f76/usr/share/rear/conf/default.conf) - confのパラメータの例 兼 解説
+- [rear/rear.8.adoc at master · rear/rear · GitHub](https://github.com/rear/rear/blob/master/doc/rear.8.adoc) - CIFS でクレデンシャルファイルを使う例が載ってる。「動かない」と言う話も多数あり
+- [rear/default.conf at 55529525343f31ba0b523078fbdb79be81ec6f76 · rear/rear · GitHub](https://github.com/rear/rear/blob/55529525343f31ba0b523078fbdb79be81ec6f76/usr/share/rear/conf/default.conf) - conf のパラメータの例兼 解説
 - [Relax-and-Recover · GitHub](https://github.com/rear)
 - [Relax and Recover ubuntu image backup](http://www.ckenko25.jp/2017/11/relax-and-recover-ubuntu-image-backup)
 - [Workshop_REAR.pdf](https://osbconf.org/wp-content/uploads/2016/09/Workshop_REAR.pdf)

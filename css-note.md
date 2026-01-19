@@ -72,7 +72,7 @@ Windows 10/11 に Noto font (Noto Sans Mono を除く)が標準インストー�
 いわゆる「等幅」
 
 - **Noto Sans Mono CJK**: Google が開発した Noto フォントファミリーの一部。日本語・中国語・韓国語（CJK）の文字セットに対応した等幅フォント。Windows 10/11（2025 年以降）に標準搭載。
-- **Source Han Mono**: 「Noto Sans Mono CJK」の別名バージョン。Adobe 主導で開発された Source Han シリーズの等幅バージョン。見た目と機能は基本的に Noto Sans Mono CJK と同じ。
+- **Source Han Mono**:「Noto Sans Mono CJK」の別名バージョン。Adobe 主導で開発された Source Han シリーズの等幅バージョン。見た目と機能は基本的に Noto Sans Mono CJK と同じ。
 - **BIZ UD ゴシック**: 日本政府が推奨するユニバーサルデザイン（UD）フォント。アクセシビリティに配慮した等幅フォントで、可読性に優れている。
 - **SF Mono**: Apple が開発した macOS と iOS 用の等幅フォント。プログラミングやコード表示に最適化されているが、システムフォントとしてのみ利用可能。
 - **Menlo**: macOS に標準搭載されている等幅フォント。iOS の Xcode などでも使用される。

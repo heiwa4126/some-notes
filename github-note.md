@@ -336,14 +336,14 @@ GitHub の Branch protection rule は、リポジトリのブランチを保護�
 うっかり"Your main branch isn't protected"表示を消してしまった場合
 
 1. 対象リポジトリのトップページを開く
-2. 上部メニューから 「Settings」 をクリック
-3. 左側メニューで 「Branches」 を選択
-4. 「Branch protection rules」 セクションにある 「Add rule」 をクリック
+2. 上部メニューから「Settings」をクリック
+3. 左側メニューで「Branches」を選択
+4. 「Branch protection rules」セクションにある「Add rule」をクリック
 5. 「Branch name pattern」に main と入力し、必要な保護オプションを設定
 
 もしメインブランチが master なら 5.では master と入力してね
 
-で、画面変わって Target branches で デフォルトブランチを追加。
+で、画面変わって Target branches でデフォルトブランチを追加。
 Enforcement status を Active に変更。
 
 これでやっと完成。
@@ -418,7 +418,7 @@ git config --global --get credential.helper
 
 - 各コードは**一度しか使えません**。
 - 使用したコードは無効になるので、残りのコードを安全な場所に保管してください
-- すべて使い切った場合は、GitHub で新しいリカバリーコードを再生成できます(上の 「取得方法」参照)
+- すべて使い切った場合は、GitHub で新しいリカバリーコードを再生成できます(上の「取得方法」参照)
 
 ## default branch 以外も fetch する
 

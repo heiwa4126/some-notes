@@ -1,8 +1,8 @@
 # Azure PowerShell メモ
 
-遅くて嫌い。PowerShell 7でも遅い。
+遅くて嫌い。PowerShell 7 でも遅い。
 
-WindowsでもAzure CLIは使えるので、無理に使う必要なし。
+Windows でも Azure CLI は使えるので、無理に使う必要なし。
 
 ```powershell
 winget install -e --id Microsoft.AzureCLI
@@ -46,10 +46,10 @@ Get-AzContext
 
 # 実行例
 
-ロケーション一覧をsortして出力:
+ロケーション一覧を sort して出力:
 
 ```powershell
 Get-AzLocation | select Location | Sort Location
 ```
 
-`Location`が2つ要るところが不愉快。
+`Location`が 2 つ要るところが不愉快。

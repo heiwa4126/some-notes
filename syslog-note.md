@@ -1,4 +1,4 @@
-syslog(とjouernald)で出るエラーメッセージの対策メモ
+syslog(と jouernald)で出るエラーメッセージの対策メモ
 
 - [pam_oddjob_mkhomedir.soが無い](#pam_oddjob_mkhomedirsoが無い)
 - [ntpd ::1](#ntpd-1)
@@ -84,7 +84,7 @@ logger -p 6 "info:情報"
 logger -p 7 "debug:デバッグ情報"
 ```
 
-`-p0`するとbeepが鳴るのが面白い。(端末によっては画面フラッシュ)
+`-p0`すると beep が鳴るのが面白い。(端末によっては画面フラッシュ)
 
 こんなのが出ます。
 
@@ -98,13 +98,13 @@ Jun  7 17:46:24 r1 user1: notice:通知
 Jun  7 17:46:24 r1 user1: info:情報
 ```
 
-(RHEL7のrsyslog(デフォルト設定値)で/var/log/message)
+(RHEL7 の rsyslog(デフォルト設定値)で/var/log/message)
 
 # 出力フォーマットを変えてみる
 
 プライオリティ文字列を追加してみる。
 
-/etc/rsyslog.confの、この部分を
+/etc/rsyslog.conf の、この部分を
 
 ```
 # Log anything (except mail) of level info or higher.
@@ -129,7 +129,7 @@ rsyslogd -N 1 -c /etc/rsyslog.conf
 
 `-c /etc/rsyslog.conf`はデフォルト値なので省略可能
 
-rsyslogd再起動(reloadはなくなった模様)
+rsyslogd 再起動(reload はなくなった模様)
 
 ```bash
 systemctl restart rsyslog
@@ -148,7 +148,7 @@ Jun  7 18:19:14 r1 user1: info:情報 <info>
 ```
 
 もう少し変な例。
-/var/log/messageにエラーを"error"という文字列で出さなければならない要件があったケース
+/var/log/message にエラーを"error"という文字列で出さなければならない要件があったケース
 
 ```
 # Log anything (except mail) of level info or higher.
@@ -170,4 +170,4 @@ Jun  8 20:48:22 r1 user1: notice:通知 <notice>
 Jun  8 20:48:22 r1 user1: info:情報 <info>
 ```
 
-crit以上もエラーに見えるように、変なことをしている。
+crit 以上もエラーに見えるように、変なことをしている。

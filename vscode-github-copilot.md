@@ -21,7 +21,7 @@ VSCode+GitHub Copilot で使う場合
 
 いま VSCode で awslabs.aws-documentation-mcp-server が設定されているとしましょう。
 
-この流れで「Sampling」は サーバーが VS Code に LLM 呼び出しを委託するプロセスです。
+この流れで「Sampling」はサーバーが VS Code に LLM 呼び出しを委託するプロセスです。
 
 ステップごとの動き
 
@@ -80,7 +80,7 @@ VSCode+GitHub Copilot で使う場合
 - **特徴**:
   - 複雑な機能をステップに分解
   - 明確化のため質問を投げかける
-  - 作成した計画は、後で Agent モード に引き継ぎ可能
+  - 作成した計画は、後で Agent モードに引き継ぎ可能
 - **例**:  
   「多言語対応を追加するための計画を立てて」→ 手順リストを提示
 

@@ -1,4 +1,4 @@
-LVMいろいろノート
+LVM いろいろノート
 
 - [LVMのrootをfsck](#lvmのrootをfsck)
 - [LVMのサイズを広げる](#lvmのサイズを広げる)
@@ -16,13 +16,13 @@ LVMいろいろノート
 
 # LVMのrootをfsck
 
-気が付いたら/がread-onlyになってしまったような場合。
+気が付いたら/が read-only になってしまったような場合。
 (そうじゃない場合は`shutdown -rF now`とか`sudo touch /forcefsck`)
 
-かつLVMのrootをfsckするとき。
+かつ LVM の root を fsck するとき。
 
-1. RHEL(or CentOSの)レスキューディスクから起動
-2. mountのオプションを選ぶ画面になったらALT+F2
+1. RHEL(or CentOS の)レスキューディスクから起動
+2. mount のオプションを選ぶ画面になったら ALT+F2
 3. 以下のコマンドをアレンジして実行。
 
 ```
@@ -34,14 +34,14 @@ fsck.ext4 -y /dev/mappar/XXXX-root
 
 `fsck.ext4`のところは環境にあわせてアレンジ。
 
-マウントするとfsckできないので、こんな感じになる。
-read-onlyマウントでもfsckできなかった。
+マウントすると fsck できないので、こんな感じになる。
+read-only マウントでも fsck できなかった。
 
 # LVMのサイズを広げる
 
 (未整理)
 
-vgのあるpvを広げるケース。つまり
+vg のある pv を広げるケース。つまり
 
 ```
 $ lsblk
@@ -58,12 +58,12 @@ sr0                       11:0    1  1024M  0 rom
 
 のような時に、
 
-1. sdaを拡張する
-2. 拡張領域をVolGroup00-rootに追加する
+1. sda を拡張する
+2. 拡張領域を VolGroup00-root に追加する
 
-というようなVMやCloudでよくあるケースを考える。
+というような VM や Cloud でよくあるケースを考える。
 
-何らかの方法でディスクを拡張し、OSもそれを認識した、という状態から。
+何らかの方法でディスクを拡張し、OS もそれを認識した、という状態から。
 
 ```
 parted /dev/sda
@@ -127,11 +127,11 @@ rpm -ql lvm2 | grep bin/
 dpkg -L lvm2 | grep bin/
 ```
 
-- `pvs` - PVの一覧
-- `pvdisplay` - PVの詳細
-- `vgs` - VGの一覧
-- `vgdisplay` - VGの詳細
-- `lvs` - LVの一覧
+- `pvs` - PV の一覧
+- `pvdisplay` - PV の詳細
+- `vgs` - VG の一覧
+- `vgdisplay` - VG の詳細
+- `lvs` - LV の一覧
 
 なぜ `lvdisplay {lv名}`が出来ないのか?
 `lvdisplay {lv path}`はできる。
@@ -143,16 +143,16 @@ dpkg -L lvm2 | grep bin/
 
 参考: [論理ボリュームマネージャーの管理 Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/logical_volume_manager_administration/index)
 
-既存のボリュームでやるのは怖いので、新しいLVを作る。
+既存のボリュームでやるのは怖いので、新しい LV を作る。
 
-ちょっと空きのあるvgがあったので
+ちょっと空きのある vg があったので
 
 ```
 # vgdisplay --short
   "rootvg" <63.02 GiB [27.00 GiB used / <36.02 GiB free]
 ```
 
-ここに新しいLVを作る。
+ここに新しい LV を作る。
 
 ```sh
 lvcreate -n testlv -L 1G rootvg
@@ -176,7 +176,7 @@ yes | head -100 > /testv/text1.txt
 wc -l /testv/text1.txt
 ```
 
-スナップショットを100MiB作ってみる(同じVGに空きがあることが必須)
+スナップショットを 100MiB 作ってみる(同じ VG に空きがあることが必須)
 
 ```sh
 lvcreate -s -L 100M -n testlv-snap /dev/rootvg/testlv
@@ -199,10 +199,10 @@ yes n | head -100 >> /testv/text1.txt
 wc -l /testv/text1.txt
 ```
 
-200になるはず。
+200 になるはず。
 
 dump(xfs_dump)なら、`/dev/rootvg/testlv-snap`をバックアップすればいい。
-ここはread-onlyでマウントしてみる。
+ここは read-only でマウントしてみる。
 
 ```sh
 mkdir -p /mnt/testlv-snap
@@ -210,11 +210,11 @@ mount -t auto -o ro,nouuid /dev/rootvg/testlv-snap /mnt/testlv-snap
 wc -l /mnt/testlv-snap/text1.txt
 ```
 
-100になるはず。
+100 になるはず。
 
 **注意:**
-XFSだとnouuidオプションをつけないと
-dmesgに `Filesystem has duplicate UUID`
+XFS だと nouuid オプションをつけないと
+dmesg に `Filesystem has duplicate UUID`
 が出てマウントできませんでした。
 
 ## スナップショットから復元
@@ -230,22 +230,22 @@ mount -t xfs /dev/rootvg/testlv /testv
 wc -l /testv/text1.txt
 ```
 
-100になるはず。
+100 になるはず。
 スナップショットボリュームは自動的に削除される。
 
 両方ともアンマウントしないといけないのが辛い。
 
-アンマウントしないでmergeすると
+アンマウントしないで merge すると
 
-- どちらかのLVがアクティブになり(LVM的に。`lvchange -a`みたいな)
-- かつ両LVがマウントされていない
+- どちらかの LV がアクティブになり(LVM 的に。`lvchange -a`みたいな)
+- かつ両 LV がマウントされていない
 
 状態になると、マージ処理が実行されるらしい。
 (要は再起動しろ、ということ)
 
 参考: [4.4.7. スナップショットボリュームのマージ Red Hat Enterprise Linux 6 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/logical_volume_manager_administration/snapshot_merge)
 
-アンマウントしないでmergeするテスト
+アンマウントしないで merge するテスト
 
 ```
 # lvconvert --merge /dev/rootvg/testlv-snap
@@ -295,7 +295,7 @@ lvremove /dev/rootvg/testlv -y
 
 ## スナップショットがあふれた場合
 
-(↓part2の [snapshotがfullになるとどうなるか](#snapshotがfullになるとどうなるか) 参照)
+(↓part2 の [snapshotがfullになるとどうなるか](#snapshotがfullになるとどうなるか) 参照)
 
 [スナップショットが溢れるケース - LVMでスナップショットの作成と状態の復元 - Qiita](https://qiita.com/TsutomuNakamura/items/a68377952d07397db448#%E3%82%B9%E3%83%8A%E3%83%83%E3%83%97%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%E3%81%8C%E6%BA%A2%E3%82%8C%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9)
 
@@ -309,7 +309,7 @@ lvremove /dev/rootvg/testlv -y
 
 # LVM snapshotの練習 part2
 
-VMでテスト
+VM でテスト
 
 ```
 # lsblk -f
@@ -327,11 +327,11 @@ sda
 
 で空きがぜんぜん無い。
 
-sdaを1GB広げて
-VolGroup00に追加して
+sda を 1GB 広げて
+VolGroup00 に追加して
 拡張分をスナップショット領域にする。
 
-VMマネージャで広げて、
+VM マネージャで広げて、
 `parted /dev/sda`で`p Fix Fix resizepart 3 100%`で
 `pvresize /dev/sda3`
 
@@ -342,14 +342,14 @@ VMマネージャで広げて、
   Free  PE / Size       256 / 1.00 GiB
 ```
 
-root用にsnapshot領域を作成
+root 用に snapshot 領域を作成
 
 ```sh
 lvcreate -s -l 100%FREE -n snap1 /dev/mapper/VolGroup00-root
 ls -lad /dev/mapper/VolGroup00-snap1
 ```
 
-この`/dev/mapper/VolGroup00-snap1`に対してdumpとかを行う。
+この`/dev/mapper/VolGroup00-snap1`に対して dump とかを行う。
 
 状態の確認は
 
@@ -387,7 +387,7 @@ lvremove VolGroup00/snap1 -y
   rootvg   1   6   0 wz--n- <63.02g <24.02g
 ```
 
-rootvgに空きがあるので、ここに新しいLVMつくってテスト
+rootvg に空きがあるので、ここに新しい LVM つくってテスト
 
 ```
 # lvcreate -n testlv -L 1g rootvg
@@ -442,7 +442,7 @@ drwx------ 2 root root 16384  2月  9 07:07 lost+found
 -rw-r--r-- 1 root root    50  2月  9 07:10 test.txt
 ```
 
-/mnt/testで、ファイルを追記してみる
+/mnt/test で、ファイルを追記してみる
 
 ```
 # yes test | head >> /mnt/test/test.txt
@@ -456,7 +456,7 @@ Allocated to snapshot  0.88%
 
 いいようですね。
 
-では/mnt/testの方をdisk fullにしてみる。
+では/mnt/test の方を disk full にしてみる。
 
 ```
 # yes test >> /mnt/test/test.txt
@@ -474,7 +474,7 @@ ls: /mnt/snap1/test.txt にアクセスできません: そのようなファイ
   LV snapshot status     INACTIVE destination for testlv
 ```
 
-syslogの出力は
+syslog の出力は
 
 ```
 Feb  9 07:21:06 r7 kernel: device-mapper: snapshots: Invalidating snapshot: Unable to allocate exception.
@@ -487,8 +487,8 @@ Feb  9 07:21:18 r7 dmeventd[9396]: No longer monitoring snapshot rootvg-snap1.
 
 つまり
 
-- LVMスナップショットがあふれると、スナップショットはアンマウントされる
-- LVリストからは削除されないけど、再マウントもなにも出来ない
+- LVM スナップショットがあふれると、スナップショットはアンマウントされる
+- LV リストからは削除されないけど、再マウントもなにも出来ない
 
 ということらしい。
 
@@ -518,9 +518,9 @@ lvremove rootvg/testlv
 メモなのでまとまってません。
 
 `/dev/sdc`
-cfdisk/cgdiskでパーティション切ってLVM(8E)にする。
+cfdisk/cgdisk でパーティション切って LVM(8E)にする。
 
-テスト用LV`root`を作る。
+テスト用 LV`root`を作る。
 
 ```sh
 pvcreate /dev/sdc1
@@ -535,7 +535,7 @@ ls /mnt/x
 # ↑lost+foundディレクトリができてるはず
 ```
 
-VolGroup00に空きはない。
+VolGroup00 に空きはない。
 
 ```
 # vgs
@@ -543,17 +543,17 @@ VolGroup00に空きはない。
   VolGroup00   1   1   0 wz--n- <14.90g      0
 ```
 
-`/dev/sdc`が(何らかの手段で)+16G拡張されるとする。
-(普通こういうことはしません。LVM的にはvgextendでVGにPVを追加するのが正しい)
+`/dev/sdc`が(何らかの手段で)+16G 拡張されるとする。
+(普通こういうことはしません。LVM 的には vgextend で VG に PV を追加するのが正しい)
 
-VolGroup00を拡張する手順。拡張分全部割り振る。
+VolGroup00 を拡張する手順。拡張分全部割り振る。
 
 ```sh
 echo -e "p\nresizepart 1 100%\np\nq\n" | parted /dev/sdc
 pvresize /dev/sdc1
 ```
 
-VolGroup00に空きが出来た。
+VolGroup00 に空きが出来た。
 
 ```
 # vgs
@@ -563,7 +563,7 @@ VolGroup00に空きが出来た。
 
 # ディスクの追加
 
-ホストにディスクを追加して、gvに追加、rootを増やす。
+ホストにディスクを追加して、gv に追加、root を増やす。
 
 初期状態
 
@@ -592,11 +592,11 @@ Filesystem                        Size  Used Avail Use% Mounted on
   LV Size                <6.20 GiB
 ```
 
-- rootのlvにsdb(128MB)を追加する
-- 事情によりext4
-- 訳あってCentOS7
+- root の lv に sdb(128MB)を追加する
+- 事情により ext4
+- 訳あって CentOS7
 
-/dev/sdbにID:8eで/dev/sdb1を作る。cfdiskを使うとTUIで便利。
+/dev/sdb に ID:8e で/dev/sdb1 を作る。cfdisk を使うと TUI で便利。
 
 ```
 # pvcreate /dev/sdb1

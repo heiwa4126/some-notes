@@ -1,11 +1,11 @@
-- Terraform, AWS SAMなど同様のIaCツール
-- AWS CDKに似ているが、AWS CDKの1000倍早い
-- 既存言語で書けるのはCDK同様だが、YAMLでも書ける
-- Terraformのbackendにあたるのが Pulumiのweb(Pulumi Cloud Console)。GitHubActionみたいなUIがついてる
-  - Local Stateもある。
-- Pulumi Cloud Consoleをチームで使うなら有料 [Pricing | Pulumi](https://www.pulumi.com/pricing/)
-- ~/.aws/credentials とかは見てくれない。環境変数をexport または
-- Terraform同様GoLangで書かれてる。インストールが簡単。
+- Terraform, AWS SAM など同様の IaC ツール
+- AWS CDK に似ているが、AWS CDK の 1000 倍早い
+- 既存言語で書けるのは CDK 同様だが、YAML でも書ける
+- Terraform の backend にあたるのが Pulumi の web(Pulumi Cloud Console)。GitHubAction みたいな UI がついてる
+  - Local State もある。
+- Pulumi Cloud Console をチームで使うなら有料 [Pricing | Pulumi](https://www.pulumi.com/pricing/)
+- ~/.aws/credentials とかは見てくれない。環境変数を export または
+- Terraform 同様 GoLang で書かれてる。インストールが簡単。
 - すごい「こなれてる」印象。
 
 # インストール
@@ -46,7 +46,7 @@ fi
 
 # 利点欠点
 
-CDKと同じく「最終的には宣言型になるのだが、その定義を手続き的に行う」やつ。これは「上から順番に処理される」ということ。
+CDK と同じく「最終的には宣言型になるのだが、その定義を手続き的に行う」やつ。これは「上から順番に処理される」ということ。
 
 利点は既存言語の文法と関数が使えること。
 
@@ -57,12 +57,12 @@ CDKと同じく「最終的には宣言型になるのだが、その定義を�
 # メモ
 
 - dev
-- qa (Quality Assurance) QA環境 検証環境
+- qa (Quality Assurance) QA 環境検証環境
 - prod
 
 # ハングアップ
 
-pulumi new aws-goで作ったプロジェクトはpulumi upで死ぬ。
+pulumi new aws-go で作ったプロジェクトは pulumi up で死ぬ。
 というか「すさまじく重い」だけなんだろうけど。
 
 ```
@@ -116,7 +116,7 @@ pulumi up
 
 このへんまちがい
 
-gitにはvenvは入ってないのでクローン先では
+git には venv は入ってないのでクローン先では
 
 ```bash
 git clone xxxxx
@@ -133,7 +133,7 @@ pip install -r requirements.txt
 pulumi config
 ```
 
-でdev選ぶ。設定は `~/.pulumi/workspaces/`以下に保存される。
+で dev 選ぶ。設定は `~/.pulumi/workspaces/`以下に保存される。
 
 このへんからただしい手順
 
@@ -151,7 +151,7 @@ pulumi config set aws:region us-east-2
 pulumi up  # pip install -r requirements.txtは自動で行う(手動でもいいけど)
 ```
 
-この手順も不要なのがあって、venvのactivateはこのあと開発するなら必要。デプロイだけなら不要
+この手順も不要なのがあって、venv の activate はこのあと開発するなら必要。デプロイだけなら不要
 
 [Pulumiを使用する上での実践的なTips | DevelopersIO](https://dev.classmethod.jp/articles/pulumi-tips/)
 
@@ -159,7 +159,7 @@ pulumi up  # pip install -r requirements.txtは自動で行う(手動でもい�
 
 [pulumi/examples: Infrastructure, containers, and serverless apps to AWS, Azure, GCP, and Kubernetes... all deployed with Pulumi](https://github.com/pulumi/examples)
 
-たとえば AWS Lambda(python) + AWS Gatewayのサンプルコードを試す手順は
+たとえば AWS Lambda(python) + AWS Gateway のサンプルコードを試す手順は
 
 ```bash
 # GitHubのsvn APIで特定のディレクトリ以下だけを取得
@@ -194,7 +194,7 @@ curl $(pulumi stack output apigateway-rest-endpoint)/test
 . ./venv/bin/activate
 ```
 
-でpythonのvenv環境に入って `__main__.py` をいじりましょう。
+で python の venv 環境に入って `__main__.py` をいじりましょう。
 
 サンプルを消す場合は
 
@@ -206,14 +206,14 @@ pulumi destroy
 
 # Pulumiのstack
 
-「スタック」はAWS CloudFormationのstackとかではなくて、
-dev, prodみたいなもの。Terraformのworkspaceみたいなもの?
+「スタック」は AWS CloudFormation の stack とかではなくて、
+dev, prod みたいなもの。Terraform の workspace みたいなもの?
 
 スタックごとに変数(Configuration)を設定できる。
-Terraformのvariable, CFnのparameterに相当する。
+Terraform の variable, CFn の parameter に相当する。
 
 すごいのはこれらが Pulumi Cloud に保存されること。
-(outputsも、だがこれはCFnとかTerraformでも同じなので驚かない)
+(outputs も、だがこれは CFn とか Terraform でも同じなので驚かない)
 
 ```bash
 pulumi stack ls

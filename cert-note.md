@@ -9,17 +9,17 @@
 
 # CA.pl
 
-昔っからopensslパッケージについているCA.plで
-プライベートCA(オレオレ認証局)を作ってみるメモ。
+昔っから openssl パッケージについている CA.pl で
+プライベート CA(オレオレ認証局)を作ってみるメモ。
 
-- Red Hat系だと`openssl-perl`パッケージで、パスは`/etc/pki/tls/misc/CA.pl`。
-- Debian系だと`openssl`パッケージに同梱で、パスは`/usr/lib/ssl/misc/CA.pl`
+- Red Hat 系だと`openssl-perl`パッケージで、パスは`/etc/pki/tls/misc/CA.pl`。
+- Debian 系だと`openssl`パッケージに同梱で、パスは`/usr/lib/ssl/misc/CA.pl`
 
 - [4\.9\. Setting Up a Certifying Authority \- Linux Security Cookbook \[Book\]](https://www.oreilly.com/library/view/linux-security-cookbook/0596003919/ch04s09.html)
 - [インストール](http://archive.linux.or.jp/JF/JFdocs/SSL-Certificates-HOWTO/x129.html)
 
-CA.plのパス長いので、
-aliasかPATHに追加するか、作業ディレクトリにsymlink。/usr/local/bin/CA.plとかにsymlinkでもいいね。
+CA.pl のパス長いので、
+alias か PATH に追加するか、作業ディレクトリに symlink。/usr/local/bin/CA.pl とかに symlink でもいいね。
 
 ```sh
 ln -sf /usr/lib/ssl/misc/CA.pl .
@@ -27,7 +27,7 @@ ln -sf /usr/lib/ssl/misc/CA.pl .
 
 デフォルト設定: `/etc/ssl/openssl.cnf`
 
-Ubuntuでの例
+Ubuntu での例
 
 ```
 $ ls -la /etc/ssl/openssl.cnf /usr/lib/ssl/openssl.cnf
@@ -35,9 +35,9 @@ $ ls -la /etc/ssl/openssl.cnf /usr/lib/ssl/openssl.cnf
 lrwxrwxrwx 1 root root    20 Mar 22 20:42 /usr/lib/ssl/openssl.cnf -> /etc/ssl/openssl.cnf
 ```
 
-configファイルは環境変数OPENSSL_CONFIGから得る。
+config ファイルは環境変数 OPENSSL_CONFIG から得る。
 ローカルにコピーして、
-countryName_defaultとかを書き変える。
+countryName_default とかを書き変える。
 
 ```
 export OPENSSL_CONFIG="`pwd`/openssl.cnf"
@@ -96,7 +96,7 @@ demoCA/
 `-- serial
 ```
 
-WindowsなんかでプライベートCAを簡単にインポートできるようにDER形式に変換したバージョンも作っておく。
+Windows なんかでプライベート CA を簡単にインポートできるように DER 形式に変換したバージョンも作っておく。
 
 ```
 openssl x509 -outform der -in cacert.pem -out cacert.der
@@ -119,9 +119,9 @@ cd ..
 ./CA.pl -sign
 ```
 
-newcert.pemが生成される。
+newcert.pem が生成される。
 
-serialが1個増える
+serial が 1 個増える
 
 ```
 $ git diff demoCA/serial
@@ -146,13 +146,13 @@ mv newcert.pem cert1
 rm newreq.pem
 ```
 
-いやこれ面倒だな。カレントで作って、最後にpemを3つ移動とかがいいか?
+いやこれ面倒だな。カレントで作って、最後に pem を 3 つ移動とかがいいか?
 
 ## クライアント証明書
 
 [オレオレ認証局でクライアント認証 ～ ウェブの Basic 認証をリプレース \| OPTPiX Labs Blog](https://www.webtech.co.jp/blog/optpix_labs/server/1780/)
 
-CA.plを使うなら
+CA.pl を使うなら
 
 ```sh
 ./CA.pl -newreq
@@ -164,9 +164,9 @@ CA.plを使うなら
 
 [PKCS#12形式証明書に関するコマンド - Qiita](https://qiita.com/niko-pado/items/c864ca5b9b22ccaeb0ec)
 
-で、これを使ってみるnginx + curlで。
+で、これを使ってみる nginx + curl で。
 
-curl用にpem形式のクライアント証明書`curl.pem`を作る。
+curl 用に pem 形式のクライアント証明書`curl.pem`を作る。
 
 ```sh
 openssl pkcs12 -in newcert.p12 -out curl.pem -nodes -clcerts
@@ -180,7 +180,7 @@ curl -E ./curl.pem {URL}
 
 みたいに。
 
-nginx側はいろいろあるけど、「特定のディレクトリ以下をクライアント証明が必要」にしてみる
+nginx 側はいろいろあるけど、「特定のディレクトリ以下をクライアント証明が必要」にしてみる
 
 ```
 # -*- mode: nginx -*-
@@ -200,7 +200,7 @@ location /clientauth/ {
 ```
 
 [ssl_client_certificate](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_client_certificate)
-はサイトごとに1つしかもてないみたい。
+はサイトごとに 1 つしかもてないみたい。
 
 ## mutual TLS authentication
 

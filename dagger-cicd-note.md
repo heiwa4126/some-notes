@@ -9,8 +9,8 @@ cd /usr/local
 curl -L https://dl.dagger.io/dagger/install.sh | sh
 ```
 
-bashの補完
-ubuntuは `/usr/share/bash-completion/completions/*` なので
+bash の補完
+ubuntu は `/usr/share/bash-completion/completions/*` なので
 
 ```bash
 dagger completion bash > /tmp/dagger
@@ -24,10 +24,10 @@ dagger 0.2.36 (ea275a3ba) linux/amd64
 
 # hello world
 
-まずcuelangのhello world.
+まず cuelang の hello world.
 [dagger/helloworld.cue at v0.2.7 · dagger/dagger](https://github.com/dagger/dagger/blob/v0.2.7/pkg/universe.dagger.io/examples/helloworld/helloworld.cue)
 
-Dockerは要るので
+Docker は要るので
 [Install Docker Engine on Ubuntu \| Docker Documentation](https://docs.docker.com/engine/install/ubuntu/)
 
 ```bash
@@ -59,18 +59,18 @@ $ dagger do hello --log-format=plain
 
 [Build, run and test locally | Dagger](https://docs.dagger.io/1200/local-dev)
 
-nodejsでyarnで。build/の下にできる。LinuxだとXないとダメか。
+nodejs で yarn で。build/の下にできる。Linux だと X ないとダメか。
 
 `xdg-open build/index.html` のかわりに
 [http-server - npm](https://www.npmjs.com/package/http-server)をここで立ち上げて
-sshトンネリングでlocalhost:8080 につないでみる。
+ssh トンネリングで localhost:8080 につないでみる。
 
 ```bash
 npm install -g http-server
 http-server ./build/
 ```
 
--oオプションが使えない。
+-o オプションが使えない。
 
 で `http://127.0.0.1:8080/index.html`
 おお見えた。
@@ -89,14 +89,14 @@ http-server ./build/
 dagger do build
 ```
 
-して、wwwブラウザをリロード。
+して、www ブラウザをリロード。
 おお変わった。
 
 ローカルでできると楽だなあ。
 
 # CUEメモ
 
-JSONの上位互換で (YAMLと互換ではない)、制約とか重複排除とかあってすごい面白い。
+JSON の上位互換で (YAML と互換ではない)、制約とか重複排除とかあってすごい面白い。
 
 インストール
 
@@ -104,20 +104,20 @@ JSONの上位互換で (YAMLと互換ではない)、制約とか重複排除と
 go install cuelang.org/go/cmd/cue@latest
 ```
 
-YAMLに変換
+YAML に変換
 
 ```bash
 cue export ex1.cue --out yaml
 ```
 
-cueもbash completeionあった
+cue も bash completeion あった
 
 ```bash
 cue completion bash > /tmp/cue
 sudo mv /tmp/cue /usr/share/bash-completion/completions/
 ```
 
-CLIの解説: [CUE's cli commands | Overview | Cuetorials](https://cuetorials.com/overview/cli-commands/)
+CLI の解説: [CUE's cli commands | Overview | Cuetorials](https://cuetorials.com/overview/cli-commands/)
 
 `daggaer.cue` を `cue export` すると、だいたいエラーになるのは何で?
 
@@ -136,9 +136,9 @@ client: {
 
 `cue eval`で。
 
-CUEのチュートリアル
+CUE のチュートリアル
 
 - [Cuetorials](https://cuetorials.com/)
 - [CUE Playground](https://cuelang.org/play/)
 
-CUE Playgroundがwasmのサンプルみたいになってるのがまたすごい。
+CUE Playground が wasm のサンプルみたいになってるのがまたすごい。

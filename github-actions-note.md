@@ -211,7 +211,7 @@ API を使用する方法
 
 で "Require actions to be pinned to a full-length commit SHA" は:
 
-- 有効化すると、アクションを使うときに必ず コミット SHA で参照しなければならなくなります。
+- 有効化すると、アクションを使うときに必ずコミット SHA で参照しなければならなくなります。
   - uses: actions/checkout@v4 # ❌ ← バージョンタグは不可
   - uses: actions/checkout@a81bbbf... # ✅ ← コミット SHA で指定
 - タグやブランチ参照だと、後から中身が変わってしまうリスクがあるため、セキュリティを高めたいときに使う設定です。

@@ -5,12 +5,12 @@
 
 # UFWのログが多すぎるとき
 
-/var/log/{syslog,kern.log,ufw.log}にUFW BLOCKが山程出てて、
+/var/log/{syslog,kern.log,ufw.log}に UFW BLOCK が山程出てて、
 さすがにもういいんじゃないかと思った。
 
 `sudo ufw logging off`
 
-logレベルを調整できる。詳しくは `man ufw` のLOGGING項を。
+log レベルを調整できる。詳しくは `man ufw` の LOGGING 項を。
 
 現在のロギング状態は `ufw status verbose` で知れる。
 

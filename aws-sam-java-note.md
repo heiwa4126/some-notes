@@ -1,14 +1,14 @@
-AWS LambdaでJavaは遅い、と聞いてたので試したことなかった。
-けどJavaのライブラリ使いたい、って要件があるので
+AWS Lambda で Java は遅い、と聞いてたので試したことなかった。
+けど Java のライブラリ使いたい、って要件があるので
 試してみる。
 
 方針は
 
-1. hello worldから始めてローカルテスト
+1. hello world から始めてローカルテスト
 1. 依存のあるコード書いてローカルテスト
 1. デプロイしてテスト
 
-SAMのバージョンは
+SAM のバージョンは
 
 ```
 $ sam --version
@@ -22,7 +22,7 @@ sam init --name java-hello1 --runtime java11 --package-type Zip --dependency-man
 cd java-hello1
 ```
 
-.gitignoreが無い。
+.gitignore が無い。
 
 ```bash
 curl -L https://www.toptal.com/developers/gitignore/api/gradle,java,visualstudiocode,emacs,vim -o .gitignore
@@ -47,7 +47,7 @@ sam local invoke HelloWorldFunction  # 要Docker
 
 いちおう動くようだ。ここで最初のコミット。
 
-Gradleのテストもできる
+Gradle のテストもできる
 
 ```
 cd HelloWorldFunction
@@ -57,9 +57,9 @@ gradle test
 HelloWorldFunction/src/main/java/helloworld/App.java から
 `getPageContents()`を取り除いて単にメッセージを返すだけにする。
 
-JSONが文字列組み立て式なのでJacksonか何かでちゃんとやってみる。ごそごそコード書く。
+JSON が文字列組み立て式なので Jackson か何かでちゃんとやってみる。ごそごそコード書く。
 
-まあ普通にJavaで開発できるよなこれ。
+まあ普通に Java で開発できるよなこれ。
 
 サーバーレスアプリケーションをローカルで実行
 
@@ -71,4 +71,4 @@ curl http://127.0.0.1:3000/hello
 
 そこそこ出来たので `sam deploy -g` してみる。普通に動く。それほど遅いようには思えん。
 
-テスト終わったら `sam delete --no-prompts` でAWS上から消す。
+テスト終わったら `sam delete --no-prompts` で AWS 上から消す。

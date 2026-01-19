@@ -5,23 +5,23 @@
 
 よくわからん。
 
-AWS SAMは `sam init` で x-rayオプションあるのでそれが早いかも。ああできた。
+AWS SAM は `sam init` で x-ray オプションあるのでそれが早いかも。ああできた。
 
 デプロイして
-curlでURL呼んで
-AWS X-Rayコンソールで、トレース開くだけ。
+curl で URL 呼んで
+AWS X-Ray コンソールで、トレース開くだけ。
 
-ただこれCloudWatch log同様
+ただこれ CloudWatch log 同様
 [AWS::XRay::Group](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-xray-group.html)
-書いたほうがいいのでは。Former2で掘ってみる。
+書いたほうがいいのでは。Former2 で掘ってみる。
 
 ## CFnメモ
 
-上のsamをFormer2で掘ってみた。
+上の sam を Former2 で掘ってみた。
 
-app.pyは普通。trace的なものはなにも入ってない。
+app.py は普通。trace 的なものはなにも入ってない。
 
-AWS::Lambda::Functionだと
+AWS::Lambda::Function だと
 
 ```yaml
 Properties:
@@ -29,7 +29,7 @@ Properties:
     Mode: "Active"
 ```
 
-Roleは
+Role は
 
 - "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
 - "arn:aws:iam::aws:policy/service-role/"
@@ -63,20 +63,20 @@ XRayGroup:
 
 AWS X-Ray
 
-AWSのモニタリングサービスの1つで
+AWS のモニタリングサービスの 1 つで
 主にプロファイラ、エラー検出の機能を持つ。
 
 用語
 
-X-Rayで使われる用語は [AWS X-Ray の概念 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-concepts.html) を参照。
+X-Ray で使われる用語は [AWS X-Ray の概念 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-concepts.html) を参照。
 
-とりあえず知っておく用語は以下の2つ
+とりあえず知っておく用語は以下の 2 つ
 
 トレース
 
-一連のサービス呼び出し・結果の返却(「セグメント」)の塊。たとえばAPI GatewayのstageからLambdaが呼び出され、LambdaがDynamDBを呼んで... の一連のセグメント。
+一連のサービス呼び出し・結果の返却(「セグメント」)の塊。たとえば API Gateway の stage から Lambda が呼び出され、Lambda が DynamDB を呼んで... の一連のセグメント。
 
-トレース1個分を表示するのが
+トレース 1 個分を表示するのが
 [X-Rayコンソール](https://console.aws.amazon.com/xray/home#)
 の
 [traces](https://console.aws.amazon.com/xray/home#/traces)
@@ -87,18 +87,18 @@ X-Rayで使われる用語は [AWS X-Ray の概念 - AWS X-Ray](https://docs.aws
 グループ
 
 グループという名前だが、実質フィルタ。トレースに対する条件式を書く。
-X-Rayコンソールのトレースやサービスマップでグループを指定すると、フィルタされたトレースのみが表示されるようになる。
+X-Ray コンソールのトレースやサービスマップでグループを指定すると、フィルタされたトレースのみが表示されるようになる。
 
 条件式はこれ [フィルタ式を使用したコンソールでのトレースの検索 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-console-filters.html)
 
-Lambdaの同期呼出のサンプル
+Lambda の同期呼出のサンプル
 
-非同期呼出やPollベース呼出だと
+非同期呼出や Poll ベース呼出だと
 
-devでX-Rayを有効にして、prodで無効にする、のようなマスタースイッチ的な機能は?
+dev で X-Ray を有効にして、prod で無効にする、のようなマスタースイッチ的な機能は?
 
 アプリケーション側では
-Lambda Powertools Pythonを使うなら、[Disabling response auto\-capture](https://awslabs.github.io/aws-lambda-powertools-python/latest/core/tracer/#disabling-response-auto-capture) からの3節を参照。
+Lambda Powertools Python を使うなら、[Disabling response auto\-capture](https://awslabs.github.io/aws-lambda-powertools-python/latest/core/tracer/#disabling-response-auto-capture) からの 3 節を参照。
 
 参考リンク
 [AWS再入門ブログリレー2022 X-Ray編 | DevelopersIO](https://dev.classmethod.jp/articles/re-introduction-2022-x-ray/)

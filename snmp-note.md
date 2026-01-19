@@ -1,4 +1,4 @@
-SNMPの理解がいいかげんなのでまとめる。
+SNMP の理解がいいかげんなのでまとめる。
 
 - [RHEL7での導入](#rhel7%E3%81%A7%E3%81%AE%E5%B0%8E%E5%85%A5)
 - [参考](#%E5%8F%82%E8%80%83)
@@ -12,7 +12,7 @@ SNMPの理解がいいかげんなのでまとめる。
 
 # RHEL7での導入
 
-CentOS7でも同じでしょう(多分)。
+CentOS7 でも同じでしょう(多分)。
 
 ```
 yum install net-snmp -y
@@ -24,13 +24,13 @@ yum install net-snmp -y
 systemctl start snmpd
 ```
 
-SNMPトラップデーモンはあとで起動することにする。コマンドは
+SNMP トラップデーモンはあとで起動することにする。コマンドは
 
 ```
 systemctl start snmptrapd
 ```
 
-snmpwalkなどツールを導入。
+snmpwalk などツールを導入。
 
 ```
 yum install net-snmp-utils -y
@@ -42,7 +42,7 @@ yum install net-snmp-utils -y
 snmpwalk -v 2c -c public localhost system
 ```
 
-よそのホストから (r1は対象ホスト)
+よそのホストから (r1 は対象ホスト)
 
 ```
 snmpwalk -v 2c -c public r1 system
@@ -54,11 +54,11 @@ snmpwalk -v 2c -c public r1 system
 snmpd -H 2>&1| less
 ```
 
-snmpd.confで使えるディレクティブ一覧
+snmpd.conf で使えるディレクティブ一覧
 
 # コミュニティ名変更
 
-上の例でnet-snmpのデフォルト設定だと、起動したとたんにコミュニティ名`public`でいろいろ見えることがわかる。
+上の例で net-snmp のデフォルト設定だと、起動したとたんにコミュニティ名`public`でいろいろ見えることがわかる。
 
 問題になるかもなので、まずコミュニティ名を`swordfish`に変えてみる。
 
@@ -83,7 +83,7 @@ snmpd.confで使えるディレクティブ一覧
 systemctl restart snmpd
 ```
 
-publicで見えなくなった & swordfishで見える例
+public で見えなくなった & swordfish で見える例
 
 ```
 # snmpwalk -v 2c -c public localhost system
@@ -125,29 +125,29 @@ access  notConfigGroup ""      any       noauth    exact  systemview none   none
 ```
 
 これで、
-v1とv2cで、
-systemサブツリー(.1.3.6.1.2.1.1 sysDescr)以下と
+v1 と v2c で、
+system サブツリー(.1.3.6.1.2.1.1 sysDescr)以下と
 システム稼働時間(.1.3.6.1.2.1.25.1.1 hrSystemUptime)
-はgetできる、
-ただしsetはできない(notConfig)
+は get できる、
+ただし set はできない(notConfig)
 設定になる。
 
-稼働時間のget
+稼働時間の get
 
 ```
 snmpget -v 2c -c swordfish localhost hrSystemUptime.0
 ```
 
-1/100sec単位なので63日でカンストすることで有名。
+1/100sec 単位なので 63 日でカンストすることで有名。
 
 おまけ:
-snmpwalkだと出力が長いので、MIB1個だけ取ってみる例
+snmpwalk だと出力が長いので、MIB1 個だけ取ってみる例
 
 ```
 snmpget -v 2c -c swordfish r1 system.sysDescr.0
 ```
 
-動作確認だけならもっと引数の少ないsnmpstatusというのも
+動作確認だけならもっと引数の少ない snmpstatus というのも
 
 ```
 snmpget -v 2c -c swordfish r1
@@ -155,31 +155,31 @@ snmpget -v 2c -c swordfish r1
 
 # IPで制限
 
-/etc/snmpd.confのcom2setのsourceで制限できる。
-(iptables, firewalld, ufwでもできるけど...それは後で)
+/etc/snmpd.conf の com2set の source で制限できる。
+(iptables, firewalld, ufw でもできるけど...それは後で)
 
 ここではちょっと/etc/hosts.{allow,deny}でやってみる。
 
-snmpdがlibwrap使ってるか確認。
+snmpd が libwrap 使ってるか確認。
 
 ```
 ldd /usr/sbin/snmpd | grep wrap
 ```
 
-/etc/hosts.allowに
+/etc/hosts.allow に
 
 ```
 snmpd : 127.0.0.0/8 172.31.1.0/24
 snmpd : all : deny
 ```
 
-(172.31.1.0/24は自分のネットワークとする)
+(172.31.1.0/24 は自分のネットワークとする)
 
-hosts_accessは設定ファイルを書き込むだけで効く。再起動はいらない
+hosts_access は設定ファイルを書き込むだけで効く。再起動はいらない
 (それだけに危ない。
 `ALL : ALL : deny`書いて保存するだけで死ぬ)
 
-tcpmatchで動作確認する(`yum install tcp_wrappers`)
+tcpmatch で動作確認する(`yum install tcp_wrappers`)
 
 ```
 # # localhost
@@ -219,7 +219,7 @@ access:   granted
 適当に書き込み権与えても、実際に書き込めるところは少ないみたい。
 簡単に設定できるので有名なのは `sysName (.1.3.6.1.2.1.1.5)` なので、これで試す
 
-localhostからだけはsysNameをsetできる例
+localhost からだけは sysName を set できる例
 
 ```
 ####
@@ -255,10 +255,10 @@ access  notConfigGroup ""      any       noauth    exact  systemview  none      
 access  configGroup    ""      any       noauth    exact  systemview  sysname   none
 ```
 
-コミュニティはconfig,notconfigで同じにしたけど、
+コミュニティは config,notconfig で同じにしたけど、
 変えてもかまわない。
 
-com2secは上から評価され、マッチしたところで終わるらしい。なので
+com2sec は上から評価され、マッチしたところで終わるらしい。なので
 
 ```
 #       sec.name       source        community
@@ -266,9 +266,9 @@ com2sec notConfigUser  default       swordfish
 com2sec configUser     127.0.0.1     swordfish
 ```
 
-とすると、localhostもnotConfigUserになってしまう。
+とすると、localhost も notConfigUser になってしまう。
 
-localhostからsetのテスト
+localhost から set のテスト
 
 ```
 $ snmpget -v 2c -c swordfish localhost sysName.0
@@ -281,7 +281,7 @@ $ snmpset -v 2c -c swordfish localhost sysName.0 s swordfish.example.com
 SNMPv2-MIB::sysName.0 = STRING: swordfish.example.com
 ```
 
-localhost以外からsetのテスト
+localhost 以外から set のテスト
 
 ```
 $ snmpget -v 2c -c swordfish r1 sysName.0
@@ -301,19 +301,19 @@ Reason: (noSuchName) There is no such variable name in this MIB.
 Failed object: SNMPv2-MIB::sysName.0
 ```
 
-1と2cで返事が違うのが面白い。
+1 と 2c で返事が違うのが面白い。
 
 # net-snmpのsnmpdはtrap送信もできる
 
 ので試してみる。
 
-同じホストで偽snmptrapdを立てる(tmux, screen, 別ターミナルなどで)
+同じホストで偽 snmptrapd を立てる(tmux, screen, 別ターミナルなどで)
 
 ```
 # nc -l -u -p 162
 ```
 
-/etc/snmp/snmpd.confの最後の方に
+/etc/snmp/snmpd.conf の最後の方に
 
 ```
 # Note also that you typically only want *one* of the settings:
@@ -323,10 +323,10 @@ trap2sink  localhost  foobar
 ```
 
 とか記述して、 `systemctl restart snmpd` すると
-netcatの方に何かが出力される。
-これはsnmpdの起動時に 1.3.6.1.6.3.1.1.5.1 (coldStart)が送られたもの。
+netcat の方に何かが出力される。
+これは snmpd の起動時に 1.3.6.1.6.3.1.1.5.1 (coldStart)が送られたもの。
 
-上の設定で3行あるうち「通常は**1つ**の設定のみが必要」と言ってるのは
+上の設定で 3 行あるうち「通常は**1つ**の設定のみが必要」と言ってるのは
 [Net-SNMP FAQ](http://www.net-snmp.org/docs/FAQ.html#Where_are_these_traps_sent_to_)
 なので、参照のこと
 (もちろん複数のマネージャに送るなら、複数行書く必要があります)
@@ -347,7 +347,7 @@ netcatの方に何かが出力される。
 authCommunity log foobar
 ```
 
-foobarというコミュニティ名でトラップが来たら、ログに出す、という例。
+foobar というコミュニティ名でトラップが来たら、ログに出す、という例。
 
 `systemctl restart snmptrapd` して
 `systemctl restart snmpd` すると
@@ -373,27 +373,27 @@ trap2sink  localhost foobar
 authtrapenable  1
 ```
 
-で、コミュニティが正しくないとtrap発生、になる。
-authtrapenableは1で有効、2で無効。デフォルトは無効。
+で、コミュニティが正しくないと trap 発生、になる。
+authtrapenable は 1 で有効、2 で無効。デフォルトは無効。
 
 ```
 snmpget -v 2c -c swordfishXXX localhost sysName.0
 ```
 
-などすると、/var/log/syslogには
+などすると、/var/log/syslog には
 
 ```
 Dec 19 08:02:39 ip-172-31-1-110 snmptrapd[4439]: 2018-12-19 08:02:39 localhost [UDP: [127.0.0.1]:43230->[127.0.0.1]:162]:#012DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (179104) 0:29:51.04#011SNMPv2-MIB::snmpTrapOID.0 = OID: SNMPv2-MIB::authenticationFailure#011SNMPv2-MIB::snmpTrapEnterprise.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 ```
 
-のようなのが出る。簡単なのでSNMPマネージャのテストに便利。
+のようなのが出る。簡単なので SNMP マネージャのテストに便利。
 
 # snmptrap
 
-単にマネージャにtrap送るだけなら`snmptrap`コマンドを使う。
-問題はOIDがよくわからん、ということ。
+単にマネージャに trap 送るだけなら`snmptrap`コマンドを使う。
+問題は OID がよくわからん、ということ。
 
-man snmptrapには
+man snmptrap には
 
 ```
 snmptrap -v 1 -c public manager enterprises.spider test-hub 3 0 '' interfaces.iftable.ifentry.ifindex.1 i 1
@@ -412,7 +412,7 @@ snmptrap -v 2c -c foobar localhost '' netSnmpExperimental \
 
 みたいな例がのってます。
 
-netSnmpExperimentalは
+netSnmpExperimental は
 
 ```
 $ snmptranslate -On NET-SNMP-MIB::netSnmpExperimental
@@ -424,7 +424,7 @@ $ snmptranslate -Tp .1.3.6.1.4.1.8072.9999
    +--netSnmpPlaypen(9999)
 ```
 
-Net-SNMPのテスト用にいろいろできるものらしい。
+Net-SNMP のテスト用にいろいろできるものらしい。
 
 参考:
 [snmptranslate - mib oidと名前の変換 - うまいぼうぶろぐ](https://hogem.hatenablog.com/entry/20100622/1277215889)

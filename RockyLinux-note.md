@@ -2,9 +2,9 @@
 
 [クラウドイメージ | Rocky Linux](https://rockylinux.org/ja/cloud-images/)
 
-ここでリージョンを選ぶとAMIが。Almaと違って コミュニティAMI
+ここでリージョンを選ぶと AMI が。Alma と違ってコミュニティ AMI
 
-AWS版はcockpit入ってた。
+AWS 版は cockpit 入ってた。
 
 [cockpit 🚀 - uninstall/remove cockpit | bleepcoder.com](https://bleepcoder.com/cockpit/477748908/uninstall-remove-cockpit)
 

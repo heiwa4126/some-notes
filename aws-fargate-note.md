@@ -300,7 +300,7 @@ NAT Gateway を使えば...
 
 ## Fargate はパブリック IPv6 は使える?
 
-NAT GW は高いので、AWS ECS の fargate で パブリック IPv6 を使って VPC からインタネットにアクセスできる?
+NAT GW は高いので、AWS ECS の fargate でパブリック IPv6 を使って VPC からインタネットにアクセスできる?
 
 **以下 ChatGPT による(未検証)**
 

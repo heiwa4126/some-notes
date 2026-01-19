@@ -23,6 +23,6 @@ if torch.cuda.is_available():
 cuda_tensor = torch.cuda.FloatTensor(3, 4)  # 3行4列の行列を作成
 ```
 
-まあ このへん気をつかうよりは PyTorch Lightning を使った方がいいみたい。調べる
+まあこのへん気をつかうよりは PyTorch Lightning を使った方がいいみたい。調べる
 
 [PyTorch Lightning の GPU 訓練で「RuntimeError: Input type …」と怒られた場合](https://blog.shikoan.com/pytorch-lightning-runtime-error/)

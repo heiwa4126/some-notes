@@ -1,14 +1,14 @@
 [SELinuxとFirewallを有効にしたまま443でsshを受けるように設定する \- Qiita](https://qiita.com/yamada-hakase/items/9121be88c94f79e6cc65)
 
-RHEL8でSElinuxが有効のまま22/tcp以外もlistenするようにしたときのメモ
+RHEL8 で SElinux が有効のまま 22/tcp 以外も listen するようにしたときのメモ
 
-semanageは
+semanage は
 
 ```
 yum install policycoreutils-python-utils
 ```
 
-22/tcpみてみる
+22/tcp みてみる
 
 ```
 # semanage port -l | grep 22 | grep ssh

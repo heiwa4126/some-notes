@@ -9,7 +9,7 @@
 例えば
 ⊞ Win+R で
 「ファイル名を指定して実行」を開けて
-`ms-settings:display` で 「システム」の「ディスプレイ」が開きます。
+`ms-settings:display` で「システム」の「ディスプレイ」が開きます。
 
 Explorer のアドレスに入れてもいいし、
 ブラウザの URL に入れても OK。
@@ -40,7 +40,7 @@ Explorer のアドレスに入れてもいいし、
 
 よりは
 
-1. ⊞ Win+R で 「ファイル名を指定して実行」を開ける
+1. ⊞ Win+R で「ファイル名を指定して実行」を開ける
 2. ms-settings:regionlanguage-jpnime と入れてリターンキー
 
 のほうが絶対楽

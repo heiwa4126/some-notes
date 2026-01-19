@@ -297,7 +297,7 @@ train のグラフなどで
 と、`logging_dir=` で指定したディレクトリにログが保存される。
 
 VSCode だと学習中に自動で上がる。
-または コマンドパレットで `Launch TensorBorad`
+またはコマンドパレットで `Launch TensorBorad`
 
 手動では
 
@@ -497,7 +497,7 @@ I'd like to show off how chat templating works!<|end|>
 
 `vllm serve --chat-template` や
 `python -m vllm.entrypoints.openai.api_server --chat-template` や
-`from vllm.entrypoints.openai.api_server import run_server` の 引数 `from vllm.engine.arg_utils import AsyncEngineArgs` の `chat_template` で分類の場合は
+`from vllm.entrypoints.openai.api_server import run_server` の引数 `from vllm.engine.arg_utils import AsyncEngineArgs` の `chat_template` で分類の場合は
 Jinja2 形式で chat テンプレートを与えられるようになってるらしい。
 
 `--chat-template` オプションではファイルも可。`./foo.jinja` や `/foo/bar.jinja` で。

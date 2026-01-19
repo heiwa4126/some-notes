@@ -25,17 +25,17 @@ Amazon Web Services (AWS)には、OpenID Connect (OIDC) プロバイダを構築
 Amazon Cognito を使用して OpenID Connect (OIDC) プロバイダを作成する手順は次のようになります。
 
 1. Amazon Cognito コンソールにサインインします。
-1. [Manage User Pools] をクリックし、新しいユーザープールを作成します。
-1. [App clients] のタブをクリックし、新しいアプリクライアントを作成します。
-1. [Domain name] のタブをクリックし、独自のドメイン名を設定します。
-1. [Federation] のタブをクリックし、[Identity Providers] を選択します。
-1. [OpenID Connect] を選択し、必要な設定を入力します。
-1. [Create Provider] をクリックします。
-1. [App client settings] のタブをクリックし、新しいアプリクライアントに対して OIDC プロバイダを有効にします。
-1. [Callback URL] と [Sign out URL] を設定します。
-1. [Allowed OAuth Flows] で "code"と "implicit"を有効にします。
-1. [Allowed OAuth Scopes] で "openid"と "email"などを有効にします。
-1. [Save Changes] をクリックして設定を保存します。
+1. [Manage User Pools]をクリックし、新しいユーザープールを作成します。
+1. [App clients]のタブをクリックし、新しいアプリクライアントを作成します。
+1. [Domain name]のタブをクリックし、独自のドメイン名を設定します。
+1. [Federation]のタブをクリックし、[Identity Providers]を選択します。
+1. [OpenID Connect]を選択し、必要な設定を入力します。
+1. [Create Provider]をクリックします。
+1. [App client settings]のタブをクリックし、新しいアプリクライアントに対して OIDC プロバイダを有効にします。
+1. [Callback URL]と[Sign out URL]を設定します。
+1. [Allowed OAuth Flows]で "code"と "implicit"を有効にします。
+1. [Allowed OAuth Scopes]で "openid"と "email"などを有効にします。
+1. [Save Changes]をクリックして設定を保存します。
 
 OIDC プロバイダが作成されました。アプリケーションから Cognito に対して認証リクエストを送信し、ID トークンやアクセストークンを取得して使用することができます。
 
@@ -92,10 +92,10 @@ Azure 上で OpenID Connect (OIDC) プロバイダを構築する方法は次の
 Azure Active Directory (AAD) を使用します。 AAD は、Azure のクラウドベースの認証サービスで、OIDC プロバイダの機能を提供します。
 
 1. Azure ポータルにサインインし、AAD を選択します。
-1. [アプリの登録] を選択し、新しいアプリケーションを登録します。
-1. [証明書とシークレット] を選択し、クライアントシークレットを作成します。
-1. [API アクセス] を選択し、必要なスコープを設定します。
-1. [認証] を選択し、リダイレクト URI を設定します。
-1. [アプリケーションの設定] を選択し、OpenID Connect の設定を行います。
+1. [アプリの登録]を選択し、新しいアプリケーションを登録します。
+1. [証明書とシークレット]を選択し、クライアントシークレットを作成します。
+1. [API アクセス]を選択し、必要なスコープを設定します。
+1. [認証]を選択し、リダイレクト URI を設定します。
+1. [アプリケーションの設定]を選択し、OpenID Connect の設定を行います。
 
 OIDC プロバイダが構築されました。アプリケーションから AAD に対して認証リクエストを送信し、ID トークンやアクセストークンを取得して使用することができます。

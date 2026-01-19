@@ -1,6 +1,6 @@
 # Rustメモ
 
-Rustって深いよね(皮肉)。
+Rust って深いよね(皮肉)。
 
 - [Rustメモ](#rustメモ)
 - [std::strにiter()がない](#stdstrにiterがない)
@@ -83,11 +83,11 @@ Rustって深いよね(皮肉)。
 
 # std::strにiter()がない
 
-&strはスライスかと思っていたら、なんか特別扱いらしい(Rustは「特別扱い」が多い)。
+&str はスライスかと思っていたら、なんか特別扱いらしい(Rust は「特別扱い」が多い)。
 
 [std::str - Rust](https://doc.rust-lang.org/beta/std/str/index.html)
 
-iter()はないけど、専用のbyte(),chars(),char_indices()がある。
+iter()はないけど、専用の byte(),chars(),char_indices()がある。
 
 [スライス - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch04-03-slices.html)
 の`first_word()`の例
@@ -111,7 +111,7 @@ fn main() {
 }
 ```
 
-ただ、sが日本語だったりすると途端に死ぬ。
+ただ、s が日本語だったりすると途端に死ぬ。
 比較対象が' '空白でいいなら,bytes()を使った方がいい。
 
 ```Rust
@@ -125,8 +125,8 @@ fn first_word(s:&str) -> &str {
 }
 ```
 
-汎用ならchar_indices()を使う。
-Unicodeもちゃんと探せる。
+汎用なら char_indices()を使う。
+Unicode もちゃんと探せる。
 
 あまり意味のない例:
 
@@ -152,22 +152,22 @@ fn main() {
 
 # strとString
 
-strとStringが
-sliceやVecと異なるのは、
-strとStringが「中身が絶対UTF-8であり続けるようになっている」点。
+str と String が
+slice や Vec と異なるのは、
+str と String が「中身が絶対 UTF-8 であり続けるようになっている」点。
 
-UTF-8でないものにしようとする努力を跳ね返すような設計になってる。
+UTF-8 でないものにしようとする努力を跳ね返すような設計になってる。
 
 # Vecをもういちど整理
 
 [std::vec::Vec - Rust](https://doc.rust-lang.org/std/vec/struct.Vec.html)
 
 - Indexing - 添え字でアクセスできる。読むのも書くのもできる。
-- Slicing - sliceと違ってmutable(sliceはread-only)。sliceにするには&で。
+- Slicing - slice と違って mutable(slice は read-only)。slice にするには&で。
 - Capacity and reallocation (容量と再確保) -<br>
-  (sliceと違って)「容量」の観念がある。長さと容量は違う。容量を超えると再アロケーションになる。
-  容量が予測できるなら(Vec::newではなくVec::with_capacityを使え。
-- Guarantees(Vecが保障するもの -<br>Vecはポインタと長さとキャパシティのタプル。Vecの「中身」は必ずヒープ。ポインタはヒープを指す(Vecがサイズ0でないなら)。この節ながいけど重要
+  (slice と違って)「容量」の観念がある。長さと容量は違う。容量を超えると再アロケーションになる。
+  容量が予測できるなら(Vec::new ではなく Vec::with_capacity を使え。
+- Guarantees(Vec が保障するもの -<br>Vec はポインタと長さとキャパシティのタプル。Vec の「中身」は必ずヒープ。ポインタはヒープを指す(Vec がサイズ 0 でないなら)。この節ながいけど重要
 
 ドキュメントに矛盾があちこちあるような気がする。
 まあデカイものだからしょうがないけど。
@@ -184,9 +184,9 @@ UTF-8でないものにしようとする努力を跳ね返すような設計に
 let _:() = foobar;
 ```
 
-でcargo runしてみる。
+で cargo run してみる。
 
-最近では(最初2つのアトリビュートはオマケ)
+最近では(最初 2 つのアトリビュートはオマケ)
 
 ```rust
 #[allow(dead_code)]
@@ -223,7 +223,7 @@ fn type_of<T>(_: T) -> &'static str {
 
 "rust fungi"に由来するそうですが、
 [サビキン目 - Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%93%E3%82%AD%E3%83%B3%E7%9B%AE)
-↑にあるように「Chromeの反対」の方が好きだな。
+↑にあるように「Chrome の反対」の方が好きだな。
 
 # testでprintln!
 
@@ -233,7 +233,7 @@ cargo test -- --nocapture
 
 [関数の出力を表示する - テストを走らせる - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch11-02-running-tests.html#a%E9%96%A2%E6%95%B0%E3%81%AE%E5%87%BA%E5%8A%9B%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B)
 
-golangの
+golang の
 `go test -v`
 みたいなやつ。
 
@@ -241,7 +241,7 @@ golangの
 
 - [Rustのエラー処理 - Qiita](https://qiita.com/fujitayy/items/cafe661415b6aa33d884)
 
-Go言語の
+Go 言語の
 [builtin - The Go Programming Language](https://golang.org/pkg/builtin/#error)
 
 ```go
@@ -250,20 +250,20 @@ type error interface {
 }
 ```
 
-文字列返すError()関数だけ実装すればいい、
+文字列返す Error()関数だけ実装すればいい、
 とか、`fmr.Errorf()`みたいな、簡単なものとは違うらしい。
 
 例)
 [teip/errors.rs at master · greymd/teip](https://github.com/greymd/teip/blob/master/src/errors.rs)
 
-ある関数の返す`Result<T, E>`のEのenumを作る。Javaのexception列挙するようなノリ。
+ある関数の返す`Result<T, E>`の E の enum を作る。Java の exception 列挙するようなノリ。
 
-そのenumに
+その enum に
 [std::fmt::Display - Rust](https://doc.rust-lang.org/std/fmt/trait.Display.html)
 と
 [std::error::Error - Rust](https://doc.rust-lang.org/std/error/trait.Error.html)
 を
-implする。
+impl する。
 
 参照: [Rust のエラーまわりの変遷 - Qiita](https://qiita.com/legokichi/items/d4819f7d464c0d2ce2b8#1-error-%E3%81%A8-debug-%E3%81%A8-display-%E3%83%88%E3%83%AC%E3%82%A4%E3%83%88%E3%82%92%E5%AE%9F%E8%A3%85%E3%81%97%E3%81%AA%E3%81%84%E3%81%A8%E3%81%84%E3%81%91%E3%81%AA%E3%81%84)
 
@@ -276,9 +276,9 @@ implする。
 
 この辺読む:
 
-- [Rustのエラー処理 - Qiita](https://qiita.com/fujitayy/items/cafe661415b6aa33d884) - failureはもはやメンテされてないらしい
+- [Rustのエラー処理 - Qiita](https://qiita.com/fujitayy/items/cafe661415b6aa33d884) - failure はもはやメンテされてないらしい
 - [std::convert::From - Rust](https://doc.rust-lang.org/std/convert/trait.From.html)
-- [From failure to Fehler](https://boats.gitlab.io/blog/post/failure-to-fehler/) - fehlerはドイツ語でエラー
+- [From failure to Fehler](https://boats.gitlab.io/blog/post/failure-to-fehler/) - fehler はドイツ語でエラー
 - [Rust のエラーまわりの変遷 - Qiita](https://qiita.com/legokichi/items/d4819f7d464c0d2ce2b8)
 - [Error Handling Survey](https://blog.yoshuawuyts.com/error-handling-survey/)
 - [Rustエラーライブラリのトレンド解説（2020年1月版） - Qiita](https://qiita.com/dalance/items/7e0fa481626c76d59f65)
@@ -291,7 +291,7 @@ implする。
 
 1. 昔の[std::error::Error](https://doc.rust-lang.org/std/error/trait.Error.html)
 1. [failure](https://boats.gitlab.io/failure/)
-1. anyhowとthiserror
+1. anyhow と thiserror
 
 の順で学ぶしかないかな。
 
@@ -316,7 +316,7 @@ macros:
 - [anyhow::bail - Rust](https://docs.rs/anyhow/1.0.32/anyhow/macro.bail.html) - これは便利
 - [anyhow::ensure - Rust](https://docs.rs/anyhow/1.0.32/anyhow/macro.ensure.html) - if $cond bail!
 
-anyhowを使いたくなかたら
+anyhow を使いたくなかたら
 
 ```rust
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -328,7 +328,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 use anyhow::Result;
 ```
 
-してResultすると、どのResultかすぐわからなくなるので、anyhow::Resultと書くことにする。
+して Result すると、どの Result かすぐわからなくなるので、anyhow::Result と書くことにする。
 
 # 便利マクロ
 
@@ -353,7 +353,7 @@ cargo expand --lib ライブラリの名前
 cargo expand -- 関数名
 ```
 
-...Cloneの実装がひどい。まあ汎用だとこうなるのかな。
+...Clone の実装がひどい。まあ汎用だとこうなるのかな。
 
 [Rustのprintln!の中身 - Qiita](https://qiita.com/4hiziri/items/1aed9e264630f90e3dec)
 
@@ -381,7 +381,7 @@ RUSTFLAGS="-C link-arg=-s" cargo build --release
 
 # 型を表示
 
-1.38から[std::any::type_name - Rust](https://doc.rust-lang.org/std/any/fn.type_name.html)が使える。
+1.38 から[std::any::type_name - Rust](https://doc.rust-lang.org/std/any/fn.type_name.html)が使える。
 
 コード例
 
@@ -413,7 +413,7 @@ fn main() {
 let mut x = [10_i32 ; 8];
 ```
 
-これはsliceじゃなくてarrayだ。
+これは slice じゃなくて array だ。
 [array - Rust](https://doc.rust-lang.org/std/primitive.array.html)
 
 # Cargo.tomlの書式
@@ -423,7 +423,7 @@ let mut x = [10_i32 ; 8];
 
 # バージョンを表示する
 
-Cargo.tomlに書いたnameやversionを表示するにはこんな感じ。
+Cargo.toml に書いた name や version を表示するにはこんな感じ。
 
 ```rust
 fn main() {
@@ -433,7 +433,7 @@ fn main() {
 }
 ```
 
-キモはstd::env!マクロ。
+キモは std::env!マクロ。
 コンパイル時に環境変数の値を取得できる。
 
 ```rust
@@ -466,7 +466,7 @@ rls 1.41.0 (dd341d5 2020-06-30)
 
 # rustfmt
 
-Linuxの場合
+Linux の場合
 
 ```sh
 mkdir -p "$HOME/.config/rustfmt"
@@ -475,8 +475,8 @@ echo 'edition = "2018"' >> "$HOME/.config/rustfmt/rustfmt.toml"
 
 # emacsでRust
 
-rustic (+lsp　or eglot) + rlsがいいらしい。
-rustiはEmacs 26以上でないとだめみたい。
+rustic (+lsp　or eglot) + rls がいいらしい。
+rusti は Emacs 26 以上でないとだめみたい。
 
 - [brotzeit/rustic: Rust development environment for Emacs](https://github.com/brotzeit/rustic)
 - [Rust開発環境 on Emacs更新](https://skoji.jp/blog/2020/03/rust-dev.html)
@@ -487,7 +487,7 @@ rustiはEmacs 26以上でないとだめみたい。
 - [How do I convert a &str to a String in Rust?](https://blog.mgattozzi.dev/how-do-i-str-string/)
 - [rust String &str の変換と、文字列 数値 の変換 - Qiita](https://qiita.com/smicle/items/29a4d5d1d14ad7f77f60)
 
-String, strの他にも
+String, str の他にも
 OsString、OsStr、CString、CStr
 がある。
 
@@ -514,16 +514,16 @@ r#"これ"は引用符"#
 
 # Rustのモジュール
 
-わけがわからない。lib.rsってなんでこれいるの?
+わけがわからない。lib.rs ってなんでこれいるの?
 
 - [Rustのモジュールの使い方 2018 Edition版 | κeenのHappy Hacκing Blog](https://keens.github.io/blog/2018/12/08/rustnomoju_runotsukaikata_2018_editionhan/)
 
-Goみたいに複数のファイルで1パッケージ、というのはないみたい。
-1ファイルnモジュール。Javaっぽい。
+Go みたいに複数のファイルで 1 パッケージ、というのはないみたい。
+1 ファイル n モジュール。Java っぽい。
 
 # RHEL7にllvm
 
-たまにRustでLLVM要求されるので
+たまに Rust で LLVM 要求されるので
 
 - [Hello World - installing Clang/LLVM on RHEL 7 | Red Hat Developer](https://developers.redhat.com/HW/ClangLLVM-RHEL-7)
 - [How to Install LLVM on CentOS7 – Linux Hint](https://linuxhint.com/install_llvm_centos7/)
@@ -550,7 +550,7 @@ cargo test -- --nocapture
 cargo test foo
 ```
 
-fooを含む関数名だけ実行される
+foo を含む関数名だけ実行される
 
 # OptionとResult
 
@@ -558,8 +558,8 @@ fooを含む関数名だけ実行される
 - [RustでOption値やResult値を上手に扱う - Qiita](https://qiita.com/tatsuya6502/items/cd41599291e2e5f38a4a)
 -
 
-「unwrap()はpanic!するかもしれない」ことを忘れないこと。
-unwrap_or()やunwrap_or_else()が使えるなら使う。
+「unwrap()は panic!するかもしれない」ことを忘れないこと。
+unwrap_or()や unwrap_or_else()が使えるなら使う。
 
 # 型変換イディオム
 
@@ -577,8 +577,8 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 
 # RustでExcelファイルを作る
 
-- [spsheet - Rust](https://docs.rs/spsheet/0.1.0/spsheet/) - 出来たxlsxやodsが「不正」と表示されて怖くて使えない。
-- [xlsxwriter - Rust](https://docs.rs/xlsxwriter/0.3.2/xlsxwriter/) - LLVMを要求される。?の使い方が古いらしくコンパイラが通らない。
+- [spsheet - Rust](https://docs.rs/spsheet/0.1.0/spsheet/) - 出来た xlsx や ods が「不正」と表示されて怖くて使えない。
+- [xlsxwriter - Rust](https://docs.rs/xlsxwriter/0.3.2/xlsxwriter/) - LLVM を要求される。?の使い方が古いらしくコンパイラが通らない。
 - [simple_excel_writer - Rust](https://docs.rs/simple_excel_writer/0.1.7/simple_excel_writer/) - とりあえずまともに動く。
 
 おまけ
@@ -594,7 +594,7 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 
 [イテレータを返す関数を書きたいんですけど？ → やめとけ。 死ぬぞ。 - Qiita](https://qiita.com/wada314/items/201ab5d66ac7daeb9c3d)
 
-そこでimpl Traitだ。
+そこで impl Trait だ。
 
 [安定化間近！Rustのimpl Traitを今こそ理解する - 簡潔なQ](https://qnighy.hatenablog.com/entry/2018/01/28/220000)
 
@@ -624,14 +624,14 @@ let b = a.itor().map(std::string::ToString::to_string).collect();
 - [std::iter::Iterator - Rust](https://doc.rust-lang.org/std/iter/trait.Iterator.html)
 - [Rustのイテレータの網羅的かつ大雑把な紹介 - Qiita](https://qiita.com/lo48576/items/34887794c146042aebf1)
 
-iteretorをstructに含めようとするとつらい。
+iteretor を struct に含めようとするとつらい。
 
 # 「スタックは高速です」
 
 - [所有権とは？ - The Rust Programming Language](https://doc.rust-jp.rs/book/second-edition/ch04-01-what-is-ownership.html)
 - [What is Ownership? - The Rust Programming Language](https://doc.rust-lang.org/book/second-edition/ch04-01-what-is-ownership.html)
 
-「スタックは高速です」と書いてあったらしい2nd Editonの原文は
+「スタックは高速です」と書いてあったらしい 2nd Editon の原文は
 "The second edition of the book is no longer distributed with Rust's documentation."
 となってて閲覧できず、カレントバージョンでは「スタックは高速です」にあたる文章がない。
 
@@ -679,7 +679,7 @@ iteretorをstructに含めようとするとつらい。
 
 # cargo clean
 
-Rustのプロジェクトは、ちっちゃなコードでも500MBとかになるので、
+Rust のプロジェクトは、ちっちゃなコードでも 500MB とかになるので、
 サンプルコードなどをためしにコンパイルしたら
 `cargo clean`しておくといいと思う。
 
@@ -711,7 +711,7 @@ $ du -hs .
 
 # map!がない
 
-vec!はあるのにhashmapにはマクロがない。
+vec!はあるのに hashmap にはマクロがない。
 
 - [rust - How do I create a HashMap literal? - Stack Overflow](https://stackoverflow.com/questions/27582739/how-do-i-create-a-hashmap-literal)
 - [Rustにおける連想配列リテラル・ハッシュリテラル相当 - Qiita](https://qiita.com/qnighy/items/b1d63b1931447758d607)
@@ -723,7 +723,7 @@ vec!はあるのにhashmapにはマクロがない。
 
 # overflow
 
-これが実行時エラーになるところがすごい(releaseでなければ)。
+これが実行時エラーになるところがすごい(release でなければ)。
 
 ```rust
 fn sub(a: u32, b: u32) -> u32 {
@@ -745,12 +745,12 @@ fn main() {
 }
 ```
 
-releaseだとエラーにならないので注意
+release だとエラーにならないので注意
 
 # Rustで「普通のenum」
 
-enumを定数列挙に使いたいとき。 ...みんな困ってるんだな。
-多分「Rust的に正しくない」。だいたい算術orやandできないし。
+enum を定数列挙に使いたいとき。 ...みんな困ってるんだな。
+多分「Rust 的に正しくない」。だいたい算術 or や and できないし。
 
 古い:
 
@@ -760,7 +760,7 @@ enumを定数列挙に使いたいとき。 ...みんな困ってるんだな。
 ここの頭のとこから:
 [serde - how can I set an enum value from an integer in rust? - Stack Overflow](https://stackoverflow.com/questions/61641338/how-can-i-set-an-enum-value-from-an-integer-in-rust)
 
-「ふつうのenum」でいいなら
+「ふつうの enum」でいいなら
 
 ```rust
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -781,7 +781,7 @@ impl Clone for MyEnum {
 
 # Rustのデバッグ
 
-gdbで普通に。lldbもあれば使える。rust-gdbやrust-lldbを使うとpコマンドが楽になる。
+gdb で普通に。lldb もあれば使える。rust-gdb や rust-lldb を使うと p コマンドが楽になる。
 
 - [Rust のデバッグチートシート - Qiita](https://qiita.com/legokichi/items/e2f807f70316a916f4be)
 - [LLDBとかいう次世代高性能デバッガ - Qiita](https://qiita.com/theefool/items/8b985ce71dcdccf26abc)
@@ -791,7 +791,7 @@ gdbで普通に。lldbもあれば使える。rust-gdbやrust-lldbを使うとp�
 
 [Rust - クロージャーとラムダ式 | rust Tutorial](https://sodocumentation.net/ja/rust/topic/1815/%E3%82%AF%E3%83%AD%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%BC%E3%81%A8%E3%83%A9%E3%83%A0%E3%83%80%E5%BC%8F#----------)
 
-Box::newすればいいのか。
+Box::new すればいいのか。
 
 [Rust勉強中 - その20 -> クロージャ - Qiita](https://qiita.com/deta-mamoru/items/85f724cab5412c056cbd)
 
@@ -808,16 +808,16 @@ Box::newすればいいのか。
 
 # Result <-> Option
 
-OptionをResultにする。ok_orとok_or_else
+Option を Result にする。ok_or と ok_or_else
 
 [std::option::Option - Rust](https://doc.rust-lang.org/beta/std/option/enum.Option.html#method.ok_or)
 
-Eにあたるものを返して(Err(E)ではなく)、?でreturnとかできるので(.の連鎖の途中でも)、かっこよく書ける。
+E にあたるものを返して(Err(E)ではなく)、?で return とかできるので(.の連鎖の途中でも)、かっこよく書ける。
 
 - [OptionをResultにする - Qiita](https://qiita.com/nacika_ins/items/3a71dee5bab5a4b17a86)
 - [マクロなしでOptionをResultに簡略化する方法はありますか?](https://www.366service.com/jp/qa/93d40e68866da0f680290f8c957619f6)
 
-Resultをoptionにする、のはok()とerr()。
+Result を option にする、のは ok()と err()。
 
 [std::result::Result - Rust](https://doc.rust-lang.org/beta/std/result/enum.Result.html#method.ok)
 
@@ -826,7 +826,7 @@ Resultをoptionにする、のはok()とerr()。
 - [regex - Rust](https://docs.rs/regex/1.4.1/regex/)
 - [正規表現でつかえるパターン](https://docs.rs/regex/1.4.1/regex/#syntax)
 
-perlreのメタクォートエスケープシーケンス(\Q...\E)みたいのはなくて、regex::escapeを使う
+perlre のメタクォートエスケープシーケンス(\Q...\E)みたいのはなくて、regex::escape を使う
 ([quotemeta - Perldoc Browser](https://perldoc.perl.org/functions/quotemeta)相当)。
 
 例:
@@ -860,7 +860,7 @@ fn main() -> Result<()> {
 サンプルで
 `extern crate`
 が出てきたら、
-それはRust 2018では不要になったので書かなくていいです。
+それは Rust 2018 では不要になったので書かなくていいです。
 
 ```rust
 #[macro_use]
@@ -869,7 +869,7 @@ extern crate some_crate;
 
 とはなにか。
 
-Rust 2015までのルール。2018では
+Rust 2015 までのルール。2018 では
 
 ```
 use some::macro;
@@ -877,13 +877,13 @@ use some::macro;
 
 みたいに書ける(はず)。
 
-書き換えられる例ではlazy_static
+書き換えられる例では lazy_static
 
 ```rust
 use lazy_static::lazy_static;
 ```
 
-で全然OK。
+で全然 OK。
 
 - [Search · use "lazy_static::lazy_static"](https://github.com/search?l=Rust&q=use+%22lazy_static%3A%3Alazy_static%22&type=code)
 - [rust-lang-nursery/lazy-static.rs: A small macro for defining lazy evaluated static variables in Rust.](https://github.com/rust-lang-nursery/lazy-static.rs)
@@ -902,28 +902,28 @@ rustup component list --installed --toolchain nightly
 
 # cargo clippy
 
-なぜかcargo cleanしてからでないと
-cargo clippyがちゃんと動かない。
+なぜか cargo clean してからでないと
+cargo clippy がちゃんと動かない。
 
-clippy便利すぎるのでかならず使うべし。
+clippy 便利すぎるのでかならず使うべし。
 `rustup component add clippy`で入るし。
 
 - [rust-clippy/README.md at master · Manishearth/rust-clippy · GitHub](https://github.com/Manishearth/rust-clippy/blob/master/README.md)
 
-Cargo.tomlに書いて、debugのときはclippyになるようにする方法:
+Cargo.toml に書いて、debug のときは clippy になるようにする方法:
 
 - [rust - ビルドスクリプトでclippyを実行する簡単な方法はありますか？貨物プロジェクトで](https://stackoverrun.com/ja/q/11414843)
 - [Rustのlintライクなツールclippyを使う - Qiita](https://qiita.com/hhatto/items/9415cc5c11b3b201030a)
 - [clippy - crates.io: Rust Package Registry](https://crates.io/crates/clippy/0.0.94)
 
-Cargo.tomlに追加
+Cargo.toml に追加
 
 ```ini
 [build-dependencies]
 clippy = { version = "*", optional = true }
 ```
 
-main.rs と lib.rsのあたまに (実際はbinary crateならmain.rsに...でいいらしい)
+main.rs と lib.rs のあたまに (実際は binary crate なら main.rs に...でいいらしい)
 
 ```rust
 #![cfg_attr(feature="clippy", feature(plugin))]
@@ -949,13 +949,13 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 # 環境設定(2020-10)
 
-ubuntuだと事前に
+ubuntu だと事前に
 
 ```sh
 apt install build-essential clang
 ```
 
-clangは要るかよくわからん。
+clang は要るかよくわからん。
 
 以下こんなかんじ
 
@@ -970,22 +970,22 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 cargo +nightly install racer
 ```
 
-cargo-expandは便利かもしれない。
+cargo-expand は便利かもしれない。
 
 ```sh
 cargo +nightly install cargo-expand
 ```
 
-RUST_SRC_PATHは展開後の値と
+RUST_SRC_PATH は展開後の値と
 
 ```
 source $HOME/.cargo/env
 ```
 
 を
-.xxx_profileに書いとく。
+.xxx_profile に書いとく。
 
-ただこれやると~/.cargo ~/.rustupの下、合わせて3GBぐらいになるのが辛い。
+ただこれやると~/.cargo ~/.rustup の下、合わせて 3GB ぐらいになるのが辛い。
 
 参考:
 
@@ -1044,14 +1044,14 @@ M-x package-autoremove
   )
 ```
 
-GNU Emacs 27.1で試した(emacsはsnapで入れた)。
+GNU Emacs 27.1 で試した(emacs は snap で入れた)。
 lsp (rls,rust-analyzer)よりはサクサク動くのがよい。
 
-racerのキーバインドは
+racer のキーバインドは
 [GitHub - racer-rust/emacs-racer: Racer support for Emacs](https://github.com/racer-rust/emacs-racer)
 に親切に書いてある。
 
-cargo modeのキーバインドは:
+cargo mode のキーバインドは:
 
 - C-c C-c C-e - cargo-process-bench
 - C-c C-c C-b - cargo-process-build
@@ -1071,26 +1071,26 @@ cargo modeのキーバインドは:
 - C-c C-c C-O - cargo-process-outdated
 - C-c C-c C-m - cargo-process-fmt
 - C-c C-c C-k - cargo-process-check
-- C-c C-c C-K - cargo-process-clippy (Kが大文字)
+- C-c C-c C-K - cargo-process-clippy (K が大文字)
 - C-c C-c C-a - cargo-process-add
 - C-c C-c C-D - cargo-process-rm
 - C-c C-c C-U - cargo-process-upgrade
 - C-c C-c C-A - cargo-process-audit
 
 たぶんこんなにいらない。
-cargo-modeはコメントアウトした or remove。
+cargo-mode はコメントアウトした or remove。
 上↑で定義したキーバインドが不足だったら考える。
 
 ## emacsでrustic + rls
 
-racerと比べて重い。なぜかAPIの補完してくれない。調べ中
+racer と比べて重い。なぜか API の補完してくれない。調べ中
 
 - [brotzeit/rustic: Rust development environment for Emacs](https://github.com/brotzeit/rustic)
 
-rlsのほうがエラーが的確でいい。でもAPIのcompletionがどーしてもできない。
-rust-analizerにすると、APIのcompletionもできるけど、重い。
+rls のほうがエラーが的確でいい。でも API の completion がどーしてもできない。
+rust-analizer にすると、API の completion もできるけど、重い。
 
-両方入れといてM-x rustic-mode で切り替えるとか。
+両方入れといて M-x rustic-mode で切り替えるとか。
 
 ## emacsでrust-analizer
 
@@ -1100,11 +1100,11 @@ rust-analizerにすると、APIのcompletionもできるけど、重い。
 バイナリおとしたら動かなかったので、ソースからビルドした。
 ものすごく時間かかった。
 
-APIのcode completeもちゃんとやってくれるけど、rlsと比べると重い。
+API の code complete もちゃんとやってくれるけど、rls と比べると重い。
 
 # vscode上でデバッグする
 
-rustのextentionだけだとデバッグできない。
+rust の extention だけだとデバッグできない。
 CodeLLDB (よくわかってない)を入れる。
 
 - [How to Debug Rust with Visual Studio Code](https://www.forrestthewoods.com/blog/how-to-debug-rust-with-visual-studio-code/)
@@ -1112,15 +1112,15 @@ CodeLLDB (よくわかってない)を入れる。
 
 # BufReadとBufReader
 
-なんで2つあるの?
+なんで 2 つあるの?
 
 - [[Rust] Read と BufRead の違い - Qiita](https://qiita.com/osanshouo/items/1cf8175e1430c64372d1)
-- [std::io::Read - Rust](https://doc.rust-lang.org/std/io/trait.Read.html) - これはtrait
-- [std::io::BufRead - Rust](https://doc.rust-lang.org/std/io/trait.BufRead.html) - これもtrait
+- [std::io::Read - Rust](https://doc.rust-lang.org/std/io/trait.Read.html) - これは trait
+- [std::io::BufRead - Rust](https://doc.rust-lang.org/std/io/trait.BufRead.html) - これも trait
 - [std::io::BufReader - Rust](https://doc.rust-lang.org/std/io/struct.BufReader.html) - structure
 
-structreでimplされていないtraitのデフォルト実装を使うには、
-traitもuseしないといけないらしい?
+structre で impl されていない trait のデフォルト実装を使うには、
+trait も use しないといけないらしい?
 
 # stdのとき読み込まれるモジュールは
 
@@ -1129,9 +1129,9 @@ traitもuseしないといけないらしい?
 
 # AsRef
 
-関数に、Stringの参照が、スライスとして渡せるのは
+関数に、String の参照が、スライスとして渡せるのは
 [Trait std::convert::AsRef](https://doc.rust-lang.org/std/convert/trait.AsRef.html)
-がimplされてるから。
+が impl されてるから。
 
 [string.rs.html -- source](https://doc.rust-lang.org/src/alloc/string.rs.html#2248-2253) (リンク先は変わるかも)
 
@@ -1146,7 +1146,7 @@ impl AsRef<str> for String {
 ```
 
 あと `&[T]`を引数にとる関数に、`Vec<T>`の参照を渡せるのも
-`impl<T> AsRef<[T]> for Vec<T>`がimplされてるから。
+`impl<T> AsRef<[T]> for Vec<T>`が impl されてるから。
 
 [vec.rs.html -- source](https://doc.rust-lang.org/src/alloc/vec.rs.html#2483-2487) (リンク先は変わるかも)
 
@@ -1181,14 +1181,14 @@ pub fn main() {
 
 # 「文字列の配列」
 
-関数の引数・戻り値によくあるのが「文字列の配列」 だけど、
+関数の引数・戻り値によくあるのが「文字列の配列」だけど、
 
 - `Vec<String>`
 - `Vec<&str>`
 - `&[String]`
 - `&[&str]`
 
-の4パターンがありうる。
+の 4 パターンがありうる。
 
 戻り値にスライスが使えるのは引数の一部を返すときだけなので、
 大抵の場合 `f(..) -> Vec<U>`になる。
@@ -1219,7 +1219,7 @@ fn like_this(v: &[String]) -> Vec<&str> {
 
 # encodingについてもう少し
 
-文字コード変換のメジャーなクレートは2種類?
+文字コード変換のメジャーなクレートは 2 種類?
 
 - [lifthrasiir/rust-encoding: Character encoding support for Rust](https://github.com/lifthrasiir/rust-encoding)
 - [hsivonen/encoding_rs: A Gecko-oriented implementation of the Encoding Standard in Rust](https://github.com/hsivonen/encoding_rs)
@@ -1228,10 +1228,10 @@ fn like_this(v: &[String]) -> Vec<&str> {
 
 ## 用語を整理
 
-- decode - byte列を、コーディングを指定してRustの内部表現に変換
-- encode - Rustの内部表現を、コーディングを指定してbyte列に
+- decode - byte 列を、コーディングを指定して Rust の内部表現に変換
+- encode - Rust の内部表現を、コーディングを指定して byte 列に
 
-byte列のところをioにしたものがstreaming。
+byte 列のところを io にしたものが streaming。
 
 # memchr
 
@@ -1255,8 +1255,8 @@ byte列のところをioにしたものがstreaming。
 
 # closure
 
-Rustでは無名関数(anonymous function)とかlambdaのことを
-clousreと呼ぶらしい。
+Rust では無名関数(anonymous function)とか lambda のことを
+clousre と呼ぶらしい。
 
 # refutable / irrefutable
 
@@ -1270,20 +1270,20 @@ The Book(日本語訳)では
 
 # Rustエラーライブラリのトレンドを教えてください
 
-とChatGPTに聞いてみた結果(2023-01)
+と ChatGPT に聞いてみた結果(2023-01)
 
-Rustは、エラーハンドリングについて標準ライブラリが提供している機能が限られているため、多くのエラーハンドリングライブラリが存在しています。その中でも、現在トレンドとなっているライブラリについて説明します。
+Rust は、エラーハンドリングについて標準ライブラリが提供している機能が限られているため、多くのエラーハンドリングライブラリが存在しています。その中でも、現在トレンドとなっているライブラリについて説明します。
 
-- anyhow: anyhowは、Rustのエラーハンドリングの新しいスタイルを提供するために設計されたライブラリです。これは、エラーの原因を追跡しやすく、可読性の高いエラーメッセージを生成することができるように設計されています。
+- anyhow: anyhow は、Rust のエラーハンドリングの新しいスタイルを提供するために設計されたライブラリです。これは、エラーの原因を追跡しやすく、可読性の高いエラーメッセージを生成することができるように設計されています。
 
-- thiserror: thiserrorは、定義済みのエラー型を生成するために使用されるマクロを提供します。これにより、明確なエラー型を定義し、可読性の高いエラーメッセージを生成することができるようになります。
+- thiserror: thiserror は、定義済みのエラー型を生成するために使用されるマクロを提供します。これにより、明確なエラー型を定義し、可読性の高いエラーメッセージを生成することができるようになります。
 
-- failure: failureは、エラーの追跡を容易にするためのライブラリです。これは、複数のエラーの原因を追跡するために使用でき、可読性の高いエラーメッセージを生成することができます。
+- failure: failure は、エラーの追跡を容易にするためのライブラリです。これは、複数のエラーの原因を追跡するために使用でき、可読性の高いエラーメッセージを生成することができます。
 
-- quick-error: quick-errorは、簡単に自分自身のエラー型を定義するために使用されるマクロを提供します。これにより、明確なエラー型を定義し、可読性の高いエラーメッセージを生成することができるようになります。
+- quick-error: quick-error は、簡単に自分自身のエラー型を定義するために使用されるマクロを提供します。これにより、明確なエラー型を定義し、可読性の高いエラーメッセージを生成することができるようになります。
 
-- snafu: snafuは、Rustでのエラーハンドリングを簡素化するためのライブラリです。これは、組み込みのエラー型を使用し、可読性の高いエラーメッセージを生成することができるように設計されています。
+- snafu: snafu は、Rust でのエラーハンドリングを簡素化するためのライブラリです。これは、組み込みのエラー型を使用し、可読性の高いエラーメッセージを生成することができるように設計されています。
 
-- xerror: xerrorは、簡単にエラー型を定義するために使用されるマクロを提供します。これにより、明確なエラー型を定義し、可読性の高いエラーメッセージを生成することができるようになります。
+- xerror: xerror は、簡単にエラー型を定義するために使用されるマクロを提供します。これにより、明確なエラー型を定義し、可読性の高いエラーメッセージを生成することができるようになります。
 
-これらは、現在Rustにおいてトレンドとなっているエラーハンドリングライブラリです。実際に使用するライブラリは、開発者や開発チームによって異なりますので、どれが最適かは試行錯誤しながら見つけることができます。
+これらは、現在 Rust においてトレンドとなっているエラーハンドリングライブラリです。実際に使用するライブラリは、開発者や開発チームによって異なりますので、どれが最適かは試行錯誤しながら見つけることができます。

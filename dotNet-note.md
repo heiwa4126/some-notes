@@ -1,7 +1,7 @@
 # .NET 5
 
-formもWPFもMicrosoft Visual Studio Installer Projectsで.msi作れるとこまで確認した。
-昔作ったプロジェクトを.NET 5に置き換える練習をしてみる(ぼちぼちと)。
+form も WPF も Microsoft Visual Studio Installer Projects で.msi 作れるとこまで確認した。
+昔作ったプロジェクトを.NET 5 に置き換える練習をしてみる(ぼちぼちと)。
 
 参考:
 

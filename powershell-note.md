@@ -168,7 +168,7 @@ new の wapper 書いて
 開発中は ↑ で
 本番では`using module`にすればいい。
 ただし Export-ModuleMember の関数は全滅するので
-new ラッパも [class]::new に置き換える...
+new ラッパも[class]::new に置き換える...
 
 やっぱり PowerShell はクソ。
 

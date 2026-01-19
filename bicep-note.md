@@ -24,6 +24,6 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-03-01' = {
 
 にしないとデプロイできない。
 
-bicep.exeはlinterも兼ねている(と [Bicep リンターの使用方法 - Azure Resource Manager | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-resource-manager/bicep/linter) による)らしいが、
-上の問題を検出できない。 `bicep build`で一旦ARMテンプレートに変換して、
-そのJSONをVSCodeで開くと、警告が見える。
+bicep.exe は linter も兼ねている(と [Bicep リンターの使用方法 - Azure Resource Manager | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-resource-manager/bicep/linter) による)らしいが、
+上の問題を検出できない。 `bicep build`で一旦 ARM テンプレートに変換して、
+その JSON を VSCode で開くと、警告が見える。

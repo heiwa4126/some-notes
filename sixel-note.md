@@ -99,36 +99,36 @@ tmux detach -E 'img2sixel image.png; sleep 5; tmux attach'
 
 Citations:
 
-[1] https://toxicfrog.github.io/images-in-the-terminal/
-[2] https://note.com/ryobeam/n/n4169da15665e
-[3] https://yazi-rs.github.io/docs/image-preview/
-[4] https://bugs.launchpad.net/bugs/2068393
-[5] https://www.arewesixelyet.com
-[6] https://zenn.dev/ispec_inc/articles/tmux-sixel-build
-[7] https://github.com/csdvrx/sixel-tmux/blob/main/RANTS.md
-[8] https://github.com/tmux/tmux/issues/1613
-[9] https://www.reddit.com/r/linuxquestions/comments/1hqg7pu/in_2025_what_features_do_you_want_in_a_terminal/
-[10] https://jvns.ca/blog/2025/02/05/some-terminal-frustrations/
-[11] https://forums.theregister.com/forum/all/2025/01/08/ghostty_1/
-[12] https://www.reddit.com/r/tmux/comments/np7rjj/what_terminal_emulator_goes_well_with_tmux/
-[13] https://github.com/mintty/wsltty/issues/344
-[14] https://qiita.com/arakiken/items/3e4bc9a6e43af0198e46
-[15] https://news.ycombinator.com/item?id=40598629
-[16] https://news.ycombinator.com/item?id=28756701
-[17] https://news.ycombinator.com/item?id=42579472
-[18] https://juliapackages.com/p/sixel
-[19] https://cyberpanel.net/blog/best-terminal-emulator-linux
-[20] https://news.ycombinator.com/item?id=35936331
-[21] https://github.com/mfontanini/presenterm/issues/72
-[22] https://www.reddit.com/r/neovim/comments/14mjsvr/adding_image_support_to_neovim_kitty_tmux_amazing/
-[23] https://raw.githubusercontent.com/tmux/tmux/3.5/CHANGES
-[24] https://news.ycombinator.com/item?id=21644566
-[25] https://www.reddit.com/r/linuxquestions/comments/1bdh3n2/is_there_a_way_to_view_images_in_a_tmux_terminal/
-[26] https://github.com/tmux/tmux/issues/4208
-[27] https://discourse.julialang.org/t/ann-kittyterminalimages-jl-display-julia-output-images-directly-in-your-terminal/44831
-[28] https://www.reddit.com/r/tmux/comments/oijul9/cant_display_images_in_the_terminal_while_on_tmux/
-[29] https://www.reddit.com/r/commandline/comments/1f365z7/yazi_image_preview_doesnt_work_inside_tmux_on_a/
-[30] https://gitlab.freedesktop.org/terminal-wg/specifications/-/issues/26
-[31] https://www.reddit.com/r/tmux/comments/o85fck/sixel_support/
-[32] https://www.reddit.com/r/bashonubuntuonwindows/comments/1eimdn6/how_to_render_img2sixel_output_properly_in_wsl/
-[33] https://github.com/tmux/tmux/issues/3684
+[1]https://toxicfrog.github.io/images-in-the-terminal/
+[2]https://note.com/ryobeam/n/n4169da15665e
+[3]https://yazi-rs.github.io/docs/image-preview/
+[4]https://bugs.launchpad.net/bugs/2068393
+[5]https://www.arewesixelyet.com
+[6]https://zenn.dev/ispec_inc/articles/tmux-sixel-build
+[7]https://github.com/csdvrx/sixel-tmux/blob/main/RANTS.md
+[8]https://github.com/tmux/tmux/issues/1613
+[9]https://www.reddit.com/r/linuxquestions/comments/1hqg7pu/in_2025_what_features_do_you_want_in_a_terminal/
+[10]https://jvns.ca/blog/2025/02/05/some-terminal-frustrations/
+[11]https://forums.theregister.com/forum/all/2025/01/08/ghostty_1/
+[12]https://www.reddit.com/r/tmux/comments/np7rjj/what_terminal_emulator_goes_well_with_tmux/
+[13]https://github.com/mintty/wsltty/issues/344
+[14]https://qiita.com/arakiken/items/3e4bc9a6e43af0198e46
+[15]https://news.ycombinator.com/item?id=40598629
+[16]https://news.ycombinator.com/item?id=28756701
+[17]https://news.ycombinator.com/item?id=42579472
+[18]https://juliapackages.com/p/sixel
+[19]https://cyberpanel.net/blog/best-terminal-emulator-linux
+[20]https://news.ycombinator.com/item?id=35936331
+[21]https://github.com/mfontanini/presenterm/issues/72
+[22]https://www.reddit.com/r/neovim/comments/14mjsvr/adding_image_support_to_neovim_kitty_tmux_amazing/
+[23]https://raw.githubusercontent.com/tmux/tmux/3.5/CHANGES
+[24]https://news.ycombinator.com/item?id=21644566
+[25]https://www.reddit.com/r/linuxquestions/comments/1bdh3n2/is_there_a_way_to_view_images_in_a_tmux_terminal/
+[26]https://github.com/tmux/tmux/issues/4208
+[27]https://discourse.julialang.org/t/ann-kittyterminalimages-jl-display-julia-output-images-directly-in-your-terminal/44831
+[28]https://www.reddit.com/r/tmux/comments/oijul9/cant_display_images_in_the_terminal_while_on_tmux/
+[29]https://www.reddit.com/r/commandline/comments/1f365z7/yazi_image_preview_doesnt_work_inside_tmux_on_a/
+[30]https://gitlab.freedesktop.org/terminal-wg/specifications/-/issues/26
+[31]https://www.reddit.com/r/tmux/comments/o85fck/sixel_support/
+[32]https://www.reddit.com/r/bashonubuntuonwindows/comments/1eimdn6/how_to_render_img2sixel_output_properly_in_wsl/
+[33]https://github.com/tmux/tmux/issues/3684

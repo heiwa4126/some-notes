@@ -1,6 +1,6 @@
 # JAVA関係ノート
 
-JAVAめんどくさい。
+JAVA めんどくさい。
 
 - [JAVA関係ノート](#java関係ノート)
 - [Tomcatの新し目のやつをRHELに入れたときに参考にした記事](#tomcatの新し目のやつをrhelに入れたときに参考にした記事)
@@ -28,20 +28,20 @@ JAVAめんどくさい。
 
 - [CentOS 7にTomcat9/JDK8の開発環境を構築する - Qiita](https://qiita.com/mkyz08/items/97802acb6911f0173e7c)
 
-自分は OpenJDK(RHELの配布)と、ApacheのTomcat9で設定した。
-「参考」というよりはほぼそのままコピペ(tomcat.seviceとか)。
+自分は OpenJDK(RHEL の配布)と、Apache の Tomcat9 で設定した。
+「参考」というよりはほぼそのままコピペ(tomcat.sevice とか)。
 
-- /optの下に展開する
-- /etc/profile.dで全ユーザにJAVA_HOME,CATALINA_HOMEを設定する
-- 「Managerにログイン」の設定方法が載ってる
+- /opt の下に展開する
+- /etc/profile.d で全ユーザに JAVA_HOME,CATALINA_HOME を設定する
+- 「Manager にログイン」の設定方法が載ってる
 
 のがよい。
 
-logrotateだけ追加したけど、
-tomcat9では自前のloggerがちゃんとしてるので
+logrotate だけ追加したけど、
+tomcat9 では自前の logger がちゃんとしてるので
 いらないかもしれない。
 
-単にJava Servletコンテナを使うんだったらjettyのほうがいいんじゃないかとは思うけど、諸般の事情があって辛い。
+単に Java Servlet コンテナを使うんだったら jetty のほうがいいんじゃないかとは思うけど、諸般の事情があって辛い。
 
 下の
 [Tomcat の初期設定まとめ - Qiita](https://qiita.com/hidekatsu-izuno/items/ab604b6c764b5b5a86ed)
@@ -50,7 +50,7 @@ tomcat9では自前のloggerがちゃんとしてるので
 # tomcatで不要なwebapps
 
 デフォルトで入っていることが多い(ディストリ版ではそうでもない)、
-不要＆セキュリティに問題のあるwebapps
+不要＆セキュリティに問題のある webapps
 
 - ROOT
 - docs
@@ -58,7 +58,7 @@ tomcat9では自前のloggerがちゃんとしてるので
 - manager
 - host-manager
 
-ディレクトリごと削除 または どこかに移動する。
+ディレクトリごと削除またはどこかに移動する。
 
 参考:
 
@@ -71,11 +71,11 @@ tomcat9では自前のloggerがちゃんとしてるので
 # headlessとは
 
 グラフィックスサポートが無いバージョン。
-Linix serverでX11がなくても使える。
+Linix server で X11 がなくても使える。
 
 # Ubuntuで開発
 
-TODO: SDKMANも考慮する
+TODO: SDKMAN も考慮する
 
 サーバなら
 
@@ -113,12 +113,12 @@ source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 [Spring Initializr](https://start.spring.io/)
 
-CLIはないの?
-curlでできます。
+CLI はないの?
+curl でできます。
 [Spring Initializr Reference Guide](https://docs.spring.io/initializr/docs/0.9.1/reference/html/#command-line)
 
-demo1.zipとか作って、ホストへコピーしてunzip。
-gradle版だと
+demo1.zip とか作って、ホストへコピーして unzip。
+gradle 版だと
 
 ```sh
 ./gradlew init
@@ -162,7 +162,7 @@ $ sdk version
 SDKMAN 5.8.5+522
 ```
 
-Gradle入れる。
+Gradle 入れる。
 参考: [Gradle | Installation](https://gradle.org/install/)
 
 ```sh
@@ -215,7 +215,7 @@ Enter selection (default: Java) [1..5] 3
 
 参考: [Build Init Plugin](https://docs.gradle.org/current/userguide/build_init_plugin.html)
 
-Unix/Windowsで作業できるようにgradle wrapperがプロジェクトルートに出来るので、以下は`gradle`コマンドの代わりに、`./gradlew`を使う。
+Unix/Windows で作業できるように gradle wrapper がプロジェクトルートに出来るので、以下は`gradle`コマンドの代わりに、`./gradlew`を使う。
 
 実行は
 
@@ -238,7 +238,7 @@ Unix/Windowsで作業できるようにgradle wrapperがプロジェクトルー
 で
 `./build/distributions/`に、
 ディストリビューションパッケージが
-tarとzipが出来てるので、
+tar と zip が出来てるので、
 
 例えば(これは普通でない方法)
 
@@ -255,7 +255,7 @@ demo/bin/demo
 Hello world!
 ```
 
-が表示される。依存jarファイルもそのまま入っている。
+が表示される。依存 jar ファイルもそのまま入っている。
 
 普通はこっち。
 
@@ -267,7 +267,7 @@ build/install/demo/bin/demo
 ./app/build/install/app/bin/app
 ```
 
-でもOK.
+でも OK.
 
 ## 実行できるjarを作る その1
 
@@ -283,7 +283,7 @@ $ java -jar ./build/libs/demo.jar
 no main manifest attribute, in ./build/libs/demo.jar
 ```
 
-- これはhello worldで外部jarとかいらないのでとりあえず消す
+- これは hello world で外部 jar とかいらないのでとりあえず消す
 - 自動生成される`./build/tmp/jar/MANIFEST.MF`に`Main-Class`が抜けている
 
 ので`build.groove`を編集する。のまえに
@@ -340,15 +340,15 @@ Hello world.
 
 ## 実行できるjarを作る その2
 
-「その1」で「依存するjarなし」にして作ったわけだけど、
+「その 1」で「依存する jar なし」にして作ったわけだけど、
 そんなプロジェクトはあるとも思えないので、
 最初から入ってた
 
 - [Google Guava - Wikipedia](https://ja.wikipedia.org/wiki/Google_Guava)
 - [google/guava: Google core libraries for Java](https://github.com/google/guava)
-  を使ったApp.javaに変えてみる。
+  を使った App.java に変えてみる。
 
-[com.google.common.base.Strings#repeat](https://guava.dev/releases/19.0/api/docs/com/google/common/base/Strings.html#repeat(java.lang.String,%20int))を使って、Hello worldの上下に罫線を引く。
+[com.google.common.base.Strings#repeat](https://guava.dev/releases/19.0/api/docs/com/google/common/base/Strings.html#repeat(java.lang.String,%20int))を使って、Hello world の上下に罫線を引く。
 
 `src/main/java/demo/App.java`
 
@@ -374,7 +374,7 @@ public class App {
 }
 ```
 
-`bundle.gradle`はguavaの依存のとこだけ`implementation`に戻して、`./gradlew run`すると
+`bundle.gradle`は guava の依存のとこだけ`implementation`に戻して、`./gradlew run`すると
 
 ```
 ------------
@@ -429,7 +429,7 @@ java -jar ./build/libs/demo.jar
 - [shadow plugin - Getting Started](https://imperceptiblethoughts.com/shadow/getting-started/#default-java-groovy-tasks)
 - [Gradle: 依存ライブラリ入りのjarを作る - Qiita](https://qiita.com/suin/items/641c1c1ec9ab5447221e)
 
-`./gradlew tasks`でshadow関係が増えてるのを確認して、
+`./gradlew tasks`で shadow 関係が増えてるのを確認して、
 
 ```
 ./gradlew shadowJar
@@ -439,9 +439,9 @@ java -jar ./build/libs/demo-all.jar
 **`demo.jar`ではなくて`demo-all.jar`なのに注意。**
 
 `shadowDistZip`と`shadowDistTar`もあるけど、
-jarでなくていいなら
+jar でなくていいなら
 `distZip`,`distTar`で十分だと思う。
-minimizeができるのは大きいかも。
+minimize ができるのは大きいかも。
 
 実験:
 
@@ -467,12 +467,12 @@ implementation group: 'org\.postgresql', name: 'postgresql', version: '42\.2\.23
 
 # Groovyチュートリアル
 
-Hello worldぐらいは書いてみる。
+Hello world ぐらいは書いてみる。
 
 - [The Apache Groovy programming language - Documentation](https://groovy-lang.org/documentation.html#gettingstarted)
 - [1. index - Apache Groovyチュートリアル](https://koji-k.github.io/groovy-tutorial/)
 
-インストールとGroovy shell起動
+インストールと Groovy shell 起動
 
 ```
 sdk install groovy
@@ -484,7 +484,7 @@ groovysh
 - [The Apache Groovy programming language - Install Groovy](https://groovy-lang.org/install.html#SDKMAN)
 - [Available SDKs - SDKMAN! the Software Development Kit Manager](https://sdkman.io/sdks#groovy)
 
-Groovy shellで
+Groovy shell で
 
 ```
 println "Hello world!"
@@ -514,7 +514,7 @@ groovy Hello
 
 ...あんまり楽しくない。
 
-出来たclassの中身見てみる。
+出来た class の中身見てみる。
 
 ```
 $ javap Hello.class
@@ -534,7 +534,7 @@ $ javap -v Hello.class
 
 なんとなく何やってるかは想像がつく。
 
-実行可能なjarを作る方法は想像もつかないのでGradleでやる。
+実行可能な jar を作る方法は想像もつかないので Gradle でやる。
 
 ```
 mkdir xxx
@@ -543,13 +543,13 @@ gradle init # application, groovyを選ぶ
 ./gradlew installDist
 ```
 
-で`build/install/`の下みるとantとか入ってる。groovy-allの依存が多いらしい。
+で`build/install/`の下みると ant とか入ってる。groovy-all の依存が多いらしい。
 
 もっとチューニングする。
 
 # Kotlinチュートリアル
 
-Hello worldぐらいは書いてみる。
+Hello world ぐらいは書いてみる。
 
 - [Tutorials - Kotlin Programming Language](https://kotlinlang.org/docs/tutorials/)
   - [Working with the Command Line Compiler - Kotlin Programming Language](https://kotlinlang.org/docs/tutorials/command-line.html)
@@ -583,7 +583,7 @@ kotlinc hello.kt -include-runtime -d hello.jar
 java -jar hello.jar
 ```
 
-これはわかりやすい。jarの中身を覗いてみる。
+これはわかりやすい。jar の中身を覗いてみる。
 
 ```
 $ jar -xvf hello.jar META-INF/MANIFEST.MF HelloKt.class
@@ -603,8 +603,8 @@ $ javap -v HelloKt.class
 (略)
 ```
 
-groovyよりは面白そうだなあ。
-shellが`kotlinc-jvm`ってタイプしにくいぞ。
+groovy よりは面白そうだなあ。
+shell が`kotlinc-jvm`ってタイプしにくいぞ。
 
 # Spring Boot チュートリアル
 
@@ -625,22 +625,22 @@ spring --version  # Spring CLI v2.3.2.RELEASE
 
 [Spring Boot 入門 - 公式ドキュメントの日本語訳](https://spring.pleiades.io/spring-boot/docs/current/reference/html/getting-started.html)
 終わった。簡単。
-mvn + JAVAでjarまで出来る。
+mvn + JAVA で jar まで出来る。
 
 次は
 [入門 | Spring Boot JAR を WAR へ変換](https://spring.pleiades.io/guides/gs/convert-jar-to-war/)
 ...あれ。詰んだ。
 
-Gradleでwarのを試してみる。まずGradleの普通の
+Gradle で war のを試してみる。まず Gradle の普通の
 [Getting Started | Building an Application with Spring Boot](https://spring.io/guides/gs/spring-boot/)
 
 [Spring Boot 92\. 従来のデプロイ \- リファレンス](https://spring.pleiades.io/spring-boot/docs/2.1.4.RELEASE/reference/html/howto-traditional-deployment.html)
 
-なんとか動くwarまで出来たけど、手順がめんどうだなあ。
+なんとか動く war まで出来たけど、手順がめんどうだなあ。
 
 # formatter
 
-Gradleならこれだ。[sherter/google\-java\-format\-gradle\-plugin](https://github.com/sherter/google-java-format-gradle-plugin)
+Gradle ならこれだ。[sherter/google\-java\-format\-gradle\-plugin](https://github.com/sherter/google-java-format-gradle-plugin)
 
 # PowershellからJava
 
@@ -654,7 +654,7 @@ Gradleならこれだ。[sherter/google\-java\-format\-gradle\-plugin](https://g
 java -jar "-Duser.language=en" any.jar
 ```
 
-なので例えばmavenだったら
+なので例えば maven だったら
 
 ```powershell
 mvn -B archetype:generate `

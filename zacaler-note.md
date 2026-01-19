@@ -1,7 +1,7 @@
 # ZScaler
 
-ZScalerというproxyが来たので、対策。
-proxyというよりは「men-in-middleでSSL通信を盗聴改竄する」やべえ製品ではある。
+ZScaler という proxy が来たので、対策。
+proxy というよりは「men-in-middle で SSL 通信を盗聴改竄する」やべえ製品ではある。
 
 - [ZScaler](#zscaler)
 - [問題](#問題)
@@ -15,20 +15,20 @@ proxyというよりは「men-in-middleでSSL通信を盗聴改竄する」や�
 
 # 問題
 
-pipやCurlが証明書エラーで使えなくなった。
+pip や Curl が証明書エラーで使えなくなった。
 
-ZScalerがSSL通信を解答して、ZScalerの証明書で再び暗号化してくるから。
+ZScaler が SSL 通信を解答して、ZScaler の証明書で再び暗号化してくるから。
 
 メモ:
-ZScalerはagentもチェックしてるみたいで、有名ブラウザとCurlなどでは挙動が違う。
+ZScaler は agent もチェックしてるみたいで、有名ブラウザと Curl などでは挙動が違う。
 
 # 対策
 
-ZScalerの証明書をexportして、
-CA bundleを作る。
-(CentOSの
+ZScaler の証明書を export して、
+CA bundle を作る。
+(CentOS の
 `/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem`
-にcatして作った)
+に cat して作った)
 
 そのファイルのパスをいくつかの環境変数に設定してやる。
 
@@ -38,12 +38,12 @@ CA bundleを作る。
 | Curl    | CURL_CA_BUNDLE     |
 | OpenSSL | SSL_CERT_FILE      |
 
-CA bundleにしないと
-ZScalerがZScalerで署名してくるものと、
+CA bundle にしないと
+ZScaler が ZScaler で署名してくるものと、
 そうでないものが入り混じってくるので
 **辛い**。
 
-あとroot証明書が自動更新されないのが**危ない**。
+あと root 証明書が自動更新されないのが**危ない**。
 
 # 参考
 
@@ -52,12 +52,12 @@ ZScalerがZScalerで署名してくるものと、
 # ZScalerの証明書をexportする手順
 
 (TODO)
-Windowsでマウスをカチカチしてpem形式でexport。ああ面倒。
+Windows でマウスをカチカチして pem 形式で export。ああ面倒。
 
 # Linuxに証明書を追加する手順
 
-curlとかで有名でないホストに対するhttps:がエラーになる。Let's Encryptなんかだとまるでダメ。
-curlだけなら-kをつけて証明書エラーを無視すればOKだが、そうもいかないでしょ。
+curl とかで有名でないホストに対する https:がエラーになる。Let's Encrypt なんかだとまるでダメ。
+curl だけなら-k をつけて証明書エラーを無視すれば OK だが、そうもいかないでしょ。
 
 ## Ubuntuの場合
 
@@ -71,7 +71,7 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
    に
    `zscaler`ディレクトリを作成。
 1. `/usr/share/ca-certificates/zscaler`に
-   `ZscalerRootCertificate.cer`ファイルを置く。(拡張子は.crtかも。PEM形式ならOK)
+   `ZscalerRootCertificate.cer`ファイルを置く。(拡張子は.crt かも。PEM 形式なら OK)
 1. `/etc/ca-certificates.conf`の末尾に
    `zscaler/ZscalerRootCertificate.cer`
    を追加。最後に改行が必要。
@@ -79,19 +79,19 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 
 `/etc/ssl/certs/ca-certificates.crt`が更新されるらしい
 
-立ち上がってるデーモンは再起動する必要がある(snapdとか)。
-めんどくさかったらサーバごとreboot。
+立ち上がってるデーモンは再起動する必要がある(snapd とか)。
+めんどくさかったらサーバごと reboot。
 
 ## RHEL/CentOS 7の場合
 
-(RHEL 6/Cent 6では手順が違います)
+(RHEL 6/Cent 6 では手順が違います)
 
-証明書を置くディレクトリが2つあるみたいで、使い分けがよくわからない
+証明書を置くディレクトリが 2 つあるみたいで、使い分けがよくわからない
 
 - /usr/share/pki/ca-trust-source/
 - /etc/pki/ca-trust/source
 
-双方にREADMEがあるので、見比べてみると
+双方に README があるので、見比べてみると
 
 ```
 # diff -u /etc/pki/ca-trust/source/README /usr/share/pki/ca-trust-source/README
@@ -106,16 +106,16 @@ curlだけなら-kをつけて証明書エラーを無視すればOKだが、そ
 - (優先度高) /usr/share/pki/ca-trust-source/
 - (優先度低) /etc/pki/ca-trust/source
 
-今回は低いほうで試す。手順はREADMEに書いてあるとおり。
+今回は低いほうで試す。手順は README に書いてあるとおり。
 
 1. `/etc/pki/ca-trust/source/anchors/`に
    `ZscalerRootCertificate.cer`ファイルを置く。
 1. `update-ca-trust`を実行
 
 結果は`/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem`に。
-(`/etc/pki/tls/certs/ca-bundle.crt`かも? それはRHEL6)
+(`/etc/pki/tls/certs/ca-bundle.crt`かも? それは RHEL6)
 
-これでcurlで-kなしでもエラーがでなくなる。
+これで curl で-k なしでもエラーがでなくなる。
 
 参考:
 

@@ -15,7 +15,7 @@
 
 # `Option<&str> -> Option<String>`
 
-(OptionでもResultでも同じでいける)
+(Option でも Result でも同じでいける)
 
 ```rust
 fn c1(x: Option<&str>) -> Option<String> {
@@ -27,7 +27,7 @@ fn c1(x: Option<&str>) -> Option<String> {
 ```
 
 こういうこと↑をやりたい。
-(intoのとこはto_stringとかto_ownedとかString::fromとか)
+(into のとこは to_string とか to_owned とか String::from とか)
 
 ```rust
 // x.map_or(None, |s| Some(s.into()))
@@ -84,9 +84,9 @@ fn main() -> anyhow::Result<()> {
 
 これもテストとかで使う。
 
-Stringは
+String は
 [std::fmt::Write](https://doc.rust-lang.org/std/fmt/trait.Write.html)
-をimplしてるのでwrite!で使えるけれど、
+を impl してるので write!で使えるけれど、
 これは[std::io::Write](https://doc.rust-lang.org/std/io/trait.Write.html)ではないので
 ファイル代わりに渡せない。
 
@@ -124,7 +124,7 @@ fn main() -> anyhow::Result<()> {
 
 - [How to create an in-memory object that can be used as a Reader, Writer, or Seek in Rust? - Stack Overflow](https://stackoverflow.com/questions/41069865/how-to-create-an-in-memory-object-that-can-be-used-as-a-reader-writer-or-seek)
 - [バイトのベクトル（u8）を文字列に変換する方法](https://qastack.jp/programming/19076719/how-do-i-convert-a-vector-of-bytes-u8-to-a-string)
-- GitHub上の使用例: [Search · rust Cursor String::from_utf8 into_inner](https://github.com/search?l=Rust&q=rust+Cursor+String%3A%3Afrom_utf8+into_inner&type=Code)
+- GitHub 上の使用例: [Search · rust Cursor String::from_utf8 into_inner](https://github.com/search?l=Rust&q=rust+Cursor+String%3A%3Afrom_utf8+into_inner&type=Code)
 
 # `String <-> Vec<char>`
 
@@ -145,15 +145,15 @@ fn main() {
 参考:
 [string — Vec <char>を文字列に変換する方法](https://www.it-swarm-ja.tech/ja/string/vec-ltchargt%E3%82%92%E6%96%87%E5%AD%97%E5%88%97%E3%81%AB%E5%A4%89%E6%8F%9B%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/1046103135/)
 
-[Trait std::iter::FromIterator](https://doc.rust-lang.org/std/iter/trait.FromIterator.html)を使う例、iter()とinto_iter()のちがいが載ってます↑。
+[Trait std::iter::FromIterator](https://doc.rust-lang.org/std/iter/trait.FromIterator.html)を使う例、iter()と into_iter()のちがいが載ってます↑。
 
 # sliceでindex(),rindex()
 
-strにはfind,rfindがある。
+str には find,rfind がある。
 
 - [method.find - Rust](https://doc.rust-lang.org/std/primitive.str.html#method.find)
 
-slice一般にはposition,rpositionがある。
+slice 一般には position,rposition がある。
 
 - [method.position - std::iter::Iterator](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.position)
 - [method.rposition - std::iter::Iterator](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.rposition)
@@ -172,7 +172,7 @@ fn main(){
 
 こういうのも
 [memchr - Rust](https://docs.rs/memchr/2.3.4/memchr/)
-u8しか探せないけど早い(らしい)。
+u8 しか探せないけど早い(らしい)。
 
 # 非UTF-8のCSVを読む
 
@@ -184,7 +184,7 @@ u8しか探せないけど早い(らしい)。
 - [csv - UTF8以外でエンコードされたcsvファイルを読み取る方法は？ - ITツールウェブ](https://ja.ojit.com/so/csv/2747577) - ↑の自動翻訳
 - [character encoding - UTF8でエンコードされていないcsvファイルを読み取る方法 - 初心者向けチュートリアル](https://tutorialmore.com/questions-2197244.htm) - これも↑↑の自動翻訳
 - [encoding_rs_io::DecodeReaderBytesBuilder - Rust](https://docs.rs/encoding_rs_io/0.1.4/encoding_rs_io/struct.DecodeReaderBytesBuilder.html)
-- [Search · DecodeReaderBytesBuilder language:Rust](https://github.com/search?q=DecodeReaderBytesBuilder+language%3ARust&type=Code&ref=advsearch&l=Rust&l=) - GitHub上でもあんまり使われてない感じ... 新しいAPIとか??
+- [Search · DecodeReaderBytesBuilder language:Rust](https://github.com/search?q=DecodeReaderBytesBuilder+language%3ARust&type=Code&ref=advsearch&l=Rust&l=) - GitHub 上でもあんまり使われてない感じ... 新しい API とか??
 
 `encoding_rs::SHIFT_JIS`で検索するとけっこう出てくるので、
 「透過的に読もう/書こう」とする人がすくないのかもしれない。
@@ -205,8 +205,8 @@ Serde を使うといけそう。
 ## How to write a non-UTF8 encoded csv file?
 
 わがらん。
-goだと簡単なんだけど。
-encoding_rs_ioにWriterがあれば。
+go だと簡単なんだけど。
+encoding_rs_io に Writer があれば。
 
 # mutable slice
 
@@ -244,7 +244,7 @@ fn main() {
 }
 ```
 
-primitiveの方のサンプルでmutableなsliceが作れる。
+primitive の方のサンプルで mutable な slice が作れる。
 
 実行結果
 
@@ -255,7 +255,7 @@ x = [1, 7, 3]
 x = &mut [i32]
 ```
 
-std::strの方はarrayのref
+std::str の方は array の ref
 
 # 長さを指定して&strを作る
 
@@ -298,13 +298,13 @@ println!("{:?}", s);
 
 [パフォーマンス比較：ループVSイテレータ - The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/ch13-04-performance.html)
 によると、ループを使わないほうが早いらしい。
-でもResultを返すiteratorだと`?`演算子が使えなくなるよね?(たとえばBufRead::lines()) という話。
+でも Result を返す iterator だと`?`演算子が使えなくなるよね?(たとえば BufRead::lines()) という話。
 
-そもそもiter()って中断できるの?
+そもそも iter()って中断できるの?
 
 参考:
 
-- [ResultやOptionが要素型の場合のiteratorの捌き方 - Qiita](https://qiita.com/knknkn1162/items/d411d6a127ece8020811) - errをハンドルしてない。panic!してるだけ
+- [ResultやOptionが要素型の場合のiteratorの捌き方 - Qiita](https://qiita.com/knknkn1162/items/d411d6a127ece8020811) - err をハンドルしてない。panic!してるだけ
 - [Iterating over Results - Rust By Example](https://doc.rust-lang.org/stable/rust-by-example/error/iter_result.html)
 - [Rewrite help: imperative -> functional style - The Rust Programming Language Forum](https://users.rust-lang.org/t/rewrite-help-imperative-functional-style/28614)
 - [rust - How do I stop iteration and return an error when Iterator::map returns a Result::Err? - Stack Overflow](https://stackoverflow.com/questions/26368288/how-do-i-stop-iteration-and-return-an-error-when-iteratormap-returns-a-result)
@@ -312,7 +312,7 @@ println!("{:?}", s);
 # structureの一部をcloneせずに取り出す。
 
 [std::mem::take](https://doc.rust-lang.org/std/mem/fn.take.html)を使うと、
-&mutを受けてデフォルト値と置き換えることができる。
+&mut を受けてデフォルト値と置き換えることができる。
 
 ```rust
 use std::mem;
@@ -352,14 +352,14 @@ fn main() {
     println!("{:?}", &l1);
 ```
 
-Stringをclone()するコストより、String::new()のほうがコストが低いだろう、という予測
+String を clone()するコストより、String::new()のほうがコストが低いだろう、という予測
 
 # 内部iteratorを持つiterator
 
 参考: [rust - How do I have a struct's field be an `Iterator` over `T` elements? - Stack Overflow](https://stackoverflow.com/questions/47838596/how-do-i-have-a-structs-field-be-an-iterator-over-t-elements)
 
-- impl Trailを直接structのフィールドに出来ないのでBoxにする。
-- lifetimeが面倒なのでnewの中でBoxできない。Boxしてから渡す
+- impl Trail を直接 struct のフィールドに出来ないので Box にする。
+- lifetime が面倒なので new の中で Box できない。Box してから渡す
 - 「これが最良の方法」ではない、たぶん。
 
 ```rust

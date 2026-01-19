@@ -1,7 +1,7 @@
-firewalldノート
+firewalld ノート
 
 コマンドがめんどくさくてどうしても覚えられない。
-嫌い^3だが仕事で使うからしょうがない。
+嫌い^3 だが仕事で使うからしょうがない。
 
 - [よく使うコマンド](#よく使うコマンド)
   - [firewalldが動作しているか確認](#firewalldが動作しているか確認)
@@ -51,8 +51,8 @@ $ systemctl status firewalld
 # firewall-cmd --complete-reload
 ```
 
-reloadとcomplete-reloadの違いは
-reloadだと、通信中のセッションが継続すること。
+reload と complete-reload の違いは
+reload だと、通信中のセッションが継続すること。
 
 # man page
 
@@ -60,17 +60,17 @@ reloadだと、通信中のセッションが継続すること。
 
 # メモ: Pモードと非Pモード
 
-firewall-cmdに
+firewall-cmd に
 `--permanent`オプションを付けるとパーマネントモードで実行される。
 
 非パーマネントモード
 
 - 処理は即時反映される
-- ホストやfirewalldを再起動すると消える
+- ホストや firewalld を再起動すると消える
 
 パーマネントモード
 
-- 処理は即時反映されない。firewalldを再起動または再読込しないと反映されない
+- 処理は即時反映されない。firewalld を再起動または再読込しないと反映されない
 - ホストを再起動しても消えない
 
 # ゾーン
@@ -87,7 +87,7 @@ firewall-cmdに
 # firewall-cmd --get-active-zone
 ```
 
-デフォルトのZoneのみ出力(ほぼ役立たず)
+デフォルトの Zone のみ出力(ほぼ役立たず)
 
 ```
 # firewall-cmd --list-all
@@ -99,7 +99,7 @@ firewall-cmdに
 # firewall-cmd --zone ZONE名 --list-all
 ```
 
-activeでなくてもOK
+active でなくても OK
 
 デフォルトのゾーンを表示
 
@@ -107,7 +107,7 @@ activeでなくてもOK
 # firewall-cmd --get-default-zone
 ```
 
-デフォルトゾーン: ZONEの記述がないインタフェースに適応されるゾーン
+デフォルトゾーン: ZONE の記述がないインタフェースに適応されるゾーン
 
 新しいゾーンの作成
 
@@ -115,8 +115,8 @@ activeでなくてもOK
 # firewall-cmd --permanent --new-zone=<zone>
 ```
 
-permanentのみ。
-permanentなのでreloadが必要
+permanent のみ。
+permanent なので reload が必要
 
 ゾーンの作成例
 
@@ -138,7 +138,7 @@ firewall-cmd --permanent --zone=test1 \
 ```
 
 いっぺんに追加しても、バラで追加しても。
-servicesとportsはOR条件
+services と ports は OR 条件
 
 **_permanentの場合はreloadを忘れないこと_**
 
@@ -158,7 +158,7 @@ firewall-cmd --permanent --zone=test1 \
  --add-source=111.222.222.0/24
 ```
 
-sourcesはOR条件
+sources は OR 条件
 
 リッチルールの例
 
@@ -166,22 +166,22 @@ sourcesはOR条件
 firewall-cmd --zone=test1 --add-rich-rule='rule family="ipv4" source address="192.168.200.0/24" port port="135" protocol="tcp" accept'
 ```
 
-ZONEのルールが適応される順番は:
+ZONE のルールが適応される順番は:
 
 - sources AND (ports OR services OR rich-rules)で許可。
-- ↑にマッチしない時targetが適応される。
+- ↑にマッチしない時 target が適応される。
 
-sourcesとrich-rulesの関係が直感に反するので注意すること。
-(sourcesで先にフィルタされる)
+sources と rich-rules の関係が直感に反するので注意すること。
+(sources で先にフィルタされる)
 
-rich-rulesとsourcesは排他的に使うべきだと思う。
+rich-rules と sources は排他的に使うべきだと思う。
 
 # インタフェースにZONEを割り当てる
 
-ZONEの変更や追加。落とし穴だらけ。
+ZONE の変更や追加。落とし穴だらけ。
 
-Red Hat 7.3以前では(CentOSでも)
-NetworkManagerにバグがあって、
+Red Hat 7.3 以前では(CentOS でも)
+NetworkManager にバグがあって、
 コマンドからでも
 `nmcli connection modify <interface profile> connection.zone <zone>`
 または
@@ -191,18 +191,18 @@ NetworkManagerにバグがあって、
 `/etc/sysconfig/network-scripts/ifcfg-*`書き換えても
 `ZONE=xxxx`が消える。
 
-ZONEが消えるのはNetworkManagerをシャットダウンする時なので、
+ZONE が消えるのは NetworkManager をシャットダウンする時なので、
 
-1. NetworkManager停止
-1. ifcfg-\* にZONE追加
-1. NetworkManager開始
-1. firewalld再起動
+1. NetworkManager 停止
+1. ifcfg-\* に ZONE 追加
+1. NetworkManager 開始
+1. firewalld 再起動
 
 すればよい。
 
 **_NetworkManagerを止めてもネットワークは止まらないのでリモートからでもOK_**
 
-NetworkManagerの新しい版(正確なバージョンは不明)では修正されているので、
+NetworkManager の新しい版(正確なバージョンは不明)では修正されているので、
 試してみて、ダメなら上記の手順をふむこと。
 
 バグがない場合の手順例)
@@ -215,8 +215,8 @@ nmcli connection modify <profile name> connection.zone <zone>
 firewall-cmd --get-active-zones
 ```
 
-zones/*.xml中に`<interface name="string"/>`のような記述があるが、
-これは7.3でもまともに動かない。ifcfg-*にZONE書くほうがよい。
+zones/*.xml 中に`<interface name="string"/>`のような記述があるが、
+これは 7.3 でもまともに動かない。ifcfg-*に ZONE 書くほうがよい。
 `firewall-cmd --permanent --zone=<zone> --add-interface=<interface device>`
 だと両方に書き込むみたいだけど、混乱の元かも。
 
@@ -250,36 +250,36 @@ cat /etc/firewalld/zones/test1.xml
 
 ## メモ: "taget: default"
 
-zoneのlist-allの出力中の"taget: default"について。
+zone の list-all の出力中の"taget: default"について。
 
 ```
 firewall-cmd --zone=test1 --permanent --set-target={ACCEPT|REJECT|DROP|default}
 ```
 
-でiptablesのIN\_<zone名>の最後にターゲットが追加される。
-defaultを指定すると、それが削除され、チェインは呼びさし元に帰り
+で iptables の IN\_<zone 名>の最後にターゲットが追加される。
+default を指定すると、それが削除され、チェインは呼びさし元に帰り
 「デフォルトのルール」が適応される。
 
-「デフォルトのルール」はINPUT chainの最後に書かれるものになるわけだが、
+「デフォルトのルール」は INPUT chain の最後に書かれるものになるわけだが、
 
 実測では:
 
-- DROP ctstate INVALID (不正なパケットはDROP)
-- REJECT reject-with icmp-host-prohibite (「サービスしてない」ICMPをつけてリジェクト)
+- DROP ctstate INVALID (不正なパケットは DROP)
+- REJECT reject-with icmp-host-prohibite (「サービスしてない」ICMP をつけてリジェクト)
 
 この「デフォルトのルール」を記述した文書も、
 指定する方法も見当たらない。
 
 ## メモ: icmp-block-inversion
 
-zoneのlist-allの出力中の"icmp-block-inversion:"について。
+zone の list-all の出力中の"icmp-block-inversion:"について。
 
-設定するとICMPフィルターの設定(icmp-blocks)が逆さまになる。
+設定すると ICMP フィルターの設定(icmp-blocks)が逆さまになる。
 
 - icmp-block-inversion: no
-  - icmp-blocksに記述されたものがブロック。記述のないものは許可
+  - icmp-blocks に記述されたものがブロック。記述のないものは許可
 - icmp-block-inversion: yes
-  - icmp-blocksに記述されたものが許可。記述のないものはブロック
+  - icmp-blocks に記述されたものが許可。記述のないものはブロック
 
 例)
 
@@ -292,7 +292,7 @@ firewall-cmd --zone=test1 --add-icmp-block-inversion
 
 # サービス
 
-ZONEのルールで直にport番号を書くよりも、サービスを書いたほうが汎用性が高い。
+ZONE のルールで直に port 番号を書くよりも、サービスを書いたほうが汎用性が高い。
 
 定義されているサービス一覧
 
@@ -306,9 +306,9 @@ ZONEのルールで直にport番号を書くよりも、サービスを書いた
 # firewall-cmd --info-service=snmp
 ```
 
-(snmpは一例)
-firewalldのバージョンが古いと`--info-service`がない時がある。
-その場合はXMLを直接読む。
+(snmp は一例)
+firewalld のバージョンが古いと`--info-service`がない時がある。
+その場合は XML を直接読む。
 
 プリセットのサービスは `/usr/lib/firewalld/services/<service名>.xml`
 
@@ -325,7 +325,7 @@ firewall-cmd --permanent --service=oracle12 \
  --add-port=5500/tcp
 ```
 
-shortとdescriptionとadd-portはいっぺんに設定できない... ちょっと間抜け
+short と description と add-port はいっぺんに設定できない... ちょっと間抜け
 
 ```
 firewall-cmd --permanent --new-service clusterpro_webmanager
@@ -344,7 +344,7 @@ firewall-cmd --reload
 
 # めんどくさいときは
 
-`iptables`を使うw
+`iptables`を使う w
 
 ```
 # iptables -nvL | less

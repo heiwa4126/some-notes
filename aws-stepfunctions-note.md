@@ -2,14 +2,14 @@
 
 ここ: [Amazon States Language](https://states-language.net/)
 
-なんでamazonでないの?
+なんで amazon でないの?
 
-GitHubにもある。
+GitHub にもある。
 [awslabs/states-language: The States Language spec](https://github.com/awslabs/states-language)
 
 # AWS Step Functions との協働および統合
 
-ASLの Resource: に書く
+ASL の Resource: に書く
 `arn:aws:states:::dynamodb:putItem`
 みたいののリファレンスはどこにある?
 
@@ -17,7 +17,7 @@ ASLの Resource: に書く
 
 - [Step Functions 用統合最適化 - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/connect-suppo
   rted-services.html) - タイトルから想像できない内容...
-- DynamoDBについては [Step Functions を使用した DynamoDB API の呼び出し](https://docs.aws.amazon.com/ja_jp/step-functions/lat
+- DynamoDB については[Step Functions を使用した DynamoDB API の呼び出し](https://docs.aws.amazon.com/ja_jp/step-functions/lat
   est/dg/connect-ddb.html)
 
 統合最適化(optimized integrations)以外の呼び出し方は
@@ -37,7 +37,7 @@ ASLの Resource: に書く
 
 # ASLの '$.' とは?
 
-JsonPath。ASL内では使えない関数あり(lenght()とか)
+JsonPath。ASL 内では使えない関数あり(lenght()とか)
 
 > パスは、JSON テキスト内でコンポーネントを識別するために使用できる $ で始まる文字列です
 
@@ -61,24 +61,24 @@ JsonPath。ASL内では使えない関数あり(lenght()とか)
 # アクティビティとは?
 
 ステートマシンの途中で
-AWSの外に(中でもいいけど)
+AWS の外に(中でもいいけど)
 制御をわたす、みたいな感じ?
 
-AWSの外のやつをWorkerというらしい。
+AWS の外のやつを Worker というらしい。
 
-WorkerのPythonでのサンプル:
+Worker の Python でのサンプル:
 
 - [Step Function Activity with Python | by Yuvaraj Ravikumar | Medium](https://medium.com/@yuvarajmailme/step-function-activity-with-python-c007178037af)
 - [awsboto3/stepfunction_activity.py at master · yuvarajskr/awsboto3](https://github.com/yuvarajskr/awsboto3/blob/master/stepfunction_activity.py)
 
 # ASLでlambdaを呼ぶ
 
-Resourceにlambda ARNを書く方法と "arn:aws:states:::lambda:invoke" + Parametersでやる方法と2つあるらしい。
+Resource に lambda ARN を書く方法と "arn:aws:states:::lambda:invoke" + Parameters でやる方法と 2 つあるらしい。
 
 - [Step FunctionsからLambda関数を実行する書き方2つの違い | DevelopersIO](https://dev.classmethod.jp/articles/differences-between-2-ways-of-invoking-lambda-functions-with-step-functions/)
 - [Invoke - AWS Lambda](https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/API_Invoke.html#API_Invoke_RequestParameters)
 
-Invokeの方のFunctionNameには、名前(:alias)かARNが使える。
+Invoke の方の FunctionName には、名前(:alias)か ARN が使える。
 
 コールバック?
 [サービス統合パターン - AWS Step Functions](https://docs.aws.amazon.com/ja_jp/step-functions/latest/dg/connect-to-resource.html#connect-wait-token)
@@ -97,21 +97,21 @@ Invokeの方のFunctionNameには、名前(:alias)かARNが使える。
 
 # Parallel
 
-Parallelのブランチへの入力は同じものになるみたい。
+Parallel のブランチへの入力は同じものになるみたい。
 
-別々にしたかったらMapを使う。
+別々にしたかったら Map を使う。
 
 # ASLメモ
 
-Nextがなければ、"End: true"扱いになるらしい。
+Next がなければ、"End: true"扱いになるらしい。
 
 ↑誤り
 
 > Fail 状態は常にステートマシンを終了するため、Next フィールドはなく、End フィールドも不要です。
 
-Fail or SucceedステートではEndがいらない、ということらしい。
+Fail or Succeed ステートでは End がいらない、ということらしい。
 
-ResultPathの文法がわかりにくい。
+ResultPath の文法がわかりにくい。
 迷ったら
 [データフローシミュレーター](https://ap-northeast-1.console.aws.amazon.com/states/home?region=ap-northeast-1#/simulator)
 で試す。

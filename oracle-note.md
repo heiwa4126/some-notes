@@ -1,9 +1,9 @@
-Oracleのわけのわからなさは
+Oracle のわけのわからなさは
 
 - 歴史的なもの
 - 環境的なもの
 - ライセンスのせい
-- すぐ変わるURL
+- すぐ変わる URL
 - アカウントがないと何も見れない
 
 などが原因と思われる。まあ仕事でなかったら絶対に使わないよね。
@@ -18,13 +18,13 @@ Oracleのわけのわからなさは
 
 # FAQリンク
 
-Oracleの情報は見つけるのがしんどい。
+Oracle の情報は見つけるのがしんどい。
 
-Oracleは12cの次が18c。
+Oracle は 12c の次が 18c。
 
 # エディション
 
-Oracle12c(12.1.0.2以降)では
+Oracle12c(12.1.0.2 以降)では
 
 - Enterprise Edition（EE）
 - Standard Edition 2（SE2）
@@ -41,7 +41,7 @@ Oracle12c(12.1.0.2以降)では
 
 [Oracle Database ソフトウェア･ダウンロード](https://www.oracle.com/technetwork/jp/database/enterprise-edition/downloads/index.html)
 
-PE版というものは特にない。普通にSE版を入れればOKで、あとは「使用上の制限」に従って使えばよい。
+PE 版というものは特にない。普通に SE 版を入れれば OK で、あとは「使用上の制限」に従って使えばよい。
 
 参考:
 
@@ -55,9 +55,9 @@ PE版というものは特にない。普通にSE版を入れればOKで、あ�
 
 ちょっと仮想マシン上に環境を作るにはしきいが高い。
 
-Xが必要。
+X が必要。
 
-RHEL/CentOSの場合
+RHEL/CentOS の場合
 
 ```
 sudo yum -y groupinstall "X Window System"
@@ -66,33 +66,33 @@ sudo yum -y install vlgothic-* xterm xorg-x11-apps
 
 [Microsoft Azure上でのCentOS仮想マシン作成と、X11転送でGUIインストーラをWindowsから操作する手順 - Elixir Report](https://qiita.com/mdmom/items/1b8044dcb21e38510a44)
 
-sshdが`X11Forwarding yes`になってるか確認。
+sshd が`X11Forwarding yes`になってるか確認。
 
-sshでログインするユーザのhomeに.Xauthorityファイルを作る。
+ssh でログインするユーザの home に.Xauthority ファイルを作る。
 
 ```
 touch ~/.Xauthority
 ```
 
-X11を有効にしたputtyで接続し、DISPLAY環境変数を表示してみる。
+X11 を有効にした putty で接続し、DISPLAY 環境変数を表示してみる。
 
 ```
 $ echo $DISPLAY
 localhost:10.0
 ```
 
-こんな感じになれば準備OK
+こんな感じになれば準備 OK
 
 [PuTTY + Xming でX を使おう](http://www.ep.sci.hokudai.ac.jp/~epnetfan/tebiki/server-login/xming.html)
 
-XサーバはVcXsrvを使ってみる。
+X サーバは VcXsrv を使ってみる。
 [VcXsrv Windows X Server download | SourceForge.net](https://sourceforge.net/projects/vcxsrv/)
 
-Xサーバを普通にインストール&起動したあと、
-puttyから`xeyes &`してxeyesが表示されればOK(ものすごく遅いかも)。
+X サーバを普通にインストール&起動したあと、
+putty から`xeyes &`して xeyes が表示されれば OK(ものすごく遅いかも)。
 
-あとはputtyで`xterm &`でターミナル起動して、
-そこからLinuxを操作する。
+あとは putty で`xterm &`でターミナル起動して、
+そこから Linux を操作する。
 
 # sqlplusと叩いたときに何が起きているのか
 
@@ -116,13 +116,13 @@ puttyから`xeyes &`してxeyesが表示されればOK(ものすごく遅いか�
 完全なリファレンス:
 [Oracle Database Net Services管理者ガイド12cリリース1 (12.1)](https://docs.oracle.com/cd/E57425_01/121/NETAG/toc.htm)
 
-Oracle Net Servicesというのがリスナー。
+Oracle Net Services というのがリスナー。
 
 - [12.10.2 リスナーの設定とネットサービス名の登録（Oracleの場合）](http://software.fujitsu.com/jp/manual/manualfiles/M080163/J2X15990/05Z200/setup12/setup265.html)
 - (重要)[Oracle Net Listenerの構成と管理](http://otndnld.oracle.co.jp/document/products/oracle11g/111/doc_dvd/network.111/E05725-04/listenercfg.htm)
 - [リスナー・パラメータ（listener.ora）](http://otndnld.oracle.co.jp/document/products/oracle10g/102/doc_cd/network.102/B19209-01/listener.htm)
 
-典型的なlistener.ora
+典型的な listener.ora
 
 ```
 LISTENER =
@@ -142,12 +142,12 @@ SID_LIST_LISTENER=
   )
 ```
 
-リスナー名`LISTNEER`を指定した例。これに`SID_LIST_<リスナー名>`でSIDの「静的登録」をする。
+リスナー名`LISTNEER`を指定した例。これに`SID_LIST_<リスナー名>`で SID の「静的登録」をする。
 外部プロシージャ・エージェント
 
 ただし、動的サービス登録すれば静的登録は不要。
 
-- (古い)PMONプロセス（PMON process）プロセス・モニター・データベース・プロセスによって
+- (古い)PMON プロセス（PMON process）プロセス・モニター・データベース・プロセスによって
 - (12c)リスナー登録(LREG)プロセスによって
   動的登録されるらしい。
 

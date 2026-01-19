@@ -1,4 +1,4 @@
-OpenLDAPのメモ
+OpenLDAP のメモ
 
 # RHEL8だったら
 
@@ -21,20 +21,20 @@ Red Hat Directory Server (RHDS) を使いましょう。
 
 # slapd.confがないとき
 
-最近のslapdは
+最近の slapd は
 slapd.conf
 を読まない。
-ConfigDBを読む(/etc/ldap/slapd.d以下。OLCというらしい)
+ConfigDB を読む(/etc/ldap/slapd.d 以下。OLC というらしい)
 
 **「slapd.confを編集して...」と書いてあるweb記事は、
 ことごとく古いので参考程度にとどめて起きましょう。
 変換して別ディレクトリに出したLDIFを参考にするのはOK。**
 
-ConfigDBはldapなのでldapadd/ldapmodifyで修正できるけど
+ConfigDB は ldap なので ldapadd/ldapmodify で修正できるけど
 **そんなのやってられない**ので
-slapd.confを変換する。
+slapd.conf を変換する。
 
-Debian/Ubuntuなら
+Debian/Ubuntu なら
 
 ```sh
 dpkg-reconfigure slapd
@@ -49,9 +49,9 @@ zcat /usr/share/doc/slapd/examples/slapd.conf.gz > /etc/ldap/slapd.conf
 ```
 
 最低でも
-suffixとrootdnは書き換える。
+suffix と rootdn は書き換える。
 
-ドメインがdc=zzz,dc=example,dc=net(zzz.example.net)だったら
+ドメインが dc=zzz,dc=example,dc=net(zzz.example.net)だったら
 s/dc=example,dc=com/dc=zzz,dc=example,dc=net/
 的に
 
@@ -71,7 +71,7 @@ slaptest -f /etc/ldap/slapd.conf -F /tmp/slapd.d
 chown -R openldap:openldap /tmp/slapd.d    # これ重要
 ```
 
-これを /etc/ldap/slapd.dと入れ替える。
+これを /etc/ldap/slapd.d と入れ替える。
 
 /usr/share/doc/slapd
 の
@@ -83,7 +83,7 @@ README.Debian.gz
 slapd.conf
 に
 rootpw
-を書いてもolcRootPWにしてくれないので
+を書いても olcRootPW にしてくれないので
 
 ## 参考
 
@@ -94,7 +94,7 @@ rootpw
 
 ## メモ
 
-ConfigDBは
+ConfigDB は
 
 ```sh
 ldapsearch -LLL -Y EXTERNAL -H ldapi:/// -b cn=config
@@ -106,7 +106,7 @@ slapcat -n0
 
 で見れる
 し
-/etc/ldap/slapd.dの下のファイル見てもOK。
+/etc/ldap/slapd.d の下のファイル見ても OK。
 
 たとえば
 
@@ -116,29 +116,29 @@ find /etc/ldap/slapd.d -type f -name \*.ldif -exec grep olcRootPW {} \+
 
 `/etc/ldap/slapd.d/cn=config/olcDatabase={1}mdb.ldif` で設定されてるのがわかる。
 
-slapcatはファイルを直接見るのでslapdが起動している必要がない。
+slapcat はファイルを直接見るので slapd が起動している必要がない。
 
 # slapxxxxとldapxxxxの違いは
 
-slapxxxxはLDAP使わずにファイルを直接触るのでslapdが動いてなくても使える。
-slapdが起動してると**厳密には**一貫性がとれなくなる。
+slapxxxx は LDAP 使わずにファイルを直接触るので slapd が動いてなくても使える。
+slapd が起動してると**厳密には**一貫性がとれなくなる。
 
 # 未整理メモ
 
 すごい苦労したので「先にこれだけ知ってれば随分と違うよ」超肝心なことだけメモ書いときます(2021-12)。
 
-OpenLDAPのWeb記事は [技術メモメモ: OpenLDAP入門① (OpenLDAP初期構築手順)](https://tech-mmmm.blogspot.com/2021/11/openldap-openldap.html) がおすすめ。
+OpenLDAP の Web 記事は [技術メモメモ: OpenLDAP入門① (OpenLDAP初期構築手順)](https://tech-mmmm.blogspot.com/2021/11/openldap-openldap.html) がおすすめ。
 
-最近のslapdは slapd.conf を読まない。ConfigDBを読む(/etc/ldap/slapd.d以下。OLCというらしい)
-「slapd.confを編集して...」と書いてあるweb記事は、ことごとく古いので参考程度に。変換して別ディレクトリに出したLDIFを参考にするのはOK (ex: `slaptest -f /etc/ldap/slapd.conf -F /tmp/slapd.d`)
+最近の slapd は slapd.conf を読まない。ConfigDB を読む(/etc/ldap/slapd.d 以下。OLC というらしい)
+「slapd.conf を編集して...」と書いてある web 記事は、ことごとく古いので参考程度に。変換して別ディレクトリに出した LDIF を参考にするのは OK (ex: `slaptest -f /etc/ldap/slapd.conf -F /tmp/slapd.d`)
 
-slapxxxxとldapxxxxの違いは、
-slapxxxxはLDAP使わずにファイルを直接触るのでslapdが動いてなくても使えること。
-slapdが起動してると厳密には一貫性がとれなくなる。
+slapxxxx と ldapxxxx の違いは、
+slapxxxx は LDAP 使わずにファイルを直接触るので slapd が動いてなくても使えること。
+slapd が起動してると厳密には一貫性がとれなくなる。
 
-`objectClass: posixAccount` だったらuidインデックスだけでも作っておくといい感じ。
+`objectClass: posixAccount` だったら uid インデックスだけでも作っておくといい感じ。
 
-ldapi:スキーマはunix socket
+ldapi:スキーマは unix socket
 
 # backup
 
@@ -152,8 +152,8 @@ systemctl start slapd
 - `20211221` はタイムスタンプ
 - `-n2`はデフォルトなので不要かも
 
-/var/lib/ldap/DB_CONFIGもあるといいかも
-/etc/openldap/certs (CAはそのまま)
+/var/lib/ldap/DB_CONFIG もあるといいかも
+/etc/openldap/certs (CA はそのまま)
 /etc/sysconfig/slapd
 
 # restore
@@ -177,8 +177,8 @@ systemctl start slapd
 
 - `20211221` はタイムスタンプ
 - `-n2`はデフォルトなので不要かも
-- RedHat系だと `openldap:openldap` のかわりに `ldap:ldap`
-- RedHat系だと `/etc/ldap/slapd.d` のかわりに `/etc/openldap/slapd.d`
+- RedHat 系だと `openldap:openldap` のかわりに `ldap:ldap`
+- RedHat 系だと `/etc/ldap/slapd.d` のかわりに `/etc/openldap/slapd.d`
 
 # sssdのキャッシュ
 
@@ -199,7 +199,7 @@ sudo sss_cache -U
 sudo sss_cache -E
 ```
 
-sss_cahceはsssd-commonに入ってるのでsssdが動いてるとこならたいてい使える。
+sss_cahce は sssd-common に入ってるので sssd が動いてるとこならたいてい使える。
 
 [11.2.26. SSSD キャッシュの管理 Red Hat Enterprise Linux 6 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/6/html/deployment_guide/sssd-cache)
 

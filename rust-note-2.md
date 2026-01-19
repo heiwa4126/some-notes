@@ -16,9 +16,9 @@ cargo rustc --release -- --emit asm -C 'llvm-args=-x86-asm-syntax=intel'
 
 ちょっとしたコードの検証には [Compiler Explorer](https://rust.godbolt.org/) が楽。
 
-Compiler Explorerのコツ：
+Compiler Explorer のコツ：
 
-- pubつけないと最適化されて消えてなくなる
+- pub つけないと最適化されて消えてなくなる
 
 参照:
 
@@ -34,7 +34,7 @@ Compiler Explorerのコツ：
 
 参照: [Other Installation Methods - Rust Forge](https://forge.rust-lang.org/infra/other-installation-methods.html)
 
-Linuxだったら
+Linux だったら
 
 ```sh
 curl https://sh.rustup.rs -sSf | sh
@@ -106,7 +106,7 @@ fn main() {
 }
 ```
 
-aはスライスでなくてもvecでも同じ。例)
+a はスライスでなくても vec でも同じ。例)
 
 ```rust
 let mut a = vec![1,2,3];
@@ -117,9 +117,9 @@ let mut a = vec![1,2,3];
 
 # コアライブラリと標準ライブラリ
 
-coreクレート
+core クレート
 と
-stdクレート
+std クレート
 があるのか...
 
 - [core - Rust](https://doc.rust-lang.org/core/)
@@ -132,11 +132,11 @@ stdクレート
 # write openしたファイルのクローズ
 
 [std::fs::File - Rust](https://doc.rust-lang.org/std/fs/struct.File.html)
-closeメソッドがない。デストラクタ的にcloseされる。
+close メソッドがない。デストラクタ的に close される。
 
-で、これだとwrite openしたファイルのクローズのエラーがハンドリングできないので、
+で、これだと write open したファイルのクローズのエラーがハンドリングできないので、
 [std::fs::File - Rust](https://doc.rust-lang.org/std/fs/struct.File.html#method.sync_all)
-sync_all()を使う。sync_data()はメタデータはsyncされない、んだそうだが、どういうタイミングで使うかよくわからない。
+sync_all()を使う。sync_data()はメタデータは sync されない、んだそうだが、どういうタイミングで使うかよくわからない。
 
 # derive(Debug)とは
 

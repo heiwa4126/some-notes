@@ -1,4 +1,4 @@
-crulのメモ
+crul のメモ
 
 - [curl](https://curl.se/)
 - [README - Everything curl](https://everything.curl.dev/)

@@ -1,4 +1,4 @@
-冪等性のこと考えると、Azure CLIで書くよりはずっと楽かもしれない。
+冪等性のこと考えると、Azure CLI で書くよりはずっと楽かもしれない。
 
 - [参考リンク](#参考リンク)
 - [Azure Cloud Shellで手っ取り早く](#azure-cloud-shellで手っ取り早く)
@@ -13,13 +13,13 @@
 - [クイック スタート \- Ansible を使用して Azure で Linux 仮想マシンを構成する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/vm-configure?tabs=ansible)
 - [Azure の Ansible モジュールとバージョンのマトリックス \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/module-version-matrix)
 - [Microsoft Azure ガイド — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/scenario_guides/guide_azure.html)
-- [Cloud modules — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/modules/list_of_cloud_modules.html#azure) - 同じページにAzureだけでなくクラウド全般が載ってる
+- [Cloud modules — Ansible Documentation](https://docs.ansible.com/ansible/2.9_ja/modules/list_of_cloud_modules.html#azure) - 同じページに Azure だけでなくクラウド全般が載ってる
 - [Ansible Galaxy](https://galaxy.ansible.com/azure/azcollection?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW)
 - [クイック スタート \- Azure CLI を使用して Ansible を構成する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/install-on-linux-vm?tabs=ansible)
 
 # Azure Cloud Shellで手っ取り早く
 
-[Azure Cloud Shell](https://portal.azure.com/#cloudshell/)にはAnsibleが入っていて、認証認可の設定も不要。
+[Azure Cloud Shell](https://portal.azure.com/#cloudshell/)には Ansible が入っていて、認証認可の設定も不要。
 
 ```
 a@Azure:~$ date
@@ -31,23 +31,23 @@ ansible 2.10.2
   python version = 3.7.3 (default, Jul 25 2020, 13:03:44) [GCC 8.3.0]
 ```
 
-Azure Cloud shellについては
+Azure Cloud shell については
 [Azure Cloud Shell のクイックスタート \- Bash \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/cloud-shell/quickstart)
 を参照。
 
 # 普通のホストで
 
-(2021-05ごろ)
+(2021-05 ごろ)
 
 参考: [クイック スタート \- Azure CLI を使用して Ansible を構成する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/install-on-linux-vm?tabs=ansible)
 
-Azure cliは要るみたいので、
+Azure cli は要るみたいので、
 [Azure CLI のインストール \| Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli)
 読んでインストール。
 
 さらに `az login` しておく。
 
-ごく普通にansibleをインストールする
+ごく普通に ansible をインストールする
 
 ```sh
 PIP3="python3 -m pip"
@@ -55,7 +55,7 @@ $PIP3 install --user -U pip
 $PIP3 install --user -U ansible 'ansible-lint[community,yamllint]' pywinrm pexpect
 ```
 
-2021-05現在ではバージョンはこんな感じ
+2021-05 現在ではバージョンはこんな感じ
 
 ```
 $ pip3 freeze | grep ansible
@@ -65,7 +65,7 @@ ansible-base==2.10.9
 ansible-lint==5.0.4
 ```
 
-2.10.xから`pip 'ansible[azure]'`はできない。
+2.10.x から`pip 'ansible[azure]'`はできない。
 以下のようにしてコレクションを追加。
 
 ```sh
@@ -78,7 +78,7 @@ ansible-galaxy collection install azure.azcollection
 参考:
 
 - [GitHub \- ansible\-collections/azure: Development area for Azure Collections](https://github.com/ansible-collections/azure))
-- [Ansible を仮想マシンにインストールする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/install-on-linux-vm?tabs=ansible#install-ansible-on-the-virtual-machine) - CentOS7用だけど参考になる。
+- [Ansible を仮想マシンにインストールする \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/install-on-linux-vm?tabs=ansible#install-ansible-on-the-virtual-machine) - CentOS7 用だけど参考になる。
 
 次に「Azure 資格情報の作成」になるわけだけど
 (参考:
@@ -91,7 +91,7 @@ ansible-galaxy collection install azure.azcollection
 で、使えるようになったので、このへん曖昧。あとで調査する。
 
 テストとして
-シンプルなplaybookを実行
+シンプルな playbook を実行
 
 ```yaml
 - name: Get facts for resource groups
@@ -112,14 +112,14 @@ ansible-galaxy collection install azure.azcollection
 
 # よく使いそうなモジュールへのリンク
 
-- [azure.azcollection.azure_rm_virtualmachine – Manage Azure virtual machines — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_virtualmachine_module.html#azure-rm-virtualmachine-module) - VMを開始したり停止したりディアロケートしたり。
+- [azure.azcollection.azure_rm_virtualmachine – Manage Azure virtual machines — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_virtualmachine_module.html#azure-rm-virtualmachine-module) - VM を開始したり停止したりディアロケートしたり。
 
 # サンプルとチュートリアル
 
 [Azure 上の Ansible のドキュメント \- Ansible \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/developer/ansible/)
 から結構な数のサンプルやチュートリアルへ行ける。
 
-- [GitHub \- microsoft/AnsibleLabs: Ansible on Azure Lab playbooks and documentation](https://github.com/microsoft/AnsibleLabs)のlab1
+- [GitHub \- microsoft/AnsibleLabs: Ansible on Azure Lab playbooks and documentation](https://github.com/microsoft/AnsibleLabs)の lab1
 - [GitHub \- Azure\-Samples/ansible\-playbooks: Ansible Playbook Samples for Azure](https://github.com/Azure-Samples/ansible-playbooks)
 
 これとか面白そう:
@@ -131,9 +131,9 @@ ansible-galaxy collection install azure.azcollection
 
 [azure\.azcollection\.azure_rm_networkinterface – Manage Azure network interfaces — Ansible Documentation](https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_networkinterface_module.html)
 
-同じパラメータを指定してもchangedになる。
+同じパラメータを指定しても changed になる。
 
-retuenでetagが変わってるぐらいで理由がわからない。
+retuen で etag が変わってるぐらいで理由がわからない。
 
 # azure.azcollection.azure_rm_virtualmachine
 
@@ -141,9 +141,9 @@ retuenでetagが変わってるぐらいで理由がわからない。
 
 このモジュールで
 
-- VMの作成
-- VMの開始・終了・ディアロケート
+- VM の作成
+- VM の開始・終了・ディアロケート
 
 が出来るんだけど、
 デフォルトが `started: true` になってるので、
-VMが存在するときに、開始・終了・ディアロケートの状態を先に見てやらないと、冪等性が保てないのが辛い。
+VM が存在するときに、開始・終了・ディアロケートの状態を先に見てやらないと、冪等性が保てないのが辛い。

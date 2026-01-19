@@ -38,11 +38,11 @@
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
-pipでもインストールできるが、
+pip でもインストールできるが、
 
 > Azure CLI のパッケージによって独自の Python インタープリターがインストールされ、システム上の Python は使用されません。
 
-なので、pipを使うのはやめたほうがいい。
+なので、pip を使うのはやめたほうがいい。
 
 ## Windows
 
@@ -51,11 +51,11 @@ pipでもインストールできるが、
 [Windows での Azure CLI のインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli-windows)
 
 PowerShell でのインストール例も出てるけど、けっこう時間がかかって不安になるので、おすすめしない。
-Azureなどでは使えるかも?(win_msiモジュールを使うと思う)
+Azure などでは使えるかも?(win_msi モジュールを使うと思う)
 
 ## Azure CLI コマンド補完
 
-aptで入れたら
+apt で入れたら
 `/etc/bash_completion.d/azure-cli`
 がインストールされるので
 特に追加作業はない。
@@ -87,7 +87,7 @@ az account set -s <ここにidをペースト>
 
 # whoami
 
-whoami的なもの
+whoami 的なもの
 
 ```bash
 az ad signed-in-user show
@@ -109,23 +109,23 @@ az config param-persist on
 az config param-persist show
 ```
 
-設定は(いまのところ) .azure/.local*context*ユーザ名 というファイルに保存される。
+設定は(いまのところ) .azure/.local*context*ユーザ名というファイルに保存される。
 ドキュメントにある .param_persist ってのはウソ (昔はこれだった、とかはあるかも)。
 
 # テナントID
 
-テナントIDはAAD(Azure Active Directory)を一意に識別するID。
-ディレクトリIDと呼ばれることもある。
+テナント ID は AAD(Azure Active Directory)を一意に識別する ID。
+ディレクトリ ID と呼ばれることもある。
 
-ってか「AAD ID」にしとけばいいのにまたまたまたまた変なことをしやがってMS.
+ってか「AAD ID」にしとけばいいのにまたまたまたまた変なことをしやがって MS.
 
-1つのテナント(AAD)には、複数のサブスクリプションが関連付けられる。
+1 つのテナント(AAD)には、複数のサブスクリプションが関連付けられる。
 「関連付け」は「信頼」ということもある。
 
 - [Azure サブスクリプション、リソース、ロール、Azure AD の関係 その1 - Qiita](https://qiita.com/junichia/items/e8cf118314a173efcb68)
 - [Azure サブスクリプションと Azure AD の管理者 – Japan Azure Identity Support Blog](https://blogs.technet.microsoft.com/jpazureid/2017/11/04/azure-subscription-azuread-admin/)
 
-複数の信頼されたAD,AADのグループを「フェデレーション(federation)」という
+複数の信頼された AD,AAD のグループを「フェデレーション(federation)」という
 
 [Azure AD とのフェデレーションとは | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/hybrid/whatis-fed)
 
@@ -134,21 +134,21 @@ az config param-persist show
 [Microsoft Graph](https://developer.microsoft.com/ja-jp/graph)とは別物。機能は似ている。
 
 [Azure AD Graph API](https://docs.microsoft.com/ja-jp/azure/active-directory/develop/active-directory-graph-api)
-のほうが古いし、今後徐々にサポートされなくなる(2019年2月)。
+のほうが古いし、今後徐々にサポートされなくなる(2019 年 2 月)。
 
 違いは
 [Microsoft ID プラットフォーム (v2.0) に更新する理由 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/develop/azure-ad-endpoint-comparison)
 
 # Azureでの時刻同期
 
-Azureでは
+Azure では
 
 - [Azure での Linux VM の時刻同期 | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync)
 - [Manage Hyper-V Integration Services | Microsoft Docs](https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/manage/manage-hyper-v-integration-services#start-and-stop-an-integration-service-from-a-linux-guest)
 
-hyper-vで同期する(統合サービス (hv_utils) )
+hyper-v で同期する(統合サービス (hv_utils) )
 
-はずなのでntpdもchronyもいらないはず、だが、2本立てが推奨されている。
+はずなので ntpd も chrony もいらないはず、だが、2 本立てが推奨されている。
 
 ソースは [PTP クロック ソースを確認する](https://docs.microsoft.com/ja-jp/azure/virtual-machines/linux/time-sync#check-for-ptp-clock-source) で確認すること。
 
@@ -161,7 +161,7 @@ cat /sys/class/ptp/ptp0/clock_name
 
 で確認。
 
-PTPソースを使えるchronyで
+PTP ソースを使える chrony で
 
 ```
 refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
@@ -169,7 +169,7 @@ refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
 
 のように設定。
 
-systemd-timesyncdはPTPをサポートしてない
+systemd-timesyncd は PTP をサポートしてない
 
 設定してしばらく後
 
@@ -182,11 +182,11 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 ^- 40.74.70.63                   2   6   377   111    -31ms[  -31ms] +/-  116ms
 ```
 
-(NTPサーバはtime.windows.comを指定してみた)
+(NTP サーバは time.windows.com を指定してみた)
 
 # hv-fcopy-daemon.service が fail
 
-Azure上のUbuntu 1804で hv-fcopy-daemon.serviceがfailする。
+Azure 上の Ubuntu 1804 で hv-fcopy-daemon.service が fail する。
 
 ```
 $ systemctl status hv-fcopy-daemon
@@ -203,7 +203,7 @@ $ systemctl status hv-fcopy-daemon
  6月 18 12:03:52 u9 systemd[1]: hv-fcopy-daemon.service: Failed with result 'exit-code'.
 ```
 
-確かに/dev/vmbus/hv_fcopyは無い。(つづく)
+確かに/dev/vmbus/hv_fcopy は無い。(つづく)
 
 # omsagentをとめる
 
@@ -228,7 +228,7 @@ $ systemctl status hv-fcopy-daemon
 
 調べ中
 
-- [Linux ログインをAzureADで認証する！！](https://www.cloudou.net/azure-active-directory/aad009/) - 非sssd。まあAADは死なないと思うけど
+- [Linux ログインをAzureADで認証する！！](https://www.cloudou.net/azure-active-directory/aad009/) - 非 sssd。まあ AAD は死なないと思うけど
 - [Ubuntu VM を Azure AD Domain Services に参加させる \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory-domain-services/join-ubuntu-linux-vm)
 
 公開鍵認証ができないみたい。
@@ -244,7 +244,7 @@ $ systemctl status hv-fcopy-daemon
 
 # MSIとは
 
-またMicrosoftが名前変えやがった。
+また Microsoft が名前変えやがった。
 
 > Azure リソースのマネージド ID は、以前のマネージドサービス ID (MSI) の新しい名前です。
 
@@ -262,17 +262,17 @@ MSI とは Managed Service Identity
 - [Azure リソースのマネージド ID | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/overview)
 - [Azure VM 上でマネージド ID を使用してサインインする \- Azure ADV \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in)
 
-VMに割り当てられているマネージドIDは?
+VM に割り当てられているマネージド ID は?
 
 [チュートリアル\`:\` マネージド ID を使用して Azure Resource Manager にアクセスする \- Windows \- Azure AD \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/tutorial-windows-vm-access-arm)
 
-まず システム割り当てマネージドID(system-assigned managed identity)が有効になってるかを確認する方法
+まずシステム割り当てマネージド ID(system-assigned managed identity)が有効になってるかを確認する方法
 
 [Azure リソースのマネージド ID を使ったセキュアなパスワード管理 \| SBテクノロジー \(SBT\)](https://www.softbanktech.co.jp/special/blog/cloud_blog/2019/0006/)
 
 ポータルから
-azureポータルのVMの左ペインから「ID」を選ぶ。
-追加できるけど削除するUIがない... (2021-07)
+azure ポータルの VM の左ペインから「ID」を選ぶ。
+追加できるけど削除する UI がない... (2021-07)
 
 - [Azure CLI を使用して、リソースにマネージド ID アクセスを割り当てる \- Azure AD \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/active-directory/managed-identities-azure-resources/howto-assign-access-cli)
 
@@ -283,7 +283,7 @@ azureポータルのVMの左ペインから「ID」を選ぶ。
 
 # az cli よくつかうコマンド
 
-VM一覧
+VM 一覧
 
 ```sh
 az vm list -d -o table
@@ -293,17 +293,17 @@ az vm list -d --query "[].{Name:name,privateIps:privateIps}" -o table
 
 # azcopy
 
-blobへアップロード・ダウンロードしてみる
+blob へアップロード・ダウンロードしてみる
 
 ストレージアカウトを作るか既存のものをえらぶ。
 左ペインから「コンテナー」
-今回はコンテナーを新規に作る。手抜きでパブリック・アクセスレベルはBLOBで
+今回はコンテナーを新規に作る。手抜きでパブリック・アクセスレベルは BLOB で
 いまつくったコンテナーを選択して、
 共有アクセストークンから
-アクセス許可を全部選んで「SASトークン及びURLを作成」
-でURLを得る。
+アクセス許可を全部選んで「SAS トークン及び URL を作成」
+で URL を得る。
 
-長いんで環境変数BLOBURLに設定して
+長いんで環境変数 BLOBURL に設定して
 
 [AzCopy v10 を使用して Azure Storage にデータをコピーまたは移動する | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/storage/common/storage-use-azcopy-v10)
 
@@ -323,13 +323,13 @@ azcopy cp test.txt "$BLOBURL"
 azcopy cp "$BLOBURL" x --recurse
 ```
 
-fileだとどうか?
-共有/ディレクトリSAS認証(Share/directory SAS authentication)とはなにか?
+file だとどうか?
+共有/ディレクトリ SAS 認証(Share/directory SAS authentication)とはなにか?
 
 [Azure SAS入門 \- Qiita](https://qiita.com/azaraseal/items/2eaea4cbb9e3faa57517)
 
-「Storage Explorer (プレビュー)」でfileのフォルダを右クリックすると
-「Shared Access Signatureの取得」がある。
+「Storage Explorer (プレビュー)」で file のフォルダを右クリックすると
+「Shared Access Signature の取得」がある。
 
 [逆引き Azure CLI: Azure ストレージの SAS トークンを生成する (storage container generate-sas)｜まくろぐ](https://maku.blog/p/n4yqdys/)
 [Azure Key Vault と Azure CLI を使用してストレージ アカウント キーを管理する \| Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/key-vault/secrets/overview-storage-keys)
@@ -339,7 +339,7 @@ fileだとどうか?
 
 [IP アドレス 168.63.129.16 とは | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-network/what-is-ip-address-168-63-129-16)
 
-Azure VMのスペシャルIPらしい。メモ。
+Azure VM のスペシャル IP らしい。メモ。
 
 # AzureのストレージアカウントでSFTP
 
@@ -374,7 +374,7 @@ sudo python3 setup.py install --register-service
 
 # 複数NIC
 
-VMのサイズと使えるNIC枚数のリストがほしい。
+VM のサイズと使える NIC 枚数のリストがほしい。
 
 - [［Azure失敗と対策］仮想マシンのNICの枚数に制限がある | 日経クロステック（xTECH）](https://xtech.nikkei.com/it/atcl/column/16/041400085/041900009/)
 - [一歩先行く Azure Computing シリーズ（全3回） 第2回 Azure VM どれを選ぶの？ Azure VM 集中講座](https://www.slideshare.net/ssuser2602c6/azure-computing-3-2-azure-vm-azure-vm)
@@ -386,10 +386,10 @@ VMのサイズと使えるNIC枚数のリストがほしい。
 
 # Azure VM のローカル一時ディスクを/tmpとして使う
 
-ローカル一時ディスクは、VMをホストしているマシン上にあり、
+ローカル一時ディスクは、VM をホストしているマシン上にあり、
 マネージドディスクと比べて高速にリードライトできることが期待できます。
 
-Ubuntuだと systemd の rc-local unitで
+Ubuntu だと systemd の rc-local unit で
 
 ```bash
 sudo tee -a /etc/rc.local > /dev/null <<EOF

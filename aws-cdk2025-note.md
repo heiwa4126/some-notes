@@ -101,7 +101,7 @@ uv tool install awslabs.cdk-mcp-server@latest
 リストに"MCP サーバー: cdk-mcp-server" と表示される。展開すると tools が出てくる。
 ホバーすると description がポップアップする。
 
-あとは 「GetAwsSolutionsConstructPattern を使ってこの S3 バケットが十分にセキュアか考察して」のようなことを GitHub Copilot の chat で聞く。
+あとは「GetAwsSolutionsConstructPattern を使ってこの S3 バケットが十分にセキュアか考察して」のようなことを GitHub Copilot の chat で聞く。
 
 (最初はツール名を明示して使うほうがいいみたい。ツール名は
 [README.md](https://github.com/awslabs/mcp/blob/main/src/cdk-mcp-server/README.md)

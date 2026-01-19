@@ -2,9 +2,9 @@
 
 ## 概要
 
-MQTT参照実装のMosquittoを使う。
+MQTT 参照実装の Mosquitto を使う。
 
-ver1.4.2以降(2016頃)からWebsocket対応らしい。
+ver1.4.2 以降(2016 頃)から Websocket 対応らしい。
 
 [Installing Mosquitto MQTT broker on Raspberry Pi (with websockets) | xperimentia](https://xperimentia.com/2015/08/20/installing-mosquitto-mqtt-broker-on-raspberry-pi-with-websockets/)
 
@@ -18,7 +18,7 @@ ver1.4.2以降(2016頃)からWebsocket対応らしい。
 - 必見: [How to Install and Secure the Mosquitto MQTT Messaging Broker on Ubuntu 16.04 | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-the-mosquitto-mqtt-messaging-broker-on-ubuntu-16-04)
 - [UbuntuにMosquittoをインストールしてMQTTブローカーを構築 - Qiita](https://qiita.com/kyoro353/items/b862257086fca02d3635)
 
-本家のubuntuの項目にはクライアントとブローカのインストール方法が書いてない…
+本家の ubuntu の項目にはクライアントとブローカのインストール方法が書いてない…
 
 一応通しで書くと、
 
@@ -35,7 +35,7 @@ sudo apt-get install mosquitto-clients
 sudo apt-get install mosquitto
 ```
 
-2018-4-11では
+2018-4-11 では
 
 ```
 $ dpkg -l mosquitto\*
@@ -50,15 +50,15 @@ ii  mosquitto-clients        1.4.15-0mosquitto amd64             Mosquitto comma
 ## 本家のブローカでサブスクライブのテスト
 
 クライアントのテスト。
-mosquittoがテスト用のブローカを[test.mosquitto.org](http://test.mosquitto.org/)で動かしている。
+mosquitto がテスト用のブローカを[test.mosquitto.org](http://test.mosquitto.org/)で動かしている。
 
-FWやproxyで遮られていないなら、
+FW や proxy で遮られていないなら、
 
 ```
 mosquitto_sub -t '#' -h test.mosquitto.org
 ```
 
-全トピックがものすごい勢いで表示される。Ctrl+Cでとめる。
+全トピックがものすごい勢いで表示される。Ctrl+C でとめる。
 
 ## 本家のブローカでテスト
 
@@ -90,7 +90,7 @@ mosquitto_pub -t something/fishy -h localhost -m "`date -R`"
 
 # 他のテスト
 
-HiveMQのWebsocketクライアントで`test.mosquitto.org`につなげるか?
+HiveMQ の Websocket クライアントで`test.mosquitto.org`につなげるか?
 
 - [MQTT over WebSockets](http://test.mosquitto.org/ws.html)
 - [MQTT Websocket Client](http://www.hivemq.com/demos/websocket-client/)
@@ -106,7 +106,7 @@ listener 8080
 protocol websockets
 ```
 
-これで8080/tcpがwebsocket対応になる
+これで 8080/tcp が websocket 対応になる
 
 ```
 # systemctl stop mosquitto
@@ -121,13 +121,13 @@ protocol websockets
 1523435122: Opening websockets listen socket on port 8080.
 ```
 
-start,stopしてるのはrestartだとなんかうまくいかなかったから。
+start,stop してるのは restart だとなんかうまくいかなかったから。
 
-あとは8080/tcpをFWであける。
+あとは 8080/tcp を FW であける。
 
 # Websocketがうちのproxyを越えられるか
 
-pythonでpaho-mqttを使ったテストコードを書いて、プロキシ内でも取れることを確認した。
+python で paho-mqtt を使ったテストコードを書いて、プロキシ内でも取れることを確認した。
 
 TODO:ここにコードを書く
 
@@ -143,7 +143,7 @@ code
 
 # node.js
 
-node.jsのMQTTクライアントMQTT.js([mqtt - npm](https://www.npmjs.com/package/mqtt))を試す。
+node.js の MQTT クライアント MQTT.js([mqtt - npm](https://www.npmjs.com/package/mqtt))を試す。
 
 グローバルにインストールすると (かつ`nmp -b bin`にパスが通っていれば) 特にコードを書かなくても`mqtt`コマンドが使える。
 
@@ -163,19 +163,19 @@ mqtt help subscribe
 mqtt subscribe -h test.mosquitto.org -t '#'
 ```
 
-Websocketでサブスクライブ
+Websocket でサブスクライブ
 
 ```
 mqtt subscribe -h test.mosquitto.org -p 8080 -l ws -t '#'
 ```
 
-proxyがあると動かない。http_proxy環境変数とかもサポートしていない。
+proxy があると動かない。http_proxy 環境変数とかもサポートしていない。
 
 [Is a HTTP_PROXY supported? · Issue #452 · mqttjs/MQTT.js](https://github.com/mqttjs/MQTT.js/issues/452)
 
-MQTT.js自体にはproxyのサポートはあるが、mqttコマンドにはオプションがないらしい。
+MQTT.js 自体には proxy のサポートはあるが、mqtt コマンドにはオプションがないらしい。
 
-MQTT.jsのexamplesにclient_with_proxy.jsがあるので、これを参考に作る。
+MQTT.js の examples に client_with_proxy.js があるので、これを参考に作る。
 
 [MQTT.js/client_with_proxy.js at master · mqttjs/MQTT.js](https://github.com/mqttjs/MQTT.js/blob/master/examples/wss/client_with_proxy.js)
 

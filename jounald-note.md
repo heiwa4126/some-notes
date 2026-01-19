@@ -6,21 +6,21 @@
 # journaldのメモ
 
 `-l`オプションがよくわからない...
-jouranlctlでは`-l (--full)`がデフォルトで、
+jouranlctl では`-l (--full)`がデフォルトで、
 `--no-full`しないと幅で切り詰めない模様。
 `-a`も。「フィールド」とは?
 
 とりあえず全部見るなら`--no-pager`オプションが必要。
 
-特定サービスのログだけ見るとき(networkは例。サービス名を書く)
+特定サービスのログだけ見るとき(network は例。サービス名を書く)
 
 ```
 journalctl -lxu network
 ```
 
-(-lで画面幅でなくなる. -xで最初の行だけでなくなる)
+(-l で画面幅でなくなる. -x で最初の行だけでなくなる)
 
-最新10行
+最新 10 行
 
 ```
 journalctl -lu network -n 10
@@ -46,18 +46,18 @@ journalctl -f
 
 - [man journalctl の訳]
   (https://sites.google.com/site/kandamotohiro/systemd/man-journalctl-no-yi)
-- [Arch Wikiのjournal]
+- [Arch Wiki の journal]
   (https://wiki.archlinux.jp/index.php/Systemd#Journal)
 
 # loggerコマンド的なもの
 
-journaldはsyslogも収集してるのでloggerで出せばjournaldにも出る。
+journald は syslog も収集してるので logger で出せば journald にも出る。
 
 logger に `--journald`オプションがあるときもある(man logger)
 
 直接出すなら
 [systemd-cat](https://www.freedesktop.org/software/systemd/man/systemd-cat.html)
-が面白い。これのサンプル参照。pipeとしても使える。
+が面白い。これのサンプル参照。pipe としても使える。
 
 # 参考
 
@@ -69,7 +69,7 @@ logger に `--journald`オプションがあるときもある(man logger)
 `journalctl --field _SYSTEMD_UNIT`
 
 あるいは
-`journalctl --output=json-pretty` で \_SYSTEMD_UNITのとこを見るとか。
+`journalctl --output=json-pretty` で \_SYSTEMD_UNIT のとこを見るとか。
 
-journalctlのJSON出力は壊れてるので(コンマがない)、そのまま処理できない。
-1行づつ処理するしかない。
+journalctl の JSON 出力は壊れてるので(コンマがない)、そのまま処理できない。
+1 行づつ処理するしかない。

@@ -75,7 +75,7 @@ package.json で
 npm run build
 ```
 
-で、3 つを全部実行できる、って話をきいたんで 要確認。
+で、3 つを全部実行できる、って話をきいたんで要確認。
 
 **嘘でした**。コロンあってもそれはただのラベル
 
@@ -90,7 +90,7 @@ npm run build
 - [セマンティック バージョニング 2.0.0 | Semantic Versioning](https://semver.org/lang/ja/) 日本語版
 - [X ユーザーの中東いくべぇさん: 「Semantic Versioning とか言ってる人は初学者で、rpm, deb, apk, pip, gem, maven, NuGet などなどは全て semver に従ってません(独自の規則を持っている)。npm も caret とか tilde とか独自の constraint 持ってるし gem と npm に至っては caret の指すものが違います。」 / X](https://twitter.com/knqyf263/status/1323237581946048513)
 
-semver の規格 には `~`(Tilde Ranges) も `^`(Caret Ranges) も無い。node-semver にはある。
+semver の規格には `~`(Tilde Ranges) も `^`(Caret Ranges) も無い。node-semver にはある。
 
 ```json
 "dependencies": {
@@ -116,7 +116,7 @@ semver の規格 には `~`(Tilde Ranges) も `^`(Caret Ranges) も無い。node
 - `"git-dependency": "https://github.com/you/awesome-thing"`: GitHub リポジトリからパッケージをインストールすることを指定しています。
 - `"file-dependency": "file:./awesome-thing"`: ローカルファイルからパッケージをインストールすることを指定しています。
 
-このように、`dependencies` フィールドでは、パッケージごとに適切なバージョン指定を行うことができます。より詳細なバージョン指定の方法は ドキュメントを参照してください。
+このように、`dependencies` フィールドでは、パッケージごとに適切なバージョン指定を行うことができます。より詳細なバージョン指定の方法はドキュメントを参照してください。
 
 ## package.json の linter はありますか?
 
@@ -281,7 +281,7 @@ exports でサブパスエクスポートを使っていない場合(types が 1
 以上の話は当然 TypeScript の話で。
 
 ちなみに
-package.json の 直下の types を使えるのは、
+package.json の直下の types を使えるのは、
 tsc のバージョン 1.6 から。
 
 まあいろいろとめんどくさいので
@@ -304,7 +304,7 @@ moduleResolution を指定しない場合は、--module commonjs のときは no
 それ以外のときは classic がデフォルト値になります。
 ただし、node モジュール解決方式が TypeScript コミュニティで最も一般的であり、推奨されています。
 
-以上が tsconfig の moduleResolution に関する説明です 1[ ^2 ^][ ^3 ^ ]。もっと詳しく知りたい場合は、「node モジュール解決方式の例を見せてください」や「classic モジュール解決方式と node モジュール解決方式の違いを教えてください」などとお尋ねください。
+以上が tsconfig の moduleResolution に関する説明です 1[^2 ^][^3 ^]。もっと詳しく知りたい場合は、「node モジュール解決方式の例を見せてください」や「classic モジュール解決方式と node モジュール解決方式の違いを教えてください」などとお尋ねください。
 
 - [TypeScript: TSConfig Option: moduleResolution](https://www.typescriptlang.org/tsconfig/moduleResolution.html)
 - [TypeScript: Documentation - Module Resolution](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
@@ -640,7 +640,7 @@ package.json の bin の最初のエントリーらしい。
 ところが
 
 - npm でグローバルにインストールされたモジュールは探索対象外
-- `npm link` は グローバルにインストール(というか symlink)される
+- `npm link` はグローバルにインストール(というか symlink)される
 
 ではどうすればいいかというと、
 

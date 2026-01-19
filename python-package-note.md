@@ -100,7 +100,7 @@ project.urls.Homepage に書けばいいと思うでしょ? (または Home-page
 
 なんかバグっぽい。
 
-同様に `Author:` も変。 project.authors[] に name= だけのを作る。
+同様に `Author:` も変。 project.authors[]に name= だけのを作る。
 
 ## パッケージ中でバージョンを表示したいとき
 

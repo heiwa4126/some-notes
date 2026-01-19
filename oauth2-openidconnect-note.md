@@ -1,4 +1,4 @@
-OpenID Connect(OIDC)とOAuth2メモ
+OpenID Connect(OIDC)と OAuth2 メモ
 
 - [OpenID ConnectとOAuth2を理解する](#openid-connectとoauth2を理解する)
 - [プロバイダ](#プロバイダ)
@@ -25,7 +25,7 @@ OpenID Connect(OIDC)とOAuth2メモ
 _The OAuth 2.0 Authorization Framework_ の
 _Authorization_ は「認可」で「認証(Authentication)」ではない。
 
-たしかにOAuth2でアクセストークンをもらえれば
+たしかに OAuth2 でアクセストークンをもらえれば
 「認可サーバー」で「認証」されたことになるかもしれないけど、
 それはなんか変。
 
@@ -36,17 +36,17 @@ _Authorization_ は「認可」で「認証(Authentication)」ではない。
 これも参照:
 [OAuth Authorization vs Authentication - Stack Overflow](https://stackoverflow.com/questions/33702826/oauth-authorization-vs-authentication/33704657#33704657)
 
-で、OpenID Connectは
+で、OpenID Connect は
 [一番分かりやすい OpenID Connect の説明 - Qiita](https://qiita.com/TakahikoKawasaki/items/498ca08bbfcc341691fe)
 
 「アクセストークン」ではなく「ID トークン」が発行される。
 
-OpenIDでユーザーの認証と「ID トークン」の発行を行うのが「IDプロバイダ」。だが多くの場合OAuthの認可サーバを兼業してるので、「アクセストークン」の同時発行もできる(ときもある)。
+OpenID でユーザーの認証と「ID トークン」の発行を行うのが「ID プロバイダ」。だが多くの場合 OAuth の認可サーバを兼業してるので、「アクセストークン」の同時発行もできる(ときもある)。
 
-「IDトークン」は何の役に立つか、というと ->
+「ID トークン」は何の役に立つか、というと ->
 [IDトークンが分かれば OpenID Connect が分かる - Qiita](https://qiita.com/TakahikoKawasaki/items/8f0e422c7edd2d220e06)
 
-IDトークンペイロードに(だいたい)emailと名前が入っている。
+ID トークンペイロードに(だいたい)email と名前が入っている。
 
 詳細は
 
@@ -84,13 +84,13 @@ app(native app, web app)やサーババックエンドの側
 
 # OpenID Connect(OIDC)とOAuth2のちがい
 
-OAuth2は「認可」のプロトコル。
-OpenID Connectは「認証+認可(ない場合も)+属性(ない場合も)」ができる。
+OAuth2 は「認可」のプロトコル。
+OpenID Connect は「認証+認可(ない場合も)+属性(ない場合も)」ができる。
 
-OAuth2はアクセストークンを操る。
-OpenID ConnectはIDトークンとアクセストークンを操る。
+OAuth2 はアクセストークンを操る。
+OpenID Connect は ID トークンとアクセストークンを操る。
 
-OAuth2とOICDでは同じものでも呼び名が違う。
+OAuth2 と OICD では同じものでも呼び名が違う。
 
 |                                            | OAuth2               | OIDC                 |
 | :----------------------------------------- | :------------------- | :------------------- |
@@ -106,7 +106,7 @@ OAuth2とOICDでは同じものでも呼び名が違う。
 
 # OIDCのエンドポイント
 
-OIDCの「フロー」によって3つ全部あったりなかったりする。
+OIDC の「フロー」によって 3 つ全部あったりなかったりする。
 
 ## 認可エンドポイント(Authorization Endpoint)
 
@@ -128,11 +128,11 @@ OIDCの「フロー」によって3つ全部あったりなかったりする。
 
 # おまけ
 
-OpenID と OpenID Connectは全然別物
+OpenID と OpenID Connect は全然別物
 
 アプリにスキーマを割り当てる(逆か?)にはどうすればいいのか?
 
-なぜ認可リクエストにstateとnonceの2つが?
+なぜ認可リクエストに state と nonce の 2 つが?
 -> 付加されるところが違う
 
 認可レスポンスがフラグメントのとき
@@ -141,17 +141,17 @@ OpenID と OpenID Connectは全然別物
 
 # AWSでApiGWとCognitoでOAuth2
 
-ChatGPTに聞いてみた
+ChatGPT に聞いてみた
 
 ## Amazon API GatewayでCognito認証を設定した場合、CLIでAPIを呼び出す方法を教えてください。
 
-以下の手順に従って、Amazon API GatewayでCognito認証を設定したAPIをCLIから呼び出すことができます。
+以下の手順に従って、Amazon API Gateway で Cognito 認証を設定した API を CLI から呼び出すことができます。
 
-1. AWS CLIをインストールして、AWSアカウントにサインインする。
+1. AWS CLI をインストールして、AWS アカウントにサインインする。
 
-1. Amazon API GatewayでCognito認証を設定したAPIを呼び出すために必要な情報を収集する。これには、API GatewayのエンドポイントURL、APIのレソースパス、APIのメソッド、APIキー、アクセストークンなどが含まれます。
+1. Amazon API Gateway で Cognito 認証を設定した API を呼び出すために必要な情報を収集する。これには、API Gateway のエンドポイント URL、API のレソースパス、API のメソッド、API キー、アクセストークンなどが含まれます。
 
-1. 以下のAWS CLIコマンドを使用してAPIを呼び出す。
+1. 以下の AWS CLI コマンドを使用して API を呼び出す。
 
 ```bash
 aws apigateway invoke-method \
@@ -163,15 +163,15 @@ aws apigateway invoke-method \
   --query-string-parameters "param2=value2"`
 ```
 
-上記のコマンドは、API GatewayのAPI ID、リソースID、HTTPメソッド、アクセストークン、パスパラメータ、クエリパラメータを指定する必要があります。正確な値は、API Gatewayの管理コンソールから入手できます。
+上記のコマンドは、API Gateway の API ID、リソース ID、HTTP メソッド、アクセストークン、パスパラメータ、クエリパラメータを指定する必要があります。正確な値は、API Gateway の管理コンソールから入手できます。
 
 ## Api IDではなくOAuth2でAPIを呼び出す方法はありませんか?
 
-はい、OAuth2認証を使用してAPI GatewayのAPIを呼び出すことができます。この方法では、事前にCognitoユーザープールまたはIdentity Poolを作成し、ユーザーアクセスを認証します。その後、アクセストークンを取得して、API GatewayのAPIを呼び出すことができます。以下は一例です。
+はい、OAuth2 認証を使用して API Gateway の API を呼び出すことができます。この方法では、事前に Cognito ユーザープールまたは Identity Pool を作成し、ユーザーアクセスを認証します。その後、アクセストークンを取得して、API Gateway の API を呼び出すことができます。以下は一例です。
 
-1. AWS CLIをインストールして、AWSアカウントにサインインする。
-1. AWS CLIからCognitoアクセストークンを取得するために必要な情報を収集する。これには、Cognitoユーザープール名、ユーザー名、パスワード、クライアントIDなどが含まれます。
-1. 以下のAWS CLIコマンドを使用してアクセストークンを取得する。
+1. AWS CLI をインストールして、AWS アカウントにサインインする。
+1. AWS CLI から Cognito アクセストークンを取得するために必要な情報を収集する。これには、Cognito ユーザープール名、ユーザー名、パスワード、クライアント ID などが含まれます。
+1. 以下の AWS CLI コマンドを使用してアクセストークンを取得する。
 
 ```bash
 aws cognito-idp admin-initiate-auth \
@@ -181,7 +181,7 @@ aws cognito-idp admin-initiate-auth \
   --auth-parameters USERNAME=<username>,PASSWORD=<password>
 ```
 
-またはJavaScriptで
+または JavaScript で
 
 ```javascript
 const AWS = require("aws-sdk");
@@ -212,7 +212,7 @@ cognitoIdp.adminInitiateAuth(
 );
 ```
 
-またはPython3で
+または Python3 で
 
 ```python
 import boto3
@@ -232,7 +232,7 @@ response = client.admin_initiate_auth(
 print(response)
 ```
 
-4. 取得したアクセストークンを使用してAPI GatewayのAPIを呼び出す。
+4. 取得したアクセストークンを使用して API Gateway の API を呼び出す。
 
 ```bash
 curl -X <http-method> \
@@ -240,11 +240,11 @@ curl -X <http-method> \
   "<api-endpoint>"
 ```
 
-上記のコマンドは、HTTPメソッド、API GatewayのエンドポイントURL、アクセストークンを指定する必要があります。正確な値は、API Gatewayの管理コンソールから入手できます。
+上記のコマンドは、HTTP メソッド、API Gateway のエンドポイント URL、アクセストークンを指定する必要があります。正確な値は、API Gateway の管理コンソールから入手できます。
 
 # ↑のやつを実際に作ってみる
 
-まず手動で作って、SAMかTerraformにする。
+まず手動で作って、SAM か Terraform にする。
 
 1. [Amazon Cognito ユーザープールをオーソライザーとして使用して REST API へのアクセスを制御する](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html)
 1. [REST API 用の Amazon Cognito ユーザープールを作成する](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-create-cognito-user-pool.html)
@@ -259,9 +259,9 @@ curl -X <http-method> \
 
 # ブラウザでPKCE
 
-OAuth 2.0でのPKCE（Proof Key for Code Exchange）は、認可グラントにセキュリティを追加するための技術的手法です。PKCEを使用することで、認可コードフローを使用する際に、悪意のあるサードパーティアプリケーションによる認可コードの盗難やフィッシング攻撃から保護することができます。
+OAuth 2.0 での PKCE（Proof Key for Code Exchange）は、認可グラントにセキュリティを追加するための技術的手法です。PKCE を使用することで、認可コードフローを使用する際に、悪意のあるサードパーティアプリケーションによる認可コードの盗難やフィッシング攻撃から保護することができます。
 
-ブラウザでOAuthの認可グラントでPKCEを使用する場合、以下の手順に従って実装することができます。
+ブラウザで OAuth の認可グラントで PKCE を使用する場合、以下の手順に従って実装することができます。
 
 ランダムなバイト列（エントロピー）を生成します。このエントロピーは、認可リクエストごとに異なるものである必要があります。
 
@@ -269,17 +269,17 @@ OAuth 2.0でのPKCE（Proof Key for Code Exchange）は、認可グラントに�
 
 エントロピーの SHA-256 ハッシュ値を計算し、Base64 エンコードします。この値は、認可コードリクエストの検証に使用されます。
 
-リダイレクトURIに、クエリパラメーターとして code_challenge と code_challenge_method を追加します。 code_challenge は、エントロピーの SHA-256 ハッシュ値をエンコードした値で、 code_challenge_method は、常に "S256" を指定します。
+リダイレクト URI に、クエリパラメーターとして code_challenge と code_challenge_method を追加します。 code_challenge は、エントロピーの SHA-256 ハッシュ値をエンコードした値で、 code_challenge_method は、常に "S256" を指定します。
 
 認可エンドポイントにリクエストを送信する前に、クライアントの設定に code_challenge 値を保存します。
 
 認可エンドポイントにリクエストを送信するときに、code_challenge 値を使用して、クエリパラメーター code_challenge を追加します。
 
-認可サーバーは、リダイレクトURIに含まれる code_challenge 値とクライアントの設定に保存されている値を比較します。もし一致しない場合、認可リクエストは失敗します。
+認可サーバーは、リダイレクト URI に含まれる code_challenge 値とクライアントの設定に保存されている値を比較します。もし一致しない場合、認可リクエストは失敗します。
 
-これらの手順に従って実装することで、ブラウザでOAuthの認可グラントでPKCEを使用することができます。ただし、PKCEを実装するには、OAuthプロバイダーがPKCEをサポートしている必要があります。PKCEをサポートしていないOAuthプロバイダーの場合、この手法を使用することはできません。
+これらの手順に従って実装することで、ブラウザで OAuth の認可グラントで PKCE を使用することができます。ただし、PKCE を実装するには、OAuth プロバイダーが PKCE をサポートしている必要があります。PKCE をサポートしていない OAuth プロバイダーの場合、この手法を使用することはできません。
 
-ブラウザでOAuthの認可グラントでPKCEを使う方法は、以下のようになります。
+ブラウザで OAuth の認可グラントで PKCE を使う方法は、以下のようになります。
 
 1. [クライアントは、ランダムな文字列を生成し、それを**コードチャレンジ**と呼びます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)
 2. [クライアントは、コードチャレンジをハッシュ化し、それを**コードベリファイア**と呼びます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce)
@@ -288,27 +288,27 @@ OAuth 2.0でのPKCE（Proof Key for Code Exchange）は、認可グラントに�
 5. [クライアントは、認可サーバーに対してトークンリクエストを送ります。このとき、認可コードとコードベリファイアをパラメータとして含めます。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce) [**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
 6. [認可サーバーは、コードベリファイアをハッシュ化し、それがコードチャレンジと一致するかどうか検証します。一致すれば、クライアントに対してアクセストークンとリフレッシュトークンを返します。**1**](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce) [**2**](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow)
 
-これにより、ブラウザでOAuthの認可グラントでPKCEを使って安全にトークンを取得することができます。
+これにより、ブラウザで OAuth の認可グラントで PKCE を使って安全にトークンを取得することができます。
 
 **詳細情報:** [1\. zenn.dev](https://zenn.dev/zaki_yama/articles/oauth2-authorization-code-grant-and-pkce) [2\. learn.microsoft.com](https://learn.microsoft.com/ja-jp/azure/active-directory/develop/v2-oauth2-auth-code-flow) [3\. applis.io](https://applis.io/posts/what-is-pkce)
 
 ## リフレッシュトークンの寿命って取れるの?
 
-JWEで暗号化されてるから分からないよなあ...
+JWE で暗号化されてるから分からないよなあ...
 
 ソース: Bing との会話 2023/2/21
 
-OAuth2のリフレッシュトークンの期限切れを知る方法については、ウェブ検索の結果から以下の情報が得られました。¹²³
+OAuth2 のリフレッシュトークンの期限切れを知る方法については、ウェブ検索の結果から以下の情報が得られました。¹²³
 
-- リフレッシュトークンを取得するときに、期限切れの時間を保存する方法があります²。しかし、この方法はすべてのOAuth2プロバイダーでサポートされているわけではありません²。
-- リフレッシュトークンを使ってアクセストークンを再発行するときに、エラーレスポンスをチェックする方法があります²。エラーコードがinvalid_grantやinvalid_tokenなどの場合は、リフレッシュトークンが期限切れである可能性が高いです²。
-- リフレッシュトークンを取得するときに、access_type=offlineやprompt=consentなどのパラメータを付ける方法があります³。これにより、リフレッシュトークンが常に返されるようになります³。
+- リフレッシュトークンを取得するときに、期限切れの時間を保存する方法があります²。しかし、この方法はすべての OAuth2 プロバイダーでサポートされているわけではありません²。
+- リフレッシュトークンを使ってアクセストークンを再発行するときに、エラーレスポンスをチェックする方法があります²。エラーコードが invalid_grant や invalid_token などの場合は、リフレッシュトークンが期限切れである可能性が高いです²。
+- リフレッシュトークンを取得するときに、access_type=offline や prompt=consent などのパラメータを付ける方法があります³。これにより、リフレッシュトークンが常に返されるようになります³。
 
 この回答は役に立ちましたか？
 
 1. OAuth 2.0 全フローの図解と動画 - Qiita. https://qiita.com/TakahikoKawasaki/items/200951e5b5929f840a1f アクセス日時 2023/2/21.
 2. How to detect when an OAuth2 refresh-token expired. https://stackoverflow.com/questions/57383523/how-to-detect-when-an-oauth2-refresh-token-expired アクセス日時 2023/2/21.
-3. google認証のrefresh_tokenの扱いでハマったポイント - Qiita. https://qiita.com/zuxt/items/10cbc7cf6c12371227f3 アクセス日時 2023/2/21.
+3. google 認証の refresh_token の扱いでハマったポイント - Qiita. https://qiita.com/zuxt/items/10cbc7cf6c12371227f3 アクセス日時 2023/2/21.
 
 ログインする時に、
 まずトークンエンドポイントに投げてみて

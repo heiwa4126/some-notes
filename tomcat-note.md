@@ -1,11 +1,11 @@
 # /etc/altanativeとsetenv.sh
 
-RHELなんかで、パッケージで入れるopenjdk-1.8.0と
-バイナリビルドから入れるtomcat9を
+RHEL なんかで、パッケージで入れる openjdk-1.8.0 と
+バイナリビルドから入れる tomcat9 を
 うまく付き合わせるには、
 
 [tomcat/catalina.sh at master · apache/tomcat](https://github.com/apache/tomcat/blob/master/bin/catalina.sh)
-は、同じパスにあるsetenv.shを読むので
+は、同じパスにある setenv.sh を読むので
 
 /opt/tomcat/apache-tomcat-vvvvv/bin/setenv.sh
 
@@ -20,10 +20,10 @@ CATALINA_OPTS="$CATALINA_OPTS -XX:MaxPermSize=1024M"
 CATALINA_OPTS="$CATALINA_OPTS -Djava.net.preferIPv4Stack=true"
 ```
 
-みたいに書いておくと、altanativeシステムとうまく付き合える。
+みたいに書いておくと、altanative システムとうまく付き合える。
 
-ここにCATALINA_HOMEも書けるので環境変数設定する必要がなくなる。
-(その場合CATALINA_BASEも設定すること)
+ここに CATALINA_HOME も書けるので環境変数設定する必要がなくなる。
+(その場合 CATALINA_BASE も設定すること)
 
 参考:
 [UbuntuにおけるTomcatの覚え書き - Qiita](https://qiita.com/hidekuro/items/119317f826253326e490)
@@ -39,10 +39,10 @@ CATALINA_OPTS="$CATALINA_OPTS -Djava.net.preferIPv4Stack=true"
 
 # AJPのトラブル
 
-RHEL7の標準のApache(httpd)付属の
-mod_proxy_ajpは古くて、シークレットキーが使えない。
+RHEL7 の標準の Apache(httpd)付属の
+mod_proxy_ajp は古くて、シークレットキーが使えない。
 
-Tomcatのserver.xmlのajpの部分で
+Tomcat の server.xml の ajp の部分で
 
 ```xml
 <Connector protocol="AJP/1.3"
@@ -64,7 +64,7 @@ Server version: Apache/2.4.6 (Red Hat Enterprise Linux)
 Server built:   Apr 21 2020 10:19:09
 ```
 
-TODO: 「シークレットキーが使える時」を書く
+TODO:「シークレットキーが使える時」を書く
 
 参考:
 
@@ -73,9 +73,9 @@ TODO: 「シークレットキーが使える時」を書く
 
 # apache + tomcat ajp
 
-tomcatのserver.xmlに↑のような記述を書いてtomcatを再起動
+tomcat の server.xml に↑のような記述を書いて tomcat を再起動
 
-8009をtomcatが使ってるか確認。例:
+8009 を tomcat が使ってるか確認。例:
 
 ```
 # fuser -v 8009/tcp
@@ -83,7 +83,7 @@ tomcatのserver.xmlに↑のような記述を書いてtomcatを再起動
 8009/tcp:            tomcat    10823 F.... java
 ```
 
-apacheでmod_proxyとmod_ajp_proxyが読みこまれてるか確認。例)
+apache で mod_proxy と mod_ajp_proxy が読みこまれてるか確認。例)
 
 ```
 # httpd -M | grep proxy
@@ -92,7 +92,7 @@ apacheでmod_proxyとmod_ajp_proxyが読みこまれてるか確認。例)
 ...
 ```
 
-読み込まれてなかったら、ディストリによって微妙に違うけど、RHEL7系の場合:
+読み込まれてなかったら、ディストリによって微妙に違うけど、RHEL7 系の場合:
 
 /etc/httpd/conf.modules.d/00-tomcat.conf
 
@@ -111,21 +111,21 @@ LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
 ProxyPass /tomcat-test/ ajp://127.0.0.1:8009/test/
 ```
 
-webappのtest/以下に置かれたservlet or jspを
+webapp の test/以下に置かれた servlet or jsp を
 http://xxx.xxx.xxx/tomcat-test/でアクセスする設定。
 
-`httpd -t`でシンタックスチェックの後apache再起動。
+`httpd -t`でシンタックスチェックの後 apache 再起動。
 
 ```
 curl http://127.0.0.1:8080/test/hello.jsp
 curl http://127.0.0.1/tomcat-test/hello.jsp
 ```
 
-でテスト(上:Tomcat直接、下:Apache経由)
+でテスト(上:Tomcat 直接、下:Apache 経由)
 
 # AJPでシークレットキーを使う
 
-server.xmlの設定
+server.xml の設定
 
 ```xml
 <Connector protocol="AJP/1.3"
@@ -150,7 +150,7 @@ sudo a2enmod proxy
 sudo a2enmod proxy_ajp
 ```
 
-/etc/apache2/conf-available/ajp.confを書いて(以下例)
+/etc/apache2/conf-available/ajp.conf を書いて(以下例)
 
 ```
 ProxyPass /tomcat9/ ajp://localhost:8009/ secret=YOUR_PASSWORD
@@ -167,16 +167,16 @@ systemctl restart apache2
 
 # warファイルのサンプル
 
-Tomcatのドキュメントにsample.warが入ってる。
+Tomcat のドキュメントに sample.war が入ってる。
 [Sample Application](https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/)
 
-webappsディレクトリで
+webapps ディレクトリで
 
 ```sh
 curl https://tomcat.apache.org/tomcat-9.0-doc/appdev/sample/sample.war -O
 ```
 
-とかすればOk
+とかすれば Ok
 
 テストは
 
@@ -188,7 +188,7 @@ curl 127.0.0.1:8080/sample/
 
 # UbuntuでTomcat
 
-Ubuntu 18.04LTSで
+Ubuntu 18.04LTS で
 
 ```sh
 sudo apt install tomcat9 openjdk-11-jdk-headless
@@ -200,8 +200,8 @@ sudo apt install tomcat9 openjdk-11-jdk-headless
 systemctl status tomcat9.service
 ```
 
-- catalona.homeは`/usr/share/tomcat9` (環境変数は設定されない)
-- webappsは`/var/lib/tomcat9/webapps`
+- catalona.home は`/usr/share/tomcat9` (環境変数は設定されない)
+- webapps は`/var/lib/tomcat9/webapps`
 
 ```
 $ find /var/lib/tomcat9/webapps -ls
@@ -243,7 +243,7 @@ curl 127.0.0.1:8080/test88/index.jsp -v
 
 # CATALINA_HOME と CATALINA_BASE
 
-Tomcatの環境変数のドキュメントが貧弱なのがよくない。
+Tomcat の環境変数のドキュメントが貧弱なのがよくない。
 
 `catalina.sh`に書いてある。
 [tomcat/catalina.sh at 0a2ee9b1ba7ded327c2aa2361cccff6a16cdef84 · apache/tomcat](https://github.com/apache/tomcat/blob/0a2ee9b1ba7ded327c2aa2361cccff6a16cdef84/bin/catalina.sh)
@@ -251,4 +251,4 @@ Tomcatの環境変数のドキュメントが貧弱なのがよくない。
 で CATALINA_HOME と CATALINA_BASE の違いは:
 [java - tomcat - CATALINA_BASE and CATALINA_HOME variables - Stack Overflow](https://stackoverflow.com/questions/3090398/tomcat-catalina-base-and-catalina-home-variables#:~:text=CATALINA_HOME%20vs%20CATALINA_BASE&text=CATALINA_HOME%20represents%20the%20root%20of,is%20the%20same%20as%20%24CATALINA_HOME%20.)
 
-Tomcatの複数インスタンスを起動するときに便利
+Tomcat の複数インスタンスを起動するときに便利

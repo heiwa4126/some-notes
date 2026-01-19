@@ -1,4 +1,4 @@
-ansibleメモランダム2
+ansible メモランダム 2
 
 - [用語](#用語)
 - [2.9から2.10へアップグレード](#29から210へアップグレード)
@@ -7,7 +7,7 @@ ansibleメモランダム2
 
 - [Glossary — Ansible Documentation](https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html)
 
-最近のGoogle翻訳はすごい…
+最近の Google 翻訳はすごい…
 
 <dt>Playbook
 <dd>プレイブックは、Ansibleがシステムを編成、構成、管理、または展開するための言語です。それはスポーツのたとえであり(以下ジョークらしいがよくわからんので略)

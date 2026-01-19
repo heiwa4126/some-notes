@@ -55,7 +55,7 @@ Description: bash シェル用のプログラム可能な補完機能
 
 以下が lazy load (bash-completion v2) で、
 
-1. ($BASH_COMPLETION_USER_DIRを設定してあれば) `$BASH_COMPLETION_USER_DIR/completions/`
+1. ($BASH_COMPLETION_USER_DIR を設定してあれば) `$BASH_COMPLETION_USER_DIR/completions/`
 2. (未設定なら) `$XDG_DATA_HOME/bash-completion/completions/`
 3. ($XDG_DATA_HOME も未設定なら) `~/.local/share/bash-completion/completions/`
 

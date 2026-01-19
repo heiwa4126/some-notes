@@ -41,7 +41,7 @@ msg='test exe="/usr/sbin/auditctl" hostname=r7 addr=? terminal=pts/2 res=success
 auditctl -e0
 ```
 
-eオプションの引数:
+e オプションの引数:
 
 - 0 - 無効
 - 1 - 有効
@@ -62,7 +62,7 @@ systemctl disable auditd
 
 [LLinux Auditd ルールの読み方](https://runble1.com/linux-auditd-rule/)から引用
 
-Linux Auditd のルールには3種類ある。
+Linux Auditd のルールには 3 種類ある。
 
 - 制御ルール : Audit システム自体の動作設定
 - ファイルシステムのルール : 特定のファイルまたはディレクトリーへのアクセスを記録するための設定
@@ -119,21 +119,21 @@ $ sudo auditctl -D
 No rules
 ```
 
-`-a`の後ろはlist,action または action,list (つまりactionとlistの順序はどっちでもいい)
+`-a`の後ろは list,action または action,list (つまり action と list の順序はどっちでもいい)
 
 action:
 
 - never - 監査記録を生成しない
-- always - 監査記録を生成する(syscall終了時に)
+- always - 監査記録を生成する(syscall 終了時に)
 
-listの方はちょっとむずかしい。
+list の方はちょっとむずかしい。
 
 - task
 - exit
 - user
 - exclude
 
-あと新し目のkernelだと`filesystem`というのがlistに追加されている。
+あと新し目の kernel だと`filesystem`というのが list に追加されている。
 
 > 整理すると、アプリケーションからシステムコールが呼出されると、カーネル内で４つのフィルタが働く。userはuidやpidなどのユーザ情報によるフィルタリング、taskは特定のシステムコール（fork, clone）のみ有効なフィルタリング、exitは全システムコールに対するフィルタリング、excludeは特定のイベント条件（msgtype）によるフィルタリングとなる。user, task, exitフィルタは個別に動作し、これらからのイベントはexcludeフィルタに送られ、そこで除外されなければユーザモードで起動しているauditdへ送信される。
 
@@ -145,7 +145,7 @@ listの方はちょっとむずかしい。
 
 ## examples
 
-全部のプログラムの起動を監査。ただし/bin/idに関するものを除外
+全部のプログラムの起動を監査。ただし/bin/id に関するものを除外
 
 ```
 auditctl -a never,exit -S all -F exe=/bin/id
@@ -173,7 +173,7 @@ auditctl -a always,exit -F arch=b32 -S execve
 2. `augenrules --load` で `/etc/audit/audit.rules` を生成&ロードする。
 3. `auditctl -l`でルールを確認。
 
-RHEL7の場合
+RHEL7 の場合
 `/usr/share/doc/audit-2.8.5/rules/`に
 サンプルルールが入ってる(バージョンは変わるかも)。
 

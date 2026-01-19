@@ -1,6 +1,6 @@
 # Unified.jsのメモ
 
-remake/rehype (とretext) などなど
+remake/rehype (と retext) などなど
 
 ## 参照
 
@@ -48,14 +48,14 @@ VFile は、テキストファイルを扱う際に便利な機能を提供す�
 
 # pluginを作る
 
-Rehypeの方を例に (remark, retextにもほぼ同じ項目があります):
+Rehype の方を例に (remark, retext にもほぼ同じ項目があります):
 
 - https://github.com/rehypejs/rehype/blob/HEAD/doc/plugins.md#create-plugins
 - [Create a plugin - unified](https://unifiedjs.com/learn/guide/create-a-plugin/)
 
 プラグインを作成するには、まず、プラグインの概念について読んでください。
 次に、「[Unifiedでプラグインを作成する](https://unifiedjs.com/learn/guide/create-a-plugin/)」というガイドを読んでください。
-最後に、[既存のプラグイン](https://github.com/rehypejs/rehype/blob/HEAD/doc/plugins.md)の中から、これから作ろうとしているものに似たものを1つ選び、そこから作業してください。
+最後に、[既存のプラグイン](https://github.com/rehypejs/rehype/blob/HEAD/doc/plugins.md)の中から、これから作ろうとしているものに似たものを 1 つ選び、そこから作業してください。
 もし行き詰まったら、ディスカッションは助けを求めるのに良い場所です。
 
 `rehype-` をプレフィックスに持つ名前を選ぶべきです
@@ -67,6 +67,6 @@ hast で動作する場合は `hast-util-` を、
 仮想ファイルで動作する場合は `vfile-` を使用します。
 
 デフォルトのエクスポートを使用してパッケージからプラグインを公開し、
-package.jsonに`rehype-plugin`キーワードを追加し、
-GitHubのあなたのレポにrehype-pluginトピックを追加し、
+package.json に`rehype-plugin`キーワードを追加し、
+GitHub のあなたのレポに rehype-plugin トピックを追加し、
 [このページ](https://github.com/rehypejs/rehype/blob/HEAD/doc/plugins.md)のプラグインを追加するプルリクエストを作成してください！

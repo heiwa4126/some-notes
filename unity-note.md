@@ -51,7 +51,7 @@ https://visualstudio.microsoft.com/ja/downloads/
 Microgames が出てこない。
 
 1. Visual Studio インストーラーで
-2. Visual Studio 2022 comunity edition を Unity サポート付き でインストール
+2. Visual Studio 2022 comunity edition を Unity サポート付きでインストール
 3. Unity Hub から 2021.3 エディタをインストール(Visual Studio 2019 のインストールを外して)
 
 がいいと思う
@@ -574,7 +574,7 @@ ctrl+クリックしてドラッグ。
 
 ## Unity Editor の scene での表示で perspective の画角を変えるには?
 
-エディタ上での表示を変える話。画角(Angle of view)ではなく 視野角(FoV; Field of View)を変えられる。
+エディタ上での表示を変える話。画角(Angle of view)ではなく視野角(FoV; Field of View)を変えられる。
 
 scene ビューの右上にある Scene(ムービーカメラのアイコン)をプルダウンすると FoV があるので、それを調整。
 
@@ -584,7 +584,7 @@ scene ビューの右上にある Scene(ムービーカメラのアイコン)を
 
 OnCollisionEnter() と OnCollisionStay() と OnCollisionExit() は collider の Is Trigger を true にしなくても使える。
 
-OnCollision()は 両方に rigidbody がないと生じない? → いや片方あれば OK なのは確認した。
+OnCollision()は両方に rigidbody がないと生じない? → いや片方あれば OK なのは確認した。
 
 なぜ OnTrigger...()と 2 系統あるのか?
 

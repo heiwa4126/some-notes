@@ -1,46 +1,47 @@
 # Go 言語 メモ
 
-- [Go 言語 メモ](#go-言語-メモ)
-  - [Linux で Windows のバイナリを作る](#linux-で-windows-のバイナリを作る)
-  - [strings.Builder](#stringsbuilder)
-  - [delve](#delve)
-    - [インストール](#インストール)
-    - [実行例](#実行例)
-  - [GDB でデバッグ](#gdb-でデバッグ)
-  - [go モジュール](#go-モジュール)
-  - [go run](#go-run)
-  - [snapd で go](#snapd-で-go)
-  - [Go で書いたコードを systemd でデーモンにする](#go-で書いたコードを-systemd-でデーモンにする)
-  - [golang で書いたコードを systemd で daemon に](#golang-で書いたコードを-systemd-で-daemon-に)
-  - [構造体の比較](#構造体の比較)
-  - [よく忘れる Golang](#よく忘れる-golang)
-    - [キャスト](#キャスト)
-    - [永遠ループ](#永遠ループ)
-    - [while](#while)
-    - [type()](#type)
-      - [タイプの表示](#タイプの表示)
-      - [タイプの比較](#タイプの比較)
-  - [interface](#interface)
-  - [defer の中のエラー](#defer-の中のエラー)
-  - [テストのカバレッジ](#テストのカバレッジ)
-  - [shadowing によるバグ](#shadowing-によるバグ)
-  - [golangci-lint](#golangci-lint)
-  - [panic()のドキュメント](#panicのドキュメント)
-  - [error でスタックトレースが欲しいとき](#error-でスタックトレースが欲しいとき)
-  - [バイナリと依存モジュールのバージョン表示](#バイナリと依存モジュールのバージョン表示)
-  - [trimpath オプション](#trimpath-オプション)
-  - [JSON から go の type xxxx struct にするやつ](#json-から-go-の-type-xxxx-struct-にするやつ)
-  - [strings.HasSuffix](#stringshassuffix)
-  - [標準プロジェクトレイアウト](#標準プロジェクトレイアウト)
-  - [おもしろい記事](#おもしろい記事)
-  - [有名ツールリスト](#有名ツールリスト)
-  - [windows で btime,atime,ctime,mtime](#windows-で-btimeatimectimemtime)
-  - [emacs での環境](#emacs-での環境)
-  - [go-mode](#go-mode)
-  - [Windows と Linux でソースを分ける](#windows-と-linux-でソースを分ける)
-  - [事前に型のわからない JSON を読む](#事前に型のわからない-json-を読む)
-  - [インタフェースメモ](#インタフェースメモ)
-  - ["//go:build"](#gobuild)
+- [Linux で Windows のバイナリを作る](#linux-で-windows-のバイナリを作る)
+- [strings.Builder](#stringsbuilder)
+- [delve](#delve)
+  - [インストール](#インストール)
+  - [実行例](#実行例)
+- [GDB でデバッグ](#gdb-でデバッグ)
+- [go モジュール](#go-モジュール)
+- [go run](#go-run)
+- [snapd で go](#snapd-で-go)
+- [Go で書いたコードを systemd でデーモンにする](#go-で書いたコードを-systemd-でデーモンにする)
+- [golang で書いたコードを systemd で daemon に](#golang-で書いたコードを-systemd-で-daemon-に)
+- [構造体の比較](#構造体の比較)
+- [よく忘れる Golang](#よく忘れる-golang)
+  - [キャスト](#キャスト)
+  - [永遠ループ](#永遠ループ)
+  - [while](#while)
+  - [type()](#type)
+    - [タイプの表示](#タイプの表示)
+    - [タイプの比較](#タイプの比較)
+- [interface](#interface)
+- [defer の中のエラー](#defer-の中のエラー)
+- [テストのカバレッジ](#テストのカバレッジ)
+- [shadowing によるバグ](#shadowing-によるバグ)
+- [golangci-lint](#golangci-lint)
+- [panic()のドキュメント](#panicのドキュメント)
+- [error でスタックトレースが欲しいとき](#error-でスタックトレースが欲しいとき)
+- [バイナリと依存モジュールのバージョン表示](#バイナリと依存モジュールのバージョン表示)
+- [trimpath オプション](#trimpath-オプション)
+- [JSON から go の type xxxx struct にするやつ](#json-から-go-の-type-xxxx-struct-にするやつ)
+- [strings.HasSuffix](#stringshassuffix)
+- [標準プロジェクトレイアウト](#標準プロジェクトレイアウト)
+- [おもしろい記事](#おもしろい記事)
+- [有名ツールリスト](#有名ツールリスト)
+- [windows で btime,atime,ctime,mtime](#windows-で-btimeatimectimemtime)
+- [emacs での環境](#emacs-での環境)
+- [go-mode](#go-mode)
+- [Windows と Linux でソースを分ける](#windows-と-linux-でソースを分ける)
+- [事前に型のわからない JSON を読む](#事前に型のわからない-json-を読む)
+- [インタフェースメモ](#インタフェースメモ)
+- ["//go:build"](#gobuild)
+- [モジュールの更新](#モジュールの更新)
+- [goのcomplition](#goのcomplition)
 
 ## Linux で Windows のバイナリを作る
 
@@ -147,7 +148,7 @@ go 1.13 から標準になる。
 チュートリアルになってるので、一回やってみると理解できる
 
 - [Using Go Modules - The Go Blog](https://blog.golang.org/using-go-modules)
-- [The Go Blog - Using Go Modules / Go Modules を使う（和訳） - Qiita](https://qiita.com/pokeh/items/139d0f1fe56e358ba597)
+- [The Go Blog - Using Go Modules / Go Modules を使う(和訳) - Qiita](https://qiita.com/pokeh/items/139d0f1fe56e358ba597)
 
 ## go run
 
@@ -280,7 +281,7 @@ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/insta
 
 ## Go で書いたコードを systemd でデーモンにする
 
-参考にしたもの：
+参考にしたもの:
 
 - [Integration of a Go service with systemd: readiness & liveness | Vincent Bernat](https://vincent.bernat.ch/en/blog/2017-systemd-golang)
 
@@ -718,7 +719,7 @@ goroutine に続く
 
 これとか参考:
 
-- [複数の Goroutine を WaitGroup（ErrGroup）で制御する - Hack Your Design!](https://blog.toshimaru.net/goroutine-with-waitgroup/#goroutine--errgroup-%E3%82%92%E4%BD%BF%E3%81%86)
+- [複数の Goroutine を WaitGroup(ErrGroup)で制御する - Hack Your Design!](https://blog.toshimaru.net/goroutine-with-waitgroup/#goroutine--errgroup-%E3%82%92%E4%BD%BF%E3%81%86)
 
 ## テストのカバレッジ
 
@@ -1089,3 +1090,25 @@ REST API みたいに型が変わるものが帰ってくる場合など。
 ## "//go:build"
 
 [Build Constraints](https://pkg.go.dev/go/build#hdr-Build_Constraints)というもの。
+
+## モジュールの更新
+
+```sh
+go get -u ./...
+go mod tidy
+```
+
+`go get -u=patch ./...` など
+
+## goのcomplition
+
+そんなものは無い。
+
+Go で CLI を書いたとき、引数 perser 兼 complition 生成してくれるモジュールはある。
+
+- Cobra (spf13/cobra)+ pflag
+- urfave/cli v2
+- Kong (alecthomas/kong)
+- Carapace (rsteube/carapace)
+
+go もこういうの使えばいいのに w

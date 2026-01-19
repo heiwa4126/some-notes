@@ -9,5 +9,5 @@ Dissimilar System Recovery(DSR)
 共有リソースツリー (SRT : Shared Resource Tree)
 
 ブートサーバ作成
-SRT作成
-BMRメディア作成
+SRT 作成
+BMR メディア作成

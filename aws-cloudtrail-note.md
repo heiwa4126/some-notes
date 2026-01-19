@@ -4,7 +4,7 @@
 
 ## 概要
 
-CloudTrail は AWS アカウント全体の API アクティビティ を記録するサービス。
+CloudTrail は AWS アカウント全体の API アクティビティを記録するサービス。
 
 テナント(AWS アカウント)単位で共通。リージョンや AZ 単位ではない。CloudWatch Logs みたいな感じではない。
 

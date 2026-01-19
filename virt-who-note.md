@@ -1,4 +1,4 @@
-RHELのvirt-whoメモ
+RHEL の virt-who メモ
 
 - [概要](#%E6%A6%82%E8%A6%81)
 - [事前にいるもの](#%E4%BA%8B%E5%89%8D%E3%81%AB%E3%81%84%E3%82%8B%E3%82%82%E3%81%AE)
@@ -11,40 +11,40 @@ RHELのvirt-whoメモ
 
 # 概要
 
-ESXi(vCenterあり)と
-Red Hat Enterprise Linux for Virtual Datacentersサブスクリプション(仮想データーセンターサブスクリプション)で、
-RHELのVMを動かすのに、virt-whoを動かしてみたのでそのメモ。
+ESXi(vCenter あり)と
+Red Hat Enterprise Linux for Virtual Datacenters サブスクリプション(仮想データーセンターサブスクリプション)で、
+RHEL の VM を動かすのに、virt-who を動かしてみたのでそのメモ。
 
-Virtual DatacentersサブスクリプションはESXiホスト単位で買って、
-そのホストでいくつRHELゲストを動かしてもいい、というすごいライセンス。
+Virtual Datacenters サブスクリプションは ESXi ホスト単位で買って、
+そのホストでいくつ RHEL ゲストを動かしてもいい、というすごいライセンス。
 
 # 事前にいるもの
 
-virt-whoを動かすゲストから、vCenterまで443/tcp(HTTPS)でつながること。HTTPSなのでover proxy可らしい(未検証)。
+virt-who を動かすゲストから、vCenter まで 443/tcp(HTTPS)でつながること。HTTPS なので over proxy 可らしい(未検証)。
 
-RHELゲストからRed Hat Customer PortalまたはSAM(Subscription Asset Manager)までの通信。
+RHEL ゲストから Red Hat Customer Portal または SAM(Subscription Asset Manager)までの通信。
 要は`subscription-manager register`が出来ること。
 
-ちなみに、virt-whoを動かしたり、Virtual DatacentersサブスクリプションをESXiにアタッチする前でも
+ちなみに、virt-who を動かしたり、Virtual Datacenters サブスクリプションを ESXi にアタッチする前でも
 ゲストは`subscription-manager register`はできる(エンタイトルメント不要。半購読状態になる)。
 
 # vCenterに「読み取り専用」のユーザを作る
 
-管理者権限のユーザでvCenterにログインして、
+管理者権限のユーザで vCenter にログインして、
 メニュー -> 管理 -> ユーザおよびグループ
 
-ドメインを選んで(今回はSSOのvsphere.localを使った)、「ユーザを追加」をクリック。virt-whoユーザを作った(ユーザ名は自由)。
+ドメインを選んで(今回は SSO の vsphere.local を使った)、「ユーザを追加」をクリック。virt-who ユーザを作った(ユーザ名は自由)。
 
-次に「グローバル権限」でいま作ったvirt-whoユーザを検索、
+次に「グローバル権限」でいま作った virt-who ユーザを検索、
 ロールで「読み取り専用」を選択、「子へ伝達」をチェック。
-OKボタンで確定。
+OK ボタンで確定。
 
-いったんログアウトして、vCenterにvirt-whoで入れるかを確認する。
+いったんログアウトして、vCenter に virt-who で入れるかを確認する。
 
 # RHELゲストにvirt-whoをインストール
 
-前述のようにvirt-whoが動いていない状態でも、
-ゲストのregisterの後(attach不要で)、
+前述のように virt-who が動いていない状態でも、
+ゲストの register の後(attach 不要で)、
 `yum install virt-who`できる。
 
 - [virt-who を使用して Red Hat カスタマーポータルに VMware ESXi ゲストを登録する](https://access.redhat.com/ja/solutions/3032111)
@@ -53,11 +53,11 @@ OKボタンで確定。
 
 を参照。
 
-DVDからは
+DVD からは
 [How to install virt-who on disconnected RHEL 7 server?](https://access.redhat.com/solutions/1527923)
 を参照。
 
-↑のrepoではうまくいかなくて、\*.repoに
+↑の repo ではうまくいかなくて、\*.repo に
 
 ```
 gpgcheck=1
@@ -66,9 +66,9 @@ gpgkey=file:///mnt/RPM-GPG-KEY-redhat-release
 
 が必要だった。
 
-終わったらunmountしてenable=0にしておくこと。
+終わったら unmount して enable=0 にしておくこと。
 
-RHELインストール時にパッケージグループを選んでもよいらしいが
+RHEL インストール時にパッケージグループを選んでもよいらしいが
 未確認。
 
 # virt-who 設定
@@ -80,7 +80,7 @@ SAM(Subscription Asset Manager)があれば編集。
 `/etc/virt-who.d/{vCenter名}.conf`
 
 ファイル名は自由。
-同じディレクトリにtemplate.confがあるので
+同じディレクトリに template.conf があるので
 コピーして編集する。
 
 例)
@@ -98,9 +98,9 @@ env=Library
 hypervisor_id=hostname
 ```
 
-usernameは`virt-who@vsphere.local`だとうまくいかなかった。
+username は`virt-who@vsphere.local`だとうまくいかなかった。
 
-ownerは
+owner は
 
 ```
 LANG=C subscription-manager identity
@@ -118,27 +118,27 @@ LANG=C subscription-manager identity
 2. `systemctl status virt-who -l`
 
 正常に動けば[ポータルのシステム](https://access.redhat.com/management/systems)に
-ESXiが「ハイパーバイザー」として追加されるので(15分ぐらいかかる)、
+ESXi が「ハイパーバイザー」として追加されるので(15 分ぐらいかかる)、
 各々のシステムを選んで、「サブスクリプション」タブからエンタイトル。
 
-あとは各々のRHELゲストを register & attach
+あとは各々の RHEL ゲストを register & attach
 
 # そのほか
 
-正常にvert-whoが動くことを確認したら
+正常に vert-who が動くことを確認したら
 `virt-who-passwd`でパスワードを暗号化しておく。
 
 [暗号化されたパスワードで virt-who を設定する](https://access.redhat.com/ja/solutions/2325761)
 
-virt-whoを複数立てると、冗長性が上がるのでおすすめ。
-ただし、virt-who-passwdでの暗号は流用できないので、
-encrypted_passwordの含まれた.confをコピーしてもダメ。
+virt-who を複数立てると、冗長性が上がるのでおすすめ。
+ただし、virt-who-passwd での暗号は流用できないので、
+encrypted_password の含まれた.conf をコピーしてもダメ。
 
-各々のvirt-whoホストで実行すること(saltにホスト名か何かが入ってるらしい)
+各々の virt-who ホストで実行すること(salt にホスト名か何かが入ってるらしい)
 
 `/etc/sysconfig/virt-who`の
-`VIRTWHO_SAM=1`は0にしないほうがいいと思う。
-デフォルトは1なので特にいじる必要はない。
+`VIRTWHO_SAM=1`は 0 にしないほうがいいと思う。
+デフォルトは 1 なので特にいじる必要はない。
 
 # 参考
 

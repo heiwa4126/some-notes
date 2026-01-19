@@ -30,7 +30,7 @@ Domain Admins グループにしてしまうのが一番簡単なんだけど、
 1. DC で「ビルドインでない AD 管理のセキュリティグループ」を ADUC(dsa.msc) > DOMAIN 名 > users に作り、該当のユーザをグループに追加する。グループにしないで、2. 3.で直接 AD のユーザを追加してもいいが、グループを挟むと DC だけでユーザを RDP 接続不可にできる。
 2. RDP する先の AD 配下のホストに Domain Admins のユーザで入って、ローカルポリシー(secpol.msc) の
    Local Policies > User Right Assignment > Allow logon through Remote Desktop Services に 1. で作ったセキュリティグループを追加する。**ただし**すでにローカルの Remote Desktop Users(RDU) グループがエントリにあったら、1. で作ったセキュリティグループを追加する必要はない。RDU がデフォルトでエントリに追加されているかどうかは Windows のバージョンによって違う。
-3. さらに 2.と同じホスト&アカウントで Win+x > System > Remote Desktop > Select users that can remotely access this PC で 1. で作ったセキュリティグループを追加する。これは ローカルの Buildin グループ Remote Desktop Users(RDU) に 1.のグループをメンバとして追加するのと同じ効果がある。けれど、他になにかやってる可能性もあるのでこの手順でやってください。
+3. さらに 2.と同じホスト&アカウントで Win+x > System > Remote Desktop > Select users that can remotely access this PC で 1. で作ったセキュリティグループを追加する。これはローカルの Buildin グループ Remote Desktop Users(RDU) に 1.のグループをメンバとして追加するのと同じ効果がある。けれど、他になにかやってる可能性もあるのでこの手順でやってください。
 
 注意:
 

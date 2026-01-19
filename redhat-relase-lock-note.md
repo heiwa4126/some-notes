@@ -1,6 +1,6 @@
 # RHELのリリースロック
 
-Red Hat Enterprise Linuxのバージョンを固定する話。CentOSは対象外
+Red Hat Enterprise Linux のバージョンを固定する話。CentOS は対象外
 
 ```
 ## (たまに起動するホストだと証明書が変な時があるので)
@@ -28,7 +28,7 @@ Red Hat Enterprise Linuxのバージョンを固定する話。CentOSは対象�
 
 # 手動でカーネルアップグレード
 
-yum.confに
+yum.conf に
 
 ```
 exclude=kernel-* kmod-* redhat-release-* perf-* python-perf-*

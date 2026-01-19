@@ -1,14 +1,14 @@
-SESアイデンティティの「作成とベリファイ」はCFnではできない
-**(本当)**。CFnがないのでFormer2でもみつからない。
+SES アイデンティティの「作成とベリファイ」は CFn ではできない
+**(本当)**。CFn がないので Former2 でもみつからない。
 
-CFnのカスタムリソースを作った人ならいる。
+CFn のカスタムリソースを作った人ならいる。
 [medmunds/aws-cfn-ses-domain: AWS CloudFormation resources for Amazon SES domain and email identities](https://github.com/medmunds/aws-cfn-ses-domain)
 
-(追記: AWS CDKならできる。サンプル: [amazon web services - Verify SES email address through CDK - Stack Overflow](https://stackoverflow.com/questions/65886628/verify-ses-email-address-through-cdk))
+(追記: AWS CDK ならできる。サンプル: [amazon web services - Verify SES email address through CDK - Stack Overflow](https://stackoverflow.com/questions/65886628/verify-ses-email-address-through-cdk))
 
-AWS CLIなら
-SES emailアイデンティティを作成してベリファイメールを送る [verify-email-identity](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ses/verify-email-identity.html)
-をつかってできる。boto3でも同様。
+AWS CLI なら
+SES email アイデンティティを作成してベリファイメールを送る [verify-email-identity](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ses/verify-email-identity.html)
+をつかってできる。boto3 でも同様。
 
 参考: [E メールアドレスの検証 - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/verify-email-addresses-procedure.html)
 
@@ -20,7 +20,7 @@ SES emailアイデンティティを作成してベリファイメールを送�
 - suppressionlist
 - complaint (やや特殊なメールがとどく)
 
-がSENDERに届く(デフォルト設定の`ForwardingEnabled: true`)。
+が SENDER に届く(デフォルト設定の`ForwardingEnabled: true`)。
 
 > E メールのフィードバック転送はデフォルトで有効です
 
@@ -32,12 +32,12 @@ SES emailアイデンティティを作成してベリファイメールを送�
 - Complaint (スパム扱いされた)
 - Delivery (うまく配送された)
 
-についてSNSトピックを指定できる(Eメール以外にいろんな先に流せる)。
+について SNS トピックを指定できる(E メール以外にいろんな先に流せる)。
 
-AWS CLIは
-[set-identity-notification-topic](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ses/set-identity-notification-topic.html) - SES emailアイデンティティにバウンスノーティフィケーションのSNSトピックを設定。
+AWS CLI は
+[set-identity-notification-topic](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ses/set-identity-notification-topic.html) - SES email アイデンティティにバウンスノーティフィケーションの SNS トピックを設定。
 
-SES IDにひもづいた属性をリストする方は
+SES ID にひもづいた属性をリストする方は
 [get-identity-notification-attributes](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ses/get-identity-notification-attributes.html)
 で、こちらは
 オプションが `--identities` と複数になるのに注意。
@@ -50,5 +50,5 @@ SES IDにひもづいた属性をリストする方は
 
 # 調べる
 
-SES IDがドメインだったら?
+SES ID がドメインだったら?
 → まあおおむね同じみたい。

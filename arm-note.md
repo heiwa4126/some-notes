@@ -1,13 +1,13 @@
 # Azure Resource Manager (ARM) メモ
 
-ARMとARMテンプレートは別物だけど、
-普通ARMと言ったらARMテンプレートのこと。
+ARM と ARM テンプレートは別物だけど、
+普通 ARM と言ったら ARM テンプレートのこと。
 
 # 検索
 
 たとえば Microsoft.KeyVault リソースプロバイダーのリファレンスを検索する。
 DuckDuckGo で "arm Microsoft.KeyVault"が早い。
-!bangで "!msd ARM Microsoft.KeyVault" はいまいち。
+!bang で "!msd ARM Microsoft.KeyVault" はいまいち。
 
 ブラウザの検索の設定:
 

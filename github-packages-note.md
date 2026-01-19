@@ -196,7 +196,7 @@ PAT は WebUI がめんどくさい。
 1. gh (GitHub CLI) をインストールする
 2. `gh auth login` で yourOrg にログインする。
 3. `gh auth status`で Active account が yourOrg のメンバーで、かつ Token scopes に `read:packages` があることを確認する。
-4. Token scopes に `read:packages` がない場合は、`gh auth refresh --scopes read:packages` で 再度 yourOrg にログインする。
+4. Token scopes に `read:packages` がない場合は、`gh auth refresh --scopes read:packages` で再度 yourOrg にログインする。
 5. こんな感じで .npmrc をプロジェクトルートなどに作る
    ```sh
    GITHUB_TOKEN=$(gh auth token)

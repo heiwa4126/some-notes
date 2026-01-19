@@ -175,29 +175,29 @@ collcollate が None の場合、そのままでは使えないので `
 
 ## ICUとは何?
 
-ICU(International Components for Unicode)は、**Unicodeと国際化(i18n)・地域化(l10n)を支援するためのオープンソースライブラリ群**です。主にC/C++向けの「ICU4C」とJava向けの「ICU4J」が提供されています。
+ICU(International Components for Unicode)は、**Unicodeと国際化(i18n)・地域化(l10n)を支援するためのオープンソースライブラリ群**です。主に C/C++向けの「ICU4C」と Java 向けの「ICU4J」が提供されています。
 
 ### 主な特徴と機能
 
-ICUは、以下のような多言語・多文化対応の機能を提供します:
+ICU は、以下のような多言語・多文化対応の機能を提供します:
 
-- **文字コード変換**:Unicodeと他の文字セット(Shift-JIS、ISO-8859など)との相互変換 [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
+- **文字コード変換**:Unicode と他の文字セット(Shift-JIS、ISO-8859 など)との相互変換 [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
 - **照合(Collation)**:言語や地域ごとのルールに基づいた文字列比較(例:日本語の「あ」と「ア」の順序)[2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
 - **書式化(Formatting)**:数値、日付、時刻、通貨などをロケールに応じて表示 [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
 - **カレンダーとタイムゾーン**:グレゴリオ暦以外の暦やタイムゾーンの計算 [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
 - **Unicodeサポート**:正規化、大文字・小文字変換、文字プロパティの取得など [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
-- **正規表現**:Unicode対応の正規表現エンジン [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
+- **正規表現**:Unicode 対応の正規表現エンジン [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
 - **双方向テキスト(BiDi)**:右から左に書く言語(アラビア語、ヘブライ語)と左から右の言語の混在処理 [2](https://learn.microsoft.com/ja-jp/windows/win32/intl/international-components-for-unicode--icu-)。
 - **テキスト境界検出**:単語、文、段落の区切りを検出 [1](https://ja.wikipedia.org/wiki/International_Components_for_Unicode)。
 
 ### なぜICUが重要なのか?
 
-Unicodeは、世界中の言語を一つの文字セットで扱えるようにする標準です。ICUはこのUnicode標準に準拠し、**多言語対応のソフトウェア開発を簡素化し、同じ結果をすべてのプラットフォームで得られるようにする**ことを目的としています [3](https://icu.unicode.org/?hl=ja)。
+Unicode は、世界中の言語を一つの文字セットで扱えるようにする標準です。ICU はこの Unicode 標準に準拠し、**多言語対応のソフトウェア開発を簡素化し、同じ結果をすべてのプラットフォームで得られるようにする**ことを目的としています [3](https://icu.unicode.org/?hl=ja)。
 
 ### 利用例
 
-ICUは、Google、Apple、Microsoft、Adobeなどの大手企業の製品や、Linuxディストリビューション、JavaやPythonなどの言語環境でも広く使われています [3](https://icu.unicode.org/?hl=ja)。
+ICU は、Google、Apple、Microsoft、Adobe などの大手企業の製品や、Linux ディストリビューション、Java や Python などの言語環境でも広く使われています [3](https://icu.unicode.org/?hl=ja)。
 
 ---
 
-もしICUを使った具体的なコード例や、導入方法について知りたい場合は、どの言語(C++、Javaなど)で使いたいか教えてください。さらに詳しくご案内できます!
+もし ICU を使った具体的なコード例や、導入方法について知りたい場合は、どの言語(C++、Java など)で使いたいか教えてください。さらに詳しくご案内できます!

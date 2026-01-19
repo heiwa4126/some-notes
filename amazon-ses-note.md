@@ -9,19 +9,19 @@
 # ドメイン認証
 
 ドメインを認証すると、送信アドレスをいちいち認証しなくても、
-そのドメインの全アドレスがsenderに使えるようになる。
+そのドメインの全アドレスが sender に使えるようになる。
 
-あとIAMにも
+あと IAM にも
 
 ドメインを所有していて、
-DNS設定ができるなら、
-TXTレコードとDKIMのCNAMEを追加してみる。
+DNS 設定ができるなら、
+TXT レコードと DKIM の CNAME を追加してみる。
 
 - [Amazon SES でのドメインの検証 - Amazon Simple Email Service](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/verify-domain-procedure.html)
 - [Amazon SES でのドメインの検証 - Amazon Simple Email Service](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/verify-domains.html)
 - [E メールアドレスおよびドメインの認証の問題 - Amazon Simple Email Service](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/troubleshoot-verification.html#troubleshoot-verification-domain)
 
-bind9を使ってるので
+bind9 を使ってるので
 `/etc/bind/zone/example.com.zone`に
 表示されたレコードを追加 & `rndc reload`。
 
@@ -35,10 +35,10 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx._domainkey.example.com CNAME xxxxxxxxxxxxxxxxxx
 ;; example.com MX 10 inbound-smtp.us-east-1.amazonaws.com
 ```
 
-(TTLはあとで伸ばす。AWSのroute53でのサンプルでは1800になってた)
+(TTL はあとで伸ばす。AWS の route53 でのサンプルでは 1800 になってた)
 
-これで最大48時間待てばいいらしい。
--> そんなに待たなかった。2時間ぐらい?で
+これで最大 48 時間待てばいいらしい。
+-> そんなに待たなかった。2 時間ぐらい?で
 Verification は `Status: verified`になった。
 
 これで
@@ -56,7 +56,7 @@ Verification は `Status: verified`になった。
 
 # Amazon SES メールボックスシミュレーター
 
-バウンスのテストなどに使えるemailアドレス一覧
+バウンスのテストなどに使える email アドレス一覧
 
 [Amazon SES での E メール送信のテスト - Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/send-email-simulator.html)
 
@@ -78,7 +78,7 @@ Verification は `Status: verified`になった。
 - E メールは、検証済み E メールアドレスまたはドメインからのみ送信できます。
 
 サンドボックス外への移動の申請は自動化できる
-(CLIは
+(CLI は
 [上記](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html)参照)。
 
 [(自動翻訳) Amazon SES サンドボックス外への移動](https://docs.aws.amazon.com/ja_jp/ses/latest/dg/request-production-access.html)
@@ -90,9 +90,9 @@ Verification は `Status: verified`になった。
 迷惑なコンテンツや悪意のあるコンテンツを送信するためにシステムが悪用されないように、各リクエストを慎重に検討する必要があります。可能であれば、24 時間以内にリクエストを承認します。ただし、お客様から追加情報を取得する必要がある場合は、お客様のリクエストの解決に時間がかかる場合があります。お客様のユースケースが AWS の方針と一致しない場合は、リクエストを承認できない場合があります。
 ```
 
-...なんかEC2立ててSendGrid使ったほうが楽かもしれない。
+...なんか EC2 立てて SendGrid 使ったほうが楽かもしれない。
 
-サンドボックスの中外の状態はテナントで1個しかないみたい。ドメインを複数ホストしても1個。
+サンドボックスの中外の状態はテナントで 1 個しかないみたい。ドメインを複数ホストしても 1 個。
 
 # SESでメール送るのに最低でも必要なもの
 
@@ -101,7 +101,7 @@ Verification は `Status: verified`になった。
 
 が必要。
 
-メールアドレスを検証する、は自動ではできない(「届いたメールについてるURLをクリック」式だから。届くメールもかなりSPAMっぽい)。
+メールアドレスを検証する、は自動ではできない(「届いたメールについてる URL をクリック」式だから。届くメールもかなり SPAM っぽい)。
 検証メールは自動で送れる。
 
 [E メールアドレスの検証 \- Amazon Simple Email Service Classic](https://docs.aws.amazon.com/ja_jp/ses/latest/DeveloperGuide/verify-email-addresses-procedure.html)
@@ -122,4 +122,4 @@ aws sesv2 create-email-identity --email-identity foobarbaz@gmail.com
 - [Email Definitions: Complaint Rate \| AWS Messaging & Targeting Blog](https://aws.amazon.com/jp/blogs/messaging-and-targeting/email-definitions-complaint-rate/?nc1=h_ls)
 - [電子メールの定義：苦情率\| AWSメッセージングおよびターゲティングブログ](https://aws-amazon-com.translate.goog/jp/blogs/messaging-and-targeting/email-definitions-complaint-rate/?_x_tr_sl=en&_x_tr_tl=ja&_x_tr_hl=ja&_x_tr_pto=nui)
 
-なにこれ... 「苦情の総数」を知る方法がなんだかダークだ。
+なにこれ...「苦情の総数」を知る方法がなんだかダークだ。

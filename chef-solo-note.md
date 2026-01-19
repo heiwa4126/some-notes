@@ -1,4 +1,4 @@
-2018年だというのにChef Solo.
+2018 年だというのに Chef Solo.
 
 - [概要](#概要)
 - [Ubuntu 1604LTSでテスト](#ubuntu-1604ltsでテスト)
@@ -7,15 +7,15 @@
 
 # 概要
 
-なんか大人の事情でChef Soloで動いてるシステムのデバッグを頼まれて不幸だ。
+なんか大人の事情で Chef Solo で動いてるシステムのデバッグを頼まれて不幸だ。
 
-Chef Soloとは
+Chef Solo とは
 
-- ローカルで動くChef。
+- ローカルで動く Chef。
 - 廃止されて、Chef Zero(Chef local mode)になった。
-- Chef SoloからZeroへの以降はぜんぜん簡単じゃないらしい。
+- Chef Solo から Zero への以降はぜんぜん簡単じゃないらしい。
 
-らしい。localなのでansibleのinventryみたいのは無い、ということらしい。
+らしい。local なので ansible の inventry みたいのは無い、ということらしい。
 
 # Ubuntu 1604LTSでテスト
 
@@ -31,8 +31,8 @@ Chef: 12.3.0
 $ mkdir -p ~/works/chef-solo-tutorials ; cd !$
 ```
 
-古すぎて`chef generate`が無い(というか/usr/bin/chefが無い)。
-かわりに`knife`がchefパッケージに付いてる。
+古すぎて`chef generate`が無い(というか/usr/bin/chef が無い)。
+かわりに`knife`が chef パッケージに付いてる。
 
 ```
 $ knife cookbook create hello
@@ -55,7 +55,7 @@ log "hello world!" <--これを追加するだけ
 
 ローカルなテストなので
 `/usr/share/chef/solo.rb`をコピーして
-file_cache_pathとcookbook_pathを編集する。
+file_cache_path と cookbook_path を編集する。
 
 ```
 $ cp /usr/share/chef/solo.rb .
@@ -92,13 +92,13 @@ $ chef-solo -c ./solo.rb -o hello
 
 # defaultにhashをmergeする方法
 
-attributes/\*.rbでdefaultにhashをmergeしたい時
+attributes/\*.rb で default に hash を merge したい時
 
 ```
 default.merge!(h)
 ```
 
-だと、defaultにhが代入されてしまう。(他の\*.rbで設定された値が消える)
+だと、default に h が代入されてしまう。(他の\*.rb で設定された値が消える)
 
 ```
 h.each { |k, v| default[k].merge!(v) }
@@ -113,7 +113,7 @@ h.each { |k, v| default[k].merge!(v) }
 
 # Ubuntu 1804LTSでテスト
 
-1804だとchef-zeroになってるはず。
+1804 だと chef-zero になってるはず。
 `apt install chef`で入れてバージョン確認
 
 ```
@@ -121,8 +121,8 @@ $ chef-solo --version
 Chef: 12.14.60
 ```
 
-12.3.0で作った
-簡単なsoloプロジェクトを置いて実行してみると、
+12.3.0 で作った
+簡単な solo プロジェクトを置いて実行してみると、
 エラーと警告がぞろぞろ出る。
 
 なんだか

@@ -77,7 +77,7 @@ WSL2 の Ubuntu には linux-image\*パッケージがインストールされ�
 手動であわせるのは
 `sudo hwclock --systohc`
 
-aws cli が エラー出して気が付いた。
+aws cli がエラー出して気が付いた。
 [aws-cli がいきなり"AuthFailure"となった件 #Linux - Qiita](https://qiita.com/iam_nk/items/7acdd5e67d4a5c9ce6e2)
 
 ## WSL の再起動
@@ -205,7 +205,7 @@ WSL をバックアップするには、wsl --export コマンドを使って WS
 
 - コマンドプロンプトか PowerShell を開く
 - wsl --list --verbose を実行してバックアップしたいディストリビューションの名前を確認する
-- wsl --export ディストリビューション名 バックアップファイル名を実行してディストリビューションを tar ファイルにエクスポートする
+- wsl --export ディストリビューション名バックアップファイル名を実行してディストリビューションを tar ファイルにエクスポートする
 - バックアップファイルを安全な場所に保存する
 
 これで WSL のバックアップができます。
@@ -301,7 +301,7 @@ DIR 01;36
 みたいにする。
 
 カラーコードについては [man dir_colors](https://manpages.ubuntu.com/manpages/noble/en/man5/dir_colors.5.html) の
-"ISO 6429 (ANSI) color sequences" を 参照。
+"ISO 6429 (ANSI) color sequences" を参照。
 
 一般的なコード番号は:
 

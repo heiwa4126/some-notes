@@ -27,7 +27,7 @@ Android Studio をセットアップする
 
 "empty compose activity" は "empty activity" になったらしい。
 
-つどつど ダウンロード & インストール が始まるのは結構つらい。
+つどつどダウンロード & インストールが始まるのは結構つらい。
 Gradle だからしょうがないけど、最初が長い。
 
 ここでテンプレートの
@@ -67,8 +67,8 @@ Android Studio に別のバージョンの Android SDK を追加するには、�
 
 1. Android Studio を起動します。
 1. 画面上部のメニューバーの「Tools」\>「SDK Manager」を選択します。
-1. \[SDK Platforms\] タブで、追加する Android SDK のバージョンを選択します。
-1. \[OK\] をクリックします。
+1. \[SDK Platforms\]タブで、追加する Android SDK のバージョンを選択します。
+1. \[OK\]をクリックします。
 
 ### Android Studio で使っている JDK のバージョン
 

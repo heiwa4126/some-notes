@@ -1,7 +1,7 @@
 # Cloudflare DNS のメモ
 
 Cloudflare でカスタムドメインを使う場合、
-Workers では ネームサーバごと預けないと威力を発揮しないが、
+Workers ではネームサーバごと預けないと威力を発揮しないが、
 Pages では CNAME でもいける。
 
 ## ↑ の補足

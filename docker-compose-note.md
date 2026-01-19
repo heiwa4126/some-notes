@@ -69,7 +69,7 @@ docker compose up --build
 
 ## compose.yml 以外を使う
 
-`-f` オプションか 環境変数 COMPOSE_FILE で。
+`-f` オプションか環境変数 COMPOSE_FILE で。
 
 - `-f`や COMPOSE_FILE は `down` にも必要
 - `-f`や COMPOSE_FILE には複数定義ファイルが書ける(順番は重要)

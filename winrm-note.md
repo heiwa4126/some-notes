@@ -13,26 +13,26 @@ WinRM(WS-Man)のメモ
 
 # 非AD環境のWindows・Windows間でWinRMを使う
 
-非AD環境でWindows-Windows間でWinRMを使うのはひどく難しい。
-Linux-WindowsでWinRMを使うほうが遥かに楽。
+非 AD 環境で Windows-Windows 間で WinRM を使うのはひどく難しい。
+Linux-Windows で WinRM を使うほうが遥かに楽。
 
 どちらかを選ぶ:
 
 - 証明書を設定する(設定面倒、メンテ面倒&安全)
-- HTTPトランスポート,BASIC認証,平文通信で使う(簡単&危ない)
+- HTTP トランスポート,BASIC 認証,平文通信で使う(簡単&危ない)
 
-ひとえにAnsibleみたいな`winrm_server_cert_validation=ignore`が無いからだと思う。
+ひとえに Ansible みたいな`winrm_server_cert_validation=ignore`が無いからだと思う。
 
-winrmコマンドを使うのを諦めて、pythonを使ったほうが楽かもしれない(試してない)。
+winrm コマンドを使うのを諦めて、python を使ったほうが楽かもしれない(試してない)。
 
 参考: [PowerShellを使わずにWinRMでコマンド実行する - とりあえず備忘](http://miyataro.hatenablog.com/entry/2017/10/11/PowerShell%E3%82%92%E4%BD%BF%E3%82%8F%E3%81%9A%E3%81%ABWinRM%E3%81%A7%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B)
 
 ## 危険な方
 
-HTTPトランスポート,BASIC認証,平文通信で使う場合の設定。
+HTTP トランスポート,BASIC 認証,平文通信で使う場合の設定。
 **まあちょっとWinRM/WinRSを使ってみようかな、というときのみ使う。**
 
-まず、サーバ・クライアントともに、Ansible提供のスクリプトでWinRMの標準設定をしておくこと。Enable-PSremotingも実行されるみたい。
+まず、サーバ・クライアントともに、Ansible 提供のスクリプトで WinRM の標準設定をしておくこと。Enable-PSremoting も実行されるみたい。
 
 ```
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 -OutFile ConfigureRemotingForAnsible.ps1
@@ -86,7 +86,7 @@ winrm set winrm/config/client @{AllowUnencrypted="true"}
 winrm set winrm/config/client @{TrustedHosts="host1, host2, host3"}
 ```
 
-WinRMでは，
+WinRM では，
 **接続元のホスト**から見て，
 **接続先のホストが**
 「信頼できるホストである」ことが必要です。
@@ -168,19 +168,19 @@ Service
 
 ### テスト
 
-クライアントで以下のようなWinrmコマンドを実行(要アレンジ)
+クライアントで以下のような Winrm コマンドを実行(要アレンジ)
 
 ```
 c:\> winrm id -r:http://172.31.1.999:5985 -auth:basic -u:administrator -p:adminspassword -encoding:utf-8
 ```
 
-続いてwinrsでwhoamiを実行(要アレンジ)
+続いて winrs で whoami を実行(要アレンジ)
 
 ```
 c:\> winrs -r:http://172.31.1.999:5985 -u:administrator -p:adminspassword  whoami
 ```
 
-さらにPSremoting
+さらに PSremoting
 
 ```
 ps> Enter-PSSession -ComputerName 172.31.1.999 -Credential 172.31.1.999\Administrator
@@ -202,7 +202,7 @@ ps> Enter-PSSession -ComputerName 172.31.1.999 -Credential 172.31.1.999\Administ
 
 参考: [PowerShell でリモート接続する ( Enter-PSSession ) – 行け！偏差値40プログラマー](http://hensa40.cutegirl.jp/archives/677)
 
-WMIをいくつか取ってくる
+WMI をいくつか取ってくる
 
 ```
 $hostname = "172.31.1.999"
@@ -231,15 +231,15 @@ Remove-PSSession -Session $sess
 #Get-PSSession
 ```
 
-Get-WmiObjectは`-computername`でリモートを指定できるけれど、PSRemotingの方が早い。
-WMIの通信の設定もかなり面倒。
+Get-WmiObject は`-computername`でリモートを指定できるけれど、PSRemoting の方が早い。
+WMI の通信の設定もかなり面倒。
 
 ## httpsで接続して、かつ証明書をごまかすPowershellサンプル
 
 超ありがちなダメな状況。
 
-IPではSSL使えないし、
-非ADユーザでつなぐのもどうか。
+IP では SSL 使えないし、
+非 AD ユーザでつなぐのもどうか。
 **でも動く**
 
 ```
@@ -284,7 +284,7 @@ $sys | fl *
 
 - [リモート コンピューターのバッチ操作(Invoke-Command)](http://www.vwnet.jp/windows/powershell/InvokeCommand.htm)
 
-- winrm.cmdのman page : [Winrm -remote - Windows CMD - SS64.com](https://ss64.com/nt/winrm-remote.html)
+- winrm.cmd の man page : [Winrm -remote - Windows CMD - SS64.com](https://ss64.com/nt/winrm-remote.html)
 - [Winrs - Windows CMD - SS64.com](https://ss64.com/nt/winrs.html)
 
 - [Let's Encrpytで発行した証明書をPowerShellリモート接続のHTTPS接続にも使ってみる](https://qiita.com/kazinoue/items/bdd7b783d6742770b2cc)
@@ -327,9 +327,9 @@ winrm get winrm/config/client
 ```
 
 TrustedHosts に書くのと
-Windows Firewallにtcp/5985,5986 allowを書くのとは
-or関係らしい。
+Windows Firewall に tcp/5985,5986 allow を書くのとは
+or 関係らしい。
 
-どっちかでallowだとつながる。
+どっちかで allow だとつながる。
 
-なんか変だがMicrosoftなのでそんなもんだろう。
+なんか変だが Microsoft なのでそんなもんだろう。

@@ -6,7 +6,7 @@ Chromebook メモ
 
 キモは
 
-“chrome://components”でcros-terminaの更新を試みる。
+“chrome://components”で cros-termina の更新を試みる。
 
 で、
 

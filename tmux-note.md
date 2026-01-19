@@ -34,12 +34,12 @@
 
 ぐぐるとなんだか vi モードの話しか出てこない。デフォルトの emacs キーアサインは
 
-1. prefix [ または prefix pageup
+1. prefix[または prefix pageup
 1. カーソルキーで移動。または `g` で行番号
 1. c-space または c-@ で選択開始
 1. カーソルキーで移動。または `g` で行番号
 1. c-w で copy と同時に copy-mode 抜け
-1. prefix ] でペースト
+1. prefix]でペースト
 
 これでバッファに入るので、tmux 立ち上げたサーバで
 

@@ -19,7 +19,7 @@
 
 # proxy
 
-proxyが`10.250.42.37`だとして
+proxy が`10.250.42.37`だとして
 
 ```
 sudo emacs /etc/systemd/system/snapd.service.d/snap_proxy.conf
@@ -54,7 +54,7 @@ sudo snap set system proxy.https=http://10.250.42.37:3128
 
 # snapdで古いのを消す
 
-snapdは新しいのどんどん更新する。
+snapd は新しいのどんどん更新する。
 ほっとくと以下のようになる。
 
 例)
@@ -96,12 +96,12 @@ systemctl enable --now snapd
 ln -s /var/lib/snapd/snap /snap
 ```
 
-PATHは`/etc/profile.d/snapd.sh`で入るので、
+PATH は`/etc/profile.d/snapd.sh`で入るので、
 一旦ログアウトしてログインするのが楽。
 
 [ngompa/snapcore-el7 Copr](https://copr.fedorainfracloud.org/coprs/ngompa/snapcore-el7/)
 
-RHEL7でemacs27が使えるのが便利。
+RHEL7 で emacs27 が使えるのが便利。
 
 ```sh
 sudo snap install emacs --classic
@@ -109,9 +109,9 @@ sudo snap install emacs --classic
 
 # refresh all
 
-ほっとけばかってに更新されるので、あまり使う機会はないだろうけどAWSでEC2を立ち上げたてのときなど。
+ほっとけばかってに更新されるので、あまり使う機会はないだろうけど AWS で EC2 を立ち上げたてのときなど。
 
-rootで
+root で
 
 ```sh
 snap list --all | awk 'NR>1 {print $1}' | sort | uniq | xargs snap refresh

@@ -1,7 +1,7 @@
 # Recoil
 
 やっぱり
-lift-up|down はめんどくさいのでglobal stateのライブラリを試してみる。
+lift-up|down はめんどくさいので global state のライブラリを試してみる。
 
 いろいろあるけど、今後流行りそうなやつ、ってことで
 
@@ -11,7 +11,7 @@ lift-up|down はめんどくさいのでglobal stateのライブラリを試し�
 - [Recoilのチュートリアル](https://recoiljs.org/docs/basic-tutorial/intro)
   - [Learn Recoil with Live Walkthrough](https://app.sideguide.dev/recoil/tutorial/) 上のチュートリアルの全コード
 
-このへんからTypeScriptで書いてみる。
+このへんから TypeScript で書いてみる。
 
 - [useRecoilState](https://recoiljs.org/docs/api-reference/core/useRecoilState)
 - useRecoilValue

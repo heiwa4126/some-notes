@@ -8,7 +8,7 @@ systemd .timer のメモ
 
 # ざっくり
 
-.serviceと.timerの2本立て。
+.service と.timer の 2 本立て。
 
 リストは
 

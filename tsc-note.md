@@ -9,23 +9,23 @@
 | ブラウザ              | 可能           | 可能           |
 | その他                | 依存           | 依存           |
 
-\*1: ECMAScriptの場合、importされるファイルが ".js" で終わっていない場合は、 ".js" が付けられたパスを探す。
+\*1: ECMAScript の場合、import されるファイルが ".js" で終わっていない場合は、 ".js" が付けられたパスを探す。
 ただし、 ".js" が見つからない場合は、 ".mjs" が付けられたパスを探す。
 
-\*2: ECMAScriptの場合、importされるファイルがパスを指定しない場合、 "./"、 "../"、 "/"で始まるパスである場合は、 ".js" が付けられたパスを探す。ただし、 ".js" が見つからない場合は、 ".mjs" が付けられたパスを探す。ただし、モジュール解決アルゴリズムがNode.jsの場合、 ".js" が見つからない場合は、 ".json" が付けられたパスを探す。
+\*2: ECMAScript の場合、import されるファイルがパスを指定しない場合、 "./"、 "../"、 "/"で始まるパスである場合は、 ".js" が付けられたパスを探す。ただし、 ".js" が見つからない場合は、 ".mjs" が付けられたパスを探す。ただし、モジュール解決アルゴリズムが Node.js の場合、 ".js" が見つからない場合は、 ".json" が付けられたパスを探す。
 
-ブラウザのJavaScriptのimportについては、これが仕様。
+ブラウザの JavaScript の import については、これが仕様。
 [import - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
 
 これによると「拡張子は省略できない」が基本で、ブラウザによって拡張子省略時に".js"を付加するものがあるらしい。
 
 ## Node.jsで package.jsonのextendsがある場合
 
-package.jsonのextendsがある場合、モジュールの解決方法は、extendsされた設定を先に解析してから、ローカルのtsconfig.jsonの設定で上書きされます。つまり、extendsされた設定で moduleResolution が指定されている場合、ローカルの設定で上書きすることができます。
+package.json の extends がある場合、モジュールの解決方法は、extends された設定を先に解析してから、ローカルの tsconfig.json の設定で上書きされます。つまり、extends された設定で moduleResolution が指定されている場合、ローカルの設定で上書きすることができます。
 
 ## tscの拡張子の扱い
 
-拡張子の扱いは、tscコンパイラの moduleResolution オプションによって制御されます。このオプションは、以下の値を取ることができます。
+拡張子の扱いは、tsc コンパイラの moduleResolution オプションによって制御されます。このオプションは、以下の値を取ることができます。
 
 | **moduleResolutionオプションの値** | **説明**                                        |
 | ---------------------------------- | ----------------------------------------------- |
@@ -35,7 +35,7 @@ package.jsonのextendsがある場合、モジュールの解決方法は、exte
 
 [TypeScript: Documentation - Module Resolution](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
 
-importのモジュールリファレンス部分
+import のモジュールリファレンス部分
 
 - 相対 ("/", "./", "../"で始まる) - パスとみなされ、インポート元のファイルに対して相対的に解決
 - 非相対 - モジュールリファレンス部はモジュールとみなされる。

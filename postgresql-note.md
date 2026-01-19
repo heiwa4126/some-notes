@@ -759,7 +759,7 @@ SELECT n.nspname||'.'||t.dictname
 別 DB のテーブルの参照はいちおう出来ないことになっている。
 (DBLINK や Foreign Data Wrapper を使う)
 
-テーブル名は スキーマ名.テーブル名で。スキーマ名 public は省略できる。
+テーブル名はスキーマ名.テーブル名で。スキーマ名 public は省略できる。
 例:
 
 ```sql

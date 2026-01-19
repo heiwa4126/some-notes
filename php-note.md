@@ -7,21 +7,21 @@ yum-config-manager --enable remi-php72
 
 # ubuntuでnginxと
 
-Ubuntu 18.04LTSで
+Ubuntu 18.04LTS で
 
 ```sh
 sudo apt install nginx php-fpm -y
 ```
 
-- php-fpmの設定ファイル - `/etc/php/7.2/fpm/pool.d/www.conf`
-- php-fpmのPHP設定ファイル - `/etc/php/7.2/fpm/php.ini`と`/etc/php/7.2/fpm/conf.d/*`
+- php-fpm の設定ファイル - `/etc/php/7.2/fpm/pool.d/www.conf`
+- php-fpm の PHP 設定ファイル - `/etc/php/7.2/fpm/php.ini`と`/etc/php/7.2/fpm/conf.d/*`
 
 なにも変更しなくとも動く。
 
 `/etc/php/7.2/fpm/php.ini`は
-`/usr/lib/php/7.2/php.ini-production`のコピー。適宜developのほうに変更するなりなんなりする。
+`/usr/lib/php/7.2/php.ini-production`のコピー。適宜 develop のほうに変更するなりなんなりする。
 
-/etc/nginx/php.confに
+/etc/nginx/php.conf に
 nginx <-> PHP の設定ファイルを置く。
 
 ```
@@ -36,13 +36,13 @@ location ~ \.php$ {
 }
 ```
 
-\*.phpのファイルを全部php-fpmで処理する設定。
+\*.php のファイルを全部 php-fpm で処理する設定。
 
 で、これを
 /etc/nginx/sites-available/\*
 で `include php.conf;` する。
 
-HTTPとHTTPSの2つ分あるかもなのでincludeにした。
+HTTP と HTTPS の 2 つ分あるかもなので include にした。
 
 できたら
 
@@ -50,7 +50,7 @@ HTTPとHTTPSの2つ分あるかもなのでincludeにした。
 nginx -t
 ```
 
-でシンタックスチェック。OKならreloadかrestart
+でシンタックスチェック。OK なら reload か restart
 
 ```sh
 systemctl reload nginx
@@ -58,7 +58,7 @@ systemctl reload nginx
 systemctl restart nginx
 ```
 
-インストールしたままの設定ならdocument rootは`/var/www/html`なので
+インストールしたままの設定なら document root は`/var/www/html`なので
 `/var/www/html/index.php`におなじみの
 
 ```php

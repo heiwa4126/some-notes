@@ -57,4 +57,4 @@ transformed_dataset.push_to_hub(dataset_id + "-small")
 4. `huggingface-cli login` で write の token 入れて　"Add token as git credential? (Y/n) Y"
 5. あとは編集, commit, push
 
-パラメータはREADME.mdの
+パラメータは README.md の

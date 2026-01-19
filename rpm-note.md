@@ -28,7 +28,7 @@ sudo useradd -s /sbin/nologin mockbuild
 
 `rpm -qa`の出力を分解するのは面倒なので、最初からバラして出す。
 
-queryformatオプションを使う。
+queryformat オプションを使う。
 
 例) 典型的例
 
@@ -36,14 +36,14 @@ queryformatオプションを使う。
 rpm -qa --queryformat '%{NAME},%{VERSION},%{RELEASE},%{ARCH}\n' | sort -t, -k1,4
 ```
 
-queryformatをつけないときのデフォルトは
+queryformat をつけないときのデフォルトは
 `%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}`
 なので、それに沿った例。
 
 比較用には
-kernelパッケージに配慮して(複数あるから)、
-第2フィールドもソート対象にしたいところ。
-(あいにく2個しか指定できない。man sortでKEYDDEF参照)
+kernel パッケージに配慮して(複数あるから)、
+第 2 フィールドもソート対象にしたいところ。
+(あいにく 2 個しか指定できない。man sort で KEYDDEF 参照)
 
 例) インストールした日付順
 
@@ -51,7 +51,7 @@ kernelパッケージに配慮して(複数あるから)、
 rpm -qa --queryformat '%{NAME},%{INSTALLTIME},%{INSTALLTIME:date}\n' | sort -rn -t, -k2 | cut -d, -f1,3
 ```
 
-使えるtagの一覧は
+使える tag の一覧は
 
 ```bash
 rpm --querytags
@@ -67,13 +67,13 @@ rpm --querytags
 rpm -q --queryformat "[%-80{FILENAMES} %10{FILESIZES}\n]" gcc
 ```
 
-よくある例: Red Hatでないやつを探せ、みたいなとき
+よくある例: Red Hat でないやつを探せ、みたいなとき
 
 ```bash
 rpm -qa --queryformat '%{NAME},%{VERSION},%{RELEASE},%{ARCH},"%{VENDOR}",%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n' | sort -i -t, -k1,4 | grep -vi 'Red Hat'
 ```
 
-yumにもqueryformatオプションがあるといいのに。
+yum にも queryformat オプションがあるといいのに。
 
 ## rpmのdry-run
 
@@ -83,10 +83,10 @@ yumにもqueryformatオプションがあるといいのに。
 
 ## redhat-release-serverメモ
 
-redhat-release-serverは他に依存がないので、
+redhat-release-server は他に依存がないので、
 バージョン表記は自由に変更できる。
 
-例) 7.6以上を7.5にみせかけるとき
+例) 7.6 以上を 7.5 にみせかけるとき
 
 ```bash
 sudo yum downgrade --disableexcludes=all redhat-release-server-7.5-8.el7
@@ -133,11 +133,11 @@ redhat-release-server.x86_64                            7.9-3.el7               
 
 を確認する方法。
 
-Key ID は GPGのキーID なのでキーサーバに問い合わせれば正体がわかる。
+Key ID は GPG のキーID なのでキーサーバに問い合わせれば正体がわかる。
 
 ### 実行例1
 
-すでにインストール済みのパッケージ`curl` をGPG署名したのは誰か調べる。
+すでにインストール済みのパッケージ`curl` を GPG 署名したのは誰か調べる。
 
 ```console
 $ rpm -qi curl | grep -Fi "key id"
@@ -152,7 +152,7 @@ Keys 1-1 of 1 for "199e2f91fd431d51".  Enter number(s), N)ext, or Q)uit > Q
 
 ### 実行例2
 
-あるRPMファイルをGPG署名したのは誰か調べる。
+ある RPM ファイルを GPG 署名したのは誰か調べる。
 
 ```console
 $ $ rpm -Kv php-7.2.24-1.el8.remi.x86_64.rpm | grep -Fi "key id"

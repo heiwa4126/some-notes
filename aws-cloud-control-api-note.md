@@ -8,7 +8,7 @@
 
 [Resource types that support Cloud Control API - Cloud Control API](https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/supported-resources.html)
 
-またはCLI
+または CLI
 
 [Using resource types - Cloud Control API](https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/resource-types.html#resource-types-determine-support)
 にある例
@@ -27,14 +27,14 @@ aws cloudformation list-types --type RESOURCE --visibility PUBLIC --provisioning
 これも
 [Using resource types - Cloud Control API](https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/resource-types.html#resource-types-determine-support)
 
-例えばLogGroupの例
+例えば LogGroup の例
 
 ```sh
 aws cloudformation describe-type --type RESOURCE --type-name "AWS::Logs::LogGroup" > x.json
 jq -r ."Schema" x.json | jq .
 ```
 
-CFnのドキュメントとだいたい同じものが出るけど
+CFn のドキュメントとだいたい同じものが出るけど
 (
 [AWS::Logs::LogGroup \- AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-logs-loggroup.html)
 )
@@ -52,8 +52,8 @@ CFnのドキュメントとだいたい同じものが出るけど
 `AWS::DynamoDB::GlobalTable`はサポートしているが
 `AWS::DynamoDB::Table`がサポートされてない。
 
-EC2もInstanceがサポートされてない。
+EC2 も Instance がサポートされてない。
 
-S3ぐらい?
+S3 ぐらい?
 
-普通リソース単体で使うことなんかない(と思う)。まだCFnのほうが楽っぽい。
+普通リソース単体で使うことなんかない(と思う)。まだ CFn のほうが楽っぽい。

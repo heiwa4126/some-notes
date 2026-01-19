@@ -390,7 +390,7 @@ default = "3.12"
 
 .python-version がない場合はグローバル設定としてこれが使われるみたい。
 
-どちらもなければ 最新安定版(現在は 3.12)を自動的に選択・インストールするらしい
+どちらもなければ最新安定版(現在は 3.12)を自動的に選択・インストールするらしい
 
 ## uvx で実行するパッケージはどの Python で実行される?
 
@@ -529,7 +529,7 @@ uvx --index-url https://test.pypi.org/simple --extra-index-url https://pypi.org/
 
 - そもそも uv が prerelease を禁止してるので `--index-strategy unsafe-best-match` をつけないと死ぬ
 - 同じ理由で `bumpuv@latest` が使えないので、バージョンを明示(`@0.0.5a2`)する
-- `--extra-index-url` をつけないと 全部 TestPyPI を見に行くので、TestPyPI 上に依存パッケージが無いと死ぬ(上記の場合は gitpython)
+- `--extra-index-url` をつけないと全部 TestPyPI を見に行くので、TestPyPI 上に依存パッケージが無いと死ぬ(上記の場合は gitpython)
 
 `pipx` なら楽かな、と思ったけどそうでもない。
 

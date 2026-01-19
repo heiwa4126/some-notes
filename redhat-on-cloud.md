@@ -7,9 +7,9 @@ do- [クラウド上のRed Hat Enterprise Linux](#クラウド上のred-hat-ente
 
 # クラウド上のRed Hat Enterprise Linux
 
-AWSではRHELがサブスクリプション無しでyumが使える。
+AWS では RHEL がサブスクリプション無しで yum が使える。
 
-ただsubscription-managerの練習にはならないので、
+ただ subscription-manager の練習にはならないので、
 １つくらいは Red Hat Developer Subscription を取得しておくべき。
 
 ## AWS
@@ -20,13 +20,13 @@ AWSではRHELがサブスクリプション無しでyumが使える。
 
 ## Azure
 
-Red HatでもRHUI
+Red Hat でも RHUI
 
 [Red Hat Update Infrastructure - Azure Virtual Machines | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/virtual-machines/workloads/redhat/redhat-rhui)
 
 # そうは言ってもこのメッセージが気になる場合
 
-AzureやAWSのRed Hatでyum(dnf)使うと
+Azure や AWS の Red Hat で yum(dnf)使うと
 "Unable to read consumer identity"
 とか
 "This system is not registered with an entitlement server. You can use subscription-manager to register."
@@ -115,8 +115,8 @@ Running transaction check
 
 そのアカウントで [Red Hat IDP](rhn.redhat.com) へログイン。
 
-[Red Hat Enterprise Linux Download](https://developers.redhat.com/products/rhel/download) から、製品を1つダウンロード。
-クラウドで使うつもりなら、一番サイズの小さいISOファイルを選ぶといいです。
+[Red Hat Enterprise Linux Download](https://developers.redhat.com/products/rhel/download) から、製品を 1 つダウンロード。
+クラウドで使うつもりなら、一番サイズの小さい ISO ファイルを選ぶといいです。
 
 [Red Hat Customer Portal](https://access.redhat.com/management/subscriptions) に、 Red Hat Developer Subscription が出現するのを確認。
 
@@ -126,4 +126,4 @@ Running transaction check
 # subscription-manager register
 ```
 
-RHNのIDとパスワードを入れる。
+RHN の ID とパスワードを入れる。

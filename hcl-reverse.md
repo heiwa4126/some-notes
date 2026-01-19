@@ -6,7 +6,7 @@
 - former2
 - terracognita
 
-を使ってみたのでメモを書いておきます。(2022年7月現在)
+を使ってみたのでメモを書いておきます。(2022 年 7 月現在)
 
 ## terraforming (試してません)
 
@@ -19,11 +19,11 @@
 
 [GoogleCloudPlatform/terraformer: CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructure to Code](https://github.com/GoogleCloudPlatform/terraformer)
 
-Googleのプロジェクト。
+Google のプロジェクト。
 [Go](https://go.dev/)製。
-AWS以外にもさまざまなクラウドに対応。メインは当然GCP。
+AWS 以外にもさまざまなクラウドに対応。メインは当然 GCP。
 
-READMEにある通り
+README にある通り
 
 > Support terraform 0.13 (for terraform 0.11 use v0.7.9).
 
@@ -34,32 +34,32 @@ Terraform の 0.13 でしか動かない
 `terraform init`でプラグイン入れてから、
 `terraformer ...`を実行する。
 
-AWSでサポートしているリソースは
+AWS でサポートしているリソースは
 [ここにある通り](https://github.com/GoogleCloudPlatform/terraformer/blob/master/docs/aws.md#supported-services)。
 
-とはいうもののAWSに関してはあまりメンテナンスされていないようで、
+とはいうものの AWS に関してはあまりメンテナンスされていないようで、
 ちゃんと取れるのは ec2_instance や VPC ぐらい。ほかはエラーがだーっと出る。
 
-いまのところAWSについては実用にならないレベル。
+いまのところ AWS については実用にならないレベル。
 
 ## former2
 
 [former2](https://github.com/iann0036/former2)
-には terraform出力があるので試してみた。
+には terraform 出力があるので試してみた。
 
-roleでmanaged_policy_arns(CFnのManagedPolicyArns)が抜けたりするので、
+role で managed_policy_arns(CFn の ManagedPolicyArns)が抜けたりするので、
 そのまま使うのは危険。
-CFn出力をみながら手動でHCLにしていく感じになる。
+CFn 出力をみながら手動で HCL にしていく感じになる。
 
 ## terracognita
 
 [cycloidio/terracognita: Reads from existing public and private cloud providers (reverse Terraform) and generates your infrastructure as code on Terraform configuration](https://github.com/cycloidio/terracognita/)
 
-これもGo製。AWS以外にも有名クラウドとvSphereに対応。
+これも Go 製。AWS 以外にも有名クラウドと vSphere に対応。
 
 進行状況が出るのがえらい。
-リソース種別単位でinclude/excludeできる。
-デフォルトは「AWSアカウントのサポートしているリソース全部」。
+リソース種別単位で include/exclude できる。
+デフォルトは「AWS アカウントのサポートしているリソース全部」。
 
 サポートしているリソースは
 [terracognita/resources.go](https://github.com/cycloidio/terracognita/blob/master/aws/resources.go)
@@ -72,9 +72,9 @@ CFn出力をみながら手動でHCLにしていく感じになる。
 
 ## 結論
 
-AWSの既存リソースからHCLにするには
+AWS の既存リソースから HCL にするには
 terracognita と former2 を併用するのが良いと思う。
-(2022年7月現在)
+(2022 年 7 月現在)
 
 ## 補足: terracognita の使い方メモ
 
@@ -87,7 +87,7 @@ terracognita と former2 を併用するのが良いと思う。
 
 ### インストール
 
-Linuxにインストールするには、GitHubにバイナリビルドがあるので
+Linux にインストールするには、GitHub にバイナリビルドがあるので
 
 ```bash
 curl -L https://github.com/cycloidio/terracognita/releases/latest/download/terracognita-linux-amd64.tar.gz -o terracognita-linux-amd64.tar.gz
@@ -101,21 +101,21 @@ rm terracognita-linux-amd64.tar.gz
 
 ### 実行サンプル
 
-AWSアカウントはreadonlyで十分で、
+AWS アカウントは readonly で十分で、
 キーはデフォルトプロファイルまたは
 AWS_ACCESS_KEY_ID,
 AWS_SECRET_ACCESS_KEY,
 AWS_DEFAULT_REGION
-をexport (AWS_PROFILEは使えなかった)。
+を export (AWS_PROFILE は使えなかった)。
 
-例: 1個のHCLに全リソースを出力する例。それなりに長い時間と巨大なファイルができる。
+例: 1 個の HCL に全リソースを出力する例。それなりに長い時間と巨大なファイルができる。
 
 ```bash
 terracognita aws \
   --hcl outputs/resources.tf
 ```
 
-例: 1個のHCLにlambdaとpolicyroleを出力する例。コンマで区切って、HCLのリソース名で指示。
+例: 1 個の HCL に lambda と policyrole を出力する例。コンマで区切って、HCL のリソース名で指示。
 
 ```bash
 terracognita aws \
@@ -123,7 +123,7 @@ terracognita aws \
   -i aws_lambda_function,aws_iam_policy aws_iam_role
 ```
 
-例: ./moduleディレクトリにリソース単位風のHCLファイルを出力する例。
+例: ./module ディレクトリにリソース単位風の HCL ファイルを出力する例。
 
 ```bash
 terracognita aws --module module

@@ -1,6 +1,6 @@
-YAMLメモ
+YAML メモ
 
-YAML関連メモ
+YAML 関連メモ
 
 - [リンク](#リンク)
 - [フロースタイル / ブロックスタイル](#フロースタイル--ブロックスタイル)
@@ -105,12 +105,12 @@ yaml2json (`python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), s
 
 # yq
 
-jqならぬyqが便利。
+jq ならぬ yq が便利。
 
 - [yq: Command-line YAML/XML processor - jq wrapper for YAML and XML documents — yq documentation](https://kislyuk.github.io/yq/)
 - [jqのYAML/XMLラッパー yq でJSONとYAMLを自在に操る | Developers.IO](https://dev.classmethod.jp/articles/yq/)
 
-jqのwrapperとして実装されているのでjqが必要。
+jq の wrapper として実装されているので jq が必要。
 
 ```sh
 pip3 install yq --user -U
@@ -118,7 +118,7 @@ pip3 install yq --user -U
 
 # 構造化データ(structured data)
 
-XML,YAML,JSONなどのデータ構造をそう呼ぶみたいだけど、厳密な定義が見つからない。
+XML,YAML,JSON などのデータ構造をそう呼ぶみたいだけど、厳密な定義が見つからない。
 
 # YAMLの先進的記述
 
@@ -135,12 +135,12 @@ pip install --user -U yamllint
 
 # YAMLにはincludeがない
 
-YAML書いてると
+YAML 書いてると
 
 - インデントが深くなりがち
 - 巨大になりがち
 
-でもYAMLの仕様上includeはない。そこでプリプロセッサーを使う。
+でも YAML の仕様上 include はない。そこでプリプロセッサーを使う。
 
 これがいちばん有名らしい。
 [javanile/yamlinc: Compose multiple YAML files into one with $include tag. Split Swagger/OpenAPI into multiple YAML files.](https://github.com/javanile/yamlinc)
@@ -156,7 +156,7 @@ found 212 vulnerabilities (31 low, 111 moderate, 70 high)
 
 とか言われるのが辛い。
 
-nodeなので
+node なので
 
 ```sh
 mkdir ~/.npm-global
@@ -174,17 +174,17 @@ echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bash_profile
 
 - [birchb1024/yamp: Yet Another Macro Processor - for YAML - Superseded by Goyamp](https://github.com/birchb1024/yamp)
 - [dakusui/jq-front: A tool to empower your JSON](https://github.com/dakusui/jq-front)
-- [monken/cfn-include: Preprocessor for CloudFormation templates with support for loops and flexible include statements](https://github.com/monken/cfn-include) - CloudFormation用で便利かも
+- [monken/cfn-include: Preprocessor for CloudFormation templates with support for loops and flexible include statements](https://github.com/monken/cfn-include) - CloudFormation 用で便利かも
 
 # yqの出力をcolorでless
 
-jqだと
+jq だと
 
 ```sh
 jq -C . hoge.json | less -R
 ```
 
-yq にはカラー出力がない。batを使え。
+yq にはカラー出力がない。bat を使え。
 
 - [sharkdp/bat: A cat\(1\) clone with wings\.](https://github.com/sharkdp/bat)
 - [kislyuk/yq: Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents](https://github.com/kislyuk/yq)
@@ -196,7 +196,7 @@ bat hoge.yaml
 bat --color always -p hoge.yaml | less -R
 ```
 
-batはYAMLに限らず便利。詳しくはgithubのREADME参照。
+bat は YAML に限らず便利。詳しくは github の README 参照。
 [bat/README-ja.md at master · sharkdp/bat](https://github.com/sharkdp/bat/blob/master/doc/README-ja.md)
 
 # YAMLのフォーマッタ

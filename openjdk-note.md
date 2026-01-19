@@ -25,7 +25,7 @@
 - [Javaは今も無償です - Google ドキュメント](https://docs.google.com/document/d/1HtUnuAkUEDGL2gwUOkrDrmLe_zrD6wpAyqYBZxRmHv4/edit)
 - [最適なOpenJDKディストリビューションの選び方(PDF)](https://www.oracle.co.jp/campaign/code/2019/pdfs/oct2019_b-3-3.pdf)
 
-Oracle公式:
+Oracle 公式:
 
 - [JDKの新しいリリース・モデル、および提供ライセンスについて](https://www.oracle.com/technetwork/jp/articles/java/ja-topics/jdk-release-model-4487660-ja.html)
 - [Oracle Java SE サポート･ロードマップ](https://www.oracle.com/technetwork/java/eol-135779-ja.html)
@@ -37,31 +37,31 @@ Wikipedia:
 
 # OpenJDKの概要
 
-OpenJDKはオープンソースとして配布(ソースのみ提供。
-OpenJDKのレポジトリ [OpenJDK Mercurial Repositories](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=2ahUKEwjgiKH29eXhAhWmyosBHVmaBOQQFjAAegQIABAB&url=https%3A%2F%2Fhg.openjdk.java.net%2F&usg=AOvVaw2qWknA1P18mdKk5PNw3FVa))。
+OpenJDK はオープンソースとして配布(ソースのみ提供。
+OpenJDK のレポジトリ [OpenJDK Mercurial Repositories](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=2ahUKEwjgiKH29eXhAhWmyosBHVmaBOQQFjAAegQIABAB&url=https%3A%2F%2Fhg.openjdk.java.net%2F&usg=AOvVaw2qWknA1P18mdKk5PNw3FVa))。
 
-新しいバージョンが出た時点で、Oracleによるメンテナンス終了。
+新しいバージョンが出た時点で、Oracle によるメンテナンス終了。
 
-毎年3月と9月に新しいバージョン(新機能の追加や機能の変更が行われるフィーチャー・リリース)が出る。つまり6ヶ月毎に更新する必要がある。
+毎年 3 月と 9 月に新しいバージョン(新機能の追加や機能の変更が行われるフィーチャー・リリース)が出る。つまり 6 ヶ月毎に更新する必要がある。
 
-Oracle JDKはOpenJDKより機能が多く、サポート期間が長い以外は、機能的には同じもの(バージョン番号が同じならば)。
+Oracle JDK は OpenJDK より機能が多く、サポート期間が長い以外は、機能的には同じもの(バージョン番号が同じならば)。
 
-Oracle JDKは有償。
-LTS版(Long Term Support)は3年、
-non‑LTSは6ヶ月
+Oracle JDK は有償。
+LTS 版(Long Term Support)は 3 年、
+non‑LTS は 6 ヶ月
 サポート。
 (詳しくは[Oracle Java SE サポート･ロードマップ](https://www.oracle.com/technetwork/java/eol-135779-ja.html)参照)
 
-「Oracle Java 11以降はオラクルとの契約なしでの商用利用を全く許可しない」という点が
-Oracle JDKとOpenJDKの最大の相違。
+「Oracle Java 11 以降はオラクルとの契約なしでの商用利用を全く許可しない」という点が
+Oracle JDK と OpenJDK の最大の相違。
 
-OpenJDKはオープンソース([GPLv2+CE](http://openjdk.java.net/legal/gplv2+ce.html))なので、
+OpenJDK はオープンソース([GPLv2+CE](http://openjdk.java.net/legal/gplv2+ce.html))なので、
 バイナリのビルド&配布は誰がやってもいいし、
-Oracleのサポート終了後、フォークしてバックポートしてもかまわない。
+Oracle のサポート終了後、フォークしてバックポートしてもかまわない。
 
 ## JREの廃止
 
-Oracleは
+Oracle は
 Java Runtime Environment (JRE)の配布を廃止する。その理由は以下の通り:
 
 (「[JDKの新しいリリース・モデル、および提供ライセンスについて](https://www.oracle.com/technetwork/jp/articles/java/ja-topics/jdk-release-model-4487660-ja.html)」から引用)
@@ -75,8 +75,8 @@ Java Runtime Environment (JRE)の配布を廃止する。その理由は以下�
 
 > 今後はカスタマイズしたJREをアプリケーションにバンドルする方法を推奨 (参考:[jlink](https://docs.oracle.com/javase/jp/9/tools/jlink.htm))
 
-OracleはOracleJavaでもOracle OepnJDKでもJREを廃止するが、
-Oracle以外でOpenJDKでJRE相当のパッケージを出しているディストリビューターはある。
+Oracle は OracleJava でも Oracle OepnJDK でも JRE を廃止するが、
+Oracle 以外で OpenJDK で JRE 相当のパッケージを出しているディストリビューターはある。
 
 ## Java8
 
@@ -86,51 +86,51 @@ Oracle以外でOpenJDKでJRE相当のパッケージを出しているディス�
 
 ([Oracle Java SEの有償化に伴うOpenJDKへの切り替えの案内 | 京都教育大学 情報処理センター](https://ipc.kyokyo-u.ac.jp/page/696)から引用)
 
-Java8でも2019年4月16日以降のリリース(8u211,8u212以降)は、ライセンスが変わって有償。
+Java8 でも 2019 年 4 月 16 日以降のリリース(8u211,8u212 以降)は、ライセンスが変わって有償。
 
-正確には「2019年1月が商用無償の最後(Free updates superseded / ended (by Oracle) ... Ends January 2019 for commercial use)」。
-8u201,202は1月15日リリース。
+正確には「2019 年 1 月が商用無償の最後(Free updates superseded / ended (by Oracle) ... Ends January 2019 for commercial use)」。
+8u201,202 は 1 月 15 日リリース。
 
 - [JDK 8 Update Release Notes](https://www.oracle.com/technetwork/java/javase/8u-relnotes-2225394.html)
 - [Java™ SE Development Kit 8, Update 212 Release Notes](https://www.oracle.com/technetwork/java/javase/8u212-relnotes-5292913.html) 新元号対応 + セキュリティパッチ
 
 # Oracleの提供するOpenJDKのバイナリ
 
-OracleがビルドしたOpenJDKのバイナリは
+Oracle がビルドした OpenJDK のバイナリは
 [OpenJDK](http://openjdk.java.net/)
 から入手できる。
 
-Oracleの提供するOpenJDKのバイナリのアーカイブは
+Oracle の提供する OpenJDK のバイナリのアーカイブは
 [Archived OpenJDK GA Releases](http://jdk.java.net/archive/)
 から入手できる(セキュリティ問題やバグが含まれている。また更新もされない)
 
-Oracleの提供するOpenJDKのバイナリには「インストーラー」が無い。WindowsではZIPの展開、環境変数の設定を手動で行う
+Oracle の提供する OpenJDK のバイナリには「インストーラー」が無い。Windows では ZIP の展開、環境変数の設定を手動で行う
 (参考:[Chapter 1. Getting Started with OpenJDK 11 for Windows - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/openjdk/11/html/openjdk_11_for_windows_getting_started_guide/getting_started_with_openjdk_for_windows))
 
-その性質上、基本6ヶ月ごとにアップグレードするべき。
+その性質上、基本 6 ヶ月ごとにアップグレードするべき。
 
-JDK8はここから
+JDK8 はここから
 
 [Java SE Development Kit 8 - Downloads](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
-Oracleのアカウントが必要(free)
+Oracle のアカウントが必要(free)
 
 # Oracle以外が配布するOpenJDKのバイナリ
 
-(Linuxはディストリビューションのパッケージを普通に使用するのが基本)
+(Linux はディストリビューションのパッケージを普通に使用するのが基本)
 
 利点:
 
 - 「インストーラー」がある配布が多い
-- 無償のLTS (+ 有償によるサポート)
-- OracleのOpenJDK buildと違って過去バージョンもある(特にJava8)
-- JDKだけでなくJREに相当する配布があるものがある
-- 32bit版がある。
+- 無償の LTS (+ 有償によるサポート)
+- Oracle の OpenJDK build と違って過去バージョンもある(特に Java8)
+- JDK だけでなく JRE に相当する配布があるものがある
+- 32bit 版がある。
 
 欠点:
 
 - サポート期間や範囲が不安
-- 無償の範囲がさまざまでわかりにくい (Cloudのみ、非商用など)
-- OpenJDK, OracleのOpenJDK buildよりリリースが少し遅れる
+- 無償の範囲がさまざまでわかりにくい (Cloud のみ、非商用など)
+- OpenJDK, Oracle の OpenJDK build よりリリースが少し遅れる
 
 参考:
 
@@ -145,19 +145,19 @@ Oracleのアカウントが必要(free)
 - [Microsoft Build of OpenJDK](https://msopenjdk.azurewebsites.net/)
 - [マイクロソフトが無償でJavaの長期サポートを提供へ、「Microsoft Build of OpenJDK」をリリース － Publickey](https://www.publickey1.jp/blog/21/javamicrosoft_build_of_openjdk.html)
 
-(2021-04現在)OpenJDK 11でいいなら、これかな...
+(2021-04 現在)OpenJDK 11 でいいなら、これかな...
 
-(2021-05現在)Windowsだったらもうこれでいいのでは。(JDK11)
+(2021-05 現在)Windows だったらもうこれでいいのでは。(JDK11)
 
 - [Microsoft Build of OpenJDK](https://www.microsoft.com/openjdk)
 - [「Microsoft Build of OpenJDK」が一般公開 ～無償で「Java」の長期サポートを提供 \- 窓の杜](https://forest.watch.impress.co.jp/docs/news/1326994.html)
 
 ## AdoptOpenJDKによる配布
 
-- コミュニティベース(スポンサーにIBMがいる)
-- JRE相当の配布あり
-- OpenJDK(HotSpot)にIBMのOpenJ9を追加したバージョンの配布あり
-- OpenJDK 11をLTS(4年)
+- コミュニティベース(スポンサーに IBM がいる)
+- JRE 相当の配布あり
+- OpenJDK(HotSpot)に IBM の OpenJ9 を追加したバージョンの配布あり
+- OpenJDK 11 を LTS(4 年)
 
 リンク:
 
@@ -172,16 +172,16 @@ Oracleのアカウントが必要(free)
 
 - [OpenJDK Java Linux Windows macOS Alpine Java 11 Java 8のダウンロード](https://jp.azul.com/downloads/zulu/)
 
-MicrosoftはAzure上ではZuluを推していく模様。
+Microsoft は Azure 上では Zulu を推していく模様。
 
 - [Microsoft and Azul Systems bring free Java LTS support to Azure | Blog | Microsoft Azure](https://azure.microsoft.com/en-us/blog/microsoft-and-azul-systems-bring-free-java-lts-support-to-azure/)
 
 ## Red Hatによる配布
 
-- RHELとWindowsをサポート
-- OpenJDK11は2024年10月までサポート
-- Red Hat Networkのアカウントが必要(無料アカウントあり)
-- Windows用は開発用途専用らしい(あいまい)
+- RHEL と Windows をサポート
+- OpenJDK11 は 2024 年 10 月までサポート
+- Red Hat Network のアカウントが必要(無料アカウントあり)
+- Windows 用は開発用途専用らしい(あいまい)
 
 リンク:
 
@@ -193,9 +193,9 @@ MicrosoftはAzure上ではZuluを推していく模様。
 
 ## Amazonによる配布 (Amazon Corretto)
 
-- OpenJDK 8,11をLTS
-- AWS上のみ使用可、というわけではなく、どこでつかってもいい。
-- Windows版はMSIインストーラ付き
+- OpenJDK 8,11 を LTS
+- AWS 上のみ使用可、というわけではなく、どこでつかってもいい。
+- Windows 版は MSI インストーラ付き
 
 リンク:
 

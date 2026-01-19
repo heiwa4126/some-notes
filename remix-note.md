@@ -154,7 +154,7 @@ HTTP サーバだと URL 直接、とかリロードに失敗するので面白�
 正確には、
 
 1. 最初に「どうしても JavaScript がないとダメな部分を除いた HTML」が来る。これは SSR だとサーバー側で React によって生成されたもの。pre-build だったら SSG。
-2. その HTML は まだ hydration(再活性化)されていない状態。
+2. その HTML はまだ hydration(再活性化)されていない状態。
 3. ブラウザがその HTML を受け取った後、クライアント側の React がその HTML に対して hydration を行う。
 
 というのが正しい hydration の説明。

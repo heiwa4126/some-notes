@@ -89,7 +89,7 @@ aws cloudformation create-stack \
 
 ## CloudFormation で stack の外のリソースの IAM をマネージするかっこいい方法
 
-ホントは SAM で なんだけど。
+ホントは SAM でなんだけど。
 
 - [AWS CloudFormation のベストプラクティス - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/best-practices.html)
 

@@ -6,7 +6,7 @@
 
 # サンプルデータ
 
-AWSが配布しているIMDBの映画データ
+AWS が配布している IMDB の映画データ
 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/moviedata.zip
 
 使い方は
@@ -18,7 +18,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/movieda
 
 [TimeToLiveSpecification](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html#cfn-dynamodb-table-timetolivespecification)
 がついてくるんだけど
-これを CFnに食わせると `Property AttributeName cannot be empty.`　全然意味不明なエラーになる。
+これを CFn に食わせると `Property AttributeName cannot be empty.`　全然意味不明なエラーになる。
 
 `TimeToLiveSpecification: false`だったらデフォルトなので、これをコメントアウトする。
 
@@ -36,7 +36,7 @@ Enabled: Boolean
 
 [Reserved Words in DynamoDB - Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html)
 
-項目名にこれら予約語を使うとProjectionExpressionとかで
+項目名にこれら予約語を使うと ProjectionExpression とかで
 
 > Invalid UpdateExpression: Attribute name is a reserved keyword; reserved keyword: (属性名)
 

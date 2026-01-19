@@ -1,10 +1,10 @@
 # dump / restore
 
-RHEL7系のホストで(EFIでGPTでLVM。FSはext4かxfs)
-dumpとrestoreを使って
+RHEL7 系のホストで(EFI で GPT で LVM。FS は ext4 か xfs)
+dump と restore を使って
 ディザスタリカバリーを行う。
 
-バックアップ先はCIFSまたはNFS(v3 or v4)
+バックアップ先は CIFS または NFS(v3 or v4)
 
 - [dump / restore](#dump--restore)
 - [注意](#注意)
@@ -29,37 +29,37 @@ dumpとrestoreを使って
 
 # 注意
 
-dump/restoreはext2,3,4にしか使えない。
+dump/restore は ext2,3,4 にしか使えない。
 
-xfs用にはxfsdump/xfsrestoreがある。オプションはほぼ同じ。
+xfs 用には xfsdump/xfsrestore がある。オプションはほぼ同じ。
 
 - [Red Hat Enterprise Linux 7 3.7. XFS ファイルシステムのバックアップと復元 - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/storage_administration_guide/xfsbackuprestore)
 - [xfsdump(8) - Linux man page](https://linux.die.net/man/8/xfsdump)
 
-他のファイルシステム(reiserfs, jfs, btrfs など)の場合、dump/restoreは諦めて
+他のファイルシステム(reiserfs, jfs, btrfs など)の場合、dump/restore は諦めて
 Relax-and-Recover (ReaR)
 の使用をお勧めする。
 
 - [Red Hat Enterprise Linux 7 第26章 Relax-and-Recover (ReaR) - Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-relax-and-recover_rear)
 - [Relax-and-Recover - Linux Disaster Recovery](http://relax-and-recover.org/)
 
-AWSやAzureでの仮想マシンでは
-おおむねMBRで非LVMなので、こんな手間はいらない。
-(クラウドなのでdump/restoreは無いと思うが)
+AWS や Azure での仮想マシンでは
+おおむね MBR で非 LVM なので、こんな手間はいらない。
+(クラウドなので dump/restore は無いと思うが)
 
 # 例の前提
 
 例なので、適宜読み替えること。
 
-- OSはRHEL7(またはCentOS7)
+- OS は RHEL7(または CentOS7)
 - UEFI
-- GPTディスク
+- GPT ディスク
 - LVM
-- ファイルシステムは全部ext4(かxfs)
-- ホスト名はc71
-- ホストのipは192.168.56.94/24 (enp0s8)
-- バックアップ先はCIFSで//192.168.56.91/dumpの下
-  - またはバックアップ先はNFSv3で192.168.56.91:/export/LinuxDumpの下
+- ファイルシステムは全部 ext4(か xfs)
+- ホスト名は c71
+- ホストの ip は 192.168.56.94/24 (enp0s8)
+- バックアップ先は CIFS で//192.168.56.91/dump の下
+  - またはバックアップ先は NFSv3 で 192.168.56.91:/export/LinuxDump の下
 
 以下のようなディスク構成を想定
 
@@ -75,13 +75,13 @@ sda                   8:0    0    8G  0 disk
 sr0                  11:0    1 1024M  0 rom
 ```
 
-`/boot/efi(sda1)`のFSがvfatでdump/restoreできないのがミソ。
-(dump/restoreの対応FSはextとxfsのみ)
+`/boot/efi(sda1)`の FS が vfat で dump/restore できないのがミソ。
+(dump/restore の対応 FS は ext と xfs のみ)
 
-あとバックアップ先をCIFSにするのは推奨しない。
-DVDのrescueモードにはmount.cifsがないので、
-restoreするとき結構大変。
-NFSをお勧めします(できればNFSv4)。
+あとバックアップ先を CIFS にするのは推奨しない。
+DVD の rescue モードには mount.cifs がないので、
+restore するとき結構大変。
+NFS をお勧めします(できれば NFSv4)。
 
 # dumpの事前準備
 
@@ -95,26 +95,26 @@ yum install cifs-utils nfs-utils dump xfsdump gdisk
 
 BMR(Bare Metal Restore)用にフルバックアップ(entire dump)を行う。
 
-マウントされたデバイスもdumpでバックアップできるが、
-静止点確保(quiescing)のため、rescueモードで起動する。
+マウントされたデバイスも dump でバックアップできるが、
+静止点確保(quiescing)のため、rescue モードで起動する。
 
-rescueモードで起動するには
+rescue モードで起動するには
 
-- GRUBメニューでrescueモードで起動する
-- インストールCDから起動する
+- GRUB メニューで rescue モードで起動する
+- インストール CD から起動する
 
-の2通りがある。前者のほうがかなり楽。
+の 2 通りがある。前者のほうがかなり楽。
 
 ## GRUBメニューでrescueモードで起動する場合
 
-1. GRUBメニューからeを押して編集モードに入る
-2. linuxefiの行の最後に移動し、sを付加、ctl-xを押す。
+1. GRUB メニューから e を押して編集モードに入る
+2. linuxefi の行の最後に移動し、s を付加、ctl-x を押す。
 
 詳しくは
 [26.10. Terminal Menu Editing During Boot - Red Hat Customer Portal](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-terminal_menu_editing_during_boot)
 参照
 
-続けてrootのパスワードを要求されるので、それを入力の後、
+続けて root のパスワードを要求されるので、それを入力の後、
 
 ```
 # 日本語キーボードにする
@@ -129,8 +129,8 @@ systemctl start network
 
 ## インストールCDからrescueモードで起動する場合
 
-RHEL7(またはCentOS7)のインストールCDをホストに挿入し、
-CDからブートさせる(ホストによってCDからブートさせる手順は異なる)。
+RHEL7(または CentOS7)のインストール CD をホストに挿入し、
+CD からブートさせる(ホストによって CD からブートさせる手順は異なる)。
 
 起動したらメニューから
 
@@ -139,7 +139,7 @@ CDからブートさせる(ホストによってCDからブートさせる手順
 3. 1 continue ->
 4. return
 
-で、shが立ち上がる。
+で、sh が立ち上がる。
 
 ```
 # /mnt/sysimageをrootにする
@@ -226,18 +226,18 @@ exit
 reboot
 ```
 
-CDから起動した場合は
+CD から起動した場合は
 [HPのBIOS](#HPのBIOS)
 も参照。
 
 # restoreの実行
 
-まっさらなディスクにEFIでGPTでLVMがあるシステムを復元するケース。
+まっさらなディスクに EFI で GPT で LVM があるシステムを復元するケース。
 
-restoreそのものよりも、
-GPTディスクにパーティションを復元、
-LVMを設定
-そして EFIをインストールするのは
+restore そのものよりも、
+GPT ディスクにパーティションを復元、
+LVM を設定
+そして EFI をインストールするのは
 大変難しい。
 
 パーティションを「復元」ではなく、
@@ -245,19 +245,19 @@ LVMを設定
 という方針でもいいかもしれないので
 臨機応変に行うこと。
 
-REHL7やCentOS7のDVDのrescue modeには
-mount.cifsが含まれてないので、
-cifsマウントできない。(nfsはある)
+REHL7 や CentOS7 の DVD の rescue mode には
+mount.cifs が含まれてないので、
+cifs マウントできない。(nfs はある)
 
-CIFSからリストアする場合は
+CIFS からリストアする場合は
 [SystemRescueCDの5.3.2](https://osdn.net/projects/systemrescuecd/storage/releases/5.3.2/)
 を使う。
-(SystemRescueCDの6にはdump/restoreが入ってない。xfs_dumpはある)
+(SystemRescueCD の 6 には dump/restore が入ってない。xfs_dump はある)
 
-以下はRHEL7/CentOS7のインストールCDを使うケースについて書く。
+以下は RHEL7/CentOS7 のインストール CD を使うケースについて書く。
 
 まず
-[インストールCDからrescueモードで起動する場合](#インストールCDからrescueモードで起動する場合)を参照して、CDから起動する。
+[インストールCDからrescueモードで起動する場合](#インストールCDからrescueモードで起動する場合)を参照して、CD から起動する。
 
 ```
 loadkeys jp106
@@ -271,8 +271,8 @@ mkdir /mnt/dump
 mount -t cifs -o ro,username=foo,password=baz //192.168.56.91/dump /mnt/dump
 ```
 
-NFSについては 「[dump(続き)](#dump続き)」を参照。
-オプションにroをつけるのを忘れないこと(`-o ro,vers=3...`)
+NFS については「[dump(続き)](#dump続き)」を参照。
+オプションに ro をつけるのを忘れないこと(`-o ro,vers=3...`)
 
 続き
 
@@ -345,12 +345,12 @@ restore -rf /mnt/dump/c71/boot.dump
 
 ここで
 /mnt/sysimage/etc/fstab
-を正しいuuidで修正しておくと、
-CD再起動時に/etc/sysimageの下に
+を正しい uuid で修正しておくと、
+CD 再起動時に/etc/sysimage の下に
 全部のパーティションが適切にマウントされる(はず)なのでおすすめ。
 
 再起動して
-RHELのcdを挿入し
+RHEL の cd を挿入し
 起動したらメニューから
 
 1. Troubleshooting ->
@@ -358,8 +358,8 @@ RHELのcdを挿入し
 3. 1 continue ->
 4. return
 
-rescueモードではいりなおすと、
-/mnt/sysimageの下にrootとbootとEFI領域がマウントされているはず。
+rescue モードではいりなおすと、
+/mnt/sysimage の下に root と boot と EFI 領域がマウントされているはず。
 (`lsblk` で確認)
 
 自動マウントされていなかったら
@@ -410,14 +410,14 @@ grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg
 ```
 
 別マシンに複製した場合は、さらに
-/etc/sysconfig/network-scriptの下や、
+/etc/sysconfig/network-script の下や、
 /etc/hostname
 なども適宜書き換える。
-RHELならsubscription-managerも修正する。
+RHEL なら subscription-manager も修正する。
 特に
 /etc/sysconfig/network-script/ifc\*
 に
-MACが入っているので、適切に編集すること。
+MAC が入っているので、適切に編集すること。
 
 ```
 # 終了。再起動
@@ -426,16 +426,16 @@ reboot
 ```
 
 さらに
-CDから起動しているので
+CD から起動しているので
 [HPのBIOS](#HPのBIOS)
-を参照してCDを抜く。
+を参照して CD を抜く。
 
 # TODO
 
-dumpをもう少し簡単に & 自動定期実行できるようにする
+dump をもう少し簡単に & 自動定期実行できるようにする
 
-- ある程度daemonを止めて実行する。
-- LVMスナップショットと組み合わせる。
+- ある程度 daemon を止めて実行する。
+- LVM スナップショットと組み合わせる。
 
 # 参考
 
@@ -448,15 +448,15 @@ dumpをもう少し簡単に & 自動定期実行できるようにする
 
 ## GPTツールメモ
 
-sgdiskは `yum install gdisk`。
-Debian/Ubuntuでも `atp install gdisk`.
-バックアップ前にHDDにインストールしておくと少し楽。
+sgdisk は `yum install gdisk`。
+Debian/Ubuntu でも `atp install gdisk`.
+バックアップ前に HDD にインストールしておくと少し楽。
 
-sfdisk, cfdiskの新しいバージョンはGPTにも対応している。
-RHEL7のはGPT対応していないので
-sgdisk, cgdiskを使うこと。
+sfdisk, cfdisk の新しいバージョンは GPT にも対応している。
+RHEL7 のは GPT 対応していないので
+sgdisk, cgdisk を使うこと。
 
-ディスクがMBRかGPTか確認するには
+ディスクが MBR か GPT か確認するには
 
 ```
 parted -l /dev/sda
@@ -464,23 +464,23 @@ parted -l /dev/sda
 
 が最も汎用的。
 
-MBRのツールとGPTのツールでは若干オプションが異なる。
+MBR のツールと GPT のツールでは若干オプションが異なる。
 例えば `sfdisk -l` は `sgdisk -p`.
-sgdiskの`-l`は `-b`オプションと対になるバックアップ/ロードバックアップ。
+sgdisk の`-l`は `-b`オプションと対になるバックアップ/ロードバックアップ。
 
 ## 他メモ
 
-GPTのパーティションにはPARTUUIDというIDが付く。
+GPT のパーティションには PARTUUID という ID が付く。
 
 ファイルシステムを作っていないパーティション、
-またはpvcreateしてないパーティション
-にはUUID(PARTUUIDではなく)はつかない。
-これはMBRでも同じ。
+または pvcreate してないパーティション
+には UUID(PARTUUID ではなく)はつかない。
+これは MBR でも同じ。
 
 /dev/mapper/_ は /dev/dm_ へのシンボリックリンク。
 /dev/ボリュームグループ名/\* も。
 
-device-mapparについて詳しくは
+device-mappar について詳しくは
 
 - [LC2009 Tutorial: device-mapper - T-02-slide.pdf](http://lc.linux.or.jp/lc2009/slide/T-02-slide.pdf)
 - [device-mapperの仕組み (1) device-mapperの概要 - テストステ論](https://www.akiradeveloper.com/entry/2013/05/11/220634)
@@ -489,25 +489,25 @@ device-mapparについて詳しくは
 
 ## HPのBIOS
 
-HP(ヒューレット・パッカード)のBIOSの乗ったホストで
-CDブートするときに使う
+HP(ヒューレット・パッカード)の BIOS の乗ったホストで
+CD ブートするときに使う
 「ワンタイムブート」メニューは、ワンタイムでない。
 なんらかの条件で永続する。
 
-CDブートから、HDD(RAID)ブートに切り替えるときは
+CD ブートから、HDD(RAID)ブートに切り替えるときは
 
-1. (CDブートした状態から)reboot
-2. 「ワンタイムブート」メニューでHDD(かRAID)、またはUEFIのOSを指定。
-3. (HDDからOSが起動した状態から)`eject /dev/sr0`などでCDをイジェクト
+1. (CD ブートした状態から)reboot
+2. 「ワンタイムブート」メニューで HDD(か RAID)、または UEFI の OS を指定。
+3. (HDD から OS が起動した状態から)`eject /dev/sr0`などで CD をイジェクト
 
 という手順をふむこと。
 
 ## vfatのUUID
 
-vfatのUUIDは「ボリューム シリアル番号」というもので「ラベル」ではない。
+vfat の UUID は「ボリューム シリアル番号」というもので「ラベル」ではない。
 
-vfatのUUIDを変更するツールはないので
-ファイルシステム作成時に設定するか(mkfs.vfatの-iオプション)、
+vfat の UUID を変更するツールはないので
+ファイルシステム作成時に設定するか(mkfs.vfat の-i オプション)、
 またはディスクを直接編集して変更すること。
 
 ## インストールされているgrub2-efi-x64 shim-x64 grub2-toolsをリスト
@@ -524,7 +524,7 @@ rpm -q  grub2-efi-x64 shim-x64 grub2-tools | xargs yumdownloader
 
 ## GPTディスクを空にする
 
-RHELのcdを挿入し
+RHEL の cd を挿入し
 起動したらメニューから
 
 1. Troubleshooting ->

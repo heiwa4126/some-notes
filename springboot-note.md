@@ -8,7 +8,7 @@
 
 [MyBatis – MyBatis 3 | イントロダクション](https://mybatis.org/mybatis-3/ja/index.html)
 
-pom.xmlやbuild.gradeに追加
+pom.xml や build.grade に追加
 
 ```xml
 <!-- MyBatis -->
@@ -28,18 +28,18 @@ pom.xmlやbuild.gradeに追加
 - [Maven Repository: org.mybatis.spring.boot » mybatis-spring-boot-starter](https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter)
 - [Maven Repository: org.modelmapper.extensions » modelmapper-spring](https://mvnrepository.com/artifact/org.modelmapper.extensions/modelmapper-spring)
 
-エンティティクラスつくる。package com.example.domain.xxxx.model。Lombokの@Data
+エンティティクラスつくる。package com.example.domain.xxxx.model。Lombok の@Data
 
-↑のレポジトリつくる。＠Mapperで。interfaceで。
+↑のレポジトリつくる。＠Mapper で。interface で。
 
-↑のクラスと同じ名前の.xmlにSQL書く。
+↑のクラスと同じ名前の.xml に SQL 書く。
 
-サービスのinterface書く。implも。
+サービスの interface 書く。impl も。
 (これよくわからん。なぜ一旦抽象をつくるのか)
 
-application.configにmybatis.mapper-location書く。
+application.config に mybatis.mapper-location 書く。
 
-@Configurationのクラス作ってmodel mapper登録する。
+@Configuration のクラス作って model mapper 登録する。
 
 サービスつくる。
 
@@ -55,7 +55,7 @@ application.configにmybatis.mapper-location書く。
 
 # 古いmavenやgradleを更新ってできるの?
 
-時々セキュリティアップデートとか出てるのでgradlewなどのwrapperは更新できるのかチェック。
+時々セキュリティアップデートとか出てるので gradlew などの wrapper は更新できるのかチェック。
 まあむやみに更新すると動かなくなるけど、それは別問題。
 
 - [The Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html)
@@ -113,7 +113,7 @@ $ git status
 - [7\.3\. プロファイル](https://spring.pleiades.io/spring-boot/docs/2.5.4/reference/htmlsingle/#features.profiles) - 日本語
 - [12\.2\.6\. アクティブ Spring プロファイルを設定する](https://spring.pleiades.io/spring-boot/docs/2.5.4/reference/htmlsingle/#features.profiles) - 日本語
 
-Spring Bootのプロパティって1000以上もあるらしい。
+Spring Boot のプロパティって 1000 以上もあるらしい。
 [Spring Boot アプリケーションプロパティ設定一覧 \- リファレンス](https://spring.pleiades.io/spring-boot/docs/current/reference/html/application-properties.html)
 
 # Spring Bootで非Webアプリは作れるの?

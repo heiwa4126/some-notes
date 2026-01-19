@@ -133,7 +133,7 @@ corepack prepare yarn@stable --activate
 
 ## npmjs の ts アイコン
 
-npmjs の各パッケージのページで、パッケージ名の横に 青い ts アイコンが自動でつきますが、これはどういう基準でつくものなのか?
+npmjs の各パッケージのページで、パッケージ名の横に青い ts アイコンが自動でつきますが、これはどういう基準でつくものなのか?
 
 [javascript - TypeScript icon missing on packages on npm website - Stack Overflow](https://stackoverflow.com/questions/72423301/typescript-icon-missing-on-packages-on-npm-website)
 

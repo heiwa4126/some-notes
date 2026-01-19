@@ -257,7 +257,7 @@ npm i --dev
 
 ## プロジェクトにインストールしたモジュールの bin を使う
 
-$HOME/.profileや$HOME/,bash_profile で./node_modules/.bin:`を PATH に追加しておく。
+$HOME/.profile や$HOME/,bash_profile で./node_modules/.bin:`を PATH に追加しておく。
 こんな感じ
 
 ```

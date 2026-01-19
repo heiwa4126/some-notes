@@ -151,11 +151,11 @@ React、Vue、Angular など Webpack してデカい.js が出る場合などに
 - 別に自動で解凍してくれるわけじゃない。gzip されたデータとメタデータが送られてくるだけ
 - コンテンツネゴシエーションしてくれない。リクエストヘッダの `Accept-Encoding` とか全く見ずに、絶対 gzip で送ってくる
 
-まあ 普通のブラウザでは gzip が伸張できないことはまずないので問題にはならないだろう。
+まあ普通のブラウザでは gzip が伸張できないことはまずないので問題にはならないだろう。
 
 curl は `curl --compressed` で取れます。
 
-S3 を直接たたかず CloudFront を使う場合は Compress Objects Automatically 設定 があるので、
+S3 を直接たたかず CloudFront を使う場合は Compress Objects Automatically 設定があるので、
 これを設定したほうがハンドリングが楽だと思う。
 
 - [AWS::CloudFront::Distribution DefaultCacheBehavior - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-distribution-defaultcachebehavior.html#cfn-cloudfront-distribution-defaultcachebehavior-compress)

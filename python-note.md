@@ -1306,7 +1306,7 @@ pip install "foo bar"
 
 [PEP 508: Python Package Naming Convention](https://www.python.org/dev/peps/pep-0508/)
 
-ただし `.` だけは サブパッケージや名前空間パッケージを表すことがある。
+ただし `.` だけはサブパッケージや名前空間パッケージを表すことがある。
 
 ## サブパッケージ (subpackages)
 

@@ -1,10 +1,10 @@
 # rsyslogメモ
 
-re_match()はPOSIX ERE。ereregexと同じ表記
+re_match()は POSIX ERE。ereregex と同じ表記
 
 [re_match() — rsyslog 9c4fd0b docs](https://www.rsyslog.com/doc/master/rainerscript/functions/rs-re_match.html)
 
-POSIXのregexについては [正規表現メモ](http://www.kt.rim.or.jp/~kbk/regex/regex.html#POSIX)
+POSIX の regex については [正規表現メモ](http://www.kt.rim.or.jp/~kbk/regex/regex.html#POSIX)
 
 文字列リテラルは、
 シングルクォートでもダブルクォートでも
@@ -22,17 +22,17 @@ if re_match($fromhost-ip, '^172\\.31\\.') then {
 }
 ```
 
-↑BSD-style Blocks式。[Filter Conditions — rsyslog v8.1910.0 documentation](https://www.rsyslog.com/doc/v8-stable/configuration/filters.html)
+↑BSD-style Blocks 式。[Filter Conditions — rsyslog v8.1910.0 documentation](https://www.rsyslog.com/doc/v8-stable/configuration/filters.html)
 
-ログ名の前の'-'は、「syncしない」。デバッグ時ははずすとtail -Fしやすい。
+ログ名の前の'-'は、「sync しない」。デバッグ時ははずすと tail -F しやすい。
 
-omはoutput moduleの略
+om は output module の略
 [omfile: File Output Module — rsyslog v8.1910.0 documentation](https://www.rsyslog.com/doc/v8-stable/configuration/modules/omfile.html)
 
 `-/var/log/from-interal` のかわりに
-`action(type="omfile" dirCreateMode="0700" FileCreateMode="0644" asyncWriting="off" File="/var/log/from-interal")`と書いてもOK。
+`action(type="omfile" dirCreateMode="0700" FileCreateMode="0644" asyncWriting="off" File="/var/log/from-interal")`と書いても OK。
 
-socket経由でもfromhost-ipは"127.0.0.1"になるみたい。
+socket 経由でも fromhost-ip は"127.0.0.1"になるみたい。
 
 ```
 :fromhost-ip, !isequal, "127.0.0.1", /var/log/non-local
@@ -62,13 +62,13 @@ ruleset(name="nonlocal"){
 
 [imudp: UDP Syslog Input Module — rsyslog v8.1910.0 documentation](https://www.rsyslog.com/doc/v8-stable/configuration/modules/imudp.html#rcvbufsize)
 
-rcvbufSize=を設定するとOSによる自動チューニングが無効になるので、
+rcvbufSize=を設定すると OS による自動チューニングが無効になるので、
 考えてから設定すること。いま不具合がなければ設定しない。
 
 # テスト用
 
 `logger -n r1 -d test`を毎回タイプするのも面倒なので、
-0.5秒ごとにUDPで現在時刻を送りつけるperlのコード
+0.5 秒ごとに UDP で現在時刻を送りつける perl のコード
 
 ```perl
 #!/usr/bin/env perl
@@ -91,4 +91,4 @@ closelog();
 0;
 ```
 
-Red Hat系だと`sudo yum install perl-Sys-Syslog`が要る。
+Red Hat 系だと`sudo yum install perl-Sys-Syslog`が要る。

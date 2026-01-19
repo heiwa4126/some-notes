@@ -260,7 +260,7 @@ lodash  4.17.15    4.17.21   npm   GHSA-29mw-wpgm-hmr9  Medium    0.2% (47th)  0
 
 あたりまえだけど、おなじログが出る。SARIF はこんな感じ(結構大きいので貼るのやめた)。
 
-重要: 「GitHub の Code scanning alerts は、デフォルトブランチでのスキャン結果のみを Security タブに表示します。」
+重要:「GitHub の Code scanning alerts は、デフォルトブランチでのスキャン結果のみを Security タブに表示します。」
 
 ## この系統の製品まとめ
 

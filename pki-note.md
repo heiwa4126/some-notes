@@ -62,7 +62,7 @@ PKCS#12(というか.pfx/.p12) の構造:
 1990 年代前半に Microsoft が Personal Information Exchange(PFX)という独自規格を作り
 それが PKCS#12 として 90 年代後半に採用されたという経緯らしい。
 
-「.p12 の方がわかりやすいのになぜ MS は.pfx というのですか?」 はそういうこと
+「.p12 の方がわかりやすいのになぜ MS は.pfx というのですか?」はそういうこと
 
 あと ASN.1(Abstract Syntax Notation One)。
 protobuf(Protocol Buffers)に似たもの。

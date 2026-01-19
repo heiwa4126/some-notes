@@ -196,7 +196,7 @@ $ で $wx$ でもいい。
 単純パーセプトロンでは XOR が作れない。
 
 OR、AND、NAND は単純パーセプトロンで作れる。
-ので 多層パーセプトロン にすればできる。
+ので多層パーセプトロンにすればできる。
 
 ## ワンホットエンコーディング
 
@@ -228,7 +228,7 @@ QA や要約でも話は一緒。
 いちおう例:
 
 - [config.json · bert-base-uncased at main](https://huggingface.co/bert-base-uncased/blob/main/config.json) - vocab_size: 30522
-- [config.json · RinInori/bert-base-uncased_finetuned_sentiments at main](https://huggingface.co/RinInori/bert-base-uncased_finetuned_sentiments/blob/main/config.json) - 感情分析のモデル。ラベルが 6 つだから出力層も 6 個 だろう...
+- [config.json · RinInori/bert-base-uncased_finetuned_sentiments at main](https://huggingface.co/RinInori/bert-base-uncased_finetuned_sentiments/blob/main/config.json) - 感情分析のモデル。ラベルが 6 つだから出力層も 6 個だろう...
 
 fill-mask の `outout=model(**input)` で tensor のサイズを見ればわかるはず。あとでやってみる。
 
@@ -236,7 +236,7 @@ fill-mask の `outout=model(**input)` で tensor のサイズを見ればわか�
 
 生成系 AI チャットいろいろに聞いたもののまとめ。
 
-Q. NLP の「下流タスク」とは何ですか? 「下流(downstream)」にはどんな意味がこめられていますか? 上流タスクもあるんですか?
+Q. NLP の「下流タスク」とは何ですか?「下流(downstream)」にはどんな意味がこめられていますか? 上流タスクもあるんですか?
 
 - 上流タスクとは、事前学習のために行われる教師なし学習のタスクです。
 - 下流タスク(downstream task)」とは、ある事前学習済みモデルをベースに、新しいタスクを解くためにファインチューニングするタスクのことを指します。
@@ -246,7 +246,7 @@ Q. NLP の「下流タスク」とは何ですか? 「下流(downstream)」に�
 Q.
 例えば fill-mask の bert-base-cased モデルを
 Yelp Reviews データセット使って、
-sequence classification タスク用 として fine-tuning したモデルを作った場合
+sequence classification タスク用として fine-tuning したモデルを作った場合
 どれが上流タスクでどれが下流タスクですか?
 
 (答え省略)

@@ -7,10 +7,10 @@
 
 # install
 
-Azureで入れてみた。
+Azure で入れてみた。
 [Red Hat Enterprise Linux 8 (.latest, LVM) - Microsoft Azure](https://portal.azure.com/#create/hub)
 
-Pythonもperlも入ってないのがすごい。LVMだし。さすがにGPTではなかった。
+Python も perl も入ってないのがすごい。LVM だし。さすがに GPT ではなかった。
 
 ```
 # lsblk
@@ -29,15 +29,15 @@ sdb                 8:16   0    4G  0 disk
 sr0                11:0    1  628K  0 rom
 ```
 
-emacsは26
+emacs は 26
 
 ```
 yum install langpacks-ja tmux emacs-nox
 ```
 
-Red HatのPythonで書かれたコードは
-例えばyum(dnf-3)
-/usr/libexec/platform-pythonを使う。
+Red Hat の Python で書かれたコードは
+例えば yum(dnf-3)
+/usr/libexec/platform-python を使う。
 
 ```
 # ls -la /usr/libexec/platform-python
@@ -46,7 +46,7 @@ lrwxrwxrwx. 1 root root 20 Apr  4 02:28 /usr/libexec/platform-python -> ./platfo
 platform-python-3.6.8-2.el8_0.x86_64
 ```
 
-これで勝手にpipとかでライブラリ入れても問題ないわけだ。
+これで勝手に pip とかでライブラリ入れても問題ないわけだ。
 
 ```
 # yum install python3
@@ -72,7 +72,7 @@ Total download size: 200 k
 Installed size: 466 k
 ```
 
-これだとpythonでpython3が使えない。
+これだと python で python3 が使えない。
 
 ```
 man unversioned-python
@@ -84,13 +84,13 @@ man unversioned-python
 alternatives --set python /usr/bin/python3
 ```
 
-あとはper userで
+あとは per user で
 
 ```
 pip3 install --user -U pip
 ```
 
-sshdで
+sshd で
 
 ```
 PermitRootLogin yes
@@ -104,7 +104,7 @@ semanage port -a -t ssh_port_t -p tcp 4126
 semanage port -l | grep ssh
 ```
 
-あとfirewalldも。
+あと firewalld も。
 
 # dnf-makecache
 
@@ -175,7 +175,7 @@ sudo systemctl disable dnf-makecache.timer --now
 
 # yum-config-manager
 
-8系ではdnfのサブコマンド(プラグイン)になった。
+8 系では dnf のサブコマンド(プラグイン)になった。
 
 [DNF config\-manager Plugin — dnf\-plugins\-core 4\.3\.1\-1 documentation](https://dnf-plugins-core.readthedocs.io/en/latest/config_manager.html)
 

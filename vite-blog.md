@@ -1,6 +1,6 @@
 # おためし Vite + React
 
-評判の 次世代フロントエンドツール [Vite](https://ja.vitejs.dev/) をちょっとだけ使ってみました。
+評判の次世代フロントエンドツール [Vite](https://ja.vitejs.dev/) をちょっとだけ使ってみました。
 
 テストした環境:
 

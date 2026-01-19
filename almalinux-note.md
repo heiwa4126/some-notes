@@ -1,9 +1,9 @@
-CentOS7からの移行で調査。
-2022年にもなって何をしてるんだか、とか2022年らしいとか。
+CentOS7 からの移行で調査。
+2022 年にもなって何をしてるんだか、とか 2022 年らしいとか。
 
 # Azure
 
-cockpit入ってた。
+cockpit 入ってた。
 
 ```sh
 sudo yum install python39 git tmux -y
@@ -12,7 +12,7 @@ sudo yum autoremove -y
 sudo systemctl disable --now waagent-network-setup.service
 ```
 
-etckeeperとsnapがない
+etckeeper と snap がない
 
 ```sh
 sudo dnf config-manager --set-enabled powertools
@@ -31,15 +31,15 @@ sudo snap install emacs --classic
 sudo yum install ansible -y
 ```
 
-python36要求される
+python36 要求される
 
 ```sh
 sudo update-alternatives --config python3
 ```
 
-で39選ぶ
+で 39 選ぶ
 
-ncも-vzが使えるバージョンに
+nc も-vz が使えるバージョンに
 
 ```bash
 sudo yum install netcat
@@ -50,7 +50,7 @@ update-alternatives、非対話式に選べないの? 調べる
 
 この記事の後半とか。
 [Ubuntu - Python 3.9のインストール方法](https://codechacha.com/ja/ubuntu-install-python39/)
-ただシステムワイドにpythonのバージョンを変更するのはやめとけ。
+ただシステムワイドに python のバージョンを変更するのはやめとけ。
 
 日本語いるなら
 
@@ -64,7 +64,7 @@ sudo localectl set-locale LANG=ja_JP.UTF-8
 
 # AWS
 
-ec2-userだった。
+ec2-user だった。
 
 ```bash
 aws ec2 describe-images --owners aws-marketplace \
@@ -72,7 +72,7 @@ aws ec2 describe-images --owners aws-marketplace \
   --filters 'Name=name,Values="AlmaLinux OS 8*x86_64*"'
 ```
 
-marketplace似た名前のがいろいろあってヤバい。
+marketplace 似た名前のがいろいろあってヤバい。
 
 ```
 #cloud-config
@@ -100,7 +100,7 @@ runcmd:
 
 # resolver
 
-Almaってsystemd-resolvedじゃないのか... Centもそうだな。
-RHEL8はsystemd-resolvedだったような。
+Alma って systemd-resolved じゃないのか... Cent もそうだな。
+RHEL8 は systemd-resolved だったような。
 
 [第40章 異なるドメインでの各種 DNS サーバーの使用 Red Hat Enterprise Linux 8 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/using-different-dns-servers-for-different-domains_configuring-and-managing-networking)

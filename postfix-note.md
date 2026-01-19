@@ -2,7 +2,7 @@
 
 - [Postfix manual \- header_checks\(5\)](http://www.postfix.org/header_checks.5.html)
 
-けっこういろんなとこでフックできるみたい。 regexもpcreも使えるのはえらい
+けっこういろんなとこでフックできるみたい。 regex も pcre も使えるのはえらい
 
 デバッグは
 
@@ -27,26 +27,26 @@ postmap: fatal: unsupported dictionary type: pcre. Is the postfix-pcre package i
 postmap: fatal: unsupported dictionary type: pcre does not support bulk-mode creation.
 ```
 
-postmapでいっぺんに変換はできないらしい。元ファイル編集後は対応する.dbを消しておくといいかな。
+postmap でいっぺんに変換はできないらしい。元ファイル編集後は対応する.db を消しておくといいかな。
 (この場合 `rm /etc/postfix/header_checks1.db`)
 
-↑これheader_checks1変更して、postfix再起動しない、をやってみたんですが、平気で変更が反映されました。
-.db消す必要あるのかな。要調査。
+↑これ header_checks1 変更して、postfix 再起動しない、をやってみたんですが、平気で変更が反映されました。
+.db 消す必要あるのかな。要調査。
 
-/etc/postfix/main.cfを編集。最後に↓を追加
+/etc/postfix/main.cf を編集。最後に↓を追加
 
 ```
 header_checks = pcre:/etc/postfix/header_checks1
 ```
 
-/etc/postfix/header_checks1は
+/etc/postfix/header_checks1 は
 
 ```
 /^Subject: (.*)/
      replace Subject: [test] $1
 ```
 
-で、main.cfの変更を反映させるために`systemctl restart postfix`
+で、main.cf の変更を反映させるために`systemctl restart postfix`
 
 テストは
 
@@ -55,4 +55,4 @@ $ postmap -q 'Subject: test' pcre:/etc/postfix/header_checks1
 replace Subject: [test] test
 ```
 
-とmailコマンドでローカル配送 と outbound (gmailつかってみた。最近のGmailはsendgridとか通さなくてもおくれるみたい)
+と mail コマンドでローカル配送と outbound (gmail つかってみた。最近の Gmail は sendgrid とか通さなくてもおくれるみたい)

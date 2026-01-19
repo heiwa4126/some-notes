@@ -790,7 +790,7 @@ DOCKER_BUILDKIT=1 docker build .
 
 - [BuildKit でイメージ構築 — Docker-docs-ja 19.03 ドキュメント](https://docs.docker.jp/develop/develop-images/build_enhancements.html)
 - [BuildKit によるイメージ構築 | Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/develop/develop-images/build_enhancements/) 同じ内容
-- [BuildKit による高速でセキュアなイメージビルド](https://www.slideshare.net/AkihiroSuda/buildkit) - 「使えない」と書いてある機能は使えるようになってる模様
+- [BuildKit による高速でセキュアなイメージビルド](https://www.slideshare.net/AkihiroSuda/buildkit) -「使えない」と書いてある機能は使えるようになってる模様
 - [Docker 18.09 新機能 (イメージビルド&セキュリティ) | by Akihiro Suda | nttlabs | Medium](https://medium.com/nttlabs/docker-v18-09-%E6%96%B0%E6%A9%9F%E8%83%BD-%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%83%93%E3%83%AB%E3%83%89-%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3-9534714c26e2) 同じ内容(同じ筆者?)ちょっと詳しい。よみやすい
 - [Docker の BuildKit を使ってセキュアなビルドを試す - Qiita](https://qiita.com/takasp/items/56e1399a484ed5bfaade)
 
@@ -1042,11 +1042,11 @@ docker push your-dockerhub-username/your-repository:tag
 注意点として、鍵の管理は非常に重要です。特にルート鍵(root key)の紛失は回復不可能なので、安全な場所にバックアップを取ることをお勧めします[5]。
 
 Citations:
-[1] https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/trust_key_generate/
-[2] https://matsuand.github.io/docs.docker.jp.onthefly/engine/security/trust/
-[3] https://docs.docker.com/reference/cli/docker/trust/key/generate/
-[4] https://yuya-hirooka.hatenablog.com/entry/2021/08/14/164518
-[5] https://docs.docker.com/engine/security/trust/trust_key_mng/
+[1]https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/trust_key_generate/
+[2]https://matsuand.github.io/docs.docker.jp.onthefly/engine/security/trust/
+[3]https://docs.docker.com/reference/cli/docker/trust/key/generate/
+[4]https://yuya-hirooka.hatenablog.com/entry/2021/08/14/164518
+[5]https://docs.docker.com/engine/security/trust/trust_key_mng/
 
 **ローカルイメージに直接署名することはできません。イメージはまずリモートリポジトリにプッシュする必要があります**
 

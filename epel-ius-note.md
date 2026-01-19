@@ -1,7 +1,7 @@
 # EPEL & IUS ノート
 
-なぜかこの2019年にRHEL6を新しく作る作業をして、
-EPELとIUSの設定をググるのに若干時間がかかったので
+なぜかこの 2019 年に RHEL6 を新しく作る作業をして、
+EPEL と IUS の設定をググるのに若干時間がかかったので
 メモしておく。
 
 # install
@@ -33,12 +33,12 @@ sudo etckeeper init
 sudo etckeeper commit "Initial"
 ```
 
-gitは既に入ってるかも。その場合はyum remove。
-git2u, git222など新しいのあるかも。
+git は既に入ってるかも。その場合は yum remove。
+git2u, git222 など新しいのあるかも。
 
-python36uは
-RHEL7の場合公式レポジトリ(rhel-7-server-rpms)に
-python3が入ったので、そっちを。
+python36u は
+RHEL7 の場合公式レポジトリ(rhel-7-server-rpms)に
+python3 が入ったので、そっちを。
 
-RHEL8ならApplication Streamsで。
+RHEL8 なら Application Streams で。
 [Red Hat Enterprise Linux 8にPythonをインストールする ｜ Developers.IO](https://dev.classmethod.jp/cloud/aws/in-search-of-lost-python-at-rhel-8/)

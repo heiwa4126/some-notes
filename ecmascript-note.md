@@ -1,6 +1,6 @@
 # AST
 
-visitImport、visitExportNamedDeclaration、visitExportSpecifier、visitExportDefaultDeclaration、visitExportAllDeclaration、visitExportBatchSpecifier、visitExportDeclaration、visitExportNamespaceSpecifier、visitExportDefaultSpecifierのそれぞれが呼び出されるECMAScriptの文を以下に示します。
+visitImport、visitExportNamedDeclaration、visitExportSpecifier、visitExportDefaultDeclaration、visitExportAllDeclaration、visitExportBatchSpecifier、visitExportDeclaration、visitExportNamespaceSpecifier、visitExportDefaultSpecifier のそれぞれが呼び出される ECMAScript の文を以下に示します。
 
 ```javascript
 import "module";
@@ -38,4 +38,4 @@ export * as foo from "module";
 export { default as foo } from "module";
 ```
 
-以上のように、それぞれのvisitメソッドは、import/export文のASTノードを訪問するために使用されます。
+以上のように、それぞれの visit メソッドは、import/export 文の AST ノードを訪問するために使用されます。

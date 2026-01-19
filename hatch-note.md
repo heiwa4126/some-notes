@@ -24,7 +24,7 @@ hatch run code .
 _HATCH_COMPLETE=bash_source hatch > ~/.hatch-complete.bash
 ```
 
-Hatch わりとバージョンによってコマンドが変わるので、別出しにして .profile で読む にしといたほうがいいみたい。
+Hatch わりとバージョンによってコマンドが変わるので、別出しにして .profile で読むにしといたほうがいいみたい。
 
 `/etc/bash_completion.d/` の per user があるといいんだけど(「作ればある」)。
 

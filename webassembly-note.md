@@ -6,7 +6,7 @@
 
 https://github.com/golang/go/wiki/WebAssembly#getting-started
 
-goexecがインストールできない上にcloneしてbuildしても動かない
+goexec がインストールできない上に clone して build しても動かない
 `no required module provides package github.com/shurcooL/go-goon`
 
 代わりに
@@ -14,10 +14,10 @@ goexecがインストールできない上にcloneしてbuildしても動かな�
 で
 `http-server .` した。
 
-最初のデモはconsole.logに出るだけで、まああまり面白くない。
-やっぱDOM操作したいよね。-> [js package - syscall/js - Go Packages](https://pkg.go.dev/syscall/js)
+最初のデモは console.log に出るだけで、まああまり面白くない。
+やっぱ DOM 操作したいよね。-> [js package - syscall/js - Go Packages](https://pkg.go.dev/syscall/js)
 
-goexecのかわりにgoevalが使える。
+goexec のかわりに goeval が使える。
 [dolmen-go/goeval: Run Go snippets instantly from the command-line](https://github.com/dolmen-go/goeval)
 
 ```bash
@@ -33,7 +33,7 @@ goeval 'http.ListenAndServe(":8080", http.FileServer(http.Dir(".")))'
 
 # C
 
-もう1個HelloWorldをCのスクラッチで
+もう 1 個 HelloWorld を C のスクラッチで
 [Compiling a New C/C++ Module to WebAssembly - WebAssembly | MDN](https://developer.mozilla.org/en-US/docs/WebAssembly/C_to_wasm)
 
 ```bash
@@ -47,7 +47,7 @@ sudo apt install emscripten -y
 
 # Rust
 
-Rustもすこし
+Rust もすこし
 https://rustwasm.github.io/docs/book/game-of-life/setup.html
 
 けっこう規模が大きくて簡単には終わらん.
@@ -66,18 +66,18 @@ https://rustwasm.github.io/docs/book/game-of-life/setup.html
 
 まとめると
 
-実行はそこそこ高速。ただJavaScriptの実行自体もかなり早い。
+実行はそこそこ高速。ただ JavaScript の実行自体もかなり早い。
 引数と戻り値のハンドリングのオーバーヘッドが大きい。
 ので単に速度を期待するとがっかりする。
 
-ブラウザとのWebAssemblyのやりとりは
-「WebAssemblyの線形メモリ(Linear Memory)」領域を介して行われる。
-受け渡しされるのはメモリ上のアドレスと長さ。用は8bit配列。
+ブラウザとの WebAssembly のやりとりは
+「WebAssembly の線形メモリ(Linear Memory)」領域を介して行われる。
+受け渡しされるのはメモリ上のアドレスと長さ。用は 8bit 配列。
 
-ブラウザで動くWebAssemblyは
-DOMとかそのほかI/Oなど直接操作できない(永遠にできない)。
+ブラウザで動く WebAssembly は
+DOM とかそのほか I/O など直接操作できない(永遠にできない)。
 
-ブラウザ以外ではWASIみたいのが[WebAssemblyをWebブラウザ以外の実行環境へ。システムインターフェイスへのアクセスを可能にする「WASI」の策定開始。Mozillaが呼びかけNode.jsらが賛同 － Publickey](https://www.publickey1.jp/blog/19/webassemblywebwasimozillanodejs.html)
+ブラウザ以外では WASI みたいのが[WebAssemblyをWebブラウザ以外の実行環境へ。システムインターフェイスへのアクセスを可能にする「WASI」の策定開始。Mozillaが呼びかけNode.jsらが賛同 － Publickey](https://www.publickey1.jp/blog/19/webassemblywebwasimozillanodejs.html)
 
 利点は既存言語のライブラリが使えること。
 あとコンパイラが強力なら最適化は期待できること。
@@ -103,13 +103,13 @@ DOMとかそのほかI/Oなど直接操作できない(永遠にできない)。
 
 - [Getting started | The AssemblyScript Book](https://www.assemblyscript.org/getting-started.html) - あんまり親切じゃないチュートリアル
 
-なんか「AssemblyScriptやってみた」系の記事はどれも途中が
+なんか「AssemblyScript やってみた」系の記事はどれも途中が
 うにゃうにゃ
 ってなってるような気がする。
 
-結局WebAssemblyとの値の受け渡しのところがネックみたい。
+結局 WebAssembly との値の受け渡しのところがネックみたい。
 
-Goの [syscall/js](https://pkg.go.dev/syscall/js) と wasm_exec.js みたいなやつが必要だと思うんだが、
+Go の [syscall/js](https://pkg.go.dev/syscall/js) と wasm_exec.js みたいなやつが必要だと思うんだが、
 そういうのはないの?
 
 これが参考になる:

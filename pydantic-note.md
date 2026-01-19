@@ -18,7 +18,7 @@ class Book(BaseModel):
 - [Field クラス](https://docs.python.org/ja/3/library/dataclasses.html#dataclasses.Field)
 - [Ellipsis](https://docs.python.org/ja/3.13/library/constants.html#Ellipsis)
 
-Ellipsis リテラル が `...`。
+Ellipsis リテラルが `...`。
 
 公式ドキュメントでは以下に記述が。
 

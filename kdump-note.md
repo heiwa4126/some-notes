@@ -1,4 +1,4 @@
-kdumpのメモ
+kdump のメモ
 
 だいたいのことは
 [第7章 カーネルクラッシュダンプガイド Red Hat Enterprise Linux 7 | Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/kernel_administration_guide/kernel_crash_dump_guide)
@@ -25,7 +25,7 @@ kdumpのメモ
 systemctl is-active kdump
 ```
 
-その後rootで
+その後 root で
 
 ```sh
 echo 1 > /proc/sys/kernel/sysrq
@@ -43,9 +43,9 @@ echo c > /proc/sysrq-trigger
 
 # メモリサイズとダンプファイルのサイズ
 
-kdumpセカンドカーネル用のメモリサイズとかは、最近はautoでいいみたい。
+kdump セカンドカーネル用のメモリサイズとかは、最近は auto でいいみたい。
 
-ダンプファイルのサイズは最大メインメモリの1.2倍。
+ダンプファイルのサイズは最大メインメモリの 1.2 倍。
 
 # カーネルコマンドラインパラメータ(kernel command-line parameters)
 

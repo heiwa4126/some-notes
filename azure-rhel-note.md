@@ -1,4 +1,4 @@
-AzureでRHEL7のメモ
+Azure で RHEL7 のメモ
 
 時代は変わる。
 
@@ -10,11 +10,11 @@ AzureでRHEL7のメモ
 
 # 最近の状況 - GPTでLVMでxfsで
 
-ひさしぶりにAzureでRHEL 7.8のVMを作ったら(2020-07、
+ひさしぶりに Azure で RHEL 7.8 の VM を作ったら(2020-07、
 サイズ: B2S)
 
-GPTでLVMでxfsで、
-PVのfreeが大きくて、
+GPT で LVM で xfs で、
+PV の free が大きくて、
 自分で割り振れ、だった。
 
 こんな感じ
@@ -68,7 +68,7 @@ sdb1          ext4              1167997e-38d3-4f0c-a3b8-b6c1d49b9394   /mnt
 ## 拡張
 
 sdkman & gradle & spring boot とかやってたら、
-あっというまに/homeが不足したので拡張してみる。
+あっというまに/home が不足したので拡張してみる。
 
 ```
 $ df -h /home
@@ -76,11 +76,11 @@ Filesystem                 Size  Used Avail Use% Mounted on
 /dev/mapper/rootvg-homelv 1014M  984M   30M  98% /home
 ```
 
-pvdisplayによると
+pvdisplay によると
 4 MiB \* 9732/1000 = 38.928 GiB
-40ギビバイト(ギガバイトじゃなくて)ぐらいFreeある。
+40 ギビバイト(ギガバイトじゃなくて)ぐらい Free ある。
 
-/homeを2GiB増やしてみる。
+/home を 2GiB 増やしてみる。
 
 ```
 lvextend -L +2G /dev/rootvg/homelv
@@ -96,7 +96,7 @@ Filesystem                 Size  Used Avail Use% Mounted on
 /dev/mapper/rootvg-homelv  3.0G  985M  2.1G  33% /home
 ```
 
-無事3GBになりました。あとVGのサイズ確認
+無事 3GB になりました。あと VG のサイズ確認
 
 ```sh
 sudo vgdisplay
@@ -104,7 +104,7 @@ sudo vgdisplay
 
 9732 -> 9220
 
-(9732-9220)\*4=2024 で 2GiB減ってるのがわかる。
+(9732-9220)\*4=2024 で 2GiB 減ってるのがわかる。
 
 # chronyでPTPクロックソース
 
@@ -137,7 +137,7 @@ hyperv
 refclock PHC /dev/ptp0 poll 3 dpoll -2 offset 0
 ```
 
-追加して、他のrefclockをコメントアウト。で`systemctl restart chronyd`
+追加して、他の refclock をコメントアウト。で`systemctl restart chronyd`
 
 設定後:
 
@@ -151,18 +151,18 @@ MS Name/IP address         Stratum Poll Reach LastRx Last sample
 
 # Azureのパスワード
 
-AzureのLinuxにはシリアルコンソールがあるのだけど、
-sshで使ってるとパスワードの設定を忘れがちなので、
+Azure の Linux にはシリアルコンソールがあるのだけど、
+ssh で使ってるとパスワードの設定を忘れがちなので、
 作業ユーザにだけはパスワードを設定しておくといいと思う。
 
-ちなみにrootは
+ちなみに root は
 
 ```
 $ sudo grep root /etc/shadow
 root:*LOCK*:14600::::::
 ```
 
-lockのままにしとくべき(作業ユーザでsudo)。
+lock のままにしとくべき(作業ユーザで sudo)。
 
 # マシンイメージが古くてyum updateで証明書が古い、って言われるとき
 

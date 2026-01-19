@@ -88,7 +88,7 @@ npx create-react-app your-app \
 - JSX を返す関数
 - state は Hooks で処理する
 
-あと「ライフサイクルメソッド」 [React のライフサイクル - React 入門 - to-R Media](https://www.to-r.net/media/react-tutorial09/)
+あと「ライフサイクルメソッド」[React のライフサイクル - React 入門 - to-R Media](https://www.to-r.net/media/react-tutorial09/)
 
 ## props の型定義
 

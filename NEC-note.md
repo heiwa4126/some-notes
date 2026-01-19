@@ -20,7 +20,7 @@
 
 ## starter pack
 
-starter pack と いうものがある。
+starter pack というものがある。
 ファーム、BIOS、Express Builder それにドライバの更新キットがセットになったメディア。
 見つけるのがすごく難しい。
 

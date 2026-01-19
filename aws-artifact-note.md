@@ -8,4 +8,4 @@ npm や pip のパッケージを、プロジェクトメンバーで共有す�
 
 ## シナリオ1
 
-AWS CloudShellにCDKの
+AWS CloudShell に CDK の

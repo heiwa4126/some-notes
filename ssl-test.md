@@ -1,6 +1,6 @@
 # SSL Server Test - 評価"F"からの脱出
 
-Nginx + Let's Encrypt(Certbot)で構築したWebサーバを
+Nginx + Let's Encrypt(Certbot)で構築した Web サーバを
 [Qualys SSL LABS SSL Server Test](https://www.ssllabs.com/ssltest/)
 でチェックしたら**評価F**だったので直す。
 
@@ -15,7 +15,7 @@ Nginx + Let's Encrypt(Certbot)で構築したWebサーバを
 
 ## ステップ
 
-Nginxなので以下の通りに設定する。
+Nginx なので以下の通りに設定する。
 
 [NginxでHTTPS：ゼロから始めてSSLの評価をA+にするまで Part 2 – 設定、Ciphersuite、パフォーマンス | POSTD](https://postd.cc/https-on-nginx-from-zero-to-a-plus-part-2-configuration-ciphersuites-and-performance/)
 
@@ -30,10 +30,10 @@ ssl_ciphers 'kEECDH+ECDSA+AES128 kEECDH+ECDSA+AES256 kEECDH+AES128 kEECDH+AES256
 
 `ssl_ciphers`だけちょっとアレンジした。
 
-これで評価A(DNS CAAがないのでA+にはならない)。
+これで評価 A(DNS CAA がないので A+にはならない)。
 使えないブラウザもなし。
 
-こうすればいきなり評価Aなのだが
+こうすればいきなり評価 A なのだが
 
 ```
 ssl_protocols TLSv1.2;
@@ -44,16 +44,16 @@ ssl_ciphers 'TLSv1.2';
 
 ## メモ
 
-ssl_ciphersのチェックは
+ssl_ciphers のチェックは
 
 ```
 openssl ciphers -v 'ECDH !aNULL !eNULL !RC4 !SHA1' | sort
 ```
 
 のようにして、問題のある方式がでてこなくなるまで調整する。
-`-v`なしだと':'でつないだ1行で出力される。
+`-v`なしだと':'でつないだ 1 行で出力される。
 
-nginxのconfigのシンタックスチェックは
+nginx の config のシンタックスチェックは
 
 ```
 nginx -t
@@ -74,9 +74,9 @@ nginx -t
 `/etc/letsencrypt/options-ssl-apache.conf`
 
 [SSL Server Test (Powered by Qualys SSL Labs)](https://www.ssllabs.com/ssltest/index.html)で
-Aが取れる設定。
+A が取れる設定。
 
-weakなcryptはなくなるけど、つながるクライアントが少し減る。
+weak な crypt はなくなるけど、つながるクライアントが少し減る。
 
 ```
 SSLProtocol    all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
@@ -96,7 +96,7 @@ SSLCipherSuite HIGH:!MEDIUM:!aNULL:!MD5:!RC4:!3DES:!CBC
 # RHEL7でcertbot
 
 [Certbot - Centosrhel7 Apache](https://certbot.eff.org/lets-encrypt/centosrhel7-apache)
-にある通り、EPELを有効にして
+にある通り、EPEL を有効にして
 
 ```sh
 sudo yum install certbot python2-certbot-apache
@@ -104,7 +104,7 @@ sudo yum install certbot python2-certbot-apache
 
 すると、`python-zope-interface`パッケージが無いって怒られる。
 
-このパッケージはRHEL7 の optional channelにあるので、
+このパッケージは RHEL7 の optional channel にあるので、
 
 ```sh
 yum-config-manager --enable rhel-7-server-optional-rpms
@@ -124,12 +124,12 @@ ServerName your.site.domain
 
 を追加してから、`certbot --apache`
 
-あとはrenewを設定。
+あとは renew を設定。
 
 # Ubuntu 20.04LTSだと
 
-デフォルトのインストールでAがもらえる(apache2+certbot)。
-減点はDNS CAAだけか?
+デフォルトのインストールで A がもらえる(apache2+certbot)。
+減点は DNS CAA だけか?
 
 そうでもなかった、古いブラウザ対応みたいだけど、そのへんはもうサポート外でいいや。
 

@@ -1,6 +1,6 @@
 [char - Rust](https://doc.rust-lang.org/std/primitive.char.html)
 読んでたら不安になってきたので
-UNICODEをまとめてみる.
+UNICODE をまとめてみる.
 
 # 参考
 
@@ -18,12 +18,12 @@ UNICODEをまとめてみる.
 範囲は
 0 から 0x10FFFF
 の
-21ビット(いまのところ)。
+21 ビット(いまのところ)。
 
 で、このコードポイントから
 
-- 上位サロゲート(high-surrogates サロゲートペアの前半の2バイト)
-- 下位サロゲート(low-surrogates サロゲートペアの後半の2バイト)
+- 上位サロゲート(high-surrogates サロゲートペアの前半の 2 バイト)
+- 下位サロゲート(low-surrogates サロゲートペアの後半の 2 バイト)
 
 を除いたものが
 「ユニコードスカラー値」
@@ -45,33 +45,33 @@ UNICODEをまとめてみる.
 
 > Surrogate pairs are used only in UTF-16.
 
-って書いてあるので、UTF-8には関係がない。
+って書いてあるので、UTF-8 には関係がない。
 
-UTF-16(原則2バイト1文字)で、21bitのコードページを表現しようとするから
+UTF-16(原則 2 バイト 1 文字)で、21bit のコードページを表現しようとするから
 こんな変なことをしなきゃならない。
 
-えーとつまり、UTF-16は1文字u32というのはウソなわけだ。
+えーとつまり、UTF-16 は 1 文字 u32 というのはウソなわけだ。
 
-内部の文字コードをUTF-16で持ってる言語はJavaと.NETのC#(メジャーなところでは)。
+内部の文字コードを UTF-16 で持ってる言語は Java と.NET の C#(メジャーなところでは)。
 
 - [Unicodeと、C#での文字列の扱い - Build Insider](https://www.buildinsider.net/language/csharpunicode/02)
 - [.NET で文字エンコーディング クラスを使用する方法 | Microsoft Docs](https://docs.microsoft.com/ja-jp/dotnet/standard/base-types/character-encoding)
 
 サロゲートが問題になるケースで、
 一文字を固定バイト長にしたいなら
-UTF-32を使う。
+UTF-32 を使う。
 
-Rustのcharの実装はおおむねu32. Goのruneはi32(未確認情報)。
+Rust の char の実装はおおむね u32. Go の rune は i32(未確認情報)。
 
-JavaScriptはUTF-16
+JavaScript は UTF-16
 (と、[What every JavaScript developer should know about Unicode](https://dmitripavlutin.com/what-every-javascript-developer-should-know-about-unicode/)に書いてあった)
 だそうだけど、エンジンによって異なりそう。
 
 # ウムラウトなど
 
-Unicodeには
+Unicode には
 動的合成(dynamic composition)があるので、
-UTF-32でも1文字4byteとは限らない。
+UTF-32 でも 1 文字 4byte とは限らない。
 
 # emoji
 

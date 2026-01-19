@@ -69,7 +69,7 @@ def get_posts_post_id(post_id: int) -> Post:
 
 のように書くと、いい感じの OPenAPI が出力されるようになる。
 
-SimpleError と`{"detail": BPNF}`が 全然関連が無いのが問題だと思う場合には
+SimpleError と`{"detail": BPNF}`が全然関連が無いのが問題だと思う場合には
 
 ```python
 return JSONResponse(SimpleError(detail=BPNF).model_dump(), 404)

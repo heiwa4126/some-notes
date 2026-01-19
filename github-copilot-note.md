@@ -162,17 +162,17 @@ Copilot Chat における特定のコンテキストや役割を指定するた�
 - **`@workspace`**  
   → プロジェクト全体(ワークスペース)に関する質問をするときに使います。  
   例: `@workspace How are notifications scheduled?`  
-  → 「ワークスペース全体で通知はどうスケジュールされている?」
+  →「ワークスペース全体で通知はどうスケジュールされている?」
 
 - **`@vscode`**  
   → Visual Studio Code に関する質問をするときに使います。  
   例: `@vscode tell me how to debug a node.js app`  
-  → 「Visual Studio Code で Node.js アプリをどうデバッグするか教えて」
+  →「Visual Studio Code で Node.js アプリをどうデバッグするか教えて」
 
 - **`@terminal`**  
   → ターミナルやコマンドラインに関する質問をするときに使います。  
   例: `@terminal find the largest file in the src directory`  
-  → 「src ディレクトリで最大のファイルを見つけて」
+  →「src ディレクトリで最大のファイルを見つけて」
 
 ### なぜ必要か?
 
@@ -189,32 +189,32 @@ Copilot は複数の情報源(コード、エディタ、ターミナルなど)�
 - **`#file`**  
   → 特定のファイルを参照するよう指示します。  
   例: `#file:gameReducer.js #file:gameInit.js how are these files related?`  
-  → 「gameReducer.js と gameInit.js はどう関連していますか?」
+  →「gameReducer.js と gameInit.js はどう関連していますか?」
 
 - **`#selection`**  
   → エディタで選択したコード部分を参照します。  
   例: `#selection explain this code`  
-  → 「選択したコードを説明して」
+  →「選択したコードを説明して」
 
 - **`#editor`**  
   → 現在開いているファイル全体を参照します。  
   例: `#editor suggest improvements`  
-  → 「このファイル全体の改善点を提案して」
+  →「このファイル全体の改善点を提案して」
 
 - **`#codebase`**  
   → プロジェクト全体のコードベースを参照します。  
   例: `#codebase where is the user authentication implemented?`  
-  → 「ユーザー認証はどこで実装されていますか?」
+  →「ユーザー認証はどこで実装されていますか?」
 
 - **`#git`**  
   → Git の履歴や差分を参照します。  
   例: `#git summarize the last commit`  
-  → 「最後のコミットを要約して」
+  →「最後のコミットを要約して」
 
 - **`#terminalLastCommand`**  
   → ターミナルで最後に実行したコマンドを参照します。  
   例: `@terminal #terminalLastCommand explain the last command and error`  
-  → 「最後のコマンドとエラーを説明して」
+  →「最後のコマンドとエラーを説明して」
 
 ## スラッシュコマンド (slash commands) とは
 
@@ -230,31 +230,31 @@ Copilot は複数の情報源(コード、エディタ、ターミナルなど)�
 - **`/new`**  
   → 新しいプロジェクトを作成する。  
   例: `/new react app with typescript`  
-  → 「TypeScript を使った React アプリを作成して」
+  →「TypeScript を使った React アプリを作成して」
 
 - **`/newNotebook`**  
   → 新しい Jupyter ノートブックを作成する。  
   例: `/newNotebook retrieve the titanic dataset and use Seaborn to plot the data`  
-  → 「タイタニックのデータセットを取得し、Seaborn でプロットするノートブックを作成して」
+  →「タイタニックのデータセットを取得し、Seaborn でプロットするノートブックを作成して」
 
 - **`/fix`**  
   → アクティブなファイルや選択したコードのエラーを修正する。  
   例: `/fix`  
-  → 「このファイルのエラーを修正して」
+  →「このファイルのエラーを修正して」
 
 - **`/tests`**  
   → アクティブなファイルや選択したコードのテストを生成する。  
   例: `/tests using the Jest framework`  
-  → 「Jest フレームワークを使ってテストを書いて」
+  →「Jest フレームワークを使ってテストを書いて」
 
 ## チャット参加者・チャット変数・スラッシュコマンドの違い
 
 - **チャット参加者 (`@workspace`, `@vscode`)**  
-  → 「どの視点で答えるか」を指定。
+  →「どの視点で答えるか」を指定。
 - **チャット変数 (`#file`, `#selection`)**  
-  → 「どのコードや情報を参照するか」を指定。
+  →「どのコードや情報を参照するか」を指定。
 - **スラッシュコマンド (`/new`, `/fix`)**  
-  → 「何をするか」を直接指示。
+  →「何をするか」を直接指示。
 
 ## `/help` で表示されるメッセージ
 
@@ -382,7 +382,7 @@ Free プラン以外は 1 リクエスト $0.04 で買える。
 
 あと、インラインコード補完(IDE での入力補助)ではプレミアムリクエストを消費しない。
 
-**重要**: 「インラインコード補完」は Ctrl+I や Ctrl+Alt+I を押して出てくるやつではないやつ。
+**重要**:「インラインコード補完」は Ctrl+I や Ctrl+Alt+I を押して出てくるやつではないやつ。
 
 ### 追加プレミアムリクエストを買う
 

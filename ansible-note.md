@@ -1871,7 +1871,7 @@ pip3 install --user -U ansible-runner
 
 ## ansible-lint 6
 
-ansible-lint 6 から ansible-core 2.11 以上 をインストールするようになったので、
+ansible-lint 6 から ansible-core 2.11 以上をインストールするようになったので、
 
 core でない古い ansible と ansible-lint を使いたいときは、
 

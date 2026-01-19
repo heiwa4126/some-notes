@@ -10,9 +10,9 @@
 find /etc/pam.d -type f | xargs grep -e pam_pwquality -e pam_cracklib | fgrep :password
 ```
 
-symlink以外の設定ファイルでpam_pwqualityかpam_cracklibがあるところを探す
+symlink 以外の設定ファイルで pam_pwquality か pam_cracklib があるところを探す
 
-で、このうちmodule_interfaceが
+で、このうち module_interface が
 `password`(ユーザーのパスワード変更に使用される)
 ものを見る。
 
@@ -35,7 +35,7 @@ libpwquality-1.2.3-5.el7.x86_64
 
 # pamを使ってるか確認
 
-lddでlibpamがあればOK
+ldd で libpam があれば OK
 
 例)
 
@@ -52,24 +52,24 @@ lddでlibpamがあればOK
         libpam.so.0 => /lib64/libpam.so.0 (0x00007ffb4ffd8000)
 ```
 
-で、例えばsshdだったら
+で、例えば sshd だったら
 
-- /etc/pam.d/system-auth (symlinkかも)
-- /etc/pam.d/sshd (symlinkかも)
+- /etc/pam.d/system-auth (symlink かも)
+- /etc/pam.d/sshd (symlink かも)
 
-が設定ファイルになる。(Appのpam設定が`/etc/pam.d/App`、というのは慣習らしい。)
+が設定ファイルになる。(App の pam 設定が`/etc/pam.d/App`、というのは慣習らしい。)
 
 `/etc/pam.d/system-auth`
 は
 `/etc/pam.d/sshd`
-でincludeで読み込まれてる。
+で include で読み込まれてる。
 
-includeについては
-例えば`sudo`は`su`のincludeだけでできてるはず。
+include については
+例えば`sudo`は`su`の include だけでできてるはず。
 
 # links
 
-- [A Linux\-PAM page](http://www.linux-pam.org/) - PAM本家
+- [A Linux\-PAM page](http://www.linux-pam.org/) - PAM 本家
 - [The Linux\-PAM System Administrators' Guide](http://www.linux-pam.org/Linux-PAM-html/Linux-PAM_SAG.html)
 - [Understanding PAM Authentication and Security](https://www.aplawrence.com/Basics/understandingpam.html)
 - [Configure and Use Linux\-PAM \- Like Geeks](https://likegeeks.com/linux-pam-easy-guide/)
@@ -87,7 +87,7 @@ includeについては
 
 > PAM サービス用の共通設定は /etc/pam.d/system-auth-ac
 
-`*-auth`や`*-auth-ac`は、includeやsubstackされるものらしい。
+`*-auth`や`*-auth-ac`は、include や substack されるものらしい。
 
 - [第10章 PAM \(プラグ可能な認証モジュール\) の使用 Red Hat Enterprise Linux 7 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/pluggable_authentication_modules)
 - [10\.2\. PAM 設定ファイルについて Red Hat Enterprise Linux 7 \| Red Hat Customer Portal](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/7/html/system-level_authentication_guide/pam_configuration_files) - 重要
@@ -95,7 +95,7 @@ includeについては
 > 警告
 > PAM の設定には、PAM 設定ファイルを手動で編集するのではなく、authconfig ツールを使用することが強く推奨されます。
 
-configの各行
+config の各行
 
 ```
 module_interface	control_flag	module_name module_arguments
@@ -130,7 +130,7 @@ service type control module-path module-arguments
 - [知っているようで知らないPAMのお話](https://www.slideshare.net/serverworks/pam-53731680)
 
 - include - 引数で指定したファイルを読み込み、記述に従って処理する。指定インターフェースのすべての行を含める。
-- substack - includeと異なるのは、サブスタック内のdoneおよびdieアクションの評価が、モジュールスタック全体の残りの部分をスキップするのではなく、サブスタックのみをスキップすることです。サブスタック内でジャンプしても評価が飛び出すことはなく、親スタック内でジャンプした場合はサブスタック全体を1つのモジュールとしてカウントします。
+- substack - include と異なるのは、サブスタック内の done および die アクションの評価が、モジュールスタック全体の残りの部分をスキップするのではなく、サブスタックのみをスキップすることです。サブスタック内でジャンプしても評価が飛び出すことはなく、親スタック内でジャンプした場合はサブスタック全体を 1 つのモジュールとしてカウントします。
 
 # authconfig
 
@@ -164,7 +164,7 @@ service type control module-path module-arguments
 
 [pam_pwquality\(8\) \- Linux man page](https://linux.die.net/man/8/pam_pwquality)
 
-(DeepLで翻訳して、ちょっとづつ修正)
+(DeepL で翻訳して、ちょっとづつ修正)
 
 ## 概要
 
@@ -172,9 +172,9 @@ service type control module-path module-arguments
 
 このモジュールの動作は、ユーザにパスワードの入力を促し、システムの辞書と、不適切な選択を識別するためのルールのセットに対して、その強度をチェックすることです。
 
-最初のアクションは、1つのパスワードを入力させ、その強度をチェックし、強度が高いと判断された場合は、2回目のパスワード入力を促します（1回目に正しく入力されたかどうかを確認するためです）。問題がなければ、そのパスワードは後続のモジュールに渡され、新しい認証トークンとしてインストールされます。
+最初のアクションは、1 つのパスワードを入力させ、その強度をチェックし、強度が高いと判断された場合は、2 回目のパスワード入力を促します（1 回目に正しく入力されたかどうかを確認するためです）。問題がなければ、そのパスワードは後続のモジュールに渡され、新しい認証トークンとしてインストールされます。
 
-まず、Cracklibルーチンが呼び出され、パスワードが辞書に含まれているかどうかがチェックされます。これらのチェックは次のとおりです。
+まず、Cracklib ルーチンが呼び出され、パスワードが辞書に含まれているかどうかがチェックされます。これらのチェックは次のとおりです。
 
 ### 回文
 
@@ -187,12 +187,12 @@ service type control module-path module-arguments
 ### 類似
 
 新しいパスワードが古いパスワードに似すぎているか？
-これは主に1つの引数、difokによって制御されており、古いものと新しいものの間のいくつかの変更が新しいパスワードを受け入れるのに十分である。
+これは主に 1 つの引数、difok によって制御されており、古いものと新しいものの間のいくつかの変更が新しいパスワードを受け入れるのに十分である。
 
 ### 単純
 
 新しいパスワードが小さすぎませんか？
-これは5つの引数 minlen, dcredit, ucredit, lcredit, ocredit で制御されます。
+これは 5 つの引数 minlen, dcredit, ucredit, lcredit, ocredit で制御されます。
 これらがどのように機能するのか、またデフォルト値については、引数のセクションを参照してください。
 
 ### 回転
@@ -213,113 +213,113 @@ service type control module-path module-arguments
 
 ### debug
 
-このオプションは、モジュールの動作を示す情報をsyslog(3)に書き込ませます（このオプションでは、ログファイルにパスワード情報は書き込まれません）。
+このオプションは、モジュールの動作を示す情報を syslog(3)に書き込ませます（このオプションでは、ログファイルにパスワード情報は書き込まれません）。
 
 ### authtok_type=XXX
 
 デフォルトの動作は、モジュールがパスワードを要求する際に以下のプロンプトを使用することです。
 "New UNIX password: " および "Retype UNIX password: "
-この例のUNIXという単語はこのオプションで置き換えることができ、デフォルトでは空になっています。
+この例の UNIX という単語はこのオプションで置き換えることができ、デフォルトでは空になっています。
 
 ### retry=N
 
-エラーで戻る前に、最大でN回、ユーザーにプロンプトを表示します。デフォルトは1です。
+エラーで戻る前に、最大で N 回、ユーザーにプロンプトを表示します。デフォルトは 1 です。
 
 ### difok=N
 
-この引数は、古いパスワードと新しいパスワードの変更文字数をデフォルトの5から変更します。
+この引数は、古いパスワードと新しいパスワードの変更文字数をデフォルトの 5 から変更します。
 
 ### minlen=N
 
-(注: この節ややこしいです。例えば単にminlen=8とか設定しただけでは最小パスワード長が8文字にはなりません。例を参照)
+(注: この節ややこしいです。例えば単に minlen=8 とか設定しただけでは最小パスワード長が 8 文字にはなりません。例を参照)
 
 新しいパスワードの最小許容サイズ。
-(「クレジット」が無効化されていない場合、この値に+1が最小許容サイズになります。デフォルトでは「クレジット」は無効化されていません。
-注:「クレジット」についてはこのあとdcreditなどで説明されます)
+(「クレジット」が無効化されていない場合、この値に+1 が最小許容サイズになります。デフォルトでは「クレジット」は無効化されていません。
+注:「クレジット」についてはこのあと dcredit などで説明されます)
 
-異なる種類の文字（英大文字、英小文字、英数字、それ以外の文字）ごとに長さ+1が与えられます。
+異なる種類の文字（英大文字、英小文字、英数字、それ以外の文字）ごとに長さ+1 が与えられます。
 
-このパラメータのデフォルトは9です。
+このパラメータのデフォルトは 9 です。
 
-なお、Cracklibにも長さ制限のペアがあります。
-「あまりにも短すぎる」として設定された制限は4で(これはハードコーディングされています)
+なお、Cracklib にも長さ制限のペアがあります。
+「あまりにも短すぎる」として設定された制限は 4 で(これはハードコーディングされています)
 そしてコンパイル時に定義される制限(=6)は、
-minlenの設定と無関係にチェックされます。
+minlen の設定と無関係にチェックされます。
 
 ### dcredit=N
 
-(N >= 0の場合)
+(N >= 0 の場合)
 これは、新しいパスワードに数字が含まれている場合の最大クレジットです。
 
-英数字がN桁未満またはN桁の場合、各桁は現在のminlen値を満たすために+1としてカウントされます。
+英数字が N 桁未満または N 桁の場合、各桁は現在の minlen 値を満たすために+1 としてカウントされます。
 (注:要は「
 英数字の数が
-0だったらクレジット0
-N以下だったらクレジットは英数字の数、
-N+1以上だったらクレジットはN、
+0 だったらクレジット 0
+N 以下だったらクレジットは英数字の数、
+N+1 以上だったらクレジットは N、
 」ということらしい)
 
-dcreditのデフォルトは1で、これはminlenが10以下の場合に推奨される値です。
+dcredit のデフォルトは 1 で、これは minlen が 10 以下の場合に推奨される値です。
 
-(N < 0の場合)
+(N < 0 の場合)
 新しいパスワードに必要な最小の英数字数です。
 
-(注:たとえばdcredit=-2だったら最低でも2文字英数字が必要)
+(注:たとえば dcredit=-2 だったら最低でも 2 文字英数字が必要)
 
 ### ucredit=N
 
-dcredit=Nの項参照。英大文字
+dcredit=N の項参照。英大文字
 
 ### lcredit=N
 
-dcredit=Nの項参照。英小文字
+dcredit=N の項参照。英小文字
 
 ### ocredit=N
 
-dcredit=Nの項参照。「英小文字、英大文字、数字」以外の文字
+dcredit=N の項参照。「英小文字、英大文字、数字」以外の文字
 
 ### maxrepeat=N
 
-N個以上の同じ連続した文字を含むパスワードを拒否します。デフォルトは0で、このチェックが無効になっていることを意味します。
+N 個以上の同じ連続した文字を含むパスワードを拒否します。デフォルトは 0 で、このチェックが無効になっていることを意味します。
 
 ### maxclassrepeat=N
 
-同じクラスの連続したN個以上の文字を含むパスワードを拒否します。デフォルトは0で、このチェックが無効になっていることを意味します。
+同じクラスの連続した N 個以上の文字を含むパスワードを拒否します。デフォルトは 0 で、このチェックが無効になっていることを意味します。
 
 (注: クラスは英小文字、英大文字、数字、それ以外のあれです)
 
 ### gecoscheck=N
 
-ゼロ以外の場合は、ユーザーのpasswd GECOSフィールドの3文字を超える個々の単語が新しいパスワードに含まれているかどうかを確認します。デフォルトは0で、このチェックが無効になっていることを意味します。
+ゼロ以外の場合は、ユーザーの passwd GECOS フィールドの 3 文字を超える個々の単語が新しいパスワードに含まれているかどうかを確認します。デフォルトは 0 で、このチェックが無効になっていることを意味します。
 
-(注: GECOSフィールドは`/etc/passwd`の5番目のカラムでユーザのフルネームなどを入れるのに使用します。要はユーザのフルネームに基づいたパスワードを拒否するかどうか、の設定)
+(注: GECOS フィールドは`/etc/passwd`の 5 番目のカラムでユーザのフルネームなどを入れるのに使用します。要はユーザのフルネームに基づいたパスワードを拒否するかどうか、の設定)
 
 ### badwords=<list of words>
 
-このスペースで区切られたリストから3文字以上の単語が個別に検索され、新しいパスワードでは禁止されます。デフォルトでは、このリストは空で、このチェックは無効になっています。
+このスペースで区切られたリストから 3 文字以上の単語が個別に検索され、新しいパスワードでは禁止されます。デフォルトでは、このリストは空で、このチェックは無効になっています。
 
 (TODO: リストをダブルクォートで囲むとかそういうのが不明。単に並べるだけでいいのか確認すること)
 
 ### enforce_for_root
 
-このモジュールは、パスワードを変更するユーザーが root であっても、チェックに失敗するとエラーを返します。このオプションはデフォルトではオフになっており、デフォルトではrootユーザはチェックに失敗したというメッセージだけが出力され、パスワードを変更することができます。
+このモジュールは、パスワードを変更するユーザーが root であっても、チェックに失敗するとエラーを返します。このオプションはデフォルトではオフになっており、デフォルトでは root ユーザはチェックに失敗したというメッセージだけが出力され、パスワードを変更することができます。
 
 (注: 逆に言うと、一般ユーザが自分のパスワードを変更する場合には、ポリシーチェックにひっかかるとエラーになってパスワード変更ができない、ということ)
 
 ### use_authtok
 
 この引数は、ユーザーに新しいパスワードの入力を求めず、
-前にスタックされたpasswordモジュールによって提供されれたものを使用するように強制します。
+前にスタックされた password モジュールによって提供されれたものを使用するように強制します。
 
-(注: pam_pwqualityのオプションではない。下の例参照)
+(注: pam_pwquality のオプションではない。下の例参照)
 
 ### dictpath=/path/to/dict
 
-cracklibで使う辞書ファイルのパス
+cracklib で使う辞書ファイルのパス
 
 ## 提供されるモジュールタイプ
 
-passwordモジュールタイプのみ提供されます。
+password モジュールタイプのみ提供されます。
 
 ## 戻り値
 
@@ -362,7 +362,7 @@ passwd  password required       pam_pwquality.so retry=3
 passwd  password required       pam_unix.so use_authtok
 ```
 
-もうひとつは（`/etc/pam.d/passwd`形式）は、md5パスワード暗号化を使用したい場合の例です:
+もうひとつは（`/etc/pam.d/passwd`形式）は、md5 パスワード暗号化を使用したい場合の例です:
 
 ```
 #%PAM-1.0
@@ -394,14 +394,14 @@ password  required pam_unix.so use_authtok nullok md5
 
 # pam_pwquality の minlen,dcredit,ucredit,lcredit and ocredit の例
 
-文字種に関係なく、最小パスワード長10
+文字種に関係なく、最小パスワード長 10
 
 ```
 lcredit=0 ucredit=0 dcredit=0 ocredit=0 minlen=10
 ```
 
 文字種に関係なく
-数字が入っていれば最小パスワード長9、そうでなければ最小パスワード長10
+数字が入っていれば最小パスワード長 9、そうでなければ最小パスワード長 10
 
 ```
 lcredit=0 ucredit=0 dcredit=1 ocredit=0 minlen=10
@@ -419,18 +419,18 @@ lcredit=0 ucredit=0 dcredit=1 ocredit=0 minlen=10
 
 こんなの間違いなく設定することができようとは思えない。
 [GitHub \- libpwquality/libpwquality: Password quality checking library](https://github.com/libpwquality/libpwquality)
-のpython bindとかないのか?
+の python bind とかないのか?
 
-python2.7用のパッケージはある。
+python2.7 用のパッケージはある。
 
-libpwquality付属の
+libpwquality 付属の
 `pwscore`が使えそうだが、
 設定が、`/etc/security/pwquality.conf` に固定だ。
 
 設定変えられるといいんだけど...
 
-オマケでパスワードを作る`pwmake`もlibpwquality付属
-(Ubuntuだと`apt install libpwquality-tools`)
+オマケでパスワードを作る`pwmake`も libpwquality 付属
+(Ubuntu だと`apt install libpwquality-tools`)
 
 ```
 $ rpm -ql libpwquality | grep bin/

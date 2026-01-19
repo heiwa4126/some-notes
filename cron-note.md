@@ -1,4 +1,4 @@
-systemd.timerとかあるけど、まだまだ現役。
+systemd.timer とかあるけど、まだまだ現役。
 
 # crontab -e の時刻指定が不安だったら
 
@@ -8,10 +8,10 @@ systemd.timerとかあるけど、まだまだ現役。
 
 # cronのタイムゾーン
 
-cronは現地時間を使用する。これをUTCにするのは結構面倒。
+cron は現地時間を使用する。これを UTC にするのは結構面倒。
 
-あと、すぐ反映させるならcronの再起動も必要。
-普通はタイムゾーン最初に設定してkernel更新とかあって再起動するから気が付かないけど。
+あと、すぐ反映させるなら cron の再起動も必要。
+普通はタイムゾーン最初に設定して kernel 更新とかあって再起動するから気が付かないけど。
 
 ```bash
 sudo timedatectl set-timezone Asia/Tokyo

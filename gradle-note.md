@@ -18,7 +18,7 @@ PATH=$PATH:/opt/gradle/current/bin ; hash -r
 gradle -version
 ```
 
-Hello world的なもの
+Hello world 的なもの
 
 ```bash
 mkdir demo1 ; cd demo1
@@ -59,7 +59,7 @@ BUILD SUCCESSFUL in 1m 29s
 gradle help --task :init
 ```
 
-bash版
+bash 版
 
 ```bash
 mkdir demo2 ; cd demo2
@@ -72,7 +72,7 @@ gradle init --type java-application \
 ./gradlew -q run
 ```
 
-PowerShell版
+PowerShell 版
 
 ```powershell
 mkdir demo3 ; cd demo3
@@ -98,12 +98,12 @@ gradle init --type kotlin-application \
 ./gradlew -q run
 ```
 
-.gitignoreは
+.gitignore は
 [https://www.toptal.com/developers/gitignore/api/gradle,kotlin,visualstudiocode](https://www.toptal.com/developers/gitignore/api/gradle,kotlin,visualstudiocode)
 で置き換え。
 
 とりあえず
-`app/build.gradle.kts`のdependenciesからguavaだけはずしておく。
+`app/build.gradle.kts`の dependencies から guava だけはずしておく。
 (便利だけどデカいからなあ)
 
 ## executable Jar
@@ -125,7 +125,7 @@ tasks.jar {
 java -jar ./app/build/libs/app.jar
 ```
 
-Jarの中身見ると
+Jar の中身見ると
 
 ```
 $ jar -tvf ./app/build/libs/app.jar
@@ -140,7 +140,7 @@ $ jar -tvf ./app/build/libs/app.jar
 ```
 
 [Maven Repository: commons-codec » commons-codec » 1.15](https://mvnrepository.com/artifact/commons-codec/commons-codec/1.15)
-いれてmd5sumを意味なく計算させてみる。
+いれて md5sum を意味なく計算させてみる。
 
 `java -jar` の方は NoClassDefFoundError になるので
 
@@ -156,39 +156,39 @@ tasks.jar {
 }
 ```
 
-duplicatesStrategyはファイルをコピーする時のポリシー
+duplicatesStrategy はファイルをコピーする時のポリシー
 
 このへん参照。
 
 - [Gradle 7 requires duplicatesStrategy for "fake" duplicates · Issue #17236 · gradle/gradle](https://github.com/gradle/gradle/issues/17236)
 - [DuplicatesStrategy (Gradle API 7.5.1)](https://docs.gradle.org/current/javadoc/org/gradle/api/file/DuplicatesStrategy.html)
 
-できるJarはJavaよりも若干大きい(Kotlinの標準ライブラリのぶん)。
+できる Jar は Java よりも若干大きい(Kotlin の標準ライブラリのぶん)。
 
 # dependencies の apiとimplementation
 
-- api - mavenのcompileスコープ 実行時、コンパイル時、テスト時に必要。
-- implementation - mavenのruntimeスコープ 実行時、テスト時に必要。
+- api - maven の compile スコープ実行時、コンパイル時、テスト時に必要。
+- implementation - maven の runtime スコープ実行時、テスト時に必要。
 
 # vscodeでgradleプロジェクトのimportの補完が効かない
 
 まず
 java.autobuild.enabled を false にする。
 次に
-Java Projectの…のところから clean workspace を選ぶ(時間がかかる)。
+Java Project の…のところから clean workspace を選ぶ(時間がかかる)。
 
 これにより
-build.gradle の 右クリックで Reload Projects が効くようになるので、
+build.gradle の右クリックで Reload Projects が効くようになるので、
 build.gradle を変更するたびに Reload Projects を選ぶ。
 
 (以下葛藤)
 
 いやなんか build.gradle の変更するたびに clean workspace を実行しないとダメみたい。なんだこれ。
 
-"clean workspace"は Java Projectの…のところにあります。
+"clean workspace"は Java Project の…のところにあります。
 
 java.autobuild.enabled を false にしたら
-build.gradle の 右クリックで Reload projectが効くようになった。
+build.gradle の右クリックで Reload project が効くようになった。
 
 (以下嘘)
 
@@ -210,8 +210,8 @@ gradle init --type java-application \
 
 で作った場合、
 
-- appディレクトリをvscodeで開く。
-- またはhello1ディレクトリをvscodeで開き、appディレクトリを「フォルダをワークスペースに追加」する。(以下オプション)「ワークスペースを名前を付けて保存する」でhello1.code-workspaceをhello1ディレクトリ直下に保存する。
+- app ディレクトリを vscode で開く。
+- または hello1 ディレクトリを vscode で開き、app ディレクトリを「フォルダをワークスペースに追加」する。(以下オプション)「ワークスペースを名前を付けて保存する」で hello1.code-workspace を hello1 ディレクトリ直下に保存する。
 
 という手順でなんとかする。
 

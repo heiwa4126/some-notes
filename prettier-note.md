@@ -9,7 +9,7 @@
 
 自分は入ってたほうが好きなので。
 
-1 つの答えは 別のツールをつかうことで、
+1 つの答えは別のツールをつかうことで、
 
 ```sh
 npm i -g textlint textlint-rule-preset-ja-spacing

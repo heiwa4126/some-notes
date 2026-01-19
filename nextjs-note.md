@@ -120,8 +120,8 @@ Next.js 13.3 にしたら、いままでどーしてもうまく動かなかっ�
 
 1. app dir で作る。
 2. nextConfig に `output: 'export'`
-3. `npm build` で プロジェクトルート直下の `out/` 以下にビルドされる。
-4. `http-server ./out` で テストしてみる。
+3. `npm build` でプロジェクトルート直下の `out/` 以下にビルドされる。
+4. `http-server ./out` でテストしてみる。
 
 SSG があるとどうなるかはテストしてない。
 

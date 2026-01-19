@@ -6,7 +6,7 @@
 
 > MDXでは、マークダウンコンテンツの中でJSXを使用することができます。
 
-vscodeでのプレビューがめんどくさい
+vscode でのプレビューがめんどくさい
 
 [Markdown and MDX | Next.js](https://beta.nextjs.org/docs/guides/mdx)
 

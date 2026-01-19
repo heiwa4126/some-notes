@@ -2,7 +2,7 @@
 
 [Amazon Cognito コンソール](https://console.aws.amazon.com/cognito/home)
 
-ユーザープールとIDプール
+ユーザープールと ID プール
 
 ```
 Amazon Cognito の主な 2 つのコンポーネントは、ユーザープールと ID プールです。
@@ -11,16 +11,16 @@ ID プールは、AWS の他のサービスへのアクセス権をユーザー�
 ユーザープールと ID プールは個別に使用することも、一緒に使用することもできます。
 ```
 
-- IDプール - CognitoがOpenIDConnectのID providerになるよ [Open ID Connect プロバイダー \(ID プール\)](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/open-id.html)
-- ユーザープール - CognitoがOAuth2で認可
+- ID プール - Cognito が OpenIDConnect の ID provider になるよ [Open ID Connect プロバイダー \(ID プール\)](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/open-id.html)
+- ユーザープール - Cognito が OAuth2 で認可
 
-IAMでOpenIDConnectのID providerもできるらしい。
+IAM で OpenIDConnect の ID provider もできるらしい。
 [OpenID Connect \(OIDC\) ID プロバイダーの作成](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_roles_providers_create_oidc.html)
 
 - [Amazon Cognito の使用開始方法 - Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/cognito-getting-started.html)
 - [一般的な Amazon Cognito シナリオ \- Amazon Cognito](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/cognito-scenarios.html)
 
-↑Cognitoの「ありがちな使い方」一覧があるので、まずこれを読む。
+↑Cognito の「ありがちな使い方」一覧があるので、まずこれを読む。
 
 例えば
 [ユーザープールと共に API Gateway と Lambda を使用してリソースにアクセスする](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/cognito-scenarios.html#scenario-api-gateway)
@@ -33,9 +33,9 @@ IAMでOpenIDConnectのID providerもできるらしい。
 - [Amazon Cognito User Poolsを使って、webサイトにユーザ認証基盤を作る \- Qiita](https://qiita.com/horike37/items/1d522f66452d3abe1203)
 - [REST API と Amazon Cognito ユーザープールを統合する \- Amazon API Gateway](https://docs.aws.amazon.com/ja_jp/apigateway/latest/developerguide/apigateway-enable-cognito-user-pool.html)
 
-IDトークン or アクセストークン
+ID トークン or アクセストークン
 [【OAuth 2\.0 / OIDC】アクセストークンとIDトークンの違い ＋ OIDC誕生の歴史 \- yyh\-gl's Tech Blog](https://yyh-gl.github.io/tech-blog/blog/id_token_and_access_token/#:~:text=2%E3%81%A4%E3%81%AE%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%81%AE%E9%81%95%E3%81%84,-%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%20%E3%81%A8&text=%E8%AA%8D%E5%8F%AF%E3%81%AB%E4%BD%BF%E3%81%86%E3%81%9F%E3%82%81%E3%81%AE,%E3%81%AE%E3%81%8CID%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%81%A7%E3%81%99%E3%80%82)
-まずIDトークンで
+まず ID トークンで
 
 # CFnでCognito
 
@@ -46,6 +46,6 @@ IDトークン or アクセストークン
 - [CognitoユーザープールをCFnで構築し、TypeScriptでユーザーを追加する - HAPPY HACKING Oouchi's BLOG](https://www.ooooouchi.info/entry/2020/06/03/083000)
 - [AWS::Cognito::IdentityPool - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-identitypool.html)
 
-CFnを調べる手順としては、
-ポータルでつくる(UIを英語モードで)、AWS::Cognito::UserPool(例)と、その設定の英語名で[ググる(英語モードで)](https://www.google.com/webhp?hl=en)
+CFn を調べる手順としては、
+ポータルでつくる(UI を英語モードで)、AWS::Cognito::UserPool(例)と、その設定の英語名で[ググる(英語モードで)](https://www.google.com/webhp?hl=en)
 という感じで進めれば短時間で調査が終わる感じ。

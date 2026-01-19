@@ -1,24 +1,24 @@
 # 使ってみよう AWS X-Ray
 
 AWS X-Ray(エクスレイ)は
-AWSの観測サービスの1つで
+AWS の観測サービスの 1 つで
 主にプロファイラ、エラー検出などに使います。
 
 今回は AWS X-Ray を軽く触ってみましょう。
 
 ## X-Rayの用語
 
-X-Rayで使われる用語は [AWS X-Ray の概念 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-concepts.html) を参照。
-とりあえず知っておく用語は以下の2つです。
+X-Ray で使われる用語は [AWS X-Ray の概念 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-concepts.html) を参照。
+とりあえず知っておく用語は以下の 2 つです。
 
 ### トレース
 
 一連のサービス呼び出し・結果の返却(「セグメント」)の塊。たとえば
-API GatewayのstageからLambdaが呼び出され、
-LambdaがDynamDBを読んで...
+API Gateway の stage から Lambda が呼び出され、
+Lambda が DynamDB を読んで...
 の一連のセグメント。
 
-トレース1個分を表示するのが
+トレース 1 個分を表示するのが
 [X-Rayコンソール](https://console.aws.amazon.com/xray/home#)
 の
 [traces](https://console.aws.amazon.com/xray/home#/traces)
@@ -30,14 +30,14 @@ LambdaがDynamDBを読んで...
 
 グループという名前ですが、実質フィルタ。
 トレースに対する条件式を書きます。
-前述のX-Rayコンソールのトレースやサービスマップでグループを指定すると、
+前述の X-Ray コンソールのトレースやサービスマップでグループを指定すると、
 フィルタされたトレースのみが表示されるようになります。
 
 条件式はここ参照: [フィルタ式を使用したコンソールでのトレースの検索 - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-console-filters.html)
 
 ## 実際にX-Rayのサンプルを動かしてみる
 
-AWS提供のサンプルには
+AWS 提供のサンプルには
 
 - [AWS X-Ray サンプルアプリケーション - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-scorekeep.html)
 - [aws-samples/eb-java-scorekeep at xray-gettingstarted](https://github.com/aws-samples/eb-java-scorekeep/tree/xray-gettingstarted)
@@ -46,7 +46,7 @@ AWS提供のサンプルには
 
 使うツールは
 
-- AWS CLI 2.7.20, AWS SAM 1.53.0 (2022-08時点での最新)
+- AWS CLI 2.7.20, AWS SAM 1.53.0 (2022-08 時点での最新)
 - Python 3.9
 - [Lambda Powertools Python](https://awslabs.github.io/aws-lambda-powertools-python/latest/)
 - jq, [yq(tomlq)](https://github.com/kislyuk/yq)
@@ -60,7 +60,7 @@ sam build
 sam deploy --guided
 ```
 
-でAWSにデプロイできます。
+で AWS にデプロイできます。
 
 ## テストラン
 
@@ -74,13 +74,13 @@ sam deploy --guided
 で行います。
 
 このアプリケーションは
-API Gateway経由でDynamoDBを読み書きするLambdaで、
+API Gateway 経由で DynamoDB を読み書きする Lambda で、
 
-- GET /hello で 接続テスト。
-- GET /get で DynamoDBから k1=test を読み出し
-- GET /put で DynamoDBへ k1=test,v1=タイムスタンプ文字列 を書込(更新)
+- GET /hello で接続テスト。
+- GET /get で DynamoDB から k1=test を読み出し
+- GET /put で DynamoDB へ k1=test,v1=タイムスタンプ文字列を書込(更新)
 
-ただしlambdaのポリシーでdynamodb:UpdateItemが抜けてるので
+ただし lambda のポリシーで dynamodb:UpdateItem が抜けてるので
 `GET /put`
 は失敗します (`template.yaml`参照)。
 
@@ -96,25 +96,25 @@ API Gateway経由でDynamoDBを読み書きするLambdaで、
 ## 「トレース」を見る
 
 `./remote_test.sh` を実行したら、
-5分以内に
+5 分以内に
 [X-Rayコンソール](https://console.aws.amazon.com/xray/home#)
 を開いてください。
 
 デプロイ先のリージョンを合わせたら
 左ペインの
 [トレース](https://console.aws.amazon.com/xray/home#/traces)
-を選ぶと、テストで実行した4つのトレースが見えるはずです。
+を選ぶと、テストで実行した 4 つのトレースが見えるはずです。
 
-「トレースのリスト」を経過時間でソートすると、3番めのトレースが失敗した
+「トレースのリスト」を経過時間でソートすると、3 番めのトレースが失敗した
 `GET /put`
 になるはずなので、これを選ぶと、以下のような画面になります。
 
 TODO:IMAGE
 
-下のペインで黄色い警告マーク⚠になっているDynamoDBをクリックして
+下のペインで黄色い警告マーク⚠になっている DynamoDB をクリックして
 例外タブを開くと
 `... because no identity-based policy allows the dynamodb:UpdateItem action`
-(dynamodb:UpdateItemアクションが許可されていないので失敗しました)
+(dynamodb:UpdateItem アクションが許可されていないので失敗しました)
 と表示されます。
 
 ## 「サービスマップ」を見る
@@ -124,10 +124,10 @@ TODO:IMAGE
 を選んでください。
 
 「データがありません」と表示される場合がありますが、
-その時はゆっくり10数えて
-「過去5分間」と表示されている隣のリロードボタンを押してください。
+その時はゆっくり 10 数えて
+「過去 5 分間」と表示されている隣のリロードボタンを押してください。
 
-過去5分間のトレースが総合されて
+過去 5 分間のトレースが総合されて
 以下のような画面になります。
 
 TODO:IMAGE
@@ -154,23 +154,23 @@ TODO:IMAGE
 sam destroy --no-prompts
 ```
 
-でAWS上からテスト環境を削除してください。
+で AWS 上からテスト環境を削除してください。
 
 削除するまえに
 `template.yaml`
-の該当部分を修正して(1箇所アンコメントすればいいようにしてあります)
+の該当部分を修正して(1 箇所アンコメントすればいいようにしてあります)
 再デプロイしてみるのもいいですね。
 
 ## X-Rayの有効・無効の切替
 
-開発環境・検証環境でX-Rayを有効にして、
+開発環境・検証環境で X-Ray を有効にして、
 本番環境で無効にする、のような設定は、
 今回サンプルで使った
-Lambda Powertools Pythonを使うなら、[Disabling response auto-capture](https://awslabs.github.io/aws-lambda-powertools-python/latest/core/tracer/#disabling-response-auto-capture) からの 3章を参照。
+Lambda Powertools Python を使うなら、[Disabling response auto-capture](https://awslabs.github.io/aws-lambda-powertools-python/latest/core/tracer/#disabling-response-auto-capture) からの 3 章を参照。
 
-またSAMのCloudFormation的には [SAM CLIのInit時にLambda関数のX-Rayトレースを有効化出来るようになりました | DevelopersIO](https://dev.classmethod.jp/articles/sam-init-enable-x-ray-tracing/) を参照。
+また SAM の CloudFormation 的には [SAM CLIのInit時にLambda関数のX-Rayトレースを有効化出来るようになりました | DevelopersIO](https://dev.classmethod.jp/articles/sam-init-enable-x-ray-tracing/) を参照。
 
-コンソールのUIからのenable/disableは、前述の
+コンソールの UI からの enable/disable は、前述の
 [SAM CLIのInit時にLambda関数のX-Rayトレースを有効化出来るようになりました | DevelopersIO](https://dev.classmethod.jp/articles/sam-init-enable-x-ray-tracing/)
 と
 [Amazon API GatewayのアクティブトレーシングサポートAWS X-Ray - AWS X-Ray](https://docs.aws.amazon.com/ja_jp/xray/latest/devguide/xray-services-apigateway.html)
@@ -179,4 +179,4 @@ Lambda Powertools Pythonを使うなら、[Disabling response auto-capture](http
 ## TODO
 
 今回のサンプルは単純な同期アプリケーションでしたが、
-StepFunctionsなどの非同期アプリケーションで試してみたいです。
+StepFunctions などの非同期アプリケーションで試してみたいです。

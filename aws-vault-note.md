@@ -1,6 +1,6 @@
 [99designs/aws\-vault: A vault for securely storing and accessing AWS credentials in development environments](https://github.com/99designs/aws-vault)
 
-Ubuntu 22.04LTSで (2022-06)
+Ubuntu 22.04LTS で (2022-06)
 
 ```bash
 curl -L 'https://github.com/99designs/aws-vault/releases/download/v6.6.0/aws-vault-linux-amd64' -o aws-vault
@@ -18,9 +18,9 @@ aws-vault: error: Specified keyring backend not available, try --help
 
 なんかキーストアのバックエンドが要る。
 [Vaulting Backends](https://github.com/99designs/aws-vault#vaulting-backends)
-CLIで使えるやつがあるかな。
+CLI で使えるやつがあるかな。
 
-[Pass](https://www.passwordstore.org/) がXでもCLIでも使えるらしい。
+[Pass](https://www.passwordstore.org/) が X でも CLI でも使えるらしい。
 
 参考: [Pass for Ubuntu](https://linuxhint.com/pass-ubuntu/)
 
@@ -30,7 +30,7 @@ sudo apt install pass
 sudo yum install pass
 ```
 
-GPG Keyがないので作る。対話式。
+GPG Key がないので作る。対話式。
 
 ```bash
 gpg --full-generate-key
@@ -40,7 +40,7 @@ gpg --full-generate-key
 
 > gpg: 鍵AAAAAAAAAAAAAAAAを究極的に信用するよう記録しました
 
-これがID。
+これが ID。
 
 ```bash
 pass init AAAAAAAAAAAAAAAA
@@ -48,7 +48,7 @@ pass init AAAAAAAAAAAAAAAA
 pass init メールアドレス
 ```
 
-このへんの変数を.profileに
+このへんの変数を.profile に
 
 ```bash
 export AWS_VAULT_BACKEND=pass   # /usr/bin/pass ではなく
@@ -57,7 +57,7 @@ export AWS_SESSION_TOKEN_TTL=6h   # 6H
 export GPG_TTY=$(tty)
 ```
 
-tmuxだと.bashrcにも
+tmux だと.bashrc にも
 
 ```bash
 export GPG_TTY=$(tty)
@@ -76,7 +76,7 @@ aws-vault add bob
 
 # Passのストアをよそにコピーする
 
-`~ /.password-store/` をコピーすればOK。(GPG秘密鍵は別途必要)
+`~ /.password-store/` をコピーすれば OK。(GPG 秘密鍵は別途必要)
 
 ほかのシステムからうつすには
 [Migrating to pass](https://www.passwordstore.org/#migration)

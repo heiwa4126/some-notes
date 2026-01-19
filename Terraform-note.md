@@ -687,7 +687,7 @@ free アカウントあるので作る。 https://app.terraform.io/signup/accoun
 
 [What is Terraform Cloud - intro and sign up | Terraform | HashiCorp Developer](https://developer.hashicorp.com/terraform/tutorials/cloud-get-started/cloud-sign-up)
 
-`terraform login` で トークン作って設定するしかけ。
+`terraform login` でトークン作って設定するしかけ。
 
 ## import
 
