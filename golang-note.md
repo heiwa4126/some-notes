@@ -41,7 +41,7 @@
 - [インタフェースメモ](#インタフェースメモ)
 - ["//go:build"](#gobuild)
 - [モジュールの更新](#モジュールの更新)
-- [goのcomplition](#goのcomplition)
+- [go の complition](#go-の-complition)
 
 ## Linux で Windows のバイナリを作る
 
@@ -1100,7 +1100,7 @@ go mod tidy
 
 `go get -u=patch ./...` など
 
-## goのcomplition
+## go の complition
 
 そんなものは無い。
 

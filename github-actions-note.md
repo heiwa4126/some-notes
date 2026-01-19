@@ -4,7 +4,7 @@
 
 - [On: が難しい](#on-が難しい)
 - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
-- [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
+- [GITHUB\_REPO\_NAME 環境変数が空](#github_repo_name-環境変数が空)
 - [レポジトリ名の取得](#レポジトリ名の取得)
 - [GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?](#github-actions-の-workflow-runs-に過去の実行結果が残っていますがこれは消すべきですか-一定期間で消えますか)
 - [特定のワークフローファイルだけ実行できるようにする方法はある?](#特定のワークフローファイルだけ実行できるようにする方法はある)
@@ -18,8 +18,13 @@
 - [VSCode 拡張](#vscode-拡張)
 - [permission:](#permission)
 - [action/setup-node](#actionsetup-node)
-- [GITHUB_TOKEN と permissions:](#github_token-と-permissions)
-- [secrets.GITHUB_TOKEN と github.token](#secretsgithub_token-と-githubtoken)
+- [GITHUB\_TOKEN と permissions:](#github_token-と-permissions)
+- [secrets.GITHUB\_TOKEN と github.token](#secretsgithub_token-と-githubtoken)
+- [actionlint](#actionlint)
+- [shell: bash](#shell-bash)
+  - [`--noprofile`](#--noprofile)
+  - [`--norc`](#--norc)
+  - [`-e` \& `-o pipefail`](#-e---o-pipefail)
 
 ## On: が難しい
 
@@ -412,3 +417,45 @@ Metadata スコープとは?)
 
 推奨は github.token。
 secrets.GITHUB_TOKEN は互換性のために残されているらしい。
+
+## actionlint
+
+[rhysd/actionlint: :octocat: Static checker for GitHub Actions workflow files](https://github.com/rhysd/actionlint)
+
+Docker 版は shellcheck と pyflakes 入り
+
+- [actionlint/Dockerfile at main · rhysd/actionlint](https://github.com/rhysd/actionlint/blob/main/Dockerfile)
+- [rhysd/actionlint - Docker Image](https://hub.docker.com/r/rhysd/actionlint)
+
+## shell: bash
+
+デフォルトは bash なんだけど
+
+- デフォルトだと  `bash -e {0}`
+- 指定すると `bash --noprofile --norc -eo pipefail {0}`
+ 
+なんだそうな。
+
+### `--noprofile`
+
+ログイン時や非対話起動時に読み込まれる **プロファイル系の起動ファイルを読まなくする。
+
+### `--norc`
+
+**rc ファイルを読みません**。  
+
+ユーザー環境の `.bashrc` にエイリアス・関数・`shopt` 等があると CI とローカルで挙動が変わることがあります。これを避けます。
+
+### `-e` & `-o pipefail`
+
+`set -e` と同じで、**コマンドが非ゼロで終了したら直ちにシェルを終了**します。  
+ただし有名な落とし穴があり、以下では終了しません(= 無効化される文脈がある):
+
+*   `if` の条件式内、`while`/`until` の条件式内
+*   `&&` / `||` の右辺
+*   `!`(否定)で実行したコマンド
+*   サブシェル(`( ... )`)内、`command`/`builtin` などで抑制された場合
+
+で、
+`set -o pipefail` と同じで、**パイプラインのどこか1つでも失敗したら失敗(非ゼロ)として扱う**ようにします。  
+通常 Bash では `a | b | c` の終了ステータスは最後の `c` のものになりますが、`pipefail` を有効にすると **`a` や `b` が失敗しても検出**できます。

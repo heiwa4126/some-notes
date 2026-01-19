@@ -542,7 +542,7 @@ git checkout -b ローカルブランチ名 remotes/origin/リモートブラン
 
 (remotes/origin のところは適切に書き換える)
 
-ローカルブランチ名と リモートブランチ名が同一な場合は
+ローカルブランチ名とリモートブランチ名が同一な場合は
 
 ```sh
 git checkout -t origin/ブランチ名
