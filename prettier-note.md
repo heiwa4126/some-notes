@@ -33,3 +33,29 @@ npm i -g textlint textlint-rule-preset-ja-spacing
 のように書いて、
 `textlint --fix "**/*.md"`
 すればいいです。
+
+## VSCode 拡張の Prettier は Prettier がバンドルされている?
+
+[Prettier - Code formatter - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+バンドルされているか? は Yes
+
+優先度は:
+
+1. プロジェクトの local dependency ← 推奨
+2. global にインストールされた prettier
+3. Prettier 拡張にバンドルされた prettier (フォールバック)
+
+## Prettierでグローバルにインストールしたプラグインは使える?
+
+基本使えない。ただしプラグインの絶対パスを指定すれば使えないこともない。
+
+VSCodeでは
+
+```json
+{
+  "prettier.resolveGlobalModules": true
+}
+```
+
+でnpmかyarnのグローバルインストールを見に行くらしい。
