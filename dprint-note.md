@@ -1,12 +1,20 @@
 # dprint メモ
 
 Prettier が遅いので乗換計画中。
-Biome と併用する
+Biome と併用する(特に markdown)
 
-[dprint - Code Formatter](https://dprint.dev/)
-[Dprint Code Formatter - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=dprint.dprint)
+- [dprint - Code Formatter](https://dprint.dev/)
+- [Dprint Code Formatter - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=dprint.dprint)
 
-インストールは `npm install -g dprint` が楽だと思う。[Install - dprint - Code Formatter](https://dprint.dev/install/)
+## インストール
+
+dprint 自体はバイナリーなんだけど npmjs や PyPI で管理できる。
+
+`uv tool install dprint` や
+`npm install -g dprint` が
+楽だと思う。
+
+[Install - dprint - Code Formatter](https://dprint.dev/install/)
 
 そのあと `cd ~ ; dprint init` でプラグイン選んで、以下の config のプラグイン以外のところをコピペする感じ。
 

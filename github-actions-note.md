@@ -4,7 +4,7 @@
 
 - [On: が難しい](#on-が難しい)
 - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
-- [GITHUB\_REPO\_NAME 環境変数が空](#github_repo_name-環境変数が空)
+- [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
 - [レポジトリ名の取得](#レポジトリ名の取得)
 - [GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?](#github-actions-の-workflow-runs-に過去の実行結果が残っていますがこれは消すべきですか-一定期間で消えますか)
 - [特定のワークフローファイルだけ実行できるようにする方法はある?](#特定のワークフローファイルだけ実行できるようにする方法はある)
@@ -18,13 +18,15 @@
 - [VSCode 拡張](#vscode-拡張)
 - [permission:](#permission)
 - [action/setup-node](#actionsetup-node)
-- [GITHUB\_TOKEN と permissions:](#github_token-と-permissions)
-- [secrets.GITHUB\_TOKEN と github.token](#secretsgithub_token-と-githubtoken)
+- [GITHUB_TOKEN と permissions:](#github_token-と-permissions)
+- [secrets.GITHUB_TOKEN と github.token](#secretsgithub_token-と-githubtoken)
 - [actionlint](#actionlint)
+- [actionlint はローカル actions をみてくれない](#actionlint-はローカル-actions-をみてくれない)
 - [shell: bash](#shell-bash)
   - [`--noprofile`](#--noprofile)
   - [`--norc`](#--norc)
   - [`-e` \& `-o pipefail`](#-e---o-pipefail)
+- [Composite Action (複合アクション)](#composite-action-複合アクション)
 
 ## On: が難しい
 
@@ -430,6 +432,28 @@ Docker 版は shellcheck と pyflakes 入り
 - [actionlint/Dockerfile at main · rhysd/actionlint](https://github.com/rhysd/actionlint/blob/main/Dockerfile)
 - [rhysd/actionlint - Docker Image](https://hub.docker.com/r/rhysd/actionlint)
 
+## actionlint はローカル actions をみてくれない
+
+無理に
+
+```sh
+actionlint .github/actions/*/action.yml
+```
+
+とかやっても間違った結果しか出てこない。
+
+機能要求は出てる。
+
+- [Feature request: check that local actions exist · Issue #265 · rhysd/actionlint](https://github.com/rhysd/actionlint/issues/265)
+
+ちなみに pinact は
+
+[suzuki-shunsuke/pinact-action: GitHub Actions to pin GitHub Actions by pinact](https://github.com/suzuki-shunsuke/pinact-action)
+
+> pinact-action is a GitHub Actions to pin GitHub Actions and reusable workflows by pinact. This action fixes files \.github/workflows/[^/]+\.ya?ml$ and ^(.\*/)?action\.ya?ml? and pushes a commit to a remote branch.
+
+とあるので、ローカルアクションもpinしてくれるらしい(未確認)
+
 ## shell: bash
 
 デフォルトは bash なんだけど
@@ -462,3 +486,22 @@ Docker 版は shellcheck と pyflakes 入り
 で、
 `set -o pipefail` と同じで、**パイプラインのどこか1つでも失敗したら失敗(非ゼロ)として扱う**ようにします。  
 通常 Bash では `a | b | c` の終了ステータスは最後の `c` のものになりますが、`pipefail` を有効にすると **`a` や `b` が失敗しても検出**できます。
+
+## Composite Action (複合アクション)
+
+```yaml
+runs:
+  using: composite
+  steps:
+```
+
+となってるのが Composite Action。
+
+- Composite Action = workflow の中で呼べる「関数」
+- Reusable Workflow = workflow を呼ぶ「サブルーチン」。別プロセスで動く。「親環境を引き継がないfork()」みたいな。
+
+なかまに JavaScript action と Docker container action がある。
+
+- [Creating a composite action - GitHub Docs](https://docs.github.com/en/actions/tutorials/create-actions/create-a-composite-action)
+- [Creating a JavaScript action - GitHub Docs](https://docs.github.com/en/actions/tutorials/create-actions/create-a-javascript-action)
+- [Creating a Docker container action - GitHub Docs](https://docs.github.com/en/actions/tutorials/use-containerized-services/create-a-docker-container-action)
