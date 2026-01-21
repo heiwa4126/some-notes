@@ -370,12 +370,14 @@ osv-scanner --offline --local-db ./osv <lockfile>
 ## OSV(Open Source Vulnerabilities)
 
 - **管理運営**:OSV.dev は Google と OpenSSF(Open Source Security Foundation)によって開発・運営されています。公式「OSV Team」によりメンテされています。 [\[osv.dev\]](https://osv.dev/), [\[osv.dev\]](https://osv.dev/blog/)
-- **データソース**:GitHub Security Advisories、OSS‐Fuzz、PyPA、RustSec、Debian Security Tracker、Chainguard など 30 以上のエコシステム・ディストリビューションから情報を取り込み。 [\[osv.dev\]](https://osv.dev/), [\[osv.dev\]](https://osv.dev/blog/)
+- **データソース**:GitHub Security Advisories、OSS‐Fuzz、PyPA、RustSec、Debian Security Tracker、Chainguard など 30 以上のエコシステム・ディストリビューションから情報を取り込み。[Data sources | OSV](https://google.github.io/osv.dev/data/)
 - **更新頻度**:
   - データは継続的に取り込まれるため、**随時・リアルタイムに近い更新**が行われます。
   - ブログや SLO でも、「API クエリが高速化」「カバレッジ拡充」などに触れられており、最新版状態の維持を重視しています。 [\[osv.dev\]](https://osv.dev/blog/)
 
 ## NVD(National Vulnerability Database)
+
+CVE(Common Vulnerabilities and Exposures)をだしてるところ。
 
 - **管理機関**:NVD は米国 NIST(National Institute of Standards and Technology) ITL(Information Technology Laboratory)が運営しています。 [\[nist.gov\]](https://www.nist.gov/itl/nvd), [\[inventivehq.com\]](https://inventivehq.com/blog/nvd-database-update-frequency-and-cve-enrichment-timeline)
 - **更新フロー**:

@@ -617,3 +617,16 @@ $ ls -lad .venv/lib/python3.12/site-packages/test1/*
 モノレポで uv 管理のパッケージ test1 と test2 があるとして、test2 から test1 を使いたい。
 開発中は test2 に test1 を editable install したい、デプロイ時には test2 では test1 依存にしたい。
 というとき、どうすればいい?
+
+## `uv audit` はない (いまのところ)
+
+uv.lock を読む [uv-secure · PyPI](https://pypi.org/project/uv-secure/) を使う。`uvx uv-secure`
+もしくは osv-scanner か trivy。
+
+`uv tool install` したパッケージにはその手は使えないので
+
+```sh
+grype $(uv tool dir)
+```
+
+などで対処

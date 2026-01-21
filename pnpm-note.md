@@ -10,6 +10,10 @@ corepack prepare pnpm@latest --activate
 
 で。
 
+standalone script で入れたなら
+`pnpm self-update`
+ができるかも。
+
 ## pnpm でパッケージをまとめて latest に
 
 ```sh
@@ -114,3 +118,48 @@ pnpm の機能がちゃんと動いてる証拠ではあるのだけど。
   },
   ```
   で、しのぐ。
+
+## minimumReleaseAge
+
+pnpm の [minimumReleaseAge](https://pnpm.io/settings#minimumreleaseage) はサプライチェーン攻撃を避けるのに便利。
+
+グローバルに設定するといいかも
+
+```sh
+# 例:公開から1日(=1440分)未満のリリースは入れない
+pnpm config set --location=global minimumReleaseAge 1440
+
+# 例外を作りたいとき(任意)
+pnpm config set --location=global minimumReleaseAgeExclude "react @types/*"
+
+# 設定の確認
+pnpm config list --location=global
+```
+
+### ほかのパッケージマネージャでは?
+
+ほかの言語も含めて
+
+- Yean の npmMinimalAgeGate
+- Deno の minimumDependencyAge
+- Bun の minimumReleaseAge
+
+ぐらい(なんで全部 JavaScript 系?)。
+Cargo は機能リクエストが出たばかりらしい。
+
+## `pnpm audit -g` はない
+
+[how to audit global packages? · pnpm · Discussion #6767](https://github.com/orgs/pnpm/discussions/6767)
+
+とりあえず
+
+```sh
+cd "$HOME/.local/share/pnpm/global"
+grype .
+```
+
+で。
+
+「何が原因のパッケージかわからない」などの問題はあり。
+
+同じ手法が uv とかでも使える。`grype $(uv tool dir)`
