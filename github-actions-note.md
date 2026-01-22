@@ -5,7 +5,7 @@
 [actions/checkout]: https://github.com/actions/checkout 'actions/checkout: Action for checking out a repo'
 [osv-scanner-reusable.yml]: https://github.com/google/osv-scanner-action/blob/main/.github/workflows/osv-scanner-reusable.yml 'osv-scanner-action/.github/workflows/osv-scanner-reusable.yml at main · google/osv-scanner-action'
 
-- [On: が難しい](#on-が難しい)
+- [on: が難しい](#on-が難しい)
 - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
 - [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
 - [レポジトリ名の取得](#レポジトリ名の取得)
@@ -42,10 +42,10 @@
   - [歴史](#歴史)
   - [ActionからActionは呼べる?](#actionからactionは呼べる)
   - [Action から Reusable workflow は呼べる?](#action-から-reusable-workflow-は呼べる)
-- [Workflow 兼 Reusable Workflow](#workflow-兼-reusable-workflow)
-- [use: で呼べる呼べないのリスト](#use-で呼べる呼べないのリスト)
+  - [Workflow 兼 Reusable Workflow](#workflow-兼-reusable-workflow)
+  - [use: で呼べる呼べないのリスト](#use-で呼べる呼べないのリスト)
 
-## On: が難しい
+## on: が難しい
 
 [Workflow syntax for GitHub Actions - GitHub Docs](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on)
 
@@ -652,13 +652,13 @@ JavaScript/Docker Action から GitHub API 経由で Actions は呼べるけど
 でも例えば `action/checkout` は workflow じゃなくて action なので
 action から呼べます。
 
-## Workflow 兼 Reusable Workflow
+### Workflow 兼 Reusable Workflow
 
 `on:` に workflow_call 以外のトリガーがあれば
 
 workflow 兼 reusable workflow になる。
 
-## use: で呼べる呼べないのリスト
+### use: で呼べる呼べないのリスト
 
 - ✅ workflow から action
 - ✅ workflow から reusable workflow
@@ -667,4 +667,5 @@ workflow 兼 reusable workflow になる。
 - ❌ action から workflow
 - ❌ action から reusable workflow
 
-※「GitHub API 経由で呼ぶ」とかいうのは除く
+※「GitHub API 経由で呼ぶ」とかのハックは除く  
+※ ローカル/リモート関係なし
