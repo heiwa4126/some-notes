@@ -5,6 +5,7 @@
 [actions/checkout]: https://github.com/actions/checkout 'actions/checkout: Action for checking out a repo'
 [osv-scanner-reusable.yml]: https://github.com/google/osv-scanner-action/blob/main/.github/workflows/osv-scanner-reusable.yml 'osv-scanner-action/.github/workflows/osv-scanner-reusable.yml at main · google/osv-scanner-action'
 
+- [そもそも](#そもそも)
 - [on: が難しい](#on-が難しい)
 - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
 - [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
@@ -44,6 +45,11 @@
   - [Action から Reusable workflow は呼べる?](#action-から-reusable-workflow-は呼べる)
   - [Workflow 兼 Reusable Workflow](#workflow-兼-reusable-workflow)
   - [use: で呼べる呼べないのリスト](#use-で呼べる呼べないのリスト)
+- [ロググループ](#ロググループ)
+
+## そもそも
+
+みんなが最初に書く GitHub Action は Actions でなくて Workflows だ、というのが罠。
 
 ## on: が難しい
 
@@ -669,3 +675,15 @@ workflow 兼 reusable workflow になる。
 
 ※「GitHub API 経由で呼ぶ」とかのハックは除く  
 ※ ローカル/リモート関係なし
+
+## ロググループ
+
+[デバッグメッセージの設定](https://docs.github.com/ja/actions/reference/workflows-and-actions/workflow-commands#setting-a-debug-message)
+
+```sh
+echo "::group::..."
+printenv # or do anything
+echo "::endgroup::"
+```
+
+ネスト可能かはドキュメントに書いてない。誰か試して。

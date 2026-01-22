@@ -108,6 +108,35 @@ Action の方は自由度は高い。CLI で osv-scanner する感覚に近い�
 Reusable Workflow のほうは機能が高く(sarif、`--ghsa` オプション)、設定は簡単。
 ただし steps に書けないので job にする。事前に action/checkout が不要(内部でやる)。内的に google/osv-scanner-action/osv-scanner-action と google/osv-scanner-action/osv-reporter-action を呼んでる。
 
+## Reusable Workflowが3つあるその使い分け
+
+<https://github.com/google/osv-scanner-action/blob/main/.github/workflows/>
+
+ざっくり表:
+
+| ファイル                           | 目的                                                             | いつ使う                                              | 検出の考え方                                                                | 主な出力先                                                                                                                                                                                                                                                                                                                |
+| ---------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `osv-scanner-reusable-pr.yml`      | **PRで“新規に増えた脆弱性”だけ検出**                             | PR時に「持ち込んだ脆弱性」を止めたい                  | **base(ターゲットブランチ) と head(PRブランチ) を両方スキャンして差分比較** | PR注釈・SARIF(Code scanning)など [\[github.com\]](https://github.com/google/osv-scanner-action/blob/main/.github/workflows/osv-scanner-reusable-pr.yml), [\[google.github.io\]](https://google.github.io/osv-scanner/github-action/), [\[deepwiki.com\]](https://deepwiki.com/google/osv-scanner/3.2-github-action-usage) |
+| `osv-scanner-reusable.yml`         | **フルスキャン(現時点の脆弱性を全部)**                           | 定期・push・release前ゲートなど                       | **その時点のコードを丸ごとスキャン**                                        | SARIF(Code scanning) など [\[google.github.io\]](https://google.github.io/osv-scanner/github-action/), [\[github.com\]](https://github.com/google/osv-scanner-action), [\[deepwiki.com\]](https://deepwiki.com/google/osv-scanner/3.2-github-action-usage)                                                                |
+| `osv-scanner-unified-workflow.yml` | **導入用の“統合ワークフロー”**(PR + 定期/Push などを1ファイルに) | 「とりあえず入れたい」「1つのworkflowで両方回したい」 | 1ファイルの中に PR向け/定期向けのジョブを同居させる想定                     | 同上(設定次第) [\[github.com\]](https://github.com/marketplace/actions/osv-scanner), [\[github.com\]](https://github.com/google/osv-scanner-action/blob/main/.github/workflows/osv-scanner-reusable-pr.yml)                                                                                                               |
+
+これ docker action なので、フルスキャンでも差分スキャンでも、実行時間(I/O も含めて)はあまりかわらないし、pr 版はスキャンを 2 回やってる。
+
+じゃあ pr 版の価値は何? というと
+
+引用開始:
+
+PR ごとにフルスキャンすると:
+
+- 毎回同じ既存脆弱性が出る
+- 「この PR 関係ないやつ」が PR チェックで赤くなる
+- 次第に赤 CI が無視される
+
+これは CI の“オオカミ少年化” の典型です。
+PR で毎回フルスキャンして fail だとチームが CI を無視し始めます。
+
+引用終了:
+
 ## osv-scanner をテストする
 
 pnpm を使う例
