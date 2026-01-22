@@ -2,6 +2,9 @@
 
 デバッグが難しい。YAML とか JSON で書くやつは全部そんな感じ
 
+[actions/checkout]: https://github.com/actions/checkout 'actions/checkout: Action for checking out a repo'
+[osv-scanner-reusable.yml]: https://github.com/google/osv-scanner-action/blob/main/.github/workflows/osv-scanner-reusable.yml 'osv-scanner-action/.github/workflows/osv-scanner-reusable.yml at main · google/osv-scanner-action'
+
 - [On: が難しい](#on-が難しい)
 - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
 - [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
@@ -22,11 +25,25 @@
 - [secrets.GITHUB_TOKEN と github.token](#secretsgithub_token-と-githubtoken)
 - [actionlint](#actionlint)
 - [actionlint はローカル actions をみてくれない](#actionlint-はローカル-actions-をみてくれない)
+  - [ちなみに pinact は](#ちなみに-pinact-は)
+- [action-validator](#action-validator)
 - [shell: bash](#shell-bash)
   - [`--noprofile`](#--noprofile)
   - [`--norc`](#--norc)
   - [`-e` \& `-o pipefail`](#-e---o-pipefail)
 - [Composite Action (複合アクション)](#composite-action-複合アクション)
+- [メタデータ構文 (Action) でハマりやすい「落とし穴」まとめ](#メタデータ構文-action-でハマりやすい落とし穴まとめ)
+- [ややこしくなってきたのでちょっとまとめる](#ややこしくなってきたのでちょっとまとめる)
+  - [GitHub Actions の分類:](#github-actions-の分類)
+  - [シンタックスで分類:](#シンタックスで分類)
+  - [場所で分類:](#場所で分類)
+  - [分類例](#分類例)
+  - [このほかに](#このほかに)
+  - [歴史](#歴史)
+  - [ActionからActionは呼べる?](#actionからactionは呼べる)
+  - [Action から Reusable workflow は呼べる?](#action-から-reusable-workflow-は呼べる)
+- [Workflow 兼 Reusable Workflow](#workflow-兼-reusable-workflow)
+- [use: で呼べる呼べないのリスト](#use-で呼べる呼べないのリスト)
 
 ## On: が難しい
 
@@ -446,13 +463,35 @@ actionlint .github/actions/*/action.yml
 
 - [Feature request: check that local actions exist · Issue #265 · rhysd/actionlint](https://github.com/rhysd/actionlint/issues/265)
 
-ちなみに pinact は
+v1.7 で実装された? [Release v1.7.0 · rhysd/actionlint](https://github.com/rhysd/actionlint/releases/tag/v1.7.0)
+
+action-validator というのがあるらしい。
+[mpalmer/action-validator: Tool to validate GitHub Action and Workflow YAML files](https://github.com/mpalmer/action-validator)
+
+### ちなみに pinact は
 
 [suzuki-shunsuke/pinact-action: GitHub Actions to pin GitHub Actions by pinact](https://github.com/suzuki-shunsuke/pinact-action)
 
 > pinact-action is a GitHub Actions to pin GitHub Actions and reusable workflows by pinact. This action fixes files \.github/workflows/[^/]+\.ya?ml$ and ^(.\*/)?action\.ya?ml? and pushes a commit to a remote branch.
 
-とあるので、ローカルアクションもpinしてくれるらしい(未確認)
+とあるので、ローカルアクションも pin してくれるらしい(未確認)
+
+## action-validator
+
+[mpalmer/action-validator: Tool to validate GitHub Action and Workflow YAML files](https://github.com/mpalmer/action-validator)
+
+メタデータ構文とワークフロー構文サポート。
+
+使い方:
+
+```sh
+action-validator -v .github/workflows/*.yml  .github/actions/*/action.yml
+```
+
+特徴: エラーメッセージが意味不明
+
+たとえば「action.yml の step では shell:必須」。たしかに検出してくれるんだけど、
+出力を見て何が問題なのか、どこに問題があるのかは全然わからない。
 
 ## shell: bash
 
@@ -489,6 +528,8 @@ actionlint .github/actions/*/action.yml
 
 ## Composite Action (複合アクション)
 
+- [Creating a composite action - GitHub Docs](https://docs.github.com/en/actions/tutorials/create-actions/create-a-composite-action)
+
 ```yaml
 runs:
   using: composite
@@ -498,10 +539,132 @@ runs:
 となってるのが Composite Action。
 
 - Composite Action = workflow の中で呼べる「関数」
-- Reusable Workflow = workflow を呼ぶ「サブルーチン」。別プロセスで動く。「親環境を引き継がないfork()」みたいな。
+- Reusable Workflow = workflow を呼ぶ「サブルーチン」。別プロセスで動く。「親環境を引き継がない fork()」みたいな。
 
 なかまに JavaScript action と Docker container action がある。
 
-- [Creating a composite action - GitHub Docs](https://docs.github.com/en/actions/tutorials/create-actions/create-a-composite-action)
 - [Creating a JavaScript action - GitHub Docs](https://docs.github.com/en/actions/tutorials/create-actions/create-a-javascript-action)
 - [Creating a Docker container action - GitHub Docs](https://docs.github.com/en/actions/tutorials/use-containerized-services/create-a-docker-container-action)
+
+Composite Action は workflow に似ているけど、**文法が違う**。
+
+メタデータ構文とワークフロー構文。
+
+- [メタデータ構文リファレンス - GitHub ドキュメント](https://docs.github.com/ja/actions/reference/workflows-and-actions/metadata-syntax)
+- [GitHub Actionsのワークフロー構文 - GitHub ドキュメント](https://docs.github.com/ja/actions/reference/workflows-and-actions/workflow-syntax)
+
+## メタデータ構文 (Action) でハマりやすい「落とし穴」まとめ
+
+1. **`required: true` でも未指定エラーにならない**  
+   `inputs.<id>.required: true` を付けても、入力未指定時に自動で失敗せず、そのまま実行されることがある。呼び出し元ワークフロー側で検証 or Action 側でガードを入れる。[1](https://docs.github.com/en/actions/reference/workflows-and-actions/metadata-syntax)[2](https://docs.github.com/ja/actions/reference/workflows-and-actions/metadata-syntax)
+
+2. **シークレット(含む `GITHUB_TOKEN`)は自動では使えない**  
+   Composite Action 内で `secrets.*` に直接アクセスできない前提で設計する。**入力(`with:`→`inputs`)や `env:` で明示的に渡す**。また、呼び出し元で `permissions` を適切に付与(例:`contents: write`)しないと Git 操作が 403 になる。[6](https://stackoverflow.com/questions/70098241/using-secrets-in-composite-actions-github)[3](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)
+
+3. **シークレットのログ漏えい懸念**  
+   シークレットを入力として渡す設計は一般的。GitHub はログ上でマスキングするが、**Action 内での取り扱い(エコーや外部コマンド引数など)次第で漏えいしうる**ため、実装レビュー&コミット SHA ピン留めを推奨。[7](https://github.com/orgs/community/discussions/34212)
+
+4. **作業ディレクトリの“勘違い”**  
+   Composite の `run:` で相対パスを使うと**呼び出し元ワークフローの作業ディレクトリ**を見に行く。Action 側のファイルを実行したいなら `${{ github.action_path }}` を使って絶対パス化する。[8](https://zenn.dev/noraworld/articles/github-actions-metadata-side-commands)
+
+5. **`defaults.run` は Action 側には効かない**  
+   呼び出し元ワークフローで `defaults.run.working-directory` を設定しても、**Action(Composite)内部の step には適用されない**。各 step に明示的に `working-directory`/`shell` を指定する。[9](https://qiita.com/shun198/items/e7b7a3d9d3b86aec4813)
+
+6. **入出力の“環境変数化”の仕様差**  
+   メタデータで宣言した `inputs` は、Docker/JS Action では `INPUT_<NAME>` として環境変数化される一方、**Composite では自動環境変数化されない**ため `inputs` コンテキスト経由で参照する(必要なら `env` で渡す)。[1](https://docs.github.com/en/actions/reference/workflows-and-actions/metadata-syntax)
+
+7. **ログの粒度が粗くなる**  
+   Composite Action は実行ログが 1 ステップにまとまり、**失敗点の切り分けがしにくい**。段階的に小さめの Composite に分ける・`set -x`/明示ログを入れるなどで補う。[10](https://zenn.dev/tmrekk/articles/5fef57be891040)
+
+## ややこしくなってきたのでちょっとまとめる
+
+### GitHub Actions の分類:
+
+- Workflows
+  - 再利用前提でない。わざわざ「明示的に opt‑in された Reusable Workflow」というコンセプトがある
+  - レポジトリの `.github/workflows/*.yml` (または .yaml)に書く。これは固定
+- Actions
+  - 再利用前提。opt-in も opt-out もない。Actions は常に reusable
+  - パブリックレポジトリに置いたら全 GitHub ユーザが使える
+  - レポジトリの `.github/actions/*/action.yml` に書くのが**習慣**。
+    実はどこに置いてもいい
+  - `action.yml` または `action.yaml` というファイル名は固定
+  - use: ではディレクトリを指定して、`action.yml` のほうが優先
+
+### シンタックスで分類:
+
+- Workflow 構文で書くやつ
+  - Workflows
+  - Reusable Workflow (on: に workflow_call があるやつ)
+- メタデータ構文で書くやつ
+  - Composite Actions (複数ステップをまとめる)
+  - JavaScript Actions
+  - Docker Actions
+
+### 場所で分類:
+
+- ローカル - 同一レポジトリ
+- リモート - 同一レポジトリでないもの(同一ユーザ、同一組織、他ユーザ&組織)
+
+### 分類例
+
+- [actions/checkout] は「メタデータ構文で書かれた JavaScript Action」かつ「リモート(別リポジトリ)アクション」
+- [osv-scanner-reusable.yml] は
+  「Workflow 構文で書かれた Reusable Workflow」かつ
+  「リモート(別リポジトリ)の再利用ワークフロー」
+
+### このほかに
+
+「プライベートレポジトリ」とか「属する組織のレポジトリ」の件があるけど
+それはアクセス権限の話で GitHub Actions の本筋ではない。別ティア。
+
+### 歴史
+
+デフォルトで Workflows も Actions も reusable で、
+オプションで unusable にできる。のような設計にすればよかったはず
+(あるいはその逆)。
+
+理由は歴史的なもの。
+もともと同一レポだろうが、他所のレポジトリであろうが
+workflow から workflow は呼べなかった。
+workflow から action は呼べる(もともとそういう設計)。
+
+Reusable workflow 以前（2019-2021 年）は
+workflow から workflow を use:する方法はなかった
+(ハックはあった。GitHub API を Curl 経由で使う)。
+
+で、2021 年に Reusable Workflows が実装されて、
+「便利だがややこしい」状態になった、という経緯
+
+### ActionからActionは呼べる?
+
+- Composite Action から他の Action は呼べる
+- JavaScript/Docker Action からは直接は呼べない
+
+JavaScript/Docker Action から GitHub API 経由で Actions は呼べるけど
+それは workflow を呼び出すように別プロセスになる。
+
+### Action から Reusable workflow は呼べる?
+
+呼べない。
+(これもハックすれば呼べるんだけど)
+
+でも例えば `action/checkout` は workflow じゃなくて action なので
+action から呼べます。
+
+## Workflow 兼 Reusable Workflow
+
+`on:` に workflow_call 以外のトリガーがあれば
+
+workflow 兼 reusable workflow になる。
+
+## use: で呼べる呼べないのリスト
+
+- ✅ workflow から action
+- ✅ workflow から reusable workflow
+- ❌ workflow から workflow
+- ✅ composite action から action
+- ❌ action から workflow
+- ❌ action から reusable workflow
+
+※「GitHub API 経由で呼ぶ」とかいうのは除く

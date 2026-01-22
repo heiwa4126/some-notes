@@ -106,7 +106,7 @@ npm / PyPI パッケージのプロジェクトなら Trivy よりお勧めら�
 Action の方は自由度は高い。CLI で osv-scanner する感覚に近い。事前に action/checkout が必要。
 
 Reusable Workflow のほうは機能が高く(sarif、`--ghsa` オプション)、設定は簡単。
-ただし steps に書けないので job にする。事前に action/checkout が不要(内部でやる)
+ただし steps に書けないので job にする。事前に action/checkout が不要(内部でやる)。内的に google/osv-scanner-action/osv-scanner-action と google/osv-scanner-action/osv-reporter-action を呼んでる。
 
 ## osv-scanner をテストする
 
