@@ -50,7 +50,7 @@ npm i -g textlint textlint-rule-preset-ja-spacing
 
 基本使えない。ただしプラグインの絶対パスを指定すれば使えないこともない。
 
-VSCodeでは
+VSCode では
 
 ```json
 {
@@ -58,4 +58,4 @@ VSCodeでは
 }
 ```
 
-でnpmかyarnのグローバルインストールを見に行くらしい。
+で npm か yarn のグローバルインストールを見に行くらしい。

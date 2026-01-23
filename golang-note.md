@@ -41,7 +41,8 @@
 - [インタフェースメモ](#インタフェースメモ)
 - ["//go:build"](#gobuild)
 - [モジュールの更新](#モジュールの更新)
-- [go の complition](#go-の-complition)
+- [goの脆弱性スキャン](#goの脆弱性スキャン)
+- [go の bash complition](#go-の-bash-complition)
 
 ## Linux で Windows のバイナリを作る
 
@@ -1093,16 +1094,33 @@ REST API みたいに型が変わるものが帰ってくる場合など。
 
 ## モジュールの更新
 
+`npm update` に近いもの
+
 ```sh
 go get -u ./...
 go mod tidy
 ```
 
-`go get -u=patch ./...` など
+`go get -u=patch ./...` にすると「パッチ版のみ更新」を指定できる。
 
-## go の complition
+## goの脆弱性スキャン
 
-そんなものは無い。
+`npm audit` 的な
+
+[golang/govulncheck-action: [mirror] GitHub action for govulncheck](https://github.com/golang/govulncheck-action)
+
+```sh
+govulncheck ./...
+```
+
+## go の bash complition
+
+v1.25 では公式には無い。
+
+1. ディストリの bash-completion パッケージを使う
+2. [posener/complete: bash completion written in go + bash completion for go command](https://github.com/posener/complete) やや古い
+3. [kura/go-bash-completion: Bash completions for Go](https://github.com/kura/go-bash-completion) 古い
+4. [thomasf/go-bash-completion](https://github.com/thomasf/go-bash-completion) 古い
 
 Go で CLI を書いたとき、引数 perser 兼 complition 生成してくれるモジュールはある。
 
