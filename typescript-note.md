@@ -12,6 +12,8 @@
 - [class で private](#class-で-private)
 - [TypeScript にのみ存在する標準型](#typescript-にのみ存在する標準型)
   - [参考リンク](#参考リンク)
+- [`tsc --listFilesOnly`](#tsc---listfilesonly)
+- [tsconfig.json の rootDir:](#tsconfigjson-の-rootdir)
 
 ## 超重要: import の拡張子
 
@@ -189,3 +191,48 @@ TypeScript ではおおむね後者で用が足りる。
 
 - [TypeScript の Partial Type について理解する](https://zenn.dev/tommykw/articles/d7ce0b4efdabc4)
 - [超便利な TypeScript の 8 つのユーティリティ型で効率アップ](https://gizanbeak.com/post/ts-utility-types)
+
+## `tsc --listFilesOnly`
+
+このコマンドで
+
+- package.json
+- src/ 以下
+- node_modules/ 以下の .d.ts
+- その他状況に応じた例外。lib.es2023.d.tsとか、monorepoの時とか
+
+以外が表示されるなら、tsconfig.json の設定ミス。
+
+`tsc --explainFiles` で 「なんでそのファイルコンパイルの対象になってるの?」の説明が出る。
+
+参考:
+[TypeScript のパフォーマンス問題の解決: ケーススタディ | Viget](https://www.viget.com/articles/fixing-typescript-performance-problems)
+
+## tsconfig.json の rootDir:
+
+rootDir: は "どのファイルをコンパイル対象にするか" を決めるオプションではない。
+
+```json
+	"compilerOptions": {
+		"rootDir": "./src",
+   }
+```
+
+と書けば ./src 以下だけを見てくれる、と思ったら大間違い。
+
+> rootDir を "./src" に設定しても、TypeScript はデフォルトでプロジェクト内のすべての .ts / .tsx ファイルをコンパイル対象にしようとします。つまり、src 以外のディレクトリにあるファイルも見てしまいます。
+
+> rootDir はコンパイル時の 入力ツリーを「outDir にどう写すか」を決めるためのもの
+
+なので
+
+```json
+	"include": ["src/**/*"]
+```
+
+も必要。("exclude"してもいい)
+
+`tsc --noEmit` で確認。
+
+典型的な **こんなの先に言ってくれよ** 案件である。
+ドキュメントには書いてあるんですけどね。
