@@ -194,6 +194,8 @@ TypeScript ではおおむね後者で用が足りる。
 
 ## `tsc --listFilesOnly`
 
+(この話は例外がいっぱいあるので、参考まで)
+
 このコマンドで
 
 - package.json
