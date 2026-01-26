@@ -46,6 +46,23 @@
   - [Workflow 兼 Reusable Workflow](#workflow-兼-reusable-workflow)
   - [use: で呼べる呼べないのリスト](#use-で呼べる呼べないのリスト)
 - [ロググループ](#ロググループ)
+  - [1) なぜ「再利用可能な workflow」が必要だったのか(導入前の痛み)](#1-なぜ再利用可能な-workflowが必要だったのか導入前の痛み)
+    - [1-1. “同じ YAML をコピペ”がスケールしない](#1-1-同じ-yaml-をコピペがスケールしない)
+    - [1-2. 「Composite Action」だけでは足りなかった](#1-2-composite-actionだけでは足りなかった)
+  - [2) 実装の経緯(β→GA→改善)と主要URL](#2-実装の経緯βga改善と主要url)
+    - [2-1. 2021年10月:Beta 開始](#2-1-2021年10月beta-開始)
+    - [2-2. 2021年11月24日:Generally Available(GA)リリース](#2-2-2021年11月24日generally-availablegaリリース)
+    - [2-3. 2022年1月25日:ローカル参照の簡略化(同一repo内 `./.github/workflows/...`)](#2-3-2022年1月25日ローカル参照の簡略化同一repo内-githubworkflows)
+  - [2-4. 2022年8月22日:マトリクス呼び出し/ネスト呼び出し(最大4階層)](#2-4-2022年8月22日マトリクス呼び出しネスト呼び出し最大4階層)
+  - [2-5. 2025年11月:ネスト上限や呼び出し数上限の拡大(10階層/50 workflows)](#2-5-2025年11月ネスト上限や呼び出し数上限の拡大10階層50-workflows)
+  - [3) GitHub が公式に述べている “実装理由” を要約すると](#3-github-が公式に述べている-実装理由-を要約すると)
+    - [3-1. DRY(重複排除)と保守性](#3-1-dry重複排除と保守性)
+    - [3-2. 標準化・ベストプラクティスの押しつけ(良い意味で)](#3-2-標準化ベストプラクティスの押しつけ良い意味で)
+    - [3-3. 組織スケール(数十〜数百 repo)への対応](#3-3-組織スケール数十数百-repoへの対応)
+  - [4) あなたの推測は当たり:でも “ただのテンプレ” ではない](#4-あなたの推測は当たりでも-ただのテンプレ-ではない)
+  - [5) 参考URLまとめ(経緯を追える順)](#5-参考urlまとめ経緯を追える順)
+  - [次に聞きたい(任意)](#次に聞きたい任意)
+- [`jobs.<job_id>.uses`](#jobsjob_iduses)
 
 ## そもそも
 
@@ -587,7 +604,7 @@ Composite Action は workflow に似ているけど、**文法が違う**。
 ### GitHub Actions の分類:
 
 - Workflows
-  - 再利用前提でない。わざわざ「明示的に opt‑in された Reusable Workflow」というコンセプトがある
+  - 再利用前提でない。わざわざ「明示的に opt‐in された Reusable Workflow」というコンセプトがある
   - レポジトリの `.github/workflows/*.yml` (または .yaml)に書く。これは固定
 - Actions
   - 再利用前提。opt-in も opt-out もない。Actions は常に reusable
@@ -616,8 +633,8 @@ Composite Action は workflow に似ているけど、**文法が違う**。
 
 - [actions/checkout] は「メタデータ構文で書かれた JavaScript Action」かつ「リモート(別リポジトリ)アクション」
 - [osv-scanner-reusable.yml] は
- 「Workflow 構文で書かれた Reusable Workflow」かつ
- 「リモート(別リポジトリ)の再利用ワークフロー」
+  「Workflow 構文で書かれた Reusable Workflow」かつ
+  「リモート(別リポジトリ)の再利用ワークフロー」
 
 ### このほかに
 
@@ -635,7 +652,7 @@ Composite Action は workflow に似ているけど、**文法が違う**。
 workflow から workflow は呼べなかった。
 workflow から action は呼べる(もともとそういう設計)。
 
-Reusable workflow 以前（2019-2021 年）は
+Reusable workflow 以前(2019-2021 年)は
 workflow から workflow を use:する方法はなかった
 (ハックはあった。GitHub API を Curl 経由で使う)。
 
@@ -687,3 +704,157 @@ echo "::endgroup::"
 ```
 
 ネスト可能かはドキュメントに書いてない。誰か試して。
+
+# Reusable workflows が実装された経緯(背景と経緯つき)
+
+> GitHub Actions の Reusable workflows が実装された理由を、経緯(URL)もふくめて解説して。
+> おそらく再利用可能なworkflowsが欲しかったんだろうと推測されますが。
+
+と GPT5 に聞いて出てきたのが以下:
+
+結論から言うと、**「CI/CD の“手順(ワークフロー)そのもの”を再利用して DRY にし、組織規模で標準化・統制できるようにする」** のが Reusable workflows(`workflow_call`)導入の主目的です。GitHub 自身が「重複を減らす」「組織で一元管理できる」「ベストプラクティスを促進できる」と明言しています。[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)[2](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)
+
+### 1) なぜ「再利用可能な workflow」が必要だったのか(導入前の痛み)
+
+#### 1-1. “同じ YAML をコピペ”がスケールしない
+
+Reusable workflows が登場するまで、複数リポジトリで同じ CI を回すには、**各リポジトリに workflow YAML をコピペして運用** するのが一般的でした。GitHub Blog でも「最近まで、複数箇所で使うには YAML をコピー&ペーストするしかなかった」と説明されています。[3](https://github.blog/developer-skills/github/using-reusable-workflows-github-actions/)[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)
+
+この方式の問題はシンプルで、
+
+- 手順の更新(Node バージョン更新・セキュリティ手順追加等)があるたびに **全レポジトリに横展開PR**が必要
+- レポジトリ間で **微妙に手順がズレて** 事故る(テストが抜ける・デプロイ条件が違う等)
+- 「この組織では本番デプロイ前に必ずこの検証を通す」みたいな **統制**が難しい
+
+という “運用コストとリスク” が、リポジトリ数に比例して増えます。GitHub 公式は、Reusable workflows を「重複を避けてメンテしやすくし、中央で管理できるライブラリを作れる」ものとして位置づけています。[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)[5](https://resources.github.com/learn/pathways/automation/intermediate/create-reusable-workflows-in-github-actions/)
+
+#### 1-2. 「Composite Action」だけでは足りなかった
+
+「再利用」なら Composite Actions(複数 step の束ね)でも良さそうに見えますが、Reusable workflows が狙っているのは **“ジョブ/複数ジョブを含むパイプラインの塊”** の再利用です。  
+GitHub Docs は、Reusable workflows を「ワークフロー全体を別ワークフローから呼べる」仕組みとして説明し、Composite actions との比較もしています(どちらも重複回避だが、粒度が違う)。[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)[3](https://github.blog/developer-skills/github/using-reusable-workflows-github-actions/)
+
+つまり「step を部品化」だけではなく、**CI/CDの設計(複数ジョブ・依存関係・環境・デプロイ手順)ごと使い回したい**ニーズが強かった、ということです。[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)
+
+### 2) 実装の経緯(β→GA→改善)と主要URL
+
+#### 2-1. 2021年10月:Beta 開始
+
+GitHub Changelog によると、Reusable workflows は **2021年10月にベータが開始**され、その後改善が続いたとされています。[2](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)
+
+> ここが「経緯」の起点です(=いきなりGAではなく、βで実運用に揉まれた)。
+
+#### 2-2. 2021年11月24日:Generally Available(GA)リリース
+
+Reusable workflows が **GAになったのは 2021-11-24**。GitHub Changelog が明確に「generally available」として告知しています。[2](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)  
+同時期の GitHub Blog(ニュース記事)でも GA を前提に、ユースケースと改善点(β以降の改良)を説明しています。[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)[2](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)
+
+- GitHub Changelog(GA 告知):  
+  [GitHub Actions: Reusable workflows are generally available](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)
+- GitHub Blog(GA とユースケース):  
+  [GitHub Actions: reusable workflows is generally available](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)
+
+GA 告知では、Reusable workflows の価値を「**ワークフロー全体を action のように再利用して重複を減らす**」と要約しています。[2](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)
+
+#### 2-3. 2022年1月25日:ローカル参照の簡略化(同一repo内 `./.github/workflows/...`)
+
+GA 直後の改善として、**同一リポジトリ内の呼び出しがパス指定で簡単に**できるようになっています。[6](https://github.blog/changelog/2022-01-25-github-actions-reusable-workflows-can-be-referenced-locally/)  
+これは「まずは同一 repo 内で共通化したい」という現実的ニーズにも応えた変更です。[6](https://github.blog/changelog/2022-01-25-github-actions-reusable-workflows-can-be-referenced-locally/)[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)
+
+- [Reusable workflows can be referenced locally](https://github.blog/changelog/2022-01-25-github-actions-reusable-workflows-can-be-referenced-locally/)
+
+### 2-4. 2022年8月22日:マトリクス呼び出し/ネスト呼び出し(最大4階層)
+
+次の大きな改善は、**matrix から呼べる**・**reusable workflow から別の reusable workflow を呼べる**(ネスト)ようになった点です。[7](https://github.blog/changelog/2022-08-22-github-actions-improvements-to-reusable-workflows-2/)  
+“部品化”を本格的にやると「共通 workflow の中でも共通化したい」ので、ここはスケール要件として重要です。[7](https://github.blog/changelog/2022-08-22-github-actions-improvements-to-reusable-workflows-2/)[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)
+
+- [Improvements to reusable workflows (matrix / nesting)](https://github.blog/changelog/2022-08-22-github-actions-improvements-to-reusable-workflows-2/)
+
+### 2-5. 2025年11月:ネスト上限や呼び出し数上限の拡大(10階層/50 workflows)
+
+さらに最近(2025-11)には、**ネスト上限や呼び出し可能数が拡大**され、より大規模な再利用に寄せています。[8](https://github.blog/changelog/2025-11-06-new-releases-for-github-actions-november-2025/)[9](https://docs.github.com/ja/actions/reference/workflows-and-actions/reusing-workflow-configurations)  
+(Docs 側でも上限が更新されていることが読み取れます)[9](https://docs.github.com/ja/actions/reference/workflows-and-actions/reusing-workflow-configurations)[10](https://docs.github.com/en/actions/reference/workflows-and-actions/reusing-workflow-configurations)
+
+- [New releases for GitHub Actions – November 2025(上限拡大)](https://github.blog/changelog/2025-11-06-new-releases-for-github-actions-november-2025/)
+
+### 3) GitHub が公式に述べている “実装理由” を要約すると
+
+GitHub Docs / Blog の表現をまとめると、Reusable workflows は次の狙いを満たすために導入されました。
+
+#### 3-1. DRY(重複排除)と保守性
+
+「コピペをやめて、**1箇所の共通 workflow を参照**する」ことができる。[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)[3](https://github.blog/developer-skills/github/using-reusable-workflows-github-actions/)  
+これにより、更新時に全リポジトリへ PR 横展開する必要が減り、保守が楽になります。[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)[5](https://resources.github.com/learn/pathways/automation/intermediate/create-reusable-workflows-in-github-actions/)
+
+#### 3-2. 標準化・ベストプラクティスの押しつけ(良い意味で)
+
+Docs は「よく設計され、テストされ、実績のある workflow を使わせることで **ベストプラクティスを促進**できる」と言っています。[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)[5](https://resources.github.com/learn/pathways/automation/intermediate/create-reusable-workflows-in-github-actions/)  
+大企業の “Paved Road(舗装路)” 的な運用に寄せたい意図が読み取れます。[5](https://resources.github.com/learn/pathways/automation/intermediate/create-reusable-workflows-in-github-actions/)[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)
+
+#### 3-3. 組織スケール(数十〜数百 repo)への対応
+
+GA 告知やブログは「大規模組織での利用」「多数の repo を同じ方法でビルド/デプロイする」ユースケースを前面に出しています。[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)[2](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)  
+つまり、**Actions を“チーム規模”から“組織規模”へスケールさせる機能**として投入された、という位置づけです。[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)
+
+### 4) あなたの推測は当たり:でも “ただのテンプレ” ではない
+
+ご推測の「再利用可能な workflows が欲しかった」はその通りです。ただし GitHub の狙いは単なるテンプレ共有に留まらず、
+
+- **入力/出力**(`inputs` / `outputs` / `secrets`)で “パラメータ化されたパイプライン部品” にする[11](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows)[2](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)
+- “呼び出し側のコンテキストで動く” という設計で、レポジトリ横断でも扱いやすくする(checkout 対象など)[1](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)[11](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows)
+- 監査ログ(audit log)に reusable workflow 使用情報を出し、統制を効かせる[2](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)
+
+といった **「組織運用・統制」まで含めた CI/CD のモジュール化**に踏み込んでいます。[5](https://resources.github.com/learn/pathways/automation/intermediate/create-reusable-workflows-in-github-actions/)[4](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)
+
+### 5) 参考URLまとめ(経緯を追える順)
+
+- 2021-11-24 GA(changelog):  
+  [GitHub Actions: Reusable workflows are generally available](https://github.blog/changelog/2021-11-24-github-actions-reusable-workflows-are-generally-available/)
+- 2021-11-29 GA(blog / ユースケース):  
+  [GitHub Actions: reusable workflows is generally available](https://github.blog/news-insights/product-news/github-actions-reusable-workflows-is-generally-available/)
+- 2022-01-25 ローカル参照改善:  
+  [Reusable workflows can be referenced locally](https://github.blog/changelog/2022-01-25-github-actions-reusable-workflows-can-be-referenced-locally/)
+- 2022-08-22 matrix/ネスト改善:  
+  [Improvements to reusable workflows](https://github.blog/changelog/2022-08-22-github-actions-improvements-to-reusable-workflows-2/)
+- 公式 Docs(概念/理由の説明がまとまってる):  
+  [Reusing workflow configurations](https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations)
+- 公式 Docs(使い方の手順):  
+  [Reuse workflows](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows)
+- 2025-11 上限拡大(より大規模へ):  
+  [New releases for GitHub Actions – November 2025](https://github.blog/changelog/2025-11-06-new-releases-for-github-actions-november-2025/)
+
+### 次に聞きたい(任意)
+
+Reusable workflows が「なぜ _jobs.<job_id>.uses_ なのか」「なぜ step から呼べないのか」「composite action との責務分離は設計として正しいのか」みたいな“設計思想の違和感”も、あなたが以前話していた論点に直結します。
+
+続けて、
+
+- **「Reusable workflow と Composite action を、責務・セキュリティ境界・再利用単位でどう使い分けるべきか」**
+- **「なぜ workflow_call が env を引き継がない設計なのか(落とし穴)」**
+  あたりも掘ります?
+
+## `jobs.<job_id>.uses`
+
+これは説明用表記であって、JSONPath とかではない。
+
+Workflows の場合:
+
+```yaml
+jobs:
+  do_something:
+    uses: owner/repo/.github/workflows/reusable-workflow.yml@main
+    # ↑ この「uses:」の部分が `jobs.<job_id>.uses`
+```
+
+GitHub Actions は
+
+- YAML
+- glob
+- 独自 expression
+- ドキュメント擬似記法
+
+がごちゃっと混ざってる...
+コンテキストを考慮しないとダメ。
+
+実際に `jobs.<job_id>.uses` のような表記が出てくるGitHubの文書:
+
+- [Workflow syntax for GitHub Actions - GitHub Enterprise Server 3.1 Docs](https://docs.github.com/en/enterprise-server@3.1/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv)
