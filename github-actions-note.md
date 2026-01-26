@@ -633,8 +633,8 @@ Composite Action は workflow に似ているけど、**文法が違う**。
 
 - [actions/checkout] は「メタデータ構文で書かれた JavaScript Action」かつ「リモート(別リポジトリ)アクション」
 - [osv-scanner-reusable.yml] は
-  「Workflow 構文で書かれた Reusable Workflow」かつ
-  「リモート(別リポジトリ)の再利用ワークフロー」
+ 「Workflow 構文で書かれた Reusable Workflow」かつ
+ 「リモート(別リポジトリ)の再利用ワークフロー」
 
 ### このほかに
 
@@ -855,6 +855,6 @@ GitHub Actions は
 がごちゃっと混ざってる...
 コンテキストを考慮しないとダメ。
 
-実際に `jobs.<job_id>.uses` のような表記が出てくるGitHubの文書:
+実際に `jobs.<job_id>.uses` のような表記が出てくる GitHub の文書:
 
 - [Workflow syntax for GitHub Actions - GitHub Enterprise Server 3.1 Docs](https://docs.github.com/en/enterprise-server@3.1/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv)
