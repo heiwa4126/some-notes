@@ -147,6 +147,10 @@ pnpm config list --location=global
 ぐらい(なんで全部 JavaScript 系?)。
 Cargo は機能リクエストが出たばかりらしい。
 
+##
+
+[クラウドサインは npm から pnpm へ移行しました - 弁護士ドットコム株式会社 Creators’ blog](https://creators.bengo4.com/entry/2026/01/26/080000)
+
 ## `pnpm audit -g` はない
 
 [how to audit global packages? · pnpm · Discussion #6767](https://github.com/orgs/pnpm/discussions/6767)

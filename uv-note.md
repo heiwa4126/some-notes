@@ -630,3 +630,20 @@ grype $(uv tool dir)
 ```
 
 などで対処
+
+## GitHub Action "astral-sh/setup-uv" のメモ
+
+[astral-sh/setup-uv: Set up your GitHub Actions workflow with a specific version of https://docs.astral.sh/uv/](https://github.com/astral-sh/setup-uv)
+
+キャッシュキーのデフォルトが
+
+- \**/*requirements\*.tx
+- \**/*requirements\*.i
+- \**/*constraints\*.tx
+- \**/*constraints\*.i
+- \*\*/pyproject.tom
+- \*\*/uv.lock
+- \*_/_.py.lock
+
+のハッシュで、なかなかヒットしてくれない。
+CD ならともかく CI では uv.lock だけにするとかを考慮する。
