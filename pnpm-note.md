@@ -147,9 +147,23 @@ pnpm config list --location=global
 ぐらい(なんで全部 JavaScript 系?)。
 Cargo は機能リクエストが出たばかりらしい。
 
-##
+## そのほかの pnpm のセキュリティ機能
 
-[クラウドサインは npm から pnpm へ移行しました - 弁護士ドットコム株式会社 Creators’ blog](https://creators.bengo4.com/entry/2026/01/26/080000)
+とりあえず
+`~/.config/pnpm/rc` または `~/.npmrc`
+に
+
+```conf
+minimumReleaseAge=1440        # 公開後24時間未満の新バージョンを拒否（default 0）[1](https://pnpm.io/supply-chain-security)
+blockExoticSubdeps=true       # トランジティブ依存の git/tarball 等を禁止（default false）[1](https://pnpm.io/supply-chain-security)
+trustPolicy=no-downgrade      # 信頼レベルが低下したバージョンを拒否（default off）[1](https://pnpm.io/supply-chain-security)
+```
+
+と書いとくといい。
+
+参考:
+
+- [クラウドサインは npm から pnpm へ移行しました - 弁護士ドットコム株式会社 Creators’ blog](https://creators.bengo4.com/entry/2026/01/26/080000)
 
 ## `pnpm audit -g` はない
 

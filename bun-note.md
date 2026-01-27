@@ -1,4 +1,4 @@
-# bun メモ
+# bun (バン) メモ
 
 - [bun の概要](#bun-の概要)
 - [Windows でインストールに失敗するとき](#windows-でインストールに失敗するとき)
@@ -9,6 +9,9 @@
   - [手順](#手順)
 - [bun のグローバルキャッシュをクリアする](#bun-のグローバルキャッシュをクリアする)
 - [bun で 〇〇は...](#bun-で-〇〇は)
+- [`bun audit`](#bun-audit)
+- [pnpm の minimumReleaseAge 相当](#pnpm-の-minimumreleaseage-相当)
+- [`bun build` はバンドラなんだけど](#bun-build-はバンドラなんだけど)
 
 ## bun の概要
 
@@ -120,3 +123,42 @@ bun pm cache rm
 # npm list
 bun pm ls
 ```
+
+## `bun audit`
+
+v1.3系から使えるようになった。
+
+[bun audit - Bun](https://bun.com/docs/pm/cli/audit)
+
+あと `bun why` も。
+
+## pnpm の minimumReleaseAge 相当
+
+bunfig.tomlで
+
+```toml
+[install]
+# 単位は分。1440 = 24時間
+minimumReleaseAge = 1440
+```
+
+[bunfig.toml - Bun](https://bun.com/docs/runtime/bunfig#install-minimumreleaseage)
+
+以下は ~/.config/pnpm/rc の例で、下2つはいまのところbunに相当するものはない。
+
+```conf
+minimumReleaseAge=1440        # 公開後24時間未満の新バージョンを拒否（default 0）[1](https://pnpm.io/supply-chain-security)
+blockExoticSubdeps=true       # トランジティブ依存の git/tarball 等を禁止（default false）[1](https://pnpm.io/supply-chain-security)
+trustPolicy=no-downgrade      # 信頼レベルが低下したバージョンを拒否（default off）[1](https://pnpm.io/supply-chain-security)
+```
+
+## `bun build` はバンドラなんだけど
+
+「単一 bundle を作る」のが目的なので
+
+- .d.ts が出せない
+- ファイルごとに .ts -> .js ができない
+- IIFE + globalName ができない
+
+なので、再利用できるモジュールを作るのはつらいかも。
+tsdownとかをつかいましょう。

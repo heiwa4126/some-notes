@@ -16,6 +16,7 @@
 - [git 以下でバックアップファイルができない](#git-以下でバックアップファイルができない)
 - [melpa の GPG キー](#melpa-の-gpg-キー)
 - [dired モードで d の取り消し](#dired-モードで-d-の取り消し)
+- [Ctrl+\\ を mark にする](#ctrl-を-mark-にする)
 
 ## sort & uniq
 
@@ -244,3 +245,11 @@ gpg --keyserver keyserver.ubuntu.com --homedir ~/.emacs.d/elpa/gnupg --receive-k
 
 `u` で選択中の 1 個取り消し。
 `U` で全部取り消し。
+
+## Ctrl+\ を mark にする
+
+```lisp
+;; Ctrl+\ を mark にする
+;; Windows Terminal で ctrl+space やctrl+@(shift+2)が喰われるので代替
+(global-set-key (kbd "C-\\") #'set-mark-command)
+```
