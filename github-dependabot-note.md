@@ -165,3 +165,13 @@ issues はこのへん。問題は認識されているけど修正されてい�
 - [Error updating build-system dependencies with uv · Issue #12124 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/12124)
 - [uv errors the Dependabot job when attempted version updates are incompatible · Issue #12087 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/12087)
 - [Dependabot not updating python packages via \`uv\` · Issue #13014 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/13014)
+
+## dependabot が生成したモジュール更新のprをcliでcloseする
+
+```sh
+gh pr list
+# または
+gh pr list --author "dependabot[bot]" --state open
+# あとは1個づつ
+gh pr close <PR番号> --comment "手元で pnpm up により更新済みのため、この Dependabot PR は不要になりました。"
+```
