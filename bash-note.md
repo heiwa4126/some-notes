@@ -3,6 +3,7 @@
 .profile や.bash_profile で毎回混乱するので、
 きちんと理解する。
 
+- [shebang](#shebang)
 - [参考リンク](#参考リンク)
 - [.profile, .bash_profile の関係](#profile-bash_profile-の関係)
 - [exit code](#exit-code)
@@ -27,6 +28,15 @@
 - [`@-`とは](#-とは)
 - [usermod -aG](#usermod--ag)
 - [lsof の複数条件](#lsof-の複数条件)
+
+## shebang
+
+```sh
+#!/usr/bin/env bash
+set -euox pipefail
+```
+
+`x` は状況に応じて。
 
 ## 参考リンク
 

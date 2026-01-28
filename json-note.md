@@ -5,6 +5,7 @@
 - [jq の出力を color で less](#jq-の出力を-color-で-less)
 - [JSON でなぜスラッシュにエスケープが要るのか](#json-でなぜスラッシュにエスケープが要るのか)
 - [JSON から JavaScript に貼り付けられるコードに変換(あるいはその逆)](#json-から-javascript-に貼り付けられるコードに変換あるいはその逆)
+- [JSONの "文字列の中" に生の改行は入れられない](#jsonの-文字列の中-に生の改行は入れられない)
 
 ## jq でフォーマットの変換
 
@@ -64,3 +65,8 @@ JSON だけ見ると必要なわけではない。が。
 
 - [Convert JSON to Javascript Object Online - ConvertSimple.com](https://www.convertsimple.com/convert-json-to-javascript/)
 - [Convert Javascript Object to JSON Online - ConvertSimple.com](https://www.convertsimple.com/convert-javascript-to-json/)
+
+## JSONの "文字列の中" に生の改行は入れられない
+
+絶対に入れられないので、考えるだけ無駄。
+`\\\n` のようなのは書けるけど、やりたいことはそうじゃないよね?
