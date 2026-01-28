@@ -147,6 +147,20 @@ pnpm config list --location=global
 ぐらい(なんで全部 JavaScript 系?)。
 Cargo は機能リクエストが出たばかりらしい。
 
+## 一時的に minimumReleaseAge を無効にする
+
+セキュリティパッチをすぐあてたい、というとき。
+
+「hono@4.11.5 を使っているが、セキュリティパッチが出て、4.11.7にしたい。
+だが、4.11.7 はまだリリースされて14時間しか経ってないのに、
+minimumReleaseAge=1440」
+
+みたいなとき。
+
+```sh
+pnpm add hono@latest --config.minimumReleaseAge=0
+```
+
 ## そのほかの pnpm のセキュリティ機能
 
 とりあえず
@@ -212,3 +226,47 @@ pnpm メンテナはこの挙動を認めており(互換性の観点で)**す�
 
 - `npm --loglevel=error pkg get version`
 - `NPM_CONFIG_LOGLEVEL=error npm pkg get version`
+
+## `pnpm install` の前に `pnpm audit` を実行させる
+
+run-scripts に preinstall を書いておく
+
+```json
+	"scripts": {
+		"preinstall": "pnpm audit"
+	}
+```
+
+## overrides
+
+たとえば
+
+- @stoplight/prism-cli 5.14.2 が依存している
+  - @stoplight/prism-http 5.12.0 が依存している
+    - @stoplight/http-spec 7.1.0 が依存している
+      - postman-collection 4.5.0 が依存している
+        - lodash 4.17.21 に脆弱性がある
+
+みたいな時、package.json に
+
+```json
+{
+  "pnpm": {
+    "overrides": {
+      "lodash@<4.17.23": ">=4.17.23"
+    }
+  }
+}
+```
+
+のように書けば、とりあえずしのげる。
+
+※ npmでもoverridesできる
+
+で、この場合は 4.17.21 -> 4.17.23 なのでたぶん動くであろー、
+なんだけど、本質的な解決ではない。
+
+postman-collectionで解決してほしい。
+すごく古い @faker-js/faker 5.5.3 とかも使ってるし
+
+PRおくりましょう。
