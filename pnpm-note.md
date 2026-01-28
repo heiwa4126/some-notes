@@ -151,8 +151,8 @@ Cargo は機能リクエストが出たばかりらしい。
 
 セキュリティパッチをすぐあてたい、というとき。
 
-「hono@4.11.5 を使っているが、セキュリティパッチが出て、4.11.7にしたい。
-だが、4.11.7 はまだリリースされて14時間しか経ってないのに、
+「hono@4.11.5 を使っているが、セキュリティパッチが出て、4.11.7 にしたい。
+だが、4.11.7 はまだリリースされて 14 時間しか経ってないのに、
 minimumReleaseAge=1440」
 
 みたいなとき。
@@ -261,12 +261,22 @@ run-scripts に preinstall を書いておく
 
 のように書けば、とりあえずしのげる。
 
-※ npmでもoverridesできる
+※ npm でも overrides できる
 
 で、この場合は 4.17.21 -> 4.17.23 なのでたぶん動くであろー、
 なんだけど、本質的な解決ではない。
 
-postman-collectionで解決してほしい。
+postman-collection で解決してほしい。
 すごく古い @faker-js/faker 5.5.3 とかも使ってるし
 
-PRおくりましょう。
+修正して PR おくりましょう。
+
+## pnpm には `npm audit fix` が無い
+
+`pnpm audit --fix` はちょっと動作が異なる。
+
+> pnpm 公式ドキュメントにもあるとおり、--fix を付けると 脆弱性のある依存を “overrides” で強制的に安全なバージョンへ置き換えます。
+> つまり package.json に overrides を追加する方式です。
+> これは lockfile を直接書き換える npm と異なる挙動です。
+
+[pnpm audit | pnpm](https://pnpm.io/ja/cli/audit)
