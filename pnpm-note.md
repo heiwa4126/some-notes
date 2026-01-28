@@ -154,9 +154,9 @@ Cargo は機能リクエストが出たばかりらしい。
 に
 
 ```conf
-minimumReleaseAge=1440        # 公開後24時間未満の新バージョンを拒否（default 0）[1](https://pnpm.io/supply-chain-security)
-blockExoticSubdeps=true       # トランジティブ依存の git/tarball 等を禁止（default false）[1](https://pnpm.io/supply-chain-security)
-trustPolicy=no-downgrade      # 信頼レベルが低下したバージョンを拒否（default off）[1](https://pnpm.io/supply-chain-security)
+minimumReleaseAge=1440        # 公開後24時間未満の新バージョンを拒否(default 0)[1](https://pnpm.io/supply-chain-security)
+blockExoticSubdeps=true       # トランジティブ依存の git/tarball 等を禁止(default false)[1](https://pnpm.io/supply-chain-security)
+trustPolicy=no-downgrade      # 信頼レベルが低下したバージョンを拒否(default off)[1](https://pnpm.io/supply-chain-security)
 ```
 
 と書いとくといい。
@@ -181,3 +181,34 @@ grype .
 「何が原因のパッケージかわからない」などの問題はあり。
 
 同じ手法が uv とかでも使える。`grype $(uv tool dir)`
+
+## pnpm の run-scripts に npmコマンドを使うとき
+
+(または `pnpm version`や `pnpm pkg` のような pnpm が npm を内部で呼ぶコマンドを使うとき)
+
+pnpm の設定で minimum-release-age のような npm にないオプションが設定されていると
+
+> npm warn Unknown env config "minimum-release-age". This will stop working in the next major version of npm.
+
+みたいな警告が出ます。直接 `npm pkg get version` と呼ぶと、警告が出ません。どうも pnpm は run-scripts から npm を使うとオプションを渡してるみたい。
+
+この動作をやめさせるには?
+
+...
+
+結論から言うと、**pnpm は `pnpm run` 実行時に子プロセスへ `npm_config_*` 環境変数を引き継ぐ仕様**で、
+これが npm v11 以降で「Unknown env config」警告の原因です。
+pnpm メンテナはこの挙動を認めており(互換性の観点で)**すぐには変えない方針**を示しています。
+したがって「pnpm が npm に `npm_config_*` を渡さないようにする」完全なスイッチは現状ありません。
+
+- [Warning: \`npm warn Unknown env config "verify\-deps\-before\-run"\. This will stop working in the next major version of npm\.\` · Issue \#9234 · pnpm/pnpm](https://github.com/pnpm/pnpm/issues/9234)
+- [Unknown env config "verify\-deps\-before\-run" · Issue \#9235 · pnpm/pnpm](https://github.com/pnpm/pnpm/issues/9235)
+
+いろいろあるけど
+**npm のログレベルを落として警告を非表示**
+するぐらいしか方法がない。
+
+たとえば:
+
+- `npm --loglevel=error pkg get version`
+- `NPM_CONFIG_LOGLEVEL=error npm pkg get version`
