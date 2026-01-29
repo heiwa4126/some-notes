@@ -25,6 +25,8 @@
   - [Recovery codes の使い方](#recovery-codes-の使い方)
 - [default branch 以外も fetch する](#default-branch-以外も-fetch-する)
 - [アーカイブモード](#アーカイブモード)
+- [GitHub で dependabot の open な PR があるレポジトリを検索する方法](#github-で-dependabot-の-open-な-pr-があるレポジトリを検索する方法)
+- [手動でパッケージをアップデートしたので Dependabot の PR をまとめて closeしたい](#手動でパッケージをアップデートしたので-dependabot-の-pr-をまとめて-closeしたい)
 
 ## GitHub のチュートリアル
 
@@ -437,3 +439,33 @@ Dependabotも動かない。
 
 Settings → Danger Zone → "Archive this repository"
 確認ダイアログにリポジトリ名を入力して確定
+
+## GitHub で dependabot の open な PR があるレポジトリを検索する方法
+
+GitHub の検索バーで
+`owner:yourUserName is:pr is:open author:app/dependabot`
+
+(`owner:yourUserName` のとこはアレンジ)
+
+`is:pr is:open author:app/dependabot label:security`
+にすると「セキュリティアップデートだけ」になる
+
+"アーカイブされたレポジトリを除く"なら
+
+## 手動でパッケージをアップデートしたので Dependabot の PR をまとめて closeしたい
+
+UI はない。gh を使う。
+
+```sh
+gh pr list \
+  --author app/dependabot \
+  --state open \
+  --json number \
+  --jq '.[].number' \
+| xargs -n1 gh pr close
+```
+
+※
+実行する前に
+`gh pr list`
+ぐらいはしましょう。
