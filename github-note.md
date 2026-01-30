@@ -25,8 +25,7 @@
   - [Recovery codes の使い方](#recovery-codes-の使い方)
 - [default branch 以外も fetch する](#default-branch-以外も-fetch-する)
 - [アーカイブモード](#アーカイブモード)
-- [GitHub で dependabot の open な PR があるレポジトリを検索する方法](#github-で-dependabot-の-open-な-pr-があるレポジトリを検索する方法)
-- [手動でパッケージをアップデートしたので Dependabot の PR をまとめて closeしたい](#手動でパッケージをアップデートしたので-dependabot-の-pr-をまとめて-closeしたい)
+- [ある程度作業が進んだローカルレポジトリから CLI で GitHub レポジトリを作って push する](#ある程度作業が進んだローカルレポジトリから-cli-で-github-レポジトリを作って-push-する)
 
 ## GitHub のチュートリアル
 
@@ -440,32 +439,30 @@ Dependabotも動かない。
 Settings → Danger Zone → "Archive this repository"
 確認ダイアログにリポジトリ名を入力して確定
 
-## GitHub で dependabot の open な PR があるレポジトリを検索する方法
+## ある程度作業が進んだローカルレポジトリから CLI で GitHub レポジトリを作って push する
 
-GitHub の検索バーで
-`owner:yourUserName is:pr is:open author:app/dependabot`
-
-(`owner:yourUserName` のとこはアレンジ)
-
-`is:pr is:open author:app/dependabot label:security`
-にすると「セキュリティアップデートだけ」になる
-
-"アーカイブされたレポジトリを除く"なら
-
-## 手動でパッケージをアップデートしたので Dependabot の PR をまとめて closeしたい
-
-UI はない。gh を使う。
+基本はこれ
 
 ```sh
-gh pr list \
-  --author app/dependabot \
-  --state open \
-  --json number \
-  --jq '.[].number' \
-| xargs -n1 gh pr close
+gh repo create --public --source=. --remote=origin --push
 ```
 
-※
-実行する前に
-`gh pr list`
-ぐらいはしましょう。
+ただこれだと gh が使ってるプロトコルになるので、
+「gh は HTTPS だけど git push は ssh」
+みたいなときは
+
+```sh
+gh repo create --public --source=. --remote=origin
+git remote set-url origin git@github.com:yourGitHubUsername/repoName.git
+git push origin HEAD
+```
+
+みたいにしないとダメ。
+
+```sh
+gh config set git_protocol ssh
+gh repo create --public --source=. --remote=origin --push
+gh config set git_protocol https
+```
+
+という手もあり。

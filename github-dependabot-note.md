@@ -16,11 +16,11 @@ updates:
     directory: '/' # Location of package manifests
     schedule:
       interval: 'monthly'
-    open-pull-requests-limit: 1
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
 ```
-
-`open-pull-requests-limit` を 1 にしておくと、複数の bump を 1 個にしてくれるので手抜きができるらしい。
-その反面([ここ参照](https://docs.github.com/ja/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#open-pull-requests-limit)).
 
 参考: [dependabot.yml ファイルの構成オプション - GitHub Docs](https://docs.github.com/ja/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file)
 
@@ -166,7 +166,7 @@ issues はこのへん。問題は認識されているけど修正されてい�
 - [uv errors the Dependabot job when attempted version updates are incompatible · Issue #12087 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/12087)
 - [Dependabot not updating python packages via \`uv\` · Issue #13014 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/13014)
 
-## dependabot が生成したモジュール更新のprをcliでcloseする
+## Dependabot が生成したモジュール更新の PR を cli で close する
 
 ```sh
 gh pr list
@@ -175,3 +175,97 @@ gh pr list --author "dependabot[bot]" --state open
 # あとは1個づつ
 gh pr close <PR番号> --comment "手元で pnpm up により更新済みのため、この Dependabot PR は不要になりました。"
 ```
+
+## GitHub の UI で Dependabot の open な PR があるレポジトリを検索する方法
+
+GitHub の検索バーで
+`owner:@me is:pr is:open author:app/dependabot`
+
+- "セキュリティアップデートだけ" なら `label:security` を
+- "アーカイブされたレポジトリを除く"なら `archived:false` を
+- "マージコンフリクトしている(ので適応できない)" なら `conflicts:true` を
+
+追加すること。`@me`については次の章も参照
+
+ブラウザでブックマークできる。
+
+## 検索で `@me` が使える
+
+- [Search by @me - GitHub Changelog](https://github.blog/changelog/2020-01-20-search-by-me/)
+- [ユーザ名によるクエリ](https://docs.github.com/ja/search-github/getting-started-with-searching-on-github/understanding-the-search-syntax#queries-with-usernames)
+
+> 検索クエリに user、actor、assignee のようなユーザー名を必要とする修飾子が含まれている場合、有効なユーザー名を使って特定の個人を指定し、@me を使って現在のユーザーを指定し、@copilot を使って Copilot を指定できます。
+
+## 手動でパッケージをアップデートしたので このレポジトリの Dependabot の PR をまとめて close したい
+
+UI はない。gh を使う。
+
+```sh
+gh pr list \
+  --author app/dependabot \
+  --state open \
+  --json number \
+  --jq '.[].number' \
+| xargs -n1 gh pr close
+```
+
+※
+実行する前に
+`gh pr list`
+ぐらいはしましょう。
+
+## 自分の repositories を全部スキャンして、オープンな Dependabot の PR をリストするスクリプト
+
+まず
+
+```sh
+# 自分の repositories を全部スキャンして、
+# オープンな Dependabot の PR をリストするスクリプト
+gh search prs \
+  --owner @me \
+  --state open \
+  --author app/dependabot \
+  --json repository,number,title,url,updatedAt,labels
+```
+
+で、これに加えて「コンフリクトがないPR(mergeable)」という条件が欲しいところ。しかし
+`--json`
+オプションには `mergeable` がないので
+
+- 検索後に `gh pr view` で mergeable を確認
+- または GraphQL API で
+
+のどちらか。まず
+
+```sh
+gh api graphql -f query='
+  query {
+    search(query: "is:pr is:open author:app/dependabot user:@me", type: ISSUE, first: 20) {
+      nodes {
+        ... on PullRequest {
+          repository { nameWithOwner }
+          number
+          title
+          url
+          updatedAt
+          labels(first: 10) { nodes { name } }
+          mergeable
+        }
+      }
+    }
+  }
+'
+```
+
+`first: nn` のとこはデバッグ用。最大100
+
+ややこしいので
+[heiwa4126/depbot-pr-tools: (作業用) 自分の GitHub repositories を全部スキャンして、Dependabot の PR を JSON 形式でリストするスクリプト](https://github.com/heiwa4126/depbot-pr-tools)
+にした。これ参照
+
+## dependabot.yml の updates[].directory はリストが書けません
+
+複数ディレクトリだったら `directories:` を使いましょう。ワイルドカードも使える
+
+- [How to add multiple directories in dependabot.yml config file? · Issue #2824 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/2824)
+- [Defining multiple locations for manifest files](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/manage-your-dependency-security/controlling-dependencies-updated#defining-multiple-locations-for-manifest-files)
