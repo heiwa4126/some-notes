@@ -1,5 +1,11 @@
 # GitHub Actions の Reusable Workflows のメモ
 
+## いろいろあるけど Reusable Workflows はめんどくさい
+
+actionsで済むものはactionsで共有するほうが楽っぽい。
+
+actionsでハマるのは docker actions を共有しようとしたとき
+
 ## Reusable Workflows で使えないアクション
 
 ### pypa/gh-action-pypi-publish
