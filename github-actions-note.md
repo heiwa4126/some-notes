@@ -7,6 +7,7 @@
 
 - [そもそも](#そもそも)
 - [on: が難しい](#on-が難しい)
+- [workflow を 手動で起動](#workflow-を-手動で起動)
 - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
 - [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
 - [レポジトリ名の取得](#レポジトリ名の取得)
@@ -110,6 +111,22 @@ v[0-9]*.[0-9]*.[0-9]*-?*
 ...なんか変だけど我慢すること。
 
 あと Deployment branches and tags のルールも、OR 条件。
+
+## workflow を 手動で起動
+
+[Manually running a workflow - GitHub Docs](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow#running-a-workflow)
+
+`.github/workflows/test1.yml` に (`test1`は任意)
+`on: workflow_dispatch`
+書いて
+
+```sh
+gh workflow run test1.yml
+```
+
+のように。
+
+ブランチの指定もできるし、UIからも実行できる。最初のリンク参照
 
 ## on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?
 
