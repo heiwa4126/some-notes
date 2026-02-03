@@ -1,7 +1,21 @@
 # GitHub Dependabot メモ
 
-Code security and analysis のところに設定項目がいろいろあるけど、
-よくわからん。
+Code security and analysis のところに設定項目がいろいろあるけど、よくわからん。
+
+## GitHub Dependabot は3種類ある
+
+このへん [GitHub CI/CD実践ガイド | 技術評論社](https://gihyo.jp/book/2024/978-4-297-14173-8) からの引用多し
+
+- Dependabot version updates: 最新バージョンへの自動アップデート
+- Dependabot security updates: 脆弱性を含むバージョンの自動アップデート
+- Dependabot alerts: 脆弱性が含まれるバージョンのアラート通知
+
+`.github/dependabot.yml` に書くのは
+
+- Dependabot version updates
+- Dependabot security updates
+
+の共用設定
 
 ## チュートリアル
 
@@ -30,7 +44,7 @@ updates:
 リポジトリが依存している全てのパッケージを一覧表示し、
 それらのバージョン情報も確認できます。
 
-確認は Insites の Dependency graph で。
+確認は Insight の Dependency graph で。
 
 ## Dependabot 以下の設定
 
@@ -269,3 +283,41 @@ gh api graphql -f query='
 
 - [How to add multiple directories in dependabot.yml config file? · Issue #2824 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/2824)
 - [Defining multiple locations for manifest files](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/manage-your-dependency-security/controlling-dependencies-updated#defining-multiple-locations-for-manifest-files)
+
+## Dependency Graph を有効にする話
+
+Dependency Graph が enable になっていないと
+Dependabot alerts と Dependabot security updates が動かない。
+
+「GitHub で private レポジトリの Dependency Graph はデフォルトでは有効ではない」というのは昔の話みたいです(実際に試した)。
+
+- 2021 年頃までは「public はデフォルト on / private は手動で有効化」という明確な線引きが公式に書かれていた。 [github](https://github.blog/enterprise-software/secure-software-development/secure-at-every-step-how-githubs-dependency-graph-is-generated/)
+- その後のドキュメントでは、可視性に依存した説明ではなく「どの可視性でもオーナーが一括で on/off 管理する」形に変わっており、private だけ特別にデフォルト off というニュアンスは薄れています。 [docs.github](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/configuring-the-dependency-graph)
+- 2025 年には、**逆に** public に対しても「無効化できる」「新規 public はデフォルト off にする」方向の変更が入り、現在は activity ベースや設定ベースで on/off が決まる設計になっています。 [github](https://github.blog/changelog/2025-05-15-users-can-now-disable-dependency-graph-for-public-repositories/)
+
+まあそういうやっかいな状況。
+
+とりあえず
+自分の全リポジトリをスキャンして、
+
+- アーカイブになっていないリポジトリのなかで
+- Dependency Graph が disable になっているもの
+
+を列挙するCLIを書きました。
+[heiwa4126/depbot-pr-tools: test7.sh](https://github.com/heiwa4126/depbot-pr-tools/blob/main/test7.sh)
+
+### そもそも 個人アカウントだったら一括設定がある
+
+https://github.com/settings/security_analysis に
+
+- Dependency graph
+- Dependabot alerts
+- Dependabot security updates
+
+の3つとも
+
+- 新しく作るレポジトリでは自動で有効
+- 全レポジトリで有効
+- 全レポジトリで無効
+
+がある
