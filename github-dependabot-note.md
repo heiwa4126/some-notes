@@ -321,3 +321,507 @@ https://github.com/settings/security_analysis に
 - 全レポジトリで無効
 
 がある
+
+## GitHub の 「サプライチェーンセキュリティ機能」
+
+[About supply chain security - GitHub Docs](https://docs.github.com/en/code-security/concepts/supply-chain-security/about-supply-chain-security)
+
+- Dependency graph
+- Dependency review
+- Dependabot alerts
+- Dependabot updates
+  - Dependabot security updates
+  - Dependabot version updates
+- Immutable releases
+- Artifact attestations
+
+### Dependency graph
+
+リポジトリ内の依存関係(直接・間接)を解析・可視化する基盤機能。  
+他の多くのサプライチェーン機能の前提となる。
+
+### Dependency review
+
+Pull Request で変更される依存関係をレビューし、  
+**新たに追加される脆弱性やライセンス問題**を検出する。
+
+### Dependabot alerts
+
+Dependency graph をもとに、  
+**既知の脆弱性(GitHub Advisory Database)を含む依存関係**を検出し通知する。
+
+### Dependabot updates
+
+依存関係を自動更新する Pull Request を作成する機能。
+
+- **Dependabot security updates**  
+  脆弱性を修正するための更新 PR を自動作成する。
+- **Dependabot version updates**  
+  最新バージョンへの追従を目的とした更新 PR を作成する。
+
+### Immutable releases
+
+リリース成果物を **後から変更できない(immutable)状態**にし、  
+公開後の差し替えや改ざんを防ぐ。
+
+### Artifact attestations
+
+ビルド成果物に対して  
+「誰が」「どのような環境・手順で」作成したかを証明するメタデータ(attestation)を付与し、  
+サプライチェーンの完全性を検証可能にする。
+
+### 機能間の依存関係まとめ表
+
+| 機能                        | 主な役割                     | 依存している機能                      |
+| --------------------------- | ---------------------------- | ------------------------------------- |
+| Dependency graph            | 依存関係の解析・可視化       | なし(基盤)                            |
+| Dependency review           | PR時の依存関係変更チェック   | Dependency graph                      |
+| Dependabot alerts           | 脆弱性の検出と通知           | Dependency graph                      |
+| Dependabot security updates | 脆弱性修正用PRの自動作成     | Dependency graph<br>Dependabot alerts |
+| Dependabot version updates  | 新バージョン追従のPR自動作成 | Dependency graph                      |
+| Immutable releases          | リリース改ざん防止           | なし(独立)                            |
+| Artifact attestations       | 成果物の真正性・来歴の証明   | CI/CD(ワークフロー)※                  |
+
+※ Artifact attestations は Dependency graph には直接依存せず、  
+GitHub Actions などの CI/CD 実行結果を前提とします。
+
+### ひとことで全体像
+
+- **Dependency graph** が土台
+- **Dependency review / Dependabot 系** はその上に乗る検知・自動化レイヤ
+- **Immutable releases / Artifact attestations** は  
+  「公開後・配布後の安全性」を担保するレイヤ
+
+という三層構造で考えると分かりやすい
+
+## Dependency graph の仕組み(概要)
+
+[Dependency graph の全体像・基本概念](https://docs.github.com/en/code-security/concepts/supply-chain-security/about-the-dependency-graph)
+
+### どのように依存関係を発見するか(静的解析 / submission)
+
+[Dependency graph supported package ecosystems - GitHub Docs](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+
+- 対応言語・対応エコシステム一覧
+- どのマニフェスト/ロックファイルを解析するか
+- 静的解析と dependency submission の説明
+
+#### ロックファイルと精度に関する説明
+
+特にこの部分が重要。同ページ内セクション:
+
+- 「Building the dependency graph」
+- 「Recommended formats」
+
+### dependency submission(静的解析で足りない場合)
+
+[Using the dependency submission API](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/using-the-dependency-submission-api) - GitHub Actions から依存関係を送信する仕組み
+
+[Configuring automatic dependency submission for your repository](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/configuring-automatic-dependency-submission-for-your-repository)
+
+### purl(Package URL) 対応(最近の仕様変更)
+
+[Dependency graph supports all purl-identified package ecosystems - GitHub Changelog](https://github.blog/changelog/2025-04-03-dependency-graph-supports-all-purl-identified-package-ecosystems/)
+
+## Dependency graph が生成される実例
+
+前提:
+
+- リポジトリ内に **package.json** がある
+- リポジトリ内に **pnpm-lock.yaml** がある
+- **dependabot.yml は無い**(つまり Dependabot updates の自動PR設定はしていない)
+- リポジトリ設定で **Dependency graph が有効**
+
+このとき、Dependency graph 生成は **Dependabot updates の設定とは無関係**に走ります。  
+Dependency graph 自体は「**リポジトリ内のマニフェスト/ロックファイルの静的解析**」で構築されるからです。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)[2](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+### 1) GitHub が実際にやること(静的解析の流れ)
+
+#### ステップA:リポジトリをスキャンする
+
+Dependency graph が有効だと、GitHub はリポジトリをスキャンして  
+対応エコシステムの **manifest files(マニフェスト)** を探します。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+
+pnpm の場合、対応ファイルは公式に明示されています。
+
+- **package.json**
+- **pnpm-lock.yaml(推奨=Recommended formats)** [2](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+> つまり「pnpm-lock.yaml がある」時点で、GitHub は dependency graph を “より正確に” 作れる条件を満たします。  
+> (ロックファイルが推奨フォーマットに分類されているため)[2](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+#### ステップB:見つけたファイルをパースして依存関係表現を作る
+
+GitHub は見つけたマニフェスト/ロックファイルを **parse(解析)** して、  
+各パッケージの **名前とバージョン**などを表現に落とし込みます。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)  
+このやり方は GitHub Docs 上で **static analysis(静的解析)** と呼ばれています。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+
+#### ステップC:dependency graph として表示できる形にまとめる
+
+Dependency graph は、リポジトリ内の manifest/lock files(静的解析結果)と、  
+(あれば)dependency submission API で投稿された依存関係を統合したものです。[2](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+
+あなたのケースは **submission は使っていない**想定なので、
+**package.json + pnpm-lock.yaml の静的解析結果だけ**で graph が生成されます。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)[2](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+### 2) pnpm の場合、package.json と pnpm-lock.yaml はどう効く?
+
+#### package.json から分かること(主に “直接依存”)
+
+package.json は、あなたが明示的に書いた依存(dependencies / devDependencies 等)を示します。  
+GitHub は「マニフェスト」を解析して依存を表現にします。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)[2](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+例(イメージ):
+
+```json
+{
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
+```
+
+ここから分かるのは「express を使っている」という事実(ただし `^4.18.0` のような範囲指定)。  
+**範囲指定だけだと “実際にインストールされた正確なバージョン” は確定しません。**
+
+### pnpm-lock.yaml から分かること(“実バージョン+間接依存”)
+
+pnpm-lock.yaml は、**実際に解決された依存関係(バージョン)** を固定します。
+
+GitHub Docs は「推奨フォーマットは、直接・間接の両方のバージョンを明示し、より正確な dependency graph になる」旨を述べています。 [docs.github.com](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems), [docs.github.com](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+
+したがって pnpm-lock.yaml があると、graph はだいたいこうなります:
+
+- **直接依存**:package.json に書いた express など
+- **間接依存(transitive)**:express が内部で引く dependencies(例:accepts, mime-types...など)
+- **それぞれの正確なバージョン**:lock に固定されている版
+
+> これが「package.json だけ」よりも graph が正確になる理由です。 [docs.github.com](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+### 3) dependabot.yml が無い場合に「起きないこと/起きること」
+
+#### 起きないこと(=Dependabot updates は動かない)
+
+dependabot.yml が無いと、通常 **Dependabot version updates / security updates の “更新PR作成”** は構成されていません。  
+(つまり PR が勝手に作られることは基本ありません)
+
+※ただし、ここは「graph の生成」の話とは別で、あなたの質問の主眼ではないので深入りしません。
+
+#### 起きること(=Dependency graph は作られる)
+
+dependabot.yml が無くても、Dependency graph は  
+**manifest/lock files をスキャンして作る**ものなので、作られます。 [docs.github.com](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems), [docs.github.com](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+### 4) “最終的に GitHub 画面ではどう見えるか” のイメージ
+
+Dependency graph の説明として、GitHub Docs は「依存関係の一覧、どのマニフェストが含めたか、既知の脆弱性有無」などが見えると言っています。 [docs.github.com](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+pnpm の場合は典型的に:
+
+- **Dependencies タブ**に
+  - `express@4.18.2` のように **確定バージョン**が表示(lock があるため)
+  - さらにその下に **transitive 依存**もぶら下がる(lock による精度向上) [docs.github.com](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems), [docs.github.com](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+- 各依存には
+  - どのファイル(package.json / pnpm-lock.yaml)が根拠か、などが出る [docs.github.com](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+### 5) よく混乱するポイント(ここが「分かりにくい」原因になりがち)
+
+#### 「Dependency graph」≠「Dependabot updates」
+
+- Dependency graph:**依存関係を“把握”する機能**(静的解析で構築) [docs.github.com](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems), [docs.github.com](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+- Dependabot updates:**更新PRを“作る”機能**(dependabot.yml でスケジュール等を指定)
+
+dependabot.yml が無くても graph ができるのは、この役割分離のせいです。 [docs.github.com](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems), [docs.github.com](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+## submission (dependency submission) とは(超要約)
+
+Dependency graph は通常、リポジトリ内の **マニフェスト/ロックファイルを静的解析**して作られます。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)[2](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+しかし一部エコシステムでは、**ビルド時に依存関係が確定**するため、静的解析だけだと **完全な依存ツリーを作れない**ことがあります。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+
+その不足分を補うために、GitHub Actions などで依存ツリーを生成し、**dependency submission API に送って** Dependency graph に反映させるのが submission です。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)[2](https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/dependency-graph-supported-package-ecosystems)
+
+**submission を使うと**
+
+- 静的解析では取り切れない **ビルド時の(より完全な)依存関係**を Dependency graph に載せられます。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+- submission で追加した依存関係も、結果として **Dependabot alerts / Dependabot updates に流れ込む**(=検知・更新の対象にできる)と GitHub Docs に明記されています。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+- 「Supported package ecosystems」の表にないエコシステムでも、dependency submission API を使って **任意の依存関係を追加できる**(=拡張手段になる)と説明されています。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+
+### 「自動」と「手動」の2パターン
+
+- GitHub Docs は、ビルド時依存に対して GitHub Actions を使うアプローチとして **automatic と manual** の2つがある、と述べています。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+  - **Automatic dependency submission**:リポジトリ設定から「自動投稿」を有効化できるエコシステムがある。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+  - **Manual dependency submission**:ワークフローで依存ツリー生成→API投稿、を自分で組む(外部 Action を使うことが多い)。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)
+
+### purl と submission(最近の拡張ポイント)
+
+- 2025-04-03 の GitHub Changelog により、dependency submission で **purl(Package URL)識別子**を含むグラフを投稿すると、より広いエコシステムを扱える(= purl で識別可能なエコシステムをサポート)方向に拡張されています。[3](https://github.blog/changelog/2025-04-03-dependency-graph-supports-all-purl-identified-package-ecosystems/)
+- つまり **「静的解析で対応していない」=即ムリ**ではなく、submission(特に purl)で取り込める余地があります。[1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependency-graph-supported-package-ecosystems)[3](https://github.blog/changelog/2025-04-03-dependency-graph-supports-all-purl-identified-package-ecosystems/)
+
+## Dependency graph が更新されるタイミング
+
+整理すると、**Dependency graph は「3 つの経路」×「特定のイベント」**で更新されます。公式ドキュメントに書かれている内容を、実務的な視点で噛み砕いて説明します。
+
+### 1 リポジトリへの push(最も基本)
+
+- **対応エコシステムの manifest / lock file** が
+  - 追加された
+  - 変更された
+- その変更を含む **commit が push された**
+
+このとき GitHub は **自動的に再スキャン**し、Dependency graph を更新します。
+
+公式より:
+
+> When you push a commit to GitHub that changes or adds a supported manifest or lock file to the default branch, the dependency graph is automatically updated. [1](https://docs.github.com/github/visualizing-repository-data-with-graphs/about-the-dependency-graph)
+
+#### pnpm 例に当てはめると
+
+- `package.json` (manifest) を変更して push
+- `pnpm-lock.yaml` (lock file) を更新して push
+
+→ **それぞれの push がトリガー**になり、graph が更新されます。
+
+### 2 Dependency graph を「有効化した直後」
+
+- Dependency graph を **初めて有効化**したとき
+- 既にリポジトリ内に存在している
+  - `package.json`
+  - `pnpm-lock.yaml`
+    などを **即座に解析**
+
+公式より:
+
+> When the dependency graph is first enabled, any manifest and lock files for supported ecosystems are parsed immediately. The graph is usually populated within minutes. [2](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/configuring-the-dependency-graph)
+
+**実務的な注意**
+
+- 「有効にしたのに出てこない」場合は、**数分待つ**のが正解
+- 大規模 repo では多少遅れることあり [2](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/configuring-the-dependency-graph)
+
+### 3 依存関係が “上流” リポジトリで更新されたとき
+
+あなたが依存している **外部パッケージ側**で
+
+- 新しいリリース
+- 脆弱性情報の追加
+
+が行われた場合
+
+Dependency graph 自体は変わらなくても、
+**脆弱性情報やメタデータが更新される**ことがあります。
+
+公式より:
+
+> In addition, the graph is updated when anyone pushes a change to the repository of one of your dependencies. [1](https://docs.github.com/github/visualizing-repository-data-with-graphs/about-the-dependency-graph)
+
+📌  
+これは「自分が push していないのに、Security タブの表示が変わった」  
+という現象の正体です。
+
+### 4 dependency submission(手動 or 自動)
+
+これは **静的解析とは別系統の更新トリガー**です。
+
+#### 4-1 手動 / カスタム submission
+
+- GitHub Actions などが
+- **dependency submission API** に snapshot を送信したとき
+
+公式より:
+
+> The dependency graph shows any dependencies you submit using the API in addition to any dependencies that are identified from manifest or lock files. [3](https://docs.github.com/en/rest/dependency-graph/dependency-submission)
+
+→ **API 投稿のたびに graph が更新**されます。
+
+#### 4-2 automatic dependency submission を有効にしている場合
+
+- リポジトリ設定で **automatic dependency submission** を有効化
+- GitHub が Actions を使って
+  - ビルド時依存を検出
+  - 自動で submission API に投稿
+
+公式より:
+
+> When you enable automatic dependency submission for a repository, GitHub automatically identifies the transitive dependencies in the repository and will submit these dependencies to GitHub using the dependency submission API. [4](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/configuring-automatic-dependency-submission-for-your-repository)
+
+📌  
+この場合:
+
+- **Actions の実行タイミング(push / PR / schedule)**に依存して更新される
+
+### 勘違いポイント: Pull Request 自体では「確定更新」されない
+
+- Dependency graph(確定状態)は **更新されない**
+- PR では
+  - Dependency review
+  - 差分チェック
+    に使われるだけ
+
+公式:
+
+> When you create a pull request containing changes to dependencies that targets the default branch, GitHub uses the dependency graph to add dependency reviews to the pull request. [1](https://docs.github.com/github/visualizing-repository-data-with-graphs/about-the-dependency-graph)
+
+✅ **main に merge されて push が発生して初めて更新**
+
+### タイミングまとめ(早見表)
+
+| イベント                              | Dependency graph 更新 |
+| ------------------------------------- | --------------------- |
+| Dependency graph を初めて有効化       | ✅ すぐ               |
+| package.json / pnpm-lock.yaml を push | ✅                    |
+| PR 作成(未 merge)                     | ❌(reviewのみ)        |
+| PR merge → push                       | ✅                    |
+| 依存先パッケージに変更・脆弱性追加    | ✅(メタデータ更新)    |
+| dependency submission API に投稿      | ✅                    |
+| automatic submission の Actions 実行  | ✅                    |
+
+### pnpm 前提の超短い結論
+
+> **pnpm + pnpm-lock.yaml がある repo では:**
+
+- push が唯一の更新トリガー(submission なしなら)
+- Dependabot.yml の有無は **graph 更新とは無関係**
+- 「更新されない」と感じたら:
+  - default branch への push か?
+  - lockfile が対応フォーマットか?
+  - graph が有効か?
+
+を疑うのが正解です。
+
+## Dependency graph が更新されたら...
+
+### Dependabot alerts (Dependency alerts)
+
+*Dependency graph の変化*を契機にスキャンしてアラートを出す(= ほぼ直結)[1](https://docs.github.com/en/code-security/concepts/supply-chain-security/about-dependabot-alerts)
+
+### Dependabot security updates
+
+*Dependabot alert が raise された後*に、修正PRを作ろうとする(= alerts に依存)[2](https://docs.github.com/en/code-security/concepts/supply-chain-security/about-dependabot-security-updates)
+
+### Dependabot version updates
+
+これは**graph 更新に直結しない**
+
+`.github/dependabot.yml` の **schedule** に従って定期実行される。
+そもそも dependabot.yml がないと動きません。[3](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/manage-your-dependency-security/controlling-dependencies-updated)
+
+## ハマりポイント: security updates も 一部の dependabot.yml 設定を読む
+
+GitHub 公式の **Dependabot options reference** には、はっきりこう書かれています。
+
+> **All options marked with a ⚠️ icon also change how Dependabot creates pull requests for security updates, except where target-branch is used.**  
+> (⚠️マークが付いたオプションは、target-branch を除き、security updates にも影響する) [1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference)
+
+つまり:
+
+- **dependabot.yml は version updates 専用ではない**
+- **security updates でも、明示的に記載された対象オプションは評価される**
+
+### ✅ security updates で「確実に効く」設定例
+
+#### ignore / allow
+
+- **無視した依存関係は、security updates の PR も作られない**
+- allow と ignore が両方マッチした場合は ignore が優先される
+
+公式仕様:
+
+> Dependabot default behavior:
+>
+> - All dependencies defined in lock files with vulnerable dependencies are updated by security updates.
+> - If a dependency is matched by an allow and an ignore statement, then it is ignored. [1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference)
+
+✅ つまり「除外設定(ignore)が security updates に効く」という話は **正しい**。
+
+#### directory / directories / exclude-paths
+
+- どのマニフェストをスキャン対象にするか/しないか
+- **security updates でも “対象外ディレクトリはそもそも見ない”**
+
+`exclude-paths`(2025年 GA)の説明でも、
+
+> Applies before manifest parsing: Dependabot will not list, parse, or open pull requests for excluded paths. [2](https://github.blog/changelog/2025-08-26-dependabot-can-now-exclude-automatic-pull-requests-for-manifests-in-selected-subdirectories/)
+
+→ **PR 種別(version / security)に関係なく影響**
+
+#### private registries / registries
+
+2024年の Changelog で明示されています。
+
+> Dependabot security updates now uses private registry configurations specified in the dependabot.yml file as expected. [3](https://github.blog/changelog/2024-03-18-dependabot-security-updates-work-with-private-registries-even-if-target-branch-is-specified/)
+
+→ レジストリ設定も **security updates が読む**
+
+### ❌ 誤解されがちな点:すべての設定が効くわけではない
+
+#### ❌ schedule
+
+- **security updates は schedule を使わない**
+- 依存するのは「alert が発生したかどうか」
+
+公式より:
+
+> When Dependabot security updates are enabled, Dependabot will automatically try to open pull requests to resolve every open Dependabot alert that has an available patch. [4](https://graphite.com/guides/introduction-to-github-dependency-graph)
+
+→ 時間や曜日は **一切見ない**
+
+#### ❌ target-branch
+
+- **security updates では非対応**
+- docs にも明記された例外
+
+> except where target-branch is used [1](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference)
+
+### まとめ
+
+| dependabot.yml の要素    | security updates に影響 |
+| ------------------------ | ----------------------- |
+| ignore / allow           | ✅ 効く                 |
+| directory / directories  | ✅ 効く                 |
+| exclude-paths            | ✅ 効く                 |
+| registries (private)     | ✅ 効く                 |
+| schedule                 | ❌ 無関係               |
+| open-pull-requests-limit | ✅ 効く                 |
+| commit-message / labels  | ✅ 効く                 |
+| target-branch            | ❌ 効かない             |
+
+## Insights → Dependency graph → Dependabot の "Check for updates" ボタンで実行されるのは何?
+
+Dependabot version updates だけ。
+
+"Check for updates" ボタンの出現条件は:
+
+1. (そもそも) **`dependabot.yml` が設定されている**
+   - リポジトリに `.github/dependabot.yml` ファイルが存在し、`version-updates` が有効になっている必要があります
+
+2. **次回の定期実行までに時間がある**
+   - Dependabot は設定されたスケジュール（daily、weekly、monthly）で自動実行されます
+   - 最後の実行から次回の実行予定まで時間がある場合にボタンが表示されます
+
+3. **Dependabot が実行中でない**
+   - 既に更新チェックが実行中の場合は表示されません
+   - 実行中は "Last checked: Checking now..." のような表示になります
+
+4. **Dependabot version updates が有効**
+   - リポジトリ設定で Dependabot が無効になっていると表示されません
+
+逆にボタンが消える状況は:
+
+- Dependabot が実行中
+- 最近（数分～数時間以内）チェックが完了したばかり
+- `dependabot.yml` が存在しない、または無効
+- 次回の自動実行が間もなく予定されている場合
+
+つまり、「手動で今すぐチェックする必要性がある状況」でのみ表示される設計。
+
+参考:
+
+- [Manually trigger an update for a specific dependency · Issue #2980 · dependabot/dependabot-core](https://github.com/dependabot/dependabot-core/issues/2980)
+- UIのスクリーンショットあり - [How to Trigger Dependabot Manually | Medium](https://manumagalhaes.medium.com/tip-how-to-trigger-dependabot-manually-15e50151886b)
+
+## Dependabot からセキュリティアップデートだけほしい場合
+
+Dependabot version updates を disable にする。
+
+あたりまえなんだけど、しばらく気が付かなかった...

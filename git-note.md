@@ -1,6 +1,7 @@
 # git メモ
 
 - [特定のファイルを最後の commit 時に戻す](#特定のファイルを最後の-commit-時に戻す)
+- [特定のファイルを特定のcommit 時に戻す](#特定のファイルを特定のcommit-時に戻す)
 - [全部のファイルを最後の commit 時に戻す](#全部のファイルを最後の-commit-時に戻す)
 - [特定のファイルのステージングを取り消す](#特定のファイルのステージングを取り消す)
 - [git でブランチを作る新しいサブコマンド](#git-でブランチを作る新しいサブコマンド)
@@ -46,7 +47,13 @@
 ## 特定のファイルを最後の commit 時に戻す
 
 ```sh
-git checkout HEAD^ -- <file_path>
+git restore path/to/file
+```
+
+## 特定のファイルを特定のcommit 時に戻す
+
+```sh
+git restore --source <COMMIT_HASH> -- path/to/file
 ```
 
 ## 全部のファイルを最後の commit 時に戻す
@@ -269,22 +276,18 @@ git config --global init.templateDir ~/.git-templates/git-secrets
 Git のセキュア流出防止ツールには、awslabs/git-secrets や thoughtworks/talisman 以外にもいくつかの選択肢があります。以下にいくつかの例を挙げます。
 
 1. **Gitleaks**
-
    - **URL**: [https://github.com/gitleaks/gitleaks](https://github.com/gitleaks/gitleaks)
    - **概要**: Gitleaks は、秘密情報(API キーやパスワードなど)の Git リポジトリへの漏洩を防ぐためのツールです。簡単に使えるコマンドラインツールであり、CI/CD パイプラインに組み込むことができます。
 
 2. **TruffleHog**
-
    - **URL**: [https://github.com/trufflesecurity/trufflehog](https://github.com/trufflesecurity/trufflehog)
    - **概要**: TruffleHog は、Git リポジトリ内の秘密情報を検出するためのツールです。特定の正規表現やエンコーディング、バイナリデータに基づいてスキャンを行います。
 
 3. **Repo-Supervisor**
-
    - **URL**: [https://github.com/auth0/repo-supervisor](https://github.com/auth0/repo-supervisor)
    - **概要**: Repo-Supervisor は、GitHub リポジトリ内の秘密情報の漏洩を監視するためのツールです。スキャン結果をダッシュボードで確認でき、漏洩のリスクを可視化します。
 
 4. **detect-secrets**
-
    - **URL**: [https://github.com/Yelp/detect-secrets](https://github.com/Yelp/detect-secrets)
    - **概要**: detect-secrets は、静的解析を使用して Git リポジトリ内の秘密情報を検出するためのツールです。プラグインベースであり、カスタマイズが容易です。
 
@@ -786,7 +789,6 @@ git reflog expire --expire=now --all && git gc --prune=now --aggressive
 解説:
 
 1. `rm -rf .git/refs/original/`
-
    - `.git/refs/original/` は、`git filter-branch` などの履歴書き換え操作を行った際に、\*\*元の参照(バックアップ)\*\*を保存するディレクトリです。
    - このコマンドでそれらのバックアップ参照を **強制的に削除**します。
    - 意図: 過去の履歴を完全に消して、元に戻せない状態にする
