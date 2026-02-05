@@ -275,7 +275,7 @@ postman-collection で解決してほしい。
 
 `pnpm audit --fix` はちょっと動作が異なる。
 
-> pnpm 公式ドキュメントにもあるとおり、--fix を付けると 脆弱性のある依存を “overrides” で強制的に安全なバージョンへ置き換えます。
+> pnpm 公式ドキュメントにもあるとおり、--fix を付けると 脆弱性のある依存を "overrides" で強制的に安全なバージョンへ置き換えます。
 > つまり package.json に overrides を追加する方式です。
 > これは lockfile を直接書き換える npm と異なる挙動です。
 
