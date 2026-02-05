@@ -26,6 +26,7 @@
 - [default branch 以外も fetch する](#default-branch-以外も-fetch-する)
 - [アーカイブモード](#アーカイブモード)
 - [ある程度作業が進んだローカルレポジトリから CLI で GitHub レポジトリを作って push する](#ある程度作業が進んだローカルレポジトリから-cli-で-github-レポジトリを作って-push-する)
+- [`41898282+github-actions[bot]@users.noreply.github.com` とは何か](#41898282github-actionsbotusersnoreplygithubcom-とは何か)
 
 ## GitHub のチュートリアル
 
@@ -431,7 +432,7 @@ git checkout -b feature-branch origin/feature-branch
 
 ## アーカイブモード
 
-古くてもうメンテしないコードは アーカイブ（Archive）モードにする。
+古くてもうメンテしないコードは アーカイブ(Archive)モードにする。
 
 リードオンリーになり、Issues / PR の作成や Pushができなくなる。
 Dependabotも動かない。
@@ -466,3 +467,46 @@ gh config set git_protocol https
 ```
 
 という手もあり。
+
+## `41898282+github-actions[bot]@users.noreply.github.com` とは何か
+
+まず、GitHubには noreply メールアドレスというのを各ユーザに割り振られてる
+(自分のは
+[Email settings](https://github.com/settings/emails)
+でみられる)。
+
+詳細: [Email addresses reference - GitHub Docs](https://docs.github.com/en/account-and-profile/reference/email-addresses-reference#your-noreply-email-address)
+
+で、最近は `ID+USERNAME@users.noreply.github.com` という形式。
+
+このアドレスは「メールアドレスが識別子として必要な時に使う用」で、
+このアドレスに送信しても何も起きないが、
+GitHubとユーザ自身はこれが誰だか知っている。
+
+`+USERNAME` のところは**エリアスっぽく見えるけど**、
+**ぜんぜんエリアスではなくて、変更できない**。
+
+で、 `41898282+github-actions[bot]@users.noreply.github.com` は
+
+- ユーザー名: `github-actions[bot]`
+- ユーザーID: 41898282
+- メールアドレス: `41898282+github-actions[bot]@users.noreply.github.com`
+- 種類: GitHub App ではなく、組込みのシステムアイデンティティ(system account)
+
+ということ。**一見あやしいアドレスに見えるが、これは本当にIDなのでそのまま使うのが正しい**。
+
+主な GitHub System/Botアカウント:
+
+| Bot名                    | ユーザーID | メールアドレス例                                           | 役割               |
+| ------------------------ | ---------- | ---------------------------------------------------------- | ------------------ |
+| `github-actions[bot]`    | `41898282` | `41898282+github-actions[bot]@users.noreply.github.com`    | GitHub Actions実行 |
+| `dependabot[bot]`        | `49699333` | `49699333+dependabot[bot]@users.noreply.github.com`        | 依存関係更新PR     |
+| `github-codespaces[bot]` | `61023967` | `61023967+github-codespaces[bot]@users.noreply.github.com` | Codespaces関連     |
+
+詳しい情報はAPI経由でこんな具合に取得できます。
+
+```bash
+curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/users/github-actions%5Bbot%5D
+```
+
+↑のJSONの .html_url にアクセスすると、それぞれの紹介になってて面白いです。
