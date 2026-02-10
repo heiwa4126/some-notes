@@ -27,6 +27,7 @@
 - [アーカイブモード](#アーカイブモード)
 - [ある程度作業が進んだローカルレポジトリから CLI で GitHub レポジトリを作って push する](#ある程度作業が進んだローカルレポジトリから-cli-で-github-レポジトリを作って-push-する)
 - [`41898282+github-actions[bot]@users.noreply.github.com` とは何か](#41898282github-actionsbotusersnoreplygithubcom-とは何か)
+- [API Rate Limit](#api-rate-limit)
 
 ## GitHub のチュートリアル
 
@@ -510,3 +511,60 @@ curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/users/gi
 ```
 
 ↑のJSONの .html_url にアクセスすると、それぞれの紹介になってて面白いです。
+
+## API Rate Limit
+
+こんなエラーになる。
+
+> 403 API rate limit of 60 still exceeded until 2026-02-10 11:41:48 +0900 JST, not making remote request. [rate reset in 13m59s]
+
+GitHub の REST API では、
+
+- Authorization ヘッダが無い
+- OAuth / PAT / GitHub App のいずれも使っていない
+
+この条件を満たすリクエストは、**unauthenticated request(未認証リクエスト)** として扱われる。
+
+未認証リクエストの識別子は「送信元 IP アドレス」だけ。なので:
+
+- 同じ IP から来た未認証リクエストは すべて同一バケット
+- 別のユーザーでも、同じ NAT / Proxy / CI runner / 会社ネットワークなら 合算
+- 上限は 60 requests / hour
+
+参照: [A Developer's Guide: Managing Rate Limits for the GitHub API](https://www.lunar.dev/post/a-developers-guide-managing-rate-limits-for-the-github-api)
+
+未認証リクエストと認証リクエストを比較してみる。
+
+```sh
+curl https://api.github.com/rate_limit | jq -S . > 1.json
+gh api /rate_limit | jq  -S . > 2.json
+difft 1.json 2.json
+```
+
+※ difft は [Wilfred/difftastic: a structural diff that understands syntax](https://github.com/Wilfred/difftastic)  
+※ `jq -S` は「キーでソート」
+
+出力例:
+
+```console
+$ difft 1.json 2.json
+2.json --- JSON
+ 1 {                                          1 {
+ 2   "rate": {                                2   "rate": {
+ 3     "limit": 60,                           3     "limit": 5000,
+ 4     "remaining": 59,                       4     "remaining": 5000,
+ 5     "reset": 1770695186,                   5     "reset": 1770695534,
+ 6     "resource": "core",                    .
+ 7     "used": 1                              6     "used": 0
+ 8   },                                       7   },
+ (以下略)
+```
+
+おまけ
+
+```console
+$ date -d @1770695186
+2026年  2月 10日 火曜日 12:46:26 JST
+```
+
+(Macだったら`date -r 1770695186`)
