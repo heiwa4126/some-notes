@@ -1,6 +1,6 @@
 # trivy メモ
 
-GitHub の Depandabot + Secret Scanning みたいなやつ。
+GitHub の Dependabot + Secret Scanning みたいなやつ。
 "Code Scanning"ではないので「このプロジェクトの XSS 見つけろ」みたいのはできない。
 他、設定ファイルのベストプラクティスを知っていて(例えば[Top 22 Docker Security Best Practices: Ultimate Guide](https://www.aquasec.com/blog/docker-security-best-practices/))、従ってないと警告してくる。
 

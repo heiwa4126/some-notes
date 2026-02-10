@@ -825,3 +825,19 @@ Dependabot version updates だけ。
 Dependabot version updates を disable にする。
 
 あたりまえなんだけど、しばらく気が付かなかった...
+
+## package-ecosystem: github-actions で
+
+レポジトリのルートに `action.yml` があり、 `.github/workflows/*.yml` もあるような場合
+
+```yaml
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directories:
+      - / # for /.github/workflows/*.yml
+      - ./ # for /action.yml
+      - ./another_action # for /another_action/action.yml
+```
+
+みたいに書かないと `/action.yml` を見てくれない
