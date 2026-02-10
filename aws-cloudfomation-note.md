@@ -15,6 +15,15 @@
 - [UpdateReplacePolicy と DeletionPolicy](#updatereplacepolicy-と-deletionpolicy)
 - [VSCode で SAM の template.yaml で "!Sub "等にエラーを出さなくする](#vscode-で-sam-の-templateyaml-で-sub-等にエラーを出さなくする)
 - [VSCode で SAM の拡張機能は?](#vscode-で-sam-の拡張機能は)
+- [CloudFormation IaC generator](#cloudformation-iac-generator)
+  - [CloudFormation IaC generator のはまりポイント(事前調査)](#cloudformation-iac-generator-のはまりポイント事前調査)
+  - [以下 Geminiに生成してもらった分(未確認)](#以下-geminiに生成してもらった分未確認)
+  - [1. 「Cognito」周りのリソース(最大のハマりポイント)](#1-cognito周りのリソース最大のハマりポイント)
+  - [2. 「API Gateway」のメソッドやモデル](#2-api-gatewayのメソッドやモデル)
+  - [3. 「グローバルリソース」の罠(IAM, Route 53, CloudFront)](#3-グローバルリソースの罠iam-route-53-cloudfront)
+  - [4. 依存関係が複雑な「ネットワーク・セキュリティ」周り](#4-依存関係が複雑なネットワークセキュリティ周り)
+  - [5. 「デフォルトリソース」と「自動生成リソース」](#5-デフォルトリソースと自動生成リソース)
+  - [6. シークレットを持つリソースの「中身」](#6-シークレットを持つリソースの中身)
 
 YAML でリソースを作るアレ。
 「せっかく書いても、手動で修正したら(統合性が)壊れちゃうんでしょ」とか思ってたら、
@@ -43,7 +52,7 @@ YAML でリソースを作るアレ。
 ↑ に載ってたやつ。
 
 ```yaml
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Resources:
   FirstVPC:
     Type: AWS::EC2::VPC
@@ -203,3 +212,71 @@ aws cloudformation create-stack \
 
 こっちはたぶん不要:
 [CloudFormation Linter - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=kddejong.vscode-cfn-lint)
+
+## CloudFormation IaC generator
+
+[iann0036/former2](https://github.com/iann0036/former2)
+があんまりメンテされないので、試しに使ってみる。
+
+- [Generate templates from existing resources with IaC generator - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/generate-IaC.html)
+- [CloudFormation IaC ジェネレーターを使用してリソーススキャンを開始する - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/iac-generator-start-resource-scan.html)
+- [Resource type support - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html) - 対応リソース一覧
+- [StartResourceScan - AWS CloudFormation](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/APIReference/API_StartResourceScan.html)
+- [AWS CloudFormation が IaC ジェネレーターでのターゲットを絞ったリソーススキャンのサポートを開始 - AWS](https://aws.amazon.com/jp/about-aws/whats-new/2025/03/aws-cloudformation-targeted-resource-scans-iac-generator/)
+- [テンプレートの生成、管理、削除によく使用されるコマンド](https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/generate-IaC.html)
+
+### CloudFormation IaC generator のはまりポイント(事前調査)
+
+- RDS Parameter Group / Option Group - スキャン自体には出ない
+- RDS Subnet Group - [非存在サブネットの罠: CloudFormationのIaCGeneratorテンプレート登録失敗の真相 - 管理人Kのひとりごと](https://www.k-hitorigoto.online/entry/2024/11/26/080000)
+- CloudWatch Logs の LogStream - 異様に多い(それはそうですね)
+  - リソースタイプ=AWS::Logs::LogStream を除外、とかできる?
+- CloudFormation 管理済みリソースはテンプレートに追加できない
+- サブリソース(自動生成系) - スキャンはできてテンプレートにも追加できるが、デプロイできない(それはそうですね)
+  - ENI
+  - EIPAssociation
+  - Lambda::Version
+  - etc
+- VpcId / SubnetId がハードコード - Ref ではなく物理IDが直書きされる
+
+### 以下 Geminiに生成してもらった分(未確認)
+
+「IaC Generatorでハマった!」というブログやコミュニティ(Reddit, AWS re:Post, DevelopersIO, Qiita等)の報告でよく見かける、「**あるはずなのに出てこない**」「**テンプレート化できなくて困る**」代表的なリソースをまとめました。
+
+これらは仕様上の制限だけでなく、**「ユーザーが直感的に期待する挙動と異なる」**ことによるハマりポイントでもあります。
+
+### 1. 「Cognito」周りのリソース(最大のハマりポイント)
+
+多くのユーザーが報告する「出てこない」代表格です。
+
+- **症状:** `AWS::Cognito::UserPool`(ユーザープール)や `IdentityPool` がスキャン結果に出てこない。
+- **理由:** IaC Generatorは「Cloud Control API」に対応しているリソースしかスキャンできません。Cognitoの主要リソースはCloud Control APIへの対応が遅れており(または一部リージョンで未対応)、**リストアップすらされない**ことが多々あります。
+- **対策:** 現状は手書きするか、既存のテンプレート作成ツール(`former2`など)を併用するしかありません。
+
+### 2. 「API Gateway」のメソッドやモデル
+
+- **症状:** API Gateway自体は見えても、その配下の細かい設定(Method, Model, Stageなど)が個別リソースとして抽出できない、またはID表示ばかりでどれがどれか分からない。
+- **理由:** API Gatewayはリソース構造が複雑で、親リソース(RestApi)の中に定義が包含されているケースと、独立したリソースとして定義すべきケースが混在し、Generatorがうまく依存関係を解決できないことがあります。また、識別子が「ランダムなID」で表示されるため、**リストにあっても人間が見つけられない**(検索できない)という「実質的な取得不可」も起きています。
+
+### 3. 「グローバルリソース」の罠(IAM, Route 53, CloudFront)
+
+- **症状:** IAMロールやRoute 53のホストゾーンが見つからない。
+- **理由:** IaC Generatorは**リージョン単位**でスキャンします。
+- **IAM / Route 53 / CloudFront:** これらはグローバルリソースですが、CloudFormationの仕様上、**「us-east-1(バージニア北部)」**でスキャンしないと出てこない、あるいは管理できないケースがあります。東京リージョンでスキャンして「IAMが出てこない!」と焦るケースが非常に多いです。
+
+### 4. 依存関係が複雑な「ネットワーク・セキュリティ」周り
+
+- **症状:** 生成されたテンプレートを使おうとするとエラーになる。
+- **具体例:**
+- **VPCピアリング:** 相手側のVPCが存在しない(削除済み)のに、参照IDだけが残っていてエラーになる。
+- **セキュリティグループの循環参照:** AがBを参照し、BがAを参照している場合、Generatorがどちらを先に作るか解決できず、デプロイ時にコケるテンプレートが生成されることがあります。
+
+### 5. 「デフォルトリソース」と「自動生成リソース」
+
+- **症状:** `Default VPC` や、Lambdaが勝手に作ったENI、LogGroupなどが大量に出てきてノイズになる、またはインポートしようとして失敗する。
+- **理由:** AWSアカウント作成時からある「デフォルトVPC」や「デフォルトセキュリティグループ」は、CloudFormationで管理(インポート)しようとすると、「既存のプロパティと一致しない」などの理由でドリフト(差分)扱いされたり、削除保護の制約でハマることがあります。
+
+### 6. シークレットを持つリソースの「中身」
+
+- **症状:** RDSやRedshiftを作成するテンプレートはできるが、パスワード欄が空っぽ、または適当なプレースホルダーになっていて、そのままではデプロイできない。
+- **理由:** APIはセキュリティ上、パスワードを返さない(Write-onlyプロパティ)ためです。これは「取得できない」というより「不完全な状態でしか取得できない」仕様です。

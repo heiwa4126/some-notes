@@ -837,7 +837,15 @@ updates:
     directories:
       - / # for /.github/workflows/*.yml
       - ./ # for /action.yml
-      - ./another_action # for /another_action/action.yml
+      - ./another # for /another/action.yml
+      - ...
 ```
 
-みたいに書かないと `/action.yml` を見てくれない
+みたいに書かないと ルートの`/action.yml` を見てくれない。
+**設定したら Insights → Dependency graph で確認すること。**
+
+あと dependabot.yml は主に
+Dependabot version updates の設定で、
+Dependency graph は自動更新(dependabot.ymlも少し参考にする)らしいので、
+すぐ更新されないかもしれない
+というのを忘れないこと。
