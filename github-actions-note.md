@@ -64,6 +64,7 @@
   - [5) 参考URLまとめ(経緯を追える順)](#5-参考urlまとめ経緯を追える順)
   - [次に聞きたい(任意)](#次に聞きたい任意)
 - [`jobs.<job_id>.uses`](#jobsjob_iduses)
+- [PR に workflow があるとき](#pr-に-workflow-があるとき)
 
 ## そもそも
 
@@ -875,3 +876,32 @@ GitHub Actions は
 実際に `jobs.<job_id>.uses` のような表記が出てくる GitHub の文書:
 
 - [Workflow syntax for GitHub Actions - GitHub Enterprise Server 3.1 Docs](https://docs.github.com/en/enterprise-server@3.1/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv)
+
+## PR に workflow があるとき
+
+「あたらしいブランチを作ってコミットし、
+それから PR を作成したときに動作する GitHub Actions の workflow は
+どのブランチのワークフローでしょう?」という話
+
+GitHub上のリポジトリに
+
+- main ブランチと、
+- 新しく作った feature-x ブランチ
+
+があり、feature-x ブランチで、main に向けて PR を出したとすると(mainがターゲットブランチ)、
+
+`on: pull_request` も `on: pull_request_target` も ターゲットブランチ の workflowsが実行される。
+
+で、action/checkout でチェックアウトされるのは
+
+- `on: pull_request` では main + feature-x をマージした仮想 merge commit
+- `on: pull_request_target` では mainブランチの最新コミット
+
+`on: pull_request` や `on: pull_request_target` で ローカルaction を呼んでいた場合は?
+仮想 merge commitで脆弱性のある action.yml を実行できるのでは?
+
+"Pwn Request" - [Keeping your GitHub Actions and workflows secure Part 1: Preventing pwn requests | GitHub Security Lab](https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/)
+
+この問題根が深い...
+
+「PRの仮想マージコミットをauditしたりlintしたりtestしたい」んだけど、それには危険がある、ということ。
