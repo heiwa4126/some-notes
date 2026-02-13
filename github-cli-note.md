@@ -1,5 +1,17 @@
 # gh (GitHub CLI) のメモ
 
+- [GitHub Actions をデバッグするときに便利な GitHub CLI コマンド](#github-actions-をデバッグするときに便利な-github-cli-コマンド)
+  - [VSCode でエラーログだけ取りたいなら...](#vscode-でエラーログだけ取りたいなら)
+- [gh の bash completion](#gh-の-bash-completion)
+- [`gh auth login` は expire しないらしい](#gh-auth-login-は-expire-しないらしい)
+- [なるべくオプションで](#なるべくオプションで)
+- [複数アカウント](#複数アカウント)
+- [gh CLI から Variables や Secrets は登録できる?](#gh-cli-から-variables-や-secrets-は登録できる)
+  - [1) カレントディレクトリの Git リモートから自動推測(デフォルト)](#1-カレントディレクトリの-git-リモートから自動推測デフォルト)
+  - [2) `--repo` / `-R` フラグで明示指定](#2---repo---r-フラグで明示指定)
+  - [3) **環境変数 `GH_REPO` で固定する**](#3-環境変数-gh_repo-で固定する)
+  - [補足](#補足)
+
 ## GitHub Actions をデバッグするときに便利な GitHub CLI コマンド
 
 Web からやるより便利! 事前に `gh auth login` は要ります
