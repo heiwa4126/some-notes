@@ -9,7 +9,7 @@
 - [on: が難しい](#on-が難しい)
 - [workflow を 手動で起動](#workflow-を-手動で起動)
 - [on.push.tags で 新しい tag が 2 つ以上 push されたら、全部について action が発生しますか? またその場合 uses actions/checkout で checkout されるのは何?](#onpushtags-で-新しい-tag-が-2-つ以上-push-されたら全部について-action-が発生しますか-またその場合-uses-actionscheckout-で-checkout-されるのは何)
-- [GITHUB_REPO_NAME 環境変数が空](#github_repo_name-環境変数が空)
+- [GITHUB\_REPO\_NAME 環境変数が空](#github_repo_name-環境変数が空)
 - [レポジトリ名の取得](#レポジトリ名の取得)
 - [GitHub Actions の workflow runs に過去の実行結果が残っていますが、これは消すべきですか? 一定期間で消えますか?](#github-actions-の-workflow-runs-に過去の実行結果が残っていますがこれは消すべきですか-一定期間で消えますか)
 - [特定のワークフローファイルだけ実行できるようにする方法はある?](#特定のワークフローファイルだけ実行できるようにする方法はある)
@@ -23,8 +23,8 @@
 - [VSCode 拡張](#vscode-拡張)
 - [permission:](#permission)
 - [action/setup-node](#actionsetup-node)
-- [GITHUB_TOKEN と permissions:](#github_token-と-permissions)
-- [secrets.GITHUB_TOKEN と github.token](#secretsgithub_token-と-githubtoken)
+- [GITHUB\_TOKEN と permissions:](#github_token-と-permissions)
+- [secrets.GITHUB\_TOKEN と github.token](#secretsgithub_token-と-githubtoken)
 - [actionlint](#actionlint)
 - [actionlint はローカル actions をみてくれない](#actionlint-はローカル-actions-をみてくれない)
   - [ちなみに pinact は](#ちなみに-pinact-は)
@@ -65,6 +65,7 @@
   - [次に聞きたい(任意)](#次に聞きたい任意)
 - [`jobs.<job_id>.uses`](#jobsjob_iduses)
 - [PR に workflow があるとき](#pr-に-workflow-があるとき)
+- [Workflows では動作するのに Reusable workflows では動かない Actions](#workflows-では動作するのに-reusable-workflows-では動かない-actions)
 
 ## そもそも
 
@@ -905,3 +906,12 @@ GitHub上のリポジトリに
 この問題根が深い...
 
 「PRの仮想マージコミットをauditしたりlintしたりtestしたい」んだけど、それには危険がある、ということ。
+
+## Workflows では動作するのに Reusable workflows では動かない Actions
+
+ごく稀に存在する。その有名な例が
+[pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish?tab=readme-ov-file#usage)
+
+> Trusted publishing cannot be used from within a reusable workflow at this time. It is recommended to instead create a non-reusable workflow that contains a job calling your reusable workflow, and then do the trusted publishing step from a separate job within that non-reusable workflow.
+
+> 現時点では、再利用可能なワークフロー内から信頼できる公開を使用することはできません。代わりに、再利用可能なワークフローを呼び出すジョブを含む再利用不可のワークフローを作成し、その再利用不可のワークフロー内の別のジョブから信頼できる公開ステップを実行することをお勧めします。
