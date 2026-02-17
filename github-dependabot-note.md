@@ -796,7 +796,7 @@ Dependabot version updates だけ。
    - リポジトリに `.github/dependabot.yml` ファイルが存在し、`version-updates` が有効になっている必要があります
 
 2. **次回の定期実行までに時間がある**
-   - Dependabot は設定されたスケジュール（daily、weekly、monthly）で自動実行されます
+   - Dependabot は設定されたスケジュール(daily、weekly、monthly)で自動実行されます
    - 最後の実行から次回の実行予定まで時間がある場合にボタンが表示されます
 
 3. **Dependabot が実行中でない**
@@ -809,7 +809,7 @@ Dependabot version updates だけ。
 逆にボタンが消える状況は:
 
 - Dependabot が実行中
-- 最近（数分～数時間以内）チェックが完了したばかり
+- 最近(数分~数時間以内)チェックが完了したばかり
 - `dependabot.yml` が存在しない、または無効
 - 次回の自動実行が間もなく予定されている場合
 
@@ -849,3 +849,113 @@ Dependabot version updates の設定で、
 Dependency graph は自動更新(dependabot.ymlも少し参考にする)らしいので、
 すぐ更新されないかもしれない
 というのを忘れないこと。
+
+## Automatic dependency submission
+
+> リポジトリ内のファイルだけでは分からない「ビルド時に解決される依存関係(特に transitive dependencies)」を、
+> GitHub Actions を使って自動的に検出し、Dependency graph に送信(登録)する仕組み
+
+通常、Dependency graphは
+マニュフェスト(package.jsonなど)と
+ロックファイル(package-lock.jsonなど)
+を読んで、静的に依存を決定する。
+
+しかし一部のエコシステムでは、
+
+- 依存関係の完全な解決がビルド時にしか分からない
+- lockfile が存在しない/不完全
+- プラグインや条件分岐で依存が変わる
+
+といった理由で、
+リポジトリを見ただけでは「実際に使われる依存関係」を GitHub が把握できない。
+
+Automatic dependency submissionを「有効」にすると、GitHub が次のことを行う。
+
+1. GitHub Actions を自動実行
+2. ビルドツール(例: Maven/Gradle/NuGet など)を使って実際に依存解決を行う
+3. 解決された 完全な依存関係ツリー(transitive dependency 含む) を Dependency Submission API 経由で GitHub に送信
+4. Dependency graph に反映
+
+### 注意: Automatic dependency submission を「有効」にすると
+
+1. GitHub Actions の実行が発生する - Actions minutes を消費する
+2. Dependency graph が前提 - 先に Dependency graph 自体を有効化する必要あり
+3. 「自動」だが内部的には API 提出 - 内部的には Dependency Submission API を使っている
+
+### Automatic dependency submission を「有効」にしたほうがいいケース
+
+まず、Java 系(Gradle/Maven), .NET(NuGet)
+
+その他は
+
+- Python(pip) - ロックファイルがないので効き目あり。2025年7月から対応
+  [Dependency auto-submission now supports Python - GitHub Changelog](https://github.blog/changelog/2025-07-08-dependency-auto-submission-now-supports-python/)
+
+#### gradle.lockfile
+
+Gradleはオプションでロックファイルを作れるようになった(Gradle 4.8 以降)
+
+ただ
+
+- Dependency graph は gradle.lockfile を参照するが完全性は保証されない。Automatic submissionの有効化推奨
+- Dependabot は gradle.lockfile 対応. 更新・PR 作成にも対応
+
+### Automatic dependency submission のランナー
+
+右のボタンのプルダウンから
+
+1. Enabled
+2. Enabled for labeled runners
+3. Disabled
+
+が選べる。2.にすると
+
+self-hosted runner のうち、
+dependency-submission という label が付いた runner のみ
+Automatic dependency submission を実行する。
+
+- GitHub-hosted runner は使われない
+- 社内ネットワーク / private registry / 特殊ビルド環境が使える
+- Actions minutes を消費しない (self-hosted のため)
+
+向いているケースは
+
+- 社内 Maven / NuGet / PyPI mirror を使っている
+- ビルドに特殊なツール・SDK が必要
+- セキュリティ上、GitHub-hosted runner を使えない
+
+など
+
+### Automatic dependency submission における “ビルド” とは何か
+
+[Configuring automatic dependency submission for your repository - GitHub Docs](https://docs.github.com/en/code-security/how-tos/secure-your-supply-chain/secure-your-dependencies/configuring-automatic-dependency-submission-for-your-repository)
+
+> Automatic dependency submission が Actions で実行する「ビルド」とは、
+> “成果物を作るための build” **ではなく**、「依存関係を 解決(resolve) するための最小限の実行」です。
+
+- テストは走らない
+- publish もしない
+- 実アプリのビルドが成功する必要もない
+- 依存関係が (例えば.NETの場合)NuGet として解決できれば十分
+
+具体的に何をするか?どんなコマンドが実行されるか? は **明示されていない。**
+
+.NET の場合
+.NET では「依存解決」＝ NuGet restore なので
+概ね次のいずれかだと推測される。
+
+| コマンド         | 依存解決           | 使われる可能性   |
+| ---------------- | ------------------ | ---------------- |
+| `dotnet restore` | ✅                 | **高い（本質）** |
+| `dotnet build`   | ✅（restore 内包） | 可能性あり       |
+| `dotnet test`    | ✅                 | **使われない**   |
+| `dotnet publish` | ✅                 | **使われない**   |
+
+他エコシステムでは以下のコマンドが実行されていると推測される
+
+| エコシステム | 実行される「ビルド」の本質    |
+| ------------ | ----------------------------- |
+| Maven        | `mvn dependency:resolve` 相当 |
+| Gradle       | 依存解決タスクのみ            |
+| .NET / NuGet | **`dotnet restore`**          |
+| Python       | `pip install` / resolve 相当  |
