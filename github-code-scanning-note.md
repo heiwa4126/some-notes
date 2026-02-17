@@ -42,6 +42,9 @@ Default setup のかわりに、こちらを選ぶと
 
 Default setup は 「マネージドな CodeQL 実行」らしい
 
+参考:
+[GitHub Code Scanning を使ってみた (YAMLの設定方法) #Security - Qiita](https://qiita.com/ymd_h/items/63d9105cd0429317bd6f)
+
 ## CodeQL が実際に「問題を検出できている」ことを確認する
 
 ### 意図的に脆弱なコードを入れて検出させる
