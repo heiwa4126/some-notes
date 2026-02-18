@@ -707,9 +707,10 @@ workflow 兼 reusable workflow になる。
 
 - ✅ workflow から action
 - ✅ workflow から reusable workflow
-- ❌ workflow から workflow
-- ✅ composite action から action
-- ❌ action から workflow
+- ❌ workflow から 普通の workflow
+- ✅ Composite action から action (2021 年 9 月頃可能に)
+- ❌ JS action, Docker action から action
+- ❌ action から 普通の workflow
 - ❌ action から reusable workflow
 
 ※「GitHub API 経由で呼ぶ」とかのハックは除く  
