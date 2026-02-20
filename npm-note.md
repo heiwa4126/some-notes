@@ -53,6 +53,7 @@
 - [bin フィールドで指定したスクリプトに shebang は必要?](#bin-フィールドで指定したスクリプトに-shebang-は必要)
 - [./node_modules/.bin にあるコードを実行する正しい方法は?](#node_modulesbin-にあるコードを実行する正しい方法は)
 - [2026年 npm のグローバル設定を XDG風にする](#2026年-npm-のグローバル設定を-xdg風にする)
+- [`npm audit` で開発系の脆弱性を無視する](#npm-audit-で開発系の脆弱性を無視する)
 
 ## 多分最初にこれよんだほうがよさそう
 
@@ -961,3 +962,17 @@ pnpm dlx tsc --version
 というのがポイント。
 
 ## 2026年 npm のグローバル設定を XDG風にする
+
+(TODO)
+
+## `npm audit` で開発系の脆弱性を無視する
+
+Jest とか eslint 入ってるとよく脆弱性でますよね。
+
+```sh
+npm audit --production
+# もっと無視
+npm audit --production --audit-level high
+```
+
+pnpm でもOK

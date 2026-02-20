@@ -244,3 +244,17 @@ aquaproj か aqua cli で探すといいらしい。
 ```pwsh
 cd (Split-Path $Env:AQUA_GLOBAL_CONFIG)
 ```
+
+## 特定のパッケージを更新させない
+
+```yaml
+- name: golang/go@go1.25.7
+  update:
+    enabled": false
+```
+
+こんな感じ。CLI から設定できないっぽい。
+あと "~1.25" や "^1.25" みたいのは無い。
+
+- [Exclude some packages from the target of aqua update](https://aquaproj.github.io/docs/guides/update-command/#exclude-some-packages-from-the-target-of-aqua-update)
+- [packages](https://aquaproj.github.io/docs/reference/config/#packages) の update.enabled: のところ
