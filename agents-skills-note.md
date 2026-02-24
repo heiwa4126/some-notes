@@ -126,12 +126,32 @@ SKILL.md は最初から、次を前提に設計されています。
 - 影響範囲の限定
 - 長時間セッションでの安定性
 
+最大の誤解は:
+"SKILL.md = Agentの能力定義"
+ではなく本来は:
+"SKILL.md = AGENTS.mdから切り出した巨大テキスト"
+という点です。
+
+SKILL.mdはMCPツールではなくlazy-loaded prompt chunk
+(遅延ロードされた巨大プロンプト)
+
+参考:
+
+- [Agent Skillsの作り方とベストプラクティス 徹底解説|まさお@未経験からプロまでAI活用](https://note.com/masa_wunder/n/nffa03e1d5999)
+- [「保存されたプロンプト」じゃない!Agent Skills の本質を理解して最初の Skill を作る #AI - Qiita](https://qiita.com/dai_chi/items/43b912c5896357906ee9)
+- [Cursorの5つの指示方法を比較してみた:AGENTS.md、ルール、コマンド、スキル、サブエージェントの使い分け](https://zenn.dev/redamoon/articles/article38-cursor-skills-rules-commands)
+- [Skills - Docs by LangChain](https://docs.langchain.com/oss/python/deepagents/skills)
+- [What are skills? - Agent Skills](https://agentskills.io/what-are-skills)
+- [agents-md by getsentry/skills](https://skills.sh/getsentry/skills/agents-md)
+
 ## フロントマター
 
 - [フロントマターリファレンス](https://code.claude.com/docs/ja/skills#%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E3%83%9E%E3%82%BF%E3%83%BC%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9)
 - [Header \(required\)](https://code.visualstudio.com/docs/copilot/customization/agent-skills#_header-required)
 
 ## Instructions file vs SKILL.md
+
+Claudeの'Rules'
 
 [Use custom instructions in VS Code](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_instructions-file-format)
 にある 'Python standard' のようなのは SKILL.md に置き換えにくい。
@@ -160,3 +180,146 @@ AGENTS.md の優先度は
 5. (強い) カレントディレクトリの AGENTS.md
 
 オンデマンドに適応されるのは SKILLs だけ。
+
+## SKILLはMCPと違って、instructions処理時点でname/descriptionを読まない??
+
+(MCPは tool/description/schema)
+
+VSCodeの場合はよくわからないけど
+Claudeの場合は
+(https://code.claude.com/docs/ja/features-overview#skills)
+最初に読むみたいですよ。
+
+## Hooks
+
+とりあえず VSCode Copilot 版の話で
+[Agent hooks in Visual Studio Code (Preview)](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+以下 Copilotにまとめてもらったもの(間違いあるかも)。
+まあ上のリンクの翻訳みたいではある。
+
+---
+
+Agent hooks(VS Code の Copilot Agent hooks / Preview)は、**エージェント・セッションのライフサイクル上の決まったタイミングで、こちらが用意したシェルコマンド(スクリプト)を必ず実行**させたい場合に使います。
+
+「プロンプトで指示する(=従わない可能性がある)」のではなく、**決定的(deterministic)に自動化・制御**できるのがポイントです。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+### いつ使うべきか(典型ケース)
+
+VS Code のドキュメントが挙げている “Why use hooks?” の用途を、実務に落とし込むと次のようになります。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+#### 1) セキュリティ/ガードレールを「強制」したい
+
+- 例:`rm -rf` や `DROP TABLE` のような破壊的操作を、エージェントが提案・実行しようとしても**事前にブロック**する。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+- 例:インフラ変更(Terraform、kubectl など)や push 操作など、危険度の高いツールは**必ず手動承認にする**(auto-approve させない)。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+#### 2) 品質チェックを「自動で必ず回す」
+
+- 例:エージェントがファイルを編集したら、**自動で formatter / linter / unit test を走らせる**。  
+  (「最後にテストして」と言うだけでは抜けがちですが、hook なら PostToolUse 等で強制できます。) [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+#### 3) 監査ログ/コンプライアンスのために記録したい
+
+- 例:誰がどんなプロンプトを投げ、どのツールを呼び、どんなコマンドを実行したかを**ログに残す**。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks), [\[docs.github.com\]](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/use-hooks)
+
+#### 4) コンテキスト注入を「毎回確実に」やりたい
+
+- 例:セッション開始時に「プロジェクト名・ブランチ・ランタイムバージョン」などを自動で注入する。  
+  (人間が毎回書く必要がなく、漏れません。) [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+#### 5) 会話圧縮(PreCompact)前に、重要情報を退避したい
+
+- 例:コンテキストが長くなり圧縮される前に、重要な決定事項・TODO をファイルに保存する。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+### どのタイミングで動かせるか(理解の要点)
+
+VS Code はエージェント・セッション中の複数イベントで hook を発火できます(SessionStart / UserPromptSubmit / PreToolUse / PostToolUse / PreCompact / SubagentStart / SubagentStop / Stop)。  
+hook は **stdin で JSON 入力**を受け取り、**stdout に JSON 出力**を返して、実行を止めたり追加コンテキストを注入したりできます。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+### 具体例(そのまま使えるイメージ)
+
+以下は「どういう場面で、hook がどう効くか」が分かる具体例です。  
+(※コードは例示です。実際の運用では権限・パス・ツール名は環境に合わせてください。)
+
+#### 例1:破壊的なコマンドやツールを PreToolUse でブロック(セキュリティ)
+
+**狙い**:エージェントが危険な操作を実行する前に、hook 側で確実に止める。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+- PreToolUse は「ツール実行前」に呼ばれ、`permissionDecision: deny/ask/allow` などで制御できます。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+- 複数 hook がある場合は「より厳しい決定が優先」されます(deny が最優先)。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+設定例(.github/hooks/\*.json に置けます) [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "./scripts/guardrail-pretool.sh",
+        "timeout": 15
+      }
+    ]
+  }
+}
+```
+
+スクリプト側の考え方:
+
+- stdin の JSON から `tool_name` / `tool_input` を見て、危険なら `permissionDecision: "deny"` を返す。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+- deny すると、そのツール呼び出し自体を止められます。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+#### 例2:インフラ変更系ツールは必ず “ask”(承認必須)にする
+
+**狙い**:安全に倒す(自動実行させない)。  
+VS Code の docs にある “Require approval for specific tools(特定ツールは確認必須)” パターンがこれです。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+- 例:`runTerminalCommand` や “infra を変更する操作” を常に `ask` にし、人間が確認してから進める。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+#### 例3:PostToolUse でフォーマット/テストを自動実行(品質担保)
+
+**狙い**:編集後に必ず整形・テストを回す(抜け防止)。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+- PostToolUse は「ツール成功後」に呼ばれ、追加処理やログ、追加コンテキスト注入ができます。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+- docs でも「編集後に Prettier を走らせる」例が載っています。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+例えば Python + uv のプロジェクトなら:
+
+- エージェントがファイル編集(editFiles 等)を終えたら
+- hook が `uv run test` や `uv run ruff format`(お好みで)を実行
+- 失敗したら `additionalContext` で「テスト失敗」を会話に注入して、エージェントに修正を促す  
+  ...という流れにできます(PostToolUse の `additionalContext` がその用途です)。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+#### 例4:SessionStart で “毎回確実に” プロジェクト情報を注入(コンテキスト漏れ防止)
+
+**狙い**:「このリポジトリは何で、どんな制約があるか」を毎回注入して、判断ミスを減らす。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+- SessionStart では `hookSpecificOutput.additionalContext` を返して会話へ追加できます。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+- 例:`Project: my-app vX.Y | Branch: main | Node: v20...` のような情報を自動で差し込む。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+#### 例5:UserPromptSubmit でプロンプト監査ログを残す(監査/可観測性)
+
+**狙い**:ユーザーが何を依頼したか(指示の原文)を確実に記録する。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks), [\[docs.github.com\]](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/use-hooks)
+
+- VS Code 側でも「Audit user requests」用途が明記されています。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+- GitHub Docs 側にも「prompt をログする」スクリプト例があります。 [\[docs.github.com\]](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/use-hooks)
+
+#### 例6:Stop hook で「テストが通るまで終われない」を実装(手戻り削減)
+
+**狙い**:「最後にテストして終える」を、ルールとして徹底する。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+- Stop hook は「セッション終了時」に発火し、`decision: "block"` で **終了を止めて**続行させられます。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+- ただし docs でも「無限ループ防止のため stop_hook_active を確認せよ」「premium request を消費する」注意があります。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+### 「hook を使うべき」判断基準(実務的な目安)
+
+次のどれかに当てはまるなら hook の出番です。
+
+1.  **守らないと事故るルール**がある(削除、インフラ変更、秘密情報、監査)→ hook で強制。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+2.  **必ず毎回やる定型作業**がある(format / lint / test / log)→ hook で自動化。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+3.  **プロンプトや指示だけでは再現性が足りない**(人やモデルでブレる)→ hook で決定的にする。 [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
+
+### 補足:設定ファイルの置き場所(チーム共有と個人用)
+
+VS Code は hook 設定を複数箇所から探します(例:`.github/hooks/*.json` など)。チームで共有したいなら `.github/hooks/` 配下に置くのが分かりやすいです。  
+(個人用設定も可能で、ワークスペースの hook がユーザー hook より優先されます。) [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks), [\[docs.github.com\]](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/use-hooks) [\[code.visua...studio.com\]](https://code.visualstudio.com/docs/copilot/customization/hooks)
