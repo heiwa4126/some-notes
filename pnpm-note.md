@@ -280,3 +280,17 @@ postman-collection で解決してほしい。
 > これは lockfile を直接書き換える npm と異なる挙動です。
 
 [pnpm audit | pnpm](https://pnpm.io/ja/cli/audit)
+
+## npm → pnpm 移行手順
+
+```sh
+# 変換
+pnpm import
+
+# node_modules を再作成
+rm -rf node_modules
+pnpm install
+
+# package-lock.json を削除
+rm package-lock.json
+```
