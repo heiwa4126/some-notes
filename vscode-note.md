@@ -33,6 +33,9 @@
 - [Pylance を軽くする](#pylance-を軽くする)
 - [Code Spell Checker](#code-spell-checker)
   - [Code Spell Checker で exclude files を設定する](#code-spell-checker-で-exclude-files-を設定する)
+- [プロファイルフォルダーのパス](#プロファイルフォルダーのパス)
+  - [「規定」ではない場合](#規定ではない場合)
+  - [Defaultプロファイルのパス](#defaultプロファイルのパス)
 
 ## Remote Development
 
@@ -472,3 +475,33 @@ Python の例でいくと
 
 参考:
 [Files, Folders, and Workspaces | VS Code Spell Checker](https://streetsidesoftware.com/vscode-spell-checker/docs/configuration/files-folders-and-workspaces)
+
+## プロファイルフォルダーのパス
+
+「カレントのワークスペースのプロファイルフォルダーのパスを表示」みたいな機能はないらしい。
+
+WSLの場合はWindows側。
+
+### 「規定」ではない場合
+
+| OS      | プロファイルフォルダパス                           |
+| ------- | -------------------------------------------------- |
+| Windows | `%APPDATA%\Code\User\profiles`                     |
+| macOS   | `~/Library/Application Support/Code/User/profiles` |
+| Linux   | `~/.config/Code/User/profiles`                     |
+
+ここのランダムなフォルダ名の下。このランダムなフォルダがどのプロファイルに対応してるかは簡単にはわからない。
+
+Insiders版は `Code - Insiders`
+
+### Defaultプロファイルのパス
+
+VS Codeの「Default」（「規定」）プロファイルの場合、profilesフォルダ内のUUIDサブフォルダは**存在せず**、代わりに`User`ディレクトリ直下に設定が保存される。
+
+| OS      | Defaultプロファイル設定パス               |
+| ------- | ----------------------------------------- |
+| Windows | `%APPDATA%\Code\User`                     |
+| macOS   | `~/Library/Application Support/Code/User` |
+| Linux   | `~/.config/Code/User`                     |
+
+いずれにせよ超めんどくさい。
