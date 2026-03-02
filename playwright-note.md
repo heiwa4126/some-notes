@@ -13,7 +13,8 @@ mkdir test1 && cd test1
 pnpm init
 #
 pnpm add -D @playwright/test
-playwright init
+pnpm exec create playwright
+## playwright.config.ts など
 
 ## とりあえずChrome(Chromium)だけあればいい場合は
 playwright install chromium  # chromium, chromium_headless, ffmpeg の最新版が入る
@@ -25,6 +26,62 @@ Webkit (Safari) が要る場合は事前に
 
 ```sh
 sudo apt-get install libgtk-4-1 libavif13
+```
+
+### `pnpm exec create playwright` のところがめんどくさいけどオプションが無い
+
+```console
+$ pnpm create playwright --browser chromium
+
+Getting started with writing end-to-end tests with Playwright:
+Initializing project in '.'
+✔ Where to put your end-to-end tests? · tests_e2e
+✔ Add a GitHub Actions workflow? (Y/n) · false
+✔ Install Playwright operating system dependencies (requires sudo / root - can be done manually via 'sudo pnpm exec playwright install-deps')? (y/N) · false
+
+Installing Playwright Test (pnpm add --save-dev -w @playwright/test)…
+Already up to date
+Progress: resolved 49, reused 22, downloaded 0, added 0, done
+Done in 366ms using pnpm v10.30.3
+✔ /home/heiwa/works/hono/hono-learn-ejs2/playwright.config.ts already exists. Override it? (y/N) · true
+Writing playwright.config.ts.
+✔ /home/heiwa/works/hono/hono-learn-ejs2/tests_e2e/example.spec.ts already exists. Override it? (y/N) · true
+Writing tests_e2e/example.spec.ts.
+Writing package.json.
+Downloading browsers (pnpm exec playwright install chromium)…
+✔ Success! Created a Playwright Test project at /home/heiwa/works/hono/hono-learn-ejs2
+
+Inside that directory, you can run several commands:
+
+  pnpm exec playwright test
+    Runs the end-to-end tests.
+
+  pnpm exec playwright test --ui
+    Starts the interactive UI mode.
+
+  pnpm exec playwright test --project=chromium
+    Runs the tests only on Desktop Chrome.
+
+  pnpm exec playwright test example
+    Runs the tests in a specific file.
+
+  pnpm exec playwright test --debug
+    Runs the tests in debug mode.
+
+  pnpm exec playwright codegen
+    Auto generate tests with Codegen.
+
+We suggest that you begin by typing:
+
+    pnpm exec playwright test
+
+And check out the following files:
+  - ./tests_e2e/example.spec.ts - Example end-to-end test
+  - ./playwright.config.ts - Playwright Test configuration
+
+Visit https://playwright.dev/docs/intro for more information. ✨
+
+Happy hacking! 🎭
 ```
 
 ## ブラウザはどこにインストールされる?
@@ -165,3 +222,14 @@ export default defineConfig({
 ```
 
 つづく
+
+## Playwright MCP と Playwright CLI の比較
+
+[Playwright MCP vs Playwright CLI](https://github.com/microsoft/playwright-mcp?tab=readme-ov-file#playwright-mcp-vs-playwright-cli)
+の日本語訳。
+
+このパッケージはPlaywrightへのMCPインターフェースを提供します。コーディングエージェントをご利用の場合は、代わりに[CLI+SKILLS](https://github.com/microsoft/playwright-cli)を使用すると便利です。
+
+- **CLI**：現代のコーディングエージェントは、 MCPよりもSKILLとして公開されるCLIベースのワークフローを好む傾向にあります。これは、CLI呼び出しの方がトークン効率が高いためです。CLI呼び出しでは、大規模なツールスキーマや冗長なアクセシビリティツリーをモデルコンテキストに読み込む必要がなくなり、エージェントは簡潔で専用のコマンドを使用して動作できます。そのため、CLI + SKILLは、ブラウザ自動化と大規模なコードベース、テスト、そして限られたコンテキストウィンドウ内での推論のバランスを取る必要がある高スループットコーディングエージェントに適しています。Playwright [CLI with SKILLS](https://github.com/microsoft/playwright-cli)
+  の詳細については、こちらをご覧ください。
+- **MCP** : MCP は、探索的自動化、自己修復テスト、継続的なブラウザ コンテキストの維持がトークン コストの懸念を上回る長期実行自律ワークフローなど、永続的な状態、豊富なイントロスペクション、ページ構造の反復的な推論の恩恵を受ける特殊なエージェント ループに引き続き関連しています。
