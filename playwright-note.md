@@ -233,3 +233,143 @@ export default defineConfig({
 - **CLI**：現代のコーディングエージェントは、 MCPよりもSKILLとして公開されるCLIベースのワークフローを好む傾向にあります。これは、CLI呼び出しの方がトークン効率が高いためです。CLI呼び出しでは、大規模なツールスキーマや冗長なアクセシビリティツリーをモデルコンテキストに読み込む必要がなくなり、エージェントは簡潔で専用のコマンドを使用して動作できます。そのため、CLI + SKILLは、ブラウザ自動化と大規模なコードベース、テスト、そして限られたコンテキストウィンドウ内での推論のバランスを取る必要がある高スループットコーディングエージェントに適しています。Playwright [CLI with SKILLS](https://github.com/microsoft/playwright-cli)
   の詳細については、こちらをご覧ください。
 - **MCP** : MCP は、探索的自動化、自己修復テスト、継続的なブラウザ コンテキストの維持がトークン コストの懸念を上回る長期実行自律ワークフローなど、永続的な状態、豊富なイントロスペクション、ページ構造の反復的な推論の恩恵を受ける特殊なエージェント ループに引き続き関連しています。
+
+## playwright-core が2つあって、違うバージョンのブラウザを使おうとするとき
+
+@playwright/test と
+@playwright/mcp が
+異なるバージョンの playwright-core を使っていて
+いまこんな感じなんですがどうすればいい?
+という話
+
+```console
+$ pnpm ls | grep -Fi playwright
+├── @playwright/mcp@0.0.68
+├── @playwright/test@1.58.2
+
+$ pnpm why playwright-core
+playwright-core@1.58.2
+└─┬ playwright@1.58.2
+  └─┬ @playwright/test@1.58.2
+    └── my-project (devDependencies)
+
+playwright-core@1.59.0-alpha-1771104257000
+├─┬ @playwright/mcp@0.0.68
+│ └── my-project (devDependencies)
+└─┬ playwright@1.59.0-alpha-1771104257000
+  └── @playwright/mcp@0.0.68 [deduped]
+
+$ pnpm exec playwright --version
+Version 1.58.2
+```
+
+playwright-coreのバージョンに応じたブラウザバージョンを要求するので
+**オンデマンドでインストールしたくなければ**
+
+```sh
+pnpm exec playwright install chromium
+pnpx playwright@1.59.0-alpha-1771104257000 install chromium
+```
+
+のように `~/.cache/ms-playwright` 以下に2バージョンインストールする必要がある。
+
+### ついでに `@playright/cli` もaddしてみた
+
+```console
+$ pnpm ls | grep -Fi playwright
+├── @playwright/cli@0.1.1
+├── @playwright/mcp@0.0.68
+├── @playwright/test@1.58.2
+
+$ pnpm why playwright-core
+playwright-core@1.58.2
+└─┬ playwright@1.58.2
+  └─┬ @playwright/test@1.58.2
+    └── my-project (devDependencies)
+
+playwright-core@1.59.0-alpha-1771104257000
+├─┬ @playwright/mcp@0.0.68
+│ └── my-project (devDependencies)
+└─┬ playwright@1.59.0-alpha-1771104257000
+  ├─┬ @playwright/cli@0.1.1
+  │ └── my-project (devDependencies)
+  └── @playwright/mcp@0.0.68 [deduped]
+```
+
+(たまたまかもしれないけど) @playwright/test だけ違うのだな。
+
+### issues など
+
+この問題、けっこう「既知の罠」らしい
+
+- [Stabilize usage of \\`playwright\\` & \\`playwright-core\\` versions · Issue #917 · microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/issues/917)
+- [Missing prerequisite steps in Getting Started documentation · Issue #1113 · microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/issues/1113)
+
+### とりあえず対策
+
+こんなスクリプトでなんとか。
+(いま chromium を指定しています)
+
+```mjs
+#!/usr/bin/env node
+# scripts/download_chromes.mjs
+
+import { execSync } from "node:child_process";
+
+// `pnpm why playwright-core --json` で確実にバージョンを拾う
+const raw = execSync("pnpm why playwright-core --json", { encoding: "utf-8" });
+
+const versions = new Set(JSON.parse(raw).map((entry) => entry.version));
+
+console.log("Detected playwright-core versions:", [...versions]);
+
+for (const version of versions) {
+	console.log(`\nInstalling Chromium for playwright@${version}...`);
+	execSync(`pnpm dlx playwright@${version} install chromium`, {
+		stdio: "inherit",
+	});
+}
+```
+
+## Playwright MCP でブラウザ固定
+
+(`node_modules` にインストールした playwright を使う場合。
+肝心なのはoption)
+
+"--browser=chromium" のようなオプションを使う。
+これつけないと Chrome をインストールしようとする。
+
+`.vscode/mcp.json`
+
+```json
+{
+  "servers": {
+    "playwright": {
+      "command": "pnpm",
+      "args": ["exec", "playwright-mcp", "--browser=chromium"]
+    }
+  },
+  "inputs": []
+}
+```
+
+## Playwright MCP でスクリーンショット
+
+(`node_modules` にインストールした playwright を使う場合。
+肝心なのはoption)
+
+Vision リクエストが禁止されてる環境でエラーになるみたい。
+
+```json
+{
+  "servers": {
+    "playwright": {
+      "command": "pnpm",
+      "args": ["exec", "playwright-mcp", "--image-responses", "omit"]
+    }
+  },
+  "inputs": []
+}
+```
+
+みたいな感じで回避できる。

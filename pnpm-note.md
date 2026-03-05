@@ -294,3 +294,55 @@ pnpm install
 # package-lock.json を削除
 rm package-lock.json
 ```
+
+## lockファイルがコンフリクトする
+
+よくmergeするとコンフリクトするのがlockファイル(pnpmの場合pnpm-lock.yam)なんだけど
+lockファイルを手でマージするのは不毛。
+
+### 汎用的手法
+
+マニュフェスト(package.json)をベースに、ロックファイルを更新するほうがいい。
+これはnpm,yarn,bunでも同じノリで。
+
+```sh
+# 1) まず package.json 側のコンフリクトを解消する(ここは人間の判断が必要)
+git status
+
+# 2) pnpm-lock.yaml のコンフリクトを「とりあえず片方採用」にして印を消す
+#    (どちらでも良い。最終的には pnpm が再生成する)
+git checkout --theirs pnpm-lock.yaml   # あるいは --ours
+
+# 3) pnpm に整合性を取らせる(ここが本命)
+pnpm install
+
+# 4) 差分レビューしてコミット
+git diff
+git add pnpm-lock.yaml
+git commit
+```
+
+### pnpm には lockfile をマージするための専用パッケージ @pnpm/merge-lockfile-changes がある
+
+- いま [@pnpm/lockfile.merger - npm](https://www.npmjs.com/package/@pnpm/lockfile.merger)
+- 元 [@pnpm/merge-lockfile-changes - npm](https://www.npmjs.com/package/@pnpm/merge-lockfile-changes)
+
+特別な設定不要。
+
+pnpm-lock.yaml にコンフリクトマーカーが残った状態のまま
+`pnpm install` を実行するだけで、
+コンフリクトマーカー（`<<<<<<<` / `=======`/ `>>>>>>>>`）を検出すると、このライブラリが内部的に呼ばれて自動解決を試みる。
+
+※ 事前に package.json のコンフリクトが解消されている必要がある
+
+#### pnpm 以外
+
+yarn には同じメカニズムがあるらしい。
+
+npm はそういうのが無いので、`rm package-lock.json && npm install`
+
+bun は bun.lockb は根本的にマージ不能。bun.lock も消して `bun i` がいいらしい
+
+### Git Branch Lockfiles
+
+よくわからん。あとで調べる

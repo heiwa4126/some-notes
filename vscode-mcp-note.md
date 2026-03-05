@@ -36,3 +36,7 @@ SecretStorage の実体はローカルの SQLite ファイルらしい.
 
 正確には OS のネイティブな資格情報管理システム(Windows の Credential Manager や macOS の Keychain、 libsecret 経由で gnome-keyring/kwallet など)がない場合は
 SQLite にフォールバックするらしい。
+
+## `code --add-mcp` はリモートだと動かない
+
+あきらめて .vscode/mcp.jsonを書く

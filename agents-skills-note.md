@@ -378,3 +378,17 @@ Claude Code では
 のうちどこに書くのが適切? これ以外に適切な場所があればそれも考慮して
 
 これも 1.または2.が正解らしい。
+
+## SKILL.md を GitHub Copilot に生成してもらうテスト
+
+元ネタは [PRを送るだけでリポジトリを「乗っ取れる」?GitHub Actionsの危ない書き方を実際に検証してみた (hackerbot-claw)](https://zenn.dev/aeyesec/articles/417578718dcced)
+
+プロンプト:
+
+1. このワークスペースにあるworkflowsとactionsをチェックして、「run: セクション内で ${{ }} を直接展開させない」というルールに反しているものがあれば、それを見つけて
+2. これをSKILL.md にして。他にも GitHub Actions の攻撃対策になりそうなルールがあれば、追加して
+3. https://agentskills.io/specification と https://code.visualstudio.com/docs/copilot/customization/agent-skills を読んで、正しいパスやフロントマターをつけて
+
+(2.,3.はいっぺんでもいいと思う)
+
+これ: [reusable-workflows/.github/skills/github-actions-security/SKILL.md at main · heiwa4126/reusable-workflows](https://github.com/heiwa4126/reusable-workflows/blob/main/.github/skills/github-actions-security/SKILL.md)
