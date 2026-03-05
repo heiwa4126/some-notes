@@ -26,9 +26,10 @@
 - [GITHUB_TOKEN と permissions:](#github_token-と-permissions)
 - [secrets.GITHUB_TOKEN と github.token](#secretsgithub_token-と-githubtoken)
 - [actionlint](#actionlint)
-- [actionlint はローカル actions をみてくれない](#actionlint-はローカル-actions-をみてくれない)
+  - [actionlint はローカル actions をみてくれない](#actionlint-はローカル-actions-をみてくれない)
   - [ちなみに pinact は](#ちなみに-pinact-は)
 - [action-validator](#action-validator)
+- [linter いろいろ](#linter-いろいろ)
 - [shell: bash](#shell-bash)
   - [`--noprofile`](#--noprofile)
   - [`--norc`](#--norc)
@@ -66,6 +67,12 @@
 - [`jobs.<job_id>.uses`](#jobsjob_iduses)
 - [PR に workflow があるとき](#pr-に-workflow-があるとき)
 - [Workflows では動作するのに Reusable workflows では動かない Actions](#workflows-では動作するのに-reusable-workflows-では動かない-actions)
+- [actions/checkout の `persist-credentials: false`](#actionscheckout-の-persist-credentials-false)
+  - [`persist-credentials` とは?](#persist-credentials-とは)
+    - [デフォルト動作(`persist-credentials: true`)](#デフォルト動作persist-credentials-true)
+    - [`persist-credentials: false` にするとなぜセキュア?](#persist-credentials-false-にするとなぜセキュア)
+    - [具体的な脅威](#具体的な脅威)
+    - [推奨パターン](#推奨パターン)
 
 ## そもそも
 
@@ -494,7 +501,7 @@ Docker 版は shellcheck と pyflakes 入り
 - [actionlint/Dockerfile at main · rhysd/actionlint](https://github.com/rhysd/actionlint/blob/main/Dockerfile)
 - [rhysd/actionlint - Docker Image](https://hub.docker.com/r/rhysd/actionlint)
 
-## actionlint はローカル actions をみてくれない
+### actionlint はローカル actions をみてくれない
 
 無理に
 
@@ -537,6 +544,41 @@ action-validator -v .github/workflows/*.yml  .github/actions/*/action.yml
 
 たとえば「action.yml の step では shell:必須」。たしかに検出してくれるんだけど、
 出力を見て何が問題なのか、どこに問題があるのかは全然わからない。
+
+## linter いろいろ
+
+[GitHub Actions を静的検査するツールの紹介 (actionlint/ghalint/zizmor)](https://zenn.dev/kou_pg_0131/articles/gha-static-checker)
+
+aqua.yaml (バージョンは `aqua up` してください)
+
+```yaml
+registries:
+  - type: standard
+    ref: v4.476.0 # renovate: depName=aquaproj/aqua-registry
+packages:
+  - name: suzuki-shunsuke/pinact@v3.9.0
+  - name: mpalmer/action-validator@v0.8.0
+  - name: rhysd/actionlint@v1.7.11
+  - name: zizmorcore/zizmor@v1.22.0
+  - name: suzuki-shunsuke/ghalint@v1.5.5
+```
+
+で
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+actionlint -verbose
+find -name action.yml -o -name action.yaml | xargs -r action-validator -v
+
+zizmor .
+
+ghalint run
+ghalint act
+```
+
+`zizmor --fix=all .` が便利
 
 ## shell: bash
 
@@ -919,3 +961,52 @@ GitHub上のリポジトリに
 > Trusted publishing cannot be used from within a reusable workflow at this time. It is recommended to instead create a non-reusable workflow that contains a job calling your reusable workflow, and then do the trusted publishing step from a separate job within that non-reusable workflow.
 
 > 現時点では、再利用可能なワークフロー内から信頼できる公開を使用することはできません。代わりに、再利用可能なワークフローを呼び出すジョブを含む再利用不可のワークフローを作成し、その再利用不可のワークフロー内の別のジョブから信頼できる公開ステップを実行することをお勧めします。
+
+## actions/checkout の `persist-credentials: false`
+
+### `persist-credentials` とは?
+
+`persist-credentials` は、`actions/checkout` アクションのオプションです。
+
+#### デフォルト動作(`persist-credentials: true`)
+
+チェックアウト後、Git の認証情報(トークン)が `.git/config` に**保存され続けます**。
+
+```
+[http "https://github.com/"]
+    extraheader = AUTHORIZATION: basic ***
+```
+
+これにより、後続のステップで `git push` などが**追加設定なしで**実行できます。
+
+#### `persist-credentials: false` にするとなぜセキュア?
+
+$$\text{攻撃面} = \text{トークンが存在する時間} \times \text{アクセス可能なスコープ}$$
+
+| 設定               | トークンの残存                      | リスク                                           |
+| ------------------ | ----------------------------------- | ------------------------------------------------ |
+| `true`(デフォルト) | ジョブ終了まで `.git/config` に残る | 後続ステップや悪意あるアクションに読まれる可能性 |
+| `false`            | チェックアウト直後に削除            | 不要な認証情報の露出を最小化                     |
+
+#### 具体的な脅威
+
+```yaml
+# 悪意あるサードパーティアクションが後から実行される場合
+- uses: actions/checkout@v4
+  with:
+    persist-credentials: true # ← トークンが .git/config に残存
+
+- uses: malicious-org/some-action@v1 # ← .git/config を読んでトークン窃取の可能性
+```
+
+#### 推奨パターン
+
+```yaml
+- uses: actions/checkout@v4
+  with:
+    persist-credentials: false # 最小権限の原則
+```
+
+`git push` が必要な場合は、その**直前のステップだけ**で明示的に認証情報を設定する方がセキュアです。
+
+> **ポイント**: 最小権限の原則(Principle of Least Privilege)に従い、認証情報は**必要な瞬間だけ**存在させるのがベストプラクティスです。
