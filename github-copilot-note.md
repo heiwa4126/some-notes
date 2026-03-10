@@ -527,3 +527,18 @@ Plan モードの考察
 | OAuth(ブラウザ)認証が必須                            | <https://docs.github.com/en/copilot/how-tos/configure-personal-settings/authenticate-to-ghecom?tool=vscode> |
 | PAT / env では認証できない                           | <https://github.com/orgs/community/discussions/133366>                                                      |
 | Copilot CLI は env / PAT を使う(対比)                | <https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/authenticate-copilot-cli>        |
+
+## プロンプト
+
+[Use prompt files in VS Code](https://code.visualstudio.com/docs/copilot/customization/prompt-files)
+
+> Prompt files, also known as slash commands, let you simplify prompting for common tasks by encoding them as standalone Markdown files that you can invoke directly in chat. Each prompt file includes task-specific context and guidelines about how the task should be performed.
+
+> プロンプトファイル(スラッシュコマンドとも呼ばれます)を使用すると、チャットから直接呼び出せるスタンドアロンのMarkdownファイルとしてエンコードすることで、一般的なタスクのプロンプト表示を簡素化できます。各プロンプトファイルには、タスク固有のコンテキストと、タスクの実行方法に関するガイドラインが含まれています。
+
+> 自動的に適用されるカスタム指示とは異なり、プロンプト ファイルはチャットで手動で呼び出します。
+
+コマンドパレットから
+`Chat: Open Chat Customizations`
+が便利そう。
+[Chat Customizations editor](https://code.visualstudio.com/docs/copilot/customization/overview#_chat-customizations-editor)
