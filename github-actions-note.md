@@ -1034,3 +1034,6 @@ GitHub の UI で
 [Release v4.3.0 · pnpm/action-setup](https://github.com/pnpm/action-setup/releases/tag/v4.3.0)
 では `Revert "feat!: run the action on Node.js 24 (#205)"` で、
 「一度 Node 24 対応（#205）を取り込んだものの、v4.3.0 でそれを revert した状態でリリースされています。Node 24 対応はまだ保留中」になってる。
+
+`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` にすると
+action.yml の using 指定を無視して Node 24 で強制実行する。

@@ -647,3 +647,9 @@ grype $(uv tool dir)
 
 のハッシュで、なかなかヒットしてくれない。
 CD ならともかく CI では uv.lock だけにするとかを考慮する。
+
+## 全依存パッケージを表示する
+
+`uv tree` または `uv pip tree`
+
+`uv pip list` ではダメ。一番上しか出ない
