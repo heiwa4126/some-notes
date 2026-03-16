@@ -653,3 +653,14 @@ CD ならともかく CI では uv.lock だけにするとかを考慮する。
 `uv tree` または `uv pip tree`
 
 `uv pip list` ではダメ。一番上しか出ない
+
+## requirements.txt からの migration
+
+[From pip to a uv project | uv](https://docs.astral.sh/uv/guides/migration/pip-to-project/)
+
+```sh
+uv init --bare
+uv add -r requirements.txt
+uv add --dev -r requirements-dev.txt # あれば
+uv sync
+```
