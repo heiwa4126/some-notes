@@ -281,7 +281,7 @@ postman-collection で解決してほしい。
 
 [pnpm audit | pnpm](https://pnpm.io/ja/cli/audit)
 
-## npm → pnpm 移行手順
+## npm → pnpm 移行手順 (migration)
 
 ```sh
 # 変換
