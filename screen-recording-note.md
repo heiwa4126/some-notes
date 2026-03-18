@@ -39,5 +39,11 @@ Windows11 で、GUIの操作をビデオにしたい。
 
 SceneSwitcherは難しそう... あとで暇なときにやる
 
-ホットキーも難しい。なるほとStream Deckみたいのがはやるわけだ。
-AutoHotkey(AHK)をあとで試す。
+ホットキーも難しい。なるほと Stream Deck みたいのがはやるわけだ。
+
+- AutoHotkey(AHK) ← これあとで試す
+- サンワダイレクト 400-SKB075
+- XYZA Tiny Keyboard
+- 3 key macro pad
+
+こういうので F13～F24 を割り当てて使う
