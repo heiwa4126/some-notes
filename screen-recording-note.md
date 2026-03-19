@@ -47,3 +47,5 @@ SceneSwitcherは難しそう... あとで暇なときにやる
 - 3 key macro pad
 
 こういうので F13～F24 を割り当てて使う
+
+編集は LosslessCut を使うことにした。
