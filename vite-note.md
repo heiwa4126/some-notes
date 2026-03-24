@@ -8,6 +8,7 @@
   - [minifier に terser を使う場合](#minifier-に-terser-を使う場合)
 - [JSON5 や JSONC を直接インポート](#json5-や-jsonc-を直接インポート)
 - [Vite dev で TSL](#vite-dev-で-tsl)
+- [Vite v8](#vite-v8)
 
 ## Deno で Vite
 
@@ -168,3 +169,16 @@ export default defineConfig({
 証明書の PEM はプロジェクトに含めないほうがいいみたいので .gitignore に `*.pem` とか書く。
 
 これで <https://localhost:5173/> や <https://localhost:4173/> で作業
+
+## Vite v8
+
+rollupOptions の manualChunks がなくなった(正確にはあるけど rolldownOptions では非推奨)。
+かわりに codeSplitting を使う。置き換えはけっこう記述が大変。
+
+[Manual Code Splitting | Rolldown](https://rolldown.rs/in-depth/manual-code-splitting)
+
+あと 2026-03-24 現在、React Router v7 では
+[Vite 8 build warning, please use \`oxc\` instead · remix-run/react-router · Discussion #14870](https://github.com/remix-run/react-router/discussions/14870)
+
+のように `[vite] warning: \`esbuild\` option was specified by "react-router" plugin. This option is deprecated, please use \`oxc\` instead.`
+という警告が出る。これいまのところ対策が無くて、とりあえず動くので警告無視で。
