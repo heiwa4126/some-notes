@@ -4,9 +4,15 @@
 
 [What Oxlint supports](https://oxc.rs/docs/guide/usage/linter.html#what-oxlint-supports)
 
+> - JavaScript and TypeScript (.js, .mjs, .cjs, .ts, .mts, .cts)
+> - JSX and TSX (.jsx, .tsx)
+> - Framework files (.vue, .svelte, .astro) by linting only their \<script\> blocks
+
 ## oxfmt のサポートする言語
 
 [Supported languages](https://oxc.rs/docs/guide/usage/formatter.html#supported-languages)
+
+> JavaScript, JSX, TypeScript, TSX, JSON, JSONC, JSON5, YAML, TOML, HTML, Angular, Vue, CSS, SCSS, Less, Markdown, MDX, GraphQL, Ember, Handlebars
 
 ## VSCode拡張
 
