@@ -1,5 +1,28 @@
 # pnpm のメモ
 
+- [pnpm 自体の更新](#pnpm-自体の更新)
+- [pnpm でパッケージをまとめて latest に](#pnpm-でパッケージをまとめて-latest-に)
+- [pnpm で `npm ls`](#pnpm-で-npm-ls)
+- [bash で補完](#bash-で補完)
+- [ライフサイクルスクリプトとは何?](#ライフサイクルスクリプトとは何)
+  - [ライフサイクルスクリプトの実例: `esbuild`](#ライフサイクルスクリプトの実例-esbuild)
+- [trustPolicy: no-downgrade の件](#trustpolicy-no-downgrade-の件)
+- [minimumReleaseAge](#minimumreleaseage)
+  - [ほかのパッケージマネージャでは?](#ほかのパッケージマネージャでは)
+- [一時的に minimumReleaseAge を無効にする](#一時的に-minimumreleaseage-を無効にする)
+- [そのほかの pnpm のセキュリティ機能](#そのほかの-pnpm-のセキュリティ機能)
+- [`pnpm audit -g` はない](#pnpm-audit--g-はない)
+- [pnpm の run-scripts に npmコマンドを使うとき](#pnpm-の-run-scripts-に-npmコマンドを使うとき)
+- [`pnpm install` の前に `pnpm audit` を実行させる](#pnpm-install-の前に-pnpm-audit-を実行させる)
+- [overrides](#overrides)
+- [pnpm には `npm audit fix` が無い](#pnpm-には-npm-audit-fix-が無い)
+- [npm → pnpm 移行手順 (migration)](#npm--pnpm-移行手順-migration)
+- [lockファイルがコンフリクトする](#lockファイルがコンフリクトする)
+  - [汎用的手法](#汎用的手法)
+  - [pnpm には lockfile をマージするための専用パッケージ @pnpm/merge-lockfile-changes がある](#pnpm-には-lockfile-をマージするための専用パッケージ-pnpmmerge-lockfile-changes-がある)
+    - [pnpm 以外](#pnpm-以外)
+  - [Git Branch Lockfiles](#git-branch-lockfiles)
+
 ## pnpm 自体の更新
 
 最近は corepack 経由でやってると思うので
