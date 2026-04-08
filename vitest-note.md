@@ -11,8 +11,8 @@
 
 ---
 
-vite8以前のvitestをなんとかする。
-lockファイルは消さない方針で。
+vite8 以前の vitest をなんとかする。
+lock ファイルは消さない方針で。
 
 例:
 
@@ -22,7 +22,7 @@ pnpm add -D -E vite@8.0.7 --config.minimumReleaseAge=0
 
 バージョンなどはアレンジ。
 
-うまくいったら、 package.json の devDependenciesからviteを消す。
+うまくいったら、 package.json の devDependencies から vite を消す。
 `pnpm remove` じゃダメ。
 
 で、
@@ -31,4 +31,4 @@ pnpm add -D -E vite@8.0.7 --config.minimumReleaseAge=0
 pnpm up --config.minimumReleaseAge=0
 ```
 
-でlockfile更新。
+で lockfile 更新。
