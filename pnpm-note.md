@@ -159,6 +159,10 @@ pnpm config set --location=global minimumReleaseAgeExclude "react @types/*"
 pnpm config list --location=global
 ```
 
+環境変数で
+`PNPM_CONFIG_MINIMUM_RELEASE_AGE=1440`
+でもいい
+
 ### ほかのパッケージマネージャでは?
 
 ほかの言語も含めて

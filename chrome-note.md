@@ -11,7 +11,6 @@ Google Chrome でスクロールして**全画面のスクリーンショット*
 以下の手順で操作します。
 
 1.  **デベロッパーツールを開く**
-
     - スクリーンショットを撮りたい Web ページを開きます。
     - キーボードショートカットを押すか、右クリックメニューから開きます。
       - **Windows/ChromeOS:** $\text{F12}$ キー または $\text{Ctrl} + \text{Shift} + \text{I}$
@@ -19,7 +18,6 @@ Google Chrome でスクロールして**全画面のスクリーンショット*
       - または、ページ内の何もない場所で**右クリック**し、「**検証**」を選択します。
 
 2.  **コマンドメニューを開く**
-
     - デベロッパーツールが開いたら、以下のショートカットを押して「**実行プロンプト**(Run command)」または「**コマンドメニュー**」を開きます。
       - **Windows/ChromeOS:** $\text{Ctrl} + \text{Shift} + \text{P}$
       - **Mac:** $\text{Command} + \text{Shift} + \text{P}$
@@ -62,19 +60,15 @@ Google Chrome でスクロールして**全画面のスクリーンショット*
 **重要: DevTools のショートカットキーです**
 
 1.  **デベロッパーツールを開く**
-
     - $\text{F12}$ キー、または $\text{Ctrl} + \text{Shift} + \text{I}$(Windows/ChromeOS)、$\text{Command} + \text{Option} + \text{I}$(Mac)でデベロッパーツールを開きます。
 
 2.  **設定画面を開く**
-
     - デベロッパーツールの上部にある**歯車アイコン**(⚙️ $\text{Settings}$)をクリックするか、$\text{F1}$ キーを押します。
 
 3.  **ショートカット設定に移動する**
-
     - 左側のメニューから「**ショートカット** ($\text{Shortcuts}$)」タブを選択します。
 
 4.  **「フルサイズのスクリーンショット」を探す**
-
     - 設定項目を下にスクロールして、「**Screenshot**」セクションを探します。
     - その中の「**Capture full size screenshot**」という項目を見つけます。
 
@@ -85,3 +79,17 @@ Google Chrome でスクロールして**全画面のスクリーンショット*
     - キーが入力されたら、**チェックマーク**(✓)をクリックして確定します。
 
 これで、**デベロッパーツールが開いている状態であれば**、設定したショートカットキーを押すだけで、ページ全体のスクリーンショットが撮影されるようになります。
+
+## 便利な検索ショートカット
+
+1. Chromeで <chrome://settings/searchEngines> を開く。
+2. 「サイト検索」セクションの **「追加」** ボタンをクリックします。
+3. 以下を追加
+
+| 対象 (言語/環境)        | 検索エンジン名        | ショートカット        | 検索用URL                                          |
+| :---------------------- | :-------------------- | :-------------------- | :------------------------------------------------- |
+| **Node.js**             | `npm`                 | `npm`                 | `https://www.npmjs.com/search?q=%s`                |
+| **Python**              | `PyPI`                | `pypi`                | `https://pypi.org/search/?q=%s`                    |
+| **Go**                  | `Go Packages`         | `go`                  | `https://pkg.go.dev/search?q=%s`                   |
+| **Rust**                | `crates.io`           | `cg` (または `cargo`) | `https://crates.io/search?q=%s`                    |
+| **GitHub Repositories** | `GitHub Repositories` | `gh`                  | `https://github.com/search?q=%s&type=repositories` |
