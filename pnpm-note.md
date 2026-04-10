@@ -22,6 +22,7 @@
   - [pnpm には lockfile をマージするための専用パッケージ @pnpm/merge-lockfile-changes がある](#pnpm-には-lockfile-をマージするための専用パッケージ-pnpmmerge-lockfile-changes-がある)
     - [pnpm 以外](#pnpm-以外)
   - [Git Branch Lockfiles](#git-branch-lockfiles)
+- [`pnpm audit` では脆弱性0なのに `osv-scanner .` では脆弱性がある、と言ってくる](#pnpm-audit-では脆弱性0なのに-osv-scanner--では脆弱性があると言ってくる)
 
 ## pnpm 自体の更新
 
@@ -373,3 +374,9 @@ bun は bun.lockb は根本的にマージ不能。bun.lock も消して `bun i`
 ### Git Branch Lockfiles
 
 よくわからん。あとで調べる
+
+## `pnpm audit` では脆弱性0なのに `osv-scanner .` では脆弱性がある、と言ってくる
+
+npmの脆弱性DBに基づいてosvが更新されるはずなので、これはおかしい。
+
+`pnpm store prune` するとよい。
