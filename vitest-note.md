@@ -11,6 +11,15 @@
 
 ---
 
+楽な方法
+
+```sh
+rm -rf rm node_modules pnpm-lock.yaml
+pnpm up
+```
+
+---
+
 vite8 以前の vitest をなんとかする。
 lock ファイルは消さない方針で。
 
