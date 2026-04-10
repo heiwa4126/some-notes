@@ -9,6 +9,7 @@
 - [JSON5 や JSONC を直接インポート](#json5-や-jsonc-を直接インポート)
 - [Vite dev で TSL](#vite-dev-で-tsl)
 - [Vite v8](#vite-v8)
+- [Vite8 で rollup.manualChunks](#vite8-で-rollupmanualchunks)
 
 ## Deno で Vite
 
@@ -172,6 +173,8 @@ export default defineConfig({
 
 ## Vite v8
 
+[Migration from v7 | Vite](https://vite.dev/guide/migration)
+
 rollupOptions の manualChunks がなくなった(正確にはあるけど rolldownOptions では非推奨)。
 かわりに codeSplitting を使う。置き換えはけっこう記述が大変。
 
@@ -182,3 +185,11 @@ rollupOptions の manualChunks がなくなった(正確にはあるけど rolld
 
 のように `[vite] warning: \`esbuild\` option was specified by "react-router" plugin. This option is deprecated, please use \`oxc\` instead.`
 という警告が出る。これいまのところ対策が無くて、とりあえず動くので警告無視で。
+
+## Vite8 で rollup.manualChunks
+
+もし現在が `manualChunks: { vendor: [...] }` の オブジェクト形式なら、
+まずは 関数形式に変換してビルドを通す。
+
+参考:
+[Vite 8.0 Rolldown移行エラー \`output.manualChunks\` object form is not supported の解決方法【2026年最新版】 | ( ･∀･)つ〃∩ troubleshooting!!](https://blog.path-finder.jp/troubleshooting/vite-80-rolldown%E7%A7%BB%E8%A1%8C%E3%82%A8%E3%83%A9%E3%83%BC-outputmanualchunks-object-fo/)
