@@ -74,6 +74,7 @@
     - [具体的な脅威](#具体的な脅威)
     - [推奨パターン](#推奨パターン)
 - [Node.js 20 actions are deprecated](#nodejs-20-actions-are-deprecated)
+- [「今日できる」4つのセキュリティ対策](#今日できる4つのセキュリティ対策)
 
 ## そもそも
 
@@ -1037,3 +1038,13 @@ GitHub の UI で
 
 `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` にすると
 action.yml の using 指定を無視して Node 24 で強制実行する。
+
+## 「今日できる」4つのセキュリティ対策
+
+[GitHub 全体にわたるオープンソースサプライチェーンのセキュリティ確保 - GitHub ブログ](https://github.blog/security/supply-chain-security/securing-the-open-source-supply-chain-across-github/)
+
+の
+「最も重要な対応は、CodeQLを使ってGitHub Actionsワークフローの実装(公開リポジトリで無料提供)をレビューし、ワークフローのセキュリティベストプラクティスを点検する」
+の具体的な手順メモ
+
+参照元: [How to scan GitHub Actions workflows for security issues - The GitHub Blog](https://github.blog/security/application-security/how-to-secure-your-github-actions-workflows-with-codeql/)
