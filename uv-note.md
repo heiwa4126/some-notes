@@ -664,3 +664,47 @@ uv add -r requirements.txt
 uv add --dev -r requirements-dev.txt # あれば
 uv sync
 ```
+
+## License の書き方
+
+こんな警告が出るとき
+
+> warning: Found license classifier `License :: OSI Approved :: MIT License`. License classifiers are ambiguous and deprecated per PEP 639; projects should use `project.license` and `project.licen
+
+[PEP 639 – Improving License Clarity with Better Package Metadata | peps.python.org](https://peps.python.org/pep-0639/)
+
+1. "License :: OSI Approved :: MIT License" を pyproject.toml の project.classifiers から消す
+2. こんな感じにする
+
+   ```yaml
+   [project]
+   license = "MIT"
+   license-files = ["LICENSE"]
+   ```
+
+## uv 管理下の Python のパッチアップデート
+
+```console
+$ cat  ~/.config/uv/config.toml
+
+[python]
+default = "3.12"
+
+$ uv python list | grep -Fi 3.12
+
+cpython-3.12.13-linux-x86_64-gnu                  <download available>
+cpython-3.12.12-linux-x86_64-gnu                  bin/python3.12 -> .local/share/uv/python/cpython-3.12.12-linux-x86_64-gnu/bin/python3.12
+cpython-3.12.12-linux-x86_64-gnu                  .local/share/uv/python/cpython-3.12.12-linux-x86_64-gnu/bin/python3.12
+```
+
+で、3.12.12 → 3.12.13 したいとする。`uv tool install` したツールはそこそこある。
+
+例:
+
+```sh
+cd
+uv python install 3.12.13
+uv tool upgrade --all --python 3.12.13
+uv python uninstall 3.12.12
+uv cache prune
+```
