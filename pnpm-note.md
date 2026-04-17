@@ -23,6 +23,7 @@
     - [pnpm 以外](#pnpm-以外)
   - [Git Branch Lockfiles](#git-branch-lockfiles)
 - [`pnpm audit` では脆弱性0なのに `osv-scanner .` では脆弱性がある、と言ってくる](#pnpm-audit-では脆弱性0なのに-osv-scanner--では脆弱性があると言ってくる)
+- [`pnpm audit` が死ぬ (2026-04)](#pnpm-audit-が死ぬ-2026-04)
 
 ## pnpm 自体の更新
 
@@ -380,3 +381,33 @@ bun は bun.lockb は根本的にマージ不能。bun.lock も消して `bun i`
 npmの脆弱性DBに基づいてosvが更新されるはずなので、これはおかしい。
 
 `pnpm store prune` するとよい。
+
+## `pnpm audit` が死ぬ (2026-04)
+
+```console
+$ pnpm audit
+
+ ERR_PNPM_AUDIT_BAD_RESPONSE  The audit endpoint (at https://registry.npmjs.org/-/npm/v1/security/audits/quick) responded with 410: {"error":"This endpoint is being retired. Use the bulk advisory endpoint instead. See the following docs for more info: https://api-docs.npmjs.com/#tag/Audit"}. Fallback endpoint (at https://registry.npmjs.org/-/npm/v1/security/audits) responded with 410: {"error":"This endpoint is being retired. Use the bulk advisory endpoint instead. See the following docs for more info: https://api-docs.npmjs.com/#tag/Audit"}
+```
+
+これ
+[\`pnpm audit\` fails with 410: npm registry has retired legacy audit endpoints · Issue #11265 · pnpm/pnpm](https://github.com/pnpm/pnpm/issues/11265)
+
+2026年4月15日からnpmレジストリが旧来のauditエンドポイント（`/-/npm/v1/security/audits/quick` および `/-/npm/v1/security/audits`）を正式に廃止し、HTTP 410を返すようになりました。
+npmレジストリは新しいバルクアドバイザリエンドポイント（`/-/npm/v1/security/advisories/bulk`）への移行を求めており、`npm audit` はすでに新エンドポイントに対応しているため問題ありませんが、現時点の pnpm（v10.33.0以前）はすべて対応できていないため完全に壊れている状態です。
+
+根本的な修正は pnpm 側のアップデートを待つしかない。
+
+pnpm@11.0.0-rc.1 では修正されたので `pnpm audit` の代わりに
+
+```sh
+pnpm dlx --config.minimumReleaseAge=0 pnpm@11.0.0-rc.1 --config.manage-package-manager-versions=false audit
+```
+
+などで。
+
+(2026-04-17) npmjsが批判をくらって、エンドポイントを非公式に戻したらしい。
+
+[Clarification on retiring the Quick Audit endpoint and the impact on pnpm and Yarn · community · Discussion #192768](https://github.com/orgs/community/discussions/192768)
+
+とはいうものの今後は `/advisories/bulk` エンドポイントには移行したほうがいいよね。
