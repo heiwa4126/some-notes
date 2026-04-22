@@ -11,6 +11,7 @@
   - [2) `--repo` / `-R` フラグで明示指定](#2---repo---r-フラグで明示指定)
   - [3) **環境変数 `GH_REPO` で固定する**](#3-環境変数-gh_repo-で固定する)
   - [補足](#補足)
+- [リモートのLinuxでghのトークンをセキュアストレージに保存したい](#リモートのlinuxでghのトークンをセキュアストレージに保存したい)
 
 ## GitHub Actions をデバッグするときに便利な GitHub CLI コマンド
 
@@ -185,3 +186,23 @@ gh variable set LOG_LEVEL --body "debug"
 
 - **Organization レベル**を指定する場合は `--org your-org` を使います(Secrets/Variables ともに可)。 [\[cli.github.com\]](https://cli.github.com/manual/gh_secret_set), [\[cli.github.com\]](https://cli.github.com/manual/gh_variable_set)
 - **Environment 向け**なら `--env production` のように環境名を加えます(事前に Environment が存在している必要あり。未作成なら `gh api -X PUT /repos/OWNER/REPO/environments/ENV` で作成可能)。 [\[cli.github.com\]](https://cli.github.com/manual/gh_secret_set), [\[cli.github.com\]](https://cli.github.com/manual/gh_variable_set), [\[stackoverflow.com\]](https://stackoverflow.com/questions/70943164/create-environment-for-repository-using-gh)
+
+## リモートのLinuxでghのトークンをセキュアストレージに保存したい
+
+リモートのCLIしかないLinuxだと`gh auth login` すると、`~/.config/gh/hosts.yml` に平文でトークンが保存されて危ない。
+GUIがあればgnome-keyringを使うのだが。
+
+[Setup Github Authentication with Pass & GPG Keys on Linux \(for CLI and Container Registry\)](https://gist.github.com/mleager/e613cbc222d006e04de05cda2e312828)
+
+(あとでやってみる)
+
+ヒント:
+`docker-credential-helpers` には docker は不要。"Docker製"の意味。
+
+- [docker login | Docker Docs](https://docs.docker.com/reference/cli/docker/login/#credential-stores)
+- [docker login — Docker-docs-ja 24.0 ドキュメント](https://docs.docker.jp/engine/reference/commandline/login.html#docker-login-creadentials-store)
+
+他参考:
+
+- [How to manage Linux passwords with the pass command](https://www.redhat.com/ja/blog/management-password-store)
+- [docker/docker-credential-helpers: Programs to keep Docker login credentials safe by storing in platform keystores](https://github.com/docker/docker-credential-helpers)
