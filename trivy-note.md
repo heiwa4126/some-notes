@@ -1,4 +1,4 @@
-# trivy メモ
+# Trivy メモ
 
 GitHub の Dependabot + Secret Scanning みたいなやつ。
 "Code Scanning"ではないので「このプロジェクトの XSS 見つけろ」みたいのはできない。
@@ -136,3 +136,27 @@ trivy fs --scanners license --severity HIGH,CRITICAL .
 まあ普通はそれを知りたいとは思わない。
 
 参考: [License - Trivy](https://aquasecurity.github.io/trivy/v0.49/docs/scanner/license/)
+
+## 公開鍵を利用できないため、以下の署名は検証できませんでした: NO_PUBKEY 35B8ACA44FD9CA9F (2026-04)
+
+以下のコマンドで公開鍵を再登録:
+
+```bash
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | \
+  gpg --dearmor | \
+  sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+```
+
+次に、リポジトリの設定が鍵を参照しているか確認:
+
+```bash
+cat /etc/apt/sources.list.d/trivy.list
+```
+
+以下のように `signed-by` が指定されていればOK:
+
+```
+deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb jammy main
+```
+
+最後に再度 `sudo apt update` を実行
