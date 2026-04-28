@@ -122,7 +122,7 @@ index 0000000..e69de29
 あと
 [警戒モードの有効化 - すべてのコミットの検証ステータスを表示する - GitHub Docs](https://docs.github.com/ja/authentication/managing-commit-signature-verification/displaying-verification-statuses-for-all-of-your-commits#enabling-vigilant-mode)
 
-## おまけ: Depandabot は GPG 署名なので
+## おまけ: Dependabot は GPG 署名なので
 
 `git log --show-signature` の時に
 Depandabot のプルリクエストをマージしたコミットで

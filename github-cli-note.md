@@ -12,6 +12,7 @@
   - [3) **環境変数 `GH_REPO` で固定する**](#3-環境変数-gh_repo-で固定する)
   - [補足](#補足)
 - [リモートのLinuxでghのトークンをセキュアストレージに保存したい](#リモートのlinuxでghのトークンをセキュアストレージに保存したい)
+- [GitHub への ssh接続テスト](#github-への-ssh接続テスト)
 
 ## GitHub Actions をデバッグするときに便利な GitHub CLI コマンド
 
@@ -206,3 +207,9 @@ GUIがあればgnome-keyringを使うのだが。
 
 - [How to manage Linux passwords with the pass command](https://www.redhat.com/ja/blog/management-password-store)
 - [docker/docker-credential-helpers: Programs to keep Docker login credentials safe by storing in platform keystores](https://github.com/docker/docker-credential-helpers)
+
+## GitHub への ssh接続テスト
+
+```sh
+ssh -T github.com
+```
