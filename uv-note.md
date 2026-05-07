@@ -515,6 +515,12 @@ Windows の pwsh だと
 [Environment]::SetEnvironmentVariable("UV_NATIVE_TLS", "true", "User")
 ```
 
+### 2026-05 (uv 0.11.11)
+
+> warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+
+だそうです。
+
 ## uvx で TestPyPI 上のパッケージを動かすのはめんどくさい
 
 例:
