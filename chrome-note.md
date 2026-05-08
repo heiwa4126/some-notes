@@ -93,3 +93,9 @@ Google Chrome でスクロールして**全画面のスクリーンショット*
 | **Go**                  | `Go Packages`         | `go`                  | `https://pkg.go.dev/search?q=%s`                   |
 | **Rust**                | `crates.io`           | `cg` (または `cargo`) | `https://crates.io/search?q=%s`                    |
 | **GitHub Repositories** | `GitHub Repositories` | `gh`                  | `https://github.com/search?q=%s&type=repositories` |
+
+## Google Chromeのタスクマネージャを開く
+
+Shift+ESC がいちばん早い
+
+Windowsのタスクマネージャのような "Ctrlキーでポーズ" は無い。
