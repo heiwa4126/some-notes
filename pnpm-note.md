@@ -24,6 +24,7 @@
   - [Git Branch Lockfiles](#git-branch-lockfiles)
 - [`pnpm audit` では脆弱性0なのに `osv-scanner .` では脆弱性がある、と言ってくる](#pnpm-audit-では脆弱性0なのに-osv-scanner--では脆弱性があると言ってくる)
 - [`pnpm audit` が死ぬ (2026-04)](#pnpm-audit-が死ぬ-2026-04)
+- [pnpm v11 を使ったら GitHub の dependabotが "pnpm-lock.yaml not parseable" とか言ってきます (2026-05)](#pnpm-v11-を使ったら-github-の-dependabotが-pnpm-lockyaml-not-parseable-とか言ってきます-2026-05)
 
 ## pnpm 自体の更新
 
@@ -411,3 +412,18 @@ pnpm dlx --config.minimumReleaseAge=0 pnpm@11.0.0-rc.1 --config.manage-package-m
 [Clarification on retiring the Quick Audit endpoint and the impact on pnpm and Yarn · community · Discussion #192768](https://github.com/orgs/community/discussions/192768)
 
 とはいうものの今後は `/advisories/bulk` エンドポイントには移行したほうがいいよね。
+
+## pnpm v11 を使ったら GitHub の dependabotが "pnpm-lock.yaml not parseable" とか言ってきます (2026-05)
+
+これ
+[npm_and_yarn: pnpm v11 multi\-document pnpm\-lock\.yaml reported as dependency_file_not_parseable · Issue \#14919 · dependabot/dependabot\-core](https://github.com/dependabot/dependabot-core/issues/14919)
+
+いまのところ対策なし。
+
+しょーがないので一時
+
+```sh
+curl -fsSL https://get.pnpm.io/install.sh | PNPM_VERSION=10.33.4 sh -
+```
+
+にしといた。
