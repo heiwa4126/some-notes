@@ -427,3 +427,6 @@ curl -fsSL https://get.pnpm.io/install.sh | PNPM_VERSION=10.33.4 sh -
 ```
 
 にしといた。
+
+2026-05-13 Dependabotがpnpm v11のロックファイルに対応したみたい。確定情報ではないけど、実際に動作する
+[Support PNPM v11 · Issue \#14794 · dependabot/dependabot\-core](https://github.com/dependabot/dependabot-core/issues/14794)
