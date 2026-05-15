@@ -107,3 +107,17 @@ _aws_completion() {
 
 complete -F _aws_completion aws
 ```
+
+## あるコマンドにどんな補完があたってるかを知る
+
+まず
+
+```sh
+complete -p <コマンド名>
+```
+
+これで `-F _xxx` と表示された場合、\_xxx という名前の シェル関数 が補完を制御しているので
+
+```sh
+type _xxx
+```

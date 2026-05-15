@@ -12,6 +12,7 @@
 - [`bun audit`](#bun-audit)
 - [pnpm の minimumReleaseAge 相当](#pnpm-の-minimumreleaseage-相当)
 - [`bun build` はバンドラなんだけど](#bun-build-はバンドラなんだけど)
+- [bun の shell completions](#bun-の-shell-completions)
 
 ## bun の概要
 
@@ -162,3 +163,53 @@ trustPolicy=no-downgrade      # 信頼レベルが低下したバージョンを
 
 なので、再利用できるモジュールを作るのはつらいかも。
 tsdownとかをつかいましょう。
+
+## bun の shell completions
+
+`bun run` の completions がほしい
+
+`bun completions` で取得できるのは bash 用でしかもあんまり出来がよくない。
+
+`.bun/_bun` も存在しない。
+
+[bun/completions at main · oven\-sh/bun](https://github.com/oven-sh/bun/tree/main/completions)
+が、そこそこメンテナンスされてるみたいなので試す...
+
+zsh 版は期待通り動く
+
+bash版(<https://github.com/oven-sh/bun/blob/main/completions/bun.bash>)は
+
+> sed: -e expression #1, char 40: unknown option to `s'
+
+というエラーになる。Claudeに丸投げした
+
+```text
+bun の bash completions (https://github.com/oven-sh/bun/blob/main/completions/bun.bash)を試してるんですが、
+
+> sed: -e expression #1, char 40: unknown option to `s'
+
+というエラーになります。修正パッチを作って
+```
+
+出てきたのが以下で、デリミタを `/` から `|` に変える
+
+```diff
+--- a/completions/bun.bash
++++ b/completions/bun.bash
+@@ -1,5 +1,5 @@
+-        local re_script=$(echo ${package_json_compreply[@]} | sed 's/[^ ]*/(&)/g');
+-        local new_reply=$(echo "${COMPREPLY[@]}" | sed -E "s/$re_script//");
++        local re_script=$(echo ${package_json_compreply[@]} | sed 's|[^ ]*|(&)|g');
++        local new_reply=$(echo "${COMPREPLY[@]}" | sed -E "s|$re_script||");
+```
+
+...エラーはでなくなったけど、`bun run` の補完はしてくれない...
+
+- Issue: [Bash autocomplete #6037](https://github.com/oven-sh/bun/issues/6037)
+- PR: [fix: bash completion script #17147](https://github.com/oven-sh/bun/pull/17147)(未マージ)
+
+ただ run-scripts で複数行のJSONがあると死ぬらしい。
+
+いちおう Gist にしといた。普段使いでは問題ないのでは
+
+- [bun bash completion\(バグ修正版\) oven\-sh/bun 公式の completions/bun\.bash にあるバグを修正したものです。PR も issuse も出てるけど全然取り込まれないので自分用に](https://gist.github.com/heiwa4126/dc0b087e89026c235281655b6a835ae6)
