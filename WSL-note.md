@@ -25,6 +25,7 @@
 - [WSL では /etc/cron.daily などが実行されないので](#wsl-では-etccrondaily-などが実行されないので)
 - [WSL で keyring](#wsl-で-keyring)
 - [Explorer のアドレスバーから wsl を実行できる](#explorer-のアドレスバーから-wsl-を実行できる)
+- [インストール可能なディストリビューションの一覧](#インストール可能なディストリビューションの一覧)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -433,3 +434,41 @@ sudo apt install pass gnupg2
 ## Explorer のアドレスバーから wsl を実行できる
 
 cmd.exe や pwsh と同じように `wsl` で。
+
+## インストール可能なディストリビューションの一覧
+
+```pwsh
+wsl --list --online
+```
+
+おまけ: [Canonical、「Ubuntu 26\.04 LTS」の一般提供を開始 ~TARベースのWSLパッケージもあり \- 窓の杜](https://forest.watch.impress.co.jp/docs/news/2104789.html)
+
+```console
+PS1> wsl --list --online
+インストールできる有効なディストリビューションの一覧を次に示します。
+'wsl.exe --install <Distro>' を使用してインストールします。
+
+NAME                            FRIENDLY NAME
+Ubuntu                          Ubuntu
+Ubuntu-26.04                    Ubuntu 26.04 LTS
+Ubuntu-24.04                    Ubuntu 24.04 LTS
+Ubuntu-22.04                    Ubuntu 22.04 LTS
+openSUSE-Tumbleweed             openSUSE Tumbleweed
+openSUSE-Leap-16.0              openSUSE Leap 16.0
+SUSE-Linux-Enterprise-15-SP7    SUSE Linux Enterprise 15 SP7
+SUSE-Linux-Enterprise-16.0      SUSE Linux Enterprise 16.0
+kali-linux                      Kali Linux Rolling
+Debian                          Debian GNU/Linux
+AlmaLinux-8                     AlmaLinux OS 8
+AlmaLinux-9                     AlmaLinux OS 9
+AlmaLinux-Kitten-10             AlmaLinux OS Kitten 10
+AlmaLinux-10                    AlmaLinux OS 10
+archlinux                       Arch Linux
+FedoraLinux-44                  Fedora Linux 44
+FedoraLinux-43                  Fedora Linux 43
+eLxr                            eLxr 12.12.0.0 GNU/Linux
+OracleLinux_7_9                 Oracle Linux 7.9
+OracleLinux_8_10                Oracle Linux 8.10
+OracleLinux_9_5                 Oracle Linux 9.5
+SUSE-Linux-Enterprise-15-SP6    SUSE Linux Enterprise 15 SP6
+```
