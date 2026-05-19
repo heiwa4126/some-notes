@@ -31,6 +31,7 @@
 - [複数ディストリビューションを起動する](#複数ディストリビューションを起動する)
 - [updatedb で Windowsのドライブを除去したい](#updatedb-で-windowsのドライブを除去したい)
 - [ubuntu で emacs-nox をインストールすると、mtaとしてpostfixを入れようとする](#ubuntu-で-emacs-nox-をインストールするとmtaとしてpostfixを入れようとする)
+- [WSL上のデーモンに外部からアクセスする](#wsl上のデーモンに外部からアクセスする)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -555,3 +556,14 @@ msmtp-mta は、本物のMTA(PostfixやExim)の代わりに sendmail互換コマ
 - 外部SMTPへ即時転送するだけ
 
 ラズパイなどでもよく使われる
+
+## WSL上のデーモンに外部からアクセスする
+
+いちばん簡単なのが Mirrored モード
+
+- Windows 11 で
+- WSL上でローカルでないアドレスにバインドされていて
+- Windowsと複数のWSL間でポートがかち合ってなくて
+- あと Hyper-V firewall と Windows firewall が開いていれば
+
+[WSL を使用したネットワーク アプリケーションへのアクセス \| Microsoft Learn](https://learn.microsoft.com/ja-jp/windows/wsl/networking)
