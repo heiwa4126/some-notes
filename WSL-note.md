@@ -30,6 +30,7 @@
 - [デフォルトで起動するディストリビューションを知る/切り替える](#デフォルトで起動するディストリビューションを知る切り替える)
 - [複数ディストリビューションを起動する](#複数ディストリビューションを起動する)
 - [updatedb で Windowsのドライブを除去したい](#updatedb-で-windowsのドライブを除去したい)
+- [ubuntuでemacs-nox をインストールすると、mtaとしてpostfixを入れようとする](#ubuntuでemacs-nox-をインストールするとmtaとしてpostfixを入れようとする)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -533,3 +534,13 @@ PRUNEFS="NFS afs autofs binfmt_misc ceph cgroup cgroup2 cifs coda configfs curlf
 ```
 
 `PRUNEFS="9p NFS...` にするだけですんだ。
+
+## ubuntuでemacs-nox をインストールすると、mtaとしてpostfixを入れようとする
+
+先に
+
+```sh
+sudo apt install msmtp-mta
+```
+
+しておく。
