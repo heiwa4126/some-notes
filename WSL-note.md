@@ -30,7 +30,7 @@
 - [デフォルトで起動するディストリビューションを知る/切り替える](#デフォルトで起動するディストリビューションを知る切り替える)
 - [複数ディストリビューションを起動する](#複数ディストリビューションを起動する)
 - [updatedb で Windowsのドライブを除去したい](#updatedb-で-windowsのドライブを除去したい)
-- [ubuntuでemacs-nox をインストールすると、mtaとしてpostfixを入れようとする](#ubuntuでemacs-nox-をインストールするとmtaとしてpostfixを入れようとする)
+- [ubuntu で emacs-nox をインストールすると、mtaとしてpostfixを入れようとする](#ubuntu-で-emacs-nox-をインストールするとmtaとしてpostfixを入れようとする)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -535,7 +535,7 @@ PRUNEFS="NFS afs autofs binfmt_misc ceph cgroup cgroup2 cifs coda configfs curlf
 
 `PRUNEFS="9p NFS...` にするだけですんだ。
 
-## ubuntuでemacs-nox をインストールすると、mtaとしてpostfixを入れようとする
+## ubuntu で emacs-nox をインストールすると、mtaとしてpostfixを入れようとする
 
 先に
 
@@ -544,3 +544,14 @@ sudo apt install msmtp-mta
 ```
 
 しておく。
+
+msmtp-mta は、本物のMTA(PostfixやExim)の代わりに sendmail互換コマンドだけ提供する軽量パッケージで:
+
+- SMTPサーバー機能を持たない
+- キュー管理しない
+- ローカル配送しない
+- 常駐デーモン不要
+- sendmail コマンド互換だけ提供
+- 外部SMTPへ即時転送するだけ
+
+ラズパイなどでもよく使われる
