@@ -29,6 +29,7 @@
 - [インストール済みのディストリ一覧](#インストール済みのディストリ一覧)
 - [デフォルトで起動するディストリビューションを知る/切り替える](#デフォルトで起動するディストリビューションを知る切り替える)
 - [複数ディストリビューションを起動する](#複数ディストリビューションを起動する)
+- [updatedb で Windowsのドライブを除去したい](#updatedb-で-windowsのドライブを除去したい)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -506,4 +507,18 @@ wsl -d Ubuntu
 wsl -d Debian
 # 起動しているやつをリストする
 wsl -l --running
+```
+
+## updatedb で Windowsのドライブを除去したい
+
+```sh
+sudo nano /etc/updatedb.conf
+```
+
+こんな設定を追加
+
+```conf
+PRUNE_BIND_MOUNTS="yes"
+PRUNEPATHS="/tmp /var/spool /media /mnt"
+PRUNEFS="9p drvfs"
 ```
