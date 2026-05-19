@@ -26,6 +26,9 @@
 - [WSL で keyring](#wsl-で-keyring)
 - [Explorer のアドレスバーから wsl を実行できる](#explorer-のアドレスバーから-wsl-を実行できる)
 - [インストール可能なディストリビューションの一覧](#インストール可能なディストリビューションの一覧)
+- [インストール済みのディストリ一覧](#インストール済みのディストリ一覧)
+- [デフォルトで起動するディストリビューションを知る/切り替える](#デフォルトで起動するディストリビューションを知る切り替える)
+- [複数ディストリビューションを起動する](#複数ディストリビューションを起動する)
 
 ## WSL2 で IPv6 がつながらない
 
@@ -471,4 +474,36 @@ OracleLinux_7_9                 Oracle Linux 7.9
 OracleLinux_8_10                Oracle Linux 8.10
 OracleLinux_9_5                 Oracle Linux 9.5
 SUSE-Linux-Enterprise-15-SP6    SUSE Linux Enterprise 15 SP6
+```
+
+## インストール済みのディストリ一覧
+
+```pwsh
+wsl -l -v
+# or
+wsl --list --verbose
+```
+
+これで `*` がついてるやつが「デフォルトで起動するディストリビューション」
+
+## デフォルトで起動するディストリビューションを知る/切り替える
+
+```pwsh
+# デフォルトを知る
+wsl -l
+wsl -l -v
+# デフォルトを切り替える
+wsl -s <ディストリ名>
+wsl --set-default <ディストリ名>
+```
+
+## 複数ディストリビューションを起動する
+
+例:
+
+```pwsh
+wsl -d Ubuntu
+wsl -d Debian
+# 起動しているやつをリストする
+wsl -l --running
 ```
