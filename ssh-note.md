@@ -32,6 +32,7 @@
 - [IdentitiesOnly](#identitiesonly)
 - [ssh サーバーのフィンガープリントを表示する](#ssh-サーバーのフィンガープリントを表示する)
 - [~/.ssh/known_hosts ファイルの形式](#sshknown_hosts-ファイルの形式)
+- [Post-Quantum Cryptography](#post-quantum-cryptography)
 
 ## sshd の configtest
 
@@ -618,17 +619,14 @@ sudo sh -c 'ls /etc/ssh/ssh_host_*.pub | xargs -n1 ssh-keygen -l -f'
 各カラムの意味
 
 1. **ビット長**
-
    - 最初のカラムは、鍵の長さ(ビット数)を表しています。
    - 出力例では 256 ビットと 3072 ビットの鍵が存在します。
 
 2. **ハッシュアルゴリズムとフィンガープリント**
-
    - 2 番目のカラムは、使用されているハッシュアルゴリズム(SHA256)と、そのアルゴリズムで計算された公開鍵のフィンガープリントを表示しています。
    - フィンガープリントは鍵を一意に識別するための短い 16 進数列です。
 
 3. **コメント**
-
    - 3 番目のカラムは、鍵のコメント部分です。
    - 通常は鍵の所有者やホスト名が含まれます。この例では `root@tk2-407-44826` となっています。
 
@@ -659,3 +657,15 @@ sudo sh -c 'ls /etc/ssh/ssh_host_*.pub | xargs -n1 ssh-keygen -l -f'
 あなたの例では、3 つの SSH ED25519 公開鍵が登録されています。ソルトとハッシュ値は異なりますが、3 番目の公開鍵は 2 番目の公開鍵と同じものを指しているようです。
 
 このフォーマットを使うことで、known_hosts ファイルには平文の公開鍵が含まれず、代わりにハッシュ化された値が格納されるので、セキュリティが強化されています。
+
+## Post-Quantum Cryptography
+
+量子耐性(PQ)鍵交換を使え。
+
+[OpenSSH: Post\-Quantum Cryptography](https://www.openssh.org/pq.html)
+
+> ** WARNING: connection is not using a post-quantum key exchange algorithm.  
+> ** This session may be vulnerable to "store now, decrypt later" attacks.  
+> \*\* The server may need to be upgraded. See https://openssh.com/pq.html
+
+これが出たらどうしたらいいか。

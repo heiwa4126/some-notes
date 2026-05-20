@@ -20,6 +20,7 @@
 - [WSL で ls するとディレクトリの色が暗くて見づらいのを直す](#wsl-で-ls-するとディレクトリの色が暗くて見づらいのを直す)
 - [WSL から CSV を Excel で開く](#wsl-から-csv-を-excel-で開く)
 - [wslu](#wslu)
+  - [以下 wsluに関する古い情報](#以下-wsluに関する古い情報)
   - [wslview でこんな風になるときの対処法](#wslview-でこんな風になるときの対処法)
 - [Windows のパスが追加されるのがウザい](#windows-のパスが追加されるのがウザい)
 - [WSL では /etc/cron.daily などが実行されないので](#wsl-では-etccrondaily-などが実行されないので)
@@ -31,6 +32,7 @@
 - [複数ディストリビューションを起動する](#複数ディストリビューションを起動する)
 - [updatedb で Windowsのドライブを除去したい](#updatedb-で-windowsのドライブを除去したい)
 - [ubuntu で emacs-nox をインストールすると、mtaとしてpostfixを入れようとする](#ubuntu-で-emacs-nox-をインストールするとmtaとしてpostfixを入れようとする)
+- [Localhost Forwarding](#localhost-forwarding)
 - [WSL上のデーモンに外部からアクセスする](#wsl上のデーモンに外部からアクセスする)
 
 ## WSL2 で IPv6 がつながらない
@@ -371,6 +373,14 @@ ln -s  "/mnt/c/Program Files (x86)/Microsoft Office/root/Office16/EXCEL.EXE" ~/b
 
 ## wslu
 
+WSLUプロジェクトは終了しました。Ubuntu 26.04 にはパッケージがありません。
+
+[wslutilities/wslu: A collection of utilities for Windows Subsystem for Linux](https://github.com/wslutilities/wslu)
+
+代替はある。
+
+### 以下 wsluに関する古い情報
+
 ブラウザで認証するやつなどで便利
 
 ```sh
@@ -546,7 +556,7 @@ sudo apt install msmtp-mta
 
 しておく。
 
-msmtp-mta は、本物のMTA(PostfixやExim)の代わりに sendmail互換コマンドだけ提供する軽量パッケージで:
+msmtp-mta は、本物のMTA(Postfix や Exim)の代わりに sendmail互換コマンドだけ提供する軽量パッケージで:
 
 - SMTPサーバー機能を持たない
 - キュー管理しない
@@ -557,7 +567,18 @@ msmtp-mta は、本物のMTA(PostfixやExim)の代わりに sendmail互換コマ
 
 ラズパイなどでもよく使われる
 
+## Localhost Forwarding
+
+WSL2 VM で NATモード のとき
+ワイルドカード(0.0.0.0 or ::)
+または localhost(127.0.0.1 or ::1) にバインドされたポートは、
+ホストから localhost:port で接続可能になる機能。
+
+[Accessing network applications with WSL \| Microsoft Learn](https://learn.microsoft.com/en-us/windows/wsl/networking)
+
 ## WSL上のデーモンに外部からアクセスする
+
+(以下の設定以外にファイアウォールの設定は必要)
 
 いちばん簡単なのが Mirrored モード
 
@@ -567,3 +588,11 @@ msmtp-mta は、本物のMTA(PostfixやExim)の代わりに sendmail互換コマ
 - あと Hyper-V firewall と Windows firewall が開いていれば
 
 [WSL を使用したネットワーク アプリケーションへのアクセス \| Microsoft Learn](https://learn.microsoft.com/ja-jp/windows/wsl/networking)
+
+NATモードの場合は
+Localhost Forwarding と
+netsh interface portproxy を組み合わせて
+`WindowsのホストのIP:port` → `localhost:port` → `WSLのワイルドカードまたはlocalhost:port` にする感じ。
+
+もちろん portproxyで直に WSL VM まで行った方がいいに決まってるのだが、
+WSL2 の IP は再起動のたびに変わるので面倒。
