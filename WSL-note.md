@@ -589,6 +589,10 @@ WSL2 VM で NATモード のとき
 
 [WSL を使用したネットワーク アプリケーションへのアクセス \| Microsoft Learn](https://learn.microsoft.com/ja-jp/windows/wsl/networking)
 
+mirroredモードの場合 `netstat`コマンドで表示されないのが困りもの
+(TIME_WAITは出る)。
+Test-NetConnectionでチェックするしかない。
+
 NATモードの場合は
 Localhost Forwarding と
 netsh interface portproxy を組み合わせて
