@@ -22,9 +22,9 @@ logrotate -dv /etc/logrotate.conf 2>&1 | less
 
 して、じっくり眺める。
 
-# logoroteのログなど
+# logrotateのログなど
 
-status ファイル。logorotate が実行された時間がわかる(時間は大概 UTC なので注意)。
+status ファイル。logrotate が実行された時間がわかる(時間は大概 UTC なので注意)。
 
 RedHat 系
 
@@ -59,7 +59,7 @@ compressext .bz2
 
 xz なら
 
-```
+```conf
 # use xz whith higher compression than gzip
 compresscmd /usr/bin/xz
 uncompresscmd /usr/bin/unxz
@@ -69,6 +69,17 @@ compressext .xz
 
 zstd を使いたいところだが less が対応していないのが辛い(結構使うから)。
 
+```conf
+compresscmd /usr/bin/zstd
+uncompresscmd /usr/bin/unzstd
+compressoptions -3
+compressext .zst
+```
+
+compressoptionsは3で十分。CPUに余裕があれば12まで試す。
+xz相当は `-19`
+
 参照: [Shirouzu Hiroaki（白水啓章）さんのツイート: "logrotate.conf に下記を足して、ログの圧縮をgzipからzstdに変更。 ---- compresscmd /usr/bin/zstd uncompresscmd /usr/bin/zstd compressext .zst"](https://twitter.com/shirouzu/status/1045588414051962880)
 
 zstd は gzip 並か、それ以上の圧縮率を、高速・低メモリで行えるので、less で対応してほしい。
+→ いつのまにか対応してた
