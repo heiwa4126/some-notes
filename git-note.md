@@ -85,7 +85,7 @@ git switch -c <ブランチ名>
 
 ```sh
 git add --all
-git commit -am "i did it!"
+git commit -am "I did it!"
 ```
 
 みたいな後に、間違ったファイルをステージング&コミットしたことに気づいたとき
@@ -98,9 +98,9 @@ git reset
 ## リモートレポジトリの dev を fetch して dev ブランチを作る
 
 ```sh
-git fetch origin dev
-git checkout -b dev origin/dev
+git fetch origin dev:dev
 git branch # 確認
+git switch dev
 ```
 
 ## git の設定をリスト
