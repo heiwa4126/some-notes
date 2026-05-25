@@ -44,6 +44,7 @@
 - [`git push --tags` は `git push` を兼ねるか?](#git-push---tags-は-git-push-を兼ねるか)
 - [Git リポジトリの履歴を完全にクリーンアップして、不要なオブジェクトを削除する](#git-リポジトリの履歴を完全にクリーンアップして不要なオブジェクトを削除する)
 - [いまの状態から「1個前」を新しいブランチにしてチェックアウト](#いまの状態から1個前を新しいブランチにしてチェックアウト)
+- [etckeeper のように $HOME を gitで管理するやつ](#etckeeper-のように-home-を-gitで管理するやつ)
 
 ## 特定のファイルを最後の commit 時に戻す
 
@@ -816,3 +817,16 @@ git reflog expire --expire=now --all && git gc --prune=now --aggressive
 ```sh
 git switch -c <new-branch> HEAD~1
 ```
+
+## etckeeper のように $HOME を gitで管理するやつ
+
+Bare Git を使う手もあるが
+HOME以下全部に ~/.gitattributes や ~/.gitignore が効いてしまう。
+
+そのへんに対処してるのが
+
+- chezmoi
+- GNU Stow
+- yadm (Yet Another Dotfiles Manager)
+
+Nix系のhome-manager という手もありだが今回は割愛
