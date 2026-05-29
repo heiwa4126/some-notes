@@ -73,3 +73,7 @@ logger に `--journald`オプションがあるときもある(man logger)
 
 journalctl の JSON 出力は壊れてるので(コンマがない)、そのまま処理できない。
 1 行づつ処理するしかない。
+
+# journalctl の表示するタイムスタンプのタイムゾーン
+
+TZ環境変数が効く。
