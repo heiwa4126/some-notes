@@ -714,3 +714,13 @@ uv tool upgrade --all --python 3.12.13
 uv python uninstall 3.12.12
 uv cache prune
 ```
+
+## `poetry shell` みたいのが欲しい
+
+[Add a command to activate the virtual environment, e\.g\., \`uv shell\` · Issue \#1910 · astral\-sh/uv](https://github.com/astral-sh/uv/issues/1910)
+
+ずーっと議論されてるが実装される様子なし。
+
+近いので
+[uv\-shell\-hook · PyPI](https://pypi.org/project/uv-shell-hook/)
+というのがある。
