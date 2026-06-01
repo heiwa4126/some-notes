@@ -33,6 +33,7 @@
 - [ssh サーバーのフィンガープリントを表示する](#ssh-サーバーのフィンガープリントを表示する)
 - [~/.ssh/known_hosts ファイルの形式](#sshknown_hosts-ファイルの形式)
 - [Post-Quantum Cryptography](#post-quantum-cryptography)
+- [pts/0 を切断する](#pts0-を切断する)
 
 ## sshd の configtest
 
@@ -669,3 +670,23 @@ sudo sh -c 'ls /etc/ssh/ssh_host_*.pub | xargs -n1 ssh-keygen -l -f'
 > \*\* The server may need to be upgraded. See https://openssh.com/pq.html
 
 これが出たらどうしたらいいか。
+
+## pts/0 を切断する
+
+```console
+1753293 ?        Ss     0:29 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+1839866 ?        Ss     0:00  \_ sshd: user1 [priv]
+1839955 ?        S      0:00  |   \_ sshd: user1@pts/0
+1839956 pts/0    Ss     0:00  |       \_ -bash
+1839985 pts/0    S+     0:00  |           \_ /bin/bash -e bin/update.sh
+1840827 ?        Ss     0:00  \_ sshd: user1 [priv]
+1840885 ?        S      0:00      \_ sshd: user1@pts/1
+1840886 pts/1    Ss     0:00          \_ -bash
+1840909 pts/1    R+     0:00              \_ ps axf
+```
+
+こんな場合、どれを kill すれば pts/0 を切断できる?
+
+正解は `kill 1839955`
+
+あるいは `pkill -f 'sshd: user1@pts/0'`
