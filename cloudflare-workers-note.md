@@ -86,3 +86,71 @@ Cloudflare Workers を編集する
 
 で
 `export CLOUDFLARE_API_TOKEN=cf************`
+
+## DO を別ファイルにする
+
+同じ Worker 内で Durable Objects などを別ファイルに分割する場合(例えば`mydo.ts`)
+index.ts で re-export するのが楽。
+
+```ts
+export { MyDurableObject } from './mydo.js';
+```
+
+別 Worker(別スクリプト)として分離するのはもう一工夫必要
+
+## worker-configuration.d.ts
+
+`wrangler types` で生成される。
+
+以下 Cloudflare の "Ask AI" に
+`worker-configuration.d.ts って何の役に立つの?`と
+聞いた答え
+
+...
+
+`worker-configuration.d.ts` は、Wrangler の設定(`wrangler.json` / `wrangler.toml`)をもとに自動生成される型定義ファイルです。主に以下の役割があります:
+
+### 1. `Env` 型の自動生成
+
+KV、R2、D1、Durable Objects、Queue など、バインディングの型が `Env` インターフェースとして定義されます。
+
+```typescript
+// worker-configuration.d.ts 内(自動生成)
+interface Env {
+  MY_KV: KVNamespace;
+  MY_BUCKET: R2Bucket;
+  MY_DO: DurableObjectNamespace;
+  MY_DB: D1Database;
+}
+```
+
+これにより、`env.MY_KV` にマウスオーバーすると `KVNamespace` と補完され、存在しないキーへのアクセスは型エラーになります。
+
+### 2. Workers ランタイムの型補完
+
+`compatibility_date` や `compatibility_flags` に基づいて、Workers ランタイムで利用可能な API の型が提供されます。
+
+### 3. 型安全性の確保
+
+`src/index.ts` などで `env: Env` と書くだけで、すべてのバインディングに正しい型がつきます:
+
+```typescript
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+    // env.MY_KV に型補完・型チェックが効く
+    const value = await env.MY_KV.get('key');
+  }
+};
+```
+
+### 使い方
+
+`tsconfig.json` に含まれていると、エディタ(VS Code など)が自動で認識して補完してくれます。Wrangler の設定を変更したら、`npx wrangler types` を再実行して最新の型に更新してください。
+
+## Pages みたいな preview は?
+
+> Durable Objectsを使用しているWorkerではプレビューURLが生成されません
+
+<https://developers.cloudflare.com/changelog/post/2025-07-23-workers-preview-urls/#limitations-while-in-beta>
+
+えええええ

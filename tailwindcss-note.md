@@ -110,7 +110,7 @@ npx @tailwindcss/upgrade
 ## v4 参考リンク
 
 - [Tailwind CSS の一歩進んだ書き方](https://zenn.dev/ixkaito/articles/advanced-tailwindcss)
-- [Tailwind CSS V4 まとめ！](https://zenn.dev/miz_dev/articles/tailwind-css-v4)
+- [Tailwind CSS V4 まとめ!](https://zenn.dev/miz_dev/articles/tailwind-css-v4)
 
 ## v4 で Google Fonts
 
@@ -130,3 +130,17 @@ npx @tailwindcss/upgrade
 ## @tailwindcss/typography 以外のタイポグラフィ
 
 plugin として使えるものは他にないみたい...
+
+## (node:71174) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+`@tailwindcss/node` が module.register() を呼んでいるので出る。
+
+2026-06 現在 (@tailwindcss/node@4.3.0)、上流で修正されるのを待つしかない。
+
+[\[DEP0205\] DeprecationWarning: \`module\.register\(\)\` is deprecated\. Use \`module\.registerHooks\(\)\` instead\. · Issue \#19893 · tailwindlabs/tailwindcss](https://github.com/tailwindlabs/tailwindcss/issues/19893)
+
+今できるワークアラウンド:
+
+- Node を 24/22 LTS に下げる(最も安定)
+- 次の Tailwind リリース待ちで更新する
+- 一時的に警告だけ抑制する(NODE_OPTIONS=--disable-warning=DEP0205)
