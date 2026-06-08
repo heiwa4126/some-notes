@@ -137,7 +137,7 @@ gh workflow run test1.yml
 
 のように。
 
-ブランチの指定もできるし、UIからも実行できる。最初のリンク参照
+ブランチの指定もできるし、UI からも実行できる。最初のリンク参照
 
 参考:
 [workflow_dispatch の使い方、使い所 #GitHubActions - Qiita](https://qiita.com/chihiro/items/8b2918ceb709cb9079e8)
@@ -699,8 +699,8 @@ Composite Action は workflow に似ているけど、**文法が違う**。
 
 - [actions/checkout] は「メタデータ構文で書かれた JavaScript Action」かつ「リモート(別リポジトリ)アクション」
 - [osv-scanner-reusable.yml] は
-  「Workflow 構文で書かれた Reusable Workflow」かつ
-  「リモート(別リポジトリ)の再利用ワークフロー」
+ 「Workflow 構文で書かれた Reusable Workflow」かつ
+ 「リモート(別リポジトリ)の再利用ワークフロー」
 
 ### このほかに
 
@@ -751,10 +751,10 @@ workflow 兼 reusable workflow になる。
 
 - ✅ workflow から action
 - ✅ workflow から reusable workflow
-- ❌ workflow から 普通の workflow
+- ❌ workflow から普通の workflow
 - ✅ Composite action から action (2021 年 9 月頃可能に)
 - ❌ JS action, Docker action から action
-- ❌ action から 普通の workflow
+- ❌ action から普通の workflow
 - ❌ action から reusable workflow
 
 ※「GitHub API 経由で呼ぶ」とかのハックは除く  
@@ -932,28 +932,28 @@ GitHub Actions は
 それから PR を作成したときに動作する GitHub Actions の workflow は
 どのブランチのワークフローでしょう?」という話
 
-GitHub上のリポジトリに
+GitHub 上のリポジトリに
 
 - main ブランチと、
 - 新しく作った feature-x ブランチ
 
-があり、feature-x ブランチで、main に向けて PR を出したとすると(mainがターゲットブランチ)、
+があり、feature-x ブランチで、main に向けて PR を出したとすると(main がターゲットブランチ)、
 
-`on: pull_request` も `on: pull_request_target` も ターゲットブランチ の workflowsが実行される。
+`on: pull_request` も `on: pull_request_target` もターゲットブランチの workflows が実行される。
 
 で、action/checkout でチェックアウトされるのは
 
 - `on: pull_request` では main + feature-x をマージした仮想 merge commit
-- `on: pull_request_target` では mainブランチの最新コミット
+- `on: pull_request_target` では main ブランチの最新コミット
 
-`on: pull_request` や `on: pull_request_target` で ローカルaction を呼んでいた場合は?
-仮想 merge commitで脆弱性のある action.yml を実行できるのでは?
+`on: pull_request` や `on: pull_request_target` でローカル action を呼んでいた場合は?
+仮想 merge commit で脆弱性のある action.yml を実行できるのでは?
 
 "Pwn Request" - [Keeping your GitHub Actions and workflows secure Part 1: Preventing pwn requests | GitHub Security Lab](https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/)
 
 この問題根が深い...
 
-「PRの仮想マージコミットをauditしたりlintしたりtestしたい」んだけど、それには危険がある、ということ。
+「PR の仮想マージコミットを audit したり lint したり test したい」んだけど、それには危険がある、ということ。
 
 ## Workflows では動作するのに Reusable workflows では動かない Actions
 
@@ -1044,7 +1044,7 @@ action.yml の using 指定を無視して Node 24 で強制実行する。
 [GitHub 全体にわたるオープンソースサプライチェーンのセキュリティ確保 - GitHub ブログ](https://github.blog/security/supply-chain-security/securing-the-open-source-supply-chain-across-github/)
 
 の
-「最も重要な対応は、CodeQLを使ってGitHub Actionsワークフローの実装(公開リポジトリで無料提供)をレビューし、ワークフローのセキュリティベストプラクティスを点検する」
+「最も重要な対応は、CodeQL を使って GitHub Actions ワークフローの実装(公開リポジトリで無料提供)をレビューし、ワークフローのセキュリティベストプラクティスを点検する」
 の具体的な手順メモ
 
 参照元: [How to scan GitHub Actions workflows for security issues - The GitHub Blog](https://github.blog/security/application-security/how-to-secure-your-github-actions-workflows-with-codeql/)

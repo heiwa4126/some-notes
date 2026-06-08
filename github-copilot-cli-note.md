@@ -13,7 +13,7 @@
 2. `copilot -i /login`
 3. `gh auth login` のデフォルトアカウント
 
-Fine-grained PAT (Classicは不可) で
+Fine-grained PAT (Classic は不可) で
 スコープは
 GitHub Copilot → Copilot requests: Read and write
 があればいい。

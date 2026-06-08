@@ -1,6 +1,6 @@
 # GitHub Code scanning のメモ
 
-主にCodeQL
+主に CodeQL
 
 ## 参考
 
@@ -11,7 +11,7 @@
 上のリンクから引用
 
 1. リポジトリ \> Settings \> Advanced Security
-2. CodeQL analysisのところでSet up \> Default (とりあえず)
+2. CodeQL analysis のところで Set up \> Default (とりあえず)
 3. 提案されたトリガ(push / PR / schedule)で有効化 (とりあえず)
 
 で、GitHub Actions で "CodeQL Setup" が動くので、
@@ -22,7 +22,7 @@
 - dependabot.yml 書いて、ちゃんと Dependabot version updates にエコシステムが全部検知されてて
 - かつ Dependency graph が完了してる
 
-状態にしてからCodeQLを設定した方がいいような気がする。
+状態にしてから CodeQL を設定した方がいいような気がする。
 
 スキャン結果は
 リポジトリ \> Security \> Code scanning \> tools \> CodeQL
@@ -37,10 +37,10 @@ Default setup のかわりに、こちらを選ぶと
 `.github/workflows/codeql-analysis.yml` (名前は多少かわる)
 が生成されるらしい。
 
-これを編集すると、デフォルトブランチのpushやPR以外でもスキャンできるようになる。
+これを編集すると、デフォルトブランチの push や PR 以外でもスキャンできるようになる。
 らしい。あとで試す。
 
-Default setup は 「マネージドな CodeQL 実行」らしい
+Default setup は「マネージドな CodeQL 実行」らしい
 
 参考:
 [GitHub Code Scanning を使ってみた (YAMLの設定方法) #Security - Qiita](https://qiita.com/ymd_h/items/63d9105cd0429317bd6f)
@@ -73,7 +73,7 @@ app.get('/user', (req, res) => {
 1. 上記のような、明らかに危険なコードを
    - デフォルトブランチ、
    - または PR として追加
-2. 1.によって CodeQL workflow が トリガーされて実行される
+2. 1.によって CodeQL workflow がトリガーされて実行される
 3. 以下を確認
    - Security \> Code scanning alerts
    - PR の Code scanning results
@@ -83,11 +83,11 @@ app.get('/user', (req, res) => {
 
 ### CodeQL の 標準テスト用リポジトリを使う
 
-GitHub 公式が用意している 意図的に脆弱なサンプル:
+GitHub 公式が用意している意図的に脆弱なサンプル:
 
 - https://github.com/github/codeql-go
 
-これをforkしてCodeQL workflow を有効化、Security \> Code scanning alerts を確認。
+これを fork して CodeQL workflow を有効化、Security \> Code scanning alerts を確認。
 
 ## クエリセットの追加
 
@@ -99,7 +99,7 @@ CodeQL CLI bundle を使う
 
 [CodeQL CLI完全ガイド - コード解析を自動化する #Git - Qiita](https://qiita.com/Hurry_Fox/items/47db72f1c5f8a49a881f)
 
-Docker版は公式ではなく、MS版とコミュニティ版があるらしい
+Docker 版は公式ではなく、MS 版とコミュニティ版があるらしい
 
 ### MS版docker
 

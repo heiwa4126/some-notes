@@ -190,15 +190,15 @@ gh variable set LOG_LEVEL --body "debug"
 
 ## リモートのLinuxでghのトークンをセキュアストレージに保存したい
 
-リモートのCLIしかないLinuxだと`gh auth login` すると、`~/.config/gh/hosts.yml` に平文でトークンが保存されて危ない。
-GUIがあればgnome-keyringを使うのだが。
+リモートの CLI しかない Linux だと`gh auth login` すると、`~/.config/gh/hosts.yml` に平文でトークンが保存されて危ない。
+GUI があれば gnome-keyring を使うのだが。
 
 [Setup Github Authentication with Pass & GPG Keys on Linux \(for CLI and Container Registry\)](https://gist.github.com/mleager/e613cbc222d006e04de05cda2e312828)
 
 (あとでやってみる)
 
 ヒント:
-`docker-credential-helpers` には docker は不要。"Docker製"の意味。
+`docker-credential-helpers` には docker は不要。"Docker 製"の意味。
 
 - [docker login | Docker Docs](https://docs.docker.com/reference/cli/docker/login/#credential-stores)
 - [docker login — Docker-docs-ja 24.0 ドキュメント](https://docs.docker.jp/engine/reference/commandline/login.html#docker-login-creadentials-store)

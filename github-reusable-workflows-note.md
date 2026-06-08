@@ -2,9 +2,9 @@
 
 ## いろいろあるけど Reusable Workflows はめんどくさい
 
-actionsで済むものはactionsで共有するほうが楽っぽい。
+actions で済むものは actions で共有するほうが楽っぽい。
 
-actionsでハマるのは docker actions を共有しようとしたとき
+actions でハマるのは docker actions を共有しようとしたとき
 
 ## Reusable Workflows で使えないアクション
 

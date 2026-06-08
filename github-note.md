@@ -433,10 +433,10 @@ git checkout -b feature-branch origin/feature-branch
 
 ## アーカイブモード
 
-古くてもうメンテしないコードは アーカイブ(Archive)モードにする。
+古くてもうメンテしないコードはアーカイブ(Archive)モードにする。
 
-リードオンリーになり、Issues / PR の作成や Pushができなくなる。
-Dependabotも動かない。
+リードオンリーになり、Issues / PR の作成や Push ができなくなる。
+Dependabot も動かない。
 
 Settings → Danger Zone → "Archive this repository"
 確認ダイアログにリポジトリ名を入力して確定
@@ -471,7 +471,7 @@ gh config set git_protocol https
 
 ## `41898282+github-actions[bot]@users.noreply.github.com` とは何か
 
-まず、GitHubには noreply メールアドレスというのを各ユーザに割り振られてる
+まず、GitHub には noreply メールアドレスというのを各ユーザに割り振られてる
 (自分のは
 [Email settings](https://github.com/settings/emails)
 でみられる)。
@@ -482,7 +482,7 @@ gh config set git_protocol https
 
 このアドレスは「メールアドレスが識別子として必要な時に使う用」で、
 このアドレスに送信しても何も起きないが、
-GitHubとユーザ自身はこれが誰だか知っている。
+GitHub とユーザ自身はこれが誰だか知っている。
 
 `+USERNAME` のところは**エリアスっぽく見えるけど**、
 **ぜんぜんエリアスではなくて、変更できない**。
@@ -496,7 +496,7 @@ GitHubとユーザ自身はこれが誰だか知っている。
 
 ということ。**一見あやしいアドレスに見えるが、これは本当にIDなのでそのまま使うのが正しい**。
 
-主な GitHub System/Botアカウント:
+主な GitHub System/Bot アカウント:
 
 | Bot名                    | ユーザーID | メールアドレス例                                           | 役割               |
 | ------------------------ | ---------- | ---------------------------------------------------------- | ------------------ |
@@ -504,13 +504,13 @@ GitHubとユーザ自身はこれが誰だか知っている。
 | `dependabot[bot]`        | `49699333` | `49699333+dependabot[bot]@users.noreply.github.com`        | 依存関係更新PR     |
 | `github-codespaces[bot]` | `61023967` | `61023967+github-codespaces[bot]@users.noreply.github.com` | Codespaces関連     |
 
-詳しい情報はAPI経由でこんな具合に取得できます。
+詳しい情報は API 経由でこんな具合に取得できます。
 
 ```bash
 curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/users/github-actions%5Bbot%5D
 ```
 
-↑のJSONの .html_url にアクセスすると、それぞれの紹介になってて面白いです。
+↑の JSON の .html_url にアクセスすると、それぞれの紹介になってて面白いです。
 
 ## API Rate Limit
 
@@ -527,8 +527,8 @@ GitHub の REST API では、
 
 未認証リクエストの識別子は「送信元 IP アドレス」だけ。なので:
 
-- 同じ IP から来た未認証リクエストは すべて同一バケット
-- 別のユーザーでも、同じ NAT / Proxy / CI runner / 会社ネットワークなら 合算
+- 同じ IP から来た未認証リクエストはすべて同一バケット
+- 別のユーザーでも、同じ NAT / Proxy / CI runner / 会社ネットワークなら合算
 - 上限は 60 requests / hour
 
 参照: [A Developer's Guide: Managing Rate Limits for the GitHub API](https://www.lunar.dev/post/a-developers-guide-managing-rate-limits-for-the-github-api)
@@ -567,4 +567,4 @@ $ date -d @1770695186
 2026年  2月 10日 火曜日 12:46:26 JST
 ```
 
-(Macだったら`date -r 1770695186`)
+(Mac だったら`date -r 1770695186`)

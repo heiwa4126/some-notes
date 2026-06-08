@@ -13,23 +13,23 @@
 
 こんな感じだった。
 
-2025-04 頃(2025-03-04発表)から、Secret scanningのUIが「Secret Protection」配下に統合された。
+2025-04 頃(2025-03-04 発表)から、Secret scanning の UI が「Secret Protection」配下に統合された。
 [Introducing GitHub Secret Protection and GitHub Code Security - GitHub Changelog](https://github.blog/changelog/2025-03-04-introducing-github-secret-protection-and-github-code-security/)
 ​
 
-2025年4月1日からGitHub Advanced Security(GHAS)を
+2025 年 4 月 1 日から GitHub Advanced Security(GHAS)を
 
 - GitHub Secret Protection
 - GitHub Code Security
 
-の2製品に分割
+の 2 製品に分割
 
 現在(2026-02)の構成は:
 
 - [GitHub Secret Protection](https://github.com/security/advanced-security/secret-protection) 製品/SKU
   - [Secret scanning](https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning) コミット後の検出
     - [Secret scanning alerts](https://docs.github.com/en/code-security/secret-scanning/managing-alerts-from-secret-scanning/about-alerts)
-    - [AI-detected passwords(Copilot secret scanning)](https://docs.github.com/en/code-security/secret-scanning/copilot-secret-scanning/about-copilot-secret-scanning) 正規表現では検出できない非構造化シークレットをAIで検出
+    - [AI-detected passwords(Copilot secret scanning)](https://docs.github.com/en/code-security/secret-scanning/copilot-secret-scanning/about-copilot-secret-scanning) 正規表現では検出できない非構造化シークレットを AI で検出
     - [Validity checks](https://docs.github.com/en/code-security/secret-scanning/enabling-secret-scanning-features/enabling-validity-checks-for-your-repository) 検出済みシークレットがまだ有効かどうか確認
     - [Custom patterns](https://docs.github.com/en/code-security/secret-scanning/using-advanced-secret-scanning-and-push-protection-features/custom-patterns/defining-custom-patterns-for-secret-scanning) 独自パターンの定義
     - [Non-provider patterns](https://docs.github.com/en/code-security/secret-scanning/enabling-secret-scanning-features/enabling-secret-scanning-for-non-provider-patterns) 接続文字列・秘密鍵など汎用パターンの検出
@@ -39,14 +39,14 @@
   - [Security campaigns](https://docs.github.com/en/code-security/security-overview/about-security-campaigns) シークレット修正をチームで計画・推進
   - [Security overview](https://docs.github.com/en/code-security/security-overview/about-security-overview) 組織全体のリスク可視化・ガバナンス
 
-※ Security campaignsと Security overview は
-GitHub Code Securityの機能でもある
+※ Security campaigns と Security overview は
+GitHub Code Security の機能でもある
 
 ## secret scanning と push protection
 
 設定は
 
-repo setting \> Advanced Security の一番下の方(2026-02現在)
+repo setting \> Advanced Security の一番下の方(2026-02 現在)
 
 公開リポジトリではデフォルトで有効。設定で無効にできる。
 
@@ -65,10 +65,10 @@ repo setting \> Advanced Security の一番下の方(2026-02現在)
 > - GitHub Secret Protectionを有効にしたGitHub Team上の組織所有リポジトリ
 
 Push protection だけ独立して無効化できる設定になってるのは、
-Secret Protection の機能のうち、これだけが「push時に事前ブロック」だから。
-他は「push後に事後検出」。
+Secret Protection の機能のうち、これだけが「push 時に事前ブロック」だから。
+他は「push 後に事後検出」。
 
-古いプロジェクトだと Push protection が有効になってるとCIが死ぬものがあるから。
+古いプロジェクトだと Push protection が有効になってると CI が死ぬものがあるから。
 新規プロジェクトでは Push protection を無効にする理由はない。
 
 secret scanning は全ブランチ対応
