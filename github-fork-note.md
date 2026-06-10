@@ -7,7 +7,11 @@ GitHub 上に foobar(仮名) という public リポジトリがあり、
 場合によっては、自分の修正を foobar に PR で送りたい。
 その場合、どのようなブランチ構成にするのがよいか?
 
-## これは fork + upstream 追跡の構成が定石
+## これは "fork + upstream 追跡" の構成が定石
+
+"ForkとUpstream追跡" は、
+元となる他人のリポジトリ(Upstream)に影響を与えず、
+安全にコードを修正してプルリクエスト(PR)を送るための構成
 
 ### 全体構成
 
@@ -115,3 +119,7 @@ git switch -c feat/foo/bar    # ❌ feat/foo が存在するので feat/foo/bar 
 git switch -c feat/foo/bar    # 作成済み
 git switch -c feat/foo        # ❌ feat/foo/bar が存在するので feat/foo は作れない
 ```
+
+## GitHub で パブリックなレポジトリから、自分のプライベートレポジトリとしてフォークはできる?
+
+できない。あとからプライベートに変更することもできない
