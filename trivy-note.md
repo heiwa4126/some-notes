@@ -135,7 +135,45 @@ trivy fs --scanners license --severity HIGH,CRITICAL .
 全部の依存パッケージのライセンスが表示されるけど、
 まあ普通はそれを知りたいとは思わない。
 
-参考: [License - Trivy](https://aquasecurity.github.io/trivy/v0.49/docs/scanner/license/)
+参考: [License - Trivy](https://trivy.dev/docs/latest/scanner/license/)
+
+### CRITICAL と HIGH について
+
+Trivy のライセンス分類は **Google License Classification** をベースにしており、分類と severity の対応はこうなっています:
+
+| Classification                     | Severity     |
+| ---------------------------------- | ------------ |
+| **Forbidden**                      | **CRITICAL** |
+| **Restricted**                     | **HIGH**     |
+| Reciprocal                         | MEDIUM       |
+| Notice / Permissive / Unencumbered | LOW          |
+| Unknown                            | UNKNOWN      |
+
+で、
+
+| Severity     | 特徴                                                                                                      |
+| ------------ | --------------------------------------------------------------------------------------------------------- |
+| **CRITICAL** | 商用利用が事実上禁止 or ソース公開義務がネット配布にも及ぶ(AGPLなど)                                      |
+| **HIGH**     | 強いコピーレフト。プロダクトに組み込むと**派生物全体のソース公開が必要**になりうる(GPL, LGPL, CC-SA など) |
+
+プロプライエタリなプロダクトや SaaS で依存ライブラリを使う場合に引っかかりやすいのが HIGH (Restricted) なので、`--severity HIGH,CRITICAL` は実用的な設定といえます。
+
+#### CRITICAL (Forbidden) — 使用自体が禁じられるライセンス
+
+Google の分類で「Forbidden」とされるライセンスで、ドキュメント中の例では AGPL-3.0 が代表例として挙げられています。
+**ネットワーク越しに提供するソフトウェアにもソース公開義務を課す**など、商用プロダクトへの組み込みがほぼ不可能なもの。
+
+#### HIGH (Restricted) — 強いコピーレフトを持つライセンス
+
+「派生物を同じライセンスで公開しなければならない」という**強いコピーレフト条件**を持つライセンスです。
+デフォルト設定から読み取れる典型的な性質:
+
+- **GPL 系** — ソース全体の公開義務、リンクした全コードへの伝播
+- **LGPL 系** — GPL より緩いが動的リンクでも条件あり
+- **CC-BY-SA / CC-BY-ND / CC-BY-NC 系** — 改変禁止・非商用限定・継承義務など
+- **Commons-Clause 付きライセンス** — 商用利用を明示制限する追加条項
+- **OSL / QPL / NPL 系** — ネット配布にも公開義務が及ぶもの
+- **Sleepycat / WTFPL** など — 商用条件や公序良俗上の問題があるもの
 
 ## 公開鍵を利用できないため、以下の署名は検証できませんでした: NO_PUBKEY 35B8ACA44FD9CA9F (2026-04)
 

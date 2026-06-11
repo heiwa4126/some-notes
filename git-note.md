@@ -38,13 +38,17 @@
 - [Git で過去の特定のコミットに移動する方法いろいろ](#git-で過去の特定のコミットに移動する方法いろいろ)
 - [Git で過去の特定のコミットに移動すると、必ず detached HEAD 状態になりますか?](#git-で過去の特定のコミットに移動すると必ず-detached-head-状態になりますか)
 - [Windows 標準の ssh-agent を使って GitHub に ssh 接続する](#windows-標準の-ssh-agent-を使って-github-に-ssh-接続する)
+- [昨今の ProxyCommand](#昨今の-proxycommand)
 - [remote から dev を持ってきてローカルの dev ブランチとして使う](#remote-から-dev-を持ってきてローカルの-dev-ブランチとして使う)
+  - [以下古い情報](#以下古い情報)
 - [汎用 .gitattributes](#汎用-gitattributes)
 - [git l\<TAB\> と打っても ls-files が補完されない](#git-ltab-と打っても-ls-files-が補完されない)
 - [`git push --tags` は `git push` を兼ねるか?](#git-push---tags-は-git-push-を兼ねるか)
 - [Git リポジトリの履歴を完全にクリーンアップして、不要なオブジェクトを削除する](#git-リポジトリの履歴を完全にクリーンアップして不要なオブジェクトを削除する)
 - [いまの状態から「1個前」を新しいブランチにしてチェックアウト](#いまの状態から1個前を新しいブランチにしてチェックアウト)
 - [etckeeper のように $HOME を gitで管理するやつ](#etckeeper-のように-home-を-gitで管理するやつ)
+- [複数のコミットを1個にまとめる](#複数のコミットを1個にまとめる)
+- [diff で新規ファイルが丸々表示されるのをやめる](#diff-で新規ファイルが丸々表示されるのをやめる)
 
 ## 特定のファイルを最後の commit 時に戻す
 
@@ -645,8 +649,8 @@ GitHub の ssh 秘密鍵が
 
 管理者権限の Powershell で
 
-```powershell
-Set-Service ssh-agent -StartupType Automatic
+```pwsh
+Set-Service ssh-agent -StartupType AutomaticDelayedStart
 Start-Service ssh-agent
 Get-Service ssh-agent
 
@@ -678,13 +682,47 @@ Hi foobar! You've successfully authenticated, but GitHub does not provide shell 
 
 最後に Git の設定
 
-```powershell
+```pwsh
 git config --global core.sshCommand "'C:/Windows/System32/OpenSSH/ssh.exe'"
 ```
 
 これで毎回パスフレーズを入れずに GitHub につながる。
 
+## 昨今の ProxyCommand
+
+sshに直接つながらないとき、HTTP Proxyを越えるのに
+昔は
+[larryhou/connect-proxy](https://github.com/larryhou/connect-proxy)
+を使っていた。いまでも Ubuntuにはパッケージ`として存在する(connect-proxy)。
+
+さいきんは SOCKSもめったに見ないし、HTTPだけでいいなら nc が使える
+
+```conf
+ProxyCommand nc -X connect -x proxy.example.com:8080 %h %p
+```
+
+Windowsの場合はGit for Windows 付属の connect.exe が使える
+
+```conf
+ProxyCommand "C:/Program Files/Git/mingw64/bin/connect.exe" -H proxy.example.com:8080 %h %p
+```
+
+もっと高性能なものもある:
+
+- [gotoh/ssh-connect: SSH Proxy Command](https://github.com/gotoh/ssh-connect)
+- [izderadicka/ptunnel-rust: tunnels connections through HTTPS enabled proxy (supporting CONNECT method)](https://github.com/izderadicka/ptunnel-rust)
+- [proxytunnel/proxytunnel: Stealth tunneling through HTTP(S) proxies](https://github.com/proxytunnel/proxytunnel)
+
 ## remote から dev を持ってきてローカルの dev ブランチとして使う
+
+```sh
+git branch -r
+git switch origin/dev -t
+```
+
+これで "origin/dev を追従する(trace) dev ブランチ" が出来上がる
+
+### 以下古い情報
 
 ```console
 $ git branch --all
@@ -830,3 +868,57 @@ HOME以下全部に ~/.gitattributes や ~/.gitignore が効いてしまう。
 - yadm (Yet Another Dotfiles Manager)
 
 Nix系のhome-manager という手もありだが今回は割愛
+
+## 複数のコミットを1個にまとめる
+
+"gitでmerge conflicts の解消に失敗して、それは解決したのですが、余計なコミットが大量にできてしまって、これらをまとめて1個のコミットにすることはできる?" という話
+
+```sh
+# 直近Nコミットまとめる
+git rebase -i HEAD~N
+# 例: 直近10コミットまとめる
+git rebase -i HEAD~10
+```
+
+editor が開くので、
+
+```text
+pick aaaaaaa commit1
+pick bbbbbbb commit2
+pick ccccccc commit3
+```
+
+みたいのを
+
+```text
+pick aaaaaaa commit1
+squash bbbbbbb commit2
+squash ccccccc commit3
+```
+
+にする。squash のかわりに "s" でもいい。保存すると、まとまる。
+
+もっと手軽にまとめたいときは `reset --soft` を使う
+
+```sh
+git reset --soft <まとめたい起点>
+git commit -m "clean commit"
+```
+
+どちらも push するときは `git push -f` で。
+
+## diff で新規ファイルが丸々表示されるのをやめる
+
+`git diff branch1 branch2` で branch2 に追加したファイルがあると、全行表示されてスクロールがめんどい。
+
+```sh
+# ファイル一覧だけ
+git diff --name-status branch1 branch2
+# サイズ差だけ
+git diff --stat branch1 branch2
+# 新規ファイルの中身を出さない(おすすめ)
+git diff --diff-filter=ACDM --stat branch1 branch2
+git diff --compact-summary branch1 branch2
+# 変化したファイルだけ
+git diff --name-status --diff-filter=A branch1 branch2
+```

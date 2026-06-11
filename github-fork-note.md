@@ -9,7 +9,7 @@ GitHub 上に foobar(仮名) という public リポジトリがあり、
 
 ## これは "fork + upstream 追跡" の構成が定石
 
-"ForkとUpstream追跡" は、
+"Fork と Upstream 追跡" は、
 元となる他人のリポジトリ(Upstream)に影響を与えず、
 安全にコードを修正してプルリクエスト(PR)を送るための構成
 
@@ -59,6 +59,10 @@ git push -u origin my/tweaks
 
 ### upstream の更新を取り込む
 
+GitHub UI で "sync fork" ボタンを押す
+
+または
+
 ```bash
 # upstream の最新を取得
 git fetch upstream
@@ -86,6 +90,10 @@ git switch -c fix/some-bug
 git push -u origin fix/some-bug
 # → GitHub で upstream に向けて PR を作成
 ```
+
+このあと
+yourname/foobar.git の fix/some-bug ブランチで
+"Contribute"ボタンを押す。
 
 PR がマージされたら `fix/some-bug` は削除して OK。  
 自分のカスタマイズ (`my/tweaks`) とは完全に分離されているので、衝突しにくくなります。
@@ -122,4 +130,65 @@ git switch -c feat/foo        # ❌ feat/foo/bar が存在するので feat/foo 
 
 ## GitHub で パブリックなレポジトリから、自分のプライベートレポジトリとしてフォークはできる?
 
-できない。あとからプライベートに変更することもできない
+できない。あとからプライベートに変更することもできない。
+
+あとユーザにしかフォーク出来ない。エンタープライズなどにいきなりフォークができない。
+
+あとGitHub機能では自分のレポジトリを自分にフォークすることもできない
+
+## GitHub のフォークを使わず git で手動でも upstream はできるけど、その場合 GitHub のどんな便利機能が失われる?
+
+一番痛いのは
+
+- "Sync fork" ボタン
+- upstream への PR 作成 UI
+
+の 2 つ。続いて
+
+- フォーク元との差分比較 UI(Compare across forks)が使えない
+- upstream 側の変更が何コミット遅れているかの表示がリポジトリトップに出ない
+- GitHub 上でフォーク関係として認識されない
+- フォークネットワーク図(Network graph)に表示されない
+- Dependabot などのセキュリティアラートが upstream と連携しない
+- GitHub Actions の PR トリガーで github.event.pull_request.head.repo.fork が false になる(CI 設定に影響する場合がある)
+
+など
+
+### 逆に「失われないもの」
+
+以下は全部そのまま使えます
+
+- git upstream（fetch / merge / rebase）
+- pull request自体（cross-repo PR）
+- issue
+- actions
+- CI/CD
+- ブランチ戦略
+
+## public → private fork して、なるべくupstreamに追従する
+
+GitHubのforkは使えないケース
+
+```sh
+# 1. GitHub で private な空リポジトリを作成（UI）
+#    例: yourname/foobar-private
+
+# 2. upstream (本家) を bare clone
+git clone --bare git@github.com:original/foobar.git
+cd foobar.git
+
+# 3. private リポに mirror push（全ブランチ・タグを丸ごとコピー）
+git push --mirror git@github.com:yourname/foobar-private.git
+cd ..
+rm -rf foobar.git
+
+# 4. 改めて clone して upstream を登録
+git clone git@github.com:yourname/foobar-private.git
+cd foobar-private
+git remote add upstream git@github.com:original/foobar.git
+
+# 確認
+git remote -v
+# origin    git@github.com:yourname/foobar-private.git
+# upstream  git@github.com:original/foobar.git
+```

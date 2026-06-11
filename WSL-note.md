@@ -31,6 +31,7 @@
 - [デフォルトで起動するディストリビューションを知る/切り替える](#デフォルトで起動するディストリビューションを知る切り替える)
 - [複数ディストリビューションを起動する](#複数ディストリビューションを起動する)
 - [updatedb で Windowsのドライブを除去したい](#updatedb-で-windowsのドライブを除去したい)
+- [`apt install plocate` 時に updatedb をさせない](#apt-install-plocate-時に-updatedb-をさせない)
 - [ubuntu で emacs-nox をインストールすると、mtaとしてpostfixを入れようとする](#ubuntu-で-emacs-nox-をインストールするとmtaとしてpostfixを入れようとする)
 - [Localhost Forwarding](#localhost-forwarding)
 - [WSL上のデーモンに外部からアクセスする](#wsl上のデーモンに外部からアクセスする)
@@ -545,6 +546,12 @@ PRUNEFS="NFS afs autofs binfmt_misc ceph cgroup cgroup2 cifs coda configfs curlf
 ```
 
 `PRUNEFS="9p NFS...` にするだけですんだ。
+
+## `apt install plocate` 時に updatedb をさせない
+
+のはできそうもないので、もう1個bashを上げて `kill <updatedbのPID>` でうまいことできた。
+
+あとは1つ前の章の設定を入れて `sudo updatedb`
 
 ## ubuntu で emacs-nox をインストールすると、mtaとしてpostfixを入れようとする
 
