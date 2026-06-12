@@ -1,14 +1,14 @@
 # Windows のメモ
 
-- [Windows のメモ](#windows-のメモ)
-  - [Windows server で RC4 と triple-DES を無効にする](#windows-server-で-rc4-と-triple-des-を無効にする)
-  - [参考](#参考)
-  - [Windows のサポート期限検索](#windows-のサポート期限検索)
-  - [Windows update の proxy 設定](#windows-update-の-proxy-設定)
-  - [Windows のしつこいアニメーションを無くする](#windows-のしつこいアニメーションを無くする)
-  - [ms-settings:](#ms-settings)
-  - [Windows で権限の設定を間違えて削除できなくなったフォルダを削除するには](#windows-で権限の設定を間違えて削除できなくなったフォルダを削除するには)
-  - [永続化された共有ドライブの設定は](#永続化された共有ドライブの設定は)
+- [Windows server で RC4 と triple-DES を無効にする](#windows-server-で-rc4-と-triple-des-を無効にする)
+- [参考](#参考)
+- [Windows のサポート期限検索](#windows-のサポート期限検索)
+- [Windows update の proxy 設定](#windows-update-の-proxy-設定)
+- [Windows のしつこいアニメーションを無くする](#windows-のしつこいアニメーションを無くする)
+- [ms-settings:](#ms-settings)
+- [Windows で権限の設定を間違えて削除できなくなったフォルダを削除するには](#windows-で権限の設定を間違えて削除できなくなったフォルダを削除するには)
+- [永続化された共有ドライブの設定は](#永続化された共有ドライブの設定は)
+- [%USERPROFILE% のエリアスとして HOME を設定する](#userprofile-のエリアスとして-home-を設定する)
 
 ## Windows server で RC4 と triple-DES を無効にする
 
@@ -122,3 +122,37 @@ rd /s /q path_to_folder
 ## 永続化された共有ドライブの設定は
 
 ホスト&ユーザ単位で保存される。
+
+## %USERPROFILE% のエリアスとして HOME を設定する
+
+`HOME` だといろいろ便利なんだ。
+
+まず、固定値としていまのユーザ環境変数に設定する場合。
+管理者権限不要。おてがる。普通これで十分
+
+```pwsh
+# pwsh
+$Env:HOME = $Env:USERPROFILE
+[Environment]::SetEnvironmentVariable("HOME", $Env:HOME, "User")
+```
+
+```bat
+rem bat
+setx HOME "%USERPROFILE%"
+```
+
+つぎに、"このPCの全ユーザに動的に設定したい"場合。
+管理者権限必要。**これ未確認。あとで確認** %USERPROFILE% が設定時に展開されてしまうかも
+
+```pwsh
+New-ItemProperty `
+  -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' `
+  -Name 'HOME' `
+  -Value '%USERPROFILE%' `
+  -PropertyType ExpandString `
+  -Force
+
+# 確認
+Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' |
+  Select-Object HOME
+```
