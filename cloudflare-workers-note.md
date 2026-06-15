@@ -219,3 +219,14 @@ wrangler.toml の内容が変わったタイミングで再作成する必要が
 wranglerのバージョンが変わった時にも再生成するといいですが、
 worker-configuration.d.ts 内には wrangler のバージョンが入っていて、処理を変えるらしいので
 再生成は必須ではない。
+
+## workers のデプロイ単位でドメイン名はつけられる?
+
+できない。別の prod/dev的にしたいなら、
+some-api-v1.example.com, some-api-v2.example.com
+みたいにするしかない
+
+## 制限
+
+[Limits · Cloudflare Workers docs](https://developers.cloudflare.com/workers/platform/limits)
+
