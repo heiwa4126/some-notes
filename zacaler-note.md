@@ -46,6 +46,10 @@ ZScaler が ZScaler で署名してくるものと、
 
 あと root 証明書が自動更新されないのが**危ない**。
 
+Debian,Ubuntu だったら
+`/etc/ssl/certs/ca-certificates.crt`
+を設定しとけばOK。
+
 ## 参考
 
 - [Python requestsライブラリは認証局の証明書をどう管理する? ｜ Developers.IO](https://dev.classmethod.jp/server-side/python/how-to-manage-ca-root-certs-for-requets-library/)
