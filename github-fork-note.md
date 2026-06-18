@@ -13,6 +13,17 @@ GitHub 上に foobar(仮名) という public リポジトリがあり、
 元となる他人のリポジトリ(Upstream)に影響を与えず、
 安全にコードを修正してプルリクエスト(PR)を送るための構成
 
+呼び方はいろいろあるのだけど:
+
+> 一般的には "forked repository with an upstream remote"、  
+> 日本語なら "fork 元を upstream に設定した構成"、  
+> 略して "fork+upstream" 構成と呼ぶ。
+
+ってドキュメントの先頭に書いとけば間違いないと思う
+
+- [フォークを同期する - GitHubドキュメント](https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) - 公式資料だがわかりにくい
+- [フォーク開発したい — KumaROOT v2026.5.2](https://kumaroot.readthedocs.io/ja/latest/git/git-fork.html) - 手順が書かれていて、そこそこわかりやすい
+
 ### 全体構成
 
 ```

@@ -90,7 +90,9 @@ keyserver hkp://keyserver.ubuntu.com
 例:
 
 ```sh
+# 暗号化
 gpg --encrypt --recipient alice@example.com secret.pdf
+# 複号
 gpg --decrypt secret.pdf.gpg > secret.pdf
 ```
 
