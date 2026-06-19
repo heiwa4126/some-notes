@@ -1,6 +1,7 @@
 # AWS CDK (Cloud Development Kit)
 
 - [インストール](#インストール)
+- [CDK bootstrap](#cdk-bootstrap)
 - [チュートリアル](#チュートリアル)
 - [AWS CDK Workshop](#aws-cdk-workshop)
 - [AWS CloudShell](#aws-cloudshell)
@@ -43,6 +44,26 @@ cdk bootstrap aws://123456789012/ap-northeast-1
 
 **v1 と v2 は本当に混じり勝ちなので注意すること。**
 特に AI のサポートや、ブログから持ってきたコード。
+
+## CDK bootstrap
+
+SAM 同様ブートストラップが要る。
+
+あらかじめ AWS CloudShell で
+
+```sh
+# CloudShellには AWS CLI と CDK が最初から入ってる
+export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+cdk bootstrap "aws://$ACCOUNT_ID/us-east-1"
+cdk bootstrap "aws://$ACCOUNT_ID/ap-northeast-1"
+# and more regions...
+```
+
+とかやっとくといいかもしれない(オプション)。何度 `cdk bootstrap` を実行してもOK。
+
+リージョンごとに
+CDKToolkit
+という名前のスタックができるので CloudFormation のポータルで確認。
 
 ## チュートリアル
 
