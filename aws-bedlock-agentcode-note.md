@@ -20,6 +20,9 @@
 - 実行環境マネージド:セッション単位の分離、長時間・非同期処理、マルチモーダルペイロード、セキュアなツール呼び出しなどを備えた Runtime 上で動く。 [youtube](https://www.youtube.com/watch?v=wizEw5a4gvM)
 - 呼び出しは単一 API または CLI:`agentcore invoke`や Runtime API 経由で、プロンプトを渡すとエージェントのループ(ツール実行、メモリ参照含む)が走る。 [docs.aws.amazon](https://docs.aws.amazon.com/bedrock-agentcore/)
 
+「タスク分解」「ツール実行」「外部システム連携」「長時間処理」「権限委譲」などを伴う業務プロセス寄りのエージェントを、AgentCore で本番運用する
+みたいな使い方。
+
 ## AgentCore Runtime
 
 AgentCore Runtime は、以下を提供する**マネージド実行基盤**
