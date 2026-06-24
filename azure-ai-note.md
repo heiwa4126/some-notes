@@ -10,7 +10,6 @@
 以下 Bing Copilot に説明してもらったのを編集。
 
 1. **Azure OpenAI Service**
-
    - Azure OpenAI Service は、Microsoft Azure の一部で提供される AI サービスの一つです。
    - このサービスは、OpenAI 社の大規模言語モデル(例:GPT)を利用できるもので、文章生成やコード生成などのタスクに活用できます。
    - Azure OpenAI Service API を使用することで、開発者はモデル構築のための機械学習の知識を持たなくても、AI を利用したサービスを開発できます。
@@ -25,17 +24,14 @@
 他、タスク特化サービス:
 
 1. **Azure Cognitive Services**:
-
    - Azure Cognitive Services は、機械学習や AI を活用したさまざまなタスクをサポートする API のセットです。
    - 例えば、自然言語処理、音声認識、画像認識、感情分析、翻訳などの機能を提供しています。
 
 2. **Azure Bot Services**:
-
    - Azure Bot Services は、チャットボットや仮想アシスタントを構築するためのプラットフォームです。
    - ユーザーとの対話インターフェースを作成するために使用されます。
 
 3. **Azure Computer Vision**:
-
    - Azure Computer Vision は、画像認識と解析のためのサービスです。
    - 画像内のオブジェクトの検出、テキストの読み取り、顔認識などを行います。
 
@@ -48,13 +44,11 @@
 **Azure Machine Learning サービス**で作成したカスタムモデルを**Azure OpenAI Service API**で使用することはできますが、いくつかの制約があります。
 
 1. **モデルの形式**:
-
    - Azure Machine Learning サービスでトレーニングしたモデルは、一般的には機械学習フレームワーク(例:TensorFlow、PyTorch)でエクスポートされます。
    - 一方、Azure OpenAI Service API は、特定の形式(例:ONNX、TensorFlow SavedModel)でモデルを受け入れます。
    - カスタムモデルを Azure OpenAI Service API で使用する場合、モデルを適切な形式に変換する必要があります。
 
 2. **互換性**:
-
    - Azure OpenAI Service API は、特定のモデルアーキテクチャと互換性があります。例えば、GPT-3 や GPT-4 などの大規模言語モデルはサポートされています。
    - カスタムモデルがこれらのアーキテクチャに適合していることを確認する必要があります。
 

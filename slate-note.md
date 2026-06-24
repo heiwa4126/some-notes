@@ -14,13 +14,13 @@
 サンプルコード [slate/site/examples/ts/plaintext.tsx at main · ianstormtaylor/slate](https://github.com/ianstormtaylor/slate/blob/main/site/examples/ts/plaintext.tsx) の、
 
 ```typescript
-import { type Descendant } from 'slate';
+import { type Descendant } from "slate";
 //...
 const initialValue: Descendant[] = [
-  {
-    type: 'paragraph',
-    children: [{ text: 'This is editable plain text, just like a <textarea>!' }]
-  }
+	{
+		type: "paragraph",
+		children: [{ text: "This is editable plain text, just like a <textarea>!" }],
+	},
 ];
 ```
 
@@ -38,23 +38,23 @@ const initialValue: Descendant[] = [
 - [Best Practices for Element and Text Types](https://docs.slatejs.org/concepts/12-typescript#best-practices-for-element-and-text-types)
 
 ```typescript
-import { Descendant, Element } from 'slate';
+import { Descendant, Element } from "slate";
 
 // Paragraph型のカスタム定義
 type ParagraphElement = {
-  type: 'paragraph';
-  children: Descendant[];
+	type: "paragraph";
+	children: Descendant[];
 };
 // または、Element型を継承してParagraphElement型を定義する
 interface ParagraphElement extends Element {
-  type: 'paragraph';
-  children: Descendant[];
+	type: "paragraph";
+	children: Descendant[];
 }
 const initialValue: ParagraphElement[] = [
-  {
-    type: 'paragraph',
-    children: [{ text: 'This is editable plain text, just like a <textarea>!' }]
-  }
+	{
+		type: "paragraph",
+		children: [{ text: "This is editable plain text, just like a <textarea>!" }],
+	},
 ];
 ```
 

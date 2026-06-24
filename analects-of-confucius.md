@@ -11,7 +11,6 @@
   この翻訳は、各章に詳細なコメントや解説が付いているため、より深く理解するのに役立ちます。
 
 - **Project Gutenberg**:
-
   - **James Legge 翻訳 (英語のみ)**: [http://www.gutenberg.org/ebooks/3330](http://www.gutenberg.org/ebooks/3330)
   - **James Legge 翻訳 (中国語と英語の併記)**: [http://www.gutenberg.org/ebooks/4094](http://www.gutenberg.org/ebooks/4094)
     プロジェクト・グーテンベルクは、著作権の切れた書籍を無料で提供しているため、様々な形式でダウンロードして読むことができます。

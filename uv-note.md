@@ -285,11 +285,11 @@ uv で作成した python のプロジェクトを vscode で開いたとき、
 
 ```json
 {
-  // 1) ウィンドウを開いた直後に“初期ターミナル”が自動起動しないようにする
-  "terminal.integrated.hideOnStartup": "always",
+	// 1) ウィンドウを開いた直後に“初期ターミナル”が自動起動しないようにする
+	"terminal.integrated.hideOnStartup": "always",
 
-  // 2) すでに開いているターミナル(=最初のターミナル)にも環境を注入してアクティブ化する
-  "python.terminal.activateEnvInCurrentTerminal": true
+	// 2) すでに開いているターミナル(=最初のターミナル)にも環境を注入してアクティブ化する
+	"python.terminal.activateEnvInCurrentTerminal": true
 }
 ```
 

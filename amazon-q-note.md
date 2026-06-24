@@ -21,17 +21,17 @@ mcp.json の args で
 
 ```json
 {
-  "mcpServers": {
-    "awslabs.aws-diagram-mcp-server": {
-      "command": "uvx",
-      "args": ["--python", "3.10", "awslabs.aws-diagram-mcp-server"],
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      },
-      "autoApprove": [],
-      "disabled": false
-    }
-  }
+	"mcpServers": {
+		"awslabs.aws-diagram-mcp-server": {
+			"command": "uvx",
+			"args": ["--python", "3.10", "awslabs.aws-diagram-mcp-server"],
+			"env": {
+				"FASTMCP_LOG_LEVEL": "ERROR"
+			},
+			"autoApprove": [],
+			"disabled": false
+		}
+	}
 }
 ```
 
@@ -111,7 +111,7 @@ Q CLI ではバグありらしいが、VSCode 拡張では `.amazonq/mcp.json` �
 
 ```json
 {
-  "useLegacyMcpJson": true
+	"useLegacyMcpJson": true
 }
 ```
 

@@ -234,19 +234,19 @@ EC2 のインスタンスにタグをつける
 
 ```json
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": "ec2:DescribeTags",
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": "route53:ChangeResourceRecordSets",
-      "Resource": "arn:aws:route53:::hostedzone/HOSTED-ZONE-ID"
-    }
-  ]
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": "ec2:DescribeTags",
+			"Resource": "*"
+		},
+		{
+			"Effect": "Allow",
+			"Action": "route53:ChangeResourceRecordSets",
+			"Resource": "arn:aws:route53:::hostedzone/HOSTED-ZONE-ID"
+		}
+	]
 }
 ```
 
@@ -472,7 +472,7 @@ Use "ec2launch [command] --help" for more information about a command.
 `C:\ProgramData\Amazon\EC2Launch\config\agent-config.yml`
 
 ```yaml
-version: '1.0'
+version: "1.0"
 config:
   - stage: boot
     tasks:

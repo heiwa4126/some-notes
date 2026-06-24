@@ -65,7 +65,7 @@ Resources:
     Type: AWS::IAM::ServiceLinkedRole
     Properties:
       AWSServiceName: ecs.amazonaws.com
-      Description: 'Service-linked role for Amazon ECS'
+      Description: "Service-linked role for Amazon ECS"
 ```
 
 この CloudFormation テンプレートをデプロイすることで、AWSServiceRoleForECS が作成されます。
@@ -77,15 +77,15 @@ AWS CDK では [`CfnServiceLinkedRole`](https://docs.aws.amazon.com/cdk/api/v2/d
 TypeScript 版:
 
 ```typescript
-import * as iam from 'aws-cdk-lib/aws-iam';
-import * as cdk from 'aws-cdk-lib';
+import * as iam from "aws-cdk-lib/aws-iam";
+import * as cdk from "aws-cdk-lib";
 
 const app = new cdk.App();
-const stack = new cdk.Stack(app, 'EcsServiceLinkedRoleStack');
+const stack = new cdk.Stack(app, "EcsServiceLinkedRoleStack");
 
-new iam.CfnServiceLinkedRole(stack, 'ECSServiceLinkedRole', {
-  awsServiceName: 'ecs.amazonaws.com',
-  description: 'Service-linked role for Amazon ECS'
+new iam.CfnServiceLinkedRole(stack, "ECSServiceLinkedRole", {
+	awsServiceName: "ecs.amazonaws.com",
+	description: "Service-linked role for Amazon ECS",
 });
 ```
 

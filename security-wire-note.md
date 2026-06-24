@@ -31,29 +31,24 @@ Kensington の製品ページを見ると
 Kensington ClickSafe® 2.0 Universal Keyed Laptop Lock は、次の 3 種類のセキュリティスロットに対応しています：
 
 1. **Standard T-bar Slot**:
-
    - **Description**: The traditional and most common type of slot, used in many laptops and docking stations.
    - **Size**: Larger and more robust, providing strong security.
 
 2. **Nano Slot**:
-
    - **Description**: Smaller slot designed for ultra-thin laptops and devices.
    - **Size**: Compact, making it suitable for newer, slim devices.
 
 3. **Wedge Slot**:
-
    - **Description**: Another modern design aimed at providing security for thin laptops.
    - **Size**: Typically wedge-shaped, offering a secure fit for specific laptop models.
 
 上の日本語訳
 
 1. **標準 T バー スロット**：
-
    - **特徴**：最も一般的な従来型のスロットで、多くのノートパソコンやドッキングステーションに使用されています。
    - **サイズ**：大きく、頑丈で強力なセキュリティを提供。
 
 2. **ナノスロット**：
-
    - **特徴**：超薄型ノートパソコンやデバイス向けに設計された小型のスロット。
    - **サイズ**：コンパクトで、最新の薄型デバイスに適しています。
 

@@ -374,7 +374,7 @@ Pages でフロントエンドだけをビルド・デプロイしたいなら�
 app/routes/home.tsx で
 
 ```typescript
-import type { Route } from './+types/home';
+import type { Route } from "./+types/home";
 ```
 
 と書くと
@@ -386,7 +386,7 @@ app/routes/products/home.tsx
 で
 
 ```typescript
-import type { Route } from './+types/home';
+import type { Route } from "./+types/home";
 ```
 
 と書くと、同じ記述なのに

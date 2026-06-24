@@ -1,6 +1,7 @@
 do- [クラウド上のRed Hat Enterprise Linux](#クラウド上のred-hat-enterprise-linux)
-  - [AWS](#aws)
-  - [Azure](#azure)
+
+- [AWS](#aws)
+- [Azure](#azure)
 - [そうは言ってもこのメッセージが気になる場合](#そうは言ってもこのメッセージが気になる場合)
 - [AWS上でRHEL8の例](#aws上でrhel8の例)
 - [Red Hat Developer Subscription のとりかたメモ](#red-hat-developer-subscription-のとりかたメモ)

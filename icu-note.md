@@ -172,7 +172,6 @@ collcollate が None の場合、そのままでは使えないので `
 
 ## 日本の法人名に emoji は使えますか?
 
-
 ## ICUとは何?
 
 ICU(International Components for Unicode)は、**Unicodeと国際化(i18n)・地域化(l10n)を支援するためのオープンソースライブラリ群**です。主に C/C++向けの「ICU4C」と Java 向けの「ICU4J」が提供されています。

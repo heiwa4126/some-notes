@@ -229,8 +229,8 @@ pulumi config set <key> <value>
 
 ```typescript
 const eastRegion = new aws.Provider("east", {
-  profile: aws.config.profile,
-  region: "us-east-1", // Per AWS, ACM certificate must be in the us-east-1 region.
+	profile: aws.config.profile,
+	region: "us-east-1", // Per AWS, ACM certificate must be in the us-east-1 region.
 });
 ```
 
@@ -238,12 +238,12 @@ const eastRegion = new aws.Provider("east", {
 
 ```typescript
 const certificateValidation = new aws.acm.CertificateValidation(
-  "certificateValidation",
-  {
-    certificateArn: certificate.arn,
-    validationRecordFqdns: validationRecordFqdns,
-  },
-  { provider: eastRegion },
+	"certificateValidation",
+	{
+		certificateArn: certificate.arn,
+		validationRecordFqdns: validationRecordFqdns,
+	},
+	{ provider: eastRegion },
 );
 ```
 

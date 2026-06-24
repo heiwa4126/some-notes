@@ -149,7 +149,11 @@ CDN だと jsDelivr は SRI 付きの`<script>`をコピペできる
 例: [react CDN by jsDelivr - A CDN for npm and GitHub](https://www.jsdelivr.com/package/npm/react) より
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" integrity="sha256-2Unxw2h67a3O2shSYYZfKbF80nOZfn9rK/xTsvnUxN0=" crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"
+	integrity="sha256-2Unxw2h67a3O2shSYYZfKbF80nOZfn9rK/xTsvnUxN0="
+	crossorigin="anonymous"
+></script>
 ```
 
 ブラウザの import では SRI を指定する方法がない。

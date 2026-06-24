@@ -156,15 +156,15 @@ WSL や ssh remote で vscode を使うと、
 
 ```json
 {
-  "terminal.integrated.commandsToSkipShell": [
-    "workbench.action.terminal.clear",
-    "workbench.action.terminal.clearSelection",
-    "workbench.action.terminal.copySelection",
-    "workbench.action.terminal.paste",
-    "workbench.action.terminal.selectAll",
-    "-workbench.action.quickOpen" // ctrl+E が復活する
-  ],
-  "terminal.integrated.allowChords": false // ctrl+K が復活する
+	"terminal.integrated.commandsToSkipShell": [
+		"workbench.action.terminal.clear",
+		"workbench.action.terminal.clearSelection",
+		"workbench.action.terminal.copySelection",
+		"workbench.action.terminal.paste",
+		"workbench.action.terminal.selectAll",
+		"-workbench.action.quickOpen" // ctrl+E が復活する
+	],
+	"terminal.integrated.allowChords": false // ctrl+K が復活する
 }
 ```
 
@@ -337,7 +337,7 @@ WSL2 が mirror モードだった(IPv6 を使いたかった)のを、元の NA
 
 ```json
 {
-  "terminal.integrated.allowChords": false
+	"terminal.integrated.allowChords": false
 }
 ```
 
@@ -404,7 +404,7 @@ VSCode のワークスペースの設定(`.vscode/settings.json`)で
 
 ```json
 {
-  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"
+	"python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"
 }
 ```
 
@@ -432,8 +432,8 @@ PowerShell はともかく、bash/zsh でやられても辛いので
 
 ```json
 {
-  "terminal.integrated.shellIntegration.enabled": true,
-  "terminal.integrated.suggest.enabled": false
+	"terminal.integrated.shellIntegration.enabled": true,
+	"terminal.integrated.suggest.enabled": false
 }
 ```
 
@@ -464,16 +464,16 @@ Python の例でいくと
 
 ```json
 {
-  // .vscode/settings.json などに記述
-  "cSpell.ignorePaths": [
-    "**/node_modules/**",
-    "**/*.lock", // 任意の拡張の .lock を除外
-    "**/*-lock.json", // npm系の -lock.json を除外(例:package-lock.json)
-    "**/pnpm-lock.yaml",
-    "**/yarn.lock"
-  ],
-  // 必要なら .gitignore も尊重させる
-  "cSpell.useGitignore": true
+	// .vscode/settings.json などに記述
+	"cSpell.ignorePaths": [
+		"**/node_modules/**",
+		"**/*.lock", // 任意の拡張の .lock を除外
+		"**/*-lock.json", // npm系の -lock.json を除外(例:package-lock.json)
+		"**/pnpm-lock.yaml",
+		"**/yarn.lock"
+	],
+	// 必要なら .gitignore も尊重させる
+	"cSpell.useGitignore": true
 }
 ```
 

@@ -875,7 +875,7 @@ port PATH="$HOME/.local/share/npm/bin:$PATH"
 npm パッケージは `package.json` を含んでいるので、直接これを参照できる。
 
 ```js
-import pkg from './package.json' with { type: 'json' };
+import pkg from "./package.json" with { type: "json" };
 console.log(pkg.version);
 ```
 
@@ -911,12 +911,12 @@ console.log(pkg.version);
 
 ```json
 {
-  "name": "@scope/foo",
-  "bin": {
-    "foo": "./dist/cli-foo.js",
-    "bar": "./dist/cli-bar.js"
-  }
-  // ...
+	"name": "@scope/foo",
+	"bin": {
+		"foo": "./dist/cli-foo.js",
+		"bar": "./dist/cli-bar.js"
+	}
+	// ...
 }
 ```
 

@@ -9,9 +9,9 @@ VSCode の拡張の Even Better TOML で、pyproject.toml を自分好みにす�
 
 ```json
 {
-  "evenBetterToml.formatter.compactArrays": false,
-  "evenBetterToml.formatter.arrayAutoExpand": true,
-  "evenBetterToml.formatter.columnWidth": 30
+	"evenBetterToml.formatter.compactArrays": false,
+	"evenBetterToml.formatter.arrayAutoExpand": true,
+	"evenBetterToml.formatter.columnWidth": 30
 }
 ```
 

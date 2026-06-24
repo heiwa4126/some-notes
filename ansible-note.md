@@ -1391,16 +1391,16 @@ ansible-playbook の-l オプションでも同様。
     - debug: var=inventory_hostname
 
     - debug: msg=OK
-      when: 'inventory_hostname in d1'
+      when: "inventory_hostname in d1"
 
     - debug: msg=OK
-      when: 'inventory_hostname not in d2'
+      when: "inventory_hostname not in d2"
 
     - debug: msg=WRONG
-      when: 'inventory_hostname not in d1'
+      when: "inventory_hostname not in d1"
 
     - debug: msg=WRONG
-      when: 'inventory_hostname in d2'
+      when: "inventory_hostname in d2"
 ```
 
 OK が 2 個、WRONG が 0 個出力されるはず
@@ -1445,7 +1445,7 @@ include/import してる tasks も見る。
 
 ```yaml
 - name: Run shell.
-  shell: '{{ cmd }}' # noqa command-instead-of-shell
+  shell: "{{ cmd }}" # noqa command-instead-of-shell
 ```
 
 こんな感じに`noqa`でできる。
@@ -1558,18 +1558,18 @@ Kerberos だとローカルアカウントには接続できないのに注意�
   become: false
   gather_facts: false
   vars:
-    msg1: 'world'
+    msg1: "world"
 
   tasks:
     - debug:
-        msg: 'Hello, {{ msg1 }}!'
+        msg: "Hello, {{ msg1 }}!"
 ```
 
 読みこむファイル: `vars2.json`
 
 ```json
 {
-  "msg1": "こんにちは"
+	"msg1": "こんにちは"
 }
 ```
 

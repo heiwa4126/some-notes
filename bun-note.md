@@ -108,9 +108,9 @@ bun install --save-text-lockfile --frozen-lockfile --lockfile-only
 これで `bun.lockb` → `bun.lock` への移行が完了します。
 
 [1]: https://bun.com/blog/bun-lock-text-lockfile?utm_source=chatgpt.com "Bun's new text-based lockfile"
-[2]: https://bun.com/docs/guides/install/yarnlock?utm_source=chatgpt.com 'Generate a yarn-compatible lockfile'
-[3]: https://www.codingtag.com/bun-lockb-file-explained?utm_source=chatgpt.com 'Bun.lockb File Explained'
-[4]: https://bsky.app/profile/bun.sh/post/3ld26dxe5n226?utm_source=chatgpt.com 'Bun'
+[2]: https://bun.com/docs/guides/install/yarnlock?utm_source=chatgpt.com "Generate a yarn-compatible lockfile"
+[3]: https://www.codingtag.com/bun-lockb-file-explained?utm_source=chatgpt.com "Bun.lockb File Explained"
+[4]: https://bsky.app/profile/bun.sh/post/3ld26dxe5n226?utm_source=chatgpt.com "Bun"
 
 ## bun のグローバルキャッシュをクリアする
 

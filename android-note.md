@@ -163,7 +163,6 @@ Windows のファイル I/O が異様に遅いので試してみたい。
 **Android Studio**を**WSL2**で使う方法を紹介します。以下の手順に従って設定してみてください。
 
 1. **usbipd-win**のインストール:
-
    - 予め**winget**をインストールしておきます。次に、以下のコマンドを実行して、PowerShell 等で**usbipd-win**をインストールします:
      ```PowerShell
      PS C:\Users\horie-t> winget install usbipd
@@ -179,7 +178,6 @@ Windows のファイル I/O が異様に遅いので試してみたい。
      ```
 
 2. **Android Studio**のインストール・セットアップ:
-
    - [ダウンロードサイト](http://developer.android.com/studio)から**Android Studio**をダウンロードし、インストール先ディレクトリで展開します:
      ```
      tar xvf ~/Downloads/android-studio-2022.3.1.19-linux.tar.gz

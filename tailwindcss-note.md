@@ -73,16 +73,16 @@ npx @tailwindcss/upgrade
 
 ```css
 .btn {
-  /* ボタンの形状を定義 */
-  @apply rounded-md py-2 px-4 font-semibold text-white;
+	/* ボタンの形状を定義 */
+	@apply rounded-md py-2 px-4 font-semibold text-white;
 }
 .btn1 {
-  /* 色だけ変える(青) */
-  @apply btn bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700;
+	/* 色だけ変える(青) */
+	@apply btn bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700;
 }
 .btn2 {
-  /* 色だけ変える(赤) */
-  @apply btn bg-red-700 hover:bg-red-600 active:bg-red-800;
+	/* 色だけ変える(赤) */
+	@apply btn bg-red-700 hover:bg-red-600 active:bg-red-800;
 }
 ```
 
@@ -92,15 +92,15 @@ npx @tailwindcss/upgrade
 
 ```css
 @utility btn {
-  @apply rounded-md py-2 px-4 font-semibold text-white;
+	@apply rounded-md py-2 px-4 font-semibold text-white;
 }
 
 .btn1 {
-  @apply btn bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700;
+	@apply btn bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700;
 }
 
 .btn2 {
-  @apply btn bg-red-700 hover:bg-red-600 active:bg-red-800;
+	@apply btn bg-red-700 hover:bg-red-600 active:bg-red-800;
 }
 ```
 

@@ -348,7 +348,7 @@ Hello world.
 - [google/guava: Google core libraries for Java](https://github.com/google/guava)
   を使った App.java に変えてみる。
 
-[com.google.common.base.Strings#repeat](https://guava.dev/releases/19.0/api/docs/com/google/common/base/Strings.html#repeat(java.lang.String,%20int))を使って、Hello world の上下に罫線を引く。
+[com.google.common.base.Strings#repeat](<https://guava.dev/releases/19.0/api/docs/com/google/common/base/Strings.html#repeat(java.lang.String,%20int)>)を使って、Hello world の上下に罫線を引く。
 
 `src/main/java/demo/App.java`
 

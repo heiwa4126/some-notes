@@ -191,24 +191,24 @@ const userPoolId = "<user-pool-id>";
 const clientId = "<client-id>";
 const authFlow = "ADMIN_NO_SRP_AUTH";
 const authParameters = {
-  USERNAME: "<username>",
-  PASSWORD: "<password>",
+	USERNAME: "<username>",
+	PASSWORD: "<password>",
 };
 
 cognitoIdp.adminInitiateAuth(
-  {
-    UserPoolId: userPoolId,
-    ClientId: clientId,
-    AuthFlow: authFlow,
-    AuthParameters: authParameters,
-  },
-  (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log(data);
-  },
+	{
+		UserPoolId: userPoolId,
+		ClientId: clientId,
+		AuthFlow: authFlow,
+		AuthParameters: authParameters,
+	},
+	(err, data) => {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		console.log(data);
+	},
 );
 ```
 

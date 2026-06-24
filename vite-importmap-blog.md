@@ -30,15 +30,15 @@ git commit -am 'initial commit'
 
 ```html
 <head>
-  /*...*/
-  <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@19/",
-        "react-dom/client": "https://esm.sh/react-dom@19/client"
-      }
-    }
-  </script>
+	/*...*/
+	<script type="importmap">
+		{
+			"imports": {
+				"react": "https://esm.sh/react@19/",
+				"react-dom/client": "https://esm.sh/react-dom@19/client"
+			}
+		}
+	</script>
 </head>
 ```
 
@@ -47,12 +47,12 @@ defineConfig に rollup のオプションを追加しましょう。
 
 ```typescript
 export default defineConfig({
-  //...
-  build: {
-    rollupOptions: {
-      external: ['react', 'react-dom/client']
-    }
-  }
+	//...
+	build: {
+		rollupOptions: {
+			external: ["react", "react-dom/client"],
+		},
+	},
 });
 ```
 

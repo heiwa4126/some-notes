@@ -74,18 +74,15 @@ reg.exe delete "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a
 Windows11 の日本語 MS-IME で、IME オンオフトグルを Shift+SPACE に割り当てる手順
 
 1. **IME 設定画面を開く**
-
    - タスクバー右下の **IME アイコン（「あ」または「A」）を右クリック**
    - メニューから **「設定」** を選択
    - または、**Windows キー →「ime」と入力 →「日本語 IME 設定」** を選択
 
 2. **キーとタッチのカスタマイズを有効化**
-
    - 「Microsoft IME」設定画面で **キーとタッチのカスタマイズ** をクリック
    - 「キーの割り当て」を **オン** にします
 
 3. **Shift + Space に機能を割り当てる**
-
    - 割り当て可能なキー一覧に **Shift + Space**があります
    - その右側のドロップダウンから **IME-オン/オフ**を選択
      - これで「Shift + Space」を押すたびに IME がオン/オフ切り替わります

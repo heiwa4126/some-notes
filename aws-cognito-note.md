@@ -109,50 +109,50 @@ const { StsClient } = require("@aws-sdk/client-sts");
 
 // Initialize the STS client
 const sts = new StsClient({
-  region: "<region>",
-  credentials: {
-    accessKeyId: "<accessKeyId>",
-    secretAccessKey: "<secretAccessKey>",
-  },
+	region: "<region>",
+	credentials: {
+		accessKeyId: "<accessKeyId>",
+		secretAccessKey: "<secretAccessKey>",
+	},
 });
 
 // Assume a role with the web identity token
 const assumeRoleWithWebIdentity = async () => {
-  const params = {
-    RoleArn: "<roleArn>",
-    RoleSessionName: "<roleSessionName>",
-    WebIdentityToken: "<webIdentityToken>",
-    DurationSeconds: 3600,
-  };
+	const params = {
+		RoleArn: "<roleArn>",
+		RoleSessionName: "<roleSessionName>",
+		WebIdentityToken: "<webIdentityToken>",
+		DurationSeconds: 3600,
+	};
 
-  try {
-    const data = await sts.assumeRoleWithWebIdentity(params).promise();
-    const accessKeyId = data.Credentials.AccessKeyId;
-    const secretAccessKey = data.Credentials.SecretAccessKey;
-    const sessionToken = data.Credentials.SessionToken;
+	try {
+		const data = await sts.assumeRoleWithWebIdentity(params).promise();
+		const accessKeyId = data.Credentials.AccessKeyId;
+		const secretAccessKey = data.Credentials.SecretAccessKey;
+		const sessionToken = data.Credentials.SessionToken;
 
-    // Initialize the S3 client with the assumed role credentials
-    const s3 = new S3Client({
-      region: "<region>",
-      credentials: {
-        accessKeyId: accessKeyId,
-        secretAccessKey: secretAccessKey,
-        sessionToken: sessionToken,
-      },
-    });
+		// Initialize the S3 client with the assumed role credentials
+		const s3 = new S3Client({
+			region: "<region>",
+			credentials: {
+				accessKeyId: accessKeyId,
+				secretAccessKey: secretAccessKey,
+				sessionToken: sessionToken,
+			},
+		});
 
-    // Read an object from S3
-    const result = await s3
-      .getObject({
-        Bucket: "<bucketName>",
-        Key: "<objectKey>",
-      })
-      .promise();
+		// Read an object from S3
+		const result = await s3
+			.getObject({
+				Bucket: "<bucketName>",
+				Key: "<objectKey>",
+			})
+			.promise();
 
-    console.log(result);
-  } catch (error) {
-    console.error(error);
-  }
+		console.log(result);
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 assumeRoleWithWebIdentity();

@@ -11,22 +11,18 @@
 JSON REST API に関する学習リソースとして、以下の資料をお勧めします:
 
 1. **MDN Web Docs - Introduction to REST and JSON**:
-
    - このページは REST の基本概念と JSON の使用方法を紹介しています。REST API の設計原則や HTTP メソッドの使い方についての詳しい説明が含まれています。
    - [Introduction to REST and JSON](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON)
 
 2. **RESTful API Tutorial**:
-
    - RESTful API の設計と実装に関する包括的なガイドです。URI 設計のベストプラクティス、HTTP メソッド、ステートレス性などの重要な概念をカバーしています。
    - [RESTful API Tutorial](https://restfulapi.net/)
 
 3. **Google Cloud - RESTful API Design**:
-
    - Google Cloud が提供する RESTful API 設計に関するガイドです。設計パターンやベストプラクティス、認証方法について詳述しています。
    - [RESTful API Design](https://cloud.google.com/apis/design)
 
 4. **IBM Cloud - What is REST?**:
-
    - REST API の基本概念とそのアーキテクチャについての詳細な説明があります。JSON を使ったデータ交換の例も含まれています。
    - [What is REST?](https://www.ibm.com/cloud/learn/rest-apis)
 

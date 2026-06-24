@@ -57,16 +57,16 @@ Default setup は「マネージドな CodeQL 実行」らしい
 引用:
 
 ```javascript
-const express = require('express');
+const express = require("express");
 const app = express();
 
-app.get('/user', (req, res) => {
-  const user = req.query.user;
-  // 明示的に危険なコード
-  const query = "SELECT * FROM users WHERE name = '" + user + "'";
-  db.query(query, (err, result) => {
-    res.send(result);
-  });
+app.get("/user", (req, res) => {
+	const user = req.query.user;
+	// 明示的に危険なコード
+	const query = "SELECT * FROM users WHERE name = '" + user + "'";
+	db.query(query, (err, result) => {
+		res.send(result);
+	});
 });
 ```
 

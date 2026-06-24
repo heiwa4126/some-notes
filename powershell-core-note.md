@@ -10,8 +10,8 @@
 
 ## SETX の等価
 
-| 操作内容                                     | cmd.exe (`SETX`)     | PowerShell 等価コマンド                                             |
-| -------------------------------------------- | -------------------- | ------------------------------------------------------------------- |
-| **ユーザー環境変数を設定**                   | `SETX NAME VALUE`    | `[Environment]::SetEnvironmentVariable("NAME", "VALUE", "User")`    |
+| 操作内容                                   | cmd.exe (`SETX`)     | PowerShell 等価コマンド                                             |
+| ------------------------------------------ | -------------------- | ------------------------------------------------------------------- |
+| **ユーザー環境変数を設定**                 | `SETX NAME VALUE`    | `[Environment]::SetEnvironmentVariable("NAME", "VALUE", "User")`    |
 | **システム環境変数を設定(管理者権限必要)** | `SETX NAME VALUE /M` | `[Environment]::SetEnvironmentVariable("NAME", "VALUE", "Machine")` |
-| **現在のセッションだけで一時的に設定**       | `SET NAME=VALUE`     | `$env:NAME = "VALUE"`                                               |
+| **現在のセッションだけで一時的に設定**     | `SET NAME=VALUE`     | `$env:NAME = "VALUE"`                                               |

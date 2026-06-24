@@ -351,7 +351,7 @@ Huggung Face Hub の model の Natural Language Processing(NLP) のタスクを�
 
 ```json
 {
-  "HUGGINGFACE_TOKEN": "your_huggingface_api_token"
+	"HUGGINGFACE_TOKEN": "your_huggingface_api_token"
 }
 ```
 

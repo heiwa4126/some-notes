@@ -31,13 +31,13 @@ console.log(file.contents); // ファイルの内容を出力する
 
 ```javascript
 const file = vfile({
-  path: "path/to/file.md",
-  contents: fs.readFileSync("path/to/file.md", "utf-8"),
-  data: {
-    title: "My Markdown File",
-    type: "blog-post",
-    author: "John Doe",
-  },
+	path: "path/to/file.md",
+	contents: fs.readFileSync("path/to/file.md", "utf-8"),
+	data: {
+		title: "My Markdown File",
+		type: "blog-post",
+		author: "John Doe",
+	},
 });
 
 console.log(file.data.title); // "My Markdown File" を出力する

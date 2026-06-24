@@ -130,7 +130,7 @@ wrangler versions deploy
 index.ts で re-export するのが楽。
 
 ```ts
-export { MyDurableObject } from './mydo.js';
+export { MyDurableObject } from "./mydo.js";
 ```
 
 別 Worker(別スクリプト)として分離するのはもう一工夫必要
@@ -154,10 +154,10 @@ KV、R2、D1、Durable Objects、Queue など、バインディングの型が `
 ```typescript
 // worker-configuration.d.ts 内(自動生成)
 interface Env {
-  MY_KV: KVNamespace;
-  MY_BUCKET: R2Bucket;
-  MY_DO: DurableObjectNamespace;
-  MY_DB: D1Database;
+	MY_KV: KVNamespace;
+	MY_BUCKET: R2Bucket;
+	MY_DO: DurableObjectNamespace;
+	MY_DB: D1Database;
 }
 ```
 
@@ -173,10 +173,10 @@ interface Env {
 
 ```typescript
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-    // env.MY_KV に型補完・型チェックが効く
-    const value = await env.MY_KV.get('key');
-  }
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		// env.MY_KV に型補完・型チェックが効く
+		const value = await env.MY_KV.get("key");
+	},
 };
 ```
 
@@ -229,4 +229,3 @@ some-api-v1.example.com, some-api-v2.example.com
 ## 制限
 
 [Limits · Cloudflare Workers docs](https://developers.cloudflare.com/workers/platform/limits)
-

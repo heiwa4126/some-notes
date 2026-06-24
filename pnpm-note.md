@@ -281,11 +281,11 @@ run-scripts に preinstall を書いておく
 
 ```json
 {
-  "pnpm": {
-    "overrides": {
-      "lodash@<4.17.23": ">=4.17.23"
-    }
-  }
+	"pnpm": {
+		"overrides": {
+			"lodash@<4.17.23": ">=4.17.23"
+		}
+	}
 }
 ```
 

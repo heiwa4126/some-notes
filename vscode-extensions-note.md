@@ -87,9 +87,9 @@ VSCode拡張の命名規則に沿って提案します。
 - `package.json` の `publisher` と `name` フィールドに対応
   ```json
   {
-    "name": "foo-markdown",
-    "publisher": "username",
-    "displayName": "foo Markdown Formatter"
+  	"name": "foo-markdown",
+  	"publisher": "username",
+  	"displayName": "foo Markdown Formatter"
   }
   ```
 - `vscode-` プレフィックスは拡張IDの `name` 部分には **つけないことが多い**(`publisher` で文脈が明確なため)

@@ -87,16 +87,16 @@ CloudWatch に log を書く方は AssumeRolePolicyDocument に
 
 ```json
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Principal": {
+				"Service": "lambda.amazonaws.com"
+			},
+			"Action": "sts:AssumeRole"
+		}
+	]
 }
 ```
 

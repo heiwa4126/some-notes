@@ -66,7 +66,7 @@ SonarQube Community Edition で検出可能な基本的な脆弱性の例を ECM
    ```javascript
    // 脆弱性のあるコード
    function generateRandomId() {
-     return Math.random().toString(36).substr(2, 9);
+   	return Math.random().toString(36).substr(2, 9);
    }
    ```
 
@@ -87,9 +87,9 @@ SonarQube Community Edition で検出可能な基本的な脆弱性の例を ECM
    ```javascript
    // 脆弱性のあるコード
    function processItems(items) {
-     while (items.length > 0) {
-       // items.length が変更されない場合、無限ループになる
-     }
+   	while (items.length > 0) {
+   		// items.length が変更されない場合、無限ループになる
+   	}
    }
    ```
 
@@ -100,8 +100,8 @@ SonarQube Community Edition で検出可能な基本的な脆弱性の例を ECM
    ```javascript
    // 脆弱性のあるコード
    function calculateTotal(price, quantity) {
-     const tax = 0.1; // この変数は使用されていない
-     return price * quantity;
+   	const tax = 0.1; // この変数は使用されていない
+   	return price * quantity;
    }
    ```
 
@@ -112,9 +112,9 @@ SonarQube Community Edition で検出可能な基本的な脆弱性の例を ECM
    ```javascript
    // 脆弱性のあるコード
    try {
-     // 何らかの処理
+   	// 何らかの処理
    } catch (error) {
-     console.log(error);
+   	console.log(error);
    }
    ```
 
@@ -125,11 +125,11 @@ SonarQube Community Edition で検出可能な基本的な脆弱性の例を ECM
    ```javascript
    // 脆弱性のあるコード
    function isPositive(num) {
-     if (num > 0) {
-       return true;
-     } else {
-       return false;
-     }
+   	if (num > 0) {
+   		return true;
+   	} else {
+   		return false;
+   	}
    }
    ```
 

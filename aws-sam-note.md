@@ -146,23 +146,23 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
-            Action: 'sts:AssumeRole'
+            Action: "sts:AssumeRole"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Policies:
         - PolicyName: policy1
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
-                  - 'secretsmanager:GetSecretValue'
-                Resource: 'arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                  - "secretsmanager:GetSecretValue"
+                Resource: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   SecretTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -195,7 +195,7 @@ Resources:
       Runtime: python3.6
       Policies:
         - AWSSecretsManagerGetSecretValuePolicy:
-            SecretArn: 'arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            SecretArn: "arn:aws:secretsmanager:ap-northeast-1:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 ただ、世の中には"LB のルールの順番を入れ替える lambda"みたいのもあって
@@ -335,7 +335,7 @@ Resources:
     DependsOn: HelloWorldFunction
     Properties:
       RetentionInDays: 7
-      LogGroupName: !Join ['', ['/aws/lambda/', !Ref HelloWorldFunction]]
+      LogGroupName: !Join ["", ["/aws/lambda/", !Ref HelloWorldFunction]]
 ```
 
 これ LogGroupName がデフォルトと一緒なので、
@@ -344,7 +344,7 @@ Resources:
 最初に書くか、別のパスにするか。
 
 ```yaml
-LogGroupName: !Join ['/', ['/aws/lambda', !Ref AWS::StackName, !Ref HelloWorldFunction]]
+LogGroupName: !Join ["/", ["/aws/lambda", !Ref AWS::StackName, !Ref HelloWorldFunction]]
 ```
 
 みたいにするといいとおもう。
@@ -768,48 +768,57 @@ aws-sam-cli-managed-default stack はあるか。
 
 ```json
 {
-  "AWSTemplateFormatVersion": "2010-09-09",
-  "Transform": "AWS::Serverless-2016-10-31",
-  "Description": "Managed Stack for AWS SAM CLI",
-  "Metadata": {
-    "SamCliInfo": {
-      "version": "1.33.0",
-      "installationId": "c61a8b52-fb4c-4488-a5ea-de314c54ad2b"
-    }
-  },
-  "Resources": {
-    "SamCliSourceBucket": {
-      "Type": "AWS::S3::Bucket",
-      "Properties": {
-        "VersioningConfiguration": { "Status": "Enabled" },
-        "Tags": [{ "Key": "ManagedStackSource", "Value": "AwsSamCli" }]
-      }
-    },
-    "SamCliSourceBucketBucketPolicy": {
-      "Type": "AWS::S3::BucketPolicy",
-      "Properties": {
-        "Bucket": { "Ref": "SamCliSourceBucket" },
-        "PolicyDocument": {
-          "Statement": [
-            {
-              "Action": ["s3:GetObject"],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::Join": ["", ["arn:", { "Ref": "AWS::Partition" }, ":s3:::", { "Ref": "SamCliSourceBucket" }, "/*"]]
-              },
-              "Principal": { "Service": "serverlessrepo.amazonaws.com" },
-              "Condition": {
-                "StringEquals": {
-                  "aws:SourceAccount": { "Ref": "AWS::AccountId" }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  },
-  "Outputs": { "SourceBucket": { "Value": { "Ref": "SamCliSourceBucket" } } }
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Transform": "AWS::Serverless-2016-10-31",
+	"Description": "Managed Stack for AWS SAM CLI",
+	"Metadata": {
+		"SamCliInfo": {
+			"version": "1.33.0",
+			"installationId": "c61a8b52-fb4c-4488-a5ea-de314c54ad2b"
+		}
+	},
+	"Resources": {
+		"SamCliSourceBucket": {
+			"Type": "AWS::S3::Bucket",
+			"Properties": {
+				"VersioningConfiguration": { "Status": "Enabled" },
+				"Tags": [{ "Key": "ManagedStackSource", "Value": "AwsSamCli" }]
+			}
+		},
+		"SamCliSourceBucketBucketPolicy": {
+			"Type": "AWS::S3::BucketPolicy",
+			"Properties": {
+				"Bucket": { "Ref": "SamCliSourceBucket" },
+				"PolicyDocument": {
+					"Statement": [
+						{
+							"Action": ["s3:GetObject"],
+							"Effect": "Allow",
+							"Resource": {
+								"Fn::Join": [
+									"",
+									[
+										"arn:",
+										{ "Ref": "AWS::Partition" },
+										":s3:::",
+										{ "Ref": "SamCliSourceBucket" },
+										"/*"
+									]
+								]
+							},
+							"Principal": { "Service": "serverlessrepo.amazonaws.com" },
+							"Condition": {
+								"StringEquals": {
+									"aws:SourceAccount": { "Ref": "AWS::AccountId" }
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	},
+	"Outputs": { "SourceBucket": { "Value": { "Ref": "SamCliSourceBucket" } } }
 }
 ```
 
@@ -861,11 +870,11 @@ template.yaml に "aws:" って書いてあるところ全部治すべき。
 
 ```json
 {
-  "httpMethod": "POST",
-  "body": "{ \"key\": \"value\" }",
-  "headers": {
-    "Content-Type": "application/json"
-  }
+	"httpMethod": "POST",
+	"body": "{ \"key\": \"value\" }",
+	"headers": {
+		"Content-Type": "application/json"
+	}
 }
 ```
 
@@ -905,10 +914,10 @@ ENV_VAR1=value1 ENV_VAR2=value2 sam local invoke MyFunctionName
 
 ```json
 {
-  "MyFunctionName": {
-    "ENV_VAR1": "value1",
-    "ENV_VAR2": "value2"
-  }
+	"MyFunctionName": {
+		"ENV_VAR1": "value1",
+		"ENV_VAR2": "value2"
+	}
 }
 ```
 
@@ -939,15 +948,15 @@ Globals:
 
 ```json
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
-      // "Resource" : "*", // 元のAWSLambdaBasicExecutionRoleの設定
-      "Resource": ["arn:aws:logs:<region>:<account-id>:log-group:/aws/lambda/<your-lambda-name>:*"]
-    }
-  ]
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Action": ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
+			// "Resource" : "*", // 元のAWSLambdaBasicExecutionRoleの設定
+			"Resource": ["arn:aws:logs:<region>:<account-id>:log-group:/aws/lambda/<your-lambda-name>:*"]
+		}
+	]
 }
 ```
 

@@ -9,38 +9,37 @@
 
 `--config-path="$HOME/biome.json"` とか書くのが一番良さそう。
 
-
 ## ありがちな biome.json (v1)
 
 ```json
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.2/schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true,
-    "root": "."
-  },
-  "json": {
-    "parser": {
-      "allowComments": true,
-      "allowTrailingCommas": true
-    }
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    },
-    "ignore": ["dist/**/*", "node_modules/**/*"]
-  },
-  "formatter": {
-    "enabled": true,
-    "ignore": ["dist/**/*", "node_modules/**/*"]
-  }
+	"$schema": "https://biomejs.dev/schemas/1.8.2/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true,
+		"root": "."
+	},
+	"json": {
+		"parser": {
+			"allowComments": true,
+			"allowTrailingCommas": true
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		},
+		"ignore": ["dist/**/*", "node_modules/**/*"]
+	},
+	"formatter": {
+		"enabled": true,
+		"ignore": ["dist/**/*", "node_modules/**/*"]
+	}
 }
 ```
 
@@ -53,11 +52,11 @@ vcs.root は、~/biome.json でまとめて設定を書く用。
 
 ```json
 {
-  "scripts": {
-    "format": "biome format --write .",
-    "lint": "biome lint .",
-    "check": "biome check --write ."
-  }
+	"scripts": {
+		"format": "biome format --write .",
+		"lint": "biome lint .",
+		"check": "biome check --write ."
+	}
 }
 ```
 
@@ -76,35 +75,35 @@ biome migrate --write
 
 ```json
 {
-  "[javascript]": {
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.tabSize": 2,
-    "editor.insertSpaces": false
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.tabSize": 2,
-    "editor.insertSpaces": false
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.tabSize": 2,
-    "editor.insertSpaces": false
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.tabSize": 2,
-    "editor.insertSpaces": false
-  },
-  "[json]": {
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.tabSize": 2,
-    "editor.insertSpaces": false
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.tabSize": 2,
-    "editor.insertSpaces": false
-  }
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.tabSize": 2,
+		"editor.insertSpaces": false
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.tabSize": 2,
+		"editor.insertSpaces": false
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.tabSize": 2,
+		"editor.insertSpaces": false
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.tabSize": 2,
+		"editor.insertSpaces": false
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.tabSize": 2,
+		"editor.insertSpaces": false
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.tabSize": 2,
+		"editor.insertSpaces": false
+	}
 }
 ```

@@ -19,14 +19,14 @@ npm i -g textlint textlint-rule-preset-ja-spacing
 
 ```json
 {
-  "rules": {
-    "preset-ja-spacing": {
-      "ja-space-between-half-and-full-width": {
-        "space": "always"
-      }
-    }
-  },
-  "ignoreDirectories": ["node_modules", "dist", "build"]
+	"rules": {
+		"preset-ja-spacing": {
+			"ja-space-between-half-and-full-width": {
+				"space": "always"
+			}
+		}
+	},
+	"ignoreDirectories": ["node_modules", "dist", "build"]
 }
 ```
 
@@ -54,7 +54,7 @@ VSCode では
 
 ```json
 {
-  "prettier.resolveGlobalModules": true
+	"prettier.resolveGlobalModules": true
 }
 ```
 

@@ -16,9 +16,9 @@ npm i crypto-js  # 標準のcryptではなくわざわざ外部のを使う
 [crypto-js - npm](https://www.npmjs.com/package/crypto-js)
 
 ```javascript
-const SHA256 = require('crypto-js/sha256');
+const SHA256 = require("crypto-js/sha256");
 
-const msg = 'hello world';
+const msg = "hello world";
 
 console.log(msg);
 console.log(SHA256(msg).toString());

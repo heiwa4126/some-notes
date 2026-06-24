@@ -97,7 +97,7 @@ SKILL の方は
 ```markdown
 ---
 name: skill-smoke-test
-description: '「スモーク」または「skill-smoke-test」と言われたら必ず使う。出力に [SKILL:smoke] を含める。'
+description: "「スモーク」または「skill-smoke-test」と言われたら必ず使う。出力に [SKILL:smoke] を含める。"
 ---
 
 # Smoke Test
@@ -116,8 +116,6 @@ description: '「スモーク」または「skill-smoke-test」と言われた�
 VSCodeでGitHub Copilotだったら
 [Chat Customizations editor](https://code.visualstudio.com/docs/copilot/customization/overview#_chat-customizations-editor)
 が楽かも
-
-
 
 ## コンセプト
 
@@ -274,15 +272,15 @@ hook は **stdin で JSON 入力**を受け取り、**stdout に JSON 出力**�
 
 ```json
 {
-  "hooks": {
-    "PreToolUse": [
-      {
-        "type": "command",
-        "command": "./scripts/guardrail-pretool.sh",
-        "timeout": 15
-      }
-    ]
-  }
+	"hooks": {
+		"PreToolUse": [
+			{
+				"type": "command",
+				"command": "./scripts/guardrail-pretool.sh",
+				"timeout": 15
+			}
+		]
+	}
 }
 ```
 

@@ -71,24 +71,24 @@ npm install --save-dev rollup-plugin-license
 vite.config.js ファイルに、rollup-plugin-license を追加します。
 
 ```javascript
-import license from 'rollup-plugin-license';
+import license from "rollup-plugin-license";
 
 export default {
-  // ...
-  build: {
-    // ...
-    rollupOptions: {
-      plugins: [
-        license({
-          banner: {
-            content: {
-              file: path.join(__dirname, 'LICENSE')
-            }
-          }
-        })
-      ]
-    }
-  }
+	// ...
+	build: {
+		// ...
+		rollupOptions: {
+			plugins: [
+				license({
+					banner: {
+						content: {
+							file: path.join(__dirname, "LICENSE"),
+						},
+					},
+				}),
+			],
+		},
+	},
 };
 ```
 

@@ -36,7 +36,7 @@ Reference-style links(参照スタイルリンク)
 
 #### TypeScript/JavaScript
 
-[remark-gfm]: https://www.npmjs.com/package/remark-gfm 'remark plugin to support GFM (autolink literals, footnotes, strikethrough, tables, tasklists)'
+[remark-gfm]: https://www.npmjs.com/package/remark-gfm "remark plugin to support GFM (autolink literals, footnotes, strikethrough, tables, tasklists)"
 
 - [remark-gfm]
 - こっちも参照 [remark - markdown processor powered by plugins](https://remark.js.org/)

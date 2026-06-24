@@ -1,6 +1,5 @@
 # PDFのメモ
 
-
 ## パスワードで保護されたPDFを解除する(パスワードがわかる場合)
 
 [qpdf/qpdf: qpdf: A content-preserving PDF document transformer](https://github.com/qpdf/qpdf)

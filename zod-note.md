@@ -17,10 +17,10 @@
 - **実装**:
 
   ```javascript
-  import { z } from 'zod';
+  import { z } from "zod";
 
   const schema = z.object({
-    age: z.coerce.number().positive().int()
+  	age: z.coerce.number().positive().int(),
   });
   ```
 
@@ -31,13 +31,13 @@
 - **実装**:
 
   ```javascript
-  import { z } from 'zod';
+  import { z } from "zod";
 
   const schema = z.object({
-    age: z
-      .string()
-      .transform((val) => Number(val))
-      .pipe(z.number().positive())
+  	age: z
+  		.string()
+  		.transform((val) => Number(val))
+  		.pipe(z.number().positive()),
   });
   ```
 

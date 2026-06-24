@@ -76,17 +76,17 @@ uv tool install awslabs.cdk-mcp-server@latest
 
 ```json
 {
-  "servers": {
-    "cdk-mcp-server": {
-      "type": "stdio",
-      "command": "uvx",
-      "args": ["awslabs.cdk-mcp-server"],
-      "cwd": "${workspaceFolder}",
-      "env": {
-        "FASTMCP_LOG_LEVEL": "ERROR"
-      }
-    }
-  }
+	"servers": {
+		"cdk-mcp-server": {
+			"type": "stdio",
+			"command": "uvx",
+			"args": ["awslabs.cdk-mcp-server"],
+			"cwd": "${workspaceFolder}",
+			"env": {
+				"FASTMCP_LOG_LEVEL": "ERROR"
+			}
+		}
+	}
 }
 ```
 

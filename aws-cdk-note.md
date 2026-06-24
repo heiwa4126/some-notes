@@ -59,7 +59,7 @@ cdk bootstrap "aws://$ACCOUNT_ID/ap-northeast-1"
 # and more regions...
 ```
 
-とかやっとくといいかもしれない(オプション)。何度 `cdk bootstrap` を実行してもOK。
+とかやっとくといいかもしれない(オプション)。何度 `cdk bootstrap` を実行しても OK。
 
 リージョンごとに
 CDKToolkit
@@ -154,12 +154,12 @@ cdk bootstrap # もし最初なら(複数回やっても問題なさそう)
 で, たとえば `./lib/foo-stack.ts` で
 
 ```typescript
-const myFunction = new lambda.Function(this, 'HelloWorldFunction', {
-  runtime: lambda.Runtime.NODEJS_20_X,
-  handler: 'app.lambdaHandler',
-  code: lambda.Code.fromAsset(path.join(__dirname, '..', 'lambda', 'hello'), {
-    exclude: ['*.log', 'tests/**/*']
-  })
+const myFunction = new lambda.Function(this, "HelloWorldFunction", {
+	runtime: lambda.Runtime.NODEJS_20_X,
+	handler: "app.lambdaHandler",
+	code: lambda.Code.fromAsset(path.join(__dirname, "..", "lambda", "hello"), {
+		exclude: ["*.log", "tests/**/*"],
+	}),
 });
 ```
 
@@ -174,39 +174,39 @@ const myFunction = new lambda.Function(this, 'HelloWorldFunction', {
 
 ```javascript
 // S3のバケット名を固定
-const bucket = new s3.Bucket(this, 'MyBucket', {
-  bucketName: 'my-fixed-bucket-name'
+const bucket = new s3.Bucket(this, "MyBucket", {
+	bucketName: "my-fixed-bucket-name",
 });
 
 // テーブル名を固定
-const table = new dynamodb.Table(this, 'MyTable', {
-  tableName: 'my-fixed-table-name',
-  partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING }
+const table = new dynamodb.Table(this, "MyTable", {
+	tableName: "my-fixed-table-name",
+	partitionKey: { name: "id", type: dynamodb.AttributeType.STRING },
 });
 
 // Lambda関数名を固定
-const lambdaFunction = new lambda.Function(this, 'MyFunction', {
-  functionName: 'my-fixed-function-name',
-  runtime: lambda.Runtime.NODEJS_20_X,
-  handler: 'index.handler',
-  code: lambda.Code.fromAsset('lambda')
+const lambdaFunction = new lambda.Function(this, "MyFunction", {
+	functionName: "my-fixed-function-name",
+	runtime: lambda.Runtime.NODEJS_20_X,
+	handler: "index.handler",
+	code: lambda.Code.fromAsset("lambda"),
 });
 
 // IAM Roleの名前を固定
-const myRole = new iam.Role(this, 'MyFixedRole', {
-  roleName: 'my-fixed-role-name',
-  assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com')
+const myRole = new iam.Role(this, "MyFixedRole", {
+	roleName: "my-fixed-role-name",
+	assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
 });
 
 // IAM Policyの名前を固定
-const myPolicy = new iam.ManagedPolicy(this, 'MyFixedPolicy', {
-  managedPolicyName: 'my-fixed-policy-name', // 固定名
-  statements: [
-    new iam.PolicyStatement({
-      actions: ['s3:ListBucket'],
-      resources: ['arn:aws:s3:::my-bucket']
-    })
-  ]
+const myPolicy = new iam.ManagedPolicy(this, "MyFixedPolicy", {
+	managedPolicyName: "my-fixed-policy-name", // 固定名
+	statements: [
+		new iam.PolicyStatement({
+			actions: ["s3:ListBucket"],
+			resources: ["arn:aws:s3:::my-bucket"],
+		}),
+	],
 });
 ```
 
@@ -215,11 +215,11 @@ const myPolicy = new iam.ManagedPolicy(this, 'MyFixedPolicy', {
 という必殺技もある。
 
 ```javascript
-const resource = new cdk.CfnResource(this, 'MyResource', {
-  type: 'AWS::S3::Bucket',
-  properties: {
-    BucketName: 'my-custom-bucket-name'
-  }
+const resource = new cdk.CfnResource(this, "MyResource", {
+	type: "AWS::S3::Bucket",
+	properties: {
+		BucketName: "my-custom-bucket-name",
+	},
 });
 ```
 
@@ -471,18 +471,18 @@ Terraform は状態ファイル(state)を管理する仕組みがあり、これ
    DynamoDB の ARN を出力変数として定義します。
 
    ```typescript
-   import * as cdktf from 'cdktf';
-   import { DynamoDbTable } from '@cdktf/provider-aws';
+   import * as cdktf from "cdktf";
+   import { DynamoDbTable } from "@cdktf/provider-aws";
 
-   const table = new DynamoDbTable(stack, 'DynamoTable', {
-     name: 'my-dynamo-table',
-     hashKey: 'id',
-     attribute: [{ name: 'id', type: 'S' }],
-     billingMode: 'PAY_PER_REQUEST'
+   const table = new DynamoDbTable(stack, "DynamoTable", {
+   	name: "my-dynamo-table",
+   	hashKey: "id",
+   	attribute: [{ name: "id", type: "S" }],
+   	billingMode: "PAY_PER_REQUEST",
    });
 
-   new cdktf.TerraformOutput(stack, 'DynamoDbArn', {
-     value: table.arn
+   new cdktf.TerraformOutput(stack, "DynamoDbArn", {
+   	value: table.arn,
    });
    ```
 
@@ -490,11 +490,11 @@ Terraform は状態ファイル(state)を管理する仕組みがあり、これ
 
    ```typescript
    new cdktf.TerraformBackend(stack, {
-     s3: {
-       bucket: 'my-remote-state-bucket',
-       key: 'stack1/terraform.tfstate',
-       region: 'us-east-1'
-     }
+   	s3: {
+   		bucket: "my-remote-state-bucket",
+   		key: "stack1/terraform.tfstate",
+   		region: "us-east-1",
+   	},
    });
    ```
 
@@ -502,16 +502,16 @@ Terraform は状態ファイル(state)を管理する仕組みがあり、これ
    Terraform のリモート状態データを参照します。
 
    ```typescript
-   import * as cdktf from 'cdktf';
-   import { TerraformRemoteStateS3 } from '@cdktf/provider-terraform';
+   import * as cdktf from "cdktf";
+   import { TerraformRemoteStateS3 } from "@cdktf/provider-terraform";
 
-   const remoteState = new TerraformRemoteStateS3(stack, 'RemoteState', {
-     bucket: 'my-remote-state-bucket',
-     key: 'stack1/terraform.tfstate',
-     region: 'us-east-1'
+   const remoteState = new TerraformRemoteStateS3(stack, "RemoteState", {
+   	bucket: "my-remote-state-bucket",
+   	key: "stack1/terraform.tfstate",
+   	region: "us-east-1",
    });
 
-   const dynamoArn = remoteState.getString('outputs.DynamoDbArn');
+   const dynamoArn = remoteState.getString("outputs.DynamoDbArn");
 
    console.log(`DynamoDB ARN: ${dynamoArn}`);
    ```
@@ -526,12 +526,12 @@ AWS Systems Manager (SSM) パラメータストアを介して情報を共有し
    DynamoDB の ARN を SSM パラメータストアに保存します。
 
    ```typescript
-   import { SsmParameter } from '@cdktf/provider-aws';
+   import { SsmParameter } from "@cdktf/provider-aws";
 
-   new SsmParameter(stack, 'DynamoDbArnParam', {
-     name: '/stack1/dynamodb/arn',
-     type: 'String',
-     value: table.arn
+   new SsmParameter(stack, "DynamoDbArnParam", {
+   	name: "/stack1/dynamodb/arn",
+   	type: "String",
+   	value: table.arn,
    });
    ```
 
@@ -539,10 +539,10 @@ AWS Systems Manager (SSM) パラメータストアを介して情報を共有し
    SSM パラメータを読み取ります。
 
    ```typescript
-   import { DataAwsSsmParameter } from '@cdktf/provider-aws';
+   import { DataAwsSsmParameter } from "@cdktf/provider-aws";
 
-   const dynamoArnParam = new DataAwsSsmParameter(stack, 'DynamoDbArnParam', {
-     name: '/stack1/dynamodb/arn'
+   const dynamoArnParam = new DataAwsSsmParameter(stack, "DynamoDbArnParam", {
+   	name: "/stack1/dynamodb/arn",
    });
 
    console.log(`DynamoDB ARN: ${dynamoArnParam.value}`);

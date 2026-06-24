@@ -42,21 +42,21 @@ sts:AssumeRole で制限できそう。
 
 ```json
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::666666666666:root"
-      },
-      "Action": "sts:AssumeRole",
-      "Condition": {
-        "Bool": {
-          "aws:MultiFactorAuthPresent": "true"
-        }
-      }
-    }
-  ]
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::666666666666:root"
+			},
+			"Action": "sts:AssumeRole",
+			"Condition": {
+				"Bool": {
+					"aws:MultiFactorAuthPresent": "true"
+				}
+			}
+		}
+	]
 }
 ```
 
