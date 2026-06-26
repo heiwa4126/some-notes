@@ -1,20 +1,22 @@
 # Visual Studio Code メモ
 
+- [VScode server が CPU 100%](#vscode-server-が-cpu-100)
+	- [2026年更新版](#2026年更新版)
+- [.gitignoreからfiles.watcherExcludeのリストを生成する拡張があるという](#gitignoreからfileswatcherexcludeのリストを生成する拡張があるという)
 - [Remote Development](#remote-development)
-  - [step1](#step1)
-  - [step 2](#step-2)
-  - [step 3](#step-3)
-  - [メモ](#メモ)
+	- [step1](#step1)
+	- [step 2](#step-2)
+	- [step 3](#step-3)
+	- [メモ](#メモ)
 - [Powershell 7 が Windows Store で配布されるようになった](#powershell-7-が-windows-store-で配布されるようになった)
-- [Widnows11 で"Open with Code"が出ない件](#widnows11-でopen-with-codeが出ない件)
+- [Windows11 で"Open with Code"が出ない件](#windows11-でopen-with-codeが出ない件)
 - [ゼロ幅スペース (Zero Width Space: U+200B)](#ゼロ幅スペース-zero-width-space-u200b)
 - [bash のキーアサイン](#bash-のキーアサイン)
 - [VSCode server](#vscode-server)
-- [VScode server が CPU 100%](#vscode-server-が-cpu-100)
 - [現在 VScode にインストールされている拡張機能の ID を得るには?](#現在-vscode-にインストールされている拡張機能の-id-を得るには)
 - [VScode で Javascript/Typescript の import を並び変える](#vscode-で-javascripttypescript-の-import-を並び変える)
 - [VSCode で WSL 上の Typescript をデバッグしようとすると異常に時間がかかる](#vscode-で-wsl-上の-typescript-をデバッグしようとすると異常に時間がかかる)
-  - [いちおう解決](#いちおう解決)
+	- [いちおう解決](#いちおう解決)
 - [.vscode/ はレポジトリに含めるべき?](#vscode-はレポジトリに含めるべき)
 - [.vscode/tasks.json に書いたタスクはどうやって動かす?](#vscodetasksjson-に書いたタスクはどうやって動かす)
 - [.vscode/tasks.json と launch.json はどう使い分ける?](#vscodetasksjson-と-launchjson-はどう使い分ける)
@@ -26,20 +28,159 @@
 - [折り返しの有効無効](#折り返しの有効無効)
 - [マルチカーソルで折り返しを無視する](#マルチカーソルで折り返しを無視する)
 - [VSCode の Jupyter 拡張で Pylance が reportMissingImports と言ってくるとき](#vscode-の-jupyter-拡張で-pylance-が-reportmissingimports-と言ってくるとき)
-  - [ひとつの解決案](#ひとつの解決案)
+	- [ひとつの解決案](#ひとつの解決案)
 - [VSCode でプロファイルの複製で WSL の拡張が複製されない](#vscode-でプロファイルの複製で-wsl-の拡張が複製されない)
 - [VSCode の terminal での completion がウザい](#vscode-の-terminal-での-completion-がウザい)
 - [ワークスペース単位で拡張を無効にできる](#ワークスペース単位で拡張を無効にできる)
 - [Pylance を軽くする](#pylance-を軽くする)
 - [Code Spell Checker](#code-spell-checker)
-  - [Code Spell Checker で exclude files を設定する](#code-spell-checker-で-exclude-files-を設定する)
+	- [Code Spell Checker で exclude files を設定する](#code-spell-checker-で-exclude-files-を設定する)
 - [プロファイルフォルダーのパス](#プロファイルフォルダーのパス)
-  - [「規定」ではない場合](#規定ではない場合)
-  - [Defaultプロファイルのパス](#defaultプロファイルのパス)
+	- [「規定」ではない場合](#規定ではない場合)
+	- [Defaultプロファイルのパス](#defaultプロファイルのパス)
 - [editor.autoSurround 機能](#editorautosurround-機能)
 - [VSCodeのリロード](#vscodeのリロード)
 - [マルチカーソルをキーボードで](#マルチカーソルをキーボードで)
 - [キーボードショートカットに何が割り当てられているか](#キーボードショートカットに何が割り当てられているか)
+
+## VScode server が CPU 100%
+
+SSH-Remote などで接続しているとき VScode server が CPU を食い尽くすことがある。
+
+VSCode の設定で
+
+```json
+"search.follow.symlink": false
+```
+
+- [rg process taking up all my CPU · Issue #98594 · microsoft/vscode](https://github.com/microsoft/vscode/issues/98594)
+- [Fix 100% CPU | VSCODE-Server | Simple Remote SSH Guide - YouTube](https://www.youtube.com/watch?v=36Hm1DEl82M)
+
+もう 1 つ
+
+```json
+"files.watcherExclude": {
+  "**/.*/**": true,
+  "**/cdktf.out/**": true,
+  "**/node_modules/**": true,
+  "**/build/**": true,
+  "**/dist/**": true,
+  "**/__pycache__/**": true,
+  "**/.git/objects/**": false,
+  "**/.git/subtree-cache/**": false,
+  "**/.hg/store/**": false,
+  "**/node_modules/*/**": false
+}
+```
+
+上記は自分の設定。
+全部除外してる人もいる。
+[Visual Studio Code での SSH 接続により、EC2 サーバーが高負荷になり動かなくなった - エキサイト TechBlog.](https://tech.excite.co.jp/entry/2022/09/27/153341)
+
+設定したら VSCode Server を 1 回終わらせる。サーバ側で
+
+```sh
+pkill -f /.vscode-server/code
+```
+
+VSCode 側で VSCode Server を止めることもできるけど (F1+"kill serve"で出てくる)
+
+### 2026年更新版
+
+さすがにこれ手で書いてられないので、Claude と相談して生成してもらった。
+負荷がごっそり下がりました。
+
+Windows + WSL2(Ubuntu) + VS Code で、Python / Node / Bun / Go / Cargo 版
+
+```json
+{
+	"search.exclude": {
+		"**/node_modules/**": true,
+		"**/build/**": true,
+		"**/dist/**": true,
+		"**/.venv/**": true,
+		"**/venv/**": true,
+		"**/.git/**": true,
+		"**/__pycache__/**": true,
+		"**/.mypy_cache/**": true,
+		"**/.ruff_cache/**": true,
+		"**/.pytest_cache/**": true,
+		"**/.ipynb_checkpoints/**": true,
+		"**/cdktf.out/**": true,
+		"**/target/**": true,
+		"**/bin/**": true,
+		"**/obj/**": true,
+		"**/.next/**": true,
+		"**/.turbo/**": true,
+		"**/.bun/**": true,
+		"**/.cache/**": true
+	},
+	"files.exclude": {
+		"**/.classpath": true,
+		"**/.factorypath": true,
+		"**/.project": true,
+		"**/.settings": true,
+		"**/node_modules/**": true,
+		"**/dist/**": true,
+		"**/build/**": true,
+		"**/.next/**": true,
+		"**/.turbo/**": true
+	},
+	"files.watcherExclude": {
+		"**/.git/objects/**": true,
+		"**/.git/subtree-cache/**": true,
+		"**/node_modules/**": true,
+		"**/dist/**": true,
+		"**/build/**": true,
+		"**/.next/**": true,
+		"**/.turbo/**": true,
+		"**/.mypy_cache/**": true,
+		"**/.ruff_cache/**": true,
+		"**/.pytest_cache/**": true,
+		"**/.ipynb_checkpoints/**": true,
+		"**/.cache/**": true,
+		"**/target/**": true,
+		"**/bin/**": true,
+		"**/obj/**": true
+	},
+	"python.analysis.exclude": [
+		"**/__pycache__/**",
+		"**/.git/**",
+		"**/.mypy_cache/**",
+		"**/.ruff_cache/**",
+		"**/.pytest_cache/**",
+		"**/.ipynb_checkpoints/**",
+		"**/.venv/**",
+		"**/venv/**",
+		"**/node_modules/**",
+		"**/dist/**",
+		"**/build/**",
+		"**/.next/**",
+		"**/.cache/**"
+	]
+}
+```
+
+ほか .gitignore をみてくれる機能もあるけど
+
+```json
+{
+	// 検索(Ctrl+Shift+F)が.gitignoreを見るか → デフォルトtrue
+	"search.useIgnoreFiles": true,
+
+	// 親ディレクトリの.gitignoreも見るか → デフォルトfalse
+	"search.useParentIgnoreFiles": false,
+
+	// ~/.gitignore_globalのようなグローバルgitignoreも見るか → デフォルトfalse
+	"search.useGlobalIgnoreFiles": false
+}
+```
+
+のように「だいたいデフォルトでOK」なので、逆になってないかだけ確認。
+
+## .gitignoreからfiles.watcherExcludeのリストを生成する拡張があるという
+
+探し中。watcher-exclude-gitignore?
 
 ## Remote Development
 
@@ -57,7 +198,7 @@ Git for Windows に入ってる MINGW の ssh が使える。
 
 Git bash を起動して、.ssh/config を修正 & id_rsa を適当に配置 etc。`ssh <host>`でつながるとこまで設定。
 
-.ssh/confi の example
+.ssh/config の example
 
 ```conf
 Protocol 2
@@ -126,7 +267,7 @@ pwsh.exe へのパスは通っているので、
 
 Windows Store だと更新が楽だからなぁ...
 
-## Widnows11 で"Open with Code"が出ない件
+## Windows11 で"Open with Code"が出ない件
 
 エクスプローラー拡張の
 「Code で開く」
@@ -196,48 +337,6 @@ ls ~/.vscode-server/extensions
 ```
 
 にある。
-
-## VScode server が CPU 100%
-
-SSH-Remote などで接続しているとき VScode server が CPU を食い尽くすことがある。
-
-VSCode の設定で
-
-```json
-"search.follow.symlink": false
-```
-
-- [rg process taking up all my CPU · Issue #98594 · microsoft/vscode](https://github.com/microsoft/vscode/issues/98594)
-- [Fix 100% CPU | VSCODE-Server | Simple Remote SSH Guide - YouTube](https://www.youtube.com/watch?v=36Hm1DEl82M)
-
-もう 1 つ
-
-```json
-"files.watcherExclude": {
-  "**/.*/**": true,
-  "**/cdktf.out/**": true,
-  "**/node_modules/**": true,
-  "**/build/**": true,
-  "**/dist/**": true,
-  "**/__pycache__/**": true,
-  "**/.git/objects/**": false,
-  "**/.git/subtree-cache/**": false,
-  "**/.hg/store/**": false,
-  "**/node_modules/*/**": false
-}
-```
-
-上記は自分の設定。
-全部除外してる人もいる。
-[Visual Studio Code での SSH 接続により、EC2 サーバーが高負荷になり動かなくなった - エキサイト TechBlog.](https://tech.excite.co.jp/entry/2022/09/27/153341)
-
-設定したら VSCode Server を 1 回終わらせる。サーバ側で
-
-```sh
-pkill -f /.vscode-server/code
-```
-
-VSCode 側で VSCode Server を止めることもできるけど (F1+"kill serve"で出てくる)
 
 ## 現在 VScode にインストールされている拡張機能の ID を得るには?
 
