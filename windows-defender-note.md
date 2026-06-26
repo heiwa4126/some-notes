@@ -15,5 +15,12 @@ uv cache dir
 npm config get cache
 pnpm store path
 pnpm config get cache-dir
-bun pm cache # これだけあやしい
+bun pm cache # これだけあやしい。
+```
+
+bunにはたぶんグローバルキャッシュのパスを得るコマンドは無い。
+bashだったら、
+
+```sh
+echo ${BUN_INSTALL_CACHE_DIR:-~/.bun/install/cache}
 ```
