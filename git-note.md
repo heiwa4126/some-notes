@@ -50,6 +50,7 @@
 - [etckeeper のように $HOME を gitで管理するやつ](#etckeeper-のように-home-を-gitで管理するやつ)
 - [複数のコミットを1個にまとめる](#複数のコミットを1個にまとめる)
 - [diff で新規ファイルが丸々表示されるのをやめる](#diff-で新規ファイルが丸々表示されるのをやめる)
+- [レポジトリに含まれるファイルを探す](#レポジトリに含まれるファイルを探す)
 
 ## `git restore`
 
@@ -956,4 +957,23 @@ git diff --diff-filter=ACDM --stat branch1 branch2
 git diff --compact-summary branch1 branch2
 # 変化したファイルだけ
 git diff --name-status --diff-filter=A branch1 branch2
+```
+
+## レポジトリに含まれるファイルを探す
+
+```sh
+git ls-files | grep -Fi package.json
+```
+
+と等価なのを git CLI 自体が持っていて、それは
+
+```sh
+git ls-files ':(glob)**/package.json'
+# こんなシンタックス覚えられません
+
+# ほとんどこれで十分
+git ls-files '*package.json'
+
+# rg があれば、こんなんもあります
+rg --files -g '*package.json'
 ```
