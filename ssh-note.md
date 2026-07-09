@@ -34,6 +34,7 @@
 - [~/.ssh/known_hosts ファイルの形式](#sshknown_hosts-ファイルの形式)
 - [Post-Quantum Cryptography](#post-quantum-cryptography)
 - [pts/0 を切断する](#pts0-を切断する)
+- [OpenSSL伝統形式 (Traditional OpenSSL format) を OpenSSH新形式に変換する](#openssl伝統形式-traditional-openssl-format-を-openssh新形式に変換する)
 
 ## sshd の configtest
 
@@ -62,7 +63,7 @@ Host のマッチなんかも、最初に出てきたらマッチする。
 
 ### AllowUsers
 
-複数ユーザは``(whitespace)で区切る
+複数ユーザは ``(whitespace) で区切る
 
 ### Port
 
@@ -690,3 +691,29 @@ sudo sh -c 'ls /etc/ssh/ssh_host_*.pub | xargs -n1 ssh-keygen -l -f'
 正解は `kill 1839955`
 
 あるいは `pkill -f 'sshd: user1@pts/0'`
+
+## OpenSSL伝統形式 (Traditional OpenSSL format) を OpenSSH新形式に変換する
+
+元の秘密鍵が `./id_rsa` だとして
+
+```sh
+ssh-keygen -p -f id_rsa -o
+```
+
+元のパスフレーズ、新しいパスフレーズ、もういちど新しいパスフレーズをきかれる
+
+OpenSSL伝統形式は:
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+```
+
+で始まるやつで
+
+OpenSSH新形式は:
+
+```
+-----BEGIN OPENSSH PRIVATE KEY-----
+```
+
+で始まるやつ
