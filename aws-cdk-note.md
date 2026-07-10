@@ -30,6 +30,7 @@
     - [3. AWS Resource Access Manager(RAM)を利用](#3-aws-resource-access-managerramを利用)
 - [CDK CLI のバージョンと、CDK ライブラリのバージョンが連動しなくなる (cdk acknowledge 32775)](#cdk-cli-のバージョンとcdk-ライブラリのバージョンが連動しなくなる-cdk-acknowledge-32775)
 - [AWS CDK with Python で uv を始める](#aws-cdk-with-python-で-uv-を始める)
+- [スタックごとに乱数っぽい名前を得る](#スタックごとに乱数っぽい名前を得る)
 
 ## インストール
 
@@ -605,3 +606,50 @@ git commit -am 'initial commit'
 - [AWS CDK の Lambda Python が uv をサポートしました | DevelopersIO](https://dev.classmethod.jp/articles/aws-cdk-lambda-python-supported-uv/)
 
 Lambda 用の aws-lambda-python-alpha も uv つかえるらしい。
+
+## スタックごとに乱数っぽい名前を得る
+
+いちばん簡単なのは AWS::StackId を使う方法。
+
+リソース数を減らすため、スタック中のLambdaで共通のLogGroupを使う例:
+
+```typescript
+import * as cdk from "aws-cdk-lib";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import * as logs from "aws-cdk-lib/aws-logs";
+import { Construct } from "constructs";
+
+export class ExampleStack extends cdk.Stack {
+	constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+		super(scope, id, props);
+
+		// arn:aws:cloudformation:region:account:stack/STACK_NAME/STACK_GUID
+		const stackGuid = cdk.Fn.select(2, cdk.Fn.split("/", cdk.Aws.STACK_ID));
+		// GUID の先頭ブロックだけ使って短くする（例: a1b2c3d4）
+		const stableSuffix = cdk.Fn.select(0, cdk.Fn.split("-", stackGuid));
+
+		const sharedLogGroupName = cdk.Fn.join("", ["/aws/lambda/shared-", stableSuffix]);
+
+		const sharedLogGroup = new logs.LogGroup(this, "SharedLambdaLogGroup", {
+			logGroupName: sharedLogGroupName,
+			retention: logs.RetentionDays.ONE_WEEK,
+			removalPolicy: cdk.RemovalPolicy.DESTROY,
+		});
+
+		new NodejsFunction(this, "FnA", {
+			entry: "lambda/app1/index.ts",
+			handler: "handler",
+			runtime: lambda.Runtime.NODEJS_24_X,
+			logGroup: sharedLogGroup,
+		});
+
+		new NodejsFunction(this, "FnB", {
+			entry: "lambda/app1/index.ts",
+			handler: "handler",
+			runtime: lambda.Runtime.NODEJS_24_X,
+			logGroup: sharedLogGroup,
+		});
+	}
+}
+```
