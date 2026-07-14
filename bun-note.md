@@ -13,6 +13,10 @@
 - [pnpm の minimumReleaseAge 相当](#pnpm-の-minimumreleaseage-相当)
 - [`bun build` はバンドラなんだけど](#bun-build-はバンドラなんだけど)
 - [bun の shell completions](#bun-の-shell-completions)
+- [bun の .env と run-scripts の変な挙動](#bun-の-env-と-run-scripts-の変な挙動)
+  - [何が違うか](#何が違うか)
+  - [実用上の結論](#実用上の結論)
+  - [.env 関連 issues](#env-関連-issues)
 
 ## bun の概要
 
@@ -127,7 +131,7 @@ bun pm ls
 
 ## `bun audit`
 
-v1.3系から使えるようになった。
+v1.3 系から使えるようになった。
 
 [bun audit - Bun](https://bun.com/docs/pm/cli/audit)
 
@@ -135,7 +139,7 @@ v1.3系から使えるようになった。
 
 ## pnpm の minimumReleaseAge 相当
 
-bunfig.tomlで
+bunfig.toml で
 
 ```toml
 [install]
@@ -145,12 +149,12 @@ minimumReleaseAge = 1440
 
 [bunfig.toml - Bun](https://bun.com/docs/runtime/bunfig#install-minimumreleaseage)
 
-以下は ~/.config/pnpm/rc の例で、下2つはいまのところbunに相当するものはない。
+以下は ~/.config/pnpm/rc の例で、下 2 つはいまのところ bun に相当するものはない。
 
 ```conf
-minimumReleaseAge=1440        # 公開後24時間未満の新バージョンを拒否（default 0）[1](https://pnpm.io/supply-chain-security)
-blockExoticSubdeps=true       # トランジティブ依存の git/tarball 等を禁止（default false）[1](https://pnpm.io/supply-chain-security)
-trustPolicy=no-downgrade      # 信頼レベルが低下したバージョンを拒否（default off）[1](https://pnpm.io/supply-chain-security)
+minimumReleaseAge=1440        # 公開後24時間未満の新バージョンを拒否(default 0)[1](https://pnpm.io/supply-chain-security)
+blockExoticSubdeps=true       # トランジティブ依存の git/tarball 等を禁止(default false)[1](https://pnpm.io/supply-chain-security)
+trustPolicy=no-downgrade      # 信頼レベルが低下したバージョンを拒否(default off)[1](https://pnpm.io/supply-chain-security)
 ```
 
 ## `bun build` はバンドラなんだけど
@@ -162,7 +166,7 @@ trustPolicy=no-downgrade      # 信頼レベルが低下したバージョンを
 - IIFE + globalName ができない
 
 なので、再利用できるモジュールを作るのはつらいかも。
-tsdownとかをつかいましょう。
+tsdown とかをつかいましょう。
 
 ## bun の shell completions
 
@@ -177,11 +181,11 @@ tsdownとかをつかいましょう。
 
 zsh 版は期待通り動く
 
-bash版(<https://github.com/oven-sh/bun/blob/main/completions/bun.bash>)は
+bash 版(<https://github.com/oven-sh/bun/blob/main/completions/bun.bash>)は
 
 > sed: -e expression #1, char 40: unknown option to `s'
 
-というエラーになる。Claudeに丸投げした
+というエラーになる。Claude に丸投げした
 
 ```text
 bun の bash completions (https://github.com/oven-sh/bun/blob/main/completions/bun.bash)を試してるんですが、
@@ -208,8 +212,54 @@ bun の bash completions (https://github.com/oven-sh/bun/blob/main/completions/b
 - Issue: [Bash autocomplete #6037](https://github.com/oven-sh/bun/issues/6037)
 - PR: [fix: bash completion script #17147](https://github.com/oven-sh/bun/pull/17147)(未マージ)
 
-ただ run-scripts で複数行のJSONがあると死ぬらしい。
+ただ run-scripts で複数行の JSON があると死ぬらしい。
 
 いちおう Gist にしといた。普段使いでは問題ないのでは
 
 - [bun bash completion\(バグ修正版\) oven\-sh/bun 公式の completions/bun\.bash にあるバグを修正したものです。PR も issuse も出てるけど全然取り込まれないので自分用に](https://gist.github.com/heiwa4126/dc0b087e89026c235281655b6a835ae6)
+
+## bun の .env と run-scripts の変な挙動
+
+bun は .env を自前で処理する
+<https://bun.com/docs/runtime/environment-variables#setting-environment-variables>
+んですが、run-scripts で
+
+```json
+"scripts": {
+  "foo1": "./script/foo.sh",
+  "foo2": "bash ./script/foo.sh",
+}
+```
+
+だと
+`bun run foo1` は .env(や.env.production, .env.development, .env.test, .env.local) で設定した値が foo.sh に渡るのに、
+`bun run foo2` は渡らない、
+というへんな挙動がある。
+
+これは Bun の内部実装(`run_command.zig`)に起因する既知の非対称性。
+
+### 何が違うか
+
+Linux/macOS で `bun run <script>` を実行するとき、package.json の script 文字列は最終的に **システムの `bash`/`sh`/`zsh` を `-c` フラグ付きでspawnする** ことで実行されます(Bun Shell が使われるのは Windows や bun で直接 `.sh` を実行する場合で、package.json の script 経由では Unix 系だと通常のシェルが使われます)。
+
+- `"foo": "bash script/foo.sh"` のように**複数語からなるコマンド**の場合 → Bun はこれを `bash -c "bash script/foo.sh"` のように**新しいシェルプロセスへディスパッチ**します。このディスパッチ経路では、`.env`/`.env.production` などから読み込んでマージした環境変数が、実際に spawn されるシェルプロセスの OS レベルの環境(envp)に反映されないという既知の制限があります。同様の症状は `"env": "env"` というだけのスクリプトを `bun run env` した場合にも報告されていて、`bun` の REPL で見る `process.env` にはロード済みの `.env` の値が入っているのに、`bun run env` の出力にはそれが出てこない、という不整合が Bun の issue でも指摘されています。
+
+- `"foo": "./script/foo.sh"` のように**単一の実行可能ファイルパス**の場合 → Bun はシェルを経由した文字列パース(`bash -c "..."`)を挟まず、**そのファイルを直接exec**する、より単純な経路を取ります。この経路では、bun 自身のプロセスが既に `.env` 読み込み後に持っている環境(process.env)がそのまま引き継がれるため、期待通り環境変数が渡ります。
+
+つまり「シェル文字列として解釈・spawn されるか」「実行可能ファイルとして直接 exec されるか」で、環境変数の引き継ぎに差が出るという、Bun の内部実装上の非対称性が原因です。ドキュメント上は明記されていない、実装依存の挙動です。
+
+### 実用上の結論
+
+- `chmod +x script/foo.sh` して `"foo": "./script/foo.sh"` にする、というやり方は正しい回避策です。これなら前回の TypeScript ラッパーは不要になります。
+- 引数を渡したい場合も `"foo": "./script/foo.sh --flag value"` のように**先頭が実行可能ファイルパスであること**を保ってあれば同様に動くはずです(念のため一度動作確認してみてください)。
+- 逆に `"foo": "bash script/foo.sh"` や `"foo": "sh script/foo.sh"` のように**インタプリタ名を明示する形**は避けたほうが安全、ということになります。
+
+### .env 関連 issues
+
+- [NODE_ENV=production in package.json scripts no longer reads from .env.production (#9635)](https://github.com/oven-sh/bun/issues/9635)
+- ["bun run env" does not include environment variables from .env (#9925)](https://github.com/oven-sh/bun/issues/9925)
+- [Specific .env.[mode] does not override .env via package.json script (#6334)](https://github.com/oven-sh/bun/issues/6334)
+- [Incorrect parsing of empty envs in .env file, when running via package.json script (#5097)](https://github.com/oven-sh/bun/issues/5097)
+- [Setting env variables in package.json scripts with more than 16 characters fails (#9823)](https://github.com/oven-sh/bun/issues/9823)
+- [`bun run script.js` fails when script has node shebang (#4850)](https://github.com/oven-sh/bun/issues/4850)
+- [Bun should automatically load environment variable files when running package.json scripts (#14189)](https://github.com/oven-sh/bun/issues/14189)
