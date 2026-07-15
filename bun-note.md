@@ -17,6 +17,7 @@
   - [何が違うか](#何が違うか)
   - [実用上の結論](#実用上の結論)
   - [.env 関連 issues](#env-関連-issues)
+- [Windows 版の bun.cmd shim 問題](#windows-版の-buncmd-shim-問題)
 
 ## bun の概要
 
@@ -263,3 +264,38 @@ Linux/macOS で `bun run <script>` を実行するとき、package.json の scri
 - [Setting env variables in package.json scripts with more than 16 characters fails (#9823)](https://github.com/oven-sh/bun/issues/9823)
 - [`bun run script.js` fails when script has node shebang (#4850)](https://github.com/oven-sh/bun/issues/4850)
 - [Bun should automatically load environment variable files when running package.json scripts (#14189)](https://github.com/oven-sh/bun/issues/14189)
+
+## Windows 版の bun.cmd shim 問題
+
+[npm/run-script: Run a lifecycle script for a package (descendant of npm-lifecycle)](https://github.com/npm/run-script) のバグのせいで、
+Windows では
+bun.exe があるのに bun.cmd を明示的に探して、
+bun.cmd が無い場合は死ぬケースがある。
+
+確認は
+
+```pwsh
+gcm bun.cmd
+bun.cmd --version
+```
+
+で。"bun.cmd" があれば問題なし
+
+対策は:
+
+- (推奨しないけど楽) Bun のインストールは `npm install -g bun` で行う
+- [公式のinstallation](https://bun.com/docs/installation#windows) または winget でインストールした場合は
+  bun.cmd が生成されないので、bun.exe と同じパスに、以下の内容で bun.cmd を自前で作ってください。
+  ```bat
+  @ECHO off
+  GOTO start
+  :find_dp0
+  SET dp0=%~dp0
+  EXIT /b
+  :start
+  SETLOCAL
+  CALL :find_dp0
+  "%dp0%\bun.exe"   %*
+  ```
+  (`npm install -g bun` で出来る bun.cmd をパスだけ変更したもの)  
+  可能なら bunx.cmd も同様に作成する。
