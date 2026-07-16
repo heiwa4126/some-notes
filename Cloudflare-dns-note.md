@@ -41,7 +41,7 @@ Anycast とは、
 
 ## Cloudflare で DynDNS
 
-Cloudflareにドメインを登録してあれば、DynDNSっぽく使える。
+Cloudflare にドメインを登録してあれば、DynDNS っぽく使える。
 
 - [Dynamically update DNS records · Cloudflare DNS docs](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses/)
 - [Cloudflare を ddclient で DDNS 化する](https://zenn.dev/akaregi/articles/4a0db32a4d40a7)
@@ -52,22 +52,22 @@ Cloudflareにドメインを登録してあれば、DynDNSっぽく使える。
 こんな感じ↓
 
 1. **DNSレコードの作成**  
-   Cloudflare ダッシュボードのDNS設定画面から、任意のホスト名でAレコードを作成 (IPアドレスはダミーで構いません)。
+   Cloudflare ダッシュボードの DNS 設定画面から、任意のホスト名で A レコードを作成 (IP アドレスはダミーで構いません)。
 2. **APIトークンの発行**  
-   プロファイルのAPIトークンページから、「ゾーンDNSを編集する」権限を持つトークンを作成
+   プロファイルの API トークンページから、「ゾーン DNS を編集する」権限を持つトークンを作成
 3. **DDNSクライアントの設定**  
-   ルーターの機能や、サーバー機にインストールしたddclientなどのツールに、先ほどのAPI情報とドメインを登録
+   ルーターの機能や、サーバー機にインストールした ddclient などのツールに、先ほどの API 情報とドメインを登録
 
 ### ddclient が Perl製なのがちょっと気に入らない場合
 
 **Python製**
 
 - **[ddupdate](https://github.com/leamas/ddupdate)** — プラグイン式で Cloudflare 対応あり
-- **[cloudflare-ddns](https://github.com/timothymiller/cloudflare-ddns)** — Cloudflare 専用、Docker対応、設定がYAMLで簡潔
+- **[cloudflare-ddns](https://github.com/timothymiller/cloudflare-ddns)** — Cloudflare 専用、Docker 対応、設定が YAML で簡潔
 
 **Go製**
 
-- **[cloudflare-ddns (favonia)](https://github.com/favonia/cloudflare-ddns)** — Cloudflare 専用でシングルバイナリ、Docker/Kubernetes対応が充実、IPv4/IPv6両対応
+- **[cloudflare-ddns (favonia)](https://github.com/favonia/cloudflare-ddns)** — Cloudflare 専用でシングルバイナリ、Docker/Kubernetes 対応が充実、IPv4/IPv6 両対応
 
 **Shell Script**
 
@@ -89,7 +89,7 @@ curl -s -X PATCH \
   --data "{\"content\":\"$IP\"}"
 ```
 
-"api.ipify.org" のとこは状況による。IPがわかるなら(たとえばローカルのみで使う場合)、ここはそれに変える。
+"api.ipify.org" のとこは状況による。IP がわかるなら(たとえばローカルのみで使う場合)、ここはそれに変える。
 
 ```bash
 # 特定のインターフェースから取得（例: eth0）

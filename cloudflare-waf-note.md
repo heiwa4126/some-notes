@@ -36,18 +36,18 @@ free tier では Rate Limiting が使えない(未確認)。
 
 ドメインが登録されてればできるらしい
 
-Security rules ページ に移動し、Create rule > Rate limiting rule を選択します。
+Security rules ページに移動し、Create rule > Rate limiting rule を選択します。
 
-Freeプランでの設定手順
+Free プランでの設定手順
 
 - Rule name にルール名を入力（例: "Rate limit login"）
 - When incoming requests match で条件を設定  
   例: `(http.request.uri.path eq "/login" and http.request.method eq "POST")`  
   式ビルダーだとメソッド指定ができない。"式を編集" をクリック。
-- With the same characteristics — Freeプランでは IP が自動で選択されます
+- With the same characteristics — Free プランでは IP が自動で選択されます
 - When rate exceeds で閾値を設定  
   Requests: 5（例）
-- Period: Freeプランでは 10 seconds のみ選択可能
-- Then take action — Freeプランでは Block のみ選択可能
-- For duration — Freeプランでは 10 seconds のみ選択可能
+- Period: Free プランでは 10 seconds のみ選択可能
+- Then take action — Free プランでは Block のみ選択可能
+- For duration — Free プランでは 10 seconds のみ選択可能
 - Deploy をクリック
