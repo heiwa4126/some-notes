@@ -229,3 +229,9 @@ some-api-v1.example.com, some-api-v2.example.com
 ## 制限
 
 [Limits · Cloudflare Workers docs](https://developers.cloudflare.com/workers/platform/limits)
+
+## `wrangler login` で `aws login --remote` みたいなやつ
+
+```sh
+wrangler login --browser false
+```
