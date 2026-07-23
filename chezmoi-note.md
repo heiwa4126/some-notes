@@ -5,7 +5,7 @@ per user の etckeeper みたいなやつ
 - [twpayne/chezmoi: Manage your dotfiles across multiple diverse machines, securely\.](https://github.com/twpayne/chezmoi)
 - [chezmoi \- chezmoi](https://www.chezmoi.io/)
 
-yadam のほうが使いやすそう。(Gitっぽい)
+yadam のほうが使いやすそう。(Git っぽい)
 
 - [yadm\-dev/yadm: Yet Another Dotfiles Manager](https://github.com/yadm-dev/yadm)
 - [Yet Another Dotfiles Manager \- yadm](https://yadm.io/)

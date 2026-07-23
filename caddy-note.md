@@ -53,7 +53,7 @@ Caddyfile のフォーマッターの `Caddy fmt` もある。
 API を使う
 `curl localhost:2019/config/`
 
-caddy reload / caddy adapt 後の最終形がJSON形式で帰る
+caddy reload / caddy adapt 後の最終形が JSON 形式で帰る
 
 [GET /config/\[path\]](https://caddyserver.com/docs/api#get-configpath)
 
@@ -78,10 +78,10 @@ example.com {
 こんなの書くだけ。
 
 証明書の更新期間を設定する方法はない(ハードコーディングされている)。
-証明書期限切れの30日前から更新を初めて
+証明書期限切れの 30 日前から更新を初めて
 チェック間隔は
 [renew_interval](https://caddyserver.com/docs/caddyfile/options#renew-interval)
-で指定できる。デフォルト10m
+で指定できる。デフォルト 10m
 
 ## ログ
 
@@ -138,7 +138,7 @@ example.com {
 
 ## コンテンツにヘッダを
 
-HTML全部に 'Content-Type "text/html; charset=Shift_JIS"' をつける例
+HTML 全部に 'Content-Type "text/html; charset=Shift_JIS"' をつける例
 
 ```conf
 example.com {
@@ -162,9 +162,9 @@ https://caddyserver.com/docs/caddyfile/directives/header
 
 ## caddyfile には include はある? もしくは1つの設定をほかでも使うことはできる?
 
-ある。**`import`**。Caddyfileの擬似`include`。ファイル取り込みも、再利用スニペット呼び出しもこれ1つ。
+ある。**`import`**。Caddyfile の擬似`include`。ファイル取り込みも、再利用スニペット呼び出しもこれ 1 つ。
 
-`import` は **構文解析前** に展開され、Caddyfileのどこにでも置ける。
+`import` は **構文解析前** に展開され、Caddyfile のどこにでも置ける。
 [\[caddyserver.com\]](https://caddyserver.com/docs/caddyfile/directives/import), [\[caddyserver.com\]](https://caddyserver.com/docs/caddyfile/concepts)
 
 ### 1. ファイルを include したい

@@ -31,6 +31,8 @@
 - [CDK CLI のバージョンと、CDK ライブラリのバージョンが連動しなくなる (cdk acknowledge 32775)](#cdk-cli-のバージョンとcdk-ライブラリのバージョンが連動しなくなる-cdk-acknowledge-32775)
 - [AWS CDK with Python で uv を始める](#aws-cdk-with-python-で-uv-を始める)
 - [スタックごとに乱数っぽい名前を得る](#スタックごとに乱数っぽい名前を得る)
+- [Nodejsランタイムでの AWS SDK for JavaScript](#nodejsランタイムでの-aws-sdk-for-javascript)
+- [expressモード](#expressモード)
 
 ## インストール
 
@@ -653,3 +655,34 @@ export class ExampleStack extends cdk.Stack {
 	}
 }
 ```
+
+## Nodejsランタイムでの AWS SDK for JavaScript
+
+ランタイム環境に AWS SDK for JavaScript が入ってる。
+
+"Lambdaレイヤーとしてアタッチ" されてるわけでなないけど、バンドルせずに使える。
+
+NodejsFunction() では最初からバンドル例外になってる。
+
+- Node 16.x以下 → デフォルトで `aws-sdk` (v2) を除外
+- Node 18.x以上 → デフォルトで `@aws-sdk/*` (v3) を除外
+
+ただし、最新のSDKとは限らないので、どーしてもローカルのと同じバージョンをバンドルしたいときは
+NodejsFunction() の bundling: で
+
+```ts
+bundling: {
+  bundleAwsSDK: true, // externalModulesからaws-sdkを除外する代わりにこちらでもOK
+}
+```
+
+と指定するのが楽。
+
+## expressモード
+
+[AWS CloudFormation Express モードを使用してインフラストラクチャのデプロイを最大 4 倍高速化 | Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/accelerate-your-infrastructure-deployments-by-up-to-4x-with-aws-cloudformation-express-mode/)
+
+CDK だと [PR(#1689)](https://github.com/aws/aws-cdk-cli/pull/1689) で deploy・destroy・bootstrap の3つに--expressフラグが追加。
+aws-cdk v2.1129.0 以降。
+
+ロールバックがデフォルト無効なので、ロールバックが要る場合は `cdk deploy --express --rollback`

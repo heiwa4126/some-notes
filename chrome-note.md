@@ -82,7 +82,7 @@ Google Chrome でスクロールして**全画面のスクリーンショット*
 
 ## 便利な検索ショートカット
 
-1. Chromeで <chrome://settings/searchEngines> を開く。(Edgeだったら<edge://settings/searchEngines>)
+1. Chrome で <chrome://settings/searchEngines> を開く。(Edge だったら<edge://settings/searchEngines>)
 2. 「サイト検索」セクションの **「追加」** ボタンをクリックします。
 3. 以下を追加
 
@@ -98,4 +98,4 @@ Google Chrome でスクロールして**全画面のスクリーンショット*
 
 Shift+ESC がいちばん早い
 
-Windowsのタスクマネージャのような "Ctrlキーでポーズ" は無い。
+Windows のタスクマネージャのような "Ctrl キーでポーズ" は無い。
